@@ -1,0 +1,13 @@
+c various ways to crash, uncomment the one you want to test
+c 
+c zero div by zero
+crash NaN 
+c
+c sets vars to NaN then uses in multiplication
+crash setnan float
+crash setnan double
+c
+c should throw assert - sets var to NaN then asserts is no NaN
+crash isnan float
+crash isnan double
+ 

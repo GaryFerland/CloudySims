@@ -1,0 +1,11 @@
+title this will compile only one grain species
+# this will use default of 10 bins
+#compile agb-silicate ism grains
+# this will do 1 large bin
+#compile agb-silicate ism grains 1
+# this will do 1 large bin for pahs
+#compile pah ab08 grains 1
+# AB08 size distribution, charged PAH, 10 size bins
+# compile grain 10 bins "ph2c.rfi" ab08
+# AB08 size distribution, neutral PAH, 10 size bins
+compile grain 10 bins "ph2n.rfi" ab08

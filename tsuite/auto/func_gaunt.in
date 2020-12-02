@@ -1,0 +1,33 @@
+title check the Gaunt free-free factor for discontinuities
+test
+## check for all elements
+drive gaunt check 1
+drive gaunt check 2
+drive gaunt check 3
+drive gaunt check 4
+drive gaunt check 5
+drive gaunt check 6
+drive gaunt check 7
+drive gaunt check 8
+drive gaunt check 9
+drive gaunt check 10
+drive gaunt check 11
+drive gaunt check 12
+drive gaunt check 13
+drive gaunt check 14
+drive gaunt check 15
+drive gaunt check 16
+drive gaunt check 17
+drive gaunt check 18
+drive gaunt check 19
+drive gaunt check 20
+drive gaunt check 21
+drive gaunt check 22
+drive gaunt check 23
+drive gaunt check 24
+drive gaunt check 25
+drive gaunt check 26
+drive gaunt check 27
+drive gaunt check 28
+drive gaunt check 29
+drive gaunt check 30

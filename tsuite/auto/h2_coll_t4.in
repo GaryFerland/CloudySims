@@ -1,0 +1,147 @@
+title coronal equilibrium at 10^4 K
+#
+# commands controlling continuum =========
+coronal 4
+#
+# other commands for details     =========
+iterate
+#
+# commands controlling geometry  =========
+stop column density 15 
+#
+# commands for density & abundances =========
+hden 4
+database H2
+#
+# commands controlling output    =========
+save performance "h2_coll_t4.per"
+save monitors "h2_coll_t4.asr" 
+save overview "h2_coll_t4.ovr" 
+save continuum "h2_coll_t4.con"  units angstroms 
+#
+# commands giving the monitors    =========
+## >>chng 12 nov 09, from 19.39 to 9.023, first run
+## >>chng 13 feb 10, from 9.023 to 8.656, H2,e-=>H-,H update
+## >>chng 13 nov 19, from 8.656 to 9, fix CT bug in mole_eval_balance
+monitor H2 column density 9 error 0.20
+## >>chng 12 nov 09, from 19.39 to 10.05, first run
+## >>chng 13 feb 01, from 10.05 to 10.18, BUGFIX, largely undo r6703
+## >>chng 13 feb 10, from 10.18 to 9.754, H2,e-=>H-,H update
+## >>chng 13 nov 19, from 9.754 to 10.44, fix CT bug in mole_eval_balance
+monitor CO column density 10.44 error 0.20
+##
+## >>chng 13 feb 01, from -3.05 to -3.136, BUGFIX, largely undo r6703
+## >>chng 13 nov 19, from -3.136 to -3.597, fix CT bug in mole_eval_balance
+monitor ionization Hydrogen  2 -3.597 error 0.15
+##
+## >>chng 13 nov 19, from -10.87 to -11.38, fix CT bug in mole_eval_balance
+## >>chng 16 mar 21, from -11.38 to -11.27, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
+monitor ionization Helium    2 -11.27 error 0.30
+##
+## >>chng 13 feb 10, from -2.775 to -2.878, H2,e-=>H-,H update
+## >>chng 13 nov 19, from -2.878 to -3.037, fix CT bug in mole_eval_balance
+monitor ionization Carbon    2 -3.037 error 0.20
+##
+## >>chng 13 feb 01, from -2.956 to -3.044, BUGFIX, largely undo r6703
+## >>chng 13 nov 19, from -3.044 to -3.51, fix CT bug in mole_eval_balance
+monitor ionization Nitrogen  2 -3.51 error 0.15
+##
+## >>chng 13 feb 01, from -3.153 to -3.243, BUGFIX, largely undo r6703
+## >>chng 13 nov 05, from -3.243 to -3.187, convergence branch changes
+## >>chng 13 nov 19, from -3.187 to -3.716, fix CT bug in mole_eval_balance
+monitor ionization Oxygen    2 -3.716 error 0.15
+##
+## >>chng 13 feb 01, from -1.302 to -1.215, BUGFIX, largely undo r6703
+## >>chng 13 nov 19, from -1.215 to -1.167, fix CT bug in mole_eval_balance
+monitor ionization Magnesium 1 -1.167  error 0.1
+##
+## >>chng 13 feb 01, from -2.987 to -2.914, BUGFIX, largely undo r6703
+## >>chng 13 nov 19, from -2.914 to -2.796, fix CT bug in mole_eval_balance
+monitor ionization Aluminium 1 -2.796 error 0.1
+##
+## >>chng 13 feb 01, from -0.7942 to -0.7013, BUGFIX, largely undo r6703
+## >>chng 13 feb 10, from -0.7013 to -0.6345, H2,e-=>H-,H update
+monitor ionization Silicon   1 -0.6345 error 0.15
+##
+## >>chng 13 feb 10, from -0.8323 to -1.144, H2,e-=>H-,H update
+## >>chng 13 nov 19, from -1.144 to -0.9445, fix CT bug in mole_eval_balance
+monitor ionization Sulphur   2 -0.9445 error 0.15
+##
+## >>chng 13 feb 01, from -3.838 to -3.927, BUGFIX, largely undo r6703
+## >>chng 13 feb 10, from -3.927 to -3.773, H2,e-=>H-,H update
+## >>chng 13 nov 19, from -3.773 to -4.097, fix CT bug in mole_eval_balance
+monitor ionization Argon     2 -4.097 error 0.1 
+##
+## >>chng 13 feb 01, from 1 to 0.9228, BUGFIX, largely undo r6703
+## >>chng 13 feb 10, from 0.9228 to 0.9605, H2,e-=>H-,H update
+## >>chng 13 nov 19, from 0.9605 to 0.5478, fix CT bug in mole_eval_balance
+monitor eden 0.5478 error 0.1
+##
+## >>chng 13 jun 27, from -3.4460 to -12.2576, add H2 2.1215m line luminosity
+## >>chng 13 jul 24, wl from 2.1215m to 2.12125m, increased wl precision to 6 sig. fig.
+## >>chng 13 nov 19, from -12.26 to -11.49, fix CT bug in mole_eval_balance
+monitor line luminosity "H2  " 2.12125m  -11.49 error 0.1
+##
+## >>chng 13 jun 27, from -8.869 to -20.53, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
+## >>chng 13 nov 19, from -20.53 to -19.89, fix CT bug in mole_eval_balance
+## >>chng 15 aug 03, from -19.89 to -19.81, update LAMDA to 2015
+monitor "H2O " 538.142m line intensity -19.81
+## >>chng 13 jun 27, from -8.563 to -20.68, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
+## >>chng 13 nov 19, from -20.68 to -18.87, fix CT bug in mole_eval_balance
+monitor "HCS+" 1755.88m  -18.87 line intensity
+## >>chng 13 jun 27, from -7.453 to -16.48, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
+## >>chng 13 nov 19, from -16.48 to -15.26, fix CT bug in mole_eval_balance
+## >>chng 15 aug 03, from -15.26 to -15.3, update LAMDA to 2015
+monitor "CS  " 3058.86m  -15.3 line intensity
+## >>chng 13 jun 27, from -7.288 to -14.2, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
+## >>chng 13 nov 19, from -14.2 to -13.52, fix CT bug in mole_eval_balance
+monitor "CO  " 2600.05m  -13.52 line intensity
+## >>chng 13 jun 27, from -6.463 to -12.66, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
+## >>chng 13 nov 19, from -12.66 to -11.98, fix CT bug in mole_eval_balance
+monitor "CO  " 1300.05m  -11.98 line intensity
+## >>chng 13 jun 27, from -6.149 to -11.69, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
+## >>chng 13 nov 19, from -11.69 to -11.01, fix CT bug in mole_eval_balance
+monitor "CO  " 866.727m  -11.01 line intensity
+## >>chng 13 jun 27, from -6.177 to -10.98, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
+## >>chng 13 nov 19, from -10.98 to -10.3, fix CT bug in mole_eval_balance
+monitor "CO  " 650.074m  -10.3 line intensity
+## >>chng 13 jun 27, from -6.485 to -10.48, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
+## >>chng 13 nov 19, from -10.48 to -9.803, fix CT bug in mole_eval_balance
+monitor "CO  " 520.089m  -9.803 line intensity
+## >>chng 13 jun 27, from -6.954 to -10.14, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
+## >>chng 13 nov 19, from -10.14 to -9.46, fix CT bug in mole_eval_balance
+monitor "CO  " 433.438m  -9.46 line intensity
+## >>chng 13 jun 27, from -7.48 to -9.907, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
+## >>chng 13 nov 19, from -9.907 to -9.227, fix CT bug in mole_eval_balance
+monitor "CO  " 371.549m  -9.227 line intensity
+## >>chng 13 jun 27, from -8.049 to -9.752, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
+## >>chng 13 nov 19, from -9.752 to -9.072, fix CT bug in mole_eval_balance
+monitor "CO  " 325.137m  -9.072 line intensity
+## >>chng 13 jun 27, from -7.522 to -13.29, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
+## >>chng 13 nov 19, from -13.29 to -12.61, fix CT bug in mole_eval_balance
+monitor "^13CO" 906.599m  -12.61 line intensity
+## >>chng 13 jun 27, from -8.247 to -13.34, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
+## >>chng 13 nov 19, from -13.34 to -12.71, fix CT bug in mole_eval_balance
+monitor "CN  " 880.858m  -12.71  line intensity
+#
+# h2_coll_t4.in
+# class coronal  
+# ========================================
+
+this tests conditions of collisional equilibrium at low densities
+
+database h2 included to test results of large model
+Hden is 4 (coll_tx series is 10) to reproduce conditinos for major bug)

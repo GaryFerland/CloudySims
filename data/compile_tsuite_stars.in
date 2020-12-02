@@ -1,0 +1,18 @@
+c uncomment each of the following pairs to create transmitted radiation field
+c needed for the test suite to function properly
+c 
+c table star kurucz 39600
+c save transmitted continuum "star_kurucz_39600.dat"
+c 
+c table star mihalas 46000
+c save transmitted continuum "star_mihalas_46000.dat"
+c 
+table star kurucz 35000
+save transmitted continuum "star_kurucz_35000.dat"
+c 
+set dr -10
+hden -5
+init "honly.ini"
+ionization parameter -2
+stop zone 1
+constant temperature 4

@@ -1,0 +1,141 @@
+title constant pressure cooling cloud
+#
+# commands controlling continuum =========
+coronal 3.4e7 K init time 
+#
+# commands for density & abundances =========
+# want nT = 2e6 K cm-3
+hden 5.88e-2 linear
+constant pressure reset
+# >> chng 20 oct 05, from -6 to -5 for load balancing
+element limit off  -5
+#
+# commands controlling geometry  =========
+set dr 0 
+set nend 1
+stop zone 1
+#
+# other commands for details     =========
+# number of time steps
+iterate 400
+stop time when temperature falls below 1e4 K
+cosmic rays background
+#
+# commands controlling output    =========
+print line faint 2 log
+print line cumulative
+print ages
+set save prefix "time_cool_cp"
+save time dependent ".tim" no hash
+save overview ".ovr" no hash
+save cooling ".col" no hash
+save heating ".het" no hash
+save continuum units Angstroms ".con"
+save cumulative continuum units Angstroms last ".concum"
+save monitors ".asr" last
+#
+# commands giving the asserts    =========
+#
+## >>chng 16 jul 24, from 13.65 to 13.91, update C III to 2014A&A...566A.104F
+## >>chng 16 jul 24, from 13.91 to 13.65, update C III to 2014A&A...566A.104F
+## >>chng 20 oct 13, from 13.65 to 13.68, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe24"      11.1710A   13.68
+## >>chng 20 oct 13, from 14 to 14.04, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe17"      15.0130A   14.04
+## >>chng 20 oct 13, from 13.65 to 13.7, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe17"      17.0960A   13.7
+## >>chng 20 oct 13, from 13.79 to 13.84, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe17"      17.0510A   13.84
+## >>chng 20 oct 13, from 13.17 to 13.2, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "O  6"      1031.91A   13.2
+## >>chng 16 jul 24, from 13.35 to 13.6, update C III to 2014A&A...566A.104F
+## >>chng 16 jul 24, from 13.6 to 13.35, update C III to 2014A&A...566A.104F
+## >>chng 20 oct 13, from 13.35 to 13.38, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe24"      11.4271A   13.38
+## >>chng 16 jul 24, from 13.44 to 13.5, update C III to 2014A&A...566A.104F
+## >>chng 16 jul 24, from 13.5 to 13.44, update C III to 2014A&A...566A.104F
+## >>chng 20 oct 13, from 13.44 to 13.47, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe23"      12.1612A   13.47
+## >>chng 20 oct 13, from 12.59 to 12.62, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe20"      13.0520A   12.62
+## >>chng 20 oct 13, from 13.79 to 13.84, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe17"      17.0510A   13.84
+## >>chng 20 oct 13, from 13.65 to 13.7, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe17"      17.0960A   13.7
+## >>chng 20 oct 13, from 12.05 to 12.1, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe14"      5303.01A   12.1
+## >>chng 20 oct 13, from 11.81 to 11.85, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe13"      1.07462m   11.85
+## >>chng 20 oct 13, from 11.59 to 11.63, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe13"      1.07978m   11.63
+## >>chng 20 oct 13, from 11.34 to 11.38, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe12"      2405.69A   11.38
+## >>chng 20 oct 13, from 11.25 to 11.29, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe12"      2169.09A   11.29
+## >>chng 20 oct 13, from 10.56 to 10.6, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe12"      1349.40A   10.6
+## >>chng 20 oct 13, from 10.79 to 10.83, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe12"      1242.01A   10.83
+## >>chng 20 oct 13, from 11.47 to 11.51, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe11"      2648.71A   11.51
+## >>chng 20 oct 13, from 11.51 to 11.54, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe10"      6374.54A   11.54
+## >>chng 20 oct 13, from 11.11 to 11.15, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Fe 9"      8234.56A   11.15
+## >>chng 16 jul 24, from 14.21 to 14.28, update C III to 2014A&A...566A.104F
+## >>chng 16 jul 24, from 14.28 to 14.21, update C III to 2014A&A...566A.104F
+## >>chng 17 may 25, wl from 18.9732A to 18.9709A, update Rydberg constant
+## >>chng 20 sep 30, wl from 18.9709A to 18.9689A, update H like n=2 energies
+## >>chng 20 oct 13, from 14.21 to 14.24, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "O  8"      18.9689A   14.24
+## >>chng 16 jul 24, from 14.01 to 14.32, update C III to 2014A&A...566A.104F
+## >>chng 16 jul 24, from 14.32 to 14.01, update C III to 2014A&A...566A.104F
+## >>chng 20 oct 13, from 12.25 to 12.31, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "O  7"      16.7725A   12.31
+## >>chng 16 aug 17, from 13.01 to 12.92, bugfix at r11237
+## >>chng 18 feb 01, from 12.92 to 11.81, fix bug in n-changing collisional excitation rates for iso-sequences
+## >>chng 20 oct 13, from 11.81 to 11.84, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "O  7"      18.6270A   11.84
+## >>chng 20 oct 13, from 13.17 to 13.22, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "O  7"      21.6020A   13.22
+## >>chng 20 oct 13, from 12.73 to 12.78, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "O  7"      21.8070A   12.78
+## >>chng 17 feb 25, from 13.25 to 13.27, increase number of collapsed levels
+## >>chng 20 oct 13, from 13.27 to 13.3, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "O  7"      22.1012A   13.3
+## >>chng 20 oct 13, from 12.87 to 12.9, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "O  6"      1037.62A   12.9
+## >>chng 20 oct 13, from 12.09 to 12.12, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "O  5"      1213.81A   12.12
+## >>chng 20 oct 13, from 11.69 to 11.71, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "N  5"      1242.80A   11.71
+## >>chng 20 oct 13, from 11.17 to 11.2, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Si 7"      2146.64A   11.2
+## >>chng 20 oct 13, from 11.04 to 11.07, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Mg 6"      1806.00A   11.07
+## >>chng 20 oct 13, from 11.15 to 11.18, load leveling, small changes due to limits in number of elements
+monitor line luminosity cumulative intrinsic "Mg 6"      1806.43A   11.18
+monitor line luminosity cumulative intrinsic "O  4"      1404.78A   11.7153
+monitor line luminosity cumulative intrinsic "C  4"      1548.19A   12.2393
+## >>chng 16 jul 24, from 11.84 to 11.81, update C III to 2014A&A...566A.104F
+monitor line luminosity cumulative intrinsic "C  3"      1906.68A   11.81
+monitor line luminosity cumulative intrinsic "O  3"      1666.15A   11.7145
+monitor line luminosity cumulative intrinsic "O  3"      5006.84A   12.0517
+## >>chng 16 jul 01, from 11.81 to 11.85, increase iterations, let Te drop to 1e4K
+## >>chng 16 jul 24, from 11.85 to 11.88, update C III to 2014A&A...566A.104F
+## >>chng 16 jul 24, from 11.88 to 11.85, update C III to 2014A&A...566A.104F
+## >>chng 16 aug 17, from 11.85 to 11.76, bugfix at r11237
+## >>chng 16 nov 14, from 11.76 to 11.68, Reintegration of RydDep after several bug fixes
+## >>chng 17 may 26, from 1640.00 to 1640.43 update Rydberg constant
+monitor line luminosity cumulative intrinsic "He 2"      1640.43A   11.68
+## >>chng 16 jul 01, from 11.83 to 12.04, increase iterations, let Te drop to 1e4K
+## >>chng 16 jul 24, from 12.04 to 12.01, update C III to 2014A&A...566A.104F
+## >>chng 16 jul 24, from 12.01 to 12.05, update C III to 2014A&A...566A.104F
+monitor line luminosity cumulative intrinsic "O  2"      3728.81A   12.05
+#
+# time_cool_cp.in 
+# class dynamics 
+# ========================================
+# 
+
+test time dependent cooling at constant pressure

@@ -1,0 +1,3 @@
+title test abortinig on assert
+set assert abort 
+crash assert 

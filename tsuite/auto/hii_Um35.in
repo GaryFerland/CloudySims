@@ -1,0 +1,68 @@
+title H II region sim from Christophe Morriset's ionization paramter family
+set save prefix "hii_Um35"
+Blackbody 56000
+ionisation parameter = -3.5
+hden = 3
+abundances HII region
+cosmic ray background
+element limit off -8
+print line optical depth
+iterate
+#
+# commands giving the monitors    =========
+## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
+monitor line "H  1" 4861.33A luminosity -2.394
+## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
+monitor line "Q(H)" 4861.33A  1.141.
+monitor line "He 1" 5875.64A  0.1253
+monitor line "Ca B" 5875.64A 0.1409
+monitor line "He 1" 3888.63A  0.1174
+## >>chng 17 may 25, wl from 3889.07A to 3889.05A, update Rydberg constant
+monitor line "Ca B" 3889.05A 0.104
+monitor line "he 1" 7065.22A  0.0291
+monitor line "Ca B" 7065.22A 0.027
+monitor line "he 1" 4471.49A  0.0476
+monitor line "Ca B" 4471.49A 0.0485
+## >>chng 19 jul 31, from 0.6032 to 0.4245, fine structure split of He I 2 ^3P from r12872
+## >>chng 20 jan 23, from 0.4245 to 0.3556, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
+monitor line "He 1" 1.08303m 0.3556
+monitor line "blnd" 2326  0.6745 error 0.1
+monitor line "blnd" 1335  0.1026 error 0.1
+monitor line "blnd" 1909  0.1976 error 0.1
+monitor line "N  2"  6583.45  2.617 error 0.1
+monitor line "n  3"  57.3238m  0.051
+monitor line "blnd"  7325  0.1691 error 0.07
+monitor line "blnd"  3727  6.025 0.1
+monitor line "O  3"  51.8004m  0.2023
+monitor line "o  3"  5006.84  0.7574
+monitor line "Ne 2"  12.8101m  0.3388
+monitor line "Ne 3"  15.5509m  0.2273
+monitor line "Ne 3"  36.0036m  0.02
+monitor line "Ne 3" 3868.76A  0.1096 error 0.08
+monitor line "S  3"  18.7078m  0.4219
+monitor line "S  3"   9530.62A  0.7121
+monitor line "S  4"  10.5076m  0.0056
+monitor line "Ar 2" 6.98337m  0.0617
+monitor line "Bac " 3646 15.89
+monitor hydrogen 2 ionization fraction is 0.7029
+monitor helium   2 ionization fraction is 0.7546
+monitor depth 16.6389
+monitor nzone 137
+monitor temperature face 9548
+monitor temperature Oxygen 1 3.905
+monitor temperature Oxygen 2 3.986
+monitor temperature Oxygen 3 3.969
+monitor HHeicf -0.0538 error 0.01
+monitor itrzn 6.946 error 0.05
+#
+save last continuum ".con" units microns
+save last overview ".ovr"
+save last monitors ".asr"
+save performance ".per"
+#
+# hii_Um3.in
+# class hii
+# ===========================
+
+This is one of three tests suggested by Christophe Morisset to span
+the range of ionization parameter on a BPT diagram

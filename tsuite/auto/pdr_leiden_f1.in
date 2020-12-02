@@ -1,0 +1,291 @@
+title Leiden meeting model 1
+# This is one of the tests in Rollig et al. 2007, A&A, 467, 187 
+#
+# commands controlling continuum =========
+# Use the Draine 1978 field, for a semi-infinite slab we have to use half
+# the requested value, so the actual value
+# they want for the model is actually twice the value below
+table draine 5
+extinguish 24
+#
+# commands for density & abundances =========
+#  hydrogen density 
+hden 3.
+grains ism 1.16 no qheat
+#
+# commands controlling geometry  =========
+#
+# other commands for details     =========
+failures 3
+# use leiden initialization file
+init file="pdr_leiden.ini"
+# This command defines the grain temperature to be a constant 20 Kelvin
+constant grain temperature 20 
+# This sets the temperature to a constant 50 Kelvin
+constant temperature 50 linear
+#
+# commands controlling output    =========
+print line optical depths 
+save performance "pdr_leiden_f1.per"
+save overview "pdr_leiden_f1.ovr"
+save continuum "pdr_leiden_f1.con"
+save leiden lines "pdr_leiden_f1.lin"
+save leiden "pdr_leiden_f1.lei"
+save dr "pdr_leiden_f1.dr" 
+save molecules "pdr_leiden_f1.mol"
+save grain physical conditions "pdr_leiden_f1.grn"
+save monitors "pdr_leiden_f1.asr"
+save chemistry rates "pdr_leiden_f1.COr" "CO"
+save chemistry rates "pdr_leiden_f1.H2r" "H2"
+save chemistry rates "pdr_leiden_f1.H2a" "H2" all
+save chemistry rates "pdr_leiden_f1.H2ds" "H2" destruction
+save chemistry rates "pdr_leiden_f1.H2cr" "H2" creation
+save chemistry rates "pdr_leiden_f1.H2ca" "H2" catalytic 
+save secondaries "pdr_leiden_f1.sec"
+save species column densities "pdr_leiden_f1.col" all
+#
+# commands giving the monitors    =========
+## >>chng 13 jul 01, from -1.974 to -7.072, add this monitor
+## >>chng 15 aug 30, from -7.072 to -7.101, update Si II stout to Laha+ 2015
+monitor line luminosity "Si 2" 34.8046m  -7.101
+## >>chng 10 aug 21, from -9.151 to -8.862, add these lines
+## >>chng 11 nov 16, from -8.862 to -8.883, adjust newmole monitors
+## >>chng 12 jun 07, from -8.883 to -8.903, vib_evap fix
+## >>chng 12 jun 07, from -8.903 to -8.869, bugfix, no satur'n in grn_photo
+## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
+## >>chng 15 aug 03, from -8.869 to -8.766, update LAMDA to 2015
+## >>chng 20 aug 03, from -8.766 to -8.699, update H3+ reactions to Indriolo+2012
+## >>chng 20 sep 06, from -8.699 to -8.676, further update to McCall CR-related rates from r14260
+monitor "H2O " 538.142m line intensity -8.676
+## >>chng 10 aug 21, from -9.341 to -7.385, add these lines
+## >>chng 10 dec 19, from -7.385 to -7.357, changes due to LAMDA update in r4457
+## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
+## >>chng 16 mar 21, from -7.357 to -7.312, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
+monitor "HNC " 1652.90m  line intensity -7.312 
+## >>chng 10 aug 21, from -9.86 to -8.428, add these lines
+## >>chng 11 nov 16, from -8.428 to -8.452, adjust newmole monitors
+## >>chng 12 jun 07, from -8.452 to -8.582, vib_evap fix
+## >>chng 12 jul 01, from -8.582 to -8.536, update Badnell DR to 13-electron iso sequence
+## >>chng 12 aug 21, from -8.536 to -8.583, fix CRPHOT botches and HD crash
+## >>chng 13 feb 01, from -8.583 to -8.563, BUGFIX, largely undo r6703
+## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
+## >>chng 16 mar 21, from -8.563 to -8.451, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
+## >>chng 20 aug 03, from -8.451 to -8.388, update H3+ reactions to Indriolo+2012
+## >>chng 20 sep 06, from -8.388 to -8.332, further update to McCall CR-related rates from r14260
+monitor "HCS+" 1755.88m  -8.332 line intensity
+## >>chng 10 aug 21, from -8.288 to -7.402, add these lines
+## >>chng 12 jun 07, from -7.402 to -7.453, vib_evap fix
+## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
+## >>chng 15 aug 03, from -7.453 to -7.424, update LAMDA to 2015
+## >>chng 20 aug 03, from -7.424 to -7.387, update H3+ reactions to Indriolo+2012
+monitor "CS  " 3058.86m  -7.387 line intensity
+## >>chng 10 aug 21, from -8.887 to -7.141, add these lines
+## >>chng 11 nov 16, from -7.141 to -7.191, adjust newmole monitors
+## >>chng 12 jun 07, from -7.191 to -7.288, vib_evap fix
+## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
+## >>chng 16 mar 21, from -7.288 to -7.341, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
+## >>chng 20 aug 03, from -7.341 to -7.416, update H3+ reactions to Indriolo+2012
+monitor "CO  " 2600.05m  -7.416 line intensity
+## >>chng 10 aug 21, from -7.637 to -6.303, add these lines
+## >>chng 11 nov 16, from -6.303 to -6.355, adjust newmole monitors
+## >>chng 12 jun 07, from -6.355 to -6.463, vib_evap fix
+## >>chng 13 jul 24, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
+## >>chng 16 mar 21, from -6.463 to -6.523, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
+## >>chng 20 aug 03, from -6.523 to -6.609, update H3+ reactions to Indriolo+2012
+monitor "CO  " 1300.05m  -6.609 line intensity
+## >>chng 10 aug 21, from -7.173 to -5.946, add these lines
+## >>chng 11 nov 16, from -5.946 to -6.007, adjust newmole monitors
+## >>chng 12 jun 07, from -6.007 to -6.149, vib_evap fix
+## >>chng 13 jul 24, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
+## >>chng 16 mar 21, from -6.149 to -6.23, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
+## >>chng 20 aug 03, from -6.23 to -6.348, update H3+ reactions to Indriolo+2012
+monitor "CO  " 866.727m  -6.348 line intensity
+## >>chng 10 aug 21, from -7.114 to -5.887, add these lines
+## >>chng 11 nov 16, from -5.887 to -5.973, adjust newmole monitors
+## >>chng 12 jun 07, from -5.973 to -6.177, vib_evap fix
+## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
+## >>chng 16 mar 21, from -6.177 to -6.29, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
+## >>chng 20 aug 03, from -6.29 to -6.451, update H3+ reactions to Indriolo+2012
+monitor "CO  " 650.074m  -6.451 line intensity
+## >>chng 10 aug 21, from -7.324 to -6.114, add these lines
+## >>chng 11 nov 16, from -6.114 to -6.224, adjust newmole monitors
+## >>chng 12 jun 07, from -6.224 to -6.485, vib_evap fix
+## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
+## >>chng 16 mar 21, from -6.485 to -6.622, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
+## >>chng 20 aug 03, from -6.622 to -6.808, update H3+ reactions to Indriolo+2012
+monitor "CO  " 520.089m  -6.808 line intensity
+## >>chng 10 aug 21, from -7.731 to -6.56, add these lines
+## >>chng 11 nov 16, from -6.56 to -6.674, adjust newmole monitors
+## >>chng 12 jun 07, from -6.674 to -6.954, vib_evap fix
+## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
+## >>chng 16 mar 21, from -6.954 to -7.095, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
+## >>chng 20 aug 03, from -7.095 to -7.282, update H3+ reactions to Indriolo+2012
+monitor "CO  " 433.438m  -7.282 line intensity
+## >>chng 10 aug 21, from -8.299 to -7.122, add these lines
+## >>chng 10 dec 19, from -7.122 to -7.073, changes due to LAMDA update in r4457
+## >>chng 11 nov 16, from -7.073 to -7.201, adjust newmole monitors
+## >>chng 12 jun 07, from -7.201 to -7.48, vib_evap fix
+## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
+## >>chng 16 mar 21, from -7.48 to -7.618, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
+## >>chng 20 aug 03, from -7.618 to -7.804, update H3+ reactions to Indriolo+2012
+monitor "CO  " 371.549m  -7.804 line intensity
+## >>chng 10 aug 21, from -8.997 to -7.739, add these lines
+## >>chng 10 dec 19, from -7.739 to -7.644, changes due to LAMDA update in r4457
+## >>chng 11 nov 16, from -7.644 to -7.772, adjust newmole monitors
+## >>chng 12 jun 07, from -7.772 to -8.049, vib_evap fix
+## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
+## >>chng 16 mar 21, from -8.049 to -8.189, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
+## >>chng 20 aug 03, from -8.189 to -8.377, update H3+ reactions to Indriolo+2012
+monitor "CO  " 325.137m  -8.377 line intensity
+## >>chng 11 nov 16, from -7.214 to -7.310, adjust newmole monitors
+## >>chng 12 jun 07, from -7.31 to -7.522, vib_evap fix
+## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
+## >>chng 16 mar 21, from -7.522 to -7.632, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
+## >>chng 20 aug 03, from -7.632 to -7.783, update H3+ reactions to Indriolo+2012
+monitor "^13CO" 906.599m  -7.783 line intensity
+## >>chng 10 aug 21, from -9.336 to -8.233, add these lines
+## >>chng 10 dec 19, from -8.233 to -8.071, changes due to LAMDA update in r4457
+## >>chng 12 jun 07, from -8.071 to -8.305, vib_evap fix
+## >>chng 12 jul 01, from -8.305 to -8.273, update Badnell DR to 13-electron iso sequence
+## >>chng 12 aug 24, from -8.273 to -8.247, BUGFIX r6603 DR rates not updated in const temp sim
+## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
+## >>chng 16 mar 21, from -8.247 to -8.13, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
+## >>chng 20 aug 03, from -8.13 to -8.031, update H3+ reactions to Indriolo+2012
+## >>chng 20 sep 06, from -8.031 to -7.997, further update to McCall CR-related rates from r14260
+monitor "CN  " 880.858m  -7.997  line intensity
+# 
+monitor H2 column density 21.904 error 0.1
+## 
+## >>chng 04 oct 19, from 18.02 to 18.06, increse d Mole d Zone
+## >>chng 05 jun 26, from 18.06 to 18.01, include Federman chemistry
+## >>chng 05 jul 02, from 18.01 to 17.93, A_V zoning was not exact
+## >>chng 05 nov 22, from 17.93 to 16.35, NA add freeze out onto grains
+## >>chng 05 dec 17, from 16.35 to 16.54, NA increase C chemistry
+## >>chng 06 jan 04, from 16.54 to 16.65, NA C chem restore missed block reacts
+## >>chng 06 mar 02, from 16.65 to 17.42, NA Fe0, Mg0, <-> Si+, S+, C+ ct,
+## also energy barrier for H + (CH and CH2) reactions
+## >>chng 06 mar 06, from 17.42 to 17.29, PvH grain freeze out
+## >>chng 11 nov 16, from 17.29 to 17.22, adjust newmole monitors
+## >>chng 12 jun 07, from 17.22 to 17.01, vib_evap fix
+## >>chng 16 mar 21, from 17.01 to 16.9, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
+## >>chng 20 aug 03, from 16.9 to 16.75, update H3+ reactions to Indriolo+2012
+monitor CO column density 16.75 error 0.1
+## 
+## >>chng 05 jul 02, from 17.26 to 17.20, A_V zoning was not exact
+## >>chng 05 aug 24, from 17.20 to 16.91, NA update CO cr ion rate
+## >>chng 05 nov 22, from 16.91 to 13.41, NA add freeze out onto grains
+## >>chng 06 mar 06, from 13.41 to 13.20, PvH grain freeze out
+## >>chng 07 jan 07, from 13.20 to 13.15, enable McCall et al. H3+ rate
+## >>chng 11 nov 16, from 13.15 to 13.44, adjust newmole monitors
+## >>chng 12 jun 07, from 13.44 to 13.69, bugfix, no satur'n in grn_photo
+## >>chng 12 aug 21, from 13.69 to 13.63, fix CRPHOT botches and HD crash
+## >>chng 20 aug 03, from 13.63 to 13.76, update H3+ reactions to Indriolo+2012
+## >>chng 20 sep 06, from 13.76 to 13.81, further update to McCall CR-related rates from r14260
+monitor O2 column density 13.81 error 0.1
+## 
+## >>chng 05 jul 02, from 15.37 to 15.32, A_V zoning was not exact
+## >>chng 05 aug 24, from 15.32 to 15.22, NA update CO cr ion rate
+## >>chng 05 nov 22, from 15.22 to 13.77, NA add freeze out onto grains
+## >>chng 06 mar 06, from 13.77 to 13.67, PvH grain freeze out
+## >>chng 07 jan 07, from 13.67 to 13.78, enable McCall et al. H3+ rate
+## >>chng 11 nov 16, from 13.78 to 13.83, adjust newmole monitors
+## >>chng 12 jun 07, from 13.83 to 13.88, bugfix, no satur'n in grn_photo
+## >>chng 12 aug 21, from 13.88 to 13.83, fix CRPHOT botches and HD crash
+## >>chng 20 aug 03, from 13.83 to 13.95, update H3+ reactions to Indriolo+2012
+## >>chng 20 sep 06, from 13.95 to 14.01, further update to McCall CR-related rates from r14260
+monitor OH column density 14.01 error 0.1
+## 
+## >>chng 05 jul 02, from 16.85 to 16.80, A_V zoning was not exact
+## >>chng 05 aug 24, from 16.80 to 16.64, NA update CO cr ion rate
+## >>chng 05 nov 22, from 16.64 to 14.89, NA add freeze out onto grains
+## >>chng 06 jan 04, from 14.89 to 14.93, NA C chem restore missed block reacts
+## >>chng 06 mar 02, from 14.93 to 15.04, NA Fe0, Mg0, <-> Si+, S+, C+ ct,
+## also energy barrier for H + (CH and CH2) reactions
+## >>chng 06 mar 06, from 15.04 to 14.89, PvH grain freeze out
+## >>chng 06 sep 30, from 14.89 to 14.94, rjrw merge chem, corr several bugs
+## >>chng 07 jan 07, from 14.94 to 14.98, enable McCall et al. H3+ rate
+## >>chng 16 mar 21, from 14.98 to 14.93, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
+## >>chng 20 aug 03, from 14.93 to 14.99, update H3+ reactions to Indriolo+2012
+monitor SiO column density 14.99 error 0.1
+## 
+## >>chng 05 sep 30, add these 5
+monitor column density H2+  11.72 error 0.1
+## 
+## >>chng 06 mar 06, from 14.27 to 14.30, PvH grain freeze out
+## >>chng 06 sep 30, from 14.30 to 14.21, rjrw merge chem, corr several bugs
+## >>chng 07 jan 07, from 14.21 to 14.49, enable McCall et al. H3+ rate
+## >>chng 08 feb 20, from 14.49 to 14.54, grain charge transfer changes in ion_solver and iso*
+## >>chng 12 jul 01, from 14.54 to 14.59, update Badnell DR to 13-electron iso sequence
+## >>chng 20 sep 06, from 14.59 to 14.69, further update to McCall CR-related rates from r14260
+monitor column density H3+  14.69 error 0.1
+## 
+monitor column density H2g  21.90 error 0.1
+## 
+## >>chng 05 dec 08, from 14.11 to 14.00, update to Elwert Solomon rate
+monitor column density H2*  14.00 error 0.1
+## 
+## >>chng 05 dec 08, from 8.35 to 8.06, update to Elwert Solomon rate
+## >>chng 12 jul 01, from 8.06 to 8.011, update Badnell DR to 13-electron iso sequence
+monitor column density HeH+ 8.011  error 0.1
+## 
+## >>chng 06 nov 28, add these lines
+## >>chng 06 nov 29, from -4.611 to -4.644, Badnell DR turned on
+## >>chng 13 nov 03, from -4.644 to -4.816, update H2 - C II collision rates
+## >>chng 13 nov 04, wl from 157.6m to 157.636m, update C II wl
+## >>chng 13 dec 23, from -4.816 to -4.682, C to external databases
+monitor line luminosity "C  2" 157.636m -4.682
+## 
+## >>chng 07 jan 07, from -5.060 to -5.084, enable McCall et al. H3+ rate
+## >>chng 12 jun 07, from -5.084 to -5.139, vib_evap fix
+## >>chng 16 mar 21, from -5.139 to -5.103, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
+monitor line luminosity "c  1" 370.269m -5.103
+## 
+## >>chng 07 jan 07, from -5.485 to -5.505, enable McCall et al. H3+ rate
+## >>chng 12 jun 07, from -5.505 to -5.55, vib_evap fix
+## >>chng 13 dec 23, from -5.55 to -5.49, C to external databases
+## >>chng 20 aug 03, from -5.49 to -5.46, update H3+ reactions to Indriolo+2012
+monitor line luminosity "c  1" 609.590m -5.46
+## 
+## >>chng 07 jan 07, from -5.835 to -5.877, enable McCall et al. H3+ rate
+## >>chng 11 nov 16, from -5.877 to -5.782, adjust newmole monitors
+## >>chng 12 jun 07, from -5.782 to -5.749, bugfix, no satur'n in grn_photo
+## >>chng 14 mar 26, from -5.749 to -5.721, Move oxygen data to stout and chianti files
+monitor line luminosity "O  1" 63.1679m -5.721
+## 
+## >>chng 07 jan 07, from -7.331 to -7.376, enable McCall et al. H3+ rate
+## >>chng 11 nov 16, from -7.376 to -7.278, adjust newmole monitors
+## >>chng 12 jun 07, from -7.278 to -7.243, bugfix, no satur'n in grn_photo
+## >>chng 13 jul 24, wl from 145.5m to 145.495m, increased wl precision to 6 sig. fig.
+monitor line luminosity "O  1" 145.495m -7.243
+##
+## >>chng 05 mar 28, from 5 to 3.5 impr mol converg
+## >>chng 08 dec 08, from 3.5 to 2.339, upper limit -> equals (r2515)
+## >>chng 08 dec 13, from 2.339 to 3.937, merging newsolvers branch
+## >>chng 09 jan 08, from 3.937 to 3.866, minor changes in iter/zn, iterations, and zone that crept in over last month
+## >>chng 09 jan 16, from 3.866 to 3.946 (error 0.04), average of 10 runs
+## >>chng 09 feb 23, from 3.946 to 4.134, remove otslin, otscon dampers (PR #84, r2758)
+## >>chng 09 apr 18, from 4.134 to 3.964, refactor evaluation of esc dest probs to occur with cooling
+## >>chng 09 nov 17, from 3.964 to 4.152, N I changes (r3588)
+## >>chng 10 mar 05, from 4.152 to 3.919, changes caused by r3848 atomic data update
+## >>chng 13 nov 05, from 3.919 to 2.41, convergence branch changes
+## >>chng 13 nov 25, from 2.41 to 1.939, convergence branch changes
+monitor itrzn 1.939
+## 
+## >>chng 05 jun 26, turn on elements needed for chem net, 450 to 574
+## >>chng 06 mar 02, from 620 to 660 (636), NA Fe0, Mg0, <-> Si+, S+, C+ ct,
+## also energy barrier for H + (CH and CH2) reactions
+## >>chng 08 dec 08, from 660 to 619, upper limit -> equals (r2515)
+## >>chng 09 jan 16, from 619 to 618, average of 10 runs
+## >>chng 11 nov 16, from 618 to 754, adjust newmole monitors
+monitor nzone 754 
+#
+# pdr_leiden_f1.in
+# class pdr  
+# ========================================
+# 
+
+
+This sim has some interesting properties.  The grain temp is so low that
+O freezes onto grains as H2O.  This is so efficient that CO does not become
+well formed - the CO/C ratio only reaches 0.3.
+This is one of the tests in Rollig et al. 2007, A&A, 467, 187 

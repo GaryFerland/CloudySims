@@ -1,0 +1,4 @@
+title this should crash with Portland Group compiler
+crash bounds static stack
+test
+

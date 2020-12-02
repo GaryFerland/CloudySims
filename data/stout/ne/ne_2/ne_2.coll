@@ -1,0 +1,16 @@
+11 10 14
+TEMP	1.00E+01	4.00E+01	7.00E+01	1.00E+02	1.50E+02	3.00E+02	4.50E+02	6.00E+02	7.50E+02	9.00E+02	1.05E+03	1.20E+03	1.35E+03	1.50E+03	1.65E+03	1.80E+03	1.95E+03	2.00E+03	4.00E+03	1.00E+04	4.00E+04	1.00E+05	4.00E+05
+CSELECTRON	1	2	3.00E-01	3.00E-01	3.00E-01	3.00E-01	3.01E-01	3.01E-01	3.01E-01	3.01E-01	3.02E-01	3.02E-01	3.02E-01	3.02E-01	3.02E-01	3.03E-01	3.03E-01	3.03E-01	3.03E-01	3.04E-01	3.05E-01	3.14E-01	3.50E-01	4.00E-01	4.73E-01
+TEMP	3.00E+01	1.00E+03	2.00E+03	3.00E+03
+RATE H	1	2	1.30E-09	1.30E-09	1.30E-09	1.30E-09
+***********
+#References
+"# Electron CS: Griffin,D.C., Mitnik,D.M. & Badnell, N. R.,2001,JPhB,34,4401"
+"# Atomic Hydrogen Rates: Hollenbach, D. & McKee, C. F. 1989, ApJ, 342, 306"
+# Wang, Q., Loch, S. D., Li, Y., et al. 2017, MNRAS, 
+# http://adsabs.harvard.edu/abs/2001JPhB...34.4401G
+# http://adsabs.harvard.edu/abs/1989ApJ...342..306H
+# http://arxiv.org/abs/1607.03158
+**************
+  
+#Electron CS below 4000K is Wang 2017, 4000 K value smoothed, above 4000K Griffin (PCS change 4/20/17)
