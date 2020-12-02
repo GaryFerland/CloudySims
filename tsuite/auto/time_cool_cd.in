@@ -1,0 +1,99 @@
+title constant density cooling cloud
+#
+# commands controlling continuum =========
+coronal 3.4e7 K init time 
+#
+# commands for density & abundances =========
+# want nT = 2e6 K cm-3
+hden 5.88e-2 linear
+#
+# commands controlling geometry  =========
+set dr 0 
+set nend 1
+stop zone 1
+#
+# other commands for details     =========
+# number of time steps
+iterate 600
+stop time when temperature falls below 0.5 K
+cosmic rays background
+#
+# commands controlling output    =========
+print line faint 2 log
+print line cumulative
+print ages
+set save prefix "time_cool_cd"
+save time dependent ".tim" no hash
+save dt ".dt" no hash
+save overview ".ovr" no hash
+save cooling ".col" no hash
+save heating ".het" no hash
+save continuum units Angstroms ".con"
+save cumulative continuum units Angstroms last ".concum"
+save monitors ".asr" last
+#
+# commands giving the asserts    =========
+monitor line luminosity cumulative intrinsic "Fe24"      11.1710A   13.4384
+monitor line luminosity cumulative intrinsic "Fe17"      15.0130A   13.7835
+monitor line luminosity cumulative intrinsic "Fe17"      17.0960A   13.4339
+monitor line luminosity cumulative intrinsic "Fe17"      17.0510A   13.5768
+monitor line luminosity cumulative intrinsic "O  6"      1031.91A   12.9633
+monitor line luminosity cumulative intrinsic "Fe24"      11.4271A   13.1375
+monitor line luminosity cumulative intrinsic "Fe23"      12.1612A   13.2285
+monitor line luminosity cumulative intrinsic "Fe20"      13.0520A   12.3823
+monitor line luminosity cumulative intrinsic "Fe17"      17.0510A   13.5768
+monitor line luminosity cumulative intrinsic "Fe17"      17.0960A   13.4339
+monitor line luminosity cumulative intrinsic "Fe14"      5303.01A   11.8365
+monitor line luminosity cumulative intrinsic "Fe13"      1.07462m   11.5958
+monitor line luminosity cumulative intrinsic "Fe13"      1.07978m   11.3730
+monitor line luminosity cumulative intrinsic "Fe12"      2405.69A   11.1307
+monitor line luminosity cumulative intrinsic "Fe12"      2169.09A   11.0401
+monitor line luminosity cumulative intrinsic "Fe12"      1349.40A   10.3467
+monitor line luminosity cumulative intrinsic "Fe12"      1242.01A   10.5776
+monitor line luminosity cumulative intrinsic "Fe11"      2648.71A   11.2537
+monitor line luminosity cumulative intrinsic "Fe10"      6374.54A   11.2911
+monitor line luminosity cumulative intrinsic "Fe 9"      8234.56A   10.9000
+## >>chng 17 may 25, wl from 18.9732A to 18.9709A, up Rydberg constant
+## >>chng 19 aug 06, from 14 to 14.02, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
+monitor line luminosity cumulative intrinsic "O  8"      18.9709A   14.02
+monitor line luminosity cumulative intrinsic "O  7"      16.7725A   12.0396
+## >>chng 16 aug 07, from 12.79 to 12.69, Marios bug fixes
+## >>chng 17 sep 01, from 12.69 to 11.59, fix bug in high n collisional excitation rates for He-like iso-sequences
+## >>chng 19 jun 11, from 11.59 to 11.77, Percival and Richards (1978) used for He-like ions
+## >>chng 19 jul 24, from 11.77 to 11.55, fix bug on resolving ions excitation on He like
+## >>chng 19 aug 06, from 11.55 to 11.59, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
+monitor line luminosity cumulative intrinsic "O  7"      18.6270A   11.59
+## >>chng 19 jun 11, from 12.94 to 12.98, Percival and Richards (1978) used for He-like ions
+## >>chng 19 jul 24, from 12.98 to 12.95, fix bug on resolving ions excitation on He like
+monitor line luminosity cumulative intrinsic "O  7"      21.6020A   12.95
+## >>chng 19 jun 11, from 12.51 to 12.54, Percival and Richards (1978) used for He-like ions
+## >>chng 19 jul 24, from 12.54 to 12.51, fix bug on resolving ions excitation on He like
+monitor line luminosity cumulative intrinsic "O  7"      21.8070A   12.51
+## >>chng 17 feb 25, from 13.03 to 13.05, increase number of collapsed levels
+monitor line luminosity cumulative intrinsic "O  7"      22.1012A   13.05
+monitor line luminosity cumulative intrinsic "O  6"      1037.62A   12.6609
+monitor line luminosity cumulative intrinsic "O  5"      1213.81A   11.8703
+monitor line luminosity cumulative intrinsic "N  5"      1242.80A   11.5024
+monitor line luminosity cumulative intrinsic "Si 7"      2146.64A   10.9629
+monitor line luminosity cumulative intrinsic "Mg 6"      1806.00A   10.8444
+monitor line luminosity cumulative intrinsic "Mg 6"      1806.43A   10.9519
+monitor line luminosity cumulative intrinsic "O  4"      1404.78A   11.4948
+monitor line luminosity cumulative intrinsic "C  4"      1548.19A   12.0215
+## >>chng 16 jul 24, from 11.59 to 11.54, update C III to 2014A&A...566A.104F
+monitor line luminosity cumulative intrinsic "C  3"      1906.68A   11.54
+monitor line luminosity cumulative intrinsic "O  3"      1666.15A   11.5033
+monitor line luminosity cumulative intrinsic "O  3"      5006.84A   11.8793
+## >>chng 16 aug 07, from 11.61 to 11.54, Marios bug fixes
+## >>chng 16 nov 14, from 11.54 to 11.45, Reintegration of RydDep after several bug fixes
+## >>chng 19 jun 28, from 11.45 to 11.62, reintegrate iso_collisions branch
+## >>chng 19 aug 06, from 11.62 to 11.65, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
+monitor line luminosity cumulative intrinsic "He 2"      1640.43A   11.65
+## >>chng 16 aug 07, from 11.81 to 11.83, Fran bug fix
+monitor line luminosity cumulative intrinsic "O  2"      3728.81A   11.83
+#
+# time_cool_cd.in 
+# class dynamics 
+# ========================================
+# 
+
+test time dependent cooling at constant density
