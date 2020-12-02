@@ -1,0 +1,87 @@
+title the best we can do to predict the H I emission spectrum 
+#
+set save prefix "limit_caseb_h_den2_temp45"
+# commands controlling continuum =========
+laser 1.4
+ionization -1
+#
+# commands for density & abundances =========
+hden 100 linear 
+set eden 2
+init file "honly.ini"
+#
+# commands controlling geometry  =========
+stop zone 1
+set dr 0
+#
+# other commands for details     =========
+database h-like resolved levels 30
+database h-like collapsed levels 70
+constant temperature 3e4
+case b no photoionzation no pdest 
+no scattering escape
+no induced processes
+iterate
+#
+# commands controlling output    =========
+monitor line case b "H  1"      6562.81A  1.027
+monitor line case b "H  1"      4861.33A  1.0064
+monitor line case b "H  1"      4340.46A  1.021
+monitor line case b "H  1"      4101.73A  0.9992
+monitor line case b "H  1"      3970.07A  0.9989
+monitor line case b "H  1"      3889.05A  0.9987
+monitor line case b "H  1"      3835.38A  0.9987
+monitor line case b "H  1"      3797.89A  0.9983
+monitor line case b "H  1"      3770.63A  0.9982
+monitor line case b "H  1"      3750.15A  0.9982
+monitor line case b "H  1"      3734.36A  0.9976
+monitor line case b "H  1"      3721.93A  0.9976
+monitor line case b "H  1"      3711.97A  0.9973
+monitor line case b "H  1"      3703.85A  0.997
+monitor line case b "H  1"      3697.15A  0.9965
+monitor line case b "H  1"      1.87510m  1.005
+monitor line case b "H  1"      1.28180m  1.011
+monitor line case b "H  1"      1.09380m  0.9983
+monitor line case b "H  1"      1.00493m  0.9983
+monitor line case b "H  1"      9545.93A  0.9983
+monitor line case b "H  1"      9228.97A  0.9984
+monitor line case b "H  1"      9014.87A  0.9984
+monitor line case b "H  1"      8862.74A  0.9982
+monitor line case b "H  1"      8750.43A  0.9982
+monitor line case b "H  1"      4.05113m  0.9946
+monitor line case b "H  1"      2.62513m  0.9945
+monitor line case b "H  1"      2.16551m  0.9964
+monitor line case b "H  1"      1.94454m  0.997
+monitor line case b "H  1"      1.81740m  0.9974
+monitor line case b "H  1"      7.45777m  Elow=105291.6  0.9813
+monitor line case b "H  1"      4.65247m  Elow=105291.6  0.9909
+monitor line case b "H  1"      3.73951m  0.9936
+monitor departure "H[30]"  1.232
+monitor departure "H[70]"  0.714
+monitor departure "H[90]"  0.8669
+monitor departure "H[110]"  0.8306
+monitor departure "H[130]"  0.9167
+monitor departure "H[150]"  0.876
+monitor departure "H[250]"  0.8665
+monitor departure "H[350]"  0.8649
+monitor departure "H[450]"  0.8976
+monitor departure "H[470]"  0.8691
+monitor departure "H[490]"  0.8792
+## >>chng 19 jun 28, from 1.08 to 1.029, reintegrate iso_collisions branch
+## >>chng 19 aug 06, from 1.029 to 0.9543, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
+monitor departure "H[510]"  0.9543
+## >>chng 19 jun 28, from 1.487 to 1.435, reintegrate iso_collisions branch
+## >>chng 19 aug 06, from 1.435 to 1.322, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
+monitor departure "H[520]"  1.322
+## >>chng 19 jun 28, from 2.084 to 2.174, reintegrate iso_collisions branch
+## >>chng 19 aug 06, from 2.174 to 2.305, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
+monitor departure "H[530]"  2.305
+print departure h-like hydrogen
+print line faint 0.01
+print line column
+save overview ".ovr"
+save performance ".per"
+save diffuse continuum ".dif" last no title units microns
+save continuum ".con" last no title units microns
+save monitors ".asr" last 
+#
