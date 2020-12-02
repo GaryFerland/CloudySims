@@ -1,0 +1,134 @@
+title thermal equilibrium of FeII in STE limit
+#
+# commands controlling continuum =========
+black 8000 K lte 
+hden 9
+#
+# commands for density & abundances =========
+element iron abundance 2
+#
+# commands controlling geometry  =========
+set dr 0
+stop zone 1
+#
+# other commands for details     =========
+species "Fe+" levels=all
+iterate
+#
+# commands controlling output    =========
+set save prefix "feii_ste"
+save overview ".ovr"
+save performance ".per"
+save monitors ".asr" last
+save continuum last ".con"
+save species column density last ".col" "Fe+"
+save species densities last ".pop" "Fe+[:]"
+save species departure last ".dep" "Fe+[:]"
+save species levels last ".lev" "Fe+"
+save species continuum ".fe2con" "Fe+" last units microns
+save species bands ".fe2b" "FeII_bands.ini" "Fe+" last
+#
+# commands giving the monitors    =========
+## >>chng 14 jul 08, from 1.01 to 1.964, Move FeII to Stout
+monitor line intensity "Fe 2b" 1148 1.964 error 0.1
+##
+monitor line intensity "Fe 2b" 1212 1.01 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 1.104, Move FeII to Stout
+monitor line intensity "Fe 2b" 1295 1.104 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 1.057, Move FeII to Stout
+monitor line intensity "Fe 2b" 1365 1.057 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 2.991, Move FeII to Stout
+monitor line intensity "Fe 2b" 1485 2.991 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 3.216, Move FeII to Stout
+monitor line intensity "Fe 2b" 1615 3.216 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 2.288, Move FeII to Stout
+monitor line intensity "Fe 2b" 1787 2.288 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 2.269, Move FeII to Stout
+monitor line intensity "Fe 2b" 1822 2.269 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 5.154, Move FeII to Stout
+monitor line intensity "Fe 2b" 2355 5.154 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 4.231, Move FeII to Stout
+monitor line intensity "Fe 2b" 2495 4.231 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 3.612, Move FeII to Stout
+monitor line intensity "Fe 2b" 2695 3.612 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 4.601, Move FeII to Stout
+monitor line intensity "Fe 2b" 2758 4.601 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 2.396, Move FeII to Stout
+monitor line intensity "Fe 2b" 2797 2.396 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 3.313, Move FeII to Stout
+monitor line intensity "Fe 2b" 2935 3.313 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 1.519, Move FeII to Stout
+monitor line intensity "Fe 2b" 4255 1.519 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 1.63, Move FeII to Stout
+monitor line intensity "Fe 2b" 4558 1.63 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to -0.1851, Move FeII to Stout
+monitor line intensity "Fe 2b" 4743 -0.1851 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to -0.5986, Move FeII to Stout
+monitor line intensity "Fe 2b" 4855 -0.5986 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to -0.6129, Move FeII to Stout
+monitor line intensity "Fe 2b" 4971 -0.6129 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 1.758, Move FeII to Stout
+monitor line intensity "Fe 2b" 4975 1.758 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 1.636, Move FeII to Stout
+monitor line intensity "Fe 2b" 5143 1.636 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 1.228, Move FeII to Stout
+monitor line intensity "Fe 2b" 5318 1.228 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to -0.1944, Move FeII to Stout
+monitor line intensity "Fe 2b" 5865 -0.1944 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 0.4159, Move FeII to Stout
+monitor line intensity "Fe 2b" 6265 0.4159 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 0.3387, Move FeII to Stout
+monitor line intensity "Fe 2b" 6565 0.3387 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to 0.2491, Move FeII to Stout
+monitor line intensity "Fe 2b" 7445 0.2491 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to -1.478, Move FeII to Stout
+monitor line intensity "Fe 2b" 7785 -1.478 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to -1.052, Move FeII to Stout
+monitor line intensity "Fe 2b" 1.88900m -1.052 error 0.1
+##
+## >>chng 14 jul 08, from 1.01 to -2.196, Move FeII to Stout
+monitor line intensity "Fe 2b" 2.20000m -2.196 error 0.1
+##
+## >>chng 02 jul 27, increase error from 0.05 to 0.1, As changed,
+## dep coef increased slightly
+monitor "Fe+" departure, value = 1 std 0.10
+##
+monitor temperature "Fe+" 8000 error 0.1
+##
+# feii_ste.in
+# class function 
+# ========================================
+# 
+
+This model has a very high iron abundance, 100x H, and most Fe is
+in the form of Fe+. It is irradiated by a blackbody in strict
+thermodynamic equilibrium.  We check that the temperature
+of the gas is equal to the radiation temperature, to confirm
+that the thermal properties of the model FeII atom obey thermodynamics.
+ 

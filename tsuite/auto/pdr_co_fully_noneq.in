@@ -1,0 +1,201 @@
+title H2 and CO are fully molecular, non-equilibrium case
+# this is a pair with pdr_co_fully.in, which does not include non-equil chem
+#
+# commands controlling continuum =========
+blackbody 5000
+luminosity total solar linear 2
+brems 6
+luminosity total solar log -2.7
+# 
+# commands for density & abundances =========
+# set the density and composition, ism with grains
+hden 10
+abundances ism no qheat
+#
+# other commands for details     =========
+# this is an important ionization source
+cosmic ray background 
+# code will stop at 4000 K by default, lower this temp so we
+# can do fully molecular gas 
+stop temperature 10K linear
+#
+# commands controlling geometry  =========
+# the radius and thickness
+radius 15.8 
+stop thickness 6
+##>>chng 06 jun 02 add turbulence of 3 km/s
+turbulence 3 km / s
+# this turns on non-equilibrium chemistry as suggested by Federman et al. 1996
+set chemistry non equilibrium 
+#
+# commands controlling output    =========
+save performance "pdr_co_fully_noneq.per"
+save overview "pdr_co_fully_noneq.ovr"
+save molecules "pdr_co_fully_noneq.mol"
+save dr "pdr_co_fully_noneq.dr"
+save heating "pdr_co_fully_noneq.het"
+save cooling "pdr_co_fully_noneq.col"
+save grain charge "pdr_co_fully_noneq.grnchr"
+save grain drift "pdr_co_fully_noneq.grndft"
+save grain temperature "pdr_co_fully_noneq.grntem"
+save monitors "pdr_co_fully_noneq.asr"
+#
+# commands giving the monitors    =========
+## >> chng 20 sep 06 change default error to acknowledge stability of ISM chemistry
+monitor set error 0.1
+##
+## >>chng 10 mar 03, from 154 to 36.95, enable all LAMDA and increase max num levels
+## >>chng 10 jun 17, from 36.95 to 34.81, fix botches due to recent dBase cooling changes
+## >>chng 10 aug 25, from 34.81 to 32.58, bugfix r4165 & r4167
+## >>chng 11 nov 16, from 32.58 to 21.09, adjust newmole monitors
+monitor temperature "H" 21.09
+## 
+monitor H2 column density 15.683
+## 
+## >>chng 07 feb 06, bugfix in r828, from 12.13 to 12.06
+## >>chng 08 dec 13, from 12.06 to 11.97, merging newsolvers branch
+## >>chng 10 mar 03, from 11.97 to 12.36, enable all LAMDA and increase max num levels
+## >>chng 11 nov 16, from 12.36 to 12.12, adjust newmole monitors
+monitor CO column density 12.12 error 0.1 
+## 
+## >>chng 10 mar 03, from -7.43 to -7.327, enable all LAMDA and increase max num levels
+## >>chng 11 nov 16, from -7.327 to -7.371, adjust newmole monitors
+monitor ionization helium 2 -7.371 error 0.1
+# 
+# gas has more he++ than He+ due to fast charge transfer with co
+# neutralizing he+ 
+## >>chng 07 dec 19, from -6.70 to -6.66, changes in r1698
+## >>chng 08 feb 20, from -6.66 to <-20, grain charge transfer changes in ion_solver and iso*
+## >>chng 11 nov 16, from -20 to -14, adjust newmole monitors
+monitor ionization helium 3 < -14 error 0.1
+## 
+monitor column density H2+  5.46 error 0.1
+## 
+## >>chng 06 dec 09, from 8.09 to 8.05, drift down as result of newmole merge
+## >>chng 08 dec 13, from 8.05 to 8.006, merging newsolvers branch
+## >>chng 10 mar 03, from 8.006 to 8.313, enable all LAMDA and increase max num levels
+## >>chng 11 nov 16, from 8.313 to 7.986, adjust newmole monitors
+monitor column density H3+  7.986 error 0.1
+## 
+monitor column density H2g  15.70 error 0.1
+## 
+## >>chng 07 feb 06, bugfix in r828, from 10.03 to 9.95
+## >>chng 08 dec 13, from 9.95 to 9.848, merging newsolvers branch
+## >>chng 10 mar 03, from 9.848 to 10.45, enable all LAMDA and increase max num levels
+## >>chng 11 jul 12, from 10.45 to 10.49, update to head of branch, without new coll DR suppression
+## >>chng 11 nov 16, from 10.49 to 9.118, adjust newmole monitors
+monitor column density H2*  9.118 error 0.1
+##
+## >>chng 06 sep 30, from 6.99 to 7.11, rjrw merge chem, corr several bugs
+## >>chng 08 feb 20, from 7.11 to 7.04, grain charge transfer changes in ion_solver and iso*
+## >>chng 10 mar 03, from 7.04 to 7.466, enable all LAMDA and increase max num levels
+## >>chng 11 nov 16, from 7.466 to 7.904, adjust newmole monitors
+monitor column density CN 7.904 error 0.1
+##
+## >>chng 08 feb 20, from 8.02 to 7.97, grain charge transfer changes in ion_solver and iso*
+## >>chng 10 mar 03, from 7.97 to 8.251, enable all LAMDA and increase max num levels
+## >>chng 11 nov 16, from 8.251 to 8.452, adjust newmole monitors
+## >>chng 14 aug 28, from 8.452 to 8.409, EleyRideal H2 formation
+monitor column density CH 8.409 error 0.1
+##
+## >>chng 08 dec 13, from 3.87 to 3.826, merging newsolvers branch
+## >>chng 10 mar 03, from 3.826 to 3.944, enable all LAMDA and increase max num levels
+## >>chng 11 nov 16, from 3.944 to 3.78, adjust newmole monitors
+monitor column density CH+ 3.78 error 0.1
+## 
+## >>chng 08 feb 20, from 3.366 to 3.276, grain charge transfer changes in ion_solver and iso*
+## >>chng 10 mar 03, from 3.276 to 3.454, enable all LAMDA and increase max num levels
+## >>chng 11 nov 16, from 3.454 to 3.403, adjust newmole monitors
+monitor eden 3.403
+## 
+## >>chng 07 feb 06, bugfix in r828, from 9 to 11 (9.03)
+## >>chng 08 dec 08, from 11 to 3.836, upper limit -> equals (r2515)
+## >>chng 08 dec 13, from 3.836 to 16.23, merging newsolvers branch
+## >>chng 09 jan 08, from 16.23 to 17.6, minor changes in iter/zn, iterations, and zone that crept in over last month
+## >>chng 09 jan 16, from 17.6 to 16.12 (error 0.18), average of 10 runs
+## >>chng 09 jun 15, from 16.12 to 13.5, adjust approach to outer edge
+## >>chng 09 jun 26, from 13.5 to 16.06, remove several dampers
+## >>chng 09 nov 09, from 16.06 to 12.88, update several botches after my slew of commits
+## >>chng 10 jan 27, from 12.88 to 15.86, gradual change
+## >>chng 10 feb 14, from 15.86 to 12.91, update O atomic data
+## >>chng 10 mar 02, from 12.91 to 16.08, fix botches after CO model switch
+## >>chng 10 mar 03, from 16.08 to 33.48, enable all LAMDA and increase max num levels
+## >>chng 11 jul 12, from 33.48 to 27.61, enable fit to Badnell DR suppression
+## >>chng 11 aug 05, from 27.61 to 32.55, make PRD redis func for h-like ions; LY_A func is now for H only
+## >>chng 11 nov 16, from 32.55 to 6.222, adjust newmole monitors
+## >>chng 12 may 22, from 6.222 to 7.264, bugfix r6155
+## >>chng 13 nov 05, from 7.264 to 4.278, convergence branch changes
+## >>chng 13 nov 25, from 4.278 to 3.556, convergence branch changes
+monitor itrzn 3.556 error 0.18
+## 
+## >>chng 08 dec 08, from 85 to 73, upper limit -> equals (r2515)
+## >>chng 08 dec 13, from 73 to 69, merging newsolvers branch
+## >>chng 09 jan 08, from 69 to 68, minor changes in iter/zn, iterations, and zone that crept in over last month
+## >>chng 09 jan 16, from 68 to 71.6 (error 0.11), average of 10 runs
+## >>chng 09 jun 15, from 71.6 to 93, gradual approach to outer edge
+## >>chng 10 mar 03, from 93 to 80, enable all LAMDA and increase max num levels
+## >>chng 11 nov 16, from 80 to 72, adjust newmole monitors
+monitor nzone 72 error 0.11
+##
+## >>chng 13 jun 27, from -8.869 to 27.23, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
+## >>chng 15 mar 07, from 27.23 to 27.25, merging newmesh branch
+monitor "H2O " 538.142m line intensity 27.25
+## >>chng 13 jun 27, from -7.357 to 24.81, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
+monitor "HNC " 1652.90m  line intensity 24.81
+## >>chng 13 jun 27, from -8.563 to 20.64, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
+## >>chng 14 aug 28, from 20.64 to 20.62, EleyRideal H2 formation
+monitor "HCS+" 1755.88m  20.62 line intensity
+## >>chng 13 jun 27, from -7.453 to 22.9, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
+monitor "CS  " 3058.86m  22.9 line intensity
+## >>chng 13 jun 27, from -7.288 to 22.02, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
+## >>chng 14 aug 28, from 22.02 to 21.99, EleyRideal H2 formation
+monitor "CO  " 2600.05m  21.99 line intensity
+## >>chng 13 jun 27, from -6.463 to 23.3, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
+## >>chng 14 aug 28, from 23.3 to 23.27, EleyRideal H2 formation
+monitor "CO  " 1300.05m  23.27 line intensity
+## >>chng 13 jun 27, from -6.149 to 23.83, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
+## >>chng 14 aug 28, from 23.83 to 23.8, EleyRideal H2 formation
+monitor "CO  " 866.727m  23.8 line intensity
+## >>chng 13 jun 27, from -6.177 to 24, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
+## >>chng 14 aug 28, from 24 to 23.96, EleyRideal H2 formation
+monitor "CO  " 650.074m  23.96 line intensity
+## >>chng 13 jun 27, from -6.485 to 23.91, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
+## >>chng 14 aug 28, from 23.91 to 23.87, EleyRideal H2 formation
+monitor "CO  " 520.089m  23.87 line intensity
+## >>chng 13 jun 27, from -6.954 to 23.62, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
+## >>chng 14 aug 28, from 23.62 to 23.57, EleyRideal H2 formation
+monitor "CO  " 433.438m  23.57 line intensity
+## >>chng 13 jun 27, from -7.48 to 23.16, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
+## >>chng 14 aug 28, from 23.16 to 23.1, EleyRideal H2 formation
+monitor "CO  " 371.549m  23.1 line intensity
+## >>chng 13 jun 27, from -8.049 to 22.54, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
+## >>chng 14 aug 28, from 22.54 to 22.46, EleyRideal H2 formation
+monitor "CO  " 325.137m  22.46 line intensity
+## >>chng 13 jun 27, from -7.522 to 22.29, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
+## >>chng 14 aug 28, from 22.29 to 22.26, EleyRideal H2 formation
+monitor "^13CO" 906.599m  22.26 line intensity
+## >>chng 13 jun 27, from -8.247 to 21.59, add line intensities of some molecules with strong emissions
+## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
+## >>chng 14 aug 28, from 21.59 to 21.57, EleyRideal H2 formation
+monitor "CN  " 880.858m  21.57  line intensity
+##
+# pdr_co_fully_noneq.in
+# class pdr 
+# ========================================
+
+test code in fully molecular limit with Federman non-equilibrium chem
+this is a pair with pdr_co_fully.in, which does not include non-equil chem
+
