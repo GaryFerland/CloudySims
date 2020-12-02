@@ -1,0 +1,54 @@
+20190102 # magic number
+# Give level energies in cm^-1 for each He-like ion.
+# Each line gives n, l, S, J, energy.
+# The last entry for each ion is the ionization potential.
+# It is marked with negative quantum numbers. The ionization
+# potential MUST be the last entry for a given element!
+# It is used as a sentinel to switch to the next element.
+#
+# If no data exists for a given level, omit it in this table.
+# The value will be filled in using the quantum defect routine.
+#
+# helium
+# These energies from Drake 1996, except these divided by c
+#
+# lithium thru zinc
+# These energies are from CHIANTI 5, up to 5^1P 
+# >>refer He-like	Energies	Landi et al., 2005; ApJSS, in press 
+# >>refer He-like	Energies	Dere, K. P. et al. 1997, 
+# >>refercon	 Astronomy and Astrophysics Suppl. Ser., Vol. 125, pp. 149-173
+#
+# Ionization potentials (in Rydbergs) for each ion in the iso-seq up to Z=30.	
+# These are exactly what you get if you take Verner's numbers in atmdat_ph1(0,1,nelem,0) 
+# and multiply by (0.9998787/EVRYD)*RYD_INF, exactly as is done elsewhere in Cloudy
+#
+ 1  0  1  0 0.00
+ 2  0  3 -1 2411262.00
+ 2  0  1  0 2455024.00
+ 2  1  3  0 2455162.74
+ 2  1  3  1 2455150.23
+ 2  1  3  2 2455286.01
+ 2  1  1  1 2483371.00
+ 3  0  3 -1 2839562.00
+ 3  0  1  0 2851180.00
+ 3  1  3 -1 2851418.00
+ 3  2  3 -1 2857309.67
+ 3  2  1  2 2857529.00
+ 3  1  1  1 2859375.00
+ 4  0  3 -1 2983541.00
+ 4  1  3 -1 2988359.00
+ 4  2  3 -1 2990776.00
+ 4  2  1  2 2990923.00
+ 4  3  3 -1 2990923.40
+ 4  3  1  3 2990923.40
+ 4  1  1  1 2991710.00
+ 5  0  3 -1 3048927.00
+ 5  1  3 -1 3051332.00
+ 5  2  3 -1 3052589.00
+ 5  2  1  2 3052656.00
+ 5  3  3 -1 3052653.30
+ 5  3  1  3 3052653.30
+ 5  4  3 -1 3052659.40
+ 5  4  1  4 3052659.40
+ 5  1  1  1 3053044.00
+-1 -1 -1 -1 3162116.53
