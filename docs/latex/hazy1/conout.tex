@@ -1595,10 +1595,13 @@ the end of each iteration when the
 
 This saves the cooling agents for each zone.  The first number is the
 depth [cm] followed by the temperature [K].  The next two numbers are the
-total heating and cooling rates [erg cm$^{-3}$~s$^{-1}$].  The remaining labels
-indicate contributors to the cooling array and the fraction of the total
-cooling carried by that agent. The faintest coolant saved is normally
-0.05 of the total and can be reset with the \cdCommand{set WeakHeatCool} command.
+total heating and cooling rates [erg cm$^{-3}$~s$^{-1}$], not including
+advective terms; advective cooling is reported separately in the fifth column.
+The remaining labels indicate contributors to the cooling array and the
+fraction of the total cooling (ignoring advective cooling) carried by that agent.
+At least four (4) agents are reported, or more if they are ``bright'' enough.
+The faintest coolant saved is normally 0.05 of the total (sans advective),
+and can be reset with the \cdCommand{set WeakHeatCool} command.
 
 This is mainly used for debugging and its output is not well documented.
 The line labels may, or may not, correspond to labels used in the main
@@ -1936,10 +1939,13 @@ to file a bug report.
 
 The code will save the heating agents for each zone.  The first two columns
 give the depth [cm] and temperature [K].  The next two columns give the
-total heating and cooling rates [erg cm$^{-3} \mathrm{s}^{-1}$].  This is followed by a set
-of labels for various heat sources and the fraction of the total heating
-carried by that agent.  The faintest agent saved is normally 0.05 of the
-total and can be reset with the \cdCommand{set WeakHeatCool} command.
+total heating and cooling rates [erg cm$^{-3}$~s$^{-1}$], not including
+advective terms; advective heating is reported separately in the fifth column.
+This is followed by a set of labels for various heat sources and the fraction
+of the total heating (ignoring advective heating) carried by that agent.
+At least four (4) agents are reported, or more if they are ``bright'' enough.
+The faintest agent saved is normally 0.05 of the total (sans advective), and
+can be reset with the \cdCommand{set WeakHeatCool} command.
 
 The heating labels will probably not correspond to any entries in the
 emission-line list.  If the identification of a heat source is in question

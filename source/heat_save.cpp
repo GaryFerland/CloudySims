@@ -58,6 +58,9 @@ void SaveHeat(FILE* io)
 	{
 		for( long j=0; j < LIMELM; j++ )
 		{
+			/* Skip advective heating */
+			if( i == 1 && j == 5 )
+				continue;
 			if( safe_div( thermal.heating(i,j), heat_total, 0. ) > SMALLFLOAT )
 			{
 				ipsave[ipnt] = i;
@@ -234,7 +237,7 @@ void SaveHeat(FILE* io)
 			/* helium triplet line heating, heating(1,3) */
 			chLabel[k] = "He3l";
 		}
-		else if( i == 1 && j == 5 )
+		else if( false && i == 1 && j == 5 )
 		{
 			/* advective heating, heating(1,5) */
 			chLabel[k] = "adve";
@@ -275,11 +278,12 @@ void SaveHeat(FILE* io)
 	/*>>chng 06 jun 06, change start of save to give same info as cooling 
 	 * as per comment by Yumihiko Tsuzuki */
 	/* begin the print out with zone number, total heating and cooling */
-	fprintf( io, "%.5e\t%.4e\t%.4e\t%.4e", 
+	fprintf( io, "%.5e\t%.4e\t%.4e\t%.4e\t%.4e", 
 		radius.depth_mid_zone, 
 		phycon.te, 
 		heat_total, 
-		cool_total );
+		cool_total,
+		dynamics.Heat() );
 
 	for( long k=0; k < ipnt; k++ )
 	{
