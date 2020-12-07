@@ -10,10 +10,10 @@ static const int CLD_MAJOR = 13;
 static const int CLD_MINOR = 0;
 static const int CLD_PATCH = 0;
 
-#ifdef SVN_REVISION
-static const char* svn_revision = SVN_REVISION;
+#ifdef REVISION
+static const char* revision = REVISION;
 #else
-static const char* svn_revision = "rev_not_set";
+static const char* revision = "rev_not_set";
 #endif
 
 static const char* cUrl = "$HeadURL$";
@@ -43,7 +43,22 @@ t_version::t_version()
 	vector<string> Part;
 	string Url = cUrl;
 	Split( Url, "/", Part, SPM_RELAX );
-	if( Part.size() >= 3 )
+	if( strcmp( revision, "rev_not_set" ) != 0 )
+	{
+		vector<string> Part;
+		string rev = revision;
+		Split( rev, "-", Part, SPM_RELAX );
+		string rev_pr = "";
+		for( size_t i = 0 ; i < Part.size(); i++ )
+		{
+			if( i < Part.size()-1 )
+				rev_pr += Part[i] + ", ";
+			else
+				rev_pr += Part[i];
+		}
+		chVersion = "(" + string( rev_pr ) + ")";
+	}
+	else if( false )
 	{
 		// the last two parts are "source" and "version.cpp $", we don't need them...
 		// the one before is the relevant identifier (e.g. "trunk", "newmole", "c08.01")
@@ -101,7 +116,7 @@ t_version::t_version()
 				lgReleaseTag = true;
 		}
 
-		string pps = ( isdigit(svn_revision[0]) ) ? "r" : "";
+		string pps = ( isdigit(revision[0]) ) ? "r" : "";
 
 		ostringstream oss;
 		if( lgReleaseTag )
@@ -115,10 +130,10 @@ t_version::t_version()
 			oss << Branch.substr(1,5) << " beta " << nBetaVer << " (prerelease)";
 		else if( lgReleaseBranch )
 			// this expects a branch name like "c08_branch"
-			oss << "(" << Branch << ", " << pps << svn_revision << ", prerelease)";
+			oss << "(" << Branch << ", " << pps << revision << ", prerelease)";
 		else
 			// the branch name can be anything except "c??_branch"
-			oss << "(" << Branch << ", " << pps << svn_revision << ", experimental)";
+			oss << "(" << Branch << ", " << pps << revision << ", experimental)";
 		chVersion = oss.str();
 	}
 	else

@@ -154,21 +154,11 @@ CXXFLAGS += -DSYS_CONFIG=\"$(CLDCONFIG)\"
 # this is a collection of compiler flags that enable FPE traps
 TRAP_FPE_FILTER = -fnonstd -ftrap=common -Ktrap=fp
 
-# we dont need the -DSVN_REVISION here, disable FPE traps for unit tests
+# we dont need the -DREVISION here, disable FPE traps for unit tests
 CXXUNITTESTFLAGS := $(filter-out ${TRAP_FPE_FILTER},${CXXFLAGS}) $(NO_TRAP_FLAGS)
 
-SVNVER := ${shell which svnversion 2> /dev/null}
-SED := ${shell which sed 2> /dev/null}
-PERL := ${shell which perl 2> /dev/null}
-REVISION := exported
-ifneq ($(SVNVER),)
-  ifneq ($(SED),)
-# the perl command removes a rogue newline which appear to be present in the Spanish output of svnversion
-# perl is required to compile Cloudy, so there is no need to test if perl is installed
-    REVISION := ${shell $(SVNVER) $(SRCDIR) | $(PERL) -pe 's/\n$$//' | $(SED) 's/ /_/g'}
-  endif
-endif
-CXXFLAGS += -DSVN_REVISION=\"$(REVISION)\"
+REVISION := ${shell ./gitversion.sh }
+CXXFLAGS += -DREVISION=\"$(REVISION)\"
 
 # this is a filter to erase optimization flags from CXXFLAGS
 OPTFILTER = -O -O1 -O2 -O3 -O4 -O5 -Os -xO -xO1 -xO2 -xO3 -xO4 -xO5 /O /O1 /O2 /O3 -fnonstd -fsimple=1 -fast -xvector%
