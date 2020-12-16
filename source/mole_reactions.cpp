@@ -2444,7 +2444,7 @@ STATIC void newreact(const char label[], const char fun[], double a, double b, d
 	mole_reaction_i p = mole_priv::reactab.find(rateLabelPtr);
 	int exists = (p != mole_priv::reactab.end());
 	// do not comment in release or beta version, or if NO TIMES entered
-	if( exists && !t_version::Inst().lgReleaseBranch && !t_version::Inst().lgRelease && prt.lgPrintTime )
+	if( exists && !t_version::Inst().lgRelease && prt.lgPrintTime )
 	{
 		/* Replace old rate */
 		fprintf(ioQQQ,"Attention: duplicate reaction %s -- using new version\n",rateLabelPtr);

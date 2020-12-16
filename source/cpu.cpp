@@ -839,7 +839,7 @@ void check_data( const string& fpath, const string& fname )
 {
 	DEBUG_ENTRY( "check_data()" );
 
-	if( !( t_version::Inst().lgRelease || t_version::Inst().lgReleaseBranch ) || !prt.lgPrintTime )
+	if( !t_version::Inst().lgRelease || !prt.lgPrintTime )
 		return;
 
 	// Checksums do not work on Windows because of the different EOL style

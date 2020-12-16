@@ -652,12 +652,6 @@ void PrtFinal(void)
 		"                       *********************************> Log(U):%6.2f <*********************************\n", 
 	  a );
 
-	if( t_version::Inst().nBetaVer > 0 )
-	{
-		fprintf( ioQQQ, 
-			"\n                        This is a beta test version of the code, and is intended for testing only.\n\n" );
-	}
-
 	if( warnings.lgWarngs )
 	{
 		fprintf( ioQQQ, "  \n" );
