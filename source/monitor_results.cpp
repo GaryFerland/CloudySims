@@ -1947,7 +1947,7 @@ bool lgCheckMonitors(
 		{
 			/* this is the number of zones */
 			PredQuan[i] = (double)nzone;
-			if( t_version::Inst().lgRelease || t_version::Inst().lgReleaseBranch )
+			if( t_version::Inst().lgRelease )
 				RelError[i] = ForcePass(chAssertLimit[i]);
 			else
 			{
@@ -2031,7 +2031,7 @@ bool lgCheckMonitors(
 				/* something big so monitor will botch. */
 				PredQuan[i] = 1e10;
 
-			if( t_version::Inst().lgRelease || t_version::Inst().lgReleaseBranch )
+			if( t_version::Inst().lgRelease )
 				RelError[i] = ForcePass(chAssertLimit[i]);
 			else
 			{
@@ -2144,7 +2144,7 @@ bool lgCheckMonitors(
 		{
 			/* this is the number of iterations */
 			PredQuan[i] = (double)iteration;
-			if( t_version::Inst().lgRelease || t_version::Inst().lgReleaseBranch )
+			if( t_version::Inst().lgRelease )
 				RelError[i] = ForcePass(chAssertLimit[i]);
 			else
 			{

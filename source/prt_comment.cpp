@@ -123,14 +123,6 @@ void PrtComment(void)
 	 */
 	iterations.lgIterAgain = false;
 
-	if( t_version::Inst().nBetaVer > 0 )
-	{
-		sprintf( chLine, 
-			"  !This is beta test version %ld and is intended for testing only.", 
-		  t_version::Inst().nBetaVer );
-		bangin(chLine);
-	}
-
 	vector<module*>& mods=module_list::Inst().m_l;
 	for (vector<module*>::iterator mi = mods.begin(); mi != mods.end(); ++mi)
 	{
@@ -422,7 +414,7 @@ void PrtComment(void)
 	}
 
 	/* PrtComment if test code is in place */
-	if( lgTestCodeCalled && !t_version::Inst().lgReleaseBranch  && !t_version::Inst().lgRelease )
+	if( lgTestCodeCalled && !t_version::Inst().lgRelease )
 	{
 		sprintf( chLine, "  !Test code is in place." );
 		bangin(chLine);
