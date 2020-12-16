@@ -157,7 +157,11 @@ TRAP_FPE_FILTER = -fnonstd -ftrap=common -Ktrap=fp
 # we dont need the -DREVISION here, disable FPE traps for unit tests
 CXXUNITTESTFLAGS := $(filter-out ${TRAP_FPE_FILTER},${CXXFLAGS}) $(NO_TRAP_FLAGS)
 
-REVISION := ${shell ./gitversion.sh }
+ifeq (, $(wildcard ./gitversion.sh ) )
+	REVISION := ${shell ./gitversion.sh }
+else
+	REVISION := ${shell ../gitversion.sh }
+endif
 CXXFLAGS += -DREVISION=\"$(REVISION)\"
 
 # this is a filter to erase optimization flags from CXXFLAGS

@@ -14,10 +14,10 @@
 # Comment: Added support for git tags.
 #
 
-branch=`git branch | grep '^\*' | gawk  -e '{ print $2 }'`
+branch=`git branch | grep '^\*' | awk '{ print $2 }'`
 tag=`git describe --tags --abbrev=0 2> /dev/null`
 if [ -z "$tag" ]; then
-	tag=`git log --oneline | head -n 1 | gawk -e '{print $1}'`
+	tag=`git log --oneline | head -n 1 | awk '{print $1}'`
 fi
 [[ -z "`git status -s -uno`" ]] && modified="" || modified="-modified"
 echo $branch-$tag$modified

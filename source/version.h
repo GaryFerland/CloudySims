@@ -18,12 +18,6 @@ public:
 	/** version string of this version of the code */
 	string chVersion;
 
-	/** normally zero, non-zero if this is a beta test version */
-	long int nBetaVer;
-
-	/** is this a release branch?  if so do not execute performance monitors */
-	bool lgReleaseBranch;
-
 	/** is this a release version?  if so do not print some internal comments */
 	bool lgRelease;
 

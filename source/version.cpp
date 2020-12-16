@@ -35,7 +35,7 @@ t_version::t_version()
 
 		if( Part[ 0 ] == release_branch )
 		{
-			lgRelease = lgReleaseBranch = true;
+			lgRelease = true;
 			Part.erase( Part.begin() );
 		}
 
@@ -53,14 +53,7 @@ t_version::t_version()
 	{
 		// create a default version string in case the code is not versioned with git
 
-		/* is this a release branch? */
-		lgReleaseBranch = false;
-		/* is this a release version? */
-		lgRelease = false;
-
-		/* is this a beta version?  0 for no
-		 * if this is non-zero then lgRelease above should be false */
-		nBetaVer = 0;
+		lgRelease = true;
 
 		ostringstream oss;
 		if( lgRelease )
@@ -68,11 +61,6 @@ t_version::t_version()
 			oss << setfill('0') << setw(2) << CLD_MAJOR << "." << setw(2) << CLD_MINOR;
 			if( CLD_PATCH > 0 )
 				oss << " (patch level " << CLD_PATCH << ")";
-		}
-		else if( nBetaVer > 0 )
-		{
-			oss << setfill('0') << setw(2) << CLD_MAJOR << "." << setw(2) << CLD_MINOR;
-			oss << " beta " << nBetaVer << " (prerelease)";
 		}
 		else
 		{

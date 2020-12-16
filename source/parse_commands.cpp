@@ -142,15 +142,6 @@ void ParseCommands(void)
 		fprintf( ioQQQ,"<pre>\n");
 	}
 
-	/* say this is a beta version if we are talking and it is the truth */
-	if( t_version::Inst().nBetaVer > 0 && called.lgTalk )
-	{
-		fprintf( ioQQQ, 
-			 "\n                               This is a beta release of Cloudy, and is intended for testing only.\n" );
-		fprintf( ioQQQ,
-			 "Please help make Cloudy better by posing problems or suggestions on cloudyastrophysics.groups.io.\n\n" );
-	}
-
 	if( called.lgTalk )
 	{
 		/* this code prints pretty lines at top of output box */
