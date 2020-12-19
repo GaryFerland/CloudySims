@@ -157,10 +157,10 @@ TRAP_FPE_FILTER = -fnonstd -ftrap=common -Ktrap=fp
 # we dont need the -DREVISION here, disable FPE traps for unit tests
 CXXUNITTESTFLAGS := $(filter-out ${TRAP_FPE_FILTER},${CXXFLAGS}) $(NO_TRAP_FLAGS)
 
-ifeq (, $(wildcard ./gitversion.sh ) )
-	REVISION := ${shell ./gitversion.sh }
+ifneq ($(wildcard ./gitversion.sh),)
+  REVISION := ${shell ./gitversion.sh }
 else
-	REVISION := ${shell ../gitversion.sh }
+  REVISION := ${shell ../gitversion.sh }
 endif
 CXXFLAGS += -DREVISION=\"$(REVISION)\"
 
