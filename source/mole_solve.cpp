@@ -359,9 +359,7 @@ STATIC void funjac(GroupMap &MoleMap, const valarray<double> &b2vec, double * co
 
 	MoleMap.updateMolecules( b2vec );		
 		
-	if( iteration >= dynamics.n_initial_relax+1 &&
-		( dynamics.lgAdvection || dynamics.lgTimeDependentStatic ) && 
-		!dynamics.lgEquilibrium && dynamics.Rate != 0.0 )
+	if( dynamics.doNonEquilibriumSolve( iteration ) )
 	{
 		ASSERT(dynamics.Rate > 0.0);
 		*lgConserve = false; 
@@ -750,9 +748,7 @@ STATIC void mole_eval_dynamic_balance(long int num_total, double *b, bool lgJac,
 	mole_eval_balance(num_total, b, lgJac, c);
 
 	/* >>chng 06 mar 17, comment out test on old full depth - keep old solution if overrun scale */
-	if( iteration >= dynamics.n_initial_relax+1 &&
-		( dynamics.lgAdvection || dynamics.lgTimeDependentStatic ) &&
-		!dynamics.lgEquilibrium && dynamics.Rate != 0.0 )
+	if( dynamics.doNonEquilibriumSolve( iteration ) )
 	{
 		/* Don't use conservation form in matrix solution -- dynamics rate terms make c[][] non-singular */		
 

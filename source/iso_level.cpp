@@ -352,10 +352,7 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 #if	1
 		/* >>chng 02 Sep 06 rjrw -- all elements have these terms */
 		/*>>>chng 02 oct 01, only include if lgAdvection or lgTimeDependentStatic is set */
-		if( iteration > dynamics.n_initial_relax+1 &&
-			( dynamics.lgAdvection || dynamics.lgTimeDependentStatic ) &&
-			dynamics.Rate != 0.0 &&
-			!dynamics.lgEquilibrium && dynamics.lgISO[ipISO] )
+		if( dynamics.doNonEquilibriumSolve( iteration ) && dynamics.lgISO[ipISO] )
 		{
 			/* add in advection - these terms normally zero */
 			source += dynamics.Source[nelem][nelem-ipISO];
@@ -364,10 +361,7 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 		}
 #else
 		/*>>>chng 02 oct 01, only include if lgAdvection or lgTimeDependentStatic is set */
-		if( iteration > dynamics.n_initial_relax+1 &&
-			( dynamics.lgAdvection || dynamics.lgTimeDependentStatic ) &&
-			dynamics.Rate != 0.0 &&
-			!dynamics.lgEquilibrium && dynamics.lgISO[ipISO])
+		if( dynamics.doNonEquilibriumSolve( iteration ) && dynamics.lgISO[ipISO] )
 		{
 			for( level=0; level < numlevels_local; level++ )
 			{

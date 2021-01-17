@@ -45,6 +45,22 @@ static const bool lgPrintDynamics = false;
 t_dynamics dynamics;
 static int ipUpstream=-1,iphUpstream=-1,ipyUpstream=-1;
 
+bool t_dynamics::doNonEquilibriumSolve( long int iteration )
+{
+	DEBUG_ENTRY( "t_dynamics::doNonEquilibriumSolve()" );
+
+	if( iteration > n_initial_relax &&
+		( lgAdvection || lgTimeDependentStatic ) &&
+		Rate != 0.0 && !lgEquilibrium )
+	{
+		ASSERT(Rate > 0.0);
+		return true;
+	}
+
+	return false;
+}
+
+
 /* 
  * >>chng 01 mar 16, incorporate advection within dynamical solutions
  * this file contains the routines that incorporate effects of dynamics and advection upon the
