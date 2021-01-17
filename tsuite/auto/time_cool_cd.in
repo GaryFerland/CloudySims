@@ -15,7 +15,7 @@ stop zone 1
 # other commands for details     =========
 # number of time steps
 iterate 600
-stop time when temperature falls below 0.5 K
+stop time when temperature falls below 1e4 K
 cosmic rays background
 #
 # commands controlling output    =========

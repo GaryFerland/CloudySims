@@ -22,7 +22,6 @@ cosmic rays background
 ## >>chng 17 may 25, wl from 18.9732A to 18.9709A, up Rydberg constant
 normalize to "O  8" 18.9709A
 print line faint -3 log
-print line cumulative
 print ages
 set cumulative off
 set save prefix "time_cool_cd_noaccu"
