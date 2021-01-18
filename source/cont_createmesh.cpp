@@ -228,24 +228,13 @@ STATIC void rfield_opac_alloc()
 	rfield.ipnt_coarse_2_fine.resize(rfield.nflux_with_check);
 
 	/* possibly save cumulative flux */
-	for( i=0; i < 2; ++i )
-	{
-		rfield.flux[i].resize(rfield.nflux_with_check);
-		rfield.ConEmitReflec[i].resize(rfield.nflux_with_check);
-		rfield.ConEmitOut[i].resize(rfield.nflux_with_check);
-		rfield.ConRefIncid[i].resize(rfield.nflux_with_check);
-		rfield.flux_total_incident[i].resize(rfield.nflux_with_check);
-		rfield.reflin[i].resize(rfield.nflux_with_check);
-		rfield.outlin[i].resize(rfield.nflux_with_check);
-	}
-	// the cumulative (time integral) emission
-	vzero(rfield.flux[1]);
-	vzero(rfield.ConEmitReflec[1]);
-	vzero(rfield.ConEmitOut[1]);
-	vzero(rfield.ConRefIncid[1]);
-	vzero(rfield.flux_total_incident[1]);
-	vzero(rfield.reflin[1]);
-	vzero(rfield.outlin[1]);
+	rfield.flux.resize( rfield.nflux_with_check );
+	rfield.ConEmitReflec.resize( rfield.nflux_with_check );
+	rfield.ConEmitOut.resize( rfield.nflux_with_check );
+	rfield.ConRefIncid.resize( rfield.nflux_with_check );
+	rfield.flux_total_incident.resize( rfield.nflux_with_check );
+	rfield.reflin.resize( rfield.nflux_with_check );
+	rfield.outlin.resize( rfield.nflux_with_check );
 
 	rfield.csigh.resize(rfield.nflux_with_check);
 	rfield.csigc.resize(rfield.nflux_with_check);

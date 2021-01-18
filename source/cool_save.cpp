@@ -61,22 +61,28 @@ void CoolSave(FILE * io, const char chJob[])
 	cset = cool_total*save.WeakHeatCool;
 
 	/* first find all strong lines, both + and - sign */
-	ip = thermal.ncltot;
-
-	for( i=0; i < ip; i++ )
+	for( i=0, ip=0; i < thermal.ncltot; i++ )
 	{
-		csav[i] = (realnum)( safe_div( MAX2(thermal.cooling[i],thermal.heatnt[i]), cool_total, 0. ));
+		/* NB NB exclude advective cooling from sorting */
+		if( strncmp( thermal.chClntLab[i], "adve", 4 ) == 0 )
+			continue;
+
+		csav[ip] = (realnum)( safe_div( MAX2(thermal.cooling[i],thermal.heatnt[i]), cool_total, 0. ));
 
 		/* save sign to remember if heating or cooling line */
 		if( thermal.heatnt[i] == 0. )
 		{
-			sgnsav[i] = 1.;
+			sgnsav[ip] = 1.;
 		}
 		else
 		{
-			sgnsav[i] = -1.;
+			sgnsav[ip] = -1.;
 		}
+
+		ip += 1;
 	}
+
+	ASSERT( ip == thermal.ncltot-1 );
 
 	/* order strongest to weakest */
 	/* now sort by decreasing importance */
@@ -242,11 +248,12 @@ void CoolSave(FILE * io, const char chJob[])
 		/*>>chng 06 jun 06, change start of save to give same info as heating 
 		 * as per comment by Yumihiko Tsuzuki */
 		/* begin the print out with zone number, total heating and cooling */
-		fprintf( io, "%.5e\t%.4e\t%.4e\t%.4e", 
+		fprintf( io, "%.5e\t%.4e\t%.4e\t%.4e\t%.4e", 
 				 radius.depth_mid_zone, 
 				 phycon.te, 
 				 heat_total, 
-				 cool_total );
+				 cool_total,
+		      		 dynamics.Cool() );
 
 		/* now print the coolants 
 		 * keep sign of coolant, for strong negative cooling 
@@ -267,4 +274,3 @@ void CoolSave(FILE * io, const char chJob[])
 
 	return;
 }
-

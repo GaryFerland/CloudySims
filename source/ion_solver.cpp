@@ -809,8 +809,7 @@ STATIC void HomogeneousSource( long nelem, long ion_low, long ion_range, valarra
 	fixit("dynamics rates need to be moved into fill_array?");
 	/* chng 03 jan 13 rjrw, add in dynamics if required here,
 	 * - only do advection if we have not overrun the radius scale */
-	if( iteration > dynamics.n_initial_relax+1 && ( dynamics.lgAdvection || dynamics.lgTimeDependentStatic )
-		&& !dynamics.lgEquilibrium && dynamics.Rate != 0. )
+	if( dynamics.doNonEquilibriumSolve( iteration ) )
 	{
 		for( long i=0; i<ion_range;i++ )
 		{			 

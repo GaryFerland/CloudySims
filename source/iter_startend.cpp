@@ -1114,8 +1114,7 @@ void IterEnd(void)
 
 		if (strncmp(rfield.chCumuType,"MASS", sizeof(rfield.chCumuType)) == 0)
 		{
-			cumulative_factor = (dynamics.timestep/
-										colden.TotMassColl);
+			cumulative_factor = (dynamics.timestep/ colden.TotMassColl);
 		}
 		else if (strncmp(rfield.chCumuType,"FLUX", sizeof(rfield.chCumuType)) == 0)
 		{
@@ -1133,18 +1132,15 @@ void IterEnd(void)
 		{
 			LineSave.lines[n].SumLineAccum(cumulative_factor);
 		}
+
 		// save cumulative continua
-		for( long n=0; n<rfield.nflux; ++n)
-		{
-			
-			rfield.flux[1][n] += (realnum) rfield.flux[0][n]*cumulative_factor;
-			rfield.ConEmitReflec[1][n] += (realnum) rfield.ConEmitReflec[0][n]*cumulative_factor;
-			rfield.ConEmitOut[1][n] += (realnum) rfield.ConEmitOut[0][n]*cumulative_factor;
-			rfield.ConRefIncid[1][n] += (realnum) rfield.ConRefIncid[0][n]*cumulative_factor;
-			rfield.flux_total_incident[1][n] += (realnum) rfield.flux_total_incident[0][n]*cumulative_factor;
-			rfield.reflin[1][n] += (realnum) rfield.reflin[0][n]*cumulative_factor;
-			rfield.outlin[1][n] += (realnum) rfield.outlin[0][n]*cumulative_factor;
-		}
+		rfield.flux.accumulate_flux( cumulative_factor, dynamics.timestep, dynamics.time_elapsed );
+		rfield.ConEmitReflec.accumulate_flux( cumulative_factor, dynamics.timestep, dynamics.time_elapsed );
+		rfield.ConEmitOut.accumulate_flux( cumulative_factor, dynamics.timestep, dynamics.time_elapsed );
+		rfield.ConRefIncid.accumulate_flux( cumulative_factor, dynamics.timestep, dynamics.time_elapsed );
+		rfield.flux_total_incident.accumulate_flux( cumulative_factor, dynamics.timestep, dynamics.time_elapsed );
+		rfield.reflin.accumulate_flux( cumulative_factor, dynamics.timestep, dynamics.time_elapsed );
+		rfield.outlin.accumulate_flux( cumulative_factor, dynamics.timestep, dynamics.time_elapsed );
 	}
 	
 	

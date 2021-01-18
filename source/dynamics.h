@@ -62,6 +62,8 @@ struct t_dynamics : public module
 	}
 	void zero();
 	void comment(t_warnings&) {}
+	bool doNonEquilibriumSolve( long int iteration );
+
 
 	/** is advection turned on ?, set to false in zero */
 	bool lgAdvection;
@@ -189,8 +191,6 @@ struct t_dynamics : public module
 		 timestep,
 		 timestep_stop,
 		 timestep_factor;
-
-
 };
 extern t_dynamics dynamics;
 

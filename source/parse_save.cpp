@@ -572,7 +572,7 @@ void ParseSave(Parser& p)
 			strcpy( save.chSave[save.nsave], "COOL");
 			/*>>chng 06 jun 06, revise to be same as save cooling */
 			sncatf( chHeader,
-					 "#depth cm\tTemp K\tHtot erg/cm3/s\tCtot erg/cm3/s\tcool fracs\n" );
+					 "#depth cm\tTemp K\tHtot erg/cm3/s\tCtot erg/cm3/s\tAdve Ctot erg/cm3/s\tcool fracs\n" );
 		}
 	}
 
@@ -976,6 +976,12 @@ void ParseSave(Parser& p)
 		(void)0;
 	}
 
+        else if( p.nMatch(" DT ") )
+	{
+		// this is a special save option handled below
+		(void)0;
+	}
+
 	else if( p.nMatch("ELEM") && !p.nMatch("GAMMA") && !p.nMatch("COOL") ) // do not trip on SAVE COOLING EACH ELEMENT
 	{
 		/* option to save ionization structure of some element
@@ -1238,7 +1244,7 @@ void ParseSave(Parser& p)
 		strcpy( save.chSave[save.nsave], "HEAT" );
 		/*>>chng 06 jun 06, revise to be same as save cooling */
 		sncatf( chHeader, 
-			"#depth cm\tTemp K\tHtot erg/cm3/s\tCtot erg/cm3/s\theat fracs\n" );
+			"#depth cm\tTemp K\tHtot erg/cm3/s\tCtot erg/cm3/s\tAdve Htot erg/cm3/s\theat fracs\n" );
 	}
 
 	else if( p.nMatch("HELI") &&!( p.nMatch("IONI")))
@@ -2483,6 +2489,22 @@ void ParseSave(Parser& p)
 		save.lgRealSave[save.nsave] = false;
 	}
 
+	else if( p.nMatch(" DT ") )
+	{
+		/* the second save dt occurrence - file has been opened,
+		 * copy handle to ipDTout, also pass on special no hash option */
+		save.lgDTOn = true;
+		save.lgDTHash = save.lgHashEndIter[save.nsave];
+		save.ipDTout = save.params[save.nsave].ipPnunit;
+		/* set save last flag to whatever it was above */
+		save.lgDTPLst = save.lgPunLstIter[save.nsave];
+		save.lgDTOn_noclobber = save.lgNoClobber[save.nsave];
+		sncatf( chHeader,
+			"#time\tTe\ttimestep\tfactor\treason\n" );
+		strcpy( save.chSave[save.nsave], "" );
+		save.lgRealSave[save.nsave] = false;
+	}
+
 	else if( p.nMatch("SPECIES") && p.nMatch("DATA") && p.nMatch("SOURCE") )
 	{
 		/* save database sources
@@ -2597,6 +2619,7 @@ void SaveFilesInit()
 	}
 	save.lgPunConv_noclobber = lgNoClobberDefault;
 	save.lgDROn_noclobber = lgNoClobberDefault;
+	save.lgDTOn_noclobber = lgNoClobberDefault;
 	save.lgTraceConvergeBase_noclobber = lgNoClobberDefault;
 	save.lgPunPoint_noclobber = lgNoClobberDefault;
 	save.lgioRecom_noclobber = lgNoClobberDefault;
@@ -2616,6 +2639,9 @@ void SaveFilesInit()
 
 	save.ipDRout = NULL;
 	save.lgDROn = false;
+
+	save.ipDTout = NULL;
+	save.lgDTOn = false;
 
 	save.ipTraceConvergeBase = NULL;
 	save.lgTraceConvergeBase = false;
@@ -2679,6 +2705,13 @@ void CloseSaveFiles( bool lgFinal )
 	{
 		save.ipDRout = NULL;
 		save.lgDROn = false;
+	}
+
+	/* following file handles are aliased to ipPnunit which was already closed above */
+	if( save.ipDTout != NULL && ( !save.lgDTOn_noclobber || lgFinal ) )
+	{
+		save.ipDTout = NULL;
+		save.lgDTOn = false;
 	}
 
 	if( save.ipTraceConvergeBase != NULL && ( !save.lgTraceConvergeBase_noclobber || lgFinal ) )

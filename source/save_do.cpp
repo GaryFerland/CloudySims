@@ -101,7 +101,7 @@ inline double flxCell(long j, long nEmType, cont_type ct, bool lgForceConserve =
 	switch( ct )
 	{
 	case CT_INCI:
-		val = double(rfield.flux_total_incident[nEmType][j])*factor*radius.PI4_rinner_sq;
+		val = rfield.flux_total_incident.get_flux(nEmType, j) * factor*radius.PI4_rinner_sq;
 		break;
 	case CT_OUTW_INCI:
 		ASSERT( trans_coef_total != NULL );
@@ -112,19 +112,20 @@ inline double flxCell(long j, long nEmType, cont_type ct, bool lgForceConserve =
 			val *= PrettyTransmission( j, double(trans_coef_total[j]) );
 		break;
 	case CT_REFL_INCI:
-		val = double(rfield.ConRefIncid[nEmType][j]*geometry.covgeo)*factor*radius.PI4_rinner_sq;
+		val = rfield.ConRefIncid.get_flux(nEmType, j) * double(geometry.covgeo) *
+			factor*radius.PI4_rinner_sq;
 		break;
 	case CT_OUTW_DIFF:
-		val = double(rfield.ConEmitOut[nEmType][j]*geometry.covgeo)*factor*radius.PI4_Radius_sq;
+		val = rfield.ConEmitOut.get_flux(nEmType, j) * double(geometry.covgeo) * factor*radius.PI4_Radius_sq;
 		break;
 	case CT_REFL_DIFF:
-		val = double(rfield.ConEmitReflec[nEmType][j]*geometry.covgeo)*factor*radius.PI4_rinner_sq;
+		val = rfield.ConEmitReflec.get_flux(nEmType, j) * double(geometry.covgeo) * factor*radius.PI4_rinner_sq;
 		break;
 	case CT_OUTW_LIN:
-		val = double(rfield.outlin[nEmType][j]*geometry.covgeo)*resfactor*radius.PI4_Radius_sq;
+		val = rfield.outlin.get_flux(nEmType, j) * double(geometry.covgeo) * resfactor*radius.PI4_Radius_sq;
 		break;
 	case CT_REFL_LIN:
-		val = double(rfield.reflin[nEmType][j]*geometry.covgeo)*resfactor*radius.PI4_rinner_sq;
+		val = rfield.reflin.get_flux(nEmType, j) * double(geometry.covgeo) * resfactor*radius.PI4_rinner_sq;
 		break;
 	case CT_GRN_SIL:
 		val = double(gv.SilicateEmission[j]*geometry.covgeo)*factor*radius.PI4_Radius_sq;

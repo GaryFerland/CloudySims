@@ -24,6 +24,7 @@ print line cumulative
 print ages
 set save prefix "time_cool_cd"
 save time dependent ".tim" no hash
+save dt ".dt" no hash
 save overview ".ovr" no hash
 save cooling ".col" no hash
 save heating ".het" no hash

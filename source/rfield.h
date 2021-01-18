@@ -31,6 +31,122 @@ namespace Illuminate {
 	typedef enum { FORWARD , REVERSE , ISOTROPIC } IlluminationType ;
 }
 
+namespace Accumulate {
+	typedef enum { INSTANTANEOUS = 0, CUMULATIVE = 1 } AccumulationType;
+}
+
+
+class Spectrum
+{
+private:
+	/**
+	 * flux[0] holds the steady-state continuum flux emitted by a cloud;
+	 * 	   in a dynamical run, this should be understood as the
+	 * 	   instantaneous continuum of the cloud
+	 * flux[1] holds the total flux accumulated over a dynamical run;
+	 * 	   the cumulative continuum may easily overflow single-precision
+	 * 	   storage; for this reason, the total flux is scaled by the
+	 * 	   normalization factor below;
+	 * 	   in a steady-state run it is all zero
+	 */
+	vector<realnum> flux[2];
+
+	/** cumulative spectrum normalization factor */
+	double norm;
+
+	/** time-averaged flux */
+	double time_avg_flux;
+
+	/** vector lengths */
+	long int nflux;
+
+
+public:
+	// constructor
+	Spectrum()
+	{
+		norm = 1.;
+		time_avg_flux = 0.;
+	}
+
+	void resize( long int nbins );
+
+	void accumulate_flux( const double this_cumulfac, double timestep, double total_time )
+	{
+		DEBUG_ENTRY( "accumulate_flux()" );
+
+		vector<realnum> &flux_inst = flux[0];
+		vector<realnum> &flux_cumul = flux[1];
+
+		double mean = flux_cumul[ 0 ] * norm + flux_inst[ 0 ] * this_cumulfac;
+	
+		for( long ip = 1; ip < nflux; ip++ )
+		{
+			/* >>refer	running mean	Welford, 1962, Technometrics, 4-419 */
+			double tmp_fl = flux_cumul[ ip ] * norm +
+					flux_inst[ ip ] * this_cumulfac;
+			mean += (tmp_fl - mean) / double( ip+1 );
+		}
+	
+		if( fp_equal( mean, 0. ) )
+		       return;
+	
+		double mean_inv = 1. / mean;
+	
+		for( long ip = 0; ip < nflux; ip++ )
+		{
+			double flux = flux_cumul[ ip ] * norm +
+					flux_inst[ ip ] * this_cumulfac;
+			flux_cumul[ ip ] = realnum( flux * mean_inv );
+		}
+	
+		norm = mean;
+
+		if( fp_equal( time_avg_flux, 0.0 ) )
+		{
+			time_avg_flux = mean;
+		}
+		else
+		{
+			time_avg_flux += ( mean - time_avg_flux ) *
+					timestep / ( timestep + total_time );
+		}
+	
+		return;
+	}
+
+	double get_flux( long int accType, long int ip ) const
+	{
+		DEBUG_ENTRY( "get_flux" );
+
+		ASSERT( accType == Accumulate::AccumulationType::INSTANTANEOUS ||
+			accType == Accumulate::AccumulationType::CUMULATIVE );
+
+		ASSERT( ip >= 0 && ip < nflux );
+
+		if( accType == Accumulate::AccumulationType::INSTANTANEOUS )
+		{
+			return double( flux[0][ip] );
+		}
+		else
+		{
+			return double( flux[1][ip] ) * norm;
+		}
+	}
+
+	double get_time_avg_flux() const
+	{
+		return time_avg_flux;
+	}
+
+	vector<realnum>& operator[]( int accType )
+	{
+		ASSERT( accType == Accumulate::AccumulationType::INSTANTANEOUS ||
+			accType == Accumulate::AccumulationType::CUMULATIVE );
+		return flux[ accType ];
+	}
+};
+
 struct t_rfield : public module, public t_mesh {
 	const char *chName() const
 	{
@@ -66,7 +182,7 @@ struct t_rfield : public module, public t_mesh {
 	/** the following are the arrays containing the local radiation field */
 
 	/**flux is photons per cell N.B. width of cells vary with energy, given by widflx */
-	vector<realnum> flux[2];
+	Spectrum flux;
 
 	/** this is the isotropic part of the constant continuum */
 	vector<realnum> flux_isotropic;
@@ -143,19 +259,19 @@ struct t_rfield : public module, public t_mesh {
 	multi_arr<realnum,2> ConSourceFcnLocal/* [depth][energy]*/;
 
 	/** reflected diffuse emission continuum */
-	vector<realnum> ConEmitReflec[2];
+	Spectrum ConEmitReflec;
 
 	/** outward diffuse emission continuum (not the interactive one),
 	 * this is incremented in radinc because of interplay between absorption
 	 * and emission - get the outward bremsstrahlung right 
 	 * photons cell-1 cm-2 s-1 */
-	vector<realnum> ConEmitOut[2];
+	Spectrum ConEmitOut;
 
 	/** this is set in RT_diffuse and carries interactive continua */
 	vector<realnum> ConInterOut;
 
 	/** ConRefIncid is reflected portion of incident continuum */
-	vector<realnum> ConRefIncid[2];
+	Spectrum ConRefIncid;
 
 	/** these are energy-by-energy sums of various arrays, used to save time in
 	 * evaluating rate integrals */
@@ -186,17 +302,17 @@ struct t_rfield : public module, public t_mesh {
 	multi_arr<realnum,2> otssav;
 
 	/** outward directed line emission photons cm-2 s-1 */
-	vector<realnum> outlin[2];
+	Spectrum outlin;
 	vector<realnum> outlin_noplot;
 
 	/** local diffuse line emission, photons cm-3 s-1 */
 	vector<realnum> DiffuseLineEmission;
 
 	/** reflected line */
-	vector<realnum> reflin[2];
+	Spectrum reflin;
 
 	/** save incident continuum for later iterations */
-	vector<realnum> flux_total_incident[2];
+	Spectrum flux_total_incident;
 	vector<realnum> flux_beam_const_save, flux_time_beam_save, flux_isotropic_save;
 
 	/** ==1 for time steady, when continuum varies with time, is scale factor */

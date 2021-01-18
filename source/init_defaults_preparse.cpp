@@ -280,6 +280,8 @@ void InitDefaultsPreparse( void )
 	save.lgPunContinuum = false;
 	save.lgDRPLst = false;
 	save.lgDRHash = true;
+	save.lgDTPLst = false;
+	save.lgDTHash = true;
 	save.lgTraceConvergeBaseHash = true;
 	/* this is the string that will appear after each model in the save output,
 	 * reset with the "set save hash" command */

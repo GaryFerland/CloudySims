@@ -53,6 +53,17 @@ void t_rfield::zero()
 	strncpy( rfield.chCumuType, "MASS", sizeof(rfield.chCumuType));
 }
 
+void Spectrum::resize( long int nbins )
+{
+	ASSERT( nbins > 0 );
+
+	nflux = nbins;
+	flux[0].resize( nflux );
+	flux[1].resize( nflux );
+
+	vzero( flux[1] );
+}
+
 const realnum *t_rfield::getCoarseTransCoef()
 {
 	// average opacity transmission coefficient fine to coarse
@@ -114,12 +125,12 @@ double flux_correct_isotropic( const bool lgSaveIsotr, const int nEmType, const 
 	if( iflux < 0 || iflux >= rfield.nflux )
 		return  0.;
 
-	double this_flux = (double)rfield.flux[ nEmType ][ iflux ];
+	double this_flux = rfield.flux.get_flux( nEmType, iflux );
 	if( nEmType == 0 &&
 	    ( ! continuum.lgPrtIsotropicCont || ! lgSaveIsotr ) )
 	{
-			this_flux = (double)( rfield.flux_beam_const[ iflux ]
-					+ rfield.flux_beam_time[ iflux ] );
+		this_flux = (double)( rfield.flux_beam_const[ iflux ] +
+					rfield.flux_beam_time[ iflux ] );
 	}
 
 	return this_flux;

@@ -37,11 +37,29 @@
 #include "parser.h"
 #include "rfield.h"
 #include "container_classes.h"
+#include "save.h"
+#include "trace.h"
 
 static const bool lgPrintDynamics = false;
 
 t_dynamics dynamics;
 static int ipUpstream=-1,iphUpstream=-1,ipyUpstream=-1;
+
+bool t_dynamics::doNonEquilibriumSolve( long int iteration )
+{
+	DEBUG_ENTRY( "t_dynamics::doNonEquilibriumSolve()" );
+
+	if( iteration > n_initial_relax &&
+		( lgAdvection || lgTimeDependentStatic ) &&
+		Rate != 0.0 && !lgEquilibrium )
+	{
+		ASSERT(Rate > 0.0);
+		return true;
+	}
+
+	return false;
+}
+
 
 /* 
  * >>chng 01 mar 16, incorporate advection within dynamical solutions
@@ -133,24 +151,131 @@ static long int nOld_zone;
 STATIC bool lgNeedTimestep ();
 STATIC void InitDynaTimestep();
 
+STATIC void save_DT( double dtime, double this_fact, string &reason )
+{
+	bool lgDoPun = ( save.lgDTOn && !( save.lgDTPLst && !iterations.lgLastIt ) );
+	if( (trace.lgTrace && trace.lgDrBug) || lgDoPun )
+	{
+		static bool lgPrtRelax = false;
+		if( ! lgPrtRelax )
+		{
+			for( long iter = 1; iter <= dynamics.n_initial_relax; iter++ )
+			{
+				fprintf( save.ipDTout,
+					"%.12e\t%.3e\t%.5e\t%.3e\tRELAX\n",
+					0.0,
+					0.0,
+					0.0,
+					0.0 );
+			}
+			lgPrtRelax = true;
+		}
+
+		double Temp;
+		if( cdTemp(
+			/* four char string, null terminzed, giving the element name */
+			"hydr",
+			/* IonStage is ionization stage, 1 for atom, up to N+1 where N is atomic number */
+			2 ,
+			/* will be temperature */
+			&Temp,
+			/* how to weight the average, must be "VOLUME" or "RADIUS" */
+			"RADIUS" ) )
+			TotalInsanity();
+
+		fprintf( save.ipDTout,
+			"%.12e\t%.3e\t%.5e\t%.3e\t%s\n",
+			dynamics.time_elapsed,
+			Temp,
+			dtime,
+			this_fact,
+			reason.c_str() );
+
+		/* create hash marks on second and later iterations */
+		if( iteration > 1 && save.lgDTHash )
+		{
+			static bool lgPrtHash = false;
+			if( lgPrtHash )
+				fprintf( save.ipDTout, "%s\n",save.chHashString.c_str() );
+			lgPrtHash = true;
+		}
+	}
+}
 
 /*timestep_next - find next time step in time dependent case */
 STATIC double timestep_next( void )
 {
 	DEBUG_ENTRY( "timestep_next()" );
 
+	static double te_old=-1;
 	double timestep_return = dynamics.timestep;
+	double factor = 0.0;
+	string reason = "";
 
 	if( dynamics.lgRecom )
 	{
-		timestep_return = 0.04 * timesc.time_therm_short;
+		double timestep_Hp_temp = -1.;
+		double te_new;
+
+		if( cdTemp(
+			/* four char string, null terminzed, giving the element name */
+			"hydr",
+			/* IonStage is ionization stage, 1 for atom, up to N+1 where N is atomic number */
+			2 ,
+			/* will be temperature */
+			&te_new,
+			/* how to weight the average, must be "VOLUME" or "RADIUS" */
+			"VOLUME" ) )
+			TotalInsanity();
+
+		if( te_old>0 )
+		{
+			double dTdStep = fabs(te_new-te_old)/te_new;
+			/* this is the change factor to get 0.1 frac change in mean temp */
+			double dT_factor = 0.04/SDIV(dTdStep);
+			if( dT_factor > 2.0 )
+			{
+				dT_factor = 2.0;
+				reason = "DTMAX";
+			}
+			else if( dT_factor < 0.01 )
+			{
+				dT_factor = 0.01;
+				reason = "DTMIN";
+			}
+			else
+			{
+				ostringstream oss;
+
+				oss << "change in temperature weighted by H+,";
+				oss << " old T = " << scientific << setprecision(3) << te_old;
+				oss << " new T = " << scientific << setprecision(3) << te_new;
+
+				reason = oss.str();
+			}
+			timestep_Hp_temp = dynamics.timestep * dT_factor;
+			factor = dT_factor;
+		}
+		else
+		{
+			factor = 1.;
+			reason = "initial";
+		}
+		te_old = te_new;
+		if( timestep_Hp_temp > 0. )
+			timestep_return = timestep_Hp_temp;
 	}
 	else
 	{
 		timestep_return = dynamics.timestep_init;
+		factor = 1.;
+		reason = "constant timestep";
 	}
+
 	if( lgPrintDynamics )
-		fprintf( ioQQQ, "DEBUG timestep_next returns %.3e\n", timestep_return );
+		fprintf(ioQQQ,"DEBUG timestep_next returns %.3e, old temp %.2e\n" , timestep_return, te_old );
+
+	save_DT( timestep_return, factor, reason );
 
 	return( timestep_return );
 }

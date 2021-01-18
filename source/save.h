@@ -300,6 +300,7 @@ struct t_save {
 	/** these are for some special cases, same purpose as previous no clobber */
 	bool lgPunConv_noclobber;
 	bool lgDROn_noclobber;
+	bool lgDTOn_noclobber;
 	bool lgPunPoint_noclobber;
 	bool lgioRecom_noclobber;
 	bool lgQHSaveFile_noclobber;
@@ -473,6 +474,12 @@ public:
 	bool lgDROn, 
 	  lgDRPLst,
 	  lgDRHash;
+
+        /** Likewise for saving choice of dt */
+	FILE * ipDTout;
+	bool lgDTOn,
+		lgDTPLst,
+		lgDTHash;
 
 	/* set true save convergence base */
 	bool lgTraceConvergeBase,
