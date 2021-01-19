@@ -70,7 +70,8 @@ save element silicon "limit_conserve.sil"
 ## >>chng 09 feb 23, from -6.256 to -6.228, remove otslin, otscon dampers (PR #84, r2758)
 ## >>chng 13 jul 24, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line luminosity "H  1" 4861.33A -6.228
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line luminosity "H  1" 4861.32A -6.228
 ##
 ## >>chng 01 jun 15, from 0.59 to 0.621, full H ct network
 ## >>chng 02 apr 03, from 0.621 to 0.797 bound compton
@@ -95,7 +96,8 @@ monitor line luminosity "H  1" 4861.33A -6.228
 ## >>chng 09 feb 23, from 0.705 to 0.6617, remove otslin, otscon dampers (PR #84, r2758)
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "Q(H)" 4861.33A 0.6617
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Q(H)" 4861.32A 0.6617
 ##
 ## >>chng 01 may 10, from 27.4 to 29.05 ct network change
 ## >>chng 01 sep 24, from 29.0 to 27.57 chng high-state branching ratio

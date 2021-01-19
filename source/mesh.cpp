@@ -344,7 +344,9 @@ void t_mesh::ValidateEdges() const
 		{
 			fprintf( ioQQQ, "DISASTER INTERNAL ERROR: incorrect ionization edge pointers.\n" );
 			fprintf( ioQQQ, "The He 2s ionization energy should be in a higher\n" );
-			fprintf( ioQQQ, "frequency cell than the H 1s ionization energy.\n\n" );
+			fprintf( ioQQQ, "frequency cell than the H 1s ionization energy.\n" );
+			fprintf( ioQQQ, "He H edges were %li %li.\n\n", iso_sp[ipH_LIKE][ipHELIUM].fb[ipH2s].ipIsoLevNIonCon ,
+					iso_sp[ipH_LIKE][ipHYDROGEN].fb[ipH1s].ipIsoLevNIonCon );
 			lgErr = true;
 		}
 		if( iso_sp[ipH_LIKE][ipHELIUM].fb[ipH2p].ipIsoLevNIonCon <=
@@ -352,7 +354,9 @@ void t_mesh::ValidateEdges() const
 		{
 			fprintf( ioQQQ, "DISASTER INTERNAL ERROR: incorrect ionization edge pointers.\n" );
 			fprintf( ioQQQ, "The He 2p ionization energy should be in a higher\n" );
-			fprintf( ioQQQ, "frequency cell than the H 1s ionization energy.\n\n" );
+			fprintf( ioQQQ, "frequency cell than the H 1s ionization energy.\n" );
+			fprintf( ioQQQ, "He H edges were %li %li.\n\n", iso_sp[ipH_LIKE][ipHELIUM].fb[ipH2p].ipIsoLevNIonCon ,
+					iso_sp[ipH_LIKE][ipHYDROGEN].fb[ipH1s].ipIsoLevNIonCon );
 			lgErr = true;
 		}
 	}

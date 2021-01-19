@@ -82,7 +82,8 @@ monitor line luminosity cumulative intrinsic "Fe 9"      8234.56A   11.13
 ## >>chng 17 may 25, wl from 18.9732A to 18.9709A, update Rydberg constant
 ## >>chng 19 jul 24, from 14.21 to 14.23, fix bug on Presolving ions excitation on He like collisions
 ## >>chng 20 oct 05, from 14.23 to 14.26, limit more elements for load leveling
-monitor line luminosity cumulative intrinsic "O  8"      18.9709A   14.26
+## >>chng 20 nov 30, wl from 18.9709A to 18.9696A, switched from computed to tabulated energies for H and He isoseq
+monitor line luminosity cumulative intrinsic "O  8"      18.9696A   14.26
 ## >>chng 20 oct 03, from 12.24 to 12.26, drift, update branching ratio for H3+ chemistry
 ## >>chng 20 oct 05, from 12.26 to 12.3, limit more elements for load leveling
 monitor line luminosity cumulative intrinsic "O  7"      16.7725A   12.3
@@ -129,7 +130,8 @@ monitor line luminosity cumulative intrinsic "O  3"      5006.84A   11.7472
 ## >>chng 19 jun 28, from 11.34 to 11.64, reintegrate iso_collisions branch
 ## >>chng 19 aug 06, from 11.64 to 11.68, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 oct 05, from 11.68 to 11.7, limit more elements for load leveling
-monitor line luminosity cumulative intrinsic "He 2"      1640.43A   11.7
+## >>chng 20 nov 30, wl from 1640.43A to 1640.40A, switched from computed to tabulated energies for H and He isoseq
+monitor line luminosity cumulative intrinsic "He 2"      1640.40A   11.7
 ## >>chng 16 jul 01, from 11.88 to 11.91, increase iterations, let Te drop to 1e4K
 ## >>chng 16 aug 17, from 11.91 to 11.94, bugfix at r11237
 monitor line luminosity cumulative intrinsic "O  2"      3728.81A   11.94

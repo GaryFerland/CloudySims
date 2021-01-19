@@ -6,6 +6,7 @@
 #include "two_photon.h"
 #include "freebound.h"
 #include "parser.h"
+#include "elementnames.h"
 
 t_isoCTRL iso_ctrl;
 
@@ -278,16 +279,25 @@ void iso_init_energies()
 {
 	DEBUG_ENTRY( "iso_init_energies()" );
 
-	string fnam[2] = { "hydro_energies.dat", "helike_energies.dat" };
+	string sep = cpu.i().chDirSeparator();
 
 	DataParser d;
 	for( long ipISO=ipH_LIKE; ipISO < NISO; ++ipISO )
 	{
-		d.open(fnam[ipISO], ES_NONE);
-		d.getline();
-		d.checkMagic(ENERGIESMAGIC);
-		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+		for( long nelem = ipISO; nelem < LIMELM; nelem++ )
 		{
+			string elm = elementnames.chElementSym[ nelem ];
+			if( elm.substr( 1, 1 ) == " " )
+				elm = elm.substr( 0, 1 );
+			elm[ 0 ] = tolower( elm[ 0 ] );
+
+			string species = elm + '_' + to_string( nelem - ipISO + 1 );
+			string fnam = "stout" + sep + elm + sep + species + sep + species + ".nrg.dat"; 
+			if( false ) printf( "'%s'\n", fnam.c_str() );
+
+			d.open(fnam, ES_NONE);
+			d.getline();
+			d.checkMagic(ENERGIESMAGIC);
 			while( d.getline() )
 			{
 				long n, l, s, j;
@@ -308,8 +318,8 @@ void iso_init_energies()
 					break;
 				}
 			}
+			d.checkEOD();
 		}
-		d.checkEOD();
 	}
 }
 

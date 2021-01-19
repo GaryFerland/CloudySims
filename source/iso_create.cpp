@@ -115,6 +115,7 @@ void iso_setOpacity (long ipISO, long nelem, long ipLo, long ipHi)
 	return;
 }
 
+#if 0
 // hydro_energy: get the energy needed to ionize level (in cm^-1)
 // the parameters l, s, and g are currently not used, but will be in the future
 double hydro_energy(long nelem, long n, long /* l */, long /* s  */, long /* g */)
@@ -145,6 +146,46 @@ double hydro_energy(long nelem, long n, long /* l */, long /* s  */, long /* g *
 
 	return HIonPoten/POW2((double)n)*RYD_INF;
 }
+#endif
+
+
+/* hydro_energy calculates energy of a given level in cm^-1. */
+double hydro_energy(long nelem, long n, long l, long s, long j)
+{
+        DEBUG_ENTRY( "hydro_energy()" );
+
+	enum{ DEBUG_LOC = false };
+
+        double E_H;
+        if( n > iso_sp[ipH_LIKE][nelem].n_HighestResolved_max )
+        {
+                E_H = H_RYD_FACTOR * RYD_INF * POW2((double)(nelem+1)/(double)n);
+        }
+        else
+        {
+                E_H = iso_sp[ipH_LIKE][nelem].energy_ioniz(n, l, s, 2*j+1);
+		
+		if( DEBUG_LOC )
+		{
+         		fprintf( ioQQQ, "debug E_H n l s QN2ind %.2e %ld %ld %ld %ld\n",
+					E_H, n, l, s, QN2ind(n, l, s, 2*j+1) );
+			fprintf( ioQQQ, "debug level_ion Ionpot %.2e %.2e \n",
+					iso_sp[ipH_LIKE][nelem].energy_ioniz(n, l, s, 2*j+1),
+					iso_sp[ipH_LIKE][nelem].IonPot );
+		}
+	}
+
+	if( DEBUG_LOC )
+	{
+		fprintf( ioQQQ, "debug E_H nelem n l s j %.2e %ld %ld %ld %ld %ld\n",
+				E_H, nelem, n, l, s, j );
+	}
+
+        ASSERT(E_H > 0.);
+
+        return E_H;
+}
+
 
 void iso_create()
 {
@@ -201,8 +242,20 @@ void iso_create()
 
 					if( ipISO == ipH_LIKE )
 					{
-						EnergyRyd = hydro_energy(nelem, N_(ipHi), L_(ipHi),
-									 S_(ipHi), 2*J_(ipHi)+1) * WAVNRYD;
+						/* NB NB
+						 *
+						 * 2020-08-16
+						 *
+						 * The following assumes that the data are resolved in the
+						 * input data file, but the stored values of l, s, j are -1
+						 * for each, and the following call crashes.
+						 *
+						 * The hack below is temporary until we resolve the data in
+						 * the data file.
+						 */
+						// EnergyRyd = hydro_energy(nelem, N_(ipHi), L_(ipHi),
+						//					S_(ipHi), J_(ipHi)) * WAVNRYD;
+						EnergyRyd = hydro_energy(nelem, N_(ipHi), -1, -1, -1) * WAVNRYD;
 					}
 					else if( ipISO == ipHE_LIKE )
 					{

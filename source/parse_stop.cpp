@@ -812,7 +812,7 @@ void ParseStop(Parser &p)
 			strncpy( StopCalc.chStopLabel2[StopCalc.nstpl], "H  1" , NCHLAB-1 );
 			StopCalc.chStopLabel2[StopCalc.nstpl][NCHLAB-1] = 0;
 			trimTrailingWhiteSpace( StopCalc.chStopLabel2[StopCalc.nstpl] );
-			StopCalc.StopLineWl2[StopCalc.nstpl] = 4861.33f;
+			StopCalc.StopLineWl2[StopCalc.nstpl] = Hbeta_WavLen;
 		}
 		else
 		{

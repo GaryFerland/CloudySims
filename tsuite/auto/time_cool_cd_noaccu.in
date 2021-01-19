@@ -20,7 +20,8 @@ cosmic rays background
 #
 # commands controlling output    =========
 ## >>chng 17 may 25, wl from 18.9732A to 18.9709A, up Rydberg constant
-normalize to "O  8" 18.9709A
+## >>chng 20 aug 22, wl from 18.9709A to 18.9696A, switched from computed to tabulated energies for H and He isoseq
+normalize to "O  8" 18.9696A
 print line faint -3 log
 print ages
 set cumulative off
@@ -28,7 +29,8 @@ set save prefix "time_cool_cd_noaccu"
 save monitors ".asr" last
 #
 # commands giving the asserts    =========
-monitor line luminosity intrinsic "Fe24"      11.1710A   -29.1814
+## >>chng 21 jan 19, from -29.18 to -29.16, timestep logic change from tcool to n(H+)
+monitor line luminosity intrinsic "Fe24"      11.1710A   -29.16
 #
 # time_cool_cd_flux.in 
 # class dynamics 

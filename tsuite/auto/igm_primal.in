@@ -62,7 +62,8 @@ save monitors last "igm_primal.asr"
 ## >>chng 13 dec 18, from -5.713 to -5.659, fixes to Federman shielding
 ## >>chng 15 jun 03, from -5.659 to -5.569, exact LTE H2 cooling (not big model)
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line luminosity "H  1" 4861.33A -5.569 error 0.1
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line luminosity "H  1" 4861.32A -5.569 error 0.1
 ##
 ## >>chng 02 apr 03, from 0.721 to 0.758, bound compton
 ## >>chng 02 jul 19, from 0.758 to 0.717, better two photon
@@ -81,7 +82,8 @@ monitor line luminosity "H  1" 4861.33A -5.569 error 0.1
 ## >>chng 13 dec 18, from 0.6413 to 0.566, fixes to Federman shielding
 ## >>chng 15 jun 03, from 0.566 to 0.4636, exact LTE H2 cooling (not big model)
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "Q(H)" 4861.33A 0.4636 error 0.1
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Q(H)" 4861.32A 0.4636 error 0.1
 ##
 ## >>chng 03 may 22, fron intensity to luminosity
 ## >>chng 04 apr 29, change from agn, U-3 to HM96 agn background
@@ -119,7 +121,8 @@ monitor line luminosity "h  1" 1215.67A -4.058 error 0.1
 ## >>chng 13 dec 18, from -5.167 to -5.111, fixes to Federman shielding
 ## >>chng 15 jun 03, from -5.111 to -4.98, exact LTE H2 cooling (not big model)
 ## >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
-monitor line luminosity "h  1" 6562.81A -4.98 error 0.1
+## >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
+monitor line luminosity "h  1" 6562.80A -4.98 error 0.1
 ##
 ## >>chng 03 may 22, fron intensity to luminosity
 ## >>chng 03 aug 03, from -0.204 to -0.230, chng 2s-2p coll
@@ -272,7 +275,8 @@ monitor line luminosity "H ff" 0 -7.306 error 0.1   ## H free-free heating
 ## >>chng 13 nov 19, from -5.147 to -5.423, fix CT bug in mole_eval_balance
 ## >>chng 15 jun 03, from -5.423 to -6.973, exact LTE H2 cooling (not big model)
 ## >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
-monitor line luminosity "H-ct" 6562.81A -6.973 errror 0.2 
+## >>chng 20 dec 01, wl from 6562.81A to 6562.80A, update energies to NIST
+monitor line luminosity "H-ct" 6562.80A -6.973 errror 0.2 
 ##
 ## >>chng 02 apr 03, from 0.56 to 0.717 bound compton
 ## >>chng 02 may 27, from 0.717 to 1.59, brems gaunt factors

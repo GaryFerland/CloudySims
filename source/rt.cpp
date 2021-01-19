@@ -14,5 +14,5 @@ void t_rt::zero()
 	DoubleTau = 1.;
 	lgFstOn = true;
 	lgElecScatEscape = true;
-
+	lgElecScatInten = true;
 }

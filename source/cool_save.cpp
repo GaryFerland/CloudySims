@@ -68,7 +68,6 @@ void CoolSave(FILE * io, const char chJob[])
 			continue;
 
 		csav[ip] = (realnum)( safe_div( MAX2(thermal.cooling[i],thermal.heatnt[i]), cool_total, 0. ));
-
 		/* save sign to remember if heating or cooling line */
 		if( thermal.heatnt[i] == 0. )
 		{

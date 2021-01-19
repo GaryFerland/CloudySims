@@ -21,7 +21,8 @@ iterate
 # commands controlling output    =========
 ## >>chng 13 jul 24, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-normalize lines to "Ca B" 4861.33A
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+normalize lines to "Ca B" 4861.32A
 print ages
 print departure coef element hydrogen
 print line faint -5
@@ -36,7 +37,8 @@ save monitors "igm_z3_thick.asr"
 ## >>chng 13 jan 10, from 97.2 to 109.9, fix in-zone continuum shielding
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "H  1" 4861.33A 109.9
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1" 4861.32A 109.9
 ##
 monitor "H+" temperature 3000
 ##

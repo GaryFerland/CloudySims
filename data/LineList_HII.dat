@@ -19,7 +19,8 @@ blnd  1402  #   total O IV] 1402; 5 components to line:
 Blnd  1406  #   total S IV 1406
 blnd  1486
 blnd 1549
-he 2     1640.43  #   total He II Balmer-alpha 1640
+# >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
+he 2     1640.40A  #   total He II Balmer-alpha 1640
 blnd  1750   #  total N III] 1750 (all components; not computed seperately)
 blnd  1860
 blnd 1909
@@ -48,13 +49,16 @@ h  1     4101.73A #    total H-delta
 h  1     4340.46A  #   total H-gamma
 ## >>chng 19 mar 01, change "Blnd" 4363 -> "O  3" 4363.21
 O  3     4363.21
-he 2     4685.64  #   total He II 4686 (Paschen-alpha)
-Ca B     4685.64
+# >>chng 20 aug 22, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
+he 2     4685.70  #   total He II 4686 (Paschen-alpha)
+# >>chng 20 aug 22, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
+Ca B     4685.70
 ne 4  4724.17
 Ar 4     4740.12
 Inci     4860
 # >>chng 17 may 26, wl from 4861.36 to 4861.33A, update Rydberg constant
-H  1     4861.33A
+# >>chng 20 aug 22, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+H  1     4861.32A
 o  3     4958.91
 o  3     5006.84
 n  1  5200.26
@@ -68,7 +72,8 @@ Blnd     5875.66A
 blnd  6300
 o  1     6363.78
 # >>chng 17 may 26, wl from 6562.85 to 6562.81A, update Rydberg constant
-h  1     6562.81A  #   total H-alpha 6563
+# >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
+h  1     6562.80A  #   total H-alpha 6563
 n  2  6583.45
 s  2     6716.44
 Blnd     6720
@@ -87,7 +92,8 @@ S  3     9068.62
 #H  1     9229
 S  3     9530.62
 # >>chng 17 may 25, wl from 9545.99 to 9545.93A, up Rydberg constant
-h  1     9545.93A
+# >>chng 20 aug 22, wl from 9545.93A to 9545.97A, switched from computed to tabulated energies for H and He isoseq
+h  1     9545.97A
 # >>chng 13 jul 30, wl from 10829.9 to 1.08303m, increased wl precision to 6 sig. fig.
 ## >>chng 18 feb 20, updated spectral label from "He 1" 1.08303m to "Blnd" 1.08331m, update He-like triplet labels and wl
 # >>chng 18 mar 06, wl from 1.08331m to 1.08302m, adjust multiplet Blend WL for refraction index
@@ -98,21 +104,28 @@ Blnd     1.08302m # all three lines within multiplet
 # >>chng 17 may 25, wl from 1.87511m to 1.87510m, up Rydberg constant
 h  1     1.87510m  #   total H Paschen-alpha
 # >>chng 17 may 25, wl from 1.28181m to 1.28180m, up Rydberg constant
-H  1     1.28180m
+# >>chng 20 aug 22, wl from 1.28180m to 1.28181m, switched from computed to tabulated energies for H and He isoseq
+H  1     1.28181m
 # >>chng 17 may 25, wl from 1.09381m to 1.09380m, up Rydberg constant
-H  1     1.09380m
+# >>chng 20 aug 22, wl from 1.09380m to 1.09381m, switched from computed to tabulated energies for H and He isoseq
+H  1     1.09381m
 # >>chng 17 may 25, wl from 1.00494m to 1.00493m, up Rydberg constant
-H  1     1.00493m
+# >>chng 20 aug 22, wl from 1.00493m to 1.00494m, switched from computed to tabulated energies for H and He isoseq
+H  1     1.00494m
 #
 # Brackett series
 #
-H  1     4.05113m
+# >>chng 20 aug 22, wl from 4.05113m to 4.05115m, switched from computed to tabulated energies for H and He isoseq
+H  1     4.05115m
 # >>chng 17 may 25, wl from 2.62515m to 2.62513m, up Rydberg constant
-H  1     2.62513m
+# >>chng 20 aug 22, wl from 2.62513m to 2.62515m, switched from computed to tabulated energies for H and He isoseq
+H  1     2.62515m
 # >>chng 17 may 25, wl from 2.16553m to 2.16551m, up Rydberg constant
-H  1     2.16551m # Brackett gamma
+# >>chng 20 aug 22, wl from 2.16551m to 2.16553m, switched from computed to tabulated energies for H and He isoseq
+H  1     2.16553m # Brackett gamma
 # >>chng 17 may 25, wl from 1.94456m to 1.94454m, up Rydberg constant
-H  1     1.94454m
+# >>chng 20 aug 22, wl from 1.94454m to 1.94456m, switched from computed to tabulated energies for H and He isoseq
+H  1     1.94456m
 #
 # IR and coronal lines
 #

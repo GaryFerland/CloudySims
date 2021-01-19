@@ -11,9 +11,11 @@ iterate
 #
 # commands giving the monitors    =========
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "H  1" 4861.33A luminosity -2.394
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1" 4861.32A luminosity -2.394
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "Q(H)" 4861.33A  1.141.
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Q(H)" 4861.32A  1.141.
 ## >>chng 18 feb 20, updated spectral label from "He 1" 5875.64A to "Blnd" 5877.29A, update He-like triplet labels and wl
 ## >>chng 18 mar 06, wl from 5877.29A to 5875.66A, adjust multiplet Blend WL for refraction index
 monitor line "Blnd" 5875.66A  0.1253

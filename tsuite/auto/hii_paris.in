@@ -42,7 +42,8 @@ database h-like element hydrogen levels resolved 10
 # commands controlling output    =========
 ## >>chng 13 jul 26, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-normalize to "Ca B" 4861.33A
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+normalize to "Ca B" 4861.32A
 # the normalizing line is not defined on the emergent line stack
 print lines emergent off
 print column densities 
@@ -99,23 +100,28 @@ save linelist "hii_paris.lin" "LineList_HII.dat" last no hash column
 save lines emissivity "hii_paris.str" last 
 ## >>chng 13 jul 26, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-H  1  4861.33A
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+H  1  4861.32A
 end lines
 #
 # commands giving the monitors    =========
 table lines "LineList_HII.dat"
 ## >>chng 13 jul 26, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line luminosity "H  1" 4861.33A 37.309
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line luminosity "H  1" 4861.32A 37.309
 ## >>chng 13 jul 26, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "H  1" 4861.33A 1
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1" 4861.32A 1
 ## >>chng 13 jul 26, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "Q(H)" 4861.33A > 1.
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Q(H)" 4861.32A > 1.
 ## >>chng 13 jul 26, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "Q(H)" 4861.33A < 1.05
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Q(H)" 4861.32A < 1.05
 ## 
 ## >>chng 01 sep 24, from 24.71 to 23.34 2s2p br chng
 ## >>chng 07 dec 06, from 23.34 to 24.63, changes in h-like collisions
@@ -141,10 +147,12 @@ monitor line "Ca B" 1.87510m 0.363
 ## 
 ## >>chng 13 jul 26, wl from 6563 to 6562.85A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
-monitor line "H  1" 6562.81A 2.96
+## >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1" 6562.80A 2.96
 ## >>chng 13 jul 26, wl from 6563 to 6562.85A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
-monitor line "Ca B" 6562.81A 2.92
+## >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Ca B" 6562.80A 2.92
 ##
 ## >>chng 04 sep 12, from 17.62 to 18.5, drift up
 monitor line "Bac " 3646 18.5

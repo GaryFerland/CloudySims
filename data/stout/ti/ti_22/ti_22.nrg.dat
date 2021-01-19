@@ -1,0 +1,21 @@
+20190102 # magic number
+# Give level energies in cm^-1 for each H-like ion.
+# Each line gives n, l, S, J, energy.
+# The last entry for each ion is the ionization potential.
+# It is marked with negative quantum numbers. The ionization
+# potential MUST be the last entry for a given element!
+# It is used as a sentinel to switch to the next element.
+#
+# These data were calculated using the ATLL r123.
+#
+ 1 -1 -1 -1 0
+ 2 -1 -1 -1 40100000
+ 3 -1 -1 -1 47525000
+ 4 -1 -1 -1 50117100
+ 5 -1 -1 -1 51315200
+ 6 -1 -1 -1 51965500
+ 7 -1 -1 -1 52357400
+ 8 -1 -1 -1 52611720
+ 9 -1 -1 -1 52786030
+10 -1 -1 -1 52910690
+-1 -1 -1 -1 53441971

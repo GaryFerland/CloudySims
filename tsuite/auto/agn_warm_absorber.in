@@ -43,7 +43,8 @@ save monitors last "agn_warm_absorber.asr"
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 16 aug 07, from 0.6583 to 0.6883, Fran bug fix
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "cabo" 4861.33A 0.6883
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "cabo" 4861.32A 0.6883
 ##
 ## >>chng 01 dec 21, inner shell yields, 5.064 to 5.033
 ## >>chng 03 nov 23, from 5.033 to 5.131, Kraemer et al. guess of dr
@@ -67,21 +68,25 @@ monitor line luminosity "toth" 0 5.202
 monitor line luminosity "totm" 0 5.091 error 0.1
 monitor line luminosity "Ne 9"      13.4471A  3.118
 ## >>chng 17 may 25, wl from 16.0086A to 16.0067A, up Rydberg constant
-monitor line luminosity "O  8"      16.0067A  2.221  
+## >>chng 20 aug 22, wl from 16.0067A to 16.0056A, switched from computed to tabulated energies for H and He isoseq
+monitor line luminosity "O  8"      16.0056A  2.221  
 monitor line luminosity "O  7"      16.7725A  3.573   
 monitor line luminosity "O  7"      17.7680A  2.04
 monitor line luminosity "O  7"      18.6270A  2.146 
 ## >>chng 17 may 25, wl from 18.9732A to 18.9709A, up Rydberg constant
-monitor line luminosity "O  8"      18.9709A  4.165  
+## >>chng 20 aug 22, wl from 18.9709A to 18.9696A, switched from computed to tabulated energies for H and He isoseq
+monitor line luminosity "O  8"      18.9696A  4.165  
 monitor line luminosity "O  7"      21.6020A  3.336
 monitor line luminosity "O  7"      21.8070A  3.381 
 ## >>chng 18 feb 20, updated spectral label from "TOTL" 21.8070A to "Blnd" 21.8070A, update He-like triplet labels and wl
 monitor line luminosity "Blnd"      21.8070A  3.385   
 monitor line luminosity "O  7"      22.1012A  3.992  
 ## >>chng 17 may 25, wl from 24.7837A to 24.7807A, up Rydberg constant
-monitor line luminosity "N  7"      24.7807A  3.254
+## >>chng 20 aug 22, wl from 24.7807A to 24.7819A, switched from computed to tabulated energies for H and He isoseq
+monitor line luminosity "N  7"      24.7819A  3.254
 monitor line luminosity "N  6"      28.7870A  2.392  
-monitor line luminosity "C  6"      33.7372A  3.531 
+## >>chng 20 aug 25, wl from 33.7372A to 33.7368A, switched from computed to tabulated energies for H and He isoseq
+monitor line luminosity "C  6"      33.7368A  3.531 
 monitor line luminosity "C  5"      40.2678A  2.324
 monitor line luminosity "S 10"      42.4800A  2.325  
 monitor line luminosity "Si 8"      49.9099A  1.866  

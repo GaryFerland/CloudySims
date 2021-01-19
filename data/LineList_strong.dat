@@ -19,7 +19,8 @@ ne 3  3868.76
 ## >>chng 19 mar 01, change "Blnd" 4363 -> "O  3" 4363.21
 O  3  4363.21
 # >>chng 17 may 26, wl from 4861.36 to 4861.33A, update Rydberg constant
-H  1	4861.33A
+# >>chng 20 aug 22, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+H  1	4861.32A
 nFnu	4885.36
 O  3	5006.84
 O  1	5577.34
@@ -37,7 +38,8 @@ n  3  57.3238m
 O  3   51.8004m
 # >>chng 13 jul 26, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 # >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-Q(H)    4861.33A #total intensity in Hbeta is nothing else absorbs ionizing radiation
+# >>chng 20 aug 22, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+Q(H)    4861.32A #total intensity in Hbeta is nothing else absorbs ionizing radiation
 GraT       0 # total emission in grain IR, zero if no grains 
 # the file ends with the end of file, or a cr in the first col
 

@@ -84,7 +84,7 @@ void lines_molecules(void)
 		" neg H ion free-free emission ");
 
 	/* H-alpha produced by H- mutual neutralization */
-	linadd(mole.findrate("H-,H+=>H,H")*3.032e-12,6562.81,"H-CT",'i',
+	linadd(mole.findrate("H-,H+=>H,H")*3.032e-12,6562.80,"H-CT",'i',
 		"  H-alpha produced by H- mutual neutralization ");
 
 	/* remember total heating */

@@ -15,7 +15,8 @@ stop zone 1
 #
 # other commands for details     =========
 ## >>chng 13 jul 24, wl from 4686 to 4685.64A, increased wl precision to 6 sig. fig.
-normalize to "He 2" 4685.64A
+## >>chng 20 aug 25, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
+normalize to "He 2" 4685.70A
 case b hummer no Pdest no photoionization
 no scattering escape 
 # prevent H I excited levels from being predicted

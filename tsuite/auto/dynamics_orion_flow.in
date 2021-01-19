@@ -58,11 +58,13 @@ save wind "dynamics_orion_flow.wnd" last
 ## >>chng 07 oct 26, from -11.328 to -11.350, very close to botch after recent changes
 ## >>chng 13 jul 24, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "H  1" 4861.33A intensity -11.350
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1" 4861.32A intensity -11.350
 ##
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "CaBo" 4861.33A 1.0
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "CaBo" 4861.32A 1.0
 ##
 ## >>chng 05 oct 01, from 0.103 to 0.082, RP update He levels
 ## >>chng 07 dec 29, from 0.082 to 0.857, ddrift up

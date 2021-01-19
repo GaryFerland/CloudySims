@@ -36,15 +36,18 @@ save dr  "h_outopen.dr" last
 # inward and outward fractions, which we test 
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "Q(H)" 4861.33A > 1. error 0.02 ##>1 due to lyman line leaking
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Q(H)" 4861.32A > 1. error 0.02 ##>1 due to lyman line leaking
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, change to testing "Ca B" 4861.36A (was "H  1" 4861.36A).
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "Ca B" 4861.33A = 1 error 0.02 ##no surprise if not unity, since open
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Ca B" 4861.32A = 1 error 0.02 ##no surprise if not unity, since open
 ## 
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "Inwd" 4861.33A =0.5 error 0.02 
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Inwd" 4861.32A =0.5 error 0.02 
 ## 
 ## >>chng 01 sep 24, from 24.8 to 23.4, 2s 2p br -> 2nu chng
 ## >>chng 03 may 16, from 23.4 to 21.9, h line rt cleanup

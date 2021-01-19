@@ -84,10 +84,10 @@ void lines_hydro(void)
 	linadd(MAX2(0.,-iso_sp[ipH_LIKE][ipHYDROGEN].cLyrest_cool),960,"Hrst",'i',
 		"  heating due to n>2 Lyman lines ");
 
-	linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHYDROGEN].cBal_cool),4861.33,"Crst",'i',
+	linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHYDROGEN].cBal_cool),Hbeta_WavLen,"Crst",'i',
 		"  cooling due to n>3 Balmer lines ");
 
-	linadd(MAX2(0.,-iso_sp[ipH_LIKE][ipHYDROGEN].cBal_cool),4861.33,"Hrst",'i',
+	linadd(MAX2(0.,-iso_sp[ipH_LIKE][ipHYDROGEN].cBal_cool),Hbeta_WavLen,"Hrst",'i',
 		"  heating due to n>3 Balmer lines ");
 
 	linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHYDROGEN].cRest_cool),0,"Crst",'i',
@@ -129,11 +129,11 @@ void lines_hydro(void)
 	  "  Stark broadening contribution to line ");
 
 	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].st[ipH3s].Pop()*iso_sp[ipH_LIKE][ipHYDROGEN].ex[ipH3s][ipH2p].pestrk*3.025e-12,
-	  6562.81,"Strk",'i',
+	  6562.80,"Strk",'i',
 	  "  Stark broadening contribution to line ");
 
 	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].st[ipH4s].Pop()*iso_sp[ipH_LIKE][ipHYDROGEN].ex[ipH4s][ipH2p].pestrk*4.084e-12,
-	  4861.33,"Strk",'i',
+	  Hbeta_WavLen,"Strk",'i',
 	  "Stark broadening contribution to line ");
 
 	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].st[ipH4p].Pop()*iso_sp[ipH_LIKE][ipHYDROGEN].ex[ipH4p][ipH3s].pestrk*1.059e-12,
@@ -157,7 +157,7 @@ void lines_hydro(void)
 		"  portion of line lost due to absorp by background opacity ");
 
 	/* portion of line lost due to absorb by background opacity */
-	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH3p,ipH2s).Emis().ots()*iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH3p,ipH2s).EnergyErg(), 6562.81,"Dest",'i',
+	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH3p,ipH2s).Emis().ots()*iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH3p,ipH2s).EnergyErg(), 6562.80,"Dest",'i',
 		"Ha destroyed by background opacity");
 
 	/* portion of line lost due to absorp by background opacity */
@@ -170,7 +170,7 @@ void lines_hydro(void)
 
 	/* portion of line lost due to absorb by background opacity */
 	if( iso_sp[ipH_LIKE][ipHYDROGEN].numLevels_max > ipH4p )
-		linadd(iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH4p,ipH2s).Emis().ots()*iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH4p,ipH2s).EnergyErg(), 4861.33,"Dest",'i',
+		linadd(iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH4p,ipH2s).Emis().ots()*iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH4p,ipH2s).EnergyErg(), Hbeta_WavLen, "Dest",'i',
 			"portion of line lost due to absorb by background opacity");
 
 	/* portion of line lost due to absorb by background opacity */
@@ -207,7 +207,7 @@ void lines_hydro(void)
 			caseb = 0.;
 		}
 		/* H-beta computed from Q(H) and specified covering factor */
-		linadd( caseb/radius.dVeffAper*geometry.covgeo , 4861.33 , "Q(H)" , 'i' ,
+		linadd( caseb/radius.dVeffAper*geometry.covgeo , Hbeta_WavLen, "Q(H)" , 'i' ,
 			"Case B H-beta computed from Q(H) and specified covering factor");
 
 		if( nzone == 1 )
@@ -341,7 +341,7 @@ void lines_hydro(void)
 	ASSERT( iso_sp[ipH_LIKE][ipHYDROGEN].numLevels_max > 4 );
 	hbetab *= dense.xIonDense[ipHYDROGEN][1]*dense.eden;
 
-	lindst(hbetab, -4861.33 ,"CaBo",
+	lindst(hbetab, -Hbeta_WavLen ,"CaBo",
 		1 ,'i',false,
 		" this is old case b based on Ferland (1980) PASP ");
 
@@ -425,8 +425,15 @@ void lines_hydro(void)
 							chLab[3] = chAB[iCase];
 
 							/* this is freq in cm^-1 of interpolated case b from HS tables */
-							realnum Enerwn = realnum(hydro_energy(nelem, ipLo, -1, 2, -1) -
-										 hydro_energy(nelem, ipHi, -1, 2, -1));
+							/* NB NB
+							 *
+							 * 2020-08-16
+							 *
+							 * This is a temporary hack, until the data are resolved in the input
+							 * data file.  See comment with the same date in iso_create.cpp.
+							 */
+							realnum Enerwn = realnum(hydro_energy(nelem, ipLo, -1, -1, -1) -
+										 hydro_energy(nelem, ipHi, -1, -1, -1));
 							realnum wl = (realnum)wn2ang( double(Enerwn) );
 							atmdat.WaveLengthCaseB[nelem][ipHi][ipLo] = wl;
 							long ip = ipoint( Enerwn*WAVNRYD );

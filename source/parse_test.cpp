@@ -5,6 +5,7 @@
 #include "iso.h"
 #include "monitor_results.h"
 #include "parser.h"
+#include "lines.h"
 
 inline void StuffCommand( const string& chCmd, Parser& p, bool lgPrint)
 {
@@ -211,7 +212,10 @@ void ParseTest(Parser &p)
 
 		/* >>chng 02 apr 19, from 0.7258 to 0.946, due to adding Lyman cont depth */
 		/* >>chng 07 oct 22, from 0.946  to 1.108, resolve l-levels of h-like sequence */
-		StuffCommand( "MONITOR LINE \"CA B\" 4861.33 1.108", p, lgPrintTest );
+		ostringstream wavlen;
+		wavlen << setprecision( LineSave.sig_figs ) << Hbeta_WavLen;	 
+
+		StuffCommand( "MONITOR LINE \"CA B\"" + wavlen.str() + " 1.108", p, lgPrintTest );
 		ParseMonitorResults(p);
 
 		/* >>chng 02 apr 19, from 2.4603 to 3.25, due to adding Lyman cont depth 

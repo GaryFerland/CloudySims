@@ -103,7 +103,8 @@ monitor line luminosity "blnd" 1549 8.588 ##total of sum of both C IV comp
 ## >>chng 11 nov 16, from 7.864 to 7.838, adjust newmole monitors
 ## >>chng 13 nov 22, from 7.838 to 7.868, collapsed branch merge r8609
 ## >>chng 19 aug 06, from 7.868 to 7.847, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
-monitor line luminosity "he 2"  1640.43 7.847
+## >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
+monitor line luminosity "he 2"  1640.40A 7.847
 ##
 ##total O III] 1666
 ## >>chng 05 jul 17, from 7.20 to 7.14, first run in 6 mo

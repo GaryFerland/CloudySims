@@ -20,7 +20,7 @@ void t_LineSave::zero()
 	/* >>chng 02 apr 22 from 2 to 3 since added unit at 1 */
 	/* >>chng 06 mar 11, from 3 to -1 will now set to "H  1" 4861 */
 	ipNormWavL = -1;
-	WavLNorm = 4861.33f;
+	WavLNorm = Hbeta_WavLen;
 	lgNormSet = false;
 	sig_figs = sig_figs_max;
 

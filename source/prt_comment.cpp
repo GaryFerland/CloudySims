@@ -285,7 +285,7 @@ void PrtComment(void)
 	}
 
 	/* HBeta is used later in the code to check on line intensities */
-	if( cdLine("Pump",4861.33f,&relfl,&absint)<=0 )
+	if( cdLine("Pump",Hbeta_WavLen,&relfl,&absint)<=0 )
 	{
 		fprintf( ioQQQ, " PROBLEM Did not find Pump H-beta, set to unity\n" );
 		relfl = 1.;
@@ -295,7 +295,7 @@ void PrtComment(void)
 	/* now find total Hbeta */
 	/* >>chng from "totl" Hbeta which was a special entry, to "H  1" Hbeta, which 
 	 * is the general case */
-	if( cdLine( "H  1",wlAirVac(4861.33),&HBeta,&absint)<=0 )
+	if( cdLine( "H  1",wlAirVac(Hbeta_WavLen),&HBeta,&absint)<=0 )
 	{
 		fprintf( ioQQQ, " NOTE Did not find H  1 H-beta - set intensity to unity, "
 			"will not check on importance of H 1 pumping.\n" );
@@ -1392,7 +1392,7 @@ void PrtComment(void)
 		}
 	}
 
-	if( cdLine("H-CT",6562.81,&relhm,&absint)<=0 )
+	if( cdLine("H-CT",6562.80,&relhm,&absint)<=0 )
 	{
 		fprintf( ioQQQ, " Comment did not find H-CT H-alpha\n" );
 		ShowMe();

@@ -20,7 +20,8 @@ turbulence 8 km/sec
 ## OTHER PHYS PARAMS
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-normalize to "Q(H)" 4861.33A 
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+normalize to "Q(H)" 4861.32A 
 ##
 hden 3.5
 ##init "fast.ini"
@@ -62,7 +63,8 @@ save wind "dynamics_HII_PDR.wnd"
 ## set equivalent Av, from 0.4246 to 0.9713
 ## >>chng 16 dec 15, from 0.9713 to 0.4217, fix abrupt end of sim at 4 iterations
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "H  1" 4861.33A 0.4217
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1" 4861.32A 0.4217
 #
 # dynamics_HII_PDR.in
 #

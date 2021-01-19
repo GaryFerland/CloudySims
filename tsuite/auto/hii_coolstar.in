@@ -49,7 +49,8 @@ save continuum last units microns "hii_coolstar.con"
 save lines, zone cumulative, "hii_coolstar.cum"
 ## >>chng 13 jul 24, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-H  1 4861.33A
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+H  1 4861.32A
 o  3  5006.84
 blnd  3727
 O  1  6300.30
@@ -61,25 +62,30 @@ end of lines
 ## >>chng 07 oct 26, from 36.675 to 36.695, very close to botch after recent changes
 ## >>chng 13 jul 24, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line luminosity "H  1" 4861.33A 36.695
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line luminosity "H  1" 4861.32A 36.695
 ## >>chng 13 jan 10, from 1 to 1.0000, fix in-zone continuum shielding
 ## >>chng 13 jan 13, from 1 to 0.9, Pelec_esc change
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "Q(H)" 4861.33A > 0.9.
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Q(H)" 4861.32A > 0.9.
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "Q(H)" 4861.33A < 1.05
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Q(H)" 4861.32A < 1.05
 ##
 ## >>chng 07 oct 22, from 3.01 to 2.77, resolve l-levels of h-like sequence
 ## >>chng 08 apr 30, from 2.77 to 3.03, H, He topoff change
 ## >>chng 13 jul 25, wl from 6563 to 6562.85A, increased wl precision to 6 sig. fig.
 ## >>chng 16 aug 07, from 3.03 to 2.83, Marios bug fixes
 ## >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
-monitor line "H  1" 6562.81A 2.83
+## >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1" 6562.80A 2.83
 ## >>chng 13 jul 25, wl from 6563 to 6562.85A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
-monitor line "Ca B" 6562.81A 2.96
+## >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Ca B" 6562.80A 2.96
 ##
 ## >>chng 02 jan 19, from 24.79 to 23.52, slow drift down
 ## >>chng 08 apr 30, from 23.52 to 25.46 H, He topoff change

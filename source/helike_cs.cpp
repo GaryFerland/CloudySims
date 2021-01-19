@@ -412,26 +412,59 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 	}
 	/* this branch is ground to n=2 or from n=2 to n=2, for ions only	*/
 	/*>>refer Helike	CS	Zhang, Honglin, & Sampson, Douglas H. 1987, ApJS 63, 487	*/
+	/*>>refer Helike	CS Fe	Si et al., 2017, A&A, 600, A85 */
 	else if( nelem!=ipHELIUM && nHi==2 && nLo<=2 && Collider==ipELECTRON)
 	{
 		*where = "Zhang ";
+		if( nelem == ipIRON )
+			*where = "Si+2017";
 		factor1 = 1.;
 
 		/* Collisions from gound	*/
 		if( nLo == 1 )
 		{
 			if( lHi==0 && sHi==3 ) // to 2tripS
-				cs = 0.25f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 3.16e-4;
+				else
+					cs = 0.25f/POW2(nelem+1.f);
+			}
 			else if( lHi==0 && sHi==1 ) // to 2singS
-				cs = 0.4f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 1.05e-3;
+				else
+					cs = 0.4f/POW2(nelem+1.f);
+			}
 			else if( lHi==1 && sHi==3 && jHi==0 ) // to 2tripP0
-				cs = 0.15f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs =1.51e-4;
+				else
+					cs = 0.15f/POW2(nelem+1.f);
+			}
 			else if( lHi==1 && sHi==3 && jHi==1 ) // to 2tripP1
-				cs = 0.45f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 7.90e-4;
+				else
+					cs = 0.45f/POW2(nelem+1.f);
+			}
 			else if( lHi==1 && sHi==3 && jHi==2 ) // to 2tripP2
-				cs = 0.75f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 7.13e-4;
+				else
+					cs = 0.75f/POW2(nelem+1.f);
+			}
 			else if( lHi==1 && sHi==1 ) // to 2singP
-				cs = 1.3f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 4.18e-3;
+				else
+					cs = 1.3f/POW2(nelem+1.f);
+			}
 			else
 				TotalInsanity();
 		}
@@ -439,15 +472,40 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 		else if( nLo==2 && lLo==0 && sLo==3 )
 		{
 			if( lHi==0 && sHi==1 ) // to 2singS
-				cs = 2.75f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 2.16e-3;
+				else
+					cs = 2.75f/POW2(nelem+1.f);
+			}
 			else if( lHi==1 && sHi==3 && jHi==0 ) // to 2tripP0
-				cs = 60.f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 1.43e-1;
+				else
+					cs = 60.f/POW2(nelem+1.f);
+			}
 			else if( lHi==1 && sHi==3 && jHi==1 ) // to 2tripP1
-				cs = 180.f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 3.84e-1;
+				else
+					cs = 180.f/POW2(nelem+1.f);
+			}
 			else if( lHi==1 && sHi==3 && jHi==2 ) // to 2tripP2
-				cs = 300.f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 6.28e-1;
+				else
+					cs = 300.f/POW2(nelem+1.f);
+			}
 			else if( lHi==1 && sHi==1 ) // to 2singP
-				cs = 5.8f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 2.95e-4;
+				else
+					cs = 5.8f/POW2(nelem+1.f);
+			}
 			else
 				TotalInsanity();
 		}
@@ -455,13 +513,33 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 		else if( nLo==2 && lLo==0 && sLo==1 )
 		{
 			if( lHi==1 && sHi==3 && jHi==0 ) // to 2tripP0
-				cs = 0.56f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 3.99e-4;
+				else
+					cs = 0.56f/POW2(nelem+1.f);
+			}
 			else if( lHi==1 && sHi==3 && jHi==1 ) // to 2tripP1
-				cs = 1.74f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 7.23e-2;
+				else
+					cs = 1.74f/POW2(nelem+1.f);
+			}
 			else if( lHi==1 && sHi==3 && jHi==2 ) // to 2tripP2
-				cs = 2.81f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 2.05e-3;
+				else
+					cs = 2.81f/POW2(nelem+1.f);
+			}
 			else if( lHi==1 && sHi==1 ) // to 2singP
-				cs = 190.f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 3.68e-1;
+				else
+					cs = 190.f/POW2(nelem+1.f);
+			}
 			else
 				TotalInsanity();
 		}
@@ -469,11 +547,26 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 		else if( nLo==2 && lLo==1 && sLo==3 && jLo==0 )
 		{
 			if( lHi==1 && sHi==3 && jHi==1 ) // to 2tripP1
-				cs = 8.1f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 5.61e-3;
+				else
+					cs = 8.1f/POW2(nelem+1.f);
+			}
 			else if( lHi==1 && sHi==3 && jHi==2 ) // to 2tripP2
-				cs = 8.2f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 8.2e-3;
+				else
+					cs = 8.2f/POW2(nelem+1.f);
+			}
 			else if( lHi==1 && sHi==1 ) // to 2singP
-				cs = 3.9f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 2.73e-3;
+				else
+					cs = 3.9f/POW2(nelem+1.f);
+			}
 			else
 				TotalInsanity();
 		}
@@ -481,9 +574,19 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 		else if( nLo==2 && lLo==1 && sLo==3 && jLo==1 )
 		{
 			if( lHi==1 && sHi==3 && jHi==2 ) // to 2tripP2
-				cs = 30.f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 2.46e-2;
+				else
+					cs = 30.f/POW2(nelem+1.f);
+			}
 			else if( lHi==1 && sHi==1 ) // to 2singP
-				cs = 11.7f/POW2(nelem+1.f);
+			{
+				if( nelem == ipIRON )
+					cs = 9.39e-3;
+				else
+					cs = 11.7f/POW2(nelem+1.f);
+			}
 			else
 				TotalInsanity();
 		}
@@ -492,7 +595,10 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 		{
 			ASSERT( lHi==1 && sHi==1 );
 			/* to 2singP	*/
-			cs = 19.5f/POW2(nelem+1.f) * (realnum)iso_ctrl.lgColl_l_mixing[ipHE_LIKE];
+			if( nelem == ipIRON )
+				cs =1.22e-3;
+			else
+				cs = 19.5f/POW2(nelem+1.f) * (realnum)iso_ctrl.lgColl_l_mixing[ipHE_LIKE];
 		}
 		else
 			TotalInsanity();

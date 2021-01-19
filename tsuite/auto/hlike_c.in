@@ -22,7 +22,8 @@ constant temperature = 1.e5
 # commands controlling output    =========
 ## >>chng 13 jul 24, wl from 135.0A to 134.965A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 25, wl from 134.965A to 134.949A, up Rydberg constant
-normalize to "C  6" 134.949A ## the balmer beta transition
+## >>chng 20 aug 22, wl from 134.949A to 134.950A, switched from computed to tabulated energies for H and He isoseq
+normalize to "C  6" 134.950A ## the balmer beta transition
 save overview "hlike_c.ovr"
 save performance "hlike_c.per"
 save results "hlike_c.rlt"

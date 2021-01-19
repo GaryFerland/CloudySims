@@ -50,7 +50,8 @@ aperture beam
 # commands controlling output    =========
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-normalize to "CaBo" 4861.33A
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+normalize to "CaBo" 4861.32A
 print line faint -4
 # the normalizing line is not defined on the emergent line stack
 print lines emergent off

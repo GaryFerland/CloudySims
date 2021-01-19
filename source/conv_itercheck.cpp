@@ -17,6 +17,7 @@
 #include "save.h"
 #include "rt.h"
 #include "conv.h"
+#include "lines.h"
 
 /*ConvIterCheck check whether model has converged or whether more iterations
  * are needed - implements the iterate to convergence command */
@@ -44,8 +45,8 @@ void ConvIterCheck( void )
 	HbFracOutOld = HbFracOutNew;
 
 	double a, total, BeamedIn;
-	long int ipTotal = cdLine( "H  1" , 4861.33f , &a , &total );
-	long int ipInwd  = cdLine( "Inwd" , 4861.33f , &a , &BeamedIn );
+	long int ipTotal = cdLine( "H  1" , Hbeta_WavLen, &a , &total );
+	long int ipInwd  = cdLine( "Inwd" , Hbeta_WavLen, &a , &BeamedIn );
 
 	/* 2014 aug 23, mchatzikos
 	 * when cdLine returned -37 for log of zero intensity, the ratio below evaluated to 0;

@@ -832,7 +832,7 @@ void PrtFinal(void)
 	{
 		static const int NWLH = 21;
 		/* list of all H case b lines */
-		realnum wlh[NWLH] = { 6562.81e0f, 4861.33e0f, 4340.46e0f, 4101.73e0f, 1.87510e4f, 1.28180e4f,
+		realnum wlh[NWLH] = { 6562.80e0f, Hbeta_WavLen, 4340.46e0f, 4101.73e0f, 1.87510e4f, 1.28180e4f,
 						  1.09380e4f, 1.00493e4f, 2.62513e4f, 2.16551e4f, 1.94454e4f, 7.45777e4f,
 						  4.65247e4f, 3.73951e4f, 4.05113e4f, 7.45777e4f, 3.29607e4f, 1215.67e0f,
 						  1025.72e0f, 972.537e0f, 949.743e0f };
@@ -867,7 +867,7 @@ void PrtFinal(void)
 	{
 		/* table exceeded - kill all He case b predictions*/
 		static const int NWLHE = 20;
-		realnum wlhe[NWLHE] = {1640.43e0f, 1215.13e0f, 1084.94e0f, 1025.27e0f, 4685.64e0f, 3203.04e0f,
+		realnum wlhe[NWLHE] = {1640.40e0f, 1215.13e0f, 1084.94e0f, 1025.27e0f, 4685.70e0f, 3203.04e0f,
 						 2733.24e0f, 2511.15e0f, 1.01233e4f, 6559.91e0f, 5411.37e0f, 4859.18e0f,
 						 1.86362e4f, 1.16260e4f, 9344.62, 8236.51e0f, 303.784e0f, 256.317e0f,
 						 243.027e0f, 237.331e0f};
@@ -899,12 +899,12 @@ void PrtFinal(void)
 
 	/* find apparent helium abundance, will not find these if helium is turned off */
 
-	if( cdLine("H  1",wlAirVac(4861.33),&hbeta,&absint)<=0 )
+	if( cdLine("H  1",wlAirVac(Hbeta_WavLen),&hbeta,&absint)<=0 )
 	{
 		if( dense.lgElmtOn[ipHYDROGEN] )
 		{
 			/* this is a major logical error if hydrogen is turned on */
-			fprintf( ioQQQ, " PrtFinal could not find H  1 4861.33 with cdLine.\n" );
+			fprintf( ioQQQ, " PrtFinal could not find H  1  %.2f with cdLine.\n", Hbeta_WavLen );
 			cdEXIT(EXIT_FAILURE);
 		}
 		else
@@ -931,7 +931,7 @@ void PrtFinal(void)
 
 		/* get HeII 4686 */
 		/* >>chng 06 may 15, changed this so that it works for up to six sig figs. */
-		if( cdLine("He 2",wlAirVac(4685.64),&he4686,&absint)<=0 )
+		if( cdLine("He 2",wlAirVac(4685.70),&he4686,&absint)<=0 )
 		{
 			/* 06 aug 28, from numLevels_max to _local. */
 			if( iso_sp[ipH_LIKE][ipHELIUM].numLevels_local > 5 )
@@ -1127,9 +1127,9 @@ void PrtFinal(void)
 		}
 
 		/* >>chng 06 may 15, changed this so that it works for up to six sig figs. */
-		if( cdLine("Ca B",wlAirVac(4861.33),&hbcab,&absint)<=0 )
+		if( cdLine("Ca B",wlAirVac(Hbeta_WavLen),&hbcab,&absint)<=0 )
 		{
-			fprintf( ioQQQ, " PrtFinal could not find Ca B 4861.33 with cdLine.\n" );
+			fprintf( ioQQQ, " PrtFinal could not find Ca B %.2f with cdLine.\n", Hbeta_WavLen );
 			cdEXIT(EXIT_FAILURE);
 		}
 

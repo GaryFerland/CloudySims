@@ -571,7 +571,7 @@ void IterStart()
 	else
 	{
 		label = "H  1";
-		wvlng = 4861.33_r;
+		wvlng = Hbeta_WavLen;
 	}
 	LineSave.ipNormWavL = LineSave.findline( LineID(label, wvlng) );
 	if( LineSave.ipNormWavL < 0 )

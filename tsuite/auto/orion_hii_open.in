@@ -43,7 +43,8 @@ save element nitrogen last no hash "orion_hii_open.nit"
 save lines, array "orion_hii_open.lina" units microns last no hash
 ## >>chng 18 apr 18 add lines that form in both H+ and H0 regions of a PDF
 save line emissivity "orion_hii_open.ems" last no hash emergent
-H  1  4861.33A
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+H  1  4861.32A
 O  3  5006.84A
 Blnd  5199A
 O  1  6300.30A
@@ -55,10 +56,12 @@ save linelist "orion_hii_open.lin" "LineList_HII.dat" last no hash emergent abso
 ## >>chn 05 mar 07, add this to test suite 
 ## >>chng 13 jul 26, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "H  1" 4861.33A intensity -11.253
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1" 4861.32A intensity -11.253
 ##
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "H  1" 4861.33A intensity -11.43 emergent
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1" 4861.32A intensity -11.43 emergent
 ## 
 ## >>chng 13 jul 26, wl from 3889A to 3889.07A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 25, wl from 3889.07A to 3889.05A, update Rydberg constant

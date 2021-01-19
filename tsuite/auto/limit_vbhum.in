@@ -36,7 +36,8 @@ monitor nzone 70 error 0.01
 monitor hydrogen ionization 1 -1.714
 ## >>chng 13 jul 24, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "Ca B" 4861.33A 1.000
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Ca B" 4861.32A 1.000
 monitor line "Bac " 3646 15.24
 ##
 ## >>chng 05 mar 28, from 5 to 3.5, impr mol converg

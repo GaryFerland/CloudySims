@@ -572,7 +572,7 @@ void ParseSave(Parser& p)
 			strcpy( save.chSave[save.nsave], "COOL");
 			/*>>chng 06 jun 06, revise to be same as save cooling */
 			sncatf( chHeader,
-					 "#depth cm\tTemp K\tHtot erg/cm3/s\tCtot erg/cm3/s\tAdve Ctot erg/cm3/s\tcool fracs\n" );
+				 "#depth cm\tTemp K\tHtot erg/cm3/s\tCtot erg/cm3/s\tAdve Ctot erg/cm3/s\tcool fracs\n" );
 		}
 	}
 

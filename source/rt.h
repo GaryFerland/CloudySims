@@ -192,6 +192,9 @@ struct t_rt : public module {
 	/** include electron scattering escape for lines? */
 	bool lgElecScatEscape;
 
+	/** include electron scattering escape for line intensity? */
+	bool lgElecScatInten;
+
 	/** dTauMase is smallest maser optical depth in atoms, set in
 	 * RT_tau_inc for H, and in tauchn for heavy elements
 	 * it is negative or zero */

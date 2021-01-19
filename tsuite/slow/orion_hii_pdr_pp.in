@@ -68,7 +68,8 @@ print line faint -6
 # normalize to Ha
 ## >>chng 13 jul 24, wl from 6563 to 6562.85A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
-normalize to "H  1" 6562.81A
+## >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
+normalize to "H  1" 6562.80A
 save performance "orion_hii_pdr_pp.per"
 save overview last "orion_hii_pdr_pp.ovr"
 save monitors last "orion_hii_pdr_pp.asr"
@@ -101,7 +102,8 @@ save grain temperature "orion_hii_pdr_pp.grntem1"
 ## >>chng 08 jul 23, from 0.470 to 0.490 chng Pesc line radiation pressure
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line luminosity "h  1" 4861.33A 0.490
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line luminosity "h  1" 4861.32A 0.490
 ##
 ## >>chng 06 nov 24, from 1.052 to 1.029, turn on Badnell RR
 ## >>chng 06 nov 29, from 1.029 to 1.069, Badnell DR turned on

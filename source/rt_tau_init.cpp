@@ -560,8 +560,6 @@ void RT_tau_init(void)
 		{
 			if( dense.lgElmtOn[nelem] )
 			{
-				double Aprev;
-				realnum ratio;
 				/* La may be case B, tlamin set to 1e9 by default with case b command */
 				iso_sp[ipHE_LIKE][nelem].trans(ipHe2p1P,ipHe1s1S).Emis().TauIn() = opac.tlamin;
 
@@ -571,34 +569,26 @@ void RT_tau_init(void)
 				iso_sp[ipHE_LIKE][nelem].trans(ipHe2p1P,ipHe1s1S).Emis().TauTot() = 
 					2.f*iso_sp[ipHE_LIKE][nelem].trans(ipHe2p1P,ipHe1s1S).Emis().TauIn();
 
-				ratio = opac.tlamin/iso_sp[ipHE_LIKE][nelem].trans(ipHe2p1P,ipHe1s1S).Emis().opacity();
-
-				/* this will be the trans prob of the previous lyman line, will use this to 
-				 * find the next one up in the series */
-				Aprev = iso_sp[ipHE_LIKE][nelem].trans(ipHe2p1P,ipHe1s1S).Emis().Aul();
+				realnum ratio = opac.tlamin/iso_sp[ipHE_LIKE][nelem].trans(ipHe2p1P,ipHe1s1S).Emis().opacity();
 
 				/* >>chng 02 jan 05, remove explicit list of lyman lines, use As to guess
 				 * which are which - this will work for any number of levels */
-				for( long i=ipHe2p1P+1; i < iso_sp[ipHE_LIKE][nelem].numLevels_max; i++ )
+				for( long i=1; i < iso_sp[ipHE_LIKE][nelem].numLevels_max; i++ )
 				{
 					if( iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).ipCont() <= 0 )
 						continue;
 
-					/* >>chng 02 mar 15, add test for collapsed levels - As are very much
-					 * smaller at boundary between collapsed/resolved so this test is needed*/
-					if( iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().Aul()> Aprev/10. ||
-						iso_sp[ipHE_LIKE][nelem].st[i].S() < 0 )
-					{
-						Aprev = iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().Aul();
-
-						iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().TauIn() = 
-							ratio*iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().opacity();
-						/* reset line optical depth to continuum source */
-						iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().TauCon() = 
-							iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().TauIn();
-						iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().TauTot() = 
-							2.f*iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().TauIn();
-					}
+					iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().TauIn() =
+						ratio*iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().opacity();
+					/* reset line optical depth to continuum source */
+					iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().TauCon() =
+						iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().TauIn();
+					iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().TauTot() =
+						2.f*iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().TauIn();
+					/*fprintf(ioQQQ,
+						"RT_tau_init optical depths  Z=%li i=%li  tot=%g in=%g \n",
+						nelem, i, iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().TauTot(),
+						iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().TauIn() );*/
 				}
 			}
 		}

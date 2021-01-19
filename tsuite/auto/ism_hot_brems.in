@@ -51,7 +51,8 @@ save dr last "ism_hot_brems.dr"
 ## >>chng 16 aug 07, from -4.942 to -5.014, Fran bug fix
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 19 aug 06, from -5.014 to -4.969, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
-monitor line luminosity "H  1" 4861.33A -4.969
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line luminosity "H  1" 4861.32A -4.969
 ##
 ## >>chng 01 mar 17, all lines to luminosity instead of rel intensity
 ## >>chng 02 may 27, from -1.274 to -1.504, improved ism_hot_brems cooling

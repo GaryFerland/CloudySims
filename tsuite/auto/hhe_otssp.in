@@ -34,12 +34,14 @@ save dr "hhe_otssp.dr"  last
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, change to testing "Ca B" 4861.36A (was "H  1" 4861.36A).
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "Ca B" 4861.33A = 1.026
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Ca B" 4861.32A = 1.026
 ## 
 ## >>chng 02 nov 20, from error 0.06 to 1.07, change assert to the value
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "Q(H)" 4861.33A = 1.07
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Q(H)" 4861.32A = 1.07
 ## 
 ## >>chng 07 oct 22, from 0.3512 to 0.3235, resolve l-levels of h-like sequence
 ## >>chng 08 apr 19, incr error since nl atom has more limited accuracy
@@ -58,7 +60,8 @@ monitor line "Ca B" 1.87510m = 0.349 ##Paschen alpha
 ## >>chng 16 may 13, from 0.1623 to 0.1701, "PS64 only dipole l-changing calculations"
 ## >>chng 17 may 25, wl from 1.28181m to 1.28180m, up Rydberg constant
 ## >>chng 17 sep 09, from 0.1701 to 0.162, fix bug in high n collisional excitation rates for H-like iso-sequences
-monitor line "H  1" 1.28180m = 0.162 ##Paschen beta
+## >>chng 20 aug 22, wl from 1.28180m to 1.28181m, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1" 1.28181m = 0.162 ##Paschen beta
 ## 
 ## >>chng 06 may 08, from 0.0835 to 0.0858, RP update high-n As H-like
 ## >>chng 07 oct 22, from 0.0858 to 0.0738, resolve l-levels of h-like sequence
@@ -68,9 +71,11 @@ monitor line "H  1" 1.28180m = 0.162 ##Paschen beta
 ## >>chng 15 may 27, from 0.0778 to 0.0823, PS64 fixes
 ## >>chng 16 may 13, from 0.0823 to 0.0881, "PS64 only dipole l-changing calculations"
 ## >>chng 16 aug 07, from 0.0881 to 0.0739, Marios bug fixes
-monitor line "H  1" 4.05113m = 0.0739 ##Bracket alpha
+## >>chng 20 aug 22, wl from 4.05113m to 4.05115m, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1" 4.05115m = 0.0739 ##Bracket alpha
 ## >>chng 13 jul 25, wl from 4.051m to 4.05113m, increased wl precision to 6 sig. fig.
-monitor line "Ca B" 4.05113m = 0.0830 ##Bracket alpha
+## >>chng 20 aug 22, wl from 4.05113m to 4.05115m, switched from computed to tabulated energies for H and He isoseq
+monitor line "Ca B" 4.05115m = 0.0830 ##Bracket alpha
 ## 
 ## >>chng 07 oct 22, from 0.0477 to 0.0440, resolve l-levels of h-like sequence
 ## >>chng 11 nov 16, from 0.044 to 0.0465, adjust newmole monitors
@@ -78,7 +83,8 @@ monitor line "Ca B" 4.05113m = 0.0830 ##Bracket alpha
 ## >>chng 16 may 13, from 0.0465 to 0.0486, "PS64 only dipole l-changing calculations"
 ## >>chng 16 aug 07, from 0.0486 to 0.0443, Marios bug fixes
 ## >>chng 17 may 25, wl from 2.62515m to 2.62513m, up Rydberg constant
-monitor line "H  1" 2.62513m = 0.0443 beta
+## >>chng 20 aug 22, wl from 2.62513m to 2.62515m, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1" 2.62515m = 0.0443 beta
 monitor line "BaC " 3646 = 18.26 ##Balmer continuum rel to h-beta
 ##
 # helium lines

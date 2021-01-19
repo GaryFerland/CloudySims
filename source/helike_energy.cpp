@@ -175,6 +175,17 @@ double helike_energy(long nelem, long n, long l, long s, long j)
 	else
 	{
 		Ef = iso_sp[ipHE_LIKE][nelem].energy_ioniz(n, l, s, 2*j+1);
+
+		enum{ DEBUG_LOC = false };
+		if( DEBUG_LOC )
+		{
+			fprintf( ioQQQ, "debug E_Helium n l s QN2ind %.2e %ld %ld %ld %ld\n",
+					Ef, n, l, s, QN2ind(n, l, s, 2*j+1) );
+			fprintf( ioQQQ, "debug E_Helium level_ion Ionpot %.2e %.2e \n",
+					iso_sp[ipHE_LIKE][nelem].energy_ioniz(n, l, s, 2*j+1),
+					iso_sp[ipHE_LIKE][nelem].IonPot);
+		}
+
 		if( Ef < 0. )
 		{
 			double Eff_n = n - helike_quantum_defect( nelem, n, l, s, j );

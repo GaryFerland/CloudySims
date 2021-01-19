@@ -99,7 +99,8 @@ monitor itrzn 2.101 error 0.07
 ## >>chng 14 apr 08, from 665 to 707, O excit state photo back in
 ## >>chng 15 may 14, from 707 to 700, CollisSuppres, final version from Dragan Nikolic
 ## >>chng 18 jun 17, from 700 to 671, improve zone 0 thermal relaxation
-monitor nzone 671 error 0.01
+## >>chng 20 sep 30, from 671 to 679, update phfit.dat (!!) increase error 0.01 -> 0.02
+monitor nzone 679 error 0.02
 ##
 ## >>chng 13 jun 27, from -8.869 to -5.661, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.

@@ -44,13 +44,15 @@ save monitors last "h_t4_conemis_thick.asr"
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, change to testing "Ca B" 4861.36A (was "H  1" 4861.36A).
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "Ca B" 4861.33A 1.075
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Ca B" 4861.32A 1.075
 ## >>chng 07 jul 27, from 1.000 to 1.057, repair common error in several collision routines
 ## >>chng 08 mar 20, from 1.057 to 1.008, value drifted but did not throw assert
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, from 1.008 to 1.07, change normalizing line to "H  1" 4861.36A.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "Q(H)" 4861.33A 1.07
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Q(H)" 4861.32A 1.07
 ## >>chng 02 may 27, from 0.2256 to 0.247, improved brems gaunt factors
 ## >>chng 02 jun 21, from 0.247 to 0.222, improved brems gaunt factors
 ## >>chng 13 jul 25, wl from 9.325m to 9.32488m, increased wl precision to 6 sig. fig.
@@ -92,7 +94,8 @@ monitor line "nFnu"  1585.12A  0.258 error 0.15
 ## >>chng 13 jul 25, wl from 6563 to 6562.85A, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, from 2.583 to 2.777, change normalizing line to "H  1" 4861.36A.
 ## >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
-monitor line "H  1" 6562.81A  2.777
+## >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1" 6562.80A  2.777
 ## >>chng 07 nov 17, from 0.4773 to 0.4394, changes in r1512
 ## >>chng 13 jul 25, wl from 4340 to 4340.49A, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, from 0.4394 to 0.471, change normalizing line to "H  1" 4861.36A.
@@ -112,13 +115,15 @@ monitor line "H  1"  1.87510m  0.2976
 ## >>chng 13 jul 25, wl from 1.282m to 1.28181m, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, from 0.141 to 0.1532, change normalizing line to "H  1" 4861.36A.
 ## >>chng 17 may 25, wl from 1.28181m to 1.28180m, up Rydberg constant
-monitor line "H  1"  1.28180m  0.1532      
+## >>chng 20 aug 22, wl from 1.28180m to 1.28181m, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1"  1.28181m  0.1532      
 ## 
 ## >>chng 07 oct 22, from 0.0879 to 0.0826, resolve l-levels of h-like sequence
 ## >>chng 13 jul 25, wl from 1.094m to 1.09381m, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, from 0.0826 to 0.0886, change normalizing line to "H  1" 4861.36A.
 ## >>chng 17 may 25, wl from 1.09381m to 1.09380m, up Rydberg constant
-monitor line "H  1"  1.09380m  0.0886
+## >>chng 20 aug 22, wl from 1.09380m to 1.09381m, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1"  1.09381m  0.0886
 ##
 ## >>chng 07 oct 22, from 0.0683 to 0.0571, resolve l-levels of h-like sequence
 ## >>chng 07 nov 17, from 0.0571 to 0.0600, changes in r1512
@@ -127,7 +132,8 @@ monitor line "H  1"  1.09380m  0.0886
 ## >>chng 16 may 13, from 0.0649 to 0.0695, "PS64 only dipole l-changing calculations"
 ## >>chng 17 may 25, wl from 4.05113m to 4.05113m, up Rydberg constant
 ## >>chng 17 sep 09, from 0.0695 to 0.0652, fix bug in high n collisional excitation rates for H-like iso-sequences
-monitor line "H  1"  4.05113m  0.0652      
+## >>chng 20 aug 22, wl from 4.05113m to 4.05115m, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1"  4.05115m  0.0652      
 ## 
 ## >>chng 06 jul 18, from 0.0407 to 0.0389 RP major upgrade VS coll strengths
 ## >>chng 07 jul 27, from 0.0389 to 0.0414, repair common error in several collision routines
@@ -136,7 +142,8 @@ monitor line "H  1"  4.05113m  0.0652
 ## >>chng 15 may 27, from 0.0352 to 0.0372, PS64 fixes
 ## >>chng 15 dec 15, from 0.0372 to 0.0394, change normalizing line to "H  1" 4861.36A.
 ## >>chng 17 may 25, wl from 2.62515m to 2.62513m, up Rydberg constant
-monitor line "H  1"  2.62513m  0.0394      
+## >>chng 20 aug 22, wl from 2.62513m to 2.62515m, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1"  2.62515m  0.0394      
 ## 
 ## >>chng 06 jul 18, from 0.0255 to 0.0243 RP major upgrade VS coll strengths
 ## >>chng 07 mar 13, from 0.0243 to 0.0255, change in lines_service to fix cache errors
@@ -151,7 +158,8 @@ monitor line "H  1"  2.62513m  0.0394
 ## >>chng 16 may 13, from 0.0191 to 0.0213, "PS64 only dipole l-changing calculations"
 ## >>chng 16 aug 07, from 0.0213 to 0.0202, Marios bug fixes
 ## >>chng 17 may 25, wl from 7.45781m to 7.45777m, up Rydberg constant
-monitor line "H  1"  7.45777m  0.0202
+## >>chng 20 aug 22, wl from 7.45777m to 7.45782m, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1"  7.45782m  0.0202
 ## >>chng 07 jul 27, from 0.0137 to 0.0144, repair common error in several collision routines      
 ## >>chng 07 oct 22, from 0.0144 to 0.0114, resolve l-levels of h-like sequence
 ## >>chng 08 apr 03, do not predict lines from collapsed levels

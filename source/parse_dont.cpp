@@ -366,6 +366,12 @@ void ParseDont(Parser &p )
 		rt.lgElecScatEscape = false;
 	}
 
+	else if( p.nMatch("SCAT") && p.nMatch("INTEN"))
+	{
+		/* electron scattering is included as a contribution to line escape probs but not the reported line intensity */
+		rt.lgElecScatInten = false;
+	}
+
 	else if( p.nMatch("SECO") )
 	{
 		/* turn off secondary electron ionizations */

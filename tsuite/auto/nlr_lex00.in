@@ -86,7 +86,8 @@ save monitors last "nlr_lex00.asr"
 ## >>chng 13 jan 10, from 0.1446 to 0.1676, fix in-zone continuum shielding
 ## >>chng 13 jul 26, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "H  1" luminosity 4861.33A 0.1676
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "H  1" luminosity 4861.32A 0.1676
 ##
 ## >>chng 01 may 10, from 1.08 to 0.995, ct network chng
 ## >>chng 02 nov 08, from 0.995 to 0.9376, better est of Q(H) with temp
@@ -96,7 +97,8 @@ monitor line "H  1" luminosity 4861.33A 0.1676
 ## >>chng 13 jan 10, from 1.001 to 0.9497, fix in-zone continuum shielding
 ## >>chng 13 jul 26, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "Q(H)" 4861.33A 0.9497
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Q(H)" 4861.32A 0.9497
 ##
 ## >>chng 06 aug 11, from 29.6 to 31.9 Meudon06 badnell, bowen CT cs update
 ## >>chng 07 oct 22, from 31.9 to 30.3, resolve l-levels of h-like sequence
@@ -111,7 +113,8 @@ monitor line "H  1" 1215.67A 33.32
 ## >>chng 13 jul 26, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 16 aug 07, from 0.974 to 0.929, Marios bug fixes
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line "Ca B" 4861.33A 0.929
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Ca B" 4861.32A 0.929
 ##
 ## >>chng 01 may 10, from 0.24 to 0.224, ct network chng
 ## >>chng 02 nov 20, from 0.224 to 0.240 new he diff ots
@@ -126,11 +129,13 @@ monitor line "Ca B" 4861.33A 0.929
 ## >>chng 13 jan 10, from 0.2596 to 0.2478, fix in-zone continuum shielding
 ## >>chng 13 jul 26, wl from 4686 to 4685.64A, increased wl precision to 6 sig. fig.
 ## >>chng 16 aug 07, from 0.2478 to 0.1942, Marios bug fixes
-monitor line "He 2" 4685.64A 0.1942
+## >>chng 20 aug 25, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
+monitor line "He 2" 4685.70A 0.1942
 ## >>chng 12 oct 22, from 0.235 to 0.2459, zone tau in rt_line_one
 ## >>chng 13 jan 29, from 0.2459 to 0.2348, more frequent 2nu OTS update
 ## >>chng 13 jul 26, wl from 4686 to 4685.64A, increased wl precision to 6 sig. fig.
-monitor line "Ca B" 4685.64A 0.2348
+## >>chng 20 aug 25, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Ca B" 4685.70A 0.2348
 ##
 ## >>chng 01 may 10, from 1.68 to 1.571, ct network chng
 ## >>chng 02 nov 20, from 1.571 to 1.678 new he diff ots
@@ -142,12 +147,14 @@ monitor line "Ca B" 4685.64A 0.2348
 ## >>chng 12 oct 22, from 1.731 to 1.81, zone tau in rt_line_one
 ## >>chng 13 jan 10, from 1.81 to 1.68, fix in-zone continuum shielding
 ## >>chng 16 aug 07, from 1.68 to 1.546, Marios bug fixes
-monitor line "He 2" 1640.43 1.546
+## >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
+monitor line "He 2" 1640.40A 1.546
 ##
 ## >>chng 08 jun 25, from 1.731 to 1.653 (12.1) add source/sink to ioniz ladder
 ## >>chng 12 oct 22, from 1.653 to 1.729, zone tau in rt_line_one
 ## >>chng 13 feb 01, from 1.729 to 1.64, BUGFIX, largely undo r6703
-monitor line "Ca B" 1640.43 1.64
+## >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
+monitor line "Ca B" 1640.40A 1.64
 ##
 ## >>chng 02 dec 11, from 0.129 to 0.122, new hei
 ## >>chng 02 dec 11, from 0.122 to 0.128, better cs and coll ion splitting
@@ -503,7 +510,8 @@ monitor line luminosity "Stoy" 0 2.133
 ## >>chng 13 jan 10, from 0.1446 to 0.1676, fix in-zone continuum shielding
 ## >>chng 13 jul 26, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
-monitor line luminosity "H  1" 4861.33A 0.1676
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+monitor line luminosity "H  1" 4861.32A 0.1676
 ##
 ## >>chng 02 jul 19, from 3.83 to 4.06, better two photon
 ## >>chng 04 jul 07, from 4.06 to 3.84 oh ct integ

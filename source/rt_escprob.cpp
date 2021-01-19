@@ -861,6 +861,16 @@ void RT_DestProb(
 	t.Emis().Pdest() = eovrlp_v;
 
 	RT_line_electron_scatter( t , DopplerWidth );
+
+	/* true by default, set false with command No scattering intensity */
+	if( !rt.lgElecScatInten )
+	{
+		/* 20 07 15 option to not count electron scattering as line escape,
+		 * but rather as destruction
+		 */
+		t.Emis().Pdest() += t.Emis().Pelec_esc();
+		t.Emis().Pelec_esc() = 0.;
+	}
 }
 
 /*RT_line_electron_scatter evaluate electron scattering escape probability */

@@ -143,9 +143,11 @@ H  1 4101.73A
 # >>chng 17 may 25, wl from 4340.49 to 4340.46A, up Rydberg constant
 H  1 4340.46A
 # >>chng 17 may 26, wl from 4861.36 to 4861.33A, update Rydberg constant
-H  1 4861.33A
+# >>chng 20 aug 22, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+H  1 4861.32A
 # >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
-H  1 6562.81A
+# >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
+H  1 6562.80A
 #H  1 8598A
 #H  1 8665A
 #H  1 8750A

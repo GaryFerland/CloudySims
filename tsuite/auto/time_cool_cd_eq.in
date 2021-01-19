@@ -56,7 +56,8 @@ monitor line luminosity cumulative intrinsic "Fe10"      6374.54A   11.2796
 monitor line luminosity cumulative intrinsic "Fe 9"      8234.56A   10.8790
 ## >>chng 17 may 25, wl from 18.9732A to 18.9709A, up Rydberg constant
 ## >>chng 19 jul 24, fix bug on resolving ions excitation on He like
-monitor line luminosity cumulative intrinsic "O  8"      18.9709A   14.0127
+## >>chng 20 aug 22, wl from 18.9709A to 18.9696A, switched from computed to tabulated energies for H and He isoseq
+monitor line luminosity cumulative intrinsic "O  8"      18.9696A   14.0127
 monitor line luminosity cumulative intrinsic "O  7"      16.7725A   12.0288
 ## >>chng 16 aug 07, from 12.8 to 12.7, Marios bug fixes
 ## >>chng 17 sep 01, from 12.7 to 11.51, fix bug in high n collisional excitation rates for He-like iso-sequences
@@ -90,7 +91,8 @@ monitor line luminosity cumulative intrinsic "O  3"      5006.84A   11.5285
 ## >>chng 16 nov 14, from 11.28 to 11.12, Reintegration of RydDep after several bug fixes
 ## >>chng 19 jun 28, from 11.12 to 11.42, reintegrate iso_collisions branch
 ## >>chng 19 aug 06, from 11.42 to 11.46, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
-monitor line luminosity cumulative intrinsic "He 2"      1640.43A   11.46
+## >>chng 20 aug 22, wl from 1640.43A to 1640.40A, switched from computed to tabulated energies for H and He isoseq
+monitor line luminosity cumulative intrinsic "He 2"      1640.40A   11.46
 ## >>chng 16 aug 07, from 11.72 to 11.74, Fran bug fix
 monitor line luminosity cumulative intrinsic "O  2"      3728.81A   11.74
 #

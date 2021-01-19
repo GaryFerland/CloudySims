@@ -14,7 +14,8 @@ iterate ##must iterate since optically thin
 #
 ## >>chng 13 jul 24, wl from 18.97A to 18.9732A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 25, wl from 18.9732A to 18.9709A, up Rydberg constant
-normalize to "o  8" 18.9709A 
+## >>chng 20 aug 22, wl from 18.9709A to 18.9696A, switched from computed to tabulated energies for H and He isoseq
+normalize to "o  8" 18.9696A 
 # commands controlling output    =========
 save performance "coll_t7.per"
 save overview "coll_t7.ovr"
