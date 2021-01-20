@@ -212,8 +212,9 @@ This is an intensity command.
 
 \section{ionization parameter $= -1.984$}
 
-The ionization parameter is the dimensionless ratio of hydrogen-ionizing
-photon to total-hydrogen densities.  It is defined as
+The ionization parameter $U$ is the dimensionless ratio of hydrogen-ionizing
+photon to total-hydrogen densities evaluated at the illuminated face of the cloud.  
+It is defined as
 \begin{equation}
 U \equiv \frac{{Q\left( {\mathrm{H}} \right)}}{{4{\kern 1pt} \pi \,r_{\mathrm{o}}^2
 \,n\left( {\mathrm{H}} \right)\,c}} \equiv \frac{{\Phi \left( {\mathrm{H}}
@@ -229,12 +230,12 @@ than the hydrogen density.
 Before version 75 $n$(H) was the atomic/ionic
 hydrogen density, and did not include molecules.}
 hydrogen density (ionized, neutral,
-and molecular), $c$ is the speed of light,
+and molecular) at that point, $c$ is the speed of light,
 $Q(\mathrm{H})$ [s$^{-1}$] is the number of
 hydrogen-ionizing photons emitted by the central object,
 and $\Phi(\mathrm{H})$
-[cm$^{-2}\, \mathrm{s}^{-1}$] is the surface flux of ionizing photons.
-The number is interpreted
+[cm$^{-2}\, \mathrm{s}^{-1}$] is the surface flux of ionizing photons at the illuminated face.
+The number on the command line is interpreted
 as the log of $U$ unless the keyword \cdCommand{linear} appears.
 The ionization parameter
 is a useful quantity in plane-parallel, low-density, constant-density,
@@ -260,7 +261,7 @@ in Rydbergs, and the linear energy itself if positive.
 This is a luminosity command.
 \label{sec:LuminosityCommand}
 
-\section{luminosity 38.3 [solar, range, linear]}
+\section{luminosity 38.3 [solar, total, range, linear]}
 
 The number is the log of the integrated luminosity\footnote{Before version 83 of the code, the luminosity command was used to
 enter both luminosity and intensity.  The code decided between the two by
@@ -501,13 +502,13 @@ $\xi$ given by
 \xi  =  \left( {4\pi
 } \right)^2 \int_{1R}^{1000R}  J_\nu  {\kern 1pt} d\nu /n\left( {\mathrm{H}}
 \right)
-= \frac{{F_{ion} }}{{n\left( {\mathrm{H}} \right)r^2 }}
-\approx \frac{{L_{ion} }}{{n\left( {\mathrm{H}} \right)r^2 }}
+= \frac{{F_{ion} }}{{n\left( {\mathrm{H}} \right)r_0^2 }}
+\approx \frac{{L_{ion} }}{{n\left( {\mathrm{H}} \right)r_0^2 }}
  [\mathrm{erg\ cm\ s}^{-1}]
  \label{eqn:xi}
 \end{equation}
 where $n(\mathrm{H})$ is the hydrogen density at the illuminated face
-of the cloud and $r$ is the source - cloud separation.
+of the cloud and $r_0$ is the source - cloud separation.
 The number is the log of $\xi$.
 
 The original \citet{Tarter1969} paper defined $\xi$ as the last term in equation \ref{eqn:xi}, 
