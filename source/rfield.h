@@ -95,9 +95,9 @@ public:
 	
 		for( long ip = 0; ip < nflux; ip++ )
 		{
-			double flux = flux_cumul[ ip ] * norm +
+			double tmp_flux = flux_cumul[ ip ] * norm +
 					flux_inst[ ip ] * this_cumulfac;
-			flux_cumul[ ip ] = realnum( flux * mean_inv );
+			flux_cumul[ ip ] = realnum( tmp_flux * mean_inv );
 		}
 	
 		norm = mean;
