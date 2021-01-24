@@ -1259,6 +1259,17 @@ Note that if PAHs are present in predominantly molecular gas
 then they will soak up nearly all of the free electrons.
 This has major effects on the predictions of the chemistry network.
 
+\citet{2008ARA&A..46..289T} has determined the abundance of carbon
+locked up in PAHs containing 20 -- 100 atoms as 14 parts
+per million hydrogen atoms.  
+The average Galactic PAHs per hydrogen, according to \citet{2008ARA&A..46..289T}, 
+is $10^{-6.52}$.  
+This abundance can be generated with the  commands
+\begin{verbatim}
+grains PAH 10 linear
+set PAH "H,H2"
+\end{verbatim}
+
 \subsection{Variable grain abundances}
 
 The \cdCommand{function} option on the \cdCommand{grains} command

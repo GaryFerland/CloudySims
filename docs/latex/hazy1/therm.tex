@@ -226,6 +226,21 @@ modeling of the sight line to Zeta Per.
 \citet{Suchkov1993} find cosmic ray ionization rates that are
 several dex larger than the galactic background in the starburst galaxy M82. 
 
+The abundance of PAHs (see Section \ref{sec:GrainPAHcommands}) has a
+direct effect on the electron density and hence on the cosmic ray seconday
+ionization rate of H.  The cosmic ray ionization rate of \htwo\ is nearly twice
+the rate for H since two atoms are present.  This command changes the 
+atomic hydrogen ionization rate.  
+\citet{2021arXiv210103732S} suggest that, for the average Galactic PAH abundance, 
+the cosmic ray ionization rate of
+atomic hydrogen  is 3.9$\pm$ 1.9\e{-16} \ps.
+This rate can be  specified with the command
+\begin{verbatim}
+cosmic rays background 1.95 linear
+\end{verbatim}
+\citet{2021arXiv210103732S}  show that the hydrogen cosmic ray ionization rate derived using
+H$_3^+$ is much higher, 47.8$\pm$ 23.3\e{-16} \ps,\ if PAHs are not present.
+
 \subsection{Cosmic ray rate -17.3}
 
 If the keyword \cdCommand{rate} appears then the command specifies
