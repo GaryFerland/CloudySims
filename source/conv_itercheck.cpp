@@ -323,6 +323,12 @@ void ConvIterCheck( void )
 		if( dynamics.lgAdvection )
 		{
 			/* >>chng 02 nov 29, as per Will Henney email */
+			/* NB NB
+			 *
+			 * Do not use isInitialRelaxIteration() here, which would effectively
+			 * drop the "+1", since the intent is (apparently) to do an iteration
+			 * with dynamical sources, and without declaring convergence prematurely
+			 */
 			if( iteration <= dynamics.n_initial_relax+1 ||
 			    dynamics.convergence_error > conv.autocv*dynamics.error_scale2*dynamics.convergence_tolerance ||
 			    dynamics.discretization_error > conv.autocv*dynamics.error_scale2 )

@@ -378,7 +378,7 @@ void Atom_LevelN::operator()(
 		if (grnd_excit != NULL) 	*grnd_excit = amat[0][0];
 
 		if( (dynamics.lgAdvection || dynamics.lgTimeDependentStatic) &&
-			iteration > dynamics.n_initial_relax )
+			! dynamics.isInitialRelaxIteration( iteration ) )
 		{
 			double slowrate = -1.0;
 			long slowlevel = -1;

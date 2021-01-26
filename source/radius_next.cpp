@@ -454,7 +454,7 @@ void radius_next()
 		}
 
 		/* set dr from advective term */
-		if( dynamics.lgAdvection && iteration > dynamics.n_initial_relax)
+		if( dynamics.lgAdvection && ! dynamics.isInitialRelaxIteration( iteration ) )
 		{
 			winddr = MIN2( winddr , dynamics.dRad );
 			/*>>chng 04 oct 06, set dVelRelative to dynamics.dRad since dVelRelative is printed as part

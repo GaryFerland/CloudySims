@@ -620,7 +620,7 @@ void ConvInitSolution()
 	{
 		// some sort of time dependent sim
 		static double PresTotalInitTime;
-		if( iteration <= dynamics.n_initial_relax )
+		if( dynamics.isInitialRelaxIteration( iteration ) )
 		{
 			PresTotalInitTime = pressure.PresTotlInit;
 		}

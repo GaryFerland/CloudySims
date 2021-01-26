@@ -62,6 +62,8 @@ struct t_dynamics : public module
 	}
 	void zero();
 	void comment(t_warnings&) {}
+
+	bool isInitialRelaxIteration( long int iteration );
 	bool doNonEquilibriumSolve( long int iteration );
 
 

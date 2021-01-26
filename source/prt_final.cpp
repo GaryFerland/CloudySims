@@ -120,7 +120,7 @@ STATIC void PrintSpectrum ()
 	/* option to also print usual first two sets of line arrays 
 	 * but for two sets of cumulative arrays for time-dependent sims too */
 	int nEmType = 2;
-	if( prt.lgPrintLineCumulative && iteration > dynamics.n_initial_relax )
+	if( prt.lgPrintLineCumulative && ! dynamics.isInitialRelaxIteration( iteration ) )
 		nEmType = 4;
 
 	for( ipEmType=0; ipEmType<nEmType; ++ipEmType )
