@@ -63,7 +63,19 @@ struct t_dynamics : public module
 	void zero();
 	void comment(t_warnings&) {}
 
+	/** @brief isInitialRelaxIteration - Check if initial iteration
+	 * 	 
+	 *  At the beginning of a dynamical run, a number of steady-state
+	 *  iterations are performed to relax the solution before any
+	 *  dynamical solves are done.  This method checks if the given
+	 *  @p iteration is one of the initial relaxation iterations. 
+	 *
+	 * @param[in] iteration		iteration number
+	 * 
+	 * @return @c bool		true, if initial iteration; else false
+	 */
 	bool isInitialRelaxIteration( long int iteration );
+
 	bool doNonEquilibriumSolve( long int iteration );
 
 

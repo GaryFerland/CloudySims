@@ -325,9 +325,9 @@ void ConvIterCheck( void )
 			/* >>chng 02 nov 29, as per Will Henney email */
 			/* NB NB
 			 *
-			 * Do not use isInitialRelaxIteration() here, which would effectively
-			 * drop the "+1", since the intent is (apparently) to do an iteration
-			 * with dynamical sources, and without declaring convergence prematurely
+			 * Use of +1 here makes sure that one iteration is done after the
+			 * initial relaxation iterations, using dynamical sources in the
+			 * solvers and without declaring convergence prematurely.
 			 */
 			if( iteration <= dynamics.n_initial_relax+1 ||
 			    dynamics.convergence_error > conv.autocv*dynamics.error_scale2*dynamics.convergence_tolerance ||
