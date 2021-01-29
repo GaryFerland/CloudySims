@@ -1104,7 +1104,7 @@ void IterEnd(void)
 		geometry.lgGeoPP = false;
 	}
 
-	if( iteration > dynamics.n_initial_relax && dynamics.lgTimeDependentStatic 
+	if( ! dynamics.isInitialRelaxIteration( iteration ) && dynamics.lgTimeDependentStatic 
 		&& strncmp(rfield.chCumuType,"NONE", sizeof(rfield.chCumuType)) != 0)
 	{
 		// report cumulative lines per unit mass rather than flux (per unit

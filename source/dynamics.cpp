@@ -45,6 +45,15 @@ static const bool lgPrintDynamics = false;
 t_dynamics dynamics;
 static int ipUpstream=-1,iphUpstream=-1,ipyUpstream=-1;
 
+bool t_dynamics::isInitialRelaxIteration( long int iteration )
+{
+	DEBUG_ENTRY( "t_dynamics::isInitialRelaxIteration()" );
+
+	if( iteration <= n_initial_relax )
+		return true;
+	return false;
+}
+
 bool t_dynamics::doNonEquilibriumSolve( long int iteration )
 {
 	DEBUG_ENTRY( "t_dynamics::doNonEquilibriumSolve()" );
@@ -309,7 +318,7 @@ void DynaIonize(void)
 	//the region of previous iteration.
 	//Possibly should limit range of dynamical sources further by adding Dyn_dr???
 	double depth = radius.depth; 
-	if( iteration < dynamics.n_initial_relax+1 || 
+	if( dynamics.isInitialRelaxIteration( iteration ) ||
 			( ! dynamics.lgTimeDependentStatic && 
 				( depth < 0 || depth > dynamics.oldFullDepth ) ) )
 	{
@@ -1053,7 +1062,7 @@ void DynaIterEnd(void)
 					Dyn_dr );
 			}
 		}
-		else if(iteration > dynamics.n_initial_relax+1 )
+		else if( ! dynamics.isInitialRelaxIteration( iteration ) )
 		{
 			/* evaluate errors and update Dyn_dr */
 			DynaNewStep();
@@ -1073,7 +1082,7 @@ void DynaIterEnd(void)
 				dynamics.timestep ,
 				dynamics.time_elapsed,
 				iteration , dynamics.n_initial_relax);
-		if( iteration > dynamics.n_initial_relax )
+		if( ! dynamics.isInitialRelaxIteration( iteration ) )
 		{
 			/* evaluate errors */
 			DynaNewStep();
@@ -1206,7 +1215,7 @@ void DynaIterEnd(void)
 	}
 
 	/* Dyn_dr == 0 is for static time dependent cloud */
-	ASSERT( (iteration < dynamics.n_initial_relax+1) ||
+	ASSERT( dynamics.isInitialRelaxIteration( iteration ) ||
 		Dyn_dr != 0. || (Dyn_dr == 0. && wind.lgStatic()) );
 
 	/* reset the upstream counters */
@@ -2264,7 +2273,7 @@ void DynaIterStart(void)
 {
 	DEBUG_ENTRY( "DynaIterStart()" );
 
-	if( 0 == nTime_flux || iteration <= dynamics.n_initial_relax )
+	if( 0 == nTime_flux || dynamics.isInitialRelaxIteration( iteration ) )
 	{
 		rfield.time_continuum_scale = 1.;
 		return;

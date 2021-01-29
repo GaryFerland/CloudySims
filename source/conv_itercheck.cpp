@@ -324,6 +324,12 @@ void ConvIterCheck( void )
 		if( dynamics.lgAdvection )
 		{
 			/* >>chng 02 nov 29, as per Will Henney email */
+			/* NB NB
+			 *
+			 * Use of +1 here makes sure that one iteration is done after the
+			 * initial relaxation iterations, using dynamical sources in the
+			 * solvers and without declaring convergence prematurely.
+			 */
 			if( iteration <= dynamics.n_initial_relax+1 ||
 			    dynamics.convergence_error > conv.autocv*dynamics.error_scale2*dynamics.convergence_tolerance ||
 			    dynamics.discretization_error > conv.autocv*dynamics.error_scale2 )

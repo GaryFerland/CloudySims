@@ -564,7 +564,7 @@ void CoolEvaluate(double *tot)
 		CoolHeavy.expans = -2.5*pressure.PresGasCurr*dDensityDT;
 	}
 	else if( dynamics.lgTimeDependentStatic && 
-				iteration > dynamics.n_initial_relax)
+			! dynamics.isInitialRelaxIteration( iteration ) )
 	{
 		realnum dens = scalingDensity();
 		realnum dDensityDT = 
