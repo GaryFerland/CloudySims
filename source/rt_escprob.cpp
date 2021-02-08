@@ -195,7 +195,7 @@ double esc_CRDwing_1side(double tau,
 		double sqrta = sqrt(a);
 		double scal = a*(1.0+a+tau)/(POW2(1.0+a)+a*tau);
 		double pwing = scal*((tau > 0.0) ? sqrta/sqrt(a+2.25*SQRTPI*tau) : 1.0);
-		esccom_v *= (1.0-pwing)+pwing;
+		esccom_v = esccom_v*(1.0-pwing)+pwing;
 	}
 	return esccom_v;
 }
