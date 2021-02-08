@@ -177,15 +177,27 @@ double esc_CRDwing_1side(double tau,
 	 * and is the usual case for subordinate lines, 
 	 * complete redistribution with damping wings */
 
-	double esccom_v = esca0k2(tau);
+	/* esca0k2 is not designed for masers, use special form
+	 * of escape probability if one occurs
+	 */
+	double esccom_v;
+	if( tau<0 )
+	{
+		esccom_v = escmase(tau);
+	}
+	else
+	{
+		esccom_v = esca0k2(tau);
 
-	// Escape probability correction for finite damping
-	// Results agree to +/- 20% from a=1e-3->1e3, no change for a->0
+		// Escape probability correction for finite damping
+		// Results agree to +/- 20% from a=1e-3->1e3, no change for a->0
 
-	double sqrta = sqrt(a);
-	double scal = a*(1.0+a+tau)/(POW2(1.0+a)+a*tau);
-	double pwing = scal*((tau > 0.0) ? sqrta/sqrt(a+2.25*SQRTPI*tau) : 1.0);
-	return esccom_v*(1.0-pwing)+pwing;
+		double sqrta = sqrt(a);
+		double scal = a*(1.0+a+tau)/(POW2(1.0+a)+a*tau);
+		double pwing = scal*((tau > 0.0) ? sqrta/sqrt(a+2.25*SQRTPI*tau) : 1.0);
+		esccom_v *= (1.0-pwing)+pwing;
+	}
+	return esccom_v;
 }
 
 /*RTesc_lya escape prob for hydrogen atom Lya, using 
