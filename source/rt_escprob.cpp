@@ -177,11 +177,12 @@ double esc_CRDwing_1side(double tau,
 	 * and is the usual case for subordinate lines, 
 	 * complete redistribution with damping wings */
 
-	/* esca0k2 is not designed for masers, use special form
-	 * of escape probability if one occurs
+	/* esca0k2 is protected against masers, but the wing corrections
+	 * use an expansion that is not well behaved for some negative optical depths.
+	 * Use only the special form of the escape probability if a maser occurs
 	 */
 	double esccom_v;
-	if( tau<0 )
+	if(tau<0 )
 	{
 		esccom_v = escmase(tau);
 	}
@@ -197,6 +198,7 @@ double esc_CRDwing_1side(double tau,
 		double pwing = scal*((tau > 0.0) ? sqrta/sqrt(a+2.25*SQRTPI*tau) : 1.0);
 		esccom_v = esccom_v*(1.0-pwing)+pwing;
 	}
+	ASSERT( esccom_v>0 );
 	return esccom_v;
 }
 
@@ -355,6 +357,21 @@ double esc_CRDwing(double tau_in,
   double tau_out, 
   double damp)
 {
+	/* debugging code to check for continuity and Pesc>= 0  */
+	/*@-redef@*/
+	enum {BUG=false};
+	/*@+redef@*/
+	if( BUG )
+	{
+		for( double tau=-29; tau<=100; tau+=0.1 )
+		{
+			double esc = esc_CRDwing_1side(tau , damp );
+			fprintf(ioQQQ,"debuggg esc_CRDwing_1side \t %.2e \t%.2e\n",
+					tau ,  esc  );
+			ASSERT(esc>0 );
+		}
+		cdEXIT(EXIT_FAILURE);
+	}
 	return esc_2side_base(tau_in, tau_out, damp, esc_CRDwing_1side);
 }
 
@@ -519,7 +536,7 @@ STATIC double escmase(double tau)
 	}
 	else
 	{
-		fprintf( ioQQQ, " DISASTER escmase called with 2big tau%10.2e\n", 
+		fprintf( ioQQQ, " DISASTER escmase called with 2big tau%10.2e the limit is -30\n",
 		  tau  );
 		fprintf( ioQQQ, " This is zone number%4ld\n", nzone );
 		FindNeg();
