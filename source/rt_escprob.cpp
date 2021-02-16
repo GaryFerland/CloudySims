@@ -177,15 +177,29 @@ double esc_CRDwing_1side(double tau,
 	 * and is the usual case for subordinate lines, 
 	 * complete redistribution with damping wings */
 
-	double esccom_v = esca0k2(tau);
+	/* esca0k2 is protected against masers, but the wing corrections
+	 * use an expansion that is not well behaved for some negative optical depths.
+	 * Use only the special form of the escape probability if a maser occurs
+	 */
+	double esccom_v;
+	if(tau<0 )
+	{
+		esccom_v = escmase(tau);
+	}
+	else
+	{
+		esccom_v = esca0k2(tau);
 
-	// Escape probability correction for finite damping
-	// Results agree to +/- 20% from a=1e-3->1e3, no change for a->0
+		// Escape probability correction for finite damping
+		// Results agree to +/- 20% from a=1e-3->1e3, no change for a->0
 
-	double sqrta = sqrt(a);
-	double scal = a*(1.0+a+tau)/(POW2(1.0+a)+a*tau);
-	double pwing = scal*((tau > 0.0) ? sqrta/sqrt(a+2.25*SQRTPI*tau) : 1.0);
-	return esccom_v*(1.0-pwing)+pwing;
+		double sqrta = sqrt(a);
+		double scal = a*(1.0+a+tau)/(POW2(1.0+a)+a*tau);
+		double pwing = scal*((tau > 0.0) ? sqrta/sqrt(a+2.25*SQRTPI*tau) : 1.0);
+		esccom_v = esccom_v*(1.0-pwing)+pwing;
+	}
+	ASSERT( esccom_v>0 );
+	return esccom_v;
 }
 
 /*RTesc_lya escape prob for hydrogen atom Lya, using 
@@ -308,6 +322,25 @@ inline double esc_2side_base(
 		escgrd_v = rt.wayin;
 	}
 
+	/* debugging masers */
+	{
+		/*@-redef@*/
+		enum {BUG=false};
+		/*@+redef@*/
+		if( BUG )
+		{
+			if( escgrd_v<=0 )
+			{
+				fprintf(ioQQQ,"DebuGGG escgrd_v %.2e iter %li tau %.2e damp %.2e frcin %.2e wayout %.2e\n",
+						escgrd_v,
+						iteration,
+						tau,
+						damp,
+						rt.fracin,
+						rt.wayout);
+			}
+		}
+	}
 	ASSERT( escgrd_v > 0. );
 	return escgrd_v;
 }
@@ -324,6 +357,21 @@ double esc_CRDwing(double tau_in,
   double tau_out, 
   double damp)
 {
+	/* debugging code to check for continuity and Pesc>= 0  */
+	/*@-redef@*/
+	enum {BUG=false};
+	/*@+redef@*/
+	if( BUG )
+	{
+		for( double tau=-29; tau<=100; tau+=0.1 )
+		{
+			double esc = esc_CRDwing_1side(tau , damp );
+			fprintf(ioQQQ,"debuggg esc_CRDwing_1side \t %.2e \t%.2e\n",
+					tau ,  esc  );
+			ASSERT(esc>0 );
+		}
+		cdEXIT(EXIT_FAILURE);
+	}
 	return esc_2side_base(tau_in, tau_out, damp, esc_CRDwing_1side);
 }
 
@@ -488,7 +536,7 @@ STATIC double escmase(double tau)
 	}
 	else
 	{
-		fprintf( ioQQQ, " DISASTER escmase called with 2big tau%10.2e\n", 
+		fprintf( ioQQQ, " DISASTER escmase called with 2big tau%10.2e the limit is -30\n",
 		  tau  );
 		fprintf( ioQQQ, " This is zone number%4ld\n", nzone );
 		FindNeg();
