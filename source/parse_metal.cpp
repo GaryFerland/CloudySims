@@ -20,6 +20,23 @@ void ParseMetal(Parser &p)
 		/* keyword depletion is present
 		 * deplete by set of scale factors */
 		abund.lgDepln = true;
+
+		/* option to use Jenkins 2009ApJ...700.1299J fits to ISM depletion
+		 * syntax is METALS DEPLETE JENKINS 2009 FSTAR=0.5 */
+		if( p.nMatch("JENKINS") && p.nMatch("FSTAR") )
+		{
+			realnum Fstar = 0;
+			Fstar = (realnum)p.FFmtRead();
+			if( fabs( Fstar-2009) > 0.1 )
+			{
+				fprintf(ioQQQ," The first number of METALS DEPLETE JENKINS 2009 must be 2009, it was %.2f\n", Fstar);
+				cdEXIT( EXIT_FAILURE );
+			}
+			Fstar = (realnum)p.FFmtRead();
+
+			fprintf(ioQQQ,"DEBUGGG got it!  Fstar is %.2e\n" , Fstar);
+			cdEXIT( EXIT_FAILURE );
+		}
 		for( long int i=0; i < LIMELM; i++ )
 		{
 			abund.depset[i] = abund.Depletion[i];
