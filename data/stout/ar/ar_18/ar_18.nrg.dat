@@ -1,18 +1,39 @@
 20190102 # magic number
-# Give level energies in cm^-1 for each H-like ion.
+# Give level energies in cm^-1 for each ion.
 # Each line gives n, l, S, J, energy.
 # The last entry for each ion is the ionization potential.
 # It is marked with negative quantum numbers. The ionization
 # potential MUST be the last entry for a given element!
-# It is used as a sentinel to switch to the next element.
 #
-# These data were calculated using the ATLL r123.
+# NIST data for n<=5 were downloaded using ADM.
 #
- 1 -1 -1 -1 0
- 2 -1 -1 -1 26783000
- 3 -1 -1 -1 31743000
- 4 -1 -1 -1 33475700
- 5 -1 -1 -1 34277000
+# The remaining data were calculated using the ATLL r123
+#
+ 1  0  2 0.5        0.    6.   
+ 2  1  2 0.5 26762896.    6.   
+ 2  0  2 0.5 26764172.    6.   
+ 2  1  2 1.5 26801739.    6.   
+ 3  1  2 0.5 31732216.2   1.0  
+ 3  0  2 0.5 31732595.1   1.0  
+ 3  2  2 1.5 31743708.36  0.03 
+ 3  1  2 1.5 31743728.5   0.6  
+ 3  2  2 2.5 31747515.13  0.03 
+ 4  1  2 0.5 33469895.0   0.5  
+ 4  0  2 0.5 33470055.4   0.6  
+ 4  2  2 1.5 33474741.16  0.06 
+ 4  1  2 1.5 33474749.8   0.2  
+ 4  3  2 2.5 33476344.82  0.02 
+ 4  2  2 2.5 33476347.71  0.06 
+ 4  3  2 3.5 33477146.51  0.02 
+ 5  1  2 0.5 34273516.6   0.2  
+ 5  0  2 0.5 34273599.0   0.3  
+ 5  2  2 1.5 34275996.87  0.04 
+ 5  1  2 1.5 34276001.28  0.10 
+ 5  3  2 2.5 34276817.97  0.02 
+ 5  2  2 2.5 34276819.46  0.04 
+ 5  4  2 3.5 34277227.740 0.005
+ 5  3  2 3.5 34277228.52  0.02 
+ 5  4  2 4.5 34277473.875 0.005
  6 -1 -1 -1 34712080
  7 -1 -1 -1 34974330
  8 -1 -1 -1 35144510
@@ -23,4 +44,21 @@
 13 -1 -1 -1 35489806
 14 -1 -1 -1 35518793
 15 -1 -1 -1 35542178
--1 -1 -1 -1 35700212
+-1 -1 -1 -1.0 35699895.0   6.0  
+#
+# 
+# Bibliography:
+# -------------
+# PUB     Refcode: L15349 on NIST
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=15349&comment_code=&amp;element=Ar&amp;spectr_charge=18&amp;ref=15349&amp;type=E
+# PUBCON    Title: Energy Levels and Observed Spectral Lines of Ionized Argon, Ar II through Ar XVIII
+# PUBCON  Authors: E. B. Saloman
+# PUBCON  Journal: J. Phys. Chem. Ref. Data 39, 033101 (2010)
+# PUBCON      DOI: https://doi.org/10.1063/1.3337661
+# 
+# PUB     Refcode: L7188 on NIST
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7188&comment_code=&amp;element=Ar&amp;spectr_charge=18&amp;ref=7188&amp;type=E
+# PUBCON    Title: The Lamb Shift in Hydrogen-like Atoms, 1 ≤ Z ≤ 110
+# PUBCON  Authors: W. R. Johnson, and G. Soff
+# PUBCON  Journal: At. Data Nucl. Data Tables 33, 405–446 (1985)
+# PUBCON      DOI: https://doi.org/10.1016/0092-640X(85)90010-5

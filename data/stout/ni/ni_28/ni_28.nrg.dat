@@ -1,21 +1,52 @@
 20190102 # magic number
-# Give level energies in cm^-1 for each H-like ion.
+# Give level energies in cm^-1 for each ion.
 # Each line gives n, l, S, J, energy.
 # The last entry for each ion is the ionization potential.
 # It is marked with negative quantum numbers. The ionization
 # potential MUST be the last entry for a given element!
-# It is used as a sentinel to switch to the next element.
 #
-# These data were calculated using the ATLL r123.
+# NIST data for n<=5 were downloaded using ADM.
 #
- 1 -1 -1 -1 0
- 2 -1 -1 -1 65240000
- 3 -1 -1 -1 77315000
- 4 -1 -1 -1 81524000
- 5 -1 -1 -1 83468000
+# The remaining data were calculated using the ATLL r123
+#
+ 1  0  2 0.5        0     10  
+ 2  1  2 0.5 65113960    100  
+ 2  0  2 0.5 65119820    100  
+ 2  1  2 1.5 65344950    100  
+ 3  1  2 0.5 77248260    100  
+ 3  0  2 0.5 77250100   1000  
+ 3  2  2 1.5 77316630    100  
+ 3  1  2 1.5 77316750    100  
+ 3  2  2 2.5 77339010    100  
+ 4  1  2 0.5 81485832
+ 4  0  2 0.5 81486610
+ 4  2  2 1.5 81514646
+ 4  1  2 1.5 81514680    100  
+ 4  2  2 2.5 81524080    100  
+ 4  3  2 2.5 81524081
+ 4  3  2 3.5 81528770    100  
+ 5  1  2 0.5 83443186
+ 5  0  2 0.5 83443585
+ 5  2  2 1.5 83457924
+ 5  1  2 1.5 83457930    100  
+ 5  2  2 2.5 83462750    100  
+ 5  3  2 2.5 83462755
+ 5  3  2 3.5 83465150    100  
+ 5  4  2 3.5 83465160
+ 5  4  2 4.5 83466603
  6 -1 -1 -1 84522800
  7 -1 -1 -1 85158200
  8 -1 -1 -1 85570400
  9 -1 -1 -1 85852860
 10 -1 -1 -1 86054880
--1 -1 -1 -1 86915620
+-1 -1 -1 -1.0 86909350.0   30.0
+#
+# 
+# Bibliography:
+# -------------
+# PUB     Refcode: L7188 on NIST
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7188&comment_code=&amp;element=Ni&amp;spectr_charge=28&amp;ref=7188&amp;type=E
+# PUBCON    Title: The Lamb Shift in Hydrogen-like Atoms, 1 ≤ Z ≤ 110
+# PUBCON  Authors: W. R. Johnson, and G. Soff
+# PUBCON  Journal: At. Data Nucl. Data Tables 33, 405–446 (1985)
+# PUBCON      DOI: https://doi.org/10.1016/0092-640X(85)90010-5
