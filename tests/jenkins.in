@@ -1,2 +1,12 @@
 test
 metals deplete jenkins 2009 fstar 0.5
+
+vary option 0 - 1 incre 0.1
+
+metals deplete jenkins 2009 fstar 0.5 vary print
+
+what is the valid range of fstar
+abort if fstar > 1
+or fstar <0
+
+grains jenkins 2009 fstar 0.5

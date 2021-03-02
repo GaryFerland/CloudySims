@@ -160,6 +160,7 @@ The chemical composition is printed at the start of the calculation.
 Be sure to confirm that the composition has been entered correctly.
 
 \section{Abundances he c\dots}
+\label{sec:CommandAbundances}
 
 The abundances of all elements can be entered with the command
 \cdCommand{abundances}
@@ -1668,7 +1669,9 @@ abundances ISM
 metals and grains 2
 \end{verbatim}
 
-\subsection{Metals deplete---gas-phase depletion factors}
+\subsection{Metals deplete commands}
+
+\subsubsection{metals deplete --- table of gas-phase depletion factors}
 
 It is possible to alter an existing set of abundances by depletion onto
 grains.
@@ -1763,10 +1766,68 @@ solar depletion of missing material
 (see, however, \citealp{Snow1996}, who
 show that even this is not true).
 
+\subsubsection{metals deplete Jenkins 2009 Fstar=0.5}
 
+\citet{2009ApJ...700.1299J} presents a unified empirical relationship between depletions
+of different elements and other properties of the ISM.  
+The overall depletion is parameterized by his $F_*$, which we refer to as Fstar,
+with the physical limits $0\leq F_* \leq 1$.
+In his model, each element is depleted by an empirically-determined scale factor that
+is related to $F_*$ by his equation 10, the coefficients listed in Table 4, 
+and and the special case of S from Section 9 of his paper.
+Our version of his table is stored as the file \cdFilename{Jenkins09\_ISM\_Tab4.dep} 
+in the \cdFilename{abundances} directory.  
 
+We implement this as follows.
+First you specify the composition with other commands such as the
+\cdCommand{abundance} command described in Section \ref{sec:CommandAbundances}.
+We  modify those abundances by
+the \citet{2009ApJ...700.1299J}  depletion factors, as described by
+Gunasekera+2021 (in preparation).  
+The depletion factor $D_X$ of an element $X$ is given by
+\begin{equation}
+D_X = 10^{B_X + A_X (F_* - z_X)}
+\end{equation}
+where the coefficients come from Jenkins' tables.
+This factor multiplies the previously-specified gas-phase abundance of $X$
+to set the gas-phase abundance used in the calculation, as in
+\begin{equation}
+\left[ \frac{n(X)}{n(H)} \right]_{gas} = D_X \times \left[\frac{n(X)}{n(H)} \right]_{specified}
+\end{equation}
+The full command syntax is
+\begin{verbatim}
+metals deplete Jenkins 2009 Fstar=0.5 [vary]
+\end{verbatim}
+The year 2009 must be the first number on the command line and the next number, $F_*$,
+must be between 0 and 1.
+A typical use case might be
+\begin{verbatim}
+abundances nova
+metals deplete Jenkins 2009 Fstar=0.5
+grains
+\end{verbatim}
+which depletes the specified ``nova'' abundances by the \citet{2009ApJ...700.1299J}
+abundance pattern with $F_* = 0.5$ and includes our default ISM grain mixture.
 
+Notice that we specify the standard ISM grain population with a separate 
+\cdCommand{grains}  command.
+The \cdCommand{grains}  command is described in section \ref{sec:GrainsCommand}.
+As described in the previous \cdCommand{metals deplete} command, we do not 
+attempt to create grain species with a composition that is consistent with the depleted elements.
 
+The \citet{2009ApJ...700.1299J}   study actually worked with ISM gas-phase abundances scaled
+relative to the \citet{Lodders2003} solar abundances.
+We provide the \citet{2009M&PSA..72.5154L} version of her solar abundances in the \Cloudy\ distribution.  
+The \citet{2009ApJ...700.1299J}   ISM abundances could be approximated by 
+\begin{verbatim}
+abundances "solar_Lodders09.abn"
+metals deplete Jenkins 2009 Fstar=0.5
+grains
+\end{verbatim}
+using the composition stored in the \cdFilename{solar\_Lodders09.abn} file 
+in the \cdFilename{abundances} directory.
 
-
-
+This command includes the \cdCommand{vary} option, described in Section \ref{sec:CommandsVaryOption}
+allowing the \cdCommand{grid} command
+ or the  optimizer to be used.
+ 
