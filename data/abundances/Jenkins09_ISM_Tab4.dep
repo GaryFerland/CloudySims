@@ -1,19 +1,26 @@
-# Elem	BX	AX	zX
-C	-0.19	-0.10	0.80
-N	-0.11	0.00	0.55
-O	-0.15	-0.23	0.60
-Mg	-0.80	-1.00	0.53
-Si	-0.57	-1.14	0.31
-P	-0.17	-0.95	0.49
-S	-0.09	-0.88	0.29
-Cl	-0.31	-1.24	0.61
-Ti	-1.96	-2.05	0.43
-Cr	-1.51	-1.45	0.47
-Mn	-1.35	-0.86	0.52
-Fe	-1.51	-1.29	0.44
-Ni	-1.83	-1.49	0.60
-Cu	-1.10	-0.71	0.71
-Zn	-0.28	-0.61	0.56
-Ge	-0.73	-0.62	0.69
-Kr	-0.33	-0.17	0.68
+# Element	AX	BX	zX
+CARBON	-0.10	-0.19	0.80
+NITROGEN	0.00	-0.11	0.55
+OXYGEN	-0.23	-0.15	0.60
+MAGNESIUM	-1.00	-0.80	0.53
+SILICON	-1.14	-0.57	0.31
+PHOSPHORUS	-0.95	-0.17	0.49
+SULFUR	-0.88	-0.09	0.29
+CHLORINE	-1.24	-0.31	0.61
+TITANIUM	-2.05	-1.96	0.43
+CHROMIUM	-1.45	-1.51	0.47
+MANGANESE	-0.86	-1.35	0.52
+IRON	-1.29	-1.51	0.44
+NICKLE	-1.49	-1.83	0.60
+COPPER	-0.71	-1.10	0.71
+ZINC	-0.61	-0.28	0.56
 ***************************
+GERMANIUM	-0.62	-0.73	0.69
+KRYPTON	-0.17	-0.33	0.68
+
+
+Chamani Gunasekera created the spreadsheet from Table 4 of
+Jenkins 2009, https://ui.adsabs.harvard.edu/abs/2009ApJ...700.1299J/abstract
+S does not have data in Table 4 so Chamani used the information provided
+in Section 9
+
