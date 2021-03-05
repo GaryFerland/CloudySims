@@ -1671,6 +1671,21 @@ metals and grains 2
 
 \subsection{Metals deplete commands}
 
+These commands specify depletion factors that account for elements that
+have condensed onto grains.  
+The standard approach is to define
+\begin{equation}
+A( \textrm{gas phase}) = A( \textrm{reference}) \times  \textrm{Depletion}
+\end{equation}
+where the reference abundance is the composition the user specifies with other commands
+and the depletion is set with these commands.
+The final gas-phase abundance results.
+
+The condensed elements form grains.  
+These commands do not create a set of grain species that is consistent
+with the depletion.
+The grain properties are set separately.
+
 \subsubsection{metals deplete --- table of gas-phase depletion factors}
 
 It is possible to alter an existing set of abundances by depletion onto
@@ -1817,7 +1832,7 @@ attempt to create grain species with a composition that is consistent with the d
 
 The \citet{2009ApJ...700.1299J}   study actually worked with ISM gas-phase abundances scaled
 relative to the \citet{Lodders2003} solar abundances.
-We provide the \citet{2009M&PSA..72.5154L} version of her solar abundances in the \Cloudy\ distribution.  
+We provide both the \citet{Lodders2003}  and the more recent \citet{Lodders2009} versions of her solar abundances in the \Cloudy\ distribution.  
 The \citet{2009ApJ...700.1299J}   ISM abundances could be approximated by 
 \begin{verbatim}
 abundances "solar_Lodders09.abn"
@@ -1831,4 +1846,14 @@ This command includes the \cdCommand{vary} option, described in Section \ref{sec
 allowing the \cdCommand{grid} command
  or the  optimizer to be used.
  The \cdCommand{print} option will vary Fstar between 0 and 1 and report the depletion factors.
+ 
+ \emph{Caution!}.  The Jenkins work is limited to elements he studied with HST.  
+ Some very highly depleted elements are not included in his study.
+ Calcium is an example.  
+ This command implements the Jenkins study and does not
+ deplete elements that are not considered in his paper.  
+Unlisted elements are left at their reference value.  
+Solar-abundance calcium in particular produces strong lines and has a significant
+effect on other lines \citep{KingdonFerlandFeibelman1995}.
+ Consider changing the abundances of these elements separately.
  
