@@ -1,4 +1,5 @@
 #refer Solar abnd Lodders, Katharina
+# 2003ApJ...591.1220L
 HYDROGEN	1.00E+00
 HELIUM  	9.64E-02
 LITHIUM 	2.24E-09
@@ -31,5 +32,8 @@ COPPER  	2.19E-08
 ZINC    	5.01E-08
 ****************************
 
-This is a reduced form of Table 6 of Lodders+03
+Date created: March 04 2021
+File Created By: Chamani Gunasekera
+
+This is a reduced form of Table 2 of Lodders+03
 https://ui.adsabs.harvard.edu/abs/2003ApJ...591.1220L
