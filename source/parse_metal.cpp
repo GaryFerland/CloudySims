@@ -35,7 +35,8 @@ STATIC void GetJenkins09(int lgPrtJenkins09 , double DepJenkins09[LIMELM] , doub
 		chFile = "Jenkins09_ISM_Tab4.dep";
 		string chPath = "abundances" + cpu.i().chDirSeparator() + chFile;
 		STATIC FILE *ioDATA = open_data( chPath, "r" );	// will abort if not found
-		fprintf(ioQQQ," First call, opened file %s \n", chPath.c_str() );
+		if( lgPrtJenkins09 )
+			fprintf(ioQQQ," First call, opened file %s \n", chPath.c_str() );
 		// init with no depletion set
 		for(int nelem=0; nelem<LIMELM; ++nelem)
 			lgSetJenkins09[nelem] = false;
