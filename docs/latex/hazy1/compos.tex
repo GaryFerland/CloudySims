@@ -1673,18 +1673,24 @@ metals and grains 2
 
 These commands specify depletion factors that account for elements that
 have condensed onto grains.  
-The standard approach is to define
+The standard approach is to define the gas-phase abundances as
 \begin{equation}
 A( \textrm{gas phase}) = A( \textrm{reference}) \times  \textrm{Depletion}
 \end{equation}
 where the reference abundance is the composition the user specifies with other commands
 and the depletion is set with these commands.
 The final gas-phase abundance results.
+There are other commands that specify the gas-phase abundances directly.
+The most flexible are the \cdCommand{abundances} family of commands specified
+in Section \ref{sec:CommandAbundances}.
 
-The condensed elements form grains.  
+The depleted elements form grains.  
 These commands do not create a set of grain species that is consistent
 with the depletion.
-The grain properties are set separately.
+The grain properties are set separately, usually with one of the
+\cdCommand{grains} commands described in Section \ref{sec:GrainsCommand}.
+We include solid grains so suffer from the problem pointed out by \citet{Snow1996}.
+
 
 \subsubsection{metals deplete --- table of gas-phase depletion factors}
 
