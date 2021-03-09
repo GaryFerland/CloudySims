@@ -167,8 +167,8 @@ double hydro_energy(long nelem, long n, long l, long s, long j)
 		
 		if( DEBUG_LOC )
 		{
-         		fprintf( ioQQQ, "debug E_H n l s QN2ind %.2e %ld %ld %ld %ld\n",
-					E_H, n, l, s, QN2ind(n, l, s, 2*j+1) );
+         		fprintf( ioQQQ, "debug E_H n l s QN2ind %.2e %ld %ld %ld %ld %ld\n",
+					E_H, n, l, s, j, QN2ind(n, l, s, 2*j+1) );
 			fprintf( ioQQQ, "debug level_ion Ionpot %.2e %.2e \n",
 					iso_sp[ipH_LIKE][nelem].energy_ioniz(n, l, s, 2*j+1),
 					iso_sp[ipH_LIKE][nelem].IonPot );
