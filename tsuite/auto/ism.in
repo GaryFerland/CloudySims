@@ -11,8 +11,8 @@ cosmic rays, background
 #
 # commands for density & abundances =========
 hden 0
-init file="ism.ini"
-abundances ism 
+grains ism
+metals deplete
 #
 # commands controlling geometry  =========
 # set sphere since matter in all directions
@@ -55,7 +55,8 @@ monitor csupra -15.84 error 0.1
 ## >>chng 04 mar 26, from -10.051 to -9.899, update sec for cr
 ## >>chng 05 apr 17, from -9.899 to -9.87, chng bck rate, incr error
 ## >>chng 12 apr 09, from -9.87 to -8.777, update CR backbround to Indriolo+07, ~8x larger
-monitor line "cr h" 0 luminosity -8.777 error 0.1
+## >>chng 21 mar 11, from -8.777 to -8.732, add grains, deplete elements
+monitor line "cr h" 0 luminosity -8.732 error 0.1
 ##
 ## >>chng 00 dec 1, most everything changed with change to TH85
 ## cr rates
@@ -70,7 +71,8 @@ monitor line "cr h" 0 luminosity -8.777 error 0.1
 ## >>chng 12 apr 09, from 170 to 579.9, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 13 dec 23, from 579.9 to 511.3, C to external databases
 ## >>chng 14 mar 26, from 511.3 to 375.9, Move oxygen data to stout and chianti files
-monitor temperature "H" 375.9
+## >>chng 21 mar 11, from 375.9 to 1847, add grains, deplete elements
+monitor temperature "H" 1847
 ##
 ## >>chng 02 apr 02, from -9.023 to -8.996, bound compton
 ## >>chng 03 jan 13, from -8.996 to -8.972, new grains
@@ -82,7 +84,8 @@ monitor temperature "H" 375.9
 ## >>chng 06 dec 31, from -8.827 to -8.850, use ism abundances
 ## >>chng 12 apr 09, from -8.85 to -8.472, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 16 apr 26, from -8.472 to -8.493, replace \"case B\" with \"Database H-like Lyman pumping off\"
-monitor line luminosity "c  2" 157.636m -8.493 
+## >>chng 21 mar 11, from -8.493 to -8.804, add grains, deplete elements
+monitor line luminosity "c  2" 157.636m -8.804 
 ##
 ## >>chng 01 mar 07, from 0.010 to 0.0088, change in grain physics
 ## >>chng 01 mar 07, from 0.0088 to 0.0097, change in grain physics
@@ -104,7 +107,8 @@ monitor line luminosity "c  2" 157.636m -8.493
 ## >>chng 10 sep 29, from -10.53 to -10.20, use atom_leveln for all temps
 ## >>chng 12 apr 09, from -10.2 to -9.466, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 14 mar 26, from -9.466 to -9.557, Move oxygen data to stout and chianti files
-monitor line luminosity "Si 2"  34.8046m -9.557 error 0.1
+## >>chng 21 mar 11, from -9.557 to -9.787, add grains, deplete elements
+monitor line luminosity "Si 2"  34.8046m -9.787 error 0.1
 ##
 ## >>chng 01 mar 07, from 0.046 to 0.043, change in grain physics
 ## >>chng 01 mar 07, from 0.043 to 0.046, change in grain physics
@@ -124,7 +128,8 @@ monitor line luminosity "Si 2"  34.8046m -9.557 error 0.1
 ## >>chng 12 apr 09, from -10.09 to -9.319, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 13 dec 23, from -9.319 to -9.381 C to external databases
 ## >>chng 14 mar 26, from -9.381 to -9.083, Move oxygen data to stout and chianti files
-monitor line luminosity "O  1"  63.1679m -9.083 error 0.1 
+## >>chng 21 mar 11, from -9.083 to -8.721, add grains, deplete elements
+monitor line luminosity "O  1"  63.1679m -8.721 error 0.1 
 ##
 ## >>chng 03 jan 13, from 1.017 to 0.871 new grains
 ## >>chng 03 mar 08, from 1.034 to 0.871 bug grn ion recomb, solomon process
@@ -133,7 +138,8 @@ monitor line luminosity "O  1"  63.1679m -9.083 error 0.1
 ## >>chng 05 jun 22, from 1.024 to 0.973 update C2 Si2 cs to ApJ, 620, 537
 ## >>chng 12 apr 09, from 0.973 to 0.7644, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 14 mar 26, from 0.7644 to 0.8345, Move oxygen data to stout and chianti files
-monitor line "GrGH"    0 0.8345 ##this is total grain photo heating
+## >>chng 21 mar 11, from 0.8345 to 1.385, add grains, deplete elements
+monitor line "GrGH"    0 1.385 ##this is total grain photo heating
 ##
 ## >>chng 02 jul 19, from 1476 to 1394 better two photon, drift down
 ## >>chng 03 mar 08, from 1394 to 1539 bug grn ion recomb, solomon process
@@ -144,7 +150,8 @@ monitor line "GrGH"    0 0.8345 ##this is total grain photo heating
 ## >>chng 06 dec 31, from 969 to 1022 use ism abundances
 ## >>chng 12 apr 09, from 1022 to 428, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 16 apr 26, from 428 to 448.3, replace \"case B\" with \"Database H-like Lyman pumping off\"
-monitor line "GraT"    0 448.3 ##this is total grain emission
+## >>chng 21 mar 11, from 448.3 to 917.7, add grains, deplete elements
+monitor line "GraT"    0 917.7 ##this is total grain emission
 ##
 monitor grain temperature 1 19.74 graphite
 ##
@@ -158,7 +165,8 @@ monitor grain temperature 1 19.74 graphite
 ## >>chng 12 apr 09, from -11.34 to -11.51, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 13 dec 23, from -11.51 to -11.47, C to external databases
 ## >>chng 14 mar 26, from -11.47 to -11.4, Move oxygen data to stout and chianti files
-monitor line luminosity "H2dH" 0 -11.4
+## >>chng 21 mar 11, from -11.4 to -12, add grains, deplete elements
+monitor line luminosity "H2dH" 0 -12
 ##
 ## >>chng 01 mar 07, from 0.212 to 0.361, grain physics, h2 form
 ## >>chng 02 jun 27, from 0.361 to 0.542 chng H2 grain form rates
@@ -170,12 +178,14 @@ monitor line luminosity "H2dH" 0 -11.4
 ## >>chng 05 dec 08, from -9.404 to -9.11, update to Elwert Solomon rate
 ## >>chng 12 apr 09, from -9.11 to -9.279, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 14 mar 26, from -9.279 to -9.174, Move oxygen data to stout and chianti files
-monitor line luminosity "H2 v" 0  -9.174 error 0.1
+## >>chng 21 mar 11, from -9.174 to -9.771, add grains, deplete elements
+monitor line luminosity "H2 v" 0  -9.771 error 0.1
 ##
 ## >>chng 08 dec 08, from 15 to 10, upper limit -> equals (r2515)
 ## >>chng 09 jun 15, from 10 to 32, gradual approach to outer edge
 ## >>chng 13 nov 13, from 32 to 36, resolve face at all freqs
-monitor nzone 36 error 0.01
+## >>chng 21 mar 11, from 36 to 40 add grains, deplete elements
+monitor nzone 40 error 0.01
 ## >>chng 02 jun 13, from 4 to 5
 ## >>chng 02 nov 07, from 5 to 5.6
 ## >>chng 02 nov 20, from 5.6 to 6.5
@@ -210,7 +220,8 @@ monitor nzone 36 error 0.01
 ## >>chng 14 jan 05, from -8.018 to -8.135, N to external databases
 ## >>chng 14 mar 26, from -8.135 to -8.178, Move oxygen data to stout and chianti files
 ## >>chng 17 feb 10, from -8.178 to -8.107, default size of N 1 model atom set to 50
-monitor line luminosity "N  1" 1199.55 -8.107 error 0.1
+## >>chng 21 mar 11, from -8.107 to -7.928, add grains, deplete elements
+monitor line luminosity "N  1" 1199.55 -7.928 error 0.1
 ##
 ## >>chng 02 nov 20, chng to luminosity
 ## >>chng 04 jan 28, from -8.578 to -8.530 update cr back heating too
@@ -218,7 +229,8 @@ monitor line luminosity "N  1" 1199.55 -8.107 error 0.1
 ## >>chng 06 dec 31, from -8.479 to -8.542 use ism abundances
 ## >>chng 12 apr 09, from -8.542 to -8.479, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 13 jul 15, from -8.479 to -8.61, move to Stout/Chianti for Si, botches are due to improved atomic data
-monitor line luminosity "Si 2" 1533.43 -8.61 error 0.1
+## >>chng 21 mar 11, from -8.61 to -9.045, add grains, deplete elements
+monitor line luminosity "Si 2" 1533.43 -9.045 error 0.1
 ##
 ## >>chng 02 jul 19, from 6.45 to 6.11 better two photon
 ## >>chng 02 nov 20, chng to luminosity

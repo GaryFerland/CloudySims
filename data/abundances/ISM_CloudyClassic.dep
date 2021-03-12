@@ -1,0 +1,33 @@
+# these are the ISM depletion factors that have been built into
+# Cloudy for a very long time.   
+Hydrogen  	1.000e+00
+Helium    	1.000e+00
+Lithium   	1.600e-01
+Beryllium 	6.000e-01
+Boron     	1.300e-01
+Carbon    	4.000e-01
+Nitrogen  	1.000e+00
+Oxygen    	6.000e-01
+Fluorine  	3.000e-01
+Neon      	1.000e+00
+Sodium    	2.000e-01
+Magnesium 	2.000e-01
+Aluminium 	1.000e-02
+Silicon   	3.000e-02
+Phosphorus	2.500e-01
+Sulphur   	1.000e+00
+Chlorine  	4.000e-01
+Argon     	1.000e+00
+Potassium 	3.000e-01
+Calcium   	1.000e-04
+Scandium  	5.000e-03
+Titanium  	8.000e-03
+Vanadium  	6.000e-03
+Chromium  	6.000e-03
+Manganese 	5.000e-02
+Iron      	1.000e-02
+Cobalt    	1.000e-02
+Nickel    	1.000e-02
+Copper    	1.000e-01
+Zinc      	2.500e-01
+*****************************

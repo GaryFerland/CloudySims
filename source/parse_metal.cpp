@@ -11,6 +11,91 @@
 #include "abund.h"
 #include "parser.h"
 
+STATIC int lgPrintMetalsDeplete;
+
+STATIC void GetMetalsDeplete( Parser &p )
+{
+	static int lgFirst=true;
+	if( lgFirst )
+	{
+		lgFirst = false;
+		string chFile;	/*file name for table read */
+		if( p.nMatch( "\"" ) )
+		{
+			/*
+			 * if a quote occurs on the line then get the ini file name
+			 * this will also set the name in chCard and OrgCard to spaces
+			 * so later keywords do not key off it
+			 */
+			if( p.GetQuote( chFile ) )
+				p.StringError();
+		}
+		else
+		{
+			/* no quote appeared, so this is the default name, cloudy.ini */
+			chFile = "ISM_CloudyClassic.dep";
+		}
+		string chPath = "abundances" + cpu.i().chDirSeparator() + chFile;
+		STATIC FILE *ioDATA = open_data( chPath, "r" );	// will abort if not found
+
+		if( lgPrintMetalsDeplete )
+			fprintf(ioQQQ," First call, GetMetalsDeplete opened file %s \n", chPath.c_str() );
+
+		// init with no depletion set, equal to 1
+		for(int nelem=0; nelem<LIMELM; ++nelem)
+			abund.depset[nelem] = 1.;
+
+		string chLine;
+		while( read_whole_line( chLine, ioDATA ) )
+		{
+			if( lgPrintMetalsDeplete )
+				fprintf(ioQQQ, "line: %s", chLine.c_str() );
+
+			/* field of stars or empty line end data */
+			if( chLine.size() == 0 || chLine[0]=='\n' || chLine[0]=='\r' || chLine[0]=='*' )
+				break;
+
+			/* skip comment */
+			if( chLine[0]=='#' )
+				continue;
+
+			size_t pp;
+			/* erase EOL character */
+			if( (pp = chLine.find_first_of("\n\r")) != string::npos )
+				chLine.erase(pp);
+
+			string chCAPS = chLine;
+			caps(chCAPS);
+
+			bool lgFound = false;
+			for(int nelem=0; nelem<LIMELM; nelem++)
+			{
+				if( chCAPS.find(elementnames.chElementNameShort[nelem]) != string::npos )
+				{
+					lgFound = true;
+					long int i = 1;
+					bool lgEOL;
+
+					//STATIC double AX[LIMELM] , BX[LIMELM] , ZX[LIMELM];
+					abund.depset[nelem] = FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
+					if( lgPrintMetalsDeplete )
+						fprintf(ioQQQ, " Parse:\t%s\t%.2f\n",
+								elementnames.chElementNameShort[nelem] , abund.depset[nelem] );
+
+					//we shouldn't need to continue once an element name is found on the line...
+					break;
+				}
+			}
+			if( !lgFound )
+			{
+				fprintf(ioQQQ, "PROBLEM in METALS DEPLETE: did not identify element name on this line: %s\n",
+					chLine.c_str());
+				cdEXIT(EXIT_FAILURE);
+			}
+		}
+	}
+}
+
 STATIC double AX[LIMELM] , BX[LIMELM] , ZX[LIMELM];
 STATIC int lgSetJenkins09[LIMELM];
 
@@ -25,14 +110,28 @@ STATIC void EvalJenkins(double DepJenkins09[LIMELM] , double Fstar )
 	}
 }
 
-STATIC void GetJenkins09(int lgPrtJenkins09 , double DepJenkins09[LIMELM] , double Fstar )
+STATIC void GetJenkins09(int lgPrtJenkins09 , double DepJenkins09[LIMELM] , double Fstar , Parser &p )
 {
 	static int lgFirst=true;
 	if( lgFirst )
 	{
 		lgFirst = false;
 		string chFile;	/*file name for table read */
-		chFile = "Jenkins09_ISM_Tab4.dep";
+		if( p.nMatch( "\"" ) )
+		{
+			/*
+			 * if a quote occurs on the line then get the ini file name
+			 * this will also set the name in chCard and OrgCard to spaces
+			 * so later keywords do not key off it
+			 */
+			if( p.GetQuote( chFile ) )
+				p.StringError();
+		}
+		else
+		{
+			/* no quote appeared, so this is the default name, cloudy.ini */
+			chFile = "ISM_Jenkins09_Tab4.dep";
+		}
 		string chPath = "abundances" + cpu.i().chDirSeparator() + chFile;
 		STATIC FILE *ioDATA = open_data( chPath, "r" );	// will abort if not found
 		if( lgPrtJenkins09 )
@@ -183,7 +282,7 @@ void ParseMetal(Parser &p)
 				fprintf(ioQQQ,"\n Jenkins 2009, print set, found Fstar = %.2e\n" , Fstar);
 
 			STATIC double DepJenkins09[LIMELM];
-			GetJenkins09(lgPrtJenkins09 , DepJenkins09 , Fstar );
+			GetJenkins09(lgPrtJenkins09 , DepJenkins09 , Fstar , p);
 
 			/* use derived depletions */
 			for( long int i=0; i < LIMELM; i++ )
@@ -207,9 +306,19 @@ void ParseMetal(Parser &p)
 		}
 		else
 		{
+			/* metals deplete command - not Jenkins */
+			if( p.nMatch("PRINT")  )
+				lgPrintMetalsDeplete = true;
+			else
+				lgPrintMetalsDeplete = false;
+
 			/* no keyword - use stored abundances */
+			GetMetalsDeplete( p );
 			for( long int i=0; i < LIMELM; i++ )
-				abund.depset[i] = abund.Depletion[i];
+			{
+				if( lgPrintMetalsDeplete )
+					fprintf(ioQQQ,"DEBUGGG depnew %s\t%.3e\n", elementnames.chElementName[i], abund.depset[i] );
+			}
 		}
 
 	}
