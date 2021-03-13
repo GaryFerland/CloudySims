@@ -3686,6 +3686,12 @@ itself.
 If the name of any other element appears then the printout will
 describe that element.
 
+\subsection{Trace only [keyword]}
+
+This prevents the main trace output from happening.  
+The keyword on the line is still parsed and its associated variables are set.
+Certain commands will then produce minimal printout.
+
 \begin{table}
 \centering
 \caption{\label{tab:trace_keywords}Trace Keywords and Effects}
@@ -3693,6 +3699,7 @@ describe that element.
 \hline
 Keyword& Quantity traced\\
 \hline
+BeSeq& $^3$P ionization for Be-sequence ions\\
 BETA& OI 8446-\la\ problem\\
 CARBon& carbon ionization
 equilibrium\\
