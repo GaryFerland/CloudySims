@@ -25,24 +25,36 @@ void ParseTrace(Parser &p )
 	/* set initially false, in case we do not turn on trace until
 	 * later iteration or zone */
 	trace.lgTrace = false;
-	/* this is which zone to turn on */
-	trace.nznbug = (long)p.FFmtRead();
-	if( p.lgEOL() )
-		trace.lgTrace = true;
 
-	/* this is which iteration to turn on */
-	trace.npsbug = (long)p.FFmtRead();
-	if( p.lgEOL() )
-		trace.npsbug = 1;
-
-	/* turn trace on now if no numbers on line */
-	if( trace.nznbug == 0 && trace.npsbug <= 1 )
+	/* trace only is special option to mostly not turn on trace, but still parse
+	 * the trace keywords.  Some print outputs, as hardcoded, will still generate reports in this
+	 * case.
+	 */
+	if( !p.nMatch("ONLY" ) )
 	{
-		trace.lgTrace = true;
-		geometry.nprint = 1;
-		iterations.IterPrnt[0] = 1;
+		/* this is which zone to turn on */
+		trace.nznbug = (long)p.FFmtRead();
+		if( p.lgEOL() )
+			trace.lgTrace = true;
+
+		/* this is which iteration to turn on */
+		trace.npsbug = (long)p.FFmtRead();
+		if( p.lgEOL() )
+			trace.npsbug = 1;
+
+		/* turn trace on now if no numbers on line */
+		if( trace.nznbug == 0 && trace.npsbug <= 1 )
+		{
+			trace.lgTrace = true;
+			geometry.nprint = 1;
+			iterations.IterPrnt[0] = 1;
+		}
 	}
 	
+	/* trace Be sequence */
+	if( p.nMatch("BESEQ" ) )
+		trace.lgBeSeq3Pprt = true;
+
 	/* trace convergence is a special command, 
 	 * only convergence loops, not full trace */
 	if( p.nMatch("CONV") )

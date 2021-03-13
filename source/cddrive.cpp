@@ -1619,8 +1619,8 @@ int cdRead( const string& chInputLine ) /* the string containing the command */
 	Parser p;
 	p.setline(chLocal.c_str());
 
-	/* check whether this is a trace command, turn on printout if so */
-	if( p.hasCommand("TRACE") )
+	/* check whether this is a trace command, but not "only", turn on printout if so */
+	if( p.hasCommand("TRACE") && !p.nMatch("ONLY"))
 		trace.lgTrace = true;
 
 	/* print input lines if trace specified, need to do this before INIT command is processed */

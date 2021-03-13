@@ -45,6 +45,9 @@ struct t_trace {
 	/** flag set with trace iron bug */
 	bool lgFeBug;
 
+	/** dexcited state Be seq ionization */
+	bool lgBeSeq3Pprt;
+
 	/** flag set if negative opacities every occured */
 	bool lgOptcBug;
 
