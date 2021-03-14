@@ -237,8 +237,8 @@ struct t_abund : public module {
 	/** scale factors to alter abundances of elements, set with element scale */
 	realnum ScaleElement[LIMELM];
 
-	/** depset is unity unless depletion is used */
-	realnum depset[LIMELM];
+	/** grain Depletion is unity unless METALS DEPLETE is used */
+	realnum Depletion[LIMELM];
 
 	/** lgDepln is true if depln used */
 	bool lgDepln;

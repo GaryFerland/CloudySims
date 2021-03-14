@@ -15,6 +15,8 @@ STATIC int lgPrintMetalsDeplete;
 
 STATIC void GetMetalsDeplete( Parser &p )
 {
+	/* save depletions read in from external file */
+	STATIC realnum DepleteClassicSave[LIMELM];
 	static int lgFirst=true;
 	if( lgFirst )
 	{
@@ -43,7 +45,7 @@ STATIC void GetMetalsDeplete( Parser &p )
 
 		// init with no depletion set, equal to 1
 		for(int nelem=0; nelem<LIMELM; ++nelem)
-			abund.depset[nelem] = 1.;
+			DepleteClassicSave[nelem] = 1.;
 
 		string chLine;
 		while( read_whole_line( chLine, ioDATA ) )
@@ -76,11 +78,16 @@ STATIC void GetMetalsDeplete( Parser &p )
 					long int i = 1;
 					bool lgEOL;
 
-					//STATIC double AX[LIMELM] , BX[LIMELM] , ZX[LIMELM];
-					abund.depset[nelem] = FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
+					DepleteClassicSave[nelem] = FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
 					if( lgPrintMetalsDeplete )
 						fprintf(ioQQQ, " Parse:\t%s\t%.2f\n",
-								elementnames.chElementNameShort[nelem] , abund.depset[nelem] );
+								elementnames.chElementNameShort[nelem] , DepleteClassicSave[nelem] );
+					if( DepleteClassicSave[nelem]<0. || DepleteClassicSave[nelem]>1. )
+					{
+						fprintf(ioQQQ," The grain depletion for element %s was %.2e, it must be between 0 and 1\n",
+								elementnames.chElementNameShort[nelem] , DepleteClassicSave[nelem] );
+						cdEXIT(EXIT_FAILURE);
+					}
 
 					//we shouldn't need to continue once an element name is found on the line...
 					break;
@@ -94,6 +101,11 @@ STATIC void GetMetalsDeplete( Parser &p )
 			}
 		}
 	}
+
+	/* use derived depletions */
+	for( long int i=0; i < LIMELM; i++ )
+		abund.Depletion[i] = DepleteClassicSave[i];
+
 }
 
 STATIC double AX[LIMELM] , BX[LIMELM] , ZX[LIMELM];
@@ -286,7 +298,7 @@ void ParseMetal(Parser &p)
 
 			/* use derived depletions */
 			for( long int i=0; i < LIMELM; i++ )
-				abund.depset[i] = DepJenkins09[i];
+				abund.Depletion[i] = DepJenkins09[i];
 
 			/* vary option */
 			if( optimize.lgVarOn )
@@ -317,7 +329,7 @@ void ParseMetal(Parser &p)
 			for( long int i=0; i < LIMELM; i++ )
 			{
 				if( lgPrintMetalsDeplete )
-					fprintf(ioQQQ,"DEBUGGG depnew %s\t%.3e\n", elementnames.chElementName[i], abund.depset[i] );
+					fprintf(ioQQQ,"DEBUGGG depnew %s\t%.3e\n", elementnames.chElementName[i], abund.Depletion[i] );
 			}
 		}
 

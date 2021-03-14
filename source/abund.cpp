@@ -11,7 +11,7 @@ void t_abund::zero()
 	for( long nelem=0; nelem < LIMELM; nelem++ )
 	{
 		/* depletion scale factors */
-		depset[nelem] = 1.;
+		Depletion[nelem] = 1.;
 	}
 	lgDepln = false;
 	ScaleMetals = 1.;
