@@ -7,10 +7,12 @@
 #
 # NIST data for n<=5 were downloaded using ADM.
 #
+# NB NB NB  n=2 energy ignores energy of 2s
+#
 # The remaining data were calculated using the ATLL r123
 #
  1 -1 -1 -1 0 10
- 2 -1 -1 -1 56158037.5 12.2474
+ 2 -1 -1 -1 56185416.6666667 14.9071
  3 -1 -1 -1 66556742.2222222 15.9826
  4 -1 -1 -1 70182724.6875 14.5102
  5 -1 -1 -1 71857795.4 13.2761
