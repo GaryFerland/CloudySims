@@ -56,8 +56,10 @@ monitor line luminosity cumulative intrinsic "Fe 9"      8234.56A   10.9000
 ## >>chng 17 may 25, wl from 18.9732A to 18.9709A, up Rydberg constant
 ## >>chng 19 aug 06, from 14 to 14.02, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 22, wl from 18.9709A to 18.9696A, switched from computed to tabulated energies for H and He isoseq
-monitor line luminosity cumulative intrinsic "O  8"      18.9696A   14.02
-monitor line luminosity cumulative intrinsic "O  7"      16.7725A   12.0396
+## >>chng 21 mar 16, wl from 18.9696A to 18.9689A, update NIST energies
+monitor line luminosity cumulative intrinsic "O  8"      18.9689A   14.02
+## >>chng 21 mar 16, from O 7 16.7725A to 16.7699A, update to NIST
+monitor line luminosity cumulative intrinsic "O  7"      16.7699A   12.0396
 ## >>chng 16 aug 07, from 12.79 to 12.69, Marios bug fixes
 ## >>chng 17 sep 01, from 12.69 to 11.59, fix bug in high n collisional excitation rates for He-like iso-sequences
 ## >>chng 19 jun 11, from 11.59 to 11.77, Percival and Richards (1978) used for He-like ions

@@ -68,7 +68,8 @@ monitor line luminosity "blnd"  1240 2.96
 ## >>chng 15 may 27, from 4.244 to 4.267, PS64 fixes
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
-monitor line luminosity "H  1" 4861.32A 4.267, 
+## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+monitor line luminosity "H  1" 4861.33A 4.267, 
 ## 
 ## >>chng 09 jun 28, from 1 to 3.914, check convergence of outward Hb
 ## >>chng 11 sep 15, from 3.914 to 3.943, Chianti for Fe moderate to high ions
@@ -76,7 +77,8 @@ monitor line luminosity "H  1" 4861.32A 4.267,
 ## >>chng 15 may 27, from 3.943 to 3.966, PS64 fixes
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
-monitor line luminosity "Inwd" 4861.32A 3.966, 
+## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+monitor line luminosity "Inwd" 4861.33A 3.966, 
 ##
 ##total He II Balmer-alpha 1640
 ## >>chng 06 feb 03, from 5.513 to 5.974, guess dr to Badnell mean

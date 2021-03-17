@@ -28,29 +28,36 @@ iterate
 ## >>chng 16 aug 07, from 3.065 to 2.773, Fran bug fix
 ## >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1"      6562.80A  2.773
+## >>chng 21 mar 16, wl from 6562.80A to 6562.82A, update NIST energies
+monitor line "H  1"      6562.82A  2.773
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1"      4861.32A  1.0064
+## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+monitor line "H  1"      4861.33A  1.0064
 ## >>chng 17 may 25, wl from 4340.49A to 4340.46A, up Rydberg constant
-monitor line "H  1"      4340.46A  0.4713
+## >>chng 21 mar 16, wl from 4340.46A to 4340.47A, update NIST energies
+monitor line "H  1"      4340.47A  0.4713
 ## >>chng 16 jul 28, from 0.2606 to 0.2373, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.2373 to 0.1839, Fran bug fix
 ## >>chng 17 may 25, wl from 4101.76A to 4101.73A, up Rydberg constant
 ## >>chng 19 aug 06, from 0.1839 to 0.1937, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
-monitor line "H  1"      4101.73A  0.1937
+## >>chng 21 mar 16, wl from 4101.73A to 4101.74A, update NIST energies
+monitor line "H  1"      4101.74A  0.1937
 ## >>chng 16 jul 28, from 0.16 to 0.1412, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.1412 to 0.1126, Fran bug fix
 ## >>chng 17 may 25, wl from 3970.09A to 3970.07A, up Rydberg constant
-monitor line "H  1"      3970.07A  0.1126
+## >>chng 21 mar 16, wl from 3970.07A to 3970.08A, update NIST energies
+monitor line "H  1"      3970.08A  0.1126
 ## >>chng 16 jul 28, from 0.1057 to 0.091, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.091 to 0.074, Fran bug fix
 ## >>chng 17 may 25, wl from 3889.07A to 3889.05A, up Rydberg constant
-monitor line "H  1"      3889.05A  0.074
+## >>chng 21 mar 16, wl from 3889.05A to 3889.06A, update NIST energies
+monitor line "H  1"      3889.06A  0.074
 ## >>chng 16 jul 28, from 0.0736 to 0.0622, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0622 to 0.0512, Fran bug fix
 ## >>chng 17 may 25, wl from 3835.40A to 3835.38A, up Rydberg constant
-monitor line "H  1"      3835.38A  0.0512
+## >>chng 21 mar 16, wl from 3835.38A to 3835.39A, update NIST energies
+monitor line "H  1"      3835.39A  0.0512
 ## >>chng 16 jul 28, from 0.0534 to 0.0444, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0444 to 0.0369, Fran bug fix
 ## >>chng 17 may 25, wl from 3797.92A to 3797.89A, up Rydberg constant
@@ -59,11 +66,13 @@ monitor line "H  1"      3797.90A  0.0369
 ## >>chng 16 jul 28, from 0.04 to 0.0328, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0328 to 0.0275, Fran bug fix
 ## >>chng 17 may 25, wl from 3770.65A to 3770.63A, up Rydberg constant
-monitor line "H  1"      3770.63A  0.0275
+## >>chng 21 mar 16, wl from 3770.63A to 3770.64A, update NIST energies
+monitor line "H  1"      3770.64A  0.0275
 ## >>chng 16 jul 28, from 0.0307 to 0.025, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.025 to 0.021, Fran bug fix
 ## >>chng 17 may 25, wl from 3750.17A to 3750.15A, up Rydberg constant
-monitor line "H  1"      3750.15A  0.021
+## >>chng 21 mar 16, wl from 3750.15A to 3750.16A, update NIST energies
+monitor line "H  1"      3750.16A  0.021
 ## >>chng 16 jul 28, from 0.0241 to 0.0194, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0194 to 0.0164, Fran bug fix
 ## >>chng 17 may 25, wl from 3734.39A to 3734.36A, up Rydberg constant
@@ -73,19 +82,23 @@ monitor line "H  1"      3734.37A  0.0164
 ## >>chng 16 aug 07, from 0.0154 to 0.0131, Fran bug fix
 ## >>chng 17 may 25, wl from 3721.96A to 3721.93A, up Rydberg constant
 ## >>chng 20 aug 22, wl from 3721.93A to 3721.94A, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1"      3721.94A  0.0131
+## >>chng 21 mar 16, wl from 3721.94A to 3721.95A, update NIST energies
+monitor line "H  1"      3721.95A  0.0131
 ## >>chng 16 jul 28, from 0.0157 to 0.0124, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0124 to 0.0106, Fran bug fix
 ## >>chng 17 may 25, wl from 3711.99A to 3711.97A, up Rydberg constant
-monitor line "H  1"      3711.97A  0.0106
+## >>chng 21 mar 16, wl from 3711.97A to 3711.98A, update NIST energies
+monitor line "H  1"      3711.98A  0.0106
 ## >>chng 16 jul 28, from 0.0129 to 0.0102, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0102 to 0.0087, Fran bug fix
 ## >>chng 17 may 25, wl from 3703.87A to 3703.85A, up Rydberg constant
-monitor line "H  1"      3703.85A  0.0087
+## >>chng 21 mar 16, wl from 3703.85A to 3703.86A, update NIST energies
+monitor line "H  1"      3703.86A  0.0087
 ## >>chng 16 jul 28, from 0.0108 to 0.0084, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0084 to 0.0072, Fran bug fix
 ## >>chng 17 may 25, wl from 3697.17A to 3697.15A, up Rydberg constant
-monitor line "H  1"      3697.15A  0.0072
+## >>chng 21 mar 16, wl from 3697.15A to 3697.16A, update NIST energies
+monitor line "H  1"      3697.16A  0.0072
 ## >>chng 16 jul 28, from 0.3408 to 0.3056, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.3056 to 0.1879, Fran bug fix
 ## >>chng 17 may 25, wl from 1.87511m to 1.87510m, up Rydberg constant
@@ -142,7 +155,8 @@ monitor line "H  1"      8750.48A  0.0057
 ## >>chng 19 jun 28, from 0.0338 to 0.039, reintegrate iso_collisions branch
 ## >>chng 19 aug 06, from 0.039 to 0.0474, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 22, wl from 4.05113m to 4.05115m, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1"      4.05115m  0.0474
+## >>chng 21 mar 16, wl from 4.05115m to 4.05116m, update NIST energies
+monitor line "H  1"      4.05116m  0.0474
 ## >>chng 16 jul 28, from 0.0458 to 0.0344, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0344 to 0.018, Fran bug fix
 ## >>chng 17 may 25, wl from 2.62515m to 2.62513m, up Rydberg constant

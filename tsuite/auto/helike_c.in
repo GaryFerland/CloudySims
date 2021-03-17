@@ -56,7 +56,8 @@ monitor line luminosity "C  5" 40.2678A -21.67
 ## 41.47A is 2^3S to ground
 ## >>chng 05 sep 5, wl from 41.48 to 41.47
 ## >>chng 13 jul 25, wl from 41.47A to 41.4721A, increased wl precision to 6 sig. fig.
-monitor line "C  5"  41.4721A 4.45
+## >>chng 21 mar 16, wl from 41.4721A to 41.4719A, update NIST energies
+monitor line "C  5"  41.4719A 4.45
 ##
 ## Totl is 2^3P to ground
 ## >>chng 05 sep 5, wl from 40.74 to 40.73
@@ -66,14 +67,16 @@ monitor line "C  5"  41.4721A 4.45
 ## >>chng 15 may 12, from 0.35 to 0.3875, coll. str. reduced mass scaling
 ## >>chng 18 feb 20, updated spectral label from "TOTL" 40.7307A to "Blnd" 40.7307A, update He-like triplet labels and wl
 ## >>chng 20 jan 13, from 0.3875 to 0.3605, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor line "Blnd"  40.7307A 0.3605
+## >>chng 21 mar 16, wl from 40.7307A to 40.7306A, update NIST energies
+monitor line "Blnd"  40.7306A 0.3605
 ##
 ## 34.97A is 3^1P to ground
 ## >>chng 03 may 24, from 0.25 to 0.237, Ryan cleaned up some As
 ## >>chng 05 sep 5, from 0.237 to 0.27, changed wl's, some intens affected.
 ## >>chng 08 mar 22,from 0.27 to 0.24, changed deltan=0 yrare A's
 ## >>chng 13 jul 25, wl from 34.97A to 34.9727A, increased wl precision to 6 sig. fig.
-monitor line "C  5"  34.9727A 0.24
+## >>chng 21 mar 16, wl from 34.9727A to 34.9728A, update NIST energies
+monitor line "C  5"  34.9728A 0.24
 ##
 ## 227.3A is 3^3P to 2^3S
 ## >>chng 05 sep 5, wl from 227.3 to 227.2
@@ -91,7 +94,8 @@ monitor line "C  5"  227.192A 0.12 0.10
 ## >>chng 13 jul 30, wl from 248.742A to 248.658A, increased wl precision to 6 sig. fig.
 ## >>chng 13 jul 30, wl from 248.658A to 248.665A, now using middle multiplet wl
 ## >>chng 18 feb 20, updated spectral label from "C  5" 248.665A to "Blnd" 248.705A, update He-like triplet labels and wl
-monitor line "Blnd"  248.705A 0.212
+## >>chng 21 mar 16, wl from 248.705A to 248.708A, update NIST energies
+monitor line "Blnd"  248.708A 0.212
 ##
 ## the entire 2^3S - 2^3P multiplet
 ## >>chng 13 jul 25, wl from 2275A to 2275.25A, increased wl precision to 6 sig. fig.
@@ -101,7 +105,8 @@ monitor line "Blnd"  248.705A 0.212
 ## >>chng 18 feb 20, updated spectral label from "TOTL" 2277.16A to "Blnd" 2274.23A, update He-like triplet labels and wl
 ## >>chng 18 mar 06, wl from 2274.23A to 2273.52A, adjust multiplet Blend WL for refraction index
 ## >>chng 20 jan 13, from 0.0598 to 0.0555, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor line "Blnd"  2273.52A  0.0555
+## >>chng 21 mar 16, wl from 2273.52A to 2273.63A, update NIST energies
+monitor line "Blnd"  2273.63A  0.0555
 #
 # helike_c.in
 # class limit 

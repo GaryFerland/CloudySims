@@ -77,17 +77,20 @@ monitor line "Mg11"  50.4502A 0.108
 ## >>chng 13 jul 30, wl from 52.7148A to 52.7560A, increased wl precision to 6 sig. fig.
 ## >>chng 13 aug 1, wl from 52.7560A to 52.6157A, now using middle multiplet wl
 ## >>chng 18 feb 20, updated spectral label from "Mg11" 52.6157A to "Blnd" 52.6680A, update He-like triplet labels and wl
-monitor line "Blnd"  52.6680A 0.27
+## >>chng 21 mar 16, wl from 52.6680A to 52.6679A, update NIST energies
+monitor line "Blnd"  52.6679A 0.27
 ## 
 ## total 2^3P to 2^3S
 ## >>chng 13 jul 25, wl from 1025A to 1025.02A, increased wl precision to 6 sig. fig.
 ## >>chng 13 jul 30, wl from 1025.02A to 1034.31A, increased wl precision to 6 sig. fig.
 ## >>chng 18 feb 20, updated spectral label from "TOTL" 1034.31A to "Blnd" 1013.82A, update He-like triplet labels and wl
-monitor line "Blnd"  1013.82A 0.0184
+## >>chng 21 mar 16, wl from 1013.82A to 1013.84A, update NIST energies
+monitor line "Blnd"  1013.84A 0.0184
 ## 
 ## total 2^3P to 2^3S
 ## >>chng 13 jul 25, wl from 997.5A to 997.455A, increased wl precision to 6 sig. fig.
-monitor line "Mg11" 997.455A 0.0152
+## >>chng 21 mar 16, wl from 997.455A to 997.486A, update NIST energies
+monitor line "Mg11" 997.486A 0.0152
 # 
 # helike_mg.in 
 # class limit 
