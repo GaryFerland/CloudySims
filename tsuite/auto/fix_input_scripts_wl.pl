@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 #
 #  fix_input_scripts_wl.pl:
 #
@@ -47,10 +47,18 @@
 #  Chatzikos, Marios			2020-Aug-25
 #  	- Updated to search for the wavelength suggestion, instead of assuming it
 #  	  is always 3 lines after the emitted warning.
+#  Chatzikos, Marios			2021-Mar-17
+#  	- Exported functions to module WL.pm
+#  	- Updated to report proposed wavelength for lines not encountered in
+#  	  a script and its datafiles.  These lines are typically hardcoded in
+#  	  Cloudy, e.g., lines involving the Halpha, or Hbeta wavelengths.
 #
 
 use strict;
 use warnings;
+
+use WL;
+
 
 $| = 1;
 
@@ -416,127 +424,11 @@ sub get_emission_line
 
 
 
-#
-#  Conversion factor for wavelength comparison.  This is required to match the
-#  intended wavelength reported by Cloudy with the one that appears in the script
-#  itself.
-#  The factor is meant to be applied to the first of the input wavelengths.
-#
-sub convert_wl
-{
-	my ($wl_unit1, $wl_unit2) = @_;
-
-
-	my $conv_fact = 1;
-	if( $wl_unit2 ne $wl_unit1 )
-	{
-		if( $wl_unit2 eq "A" or $wl_unit2 eq "")
-		{
-			$conv_fact = 1e4	if( $wl_unit1 eq "m" );
-			$conv_fact = 1e6	if( $wl_unit1 eq "c" );
-		}
-		elsif( $wl_unit2 eq "m" )
-		{
-			$conv_fact = 1e-4	if( $wl_unit1 eq "A" or $wl_unit1 eq "" );
-			$conv_fact = 1e2	if( $wl_unit1 eq "c" );
-		}
-		elsif( $wl_unit2 eq "c" )
-		{
-			$conv_fact = 1e-6	if( $wl_unit1 eq "A" or $wl_unit1 eq "" );
-			$conv_fact = 1e-2	if( $wl_unit1 eq "m" );
-		}
-	}
-	#	print "$wl_unit2\t  VS  \t$unit_oldwl\t $conv_fact:\t $scrpt_wl\t VS ".	($oldwl * $conv_fact)	."\n";
-
-	return	$conv_fact;
-}
-
-
-
-#
-#  Process wavelength to report the numerical value, the unit, and the number of
-#  significant figures found.
-#
-sub wl_proc
-{
-	my ($wl) = @_;
-
-	my $wl_unit = "";
-	$wl_unit = substr($wl, length($wl)-1, 1, "")	if ($wl =~ m/[a-zA-Z]$/);
-
-	my $idot = index( $wl, "." );
-	my $nsigfig = 0;
-	if( $idot >= 0 )
-	{
-		$nsigfig = length(substr($wl, $idot+1));
-	}
-
-	return	($wl, $wl_unit, $nsigfig);
-}
-
-
-
-#
-#  Given two wavelengths (including units), produce a string of the first
-#  wavelength that best matches the format of the second wavelength.  This is
-#  used to pattern match the wavelength reported by Cloudy against the one
-#  that exists in the script (likely of lower precision).
-#
-sub wl_match
-{
-	my ($wl1, $wl2) = @_;
-
-	my ($wl1str, $wl1_unit, $wl1_nsigfig) = &wl_proc($wl1);
-	my ($wl2str, $wl2_unit, $wl2_nsigfig) = &wl_proc($wl2);
-	my $conv_fact = &convert_wl($wl1_unit, $wl2_unit);
-
-	return	sprintf("%.*f", $wl2_nsigfig, $wl1str * $conv_fact);
-}
-
-
-
-#
-#  Report if two wavelengths match after taking into account differences in
-#  units and precision.
-#
-sub do_wl_match
-{
-	my ($wl1, $wl2) = @_;
-
-	my (undef, $wl2_unit) = &wl_proc($wl2);
-	my $match_wl = &wl_match($wl1, $wl2);
-
-	my $match = 0;
-	$match = 1	if( $wl2 eq "$match_wl$wl2_unit" );
-	#	print "$wl1 \t $wl2\t $match_wl\t $match\n";
-
-	return	($match);
-}
-
-
-
-#
-#  Confirm that the new wl is within Cloudy's standard error (1e-4).
-#
-sub wldiff_error
-{
-	my ($oldwl, $newwl) = @_;
-
-	my ($wl1, $wl1_unit) = &wl_proc($oldwl);
-	my ($wl2, $wl2_unit) = &wl_proc($newwl);
-	my $conv_fact = &convert_wl($wl1_unit, $wl2_unit);
-
-	$wl2 *= $conv_fact;
-
-	my $tol = int( log($wl1) / log(10.0) );
-	$tol = 0.5 * 10.0**($tol-4.0);
-
-	my $error = abs($wl1 - $conv_fact*$wl2);
-
-	return	($tol, $error);
-}
-
-
+#################################################################################
+#										#
+#				LINE PROCESSING					#
+#										#
+#################################################################################
 
 #
 #  Form the new command with the correct wavelength information, and prepend it
@@ -622,7 +514,7 @@ sub process_line
 		my $oldwl = $fix_list[$i]{oldwl};
 		#	print "\t i= $i\t label = \"$label\"\t oldwl = $oldwl\t newwl = $newwl\n";
 
-		if( &do_wl_match($oldwl, $scrpt_wl) )
+		if( &WL::do_wl_match($oldwl, $scrpt_wl) )
 		{
 			$index = $i;
 			$fix_list[$i]{found}++;
@@ -684,34 +576,15 @@ sub show_array_of_fixes
 	return;
 }
 
-
-
 sub get_file_contents
 {
-	my ($filename) = @_;
+       my ($filename) = @_;
 
-	open FILE, "< $filename" or die  "Could not open:\t $filename\n";
-	my @contents = <FILE>;
-	close FILE		or warn "Could not close:\t $filename\n";
+       my @contents = &WL::get_file_contents( $filename );
 
-	&set_current_filename( $filename );
+       &set_current_filename( $filename );
 
-	return	@contents;
-}
-
-
-
-sub write_file_contents
-{
-	my ($fname, @newcontents) = @_;
-
-	$fname .= ".new";
-
-	open  NEWFILE, "> $fname" or die  "Could not open tmp sim:\t $fname\n";
-	print NEWFILE @newcontents;
-	close NEWFILE		 or print "Could not close tmp sim:\t $fname\n";
-
-	return	$fname;
+       return  @contents;
 }
 
 
@@ -866,8 +739,8 @@ sub get_findline_fails
 			for( my $i = 0; $i < scalar(@fix_list); $i++ )
 			{
 				if( $fix_list[$i]{label} eq $fix{label}  and
-				    &do_wl_match($fix_list[$i]{oldwl}, $fix{oldwl}) and
-				    &do_wl_match($fix_list[$i]{newwl}, $fix{newwl}) )
+				    &WL::do_wl_match($fix_list[$i]{oldwl}, $fix{oldwl}) and
+				    &WL::do_wl_match($fix_list[$i]{newwl}, $fix{newwl}) )
 				{
 					$is_listed++;
 					last;
@@ -878,7 +751,7 @@ sub get_findline_fails
 
 			if( not $is_listed )
 			{
-				my ($tol, $error) = &wldiff_error( $fix{oldwl}, $fix{newwl} );
+				my ($tol, $error) = &WL::wldiff_error( $fix{oldwl}, $fix{newwl} );
 				if( $error > $tol and $verbose )
 				{
 					print	"\tScript: $script\t WARNING!\t Large WL diff:\t";
@@ -889,6 +762,19 @@ sub get_findline_fails
 				push( @fix_list, { %fix } );
 			}
 		}
+	}
+
+	if( 0 )
+	{
+		for my $f ( @fix_list )
+		{
+			for ( sort keys %$f )
+			{
+				print "$_:\t$$f{$_}\n";
+			}
+			print "-" x 20 ."\n";
+		}
+		die;
 	}
 
 	return	@fix_list;
@@ -916,8 +802,8 @@ sub process_H1_caseb
 		for( my $j = 0; $j < scalar(@fix_list); $j++ )
 		{
 			if( $fix_list[$j]{label} =~ m/^H  1$/i	and
-				&do_wl_match($fix_list[$j]{oldwl}, $fix_list[$i]{oldwl})	and
-			    not &do_wl_match($fix_list[$j]{newwl}, $fix_list[$i]{newwl}) )
+				&WL::do_wl_match($fix_list[$j]{oldwl}, $fix_list[$i]{oldwl})	and
+			    not &WL::do_wl_match($fix_list[$j]{newwl}, $fix_list[$i]{newwl}) )
 			{
 				print	"\t  => Setting new wl for:  "
 				  .	"\"". $fix_list[$i]{label} ."\" @". $fix_list[$i]{oldwl} .","
@@ -1108,7 +994,7 @@ sub fix_filelist
 		if( $nfixes_tot > 0 )
 		{
 			$fix{file} = $llist;
-			$fix{newfile} = &write_file_contents( $llist, @contents );
+			$fix{newfile} = &WL::write_file_contents( $llist, @contents );
 
 			push( @llists, { %fix } );
 		}
@@ -1142,7 +1028,8 @@ sub check_fixed_wl
 		elsif( $found == 0 )
 		{
 			print	"\t No matches for line:\t"
-			  .	"\"". $fix_list[$i]{label} ."\" ". $fix_list[$i]{oldwl} ."\n";
+			  .	"\"". $fix_list[$i]{label} ."\" ". $fix_list[$i]{oldwl}
+			  .	"\t\t=> ". $fix_list[$i]{newwl} ."\n";
 		}
 		elsif( $found > 1 )
 		{
@@ -1174,7 +1061,7 @@ sub check_fixed_wl
 #  Warn about unmatched wavelengths during update.  These may be due to updates
 #  done to linelists or init files through a different script.
 #
-sub warn_unmatched_emlines 
+sub warn_unmatched_emlines
 {
 	my( $fix_list, $script, $newscript, $local_inits, $remdir_inits, $llists, $remdir_llists ) = @_;
 
@@ -1273,7 +1160,7 @@ foreach my $script ( @scripts )
 	next
 		if( not -s $output );
 
-	my @fix_list = &get_findline_fails( $script, $output );
+	my @fix_list = &get_findline_fails( $script, $output, $verbose );
 	@fix_list = &process_H1_caseb( @fix_list );
 	&show_array_of_fixes( @fix_list )
 		if( $verbose );
@@ -1282,7 +1169,7 @@ foreach my $script ( @scripts )
 	my @contents = &get_file_contents( $script );
 	my ($nfixes_tot, $contents, $fix_list_ref) = &fix_script( undef, \@contents, \@fix_list );
 	my $newscript;
-	$newscript = &write_file_contents( $script, @$contents )
+	$newscript = &WL::write_file_contents( $script, @$contents )
 		if( $nfixes_tot > 0 );
 
 
