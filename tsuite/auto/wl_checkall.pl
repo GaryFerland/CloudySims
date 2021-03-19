@@ -13,6 +13,7 @@
 use strict;
 use warnings;
 
+use lib ".";
 use WL;
 
 my $outfile = "wvlng.txt";
