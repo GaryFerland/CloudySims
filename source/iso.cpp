@@ -309,11 +309,21 @@ void iso_init_energies()
 				{
 					QNPack ind = QN2ind(n, l, s, 2*j+1);
 					d.getToken(iso_sp[ipISO][nelem].Energy[ind]);
+					if( ! d.lgEOL() )
+					{
+						double error;
+						d.getToken( error );
+					}
 					d.checkEOL();
 				}
 				else
 				{
 					d.getToken(iso_sp[ipISO][nelem].IonPot);
+					if( ! d.lgEOL() )
+					{
+						double error;
+						d.getToken( error );
+					}
 					d.checkEOL();
 					break;
 				}

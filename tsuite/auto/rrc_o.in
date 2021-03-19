@@ -74,7 +74,8 @@ monitor line luminosity "O  6" 89.7786A -23.14
 ## >>chng 10 aug 21, from -21.57 to -21.67, fix abundances to be original sim
 ## >>chng 13 jul 24, wl from 16.77A to 16.7725A, increased wl precision to 6 sig. fig.
 ## >>chng 15 mar 07, from -21.67 to -21.74, merging newmesh branch
-monitor line luminosity "O  7" 16.7725A -21.74
+## >>chng 21 mar 16, from O 7 16.7725A to 16.7699A, update to NIST
+monitor line luminosity "O  7" 16.7699A -21.74
 ## 
 # rrc_o.in
 # class limit 

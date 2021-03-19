@@ -44,7 +44,8 @@ save lines, array "orion_hii_open.lina" units microns last no hash
 ## >>chng 18 apr 18 add lines that form in both H+ and H0 regions of a PDF
 save line emissivity "orion_hii_open.ems" last no hash emergent
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
-H  1  4861.32A
+## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+H  1  4861.33A
 O  3  5006.84A
 Blnd  5199A
 O  1  6300.30A
@@ -57,22 +58,27 @@ save linelist "orion_hii_open.lin" "LineList_HII.dat" last no hash emergent abso
 ## >>chng 13 jul 26, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1" 4861.32A intensity -11.253
+## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+monitor line "H  1" 4861.33A intensity -11.253
 ##
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1" 4861.32A intensity -11.43 emergent
+## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+monitor line "H  1" 4861.33A intensity -11.43 emergent
 ## 
 ## >>chng 13 jul 26, wl from 3889A to 3889.07A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 25, wl from 3889.07A to 3889.05A, update Rydberg constant
-monitor line "H  1" 3889.05A 0.107
+## >>chng 21 mar 16, wl from 3889.05A to 3889.06A, update NIST energies
+monitor line "H  1" 3889.06A 0.107
 ##
 ## >>chng 17 may 25, wl from 3889.07A to 3889.05A, update Rydberg constant
-monitor line "H  1" 3889.05A 0.107 emergent
+## >>chng 21 mar 16, wl from 3889.05A to 3889.06A, update NIST energies
+monitor line "H  1" 3889.06A 0.107 emergent
 ##
 ## >>chng 13 jul 26, wl from 3889A to 3889.07A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 25, wl from 3889.07A to 3889.05A, update Rydberg constant
-monitor line "Ca B" 3889.05A 0.105
+## >>chng 21 mar 16, wl from 3889.05A to 3889.06A, update NIST energies
+monitor line "Ca B" 3889.06A 0.105
 ##
 ## >>chng 05 jun 05, from 0.143 to 0.137, RP update he-like iso seq
 ## >>chng 05 oct 01, from 0.137 to 0.123, RP update He levels
@@ -97,13 +103,16 @@ monitor line "Ca B" 5875.64A 0.133
 ## >>chng 13 jul 26, wl from 3889 to 3888.63A, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 12, from 0.0196 to 0.0187, coll. str. reduced mass scaling
 ## >>chng 16 aug 07, from 0.0187 to 0.0197, Marios bug fixes
-monitor line "He 1" 3888.63A 0.0197
+## >>chng 21 mar 16, wl from 3888.63A to 3888.64A, update NIST energies
+monitor line "He 1" 3888.64A 0.0197
 ##
 ## >>chng 16 aug 07, from 0.0215 to 0.0227, Marios bug fixes
-monitor line "He 1" 3888.63A 0.0227 emergent
+## >>chng 21 mar 16, wl from 3888.63A to 3888.64A, update NIST energies
+monitor line "He 1" 3888.64A 0.0227 emergent
 ##
 ## >>chng 13 jul 26, wl from 3888.5 to 3888.63A, increased wl precision to 6 sig. fig.
-monitor line "Ca B" 3888.63A 0.114
+## >>chng 21 mar 16, wl from 3888.63A to 3888.64A, update NIST energies
+monitor line "Ca B" 3888.64A 0.114
 ## 
 ## >>chng 13 jul 26, wl from 7065 to 7065.18A, increased wl precision to 6 sig. fig.
 ## >>chng 13 jul 30, wl from 7065.18A to 7065.22A, increased wl precision to 6 sig. fig.
