@@ -14,14 +14,17 @@
 # hydrogen lines
 # >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
 # >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
-H  1   6562.80A #   Balmer alpha    3-2
+# >>chng 21 mar 16, wl from 6562.80A to 6562.82A, update NIST energies
+H  1   6562.82A #   Balmer alpha    3-2
 # >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 # >>chng 20 aug 22, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
-H  1   4861.32A #   Balmer beta     4-2
+# >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+H  1   4861.33A #   Balmer beta     4-2
 # >>chng 17 may 25, wl from 1.87511m to 1.87510m, up Rydberg constant
 H  1   1.87510m #  Paschen alpha   4-3
 # >>chng 20 aug 22, wl from 4.05113m to 4.05115m, switched from computed to tabulated energies for H and He isoseq
-H  1   4.05115m #  Br alpha        5-4
+# >>chng 21 mar 16, wl from 4.05115m to 4.05116m, update NIST energies
+H  1   4.05116m #  Br alpha        5-4
 # >>chng 17 may 25, wl from 2.16553m to 2.16551m, up Rydberg constant
 # >>chng 20 aug 22, wl from 2.16551m to 2.16553m, switched from computed to tabulated energies for H and He isoseq
 H  1   2.16553m #   Br gamma
@@ -39,7 +42,8 @@ n  2  6583.45
 blnd     6720
 # >>chng 17 may 26, wl from 4861.36 to 4861.33A, update Rydberg constant
 # >>chng 20 aug 22, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
-H  1     4861.32A
+# >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+H  1     4861.33A
 blnd  6300
 n  1  5200.26
 # >>chng 13 jul 30, wl from 10829.9 to 1.08303m, increased wl precision to 6 sig. fig.

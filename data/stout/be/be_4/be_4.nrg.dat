@@ -1,21 +1,41 @@
 20190102 # magic number
-# Give level energies in cm^-1 for each H-like ion.
+# Give level energies in cm^-1 for each ion.
 # Each line gives n, l, S, J, energy.
 # The last entry for each ion is the ionization potential.
 # It is marked with negative quantum numbers. The ionization
 # potential MUST be the last entry for a given element!
-# It is used as a sentinel to switch to the next element.
 #
-# These data were calculated using the ATLL r123.
+# NIST data for n<=10 were downloaded using ADM.
 #
- 1 -1 -1 -1 0.0000
- 2 -1 -1 -1 1317030
- 3 -1 -1 -1 1560925
- 4 -1 -1 -1 1646282
- 5 -1 -1 -1 1685788.7
- 6 -1 -1 -1 1707248.4
- 7 -1 -1 -1 1720187.7
- 8 -1 -1 -1 1728585.75
- 9 -1 -1 -1 1734343.37
-10 -1 -1 -1 1738461.75
--1 -1 -1 -1 1756018.8188
+# NB NB NB  n=2 energy ignores energy of 2s
+#
+ 1 -1 -1 -1 0 0.008
+ 2 -1 -1 -1 1317041.76203333 0.000166667
+ 3 -1 -1 -1 1560925.40590133 3.7605e-05
+ 4 -1 -1 -1 1646282.39119 3.03688e-05
+ 5 -1 -1 -1 1685788.7184072 1.91958e-05
+ 6 -1 -1 -1 1707248.40708692 9.62447e-06
+ 7 -1 -1 -1 1720187.72402286 4.73632e-06
+ 8 -1 -1 -1 1728585.75419216 3.20386e-06
+ 9 -1 -1 -1 1734343.37629616 1.80184e-06
+10 -1 -1 -1 1738461.74914217 1.39572e-06
+-1 -1 -1 -1 1756018.822      0.008     
+#
+# 
+# Bibliography:
+# -------------
+# PUB     Refcode: L3620c107 on NIST
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3620&comment_code=c107&amp;element=Be&amp;spectr_charge=4&amp;ref=3620&amp;type=E
+# PUBCON    Title: Energy Levels of One-Electron Atoms
+# PUBCON  Authors: G. W. Erickson
+# PUBCON  Journal: J. Phys. Chem. Ref. Data 6, 831–869 (1977)
+# PUBCON      DOI: https://doi.org/10.1063/1.555557
+# PUBCON  Comment: The energy level values were derived from Erickson's theoretical values of the total energies by scaling them to the CODATA-2006 values of the fundamental constants, as given by Kramida et al. 2008       
+# 
+# PUB     Refcode: L3620c97 on NIST
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3620&comment_code=c97&amp;element=Be&amp;spectr_charge=4&amp;ref=3620&amp;type=E
+# PUBCON    Title: Energy Levels of One-Electron Atoms
+# PUBCON  Authors: G. W. Erickson
+# PUBCON  Journal: J. Phys. Chem. Ref. Data 6, 831–869 (1977)
+# PUBCON      DOI: https://doi.org/10.1063/1.555557
+# PUBCON  Comment: The energy values reported in this paper for the isotope <sup>9</sup>Be have been adjusted by scaling to the CODATA 2006 values of fundamental constants as given by Kramida et al. 2008 .      

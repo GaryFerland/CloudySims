@@ -23,7 +23,8 @@ set drmax 10
 ## >>chng 13 jul 24, wl from 18.97A to 18.9732A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 25, wl from 18.9732A to 18.9709A, update Rydberg constant
 ## >>chng 20 aug 22, wl from 18.9709A to 18.9696A, switched from computed to tabulated energies for H and He isoseq
-normalize to "O  8" 18.9696A
+## >>chng 21 mar 16, wl from 18.9696A to 18.9689A, update NIST energies
+normalize to "O  8" 18.9689A
 save performance "grains_hot_wd01.per"
 save monitors "grains_hot_wd01.asr" last 
 save overview "grains_hot_wd01.ovr" last 

@@ -36,13 +36,15 @@ monitor thickness 16.91656
 ## >>chng 15 dec 15, change to testing "Ca B" 4861.36A (was "H  1" 4861.36A).
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
-monitor line "Ca B" 4861.32A = 1.032 ## not too accurate since open geo
+## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+monitor line "Ca B" 4861.33A = 1.032 ## not too accurate since open geo
 ##
 ## >>chng 03 nov 11, from 1 to 1.0554, finer he0  zoning
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
-monitor line "Q(H)" 4861.32A = 1.055 ##make sure we conserve energy 
+## >>chng 21 mar 17, wl from 4861.32A to 4861.33A, update NIST energies
+monitor line "Q(H)" 4861.33A = 1.055 ##make sure we conserve energy 
 ##
 ## >>chng 07 oct 22, from 0.3512 to 0.3216, resolve l-levels of h-like sequence
 ## >>chng 08 apr 07, from 0.3216 to 0.3151, a number of mostly minor iso changes
@@ -70,10 +72,12 @@ monitor line "Ca B" 1.28181m = 0.1707 ##Paschen beta
 ## >>chng 16 may 13, from 0.0792 to 0.0877, "PS64 only dipole l-changing calculations"
 ## >>chng 16 aug 07, from 0.0877 to 0.0738, Marios bug fixes
 ## >>chng 20 aug 22, wl from 4.05113m to 4.05115m, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1" 4.05115m = 0.0738 ##Bracket alpha
+## >>chng 21 mar 16, wl from 4.05115m to 4.05116m, update NIST energies
+monitor line "H  1" 4.05116m = 0.0738 ##Bracket alpha
 ## >>chng 13 jul 25, wl from 4.051m to 4.05113m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 22, wl from 4.05113m to 4.05115m, switched from computed to tabulated energies for H and He isoseq
-monitor line "Ca B" 4.05115m = 0.0827 ##Bracket alpha
+## >>chng 21 mar 16, wl from 4.05115m to 4.05116m, update NIST energies
+monitor line "Ca B" 4.05116m = 0.0827 ##Bracket alpha
 ##
 ## >>chng 07 oct 22, from 0.0477 to 0.0435, resolve l-levels of h-like sequence
 ## >>chng 11 nov 16, from 0.0435 to 0.046, adjust newmole monitors
@@ -151,9 +155,11 @@ monitor line "Ca B" 4471.49A  0.0463
 ## >>chng 08 apr 30, from 0.020 to 0.0181 H, He topoff change
 ## >>chng 09 jun 15, from 0.0181 to 0.0223, gradual approach to outer edge
 ## >>chng 13 jul 25, wl from 3889 to 3888.63A, increased wl precision to 6 sig. fig.
-monitor line "He 1" 3888.63A  0.0223 error 0.1
+## >>chng 21 mar 16, wl from 3888.63A to 3888.64A, update NIST energies
+monitor line "He 1" 3888.64A  0.0223 error 0.1
 ## >>chng 13 jul 25, wl from 3889 to 3888.63A, increased wl precision to 6 sig. fig.
-monitor line "Ca B" 3888.63A  0.104 error 0.1
+## >>chng 21 mar 16, wl from 3888.63A to 3888.64A, update NIST energies
+monitor line "Ca B" 3888.64A  0.104 error 0.1
 ##
 ## assert line "TOTL" 7065  0.076
 ## >>chng 02 dec 10, from 0.101 to 0.0957, HeI 23P A

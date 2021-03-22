@@ -62,7 +62,8 @@ monitor line "Si13"  6.74039A 2.99
 ## >>chng 06 aug 18, from 1.88 to 1.39, RP update trans prob 
 ## >>chng 13 jul 25, wl from 6.688A to 6.68828A, increased wl precision to 6 sig. fig.
 ## >>chng 18 feb 20, updated spectral label from "TOTL" 6.68828A to "Blnd" 6.68828A, update He-like triplet labels and wl
-monitor line "Blnd"  6.68828A 1.39
+## >>chng 21 mar 16, wl from 6.68828A to 6.68827A, update NIST energies
+monitor line "Blnd"  6.68827A 1.39
 ##
 ## 5.680A is 3^1P to ground
 ## >>chng 05 sep 5, wl from 5.680 to 5.681
@@ -80,13 +81,15 @@ monitor line "Si13"  36.4466A 0.0989
 ## >>chng 13 jul 30, wl from 37.8829A to 37.8666A, increased wl precision to 6 sig. fig.
 ## >>chng 13 aug 2, wl from 37.8666A to 37.7804A, now using middle multiplet wl
 ## >>chng 18 feb 20, updated spectral label from "Si13" 37.7804A to "Blnd" 37.8344A, update He-like triplet labels and wl
-monitor line "Blnd"  37.8344A 0.28
+## >>chng 21 mar 16, wl from 37.8344A to 37.8345A, update NIST energies
+monitor line "Blnd"  37.8345A 0.28
 ##
 ## sum of 2^3P to 2^3S lines
 ## >>chng 13 jul 25, wl from 852.8A to 852.828A, increased wl precision to 6 sig. fig.
 ## >>chng 13 jul 30, wl from 852.828A to 865.144A, increased wl precision to 6 sig. fig.
 ## >>chng 18 feb 20, updated spectral label from "TOTL" 865.144A to "Blnd" 836.734A, update He-like triplet labels and wl
-monitor line "Blnd" 836.734A 0.0146
+## >>chng 21 mar 16, wl from 836.734A to 836.701A, update NIST energies
+monitor line "Blnd" 836.701A 0.0146
 #
 # helike_si.in
 # class limit

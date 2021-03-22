@@ -11,7 +11,8 @@
 FeKa     1.78   #    Iron K-alpha line (near 6.4 keV)
 # >>chng 17 may 25, wl from 18.9732 to 18.9709A, up Rydberg constant
 # >>chng 20 aug 22, wl from 18.9709A to 18.9696A, switched from computed to tabulated energies for H and He isoseq
-o  8    18.9696A #    O VIII 19A H-like Lya
+# >>chng 21 mar 16, wl from 18.9696A to 18.9689A, update NIST energies
+o  8    18.9689A #    O VIII 19A H-like Lya
 #
 # UV lines: lambda > 600 Angstroms
 # >>chng 18 jan 10, wl from 609.794A to 609.793A, use Stout data for Mg10
@@ -145,15 +146,18 @@ he 2  3203.10A  #   total He II Paschen-beta line
 BA C     0  #   total of integrated H balmer continuum
 BaC   3646  #   total nuFnu of Balmer jump at 3646 (the head)
 #h  1  3835  #   total H-7 (H-Balmer)
-He 1  3888.63  #   total H-6 (H-Balmer)
+# >>chng 21 mar 16, wl from 3888.63 to 3888.64A, update NIST energies
+He 1  3888.64A  #   total H-6 (H-Balmer)
 Ca 2  3933.66  #   total Ca II 3934 emission
 Ca 2  3968.47  #   total Ca II 3969 emission
 #h  1  3970  #   total H-epsilon
 # >>chng 17 may 25, wl from 4101.76 to 4101.73A, up Rydberg constant
-h  1  4101.73A  #   total H-delta
+# >>chng 21 mar 16, wl from 4101.73A to 4101.74A, update NIST energies
+h  1  4101.74A  #   total H-delta
 #inwd  4101.76  #   inward flux of H-delta
 # >>chng 17 may 25, wl from 4340.49 to 4340.46A, up Rydberg constant
-h  1  4340.46A  #   total H-gamma
+# >>chng 21 mar 16, wl from 4340.46A to 4340.47A, update NIST energies
+h  1  4340.47A  #   total H-gamma
 #inwd  4340.49  #   inward flux of H-gamma
 ca b  4471.49  #   total He I 4471, case B approximation
 # >>chng 20 aug 22, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
@@ -162,10 +166,12 @@ he 2  4685.70  #   total He II 4686 (Paschen-alpha)
 inwd  4685.70  #   inward flux of He II 4686
 # >>chng 17 may 26, wl from 4861.36 to 4861.33A, update Rydberg constant
 # >>chng 20 aug 22, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
-H  1  4861.32A  #   total H-beta 4861
+# >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+H  1  4861.33A  #   total H-beta 4861
 # >>chng 17 may 26, wl from 4861.36 to 4861.33A, update Rydberg constant
 # >>chng 20 aug 22, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
-inwd  4861.32A  #   inward flux of H-beta 4861
+# >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+inwd  4861.33A  #   inward flux of H-beta 4861
 # >>chng 13 sep 06, wl from 5875.61 to 5875.64A, botched merge
 ## >>chng 18 feb 20, updated spectral label from "He 1" 5875.64A to "Blnd" 5877.29A, update He-like triplet labels and wl
 # >>chng 18 mar 06, wl from 5877.29A to 5875.66A, adjust multiplet Blend WL for refraction index
@@ -174,7 +180,8 @@ Blnd  5875.66A  #   total He I 5876
 Blnd  5892   #  total Na D 5892
 # >>chng 17 may 26, wl from 6562.85 to 6562.81A, update Rydberg constant
 # >>chng 20 aug 22, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
-h  1  6562.80A  #   total H-alpha 6563
+# >>chng 21 mar 16, wl from 6562.80A to 6562.82A, update NIST energies
+h  1  6562.82A  #   total H-alpha 6563
 #inwd  6562.85  #   inward flux of H-alpha 6563
 #
 # near IR emission lines and continua
@@ -320,29 +327,36 @@ Blnd  3722.00A # Be 3
 # >>chng 13 aug 01, wl from 2824.03A to 2824.59A, now using middle multiplet wl
 ## >>chng 18 feb 20, updated spectral label from "TOTL" 2824.59A to "Blnd" 2823.98A, update He-like triplet labels and wl
 # >>chng 18 mar 06, wl from 2823.98A to 2823.14A, adjust multiplet Blend WL for refraction index
-Blnd  2823.14A # B  4
+# >>chng 21 mar 16, wl from 2823.14A to 2823.12A, update NIST energies
+Blnd  2823.12A # B  4
 # >>chng 13 aug 01, wl from 2275.25A to 2277.16A, now using middle multiplet wl
 ## >>chng 18 feb 20, updated spectral label from "TOTL" 2277.16A to "Blnd" 2274.23A, update He-like triplet labels and wl
 # >>chng 18 mar 06, wl from 2274.23A to 2273.52A, adjust multiplet Blend WL for refraction index
-Blnd  2273.52A # C  5
+# >>chng 21 mar 16, wl from 2273.52A to 2273.63A, update NIST energies
+Blnd  2273.63A # C  5
 # >>chng 13 aug 01, wl from 1903.86A to 1907.26A, now using middle multiplet wl
 ## >>chng 18 feb 20, updated spectral label from "TOTL" 1907.26A to "Blnd" 1901.17A, update He-like triplet labels and wl
-Blnd  1901.17A # N  6
+# >>chng 21 mar 16, wl from 1901.17A to 1901.26A, update NIST energies
+Blnd  1901.26A # N  6
 # >>chng 13 aug 01, wl from 1633.92A to 1638.28A, now using middle multiplet wl
 ## >>chng 18 feb 20, updated spectral label from "TOTL" 1638.28A to "Blnd" 1630.08A, update He-like triplet labels and wl
-Blnd  1630.08A # O  7
+# >>chng 21 mar 16, wl from 1630.08A to 1630.10A, update NIST energies
+Blnd  1630.10A # O  7
 # >>chng 13 aug 01, wl from 1408.98A to 1414.23A, now using middle multiplet wl
 ## >>chng 18 feb 20, updated spectral label from "TOTL" 1414.23A to "Blnd" 1403.83A, update He-like triplet labels and wl
 Blnd  1403.83A # F  8
 # >>chng 13 aug 01, wl from 1266.26A to 1272.81A, now using middle multiplet wl
 ## >>chng 18 feb 20, updated spectral label from "TOTL" 1272.81A to "Blnd" 1259.54A, update He-like triplet labels and wl
-Blnd  1259.54A # Ne 9
+# >>chng 21 mar 16, wl from 1259.54A to 1259.58A, update NIST energies
+Blnd  1259.58A # Ne 9
 # >>chng 13 aug 01, wl from 1134.43A to 1142.35A, now using middle multiplet wl
 ## >>chng 18 feb 20, updated spectral label from "TOTL" 1142.35A to "Blnd" 1125.50A, update He-like triplet labels and wl
-Blnd  1125.50A # Na 10
+# >>chng 21 mar 16, wl from 1125.50A to 1125.51A, update NIST energies
+Blnd  1125.51A # Na 10
 # >>chng 13 aug 01, wl from 1025.02A to 1034.31A, now using middle multiplet wl
 ## >>chng 18 feb 20, updated spectral label from "TOTL" 1034.31A to "Blnd" 1013.82A, update He-like triplet labels and wl
-Blnd  1013.82A # Mg 11
+# >>chng 21 mar 16, wl from 1013.82A to 1013.84A, update NIST energies
+Blnd  1013.84A # Mg 11
 # end dense line list
 # the file ends with the end of file, or a cr in the first col
 

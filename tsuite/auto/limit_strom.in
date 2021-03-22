@@ -33,7 +33,8 @@ monitor thickness 17.619
 ## >>chng 13 jul 24, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
-monitor line "Ca B" 4861.32A 1.00
+## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+monitor line "Ca B" 4861.33A 1.00
 ## 
 ## >>chng 05 dec 22, from 160 to 180 (157)
 ## >>chng 08 dec 08, from 180 to 157, upper limit -> equals (r2515)

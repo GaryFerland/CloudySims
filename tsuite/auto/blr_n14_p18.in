@@ -62,11 +62,13 @@ monitor line luminosity "H  1"  1215.67A 6.06 ##total Hydrogen Lyman-alpha 1215.
 ## >>chng 16 aug 07, from 6.344 to 6.374, Fran bug fix
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
-monitor line luminosity "H  1"  4861.32A 6.374 ##total of sum of both Si IV comp
+## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+monitor line luminosity "H  1"  4861.33A 6.374 ##total of sum of both Si IV comp
 ##
 ## >>chng 18 jan 13, from 7.854 to 6.355, first run
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
-monitor line luminosity "Inwd" 4861.32A 6.355, 
+## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+monitor line luminosity "Inwd" 4861.33A 6.355, 
 ##
 ##total HeII Balmer-a 1640
 ## >>chng 16 aug 07, from 3.87 to 3.936, Fran bug fix

@@ -88,12 +88,14 @@ monitor line luminosity cumulative intrinsic "Fe 9"      8234.56A   11.15
 ## >>chng 19 jun 28, from 14.21 to 14.23, reintegrate iso_collisions branch
 ## >>chng 20 oct 05, from 14.23 to 14.26, limit more elements for load leveling
 ## >>chng 20 nov 30, wl from 18.9709A to 18.9696A, switched from computed to tabulated energies for H and He isoseq
-monitor line luminosity cumulative intrinsic "O  8"      18.9696A   14.26
+## >>chng 21 mar 16, wl from 18.9696A to 18.9689A, update NIST energies
+monitor line luminosity cumulative intrinsic "O  8"      18.9689A   14.26
 ## >>chng 16 jul 24, from 14.01 to 14.32, update C III to 2014A&A...566A.104F
 ## >>chng 16 jul 24, from 14.32 to 14.01, update C III to 2014A&A...566A.104F
 ## >>chng 20 oct 03, from 12.25 to 12.27, drift, update branching ratio for H3+ chemistry
 ## >>chng 20 oct 05, from 12.27 to 12.3, limit more elements for load leveling
-monitor line luminosity cumulative intrinsic "O  7"      16.7725A   12.3
+## >>chng 21 mar 16, from O 7 16.7725A to 16.7699A, update to NIST
+monitor line luminosity cumulative intrinsic "O  7"      16.7699A   12.3
 ## >>chng 16 aug 17, from 13.01 to 12.92, bugfix at r11237
 ## >>chng 17 sep 01, from 12.92 to 11.81, fix bug in high n collisional excitation rates for He-like iso-sequences
 ## >>chng 19 jun 11, from 11.81 to 11.99, Percival and Richards (1978) used for He-like ions
