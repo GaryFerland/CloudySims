@@ -19,12 +19,14 @@ atom H-like hydrogen levels collapsed 170
 monitor line case b "H  1"     3671.48A      1.0 0.05
 ## >>chng 17 may 25, wl from 3673.78A to 3673.75A, up Rydberg constant
 ## >>chng 21 jan 19, wl from 3673.75A to 3673.76A, switched from computed to tabulated energies for H and He isoseq
-monitor line case b "H  1"     3673.76A      1.0 0.05
+## >>chng 21 mar 22, wl from 3673.76A to 3673.765A, drift after update to NIST energies & ionization potentials
+monitor line case b "H  1"     3673.765A     1.0 0.05
 ## >>chng 20 aug 22, wl from 3671.47A to 3671.48A, switched from computed to tabulated energies for H and He isoseq
 monitor line case b "H  1"     3671.48A      1.0 0.05
 ## >>chng 17 may 25, wl from 3673.78A to 3673.75A, up Rydberg constant
 ## >>chng 20 aug 22, wl from 3673.75A to 3673.76A, switched from computed to tabulated energies for H and He isoseq
-monitor line case b "H  1"     3673.76A      1.0 0.05
+## >>chng 21 mar 22, wl from 3673.76A to 3673.765A, drift after update to NIST energies & ionization potentials
+monitor line case b "H  1"     3673.765A     1.0 0.05
 ## >>chng 17 may 25, wl from 3676.38A to 3676.36A, up Rydberg constant
 ## >>chng 21 mar 16, wl from 3676.36A to 3676.37A, update NIST energies
 monitor line case b "H  1"     3676.37A      1.0 0.05
