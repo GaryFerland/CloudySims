@@ -1,17 +1,7 @@
-Two types of files are described here.  
-
-The *.abn files are used to specify the chemical composition.
-One of these files will be used if the command like the following appears:
+The files in this directory specify standard chemical compositions and, optionally, grains.
+One of these files will be used if the command
 abundances "filename.abn"
-These abn files may also specify grains, although grains are not included by default.
-default.abn specifies our default composition.  default-reference.abn is a copy of that file.
-
-The *.dep files specify depletion factors that account for the elements that are used to build grains.
-These may be parsed by the
-metals deplete "filename.dep"
-or 
-metals deplete Jenkins 2009 Fstar=0.5 "filename.dep"
-commands.
+appears.
 
 ==================================================
 default "solar" composition
@@ -19,26 +9,19 @@ default.abn gives the default composition used if no others are specified.
 default-backup.abn is a backup of this file, use to reestablish default if you change it
 This is a fairly old set of "solar" abundances that we maintain for backwards compatibility
 
-To change the default abundance set replace the default.abn file with your 
-own set of default abundances. Copy default-backup.abn to default.abn to reestablish 
-our default abundances
+To change the default abundance set
+replace the default.abn file with your own set of default abundances.
+Copy default-backup.abn to default.abn to reestablish our default abundances
 
-Other .abn files are available - see the comments within each file for more details.
+Available files
+
+solar84.abn - abundances used by "old solar" option, used in versions 84-94
+of the code.
+
+Other .abn files - see the comments within the file for more details.
 The file name gives a good indication of its contents
 
 =======================================================
-default depletion files
-
-metals deplete
-by default will read the ISM_CloudyClassic.dep files.  The format should be clear.
-If the element is not specified then its depletion is set to unity.
-
-metals deplete Jankins2009 Fstar
-reads the ISM_Jenkins09_Tab4.dep file.  If this file is updated or replaced then
-its current format must be maintained.
-
-=======================================================
-
 
 Format of the *.abn files
 

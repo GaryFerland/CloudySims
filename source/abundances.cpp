@@ -186,7 +186,7 @@ void AbundancesSet(void)
 
 	/* set current abundances to "solar" times metals scale factor
 	 * and grain depletion factor */
-	abund.solar[ipHELIUM] *= abund.Depletion[1]*abund.ScaleElement[1];
+	abund.solar[ipHELIUM] *= abund.depset[1]*abund.ScaleElement[1];
 
 	/* option for density or abundance variations, this flag is true by default,
 	 * set in zero, but set false if variations are enabled AND these
@@ -204,7 +204,7 @@ void AbundancesSet(void)
 
 	for( i=ipLITHIUM; i < LIMELM; i++ )
 	{
-		abund.solar[i] *= (realnum)(abund.ScaleMetals*abund.Depletion[i]*
+		abund.solar[i] *= (realnum)(abund.ScaleMetals*abund.depset[i]*
 		  abund.ScaleElement[i]*fac);
 	}
 
