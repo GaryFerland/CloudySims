@@ -20,8 +20,6 @@
 *.exe
 #
 # 20 12 21 Gary add
-# produced by build in sys_gcc/sys_gcc_gcov
-*.gcno
 data/cdms+jpl/convert_calpgm.dSYM/
 docs/latex/QuickStart/QuickStart.pdf
 docs/latex/QuickStart/QuickStart.synctex.gz

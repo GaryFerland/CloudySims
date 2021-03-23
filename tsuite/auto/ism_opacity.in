@@ -6,9 +6,7 @@ ionization parameter -3
 #
 # commands for density & abundances =========
 hden 0 ##set density of unity so that total opacity is per hydrogen atom
-# this replicates Jenkins 2009 depletion setup
-abundances "solar_Lodders03.abn"
-metals deplete jenkins 2009 Fstar=0.5
+abundances ism no grains ##this turns on depleted gas-phas abundances
 grains no qheat
 #
 # commands controlling geometry  =========
@@ -35,8 +33,7 @@ monitor line "H  1" 4861.33A intensity -24.92
 ## 
 ## >>chng 01 feb 20, from 9070 to 10075 when default ISM O abundance changed
 ## >>chng 15 oct 14, from 1.008e+04 to 1.059e+04, update Ne 3 cs to McLaughlin+11
-## >>chng 15 oct 14, from 1.059e+04 to 11188 update Ne 3 cs to McLaughlin+11
-monitor temperature "H+" 11188K
+monitor temperature "H+" 1.059e+04
 ## 
 ## >>chng 13 jul 24, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 15 oct 14, from -24.86 to -24.88, update Ne 3 cs to McLaughlin+11
@@ -69,12 +66,10 @@ monitor line "GrGH" 0  intensity -24.820
 ## >>chng 01 mar 07, from 0.459 to 0.391 change in grain physics
 ## >>chng 03 jan 12, from -25.084 to -25.062, new grains
 ## >>chng 05 jul 05, from -25.062 to -25.070, fine tune
-## >>chng 21 mar 11, from -25.07 to -25.03, consistent Jenkins 2009 depletion and Lodders 2003 solar abundance
-monitor line "GrCC" 0  intensity -25.03
+monitor line "GrCC" 0  intensity -25.070
 ## 
 ## >>chng 01 feb 20, from 0.3158 to 0.244 when default ISM O abundance changed
-## >>chng 21 mar 11, from -25.3 to -25.26, consistent Jenkins 2009 depletion and Lodders 2003 solar abundance
-monitor line "ct h" 0  intensity -25.26
+monitor line "ct h" 0  intensity -25.299
 ## 
 save monitors last "ism_opacity.asr"
 # ism_opacity.in

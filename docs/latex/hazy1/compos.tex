@@ -160,7 +160,6 @@ The chemical composition is printed at the start of the calculation.
 Be sure to confirm that the composition has been entered correctly.
 
 \section{Abundances he c\dots}
-\label{sec:CommandAbundances}
 
 The abundances of all elements can be entered with the command
 \cdCommand{abundances}
@@ -1605,7 +1604,7 @@ of the grains:
 Finally, the \cdCommand{save grain abundances} command give the abundances
 as a function of depth.
 
-\section{Metals 0.05 [log, linear, grains]}
+\section{Metals 0.05 [log, linear, grains; deplete]}
 
 This command multiplies the abundances of the entire mixture of metals
 (elements heavier than helium) by the scale factor entered on the line.
@@ -1669,91 +1668,21 @@ abundances ISM
 metals and grains 2
 \end{verbatim}
 
-\section{Metals deplete commands}
+\subsection{Metals deplete---gas-phase depletion factors}
 
-These commands specify depletion factors that account for elements that
-have condensed onto grains.  
-The standard approach is to define the gas-phase abundance of an element $Z$ as
-\begin{equation}
-A_Z( \textrm{gas phase}) = A_Z( \textrm{reference}) \times  D_Z
-\label{eqn:ISMdepletion}
-\end{equation}
-where the reference abundance is the composition the user specifies with other commands
-and the depletion onto grains $D_Z$ is set with these commands.
-The final gas-phase abundance results.
-
-Other commands are used to specify the reference abundance.
-The most flexible are the \cdCommand{abundances} family of commands specified
-in Section \ref{sec:CommandAbundances}.
-
-The depleted elements form grains.  
-These commands do not create a set of grain species that is consistent
-with the depletion.
-The grain properties are set separately, usually with one of the
-\cdCommand{grains} commands described in Section \ref{sec:GrainsCommand}.
-
-Specifying grains by themselves (with the \cdCommand{grains} command)
-does not change the gas-phase abundances,
-which is not self-consistent.  The
-code will complain if you do this, but still perform the simulation.
-You should use one of these \cdCommand{metals deplete} commands, or specify
-a gas-phase composition that includes depletions, when grains are used.
-
-The following is an example of using
-the nova abundance mixture, depleting it with this command,
-and then setting ISM grains.
-\begin{verbatim}
-abundances nova
-metals deplete
-grains
-\end{verbatim}
-
-
-It is worth noting that the \cdCommand{metals deplete} command can also
-be combined with the regular \cdCommand{metals} command to rescale the
-depletion factors. This works because both commands define multiplicative
-factors to modify the abundances. In the following example, the depletion
-will be applied to a composition with metallicity that is twice our default. 
-The two \cdCommand{metals} commands can be entered in any order.
-\begin{verbatim}
-abundances nova
-metals deplete
-metals 2.
-\end{verbatim}
-
-These commands do not attempt to conserve mass.
-In particular, the grain
-mass will be less than the mass of depleted heavy elements
-because the nova
-mixture has enhanced CNO, while the ISM grains have only
-a corresponding
-solar depletion of missing material.
-\citet{Snow1996}, show that standard grains have more mass than the
-heavy elements depleted from a solar abundance.
-
-These \cdCommand{metals deplete} commands read data from 
-one of the \cdFilename{*.dep} files located in the
-\cdFilename{cloudy/data/abundances} directory.
-Our default file will be used if no filename is specified but
-the user can specify other files by placing the filename within
-a pair of double quotes, as in
-\begin{verbatim}
-metals deplete "myfile.dep"
-\end{verbatim}
-The default file that is read if no name is specified is documented in the \cdFilename{readme.md}
-located in this directory.
-If you create additional depletion files for your work please consider documenting what
-you have done by placing comments inside the file and offering it back to the \Cloudy\ project
-by posting on the user forum.
-
-\subsection{metals deplete - specify a table of depletion factors}
-
-This command specifies a set of scale factors that are roughly those appropriate for
-relatively dense ISM gas ($\sim 1 \pcc)$.
+It is possible to alter an existing set of abundances by depletion onto
+grains.
+In the ISM the observed depletion is a function of the gas density
+(\citealp{Spitzer1985} models this), so there is not really a universal depletion
+pattern.  A set of scale factors that are roughly those appropriate for
+relatively dense ISM gas ($\sim 1 \pcc)$ is built into the code.
 Table \ref{tab:GrainGasDepletionFactors} lists
-the depletions that will be assumed.
+the depletions that will be assumed if the keyword
+\cdCommand{deplete} occurs on the
+\cdCommand{metals} command but no numbers are on the line.
 These are loosely based
 on the depletions listed by \citet{Jenkins1987} and \citet{Cowie1986}.
+This table is obviously incomplete and I would appreciate learning of better references.
 
 \begin{table}
 \centering
@@ -1795,95 +1724,49 @@ Zn& 0.25& \citealp{Cardelli1991}\\
 \end{tabular}
 \end{table}
 
-This command includes a \cdCommand{print} keyword that will  report
-the adopted depletions.
+This command can be combined with commands that specify abundances
+and the \cdCommand{grains} command to specify an arbitrary set of
+grain and gas-phase abundances.
+Specifying grains by themselves (with the \cdCommand{grains} command)
+does not change the gas-phase abundances,
+which is not self-consistent.  The
+code will complain if you do this, but still perform the simulation.
 
-
-\subsection{metals deplete Jenkins 2009 Fstar=0.5}
-
-\citet{2009ApJ...700.1299J} presents a unified empirical relationship between depletions
-of different elements and other properties of the ISM.  
-The overall depletion is parameterized by his $F_*$, which we refer to as Fstar,
-with the physical limits $0\leq F_* \leq 1$.
-In his model, each element is depleted by an empirically-determined scale factor that
-is related to $F_*$ by his equation 10, the coefficients listed in his Table 4, 
-and and the special case of S from Section 9 of his paper.
-
-The \cdFilename{readme.md} file in the \cdFilename{abundances} directory
-specifies the name of our default data file.  
-Another file will be read if a filename appears within double quotes
-on the command line.
-This new file must follow the format of the existing Jenkins file.
-
-We implement this as follows.
-You specify the reference composition in Equation \ref{eqn:ISMdepletion} with other commands such as the
-\cdCommand{abundance} command described in Section \ref{sec:CommandAbundances}.
-We  modify those abundances by
-the \citet{2009ApJ...700.1299J}  depletion factors, as described by
-Gunasekera+2021 (in preparation).  
-The depletion factor $D_Z$ of an element $Z$ is given by
-\begin{equation}
-D_Z = 10^{B_Z + A_Z (F_* - z_Z)}
-\end{equation}
-where the coefficients come from Jenkins' tables.
-This factor multiplies the previously-specified gas-phase abundance of element $Z$
-to set the gas-phase abundance used in the calculation, as in Equation \ref{eqn:ISMdepletion}.
-The full command syntax is
-\begin{verbatim}
-metals deplete Jenkins2009 Fstar=0.5 [vary]
-\end{verbatim}
-The year 2009 must be the first number on the command line and the next number, $F_*$,
-must be between 0 and 1.
-A space may or may not be placed between the name and year.
-A typical use case might be
+The following is an example of using
+the nova abundance mixture, depleting it with this command,
+and then setting ISM grains.
 \begin{verbatim}
 abundances nova
-metals deplete Jenkins 2009 Fstar=0.5
+metals deplete
 grains
 \end{verbatim}
-which depletes the specified ``nova'' abundances by the \citet{2009ApJ...700.1299J}
-abundance pattern with $F_* = 0.5$ and includes our default ISM grain mixture.
 
-The \cdCommand{ log} and \cdCommand{linear} keywords allows
-$F_*$ to be specified either way.
- The \cdCommand{print} option will vary $F_*$ between 0 and 1 and report the depletion factors.
-
-Notice that we specify the standard ISM grain population with a separate 
-\cdCommand{grains}  command.
-The \cdCommand{grains}  command is described in section \ref{sec:GrainsCommand}.
-As described in the previous \cdCommand{metals deplete} command, we do not 
-attempt to create grain species with a composition that is consistent with the depleted elements.
-
-The \citet{2009ApJ...700.1299J}   study actually worked with ISM gas-phase abundances scaled
-relative to the \citet{Lodders2003} solar abundances.
-We provide both the \citet{Lodders2003}  and the more recent \citet{Lodders2009} versions of her solar abundances in the \Cloudy\ distribution.  
-The \citet{2009ApJ...700.1299J} gas-phase ISM abundances could be specified by 
+It is worth noting that the \cdCommand{metals deplete} command can also
+be combined with the regular \cdCommand{metals} command to rescale the
+depletion factors. This works because both commands define multiplicative
+factors to modify the abundances. In the following example the depletion
+will be a factor 2 less effective than it would have been without the last
+command. The two \cdCommand{metals} commands can be entered in any order.
 \begin{verbatim}
-abundances "solar_Lodders03.abn"
-metals deplete Jenkins2009 Fstar=0.5
-grains
+abundances nova
+metals deplete
+metals 2.
 \end{verbatim}
-using the composition stored in the \cdFilename{solar\_Lodders03.abn} file 
-in the \cdFilename{abundances} directory.
 
-This command includes the \cdCommand{vary} option, described in Section \ref{sec:CommandsVaryOption}
-allowing the \cdCommand{grid} command
- or the  optimizer to be used.
- The  \cdCommand{grid} command requires log arguments so a grid of models
- varying Fstar between $10^{-2}$ and 1 could be generated by
- \begin{verbatim}
-metals deplete Jenkins2009 Fstar=-0.5 vary log
-grid -2 0 0.1 
-\end{verbatim}
- 
- {\color{red}
- \emph{Caution!}.  The Jenkins work is limited to elements he studied with HST.  
- Some very highly depleted elements are not included in his study.
- Calcium is an example.  
- This command implements the Jenkins study and does not
- deplete elements that are not considered in his paper.  
-Unlisted elements are left at their reference value.  
-Solar-abundance calcium in particular produces strong lines and has a significant
-effect on other lines \citep{KingdonFerlandFeibelman1995}.
- Consider changing the abundances of these elements separately.
- }
+These commands do not attempt to conserve mass.
+In particular, the grain
+mass will be less than the mass of depleted heavy elements
+because the nova
+mixture has enhanced CNO, while the ISM grains have only
+a corresponding
+solar depletion of missing material
+(see, however, \citealp{Snow1996}, who
+show that even this is not true).
+
+
+
+
+
+
+
+
