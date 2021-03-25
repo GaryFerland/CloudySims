@@ -19,7 +19,7 @@ LDFLAGS = $(OPT) -Wall -g
 LDLIBS =
 NO_TRAP_FLAGS =
 # this is intended for supplying extra command line parameters, e.g. extra -D flags
-EXTRA = -DFLT_IS_DBL
+EXTRA = 
 SRCDIR = .
 OBJEXT = o
 LIBEXT = a
