@@ -225,8 +225,8 @@ void ParseDont(Parser &p )
 
 		/* turn off collisional ionization */
 		atmdat.lgCollIonOn = false;
-		fprintf( ioQQQ, " This option is not working.\n Sorry.\n" );
-		cdEXIT(EXIT_FAILURE);
+		//fprintf( ioQQQ, " This option is not working.\n Sorry.\n" );
+		//cdEXIT(EXIT_FAILURE);
 	}
 
 	else if( p.nMatch("LEVE") )
