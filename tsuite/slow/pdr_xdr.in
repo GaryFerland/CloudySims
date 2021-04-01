@@ -147,7 +147,8 @@ monitor itrzn 3.63
 ## >>chng 18 mar 30, from 896 to 881, adjust to middle of bimodal distribution
 ## >>chng 18 jun 20, from 881 to 852, bugfixes at front face r12134:12136
 ## >>chng 20 sep 06, from 852 to 877, further update to McCall CR-related rates from r14260
-monitor nzone 877 error 0.03
+## >>chng 21 mar 31, from 877 to 913, add HF+ chemistry, undertainty from 0.03 to default
+monitor nzone 913 error 0.03
 ##
 ## >>chng 13 jun 27, from -8.869 to -5.357, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.

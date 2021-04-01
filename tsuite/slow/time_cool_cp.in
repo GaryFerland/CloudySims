@@ -121,7 +121,8 @@ monitor line luminosity cumulative intrinsic "O  7"      22.1012A   13.3
 monitor line luminosity cumulative intrinsic "O  6"      1037.62A   12.9
 ## >>chng 20 oct 05, from 12.09 to 12.11, limit more elements for load leveling
 monitor line luminosity cumulative intrinsic "O  5"      1213.81A   12.11
-monitor line luminosity cumulative intrinsic "N  5"      1242.80A   11.6935
+## >>chng 21 mar 31, from 11.69 to 11.71, add HF+ chemistry
+monitor line luminosity cumulative intrinsic "N  5"      1242.80A   11.71
 ## >>chng 20 oct 05, from 11.17 to 11.2, limit more elements for load leveling
 monitor line luminosity cumulative intrinsic "Si 7"      2146.64A   11.2
 ## >>chng 20 oct 05, from 11.04 to 11.07, limit more elements for load leveling
