@@ -60,7 +60,8 @@ monitor line luminosity "H  1"  1215.67A 6.357 ##total Hydrogen Lyman-alpha 1215
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line luminosity "H  1"  4861.33A 5.989 error 0.1
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+monitor line luminosity "H  1"  4861.34A 5.989 error 0.1
 ## 
 ##total HeII Bal-al 1640
 ## >>chng 04 may 13, from 4.656 to 4.691, dest albedo chng
@@ -77,7 +78,8 @@ monitor line luminosity "H  1"  4861.33A 5.989 error 0.1
 ## >>chng 16 nov 14, from 4.4 to 4.316, Reintegration of RydDep after several bug fixes
 ## >>chng 19 jun 28, from 4.316 to 4.46, reintegrate iso_collisions branch
 ## >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
-monitor line luminosity "He 2"  1640.40A 4.46 err 0.1
+## >>chng 21 apr 08, wl from 1640.40A to 1640.41A, up 1-e energies to np
+monitor line luminosity "He 2"  1640.41A 4.46 err 0.1
 ## 
 ## >>chng 04 may 19, from 2.778 to 2.817, incr err RP update helike sequence
 ## >>chng 09 dec 17, from 2.817 to 2.853, drift up

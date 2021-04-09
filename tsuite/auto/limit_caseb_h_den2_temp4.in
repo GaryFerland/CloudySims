@@ -27,11 +27,13 @@ iterate
 ## >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 6562.80A to 6562.82A, update NIST energies
-monitor line "H  1"      6562.82A  2.8815
+## >>chng 21 apr 08, wl from 6562.82A to 6562.83A, up 1-e energies to np
+monitor line "H  1"      6562.83A  2.8815
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "H  1"      4861.33A  1.0064
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+monitor line "H  1"      4861.34A  1.0064
 ## >>chng 17 may 25, wl from 4340.49A to 4340.46A, up Rydberg constant
 ## >>chng 21 mar 16, wl from 4340.46A to 4340.47A, update NIST energies
 monitor line "H  1"      4340.47A  0.4713
@@ -82,35 +84,45 @@ monitor line "H  1"      1.28181m  0.1643
 monitor line "H  1"      1.09381m  0.0910
 ## >>chng 17 may 25, wl from 1.00494m to 1.00493m, up Rydberg constant
 ## >>chng 20 aug 22, wl from 1.00493m to 1.00494m, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1"      1.00494m  0.0558
+## >>chng 21 apr 08, wl from 1.00494m to 1.00493m, up 1-e energies to np
+monitor line "H  1"      1.00493m  0.0558
 ## >>chng 17 may 25, wl from 9545.99A to 9545.93A, up Rydberg constant
 ## >>chng 20 aug 22, wl from 9545.93A to 9545.97A, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1"      9545.97A  0.0368
+## >>chng 21 apr 08, wl from 9545.97A to 9545.95A, up 1-e energies to np
+monitor line "H  1"      9545.95A  0.0368
 ## >>chng 17 may 25, wl from 9229.03A to 9228.97A, up Rydberg constant
 ## >>chng 20 aug 22, wl from 9228.97A to 9229.02A, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1"      9229.02A  0.0256
+## >>chng 21 apr 08, wl from 9229.02A to 9229.00A, up 1-e energies to np
+monitor line "H  1"      9229.00A  0.0256
 ## >>chng 17 may 25, wl from 9014.92A to 9014.87A, up Rydberg constant
 ## >>chng 20 aug 22, wl from 9014.87A to 9014.91A, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1"      9014.91A  0.0185
+## >>chng 21 apr 08, wl from 9014.91A to 9014.89A, up 1-e energies to np
+monitor line "H  1"      9014.89A  0.0185
 ## >>chng 17 may 25, wl from 8862.80A to 8862.74A, up Rydberg constant
 ## >>chng 20 aug 22, wl from 8862.74A to 8862.79A, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1"      8862.79A  0.0139
+## >>chng 21 apr 08, wl from 8862.79A to 8862.77A, up 1-e energies to np
+monitor line "H  1"      8862.77A  0.0139
 ## >>chng 17 may 25, wl from 8750.48A to 8750.43A, up Rydberg constant
 ## >>chng 20 aug 22, wl from 8750.43A to 8750.48A, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1"      8750.48A  0.0107
+## >>chng 21 apr 08, wl from 8750.48A to 8750.46A, up 1-e energies to np
+monitor line "H  1"      8750.46A  0.0107
 ## >>chng 17 may 25, wl from 4.05113m to 4.05113m, up Rydberg constant
 ## >>chng 20 aug 22, wl from 4.05113m to 4.05115m, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4.05115m to 4.05116m, update NIST energies
-monitor line "H  1"      4.05116m  0.0807
+## >>chng 21 apr 08, wl from 4.05116m to 4.05115m, up 1-e energies to np
+monitor line "H  1"      4.05115m  0.0807
 ## >>chng 17 may 25, wl from 2.62515m to 2.62513m, up Rydberg constant
 ## >>chng 20 aug 22, wl from 2.62513m to 2.62515m, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1"      2.62515m  0.0458
+## >>chng 21 apr 08, wl from 2.62515m to 2.62514m, up 1-e energies to np
+monitor line "H  1"      2.62514m  0.0458
 ## >>chng 17 may 25, wl from 2.16553m to 2.16551m, up Rydberg constant
 ## >>chng 20 aug 22, wl from 2.16551m to 2.16553m, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1"      2.16553m  0.0280
+## >>chng 21 apr 08, wl from 2.16553m to 2.16552m, up 1-e energies to np
+monitor line "H  1"      2.16552m  0.0280
 ## >>chng 17 may 25, wl from 1.94456m to 1.94454m, up Rydberg constant
 ## >>chng 20 aug 22, wl from 1.94454m to 1.94456m, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1"      1.94456m  0.0184
+## >>chng 21 apr 08, wl from 1.94456m to 1.94455m, up 1-e energies to np
+monitor line "H  1"      1.94455m  0.0184
 ## >>chng 17 may 25, wl from 1.81741m to 1.81740m, up Rydberg constant
 ## >>chng 20 aug 22, wl from 1.81740m to 1.81741m, switched from computed to tabulated energies for H and He isoseq
 monitor line "H  1"      1.81741m  0.0127
@@ -124,7 +136,8 @@ monitor line "H  1"      7.45782m  Elow=105291.6  0.0245
 monitor line "H  1"      4.65251m  Elow=105291.6  0.0163
 ## >>chng 17 may 25, wl from 3.73953m to 3.73951m, up Rydberg constant
 ## >>chng 20 aug 22, wl from 3.73951m to 3.73954m, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1"      3.73954m  0.0107
+## >>chng 21 apr 08, wl from 3.73954m to 3.73952m, up 1-e energies to np
+monitor line "H  1"      3.73952m  0.0107
 ## >>chng 16 jul 28, from 1 to 0.4894, new sims to monitor Case B and departure
 monitor departure "H[30]"  0.4894
 ## >>chng 16 jul 28, from 1 to 0.4653, new sims to monitor Case B and departure

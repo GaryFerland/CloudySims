@@ -47,21 +47,24 @@ save dr "h_outpp.dr"
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "Ca B" 4861.33A = 1 ## should be fairly close to case b
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+monitor line "Ca B" 4861.34A = 1 ## should be fairly close to case b
 ## 
 ## >>chng 06 dec 10, increase error from 0.02 to 0.03
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 17, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "Q(H)" 4861.33A = 1 ##make sure we conserve energy 
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+monitor line "Q(H)" 4861.34A = 1 ##make sure we conserve energy 
 ##
 ## >>chng 07 oct 22, from 2.884 to 2.822, resolve l-levels of h-like sequence
 ## >>chng 13 jul 25, wl from 6563 to 6562.85A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 6562.80A to 6562.82A, update NIST energies
-monitor line "H  1" 6562.82A = 2.822 
+## >>chng 21 apr 08, wl from 6562.82A to 6562.83A, up 1-e energies to np
+monitor line "H  1" 6562.83A = 2.822 
 ##
 ## >>chng 07 oct 22, from 0.3512 to 0.3285, resolve l-levels of h-like sequence
 ## >>chng 07 dec 14, from 0.3285 to 0.3225 RP update is seq
@@ -88,7 +91,8 @@ monitor line "H  1" 1.28181m = 0.1694 ##Paschen beta
 ## >>chng 17 may 25, wl from 4.05113m to 4.05113m, up Rydberg constant
 ## >>chng 20 aug 22, wl from 4.05113m to 4.05115m, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4.05115m to 4.05116m, update NIST energies
-monitor line "H  1" 4.05116m = 0.0814 ##Bracket alpha
+## >>chng 21 apr 08, wl from 4.05116m to 4.05115m, up 1-e energies to np
+monitor line "H  1" 4.05115m = 0.0814 ##Bracket alpha
 ##
 ## >>chng 03 jun 09, from 0.0477 to 0.0467, larger H atom
 ## >>chng 06 may 08, from 0.0567 to 0.0477, RP update high-n As H-like
@@ -98,7 +102,8 @@ monitor line "H  1" 4.05116m = 0.0814 ##Bracket alpha
 ## >>chng 16 may 13, from 0.0432 to 0.048, "PS64 only dipole l-changing calculations"
 ## >>chng 17 may 25, wl from 2.62515m to 2.62513m, up Rydberg constant
 ## >>chng 20 aug 22, wl from 2.62513m to 2.62515m, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1" 2.62515m = 0.048 ##Bracket beta
+## >>chng 21 apr 08, wl from 2.62515m to 2.62514m, up 1-e energies to np
+monitor line "H  1" 2.62514m = 0.048 ##Bracket beta
 ##
 ## >>chng 01 aug 23, from 18.26 to 18.645, 2x better continuum resolution
 ## >>chng 16 may 13, from 18.64 to 18.99, "PS64 only dipole l-changing calculations"

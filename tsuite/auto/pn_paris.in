@@ -27,7 +27,8 @@ print lines sort wavelength
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-normalize to "Ca b" 4861.33A 
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+normalize to "Ca b" 4861.34A 
 # the normalizing line is not defined on the emergent line stack
 print lines emergent off
 print line optical depths 
@@ -48,7 +49,8 @@ save lines emissivity "pn_paris.ems"
 ## >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 6562.80A to 6562.82A, update NIST energies
-h  1 6562.82A
+## >>chng 21 apr 08, wl from 6562.82A to 6562.83A, up 1-e energies to np
+h  1 6562.83A
 Blnd  6720
 end of lines
 save averages "pn_paris.avr" last
@@ -65,7 +67,8 @@ end of averagers
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "H  1" 4861.33A luminosity 35.47
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+monitor line "H  1" 4861.34A luminosity 35.47
 ##
 ## >>chng 01 jul 01 from 34.938 to 34.966, better diffuse fields, DP's garden
 ## >>chng 03 dec 08, from 34.966 to 34.938, chng ots, zoning
@@ -74,10 +77,12 @@ monitor line "H  1" 4861.33A luminosity 35.47
 ## >>chng 13 jul 25, wl from 4686 to 4685.64A, increased wl precision to 6 sig. fig.
 ## >>chng 16 aug 07, from 34.98 to 34.89, Marios bug fixes
 ## >>chng 20 aug 25, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
-monitor line "He 2" 4685.70A luminosity 34.89
+## >>chng 21 apr 08, wl from 4685.70A to 4685.68A, up 1-e energies to np
+monitor line "He 2" 4685.68A luminosity 34.89
 ## >>chng 13 jul 25, wl from 4686 to 4685.64A, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 25, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
-monitor line "Ca B" 4685.70A luminosity 34.955
+## >>chng 21 apr 08, wl from 4685.70A to 4685.68A, up 1-e energies to np
+monitor line "Ca B" 4685.68A luminosity 34.955
 ##
 ## >>chng 99 jun 15, conv lyman lines change following uv line,
 ## error increased as relt
@@ -87,13 +92,15 @@ monitor line "Ca B" 4685.70A luminosity 34.955
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 17, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "Q(H)" 4861.33A > 0.8
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+monitor line "Q(H)" 4861.34A > 0.8
 ##
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 17, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "Q(H)" 4861.33A < 1.1
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+monitor line "Q(H)" 4861.34A < 1.1
 ##
 monitor line "BaC " 3646 14.4
 ##
@@ -104,12 +111,14 @@ monitor line "BaC " 3646 14.4
 ## >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 6562.80A to 6562.82A, update NIST energies
-monitor line "H  1" 6562.82A 2.799 error 0.02
+## >>chng 21 apr 08, wl from 6562.82A to 6562.83A, up 1-e energies to np
+monitor line "H  1" 6562.83A 2.799 error 0.02
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "H  1" 4861.33A 1. error 0.02
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+monitor line "H  1" 4861.34A 1. error 0.02
 ## 
 ## >>chng 09 apr 12, add this line
 ## >>chng 13 jul 25, wl from 1216 to 1215.68A, increased wl precision to 6 sig. fig.
@@ -209,11 +218,13 @@ monitor line "Ca B" 1.08303m 0.8273
 ## >>chng 11 aug 05, from 2.193 to 2.315, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 16 aug 07, from 2.315 to 2.103, Marios bug fixes
 ## >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
-monitor line "He 2" 1640.40A 2.103
+## >>chng 21 apr 08, wl from 1640.40A to 1640.41A, up 1-e energies to np
+monitor line "He 2" 1640.41A 2.103
 ## >>chng 09 feb 23, from 2.35 to 2.156, remove otslin, otscon dampers (PR #84, r2758)
 ## >>chng 11 aug 05, from 2.156 to 2.273, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
-monitor line "Ca B" 1640.40A 2.273
+## >>chng 21 apr 08, wl from 1640.40A to 1640.41A, up 1-e energies to np
+monitor line "Ca B" 1640.41A 2.273
 ##
 ## >>chng 06 may 08, from 0.34 to 0.357, RP update high-n As H-like
 ## >>chng 06 aug 09, from 0.357 to 0.332 Meudon 06, badnell dr & rr
@@ -224,12 +235,14 @@ monitor line "Ca B" 1640.40A 2.273
 ## >>chng 13 jul 25, wl from 4686 to 4685.64A, increased wl precision to 6 sig. fig.
 ## >>chng 16 aug 07, from 0.3505 to 0.2666, Marios bug fixes
 ## >>chng 20 aug 25, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
-monitor line "He 2" 4685.70A 0.2666
+## >>chng 21 apr 08, wl from 4685.70A to 4685.68A, up 1-e energies to np
+monitor line "He 2" 4685.68A 0.2666
 ## >>chng 09 feb 23, from 0.332 to 0.311, remove otslin, otscon dampers (PR #84, r2758)
 ## >>chng 11 aug 05, from 0.311 to 0.3291, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 13 jul 25, wl from 4686 to 4685.64A, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 25, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
-monitor line "Ca B" 4685.70A 0.3291
+## >>chng 21 apr 08, wl from 4685.70A to 4685.68A, up 1-e energies to np
+monitor line "Ca B" 4685.68A 0.3291
 ##
 ## >>chng 01 may 10, from 0.30 to 0.279, ct network chng
 ## >>chng 06 nov 29, from 0.279 to 0.247, Badnell DR turned on

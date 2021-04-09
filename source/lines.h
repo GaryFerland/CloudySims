@@ -79,7 +79,8 @@ void cdEmis(
 
 static const int NHOLDCOMMENTS = 100;
 
-static const realnum Hbeta_WavLen = 4861.33f;
+/**chng 21 april 7, H I wl from 4861.33 to 4861.34A, replacing average energy with np energies*/
+static const realnum Hbeta_WavLen = 4861.34f;
 
 /** this struc is different from following since they are only pointer here, will be allocated 
  * to form a large array after number of lines is counted, but this is the final form */

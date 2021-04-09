@@ -87,7 +87,8 @@ monitor set error 0.1
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line luminosity "h  1" 4861.33A 0.676
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, update 1-e energies to np
+monitor line luminosity "h  1" 4861.34A 0.676
 ##
 ## >>chng 09 feb 23, from 1.236 to 1.256, remove otslin, otscon dampers (PR #84, r2758)
 ## >>chng 11 jul 12, from 1.256 to 1.279, enable fit to Badnell DR suppression

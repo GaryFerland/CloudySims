@@ -26,10 +26,12 @@ iterate
 # commands controlling output    =========
 ## >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 6562.80A to 6562.82A, update NIST energies
-monitor line case b "H  1"      6562.82A  3.782
+## >>chng 21 apr 08, wl from 6562.82A to 6562.83A, up 1-e energies to np
+monitor line case b "H  1"      6562.83A  3.782
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line case b "H  1"      4861.33A  2.249
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+monitor line case b "H  1"      4861.34A  2.249
 ## >>chng 21 mar 16, wl from 4340.46A to 4340.47A, update NIST energies
 monitor line case b "H  1"      4340.47A  1.901
 ## >>chng 19 jun 28, from 0.9822 to 1.096, reintegrate iso_collisions branch
@@ -70,32 +72,42 @@ monitor line case b "H  1"      1.28181m  1.897
 monitor line case b "H  1"      1.09381m  1.098
 ## >>chng 19 jun 28, from 0.9589 to 1.041, reintegrate iso_collisions branch
 ## >>chng 20 aug 22, wl from 1.00493m to 1.00494m, switched from computed to tabulated energies for H and He isoseq
-monitor line case b "H  1"      1.00494m  1.041
+## >>chng 21 apr 08, wl from 1.00494m to 1.00493m, up 1-e energies to np
+monitor line case b "H  1"      1.00493m  1.041
 ## >>chng 19 jun 28, from 0.9409 to 1.003, reintegrate iso_collisions branch
 ## >>chng 20 aug 22, wl from 9545.93A to 9545.97A, switched from computed to tabulated energies for H and He isoseq
-monitor line case b "H  1"      9545.97A  1.003
+## >>chng 21 apr 08, wl from 9545.97A to 9545.95A, up 1-e energies to np
+monitor line case b "H  1"      9545.95A  1.003
 ## >>chng 19 jun 28, from 0.9379 to 0.9852, reintegrate iso_collisions branch
 ## >>chng 20 aug 22, wl from 9228.97A to 9229.02A, switched from computed to tabulated energies for H and He isoseq
-monitor line case b "H  1"      9229.02A  0.9852
+## >>chng 21 apr 08, wl from 9229.02A to 9229.00A, up 1-e energies to np
+monitor line case b "H  1"      9229.00A  0.9852
 ## >>chng 19 aug 06, from 0.9476 to 0.9997, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 22, wl from 9014.87A to 9014.91A, switched from computed to tabulated energies for H and He isoseq
-monitor line case b "H  1"      9014.91A  0.9997
+## >>chng 21 apr 08, wl from 9014.91A to 9014.89A, up 1-e energies to np
+monitor line case b "H  1"      9014.89A  0.9997
 ## >>chng 20 aug 22, wl from 8862.74A to 8862.79A, switched from computed to tabulated energies for H and He isoseq
-monitor line case b "H  1"      8862.79A  0.9616
+## >>chng 21 apr 08, wl from 8862.79A to 8862.77A, up 1-e energies to np
+monitor line case b "H  1"      8862.77A  0.9616
 ## >>chng 20 aug 22, wl from 8750.43A to 8750.48A, switched from computed to tabulated energies for H and He isoseq
-monitor line case b "H  1"      8750.48A  0.9739
+## >>chng 21 apr 08, wl from 8750.48A to 8750.46A, up 1-e energies to np
+monitor line case b "H  1"      8750.46A  0.9739
 ## >>chng 20 aug 22, wl from 4.05113m to 4.05115m, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4.05115m to 4.05116m, update NIST energies
-monitor line case b "H  1"      4.05116m  1.878
+## >>chng 21 apr 08, wl from 4.05116m to 4.05115m, up 1-e energies to np
+monitor line case b "H  1"      4.05115m  1.878
 ## >>chng 19 jun 28, from 0.9817 to 1.1, reintegrate iso_collisions branch
 ## >>chng 20 aug 22, wl from 2.62513m to 2.62515m, switched from computed to tabulated energies for H and He isoseq
-monitor line case b "H  1"      2.62515m  1.1
+## >>chng 21 apr 08, wl from 2.62515m to 2.62514m, up 1-e energies to np
+monitor line case b "H  1"      2.62514m  1.1
 ## >>chng 19 jun 28, from 0.9585 to 1.041, reintegrate iso_collisions branch
 ## >>chng 20 aug 22, wl from 2.16551m to 2.16553m, switched from computed to tabulated energies for H and He isoseq
-monitor line case b "H  1"      2.16553m  1.041
+## >>chng 21 apr 08, wl from 2.16553m to 2.16552m, up 1-e energies to np
+monitor line case b "H  1"      2.16552m  1.041
 ## >>chng 19 jun 28, from 0.9408 to 1.003, reintegrate iso_collisions branch
 ## >>chng 20 aug 22, wl from 1.94454m to 1.94456m, switched from computed to tabulated energies for H and He isoseq
-monitor line case b "H  1"      1.94456m  1.003
+## >>chng 21 apr 08, wl from 1.94456m to 1.94455m, up 1-e energies to np
+monitor line case b "H  1"      1.94455m  1.003
 ## >>chng 19 jun 28, from 0.9379 to 0.9853, reintegrate iso_collisions branch
 ## >>chng 20 aug 22, wl from 1.81740m to 1.81741m, switched from computed to tabulated energies for H and He isoseq
 monitor line case b "H  1"      1.81741m  0.9853
@@ -107,7 +119,8 @@ monitor line case b "H  1"      7.45782m  Elow=105291.6  1.102
 monitor line case b "H  1"      4.65251m  Elow=105291.6  1.041
 ## >>chng 19 jun 28, from 0.9406 to 1.003, reintegrate iso_collisions branch
 ## >>chng 20 aug 22, wl from 3.73951m to 3.73954m, switched from computed to tabulated energies for H and He isoseq
-monitor line case b "H  1"      3.73954m  1.003
+## >>chng 21 apr 08, wl from 3.73954m to 3.73952m, up 1-e energies to np
+monitor line case b "H  1"      3.73952m  1.003
 ## >>chng 19 jun 28, from 0.8455 to 0.9008, reintegrate iso_collisions branch
 monitor departure "H[30]"  0.9008
 monitor departure "H[70]"  0.9581

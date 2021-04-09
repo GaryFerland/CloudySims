@@ -32,7 +32,8 @@ iterate
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-normalize to "H  1" 4861.33A = 1.417
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+normalize to "H  1" 4861.34A = 1.417
 print populations h-like 
 print departure coefficients
 save overview "limit_casea_h_den13.ovr"
@@ -47,7 +48,8 @@ save monitors "limit_casea_h_den13.asr" last
 ## >>chng 13 jul 24, wl from 6563 to 6562.85A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
 ## >>chng 21 mar 16, wl from 6562.80A to 6562.82A, update NIST energies
-monitor line "H  1" 6562.82A 3.835
+## >>chng 21 apr 08, wl from 6562.82A to 6562.83A, up 1-e energies to np
+monitor line "H  1" 6562.83A 3.835
 ##
 ## >>chng 07 oct 22, from 1.00 to 1.30, resolve l-levels of h-like sequence 
 ## >>chng 08 apr 10, from 1.30 to 1.38, change default h-like levels, other minor changes
@@ -55,12 +57,14 @@ monitor line "H  1" 6562.82A 3.835
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "H  1" 4861.33A 1.417
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+monitor line "H  1" 4861.34A 1.417
 ##
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "Ca B" 4861.33A 8.405
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+monitor line "Ca B" 4861.34A 8.405
 ##
 ## >>chng 07 oct 22, from 0.589 to 0.640, resolve l-levels of h-like sequence 
 ## >>chng 11 dec 16, from 0.64 to 0.6822, adjust botches due to recent iso recomb changes
