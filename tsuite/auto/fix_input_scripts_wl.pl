@@ -52,6 +52,8 @@
 #  	- Updated to report proposed wavelength for lines not encountered in
 #  	  a script and its datafiles.  These lines are typically hardcoded in
 #  	  Cloudy, e.g., lines involving the Halpha, or Hbeta wavelengths.
+#  Chatzikos, Marios			2021-Apr-09
+#  	- Enabled processing of 'set blend' command.
 #
 
 use strict;
@@ -314,7 +316,7 @@ sub match_any_linelist_cmd
 	my ($script_line) = @_;
 	my $match = 0;
 	$match = 1
-		if( $script_line =~ m/^(opti|prin|save)/ );
+		if( $script_line =~ m/^(opti|prin|save|set blend)/ );
 	return	$match;
 }
 
@@ -903,8 +905,7 @@ sub fix_script_linelist
 	my @newcontents;
 	for( my $i = 0; $i < scalar(@contents); $i++ )
 	{
-		my $script_line = $contents[ $i ];
-		if( $script_line =~ m/$end_of_lines/ )
+		if( &match_end_of_lines( $contents[ $i ] ) )
 		{
 			my $end = --$i;
 			do { $end--; } while( $end >= 0 and not &match_any_linelist_cmd( $contents[$end] ) );
