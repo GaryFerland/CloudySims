@@ -931,7 +931,7 @@ void PrtFinal(void)
 
 		/* get HeII 4686 */
 		/* >>chng 06 may 15, changed this so that it works for up to six sig figs. */
-		if( cdLine("He 2",wlAirVac(4685.70),&he4686,&absint)<=0 )
+		if( cdLine("He 2",wlAirVac(4685.68),&he4686,&absint)<=0 )
 		{
 			/* 06 aug 28, from numLevels_max to _local. */
 			if( iso_sp[ipH_LIKE][ipHELIUM].numLevels_local > 5 )
