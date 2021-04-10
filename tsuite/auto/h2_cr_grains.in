@@ -113,7 +113,8 @@ monitor "H2O " 538.142m line intensity -17.51
 ## >>chng 13 jun 27, from -20.49 to -20.42, fix the error in mole_h2_coll.cpp
 ## >>chng 13 jul 25, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 20 jul 21, from -20.42 to -20.22, update CR H2 dissoc as per  2020RNAAS...4...78S
-monitor "HNC " 1652.90m  line intensity -20.22
+## >>chng 21 apr 10, from -20.22 to -20.38, update chemistry and lamba
+monitor "HNC " 1652.90m  line intensity -20.38
 ## >>chng 13 jun 27, from -8.563 to -23.08, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 27, from -23.08 to -22.98, fix the error in mole_h2_coll.cpp
 ## >>chng 13 jul 25, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.

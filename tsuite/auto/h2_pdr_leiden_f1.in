@@ -521,7 +521,8 @@ monitor "H2O " 538.142m line intensity -8.99
 ## >>chng 13 jul 25, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -7.357 to -7.325, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -7.325 to -7.303, update H3+ rates Indriola+ 2012
-monitor "HNC " 1652.90m  line intensity -7.303
+## >>chng 21 apr 10, from -7.303 to -7.495, update chemistry and lamba
+monitor "HNC " 1652.90m  line intensity -7.495
 ## >>chng 13 jun 27, from -8.563 to -8.605, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 13 aug 20, from -8.605 to -8.583, enable D chem by default

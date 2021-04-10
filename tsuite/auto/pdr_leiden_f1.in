@@ -64,7 +64,8 @@ monitor "H2O " 538.142m line intensity -8.676
 ## >>chng 10 dec 19, from -7.385 to -7.357, changes due to LAMDA update in r4457
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -7.357 to -7.312, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
-monitor "HNC " 1652.90m  line intensity -7.312 
+## >>chng 21 apr 10, from -7.312 to -7.498, update chemistry and lamba
+monitor "HNC " 1652.90m  line intensity -7.498 
 ## >>chng 10 aug 21, from -9.86 to -8.428, add these lines
 ## >>chng 11 nov 16, from -8.428 to -8.452, adjust newmole monitors
 ## >>chng 12 jun 07, from -8.452 to -8.582, vib_evap fix

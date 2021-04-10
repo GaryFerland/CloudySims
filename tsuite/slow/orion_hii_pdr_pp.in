@@ -477,7 +477,8 @@ monitor Pradmax 0.0151
 monitor "H2O " 538.142m line intensity -3.9
 ## >>chng 13 jun 27, from -7.357 to -5.056, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
-monitor "HNC " 1652.90m  line intensity -5.056
+## >>chng 21 apr 10, from -5.056 to -5.219, update chemistry and LAMDA
+monitor "HNC " 1652.90m  line intensity -5.219
 ## >>chng 13 jun 27, from -8.563 to -5.569, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 monitor "HCS+" 1755.88m  -5.569 line intensity

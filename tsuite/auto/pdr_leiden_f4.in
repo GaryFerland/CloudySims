@@ -56,7 +56,8 @@ monitor "H2O " 538.142m line intensity -8.66
 ##
 ## >>chng 10 aug 21, from -9.341 to -6.126, add these lines
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
-monitor "HNC " 1652.90m  line intensity -6.126 
+## >>chng 21 apr 10, from -6.126 to -6.448, update chemistry and lamba
+monitor "HNC " 1652.90m  line intensity -6.448 
 ##
 ## >>chng 10 aug 21, from -9.86 to -7.326, add these lines
 ## >>chng 11 nov 16, from -7.326 to -7.469, adjust newmole monitors
@@ -144,7 +145,8 @@ monitor "CO  " 325.137m  -7.16 line intensity
 ## >>chng 13 feb 01, from -7.07 to -7.045, BUGFIX, largely undo r6703
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -7.045 to -6.921, update H3+ rates Indriola+ 2012
-monitor "CN  " 880.858m  -6.921  line intensity
+## >>chng 21 apr 10, from -6.921 to -6.963, update chemistry and lamba
+monitor "CN  " 880.858m  -6.963  line intensity
 monitor H2 column density 21.840 error 0.1
 ##
 ## >>chng 05 oct 01, from 17.79 to 17.75, drift down
@@ -203,7 +205,8 @@ monitor column density H2+  9.16 error 0.1
 ## >>chng 07 jan 07, from 12.10 to 12.16, enable McCall et al. H3+ rate
 ## >>chng 11 nov 16, from 12.16 to 12.23, adjust newmole monitors
 ## >>chng 12 jun 07, from 12.23 to 12.31, vib_evap fix
-monitor column density H3+  12.31 error 0.1
+## >>chng 21 apr 10, from 12.31 to 12.35, update chemistry and lamba
+monitor column density H3+  12.35 error 0.1
 ## 
 monitor column density H2g  21.84 error 0.1
 ## 

@@ -56,18 +56,22 @@ monitor H2 column density 15.683
 ## >>chng 08 dec 13, from 12.06 to 11.97, merging newsolvers branch
 ## >>chng 10 mar 03, from 11.97 to 12.36, enable all LAMDA and increase max num levels
 ## >>chng 11 nov 16, from 12.36 to 12.12, adjust newmole monitors
-monitor CO column density 12.12 error 0.1 
+## >>chng 21 apr 10, from 12.12 to 11.93, update chemistry and lamba
+monitor CO column density 11.93 error 0.1 
 ## 
 ## >>chng 10 mar 03, from -7.43 to -7.327, enable all LAMDA and increase max num levels
 ## >>chng 11 nov 16, from -7.327 to -7.371, adjust newmole monitors
-monitor ionization helium 2 -7.371 error 0.1
+## >>chng 21 apr 10, from -7.371 to -7.294, update chemistry and lamba
+monitor ionization helium 2 -7.294 error 0.1
 # 
 # gas has more he++ than He+ due to fast charge transfer with co
 # neutralizing he+ 
 ## >>chng 07 dec 19, from -6.70 to -6.66, changes in r1698
 ## >>chng 08 feb 20, from -6.66 to <-20, grain charge transfer changes in ion_solver and iso*
 ## >>chng 11 nov 16, from -20 to -14, adjust newmole monitors
-monitor ionization helium 3 < -14 error 0.1
+## >>chng 21 apr 10, from -14 to -13.7, update chemistry and lamba
+## stop monitoring this trivial quantity
+## monitor ionization helium 3 < -14.7 error 0.1
 ## 
 monitor column density H2+  5.46 error 0.1
 ## 
@@ -75,7 +79,8 @@ monitor column density H2+  5.46 error 0.1
 ## >>chng 08 dec 13, from 8.05 to 8.006, merging newsolvers branch
 ## >>chng 10 mar 03, from 8.006 to 8.313, enable all LAMDA and increase max num levels
 ## >>chng 11 nov 16, from 8.313 to 7.986, adjust newmole monitors
-monitor column density H3+  7.986 error 0.1
+## >>chng 21 apr 10, from 7.986 to 8.025, update chemistry and lamba
+monitor column density H3+  8.025 error 0.1
 ## 
 monitor column density H2g  15.70 error 0.1
 ## 
@@ -90,18 +95,21 @@ monitor column density H2*  9.118 error 0.1
 ## >>chng 08 feb 20, from 7.11 to 7.04, grain charge transfer changes in ion_solver and iso*
 ## >>chng 10 mar 03, from 7.04 to 7.466, enable all LAMDA and increase max num levels
 ## >>chng 11 nov 16, from 7.466 to 7.904, adjust newmole monitors
-monitor column density CN 7.904 error 0.1
+## >>chng 21 apr 10, from 7.904 to 7.722, update chemistry and lamba
+monitor column density CN 7.722 error 0.1
 ##
 ## >>chng 08 feb 20, from 8.02 to 7.97, grain charge transfer changes in ion_solver and iso*
 ## >>chng 10 mar 03, from 7.97 to 8.251, enable all LAMDA and increase max num levels
 ## >>chng 11 nov 16, from 8.251 to 8.452, adjust newmole monitors
 ## >>chng 14 aug 28, from 8.452 to 8.409, EleyRideal H2 formation
-monitor column density CH 8.409 error 0.1
+## >>chng 21 apr 10, from 8.409 to 8.295, update chemistry and lamba
+monitor column density CH 8.295 error 0.1
 ##
 ## >>chng 08 dec 13, from 3.87 to 3.826, merging newsolvers branch
 ## >>chng 10 mar 03, from 3.826 to 3.944, enable all LAMDA and increase max num levels
 ## >>chng 11 nov 16, from 3.944 to 3.78, adjust newmole monitors
-monitor column density CH+ 3.78 error 0.1
+## >>chng 21 apr 10, from 3.78 to 3.591, update chemistry and lamba
+monitor column density CH+ 3.591 error 0.1
 ## 
 ## >>chng 08 feb 20, from 3.366 to 3.276, grain charge transfer changes in ion_solver and iso*
 ## >>chng 10 mar 03, from 3.276 to 3.454, enable all LAMDA and increase max num levels
@@ -135,62 +143,76 @@ monitor itrzn 3.556 error 0.18
 ## >>chng 09 jun 15, from 71.6 to 93, gradual approach to outer edge
 ## >>chng 10 mar 03, from 93 to 80, enable all LAMDA and increase max num levels
 ## >>chng 11 nov 16, from 80 to 72, adjust newmole monitors
-monitor nzone 72 error 0.11
+## >>chng 21 apr 10, from 72 to 60, update chemistry and lamba
+monitor nzone 60 error 0.11
 ##
 ## >>chng 13 jun 27, from -8.869 to 27.23, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
 ## >>chng 15 mar 07, from 27.23 to 27.25, merging newmesh branch
-monitor "H2O " 538.142m line intensity 27.25
+## >>chng 21 apr 10, from 27.25 to 27.31, update chemistry and lamba
+monitor "H2O " 538.142m line intensity 27.31
 ## >>chng 13 jun 27, from -7.357 to 24.81, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
-monitor "HNC " 1652.90m  line intensity 24.81
+## >>chng 21 apr 10, from 24.81 to 24.41, update chemistry and lamba
+monitor "HNC " 1652.90m  line intensity 24.41
 ## >>chng 13 jun 27, from -8.563 to 20.64, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 20.64 to 20.62, EleyRideal H2 formation
 monitor "HCS+" 1755.88m  20.62 line intensity
 ## >>chng 13 jun 27, from -7.453 to 22.9, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
-monitor "CS  " 3058.86m  22.9 line intensity
+## >>chng 21 apr 10, from 22.9 to 22.82, update chemistry and lamba
+monitor "CS  " 3058.86m  22.82 line intensity
 ## >>chng 13 jun 27, from -7.288 to 22.02, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 22.02 to 21.99, EleyRideal H2 formation
-monitor "CO  " 2600.05m  21.99 line intensity
+## >>chng 21 apr 10, from 21.99 to 21.86, update chemistry and lamba
+monitor "CO  " 2600.05m  21.86 line intensity
 ## >>chng 13 jun 27, from -6.463 to 23.3, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 23.3 to 23.27, EleyRideal H2 formation
-monitor "CO  " 1300.05m  23.27 line intensity
+## >>chng 21 apr 10, from 23.27 to 23.12, update chemistry and lamba
+monitor "CO  " 1300.05m  23.12 line intensity
 ## >>chng 13 jun 27, from -6.149 to 23.83, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 23.83 to 23.8, EleyRideal H2 formation
-monitor "CO  " 866.727m  23.8 line intensity
+## >>chng 21 apr 10, from 23.8 to 23.63, update chemistry and lamba
+monitor "CO  " 866.727m  23.63 line intensity
 ## >>chng 13 jun 27, from -6.177 to 24, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 24 to 23.96, EleyRideal H2 formation
-monitor "CO  " 650.074m  23.96 line intensity
+## >>chng 21 apr 10, from 23.96 to 23.77, update chemistry and lamba
+monitor "CO  " 650.074m  23.77 line intensity
 ## >>chng 13 jun 27, from -6.485 to 23.91, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 23.91 to 23.87, EleyRideal H2 formation
-monitor "CO  " 520.089m  23.87 line intensity
+## >>chng 21 apr 10, from 23.87 to 23.65, update chemistry and lamba
+monitor "CO  " 520.089m  23.65 line intensity
 ## >>chng 13 jun 27, from -6.954 to 23.62, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 23.62 to 23.57, EleyRideal H2 formation
-monitor "CO  " 433.438m  23.57 line intensity
+## >>chng 21 apr 10, from 23.57 to 23.32, update chemistry and lamba
+monitor "CO  " 433.438m  23.32 line intensity
 ## >>chng 13 jun 27, from -7.48 to 23.16, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 23.16 to 23.1, EleyRideal H2 formation
-monitor "CO  " 371.549m  23.1 line intensity
+## >>chng 21 apr 10, from 23.1 to 22.81, update chemistry and lamba
+monitor "CO  " 371.549m  22.81 line intensity
 ## >>chng 13 jun 27, from -8.049 to 22.54, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 22.54 to 22.46, EleyRideal H2 formation
-monitor "CO  " 325.137m  22.46 line intensity
+## >>chng 21 apr 10, from 22.46 to 22.13, update chemistry and lamba
+monitor "CO  " 325.137m  22.13 line intensity
 ## >>chng 13 jun 27, from -7.522 to 22.29, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 22.29 to 22.26, EleyRideal H2 formation
-monitor "^13CO" 906.599m  22.26 line intensity
+## >>chng 21 apr 10, from 22.26 to 22.09, update chemistry and lamba
+monitor "^13CO" 906.599m  22.09 line intensity
 ## >>chng 13 jun 27, from -8.247 to 21.59, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 21.59 to 21.57, EleyRideal H2 formation
-monitor "CN  " 880.858m  21.57  line intensity
+## >>chng 21 apr 10, from 21.57 to 21.39, update chemistry and lamba
+monitor "CN  " 880.858m  21.39  line intensity
 ##
 # pdr_co_fully_noneq.in
 # class pdr 

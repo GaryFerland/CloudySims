@@ -41,7 +41,8 @@ monitor set error 0.1
 ## >>chng 13 jul 15, from -6.351 to -6.324 move to Stout/Chianti for Si, botches are due to improved atomic data
 ## >>chng 14 mar 26, from -6.324 to -6.484, Move oxygen data to stout and chianti files
 ## >>chng 15 aug 30, from -6.484 to -6.512, update Si II stout to Laha+ 2015
-monitor line luminosity "Si 2" 34.8046m  -6.512
+## >>chng 21 apr 10, from -6.512 to -6.565, update chemistry and lamba
+monitor line luminosity "Si 2" 34.8046m  -6.565
 ## 
 monitor H2 column density 21.92 error 0.1
 ##
