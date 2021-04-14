@@ -148,12 +148,14 @@ monitor line "H  1"      1.81741m  0.0146
 ## >>chng 16 aug 07, from 0.0372 to 0.0326, Marios bug fixes
 ## >>chng 17 may 25, wl from 7.45781m to 7.45777m, up Rydberg constant
 ## >>chng 20 aug 22, wl from 7.45777m to 7.45782m, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1"      7.45782m  Elow=105291.6  0.0326
+## >>chng 21 apr 13, wl from 7.45782m to 7.45780m
+monitor line "H  1"      7.45780m  Elow=105291.6  0.0326
 ## >>chng 16 jul 28, from 0.0163 to 0.0215, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0215 to 0.0203, Marios bug fixes
 ## >>chng 17 may 25, wl from 4.65250m to 4.65247m, up Rydberg constant
 ## >>chng 20 aug 22, wl from 4.65247m to 4.65251m, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1"      4.65251m  Elow=105291.6  0.0203
+## >>chng 21 apr 13, wl from 4.65251m to 4.65248m
+monitor line "H  1"      4.65248m  Elow=105291.6  0.0203
 ## >>chng 16 jul 28, from 0.0107 to 0.0135, new sims to monitor Case B and departure
 ## >>chng 17 may 25, wl from 3.73953m to 3.73951m, up Rydberg constant
 ## >>chng 20 aug 22, wl from 3.73951m to 3.73954m, switched from computed to tabulated energies for H and He isoseq

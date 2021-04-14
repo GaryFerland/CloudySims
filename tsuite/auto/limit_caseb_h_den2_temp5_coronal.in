@@ -219,13 +219,15 @@ monitor line "H  1"      1.81741m  0.0041
 ## >>chng 19 jun 28, from 0.0049 to 0.0115, reintegrate iso_collisions branch
 ## >>chng 19 aug 06, from 0.0115 to 0.0194, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 22, wl from 7.45777m to 7.45782m, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1"      7.45782m  Elow=105291.6  0.0194
+## >>chng 21 apr 13, wl from 7.45782m to 7.45780m
+monitor line "H  1"      7.45780m  Elow=105291.6  0.0194
 ## >>chng 16 aug 07, from 0.0163 to 0.0034, Fran bug fix
 ## >>chng 17 may 25, wl from 4.65250m to 4.65247m fix Rydberg constant
 ## >>chng 19 jun 28, from 0.0034 to 0.005, reintegrate iso_collisions branch
 ## >>chng 19 aug 06, from 0.005 to 0.0071, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 22, wl from 4.65247m to 4.65251m, switched from computed to tabulated energies for H and He isoseq
-monitor line "H  1"      4.65251m  Elow=105291.6  0.0071
+## >>chng 21 apr 13, wl from 4.65251m to 4.65248m
+monitor line "H  1"      4.65248m  Elow=105291.6  0.0071
 ## >>chng 16 jul 28, from 0.0107 to 0.0081, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0081 to 0.0023, Fran bug fix
 ## >>chng 17 may 25, wl from 3.73953m to 3.73951m, up Rydberg constant

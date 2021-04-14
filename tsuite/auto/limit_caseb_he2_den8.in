@@ -104,7 +104,8 @@ monitor line "He 2" 1.86365m  0.0066
 ## >>chng 16 aug 07, from 0.0047 to 0.0045, Fran bug fix
 ## >>chng 17 may 25, wl from 1.16270m to 1.16260m, up Rydberg constant
 ## >>chng 20 aug 22, wl from 1.16260m to 1.16264m, switched from computed to tabulated energies for H and He isoseq
-monitor line "He 2" 1.16264m  Elow=421353.2  0.0045 
+## >>chng 21 apr 13, wl from 1.16264m to 1.16262m
+monitor line "He 2" 1.16262m  Elow=421353.2  0.0045 
 ## >>chng 13 jul 24, wl from 9345A to 9345.37A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 25, wl from 9345.37A to 9344.62A, up Rydberg constant
 ## >>chng 20 aug 22, wl from 9344.62A to 9344.93A, switched from computed to tabulated energies for H and He isoseq
