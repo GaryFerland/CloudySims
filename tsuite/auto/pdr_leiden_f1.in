@@ -65,7 +65,8 @@ monitor "H2O " 538.142m line intensity -8.676
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -7.357 to -7.312, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 21 apr 10, from -7.312 to -7.498, update chemistry and lamba
-monitor "HNC " 1652.90m  line intensity -7.498 
+## >>chng 21 apr 16, from -7.498 to -7.306, remove bad UMIST reaction
+monitor "HNC " 1652.90m  line intensity -7.306 
 ## >>chng 10 aug 21, from -9.86 to -8.428, add these lines
 ## >>chng 11 nov 16, from -8.428 to -8.452, adjust newmole monitors
 ## >>chng 12 jun 07, from -8.452 to -8.582, vib_evap fix
@@ -231,6 +232,75 @@ monitor column density H2*  14.00 error 0.1
 ## >>chng 05 dec 08, from 8.35 to 8.06, update to Elwert Solomon rate
 ## >>chng 12 jul 01, from 8.06 to 8.011, update Badnell DR to 13-electron iso sequence
 monitor column density HeH+ 8.011  error 0.1
+## 
+## >>chng 21 apr 11 add all remaining molecules with N(x) > 1e10 cm-2
+monitor column density "C2+"       10.509  
+monitor column density "C2"        17.008  
+monitor column density "C2H+"      10.679  
+monitor column density "C2H"       16.168
+monitor column density "C2H2"      12.896  
+monitor column density "C2H2+"     13.233  
+monitor column density "C2H3+"     10.619  
+monitor column density "C3"        15.460  
+monitor column density "C3H+"      12.276
+monitor column density "C3H"       13.941  
+## >>chng 21 apr 16, from 10.42 to 10.47, new monitor added
+monitor column density "CCl+"      10.47  
+## >>chng 21 apr 16, from 11.96 to 11.46, new monitor added
+monitor column density "CCl"       11.46  
+monitor column density "CH+"       10.887  
+monitor column density "CH"        16.105  
+monitor column density "CH2+"      10.964  
+monitor column density "CH2"       15.549  
+monitor column density "CH3+"      13.414
+monitor column density "CH3"       15.199  
+monitor column density "CH4+"      10.123  
+monitor column density "CH4"       15.138  
+monitor column density "CH5+"      11.759  
+monitor column density "CN"        15.597  
+monitor column density "COgrn"     17.284  
+monitor column density "CS+"       10.556  
+monitor column density "CS"        16.890  
+## >>chng 21 apr 16, from 12.001to 12.0392, new monitor added
+monitor column density "H2Cl+"     12.0392  
+monitor column density "H2O+"      10.423  
+monitor column density "H2O"       14.048  
+monitor column density "H3O+"      11.412  
+monitor column density "HCl+"      11.288  
+## >>chng 21 apr 16, from 13.8 to 13.42, new monitor added
+monitor column density "HCl"       13.42  
+monitor column density "HCN"       15.167  
+monitor column density "HCNH+"     12.614  
+monitor column density "HCO+"      12.649  
+monitor column density "HCS+"      13.958 
+monitor column density "HNC"       15.847
+monitor column density "HNO"       12.257  
+monitor column density "HS+"       12.969  
+monitor column density "HS"        14.711  
+monitor column density "N2+"       12.487  
+monitor column density "N2"        17.440  
+monitor column density "N2H+"      13.951
+monitor column density "N2O"       11.029
+monitor column density "NH"        15.581  
+monitor column density "NH2+"      10.344  
+monitor column density "NH2"       14.958  
+monitor column density "NH3+"      12.448
+monitor column density "NH3"       14.864  
+monitor column density "NH4+"      11.028  
+monitor column density "NO"        13.762
+monitor column density "NS+"       11.471  
+monitor column density "NS"        14.720
+monitor column density "OCN"       11.900  
+monitor column density "OCS"       10.982  
+monitor column density "OH+"       10.331  
+monitor column density "OHgrn"     14.953  
+monitor column density "SiH"       12.923  
+monitor column density "SiH2+"     10.187  
+monitor column density "SiN+"      12.832  
+monitor column density "SiN"       13.612  
+monitor column density "SiOH+"     11.251
+monitor column density "SO+"       10.101  
+monitor column density "SO"        13.175  
 ## 
 ## >>chng 06 nov 28, add these lines
 ## >>chng 06 nov 29, from -4.611 to -4.644, Badnell DR turned on

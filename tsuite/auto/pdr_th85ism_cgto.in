@@ -271,7 +271,8 @@ monitor "H2O " 538.142m line intensity -4.264
 ## >>chng 13 jun 27, from -7.357 to -5.81, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 21 apr 10, from -5.81 to -7.145, update chemistry and lamba
-monitor "HNC " 1652.90m  line intensity -7.145
+## >>chng 21 apr 16, from -7.145 to -5.821, remove bad UMIST reaction
+monitor "HNC " 1652.90m  line intensity -5.821
 ## >>chng 13 jun 27, from -8.563 to -5.555, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 15 aug 03, from -5.555 to -5.584, update LAMDA to 2015
@@ -305,7 +306,8 @@ monitor "CO  " 433.438m  -3.51 line intensity
 ## >>chng 13 jun 27, from -7.48 to -3.411, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 15 aug 03, from -3.411 to -3.493, update LAMDA to 2015
-monitor "CO  " 371.549m  -3.493 line intensity
+## >>chng 21 apr 16, from -3.493 to -3.452, remove bad UMIST reaction
+monitor "CO  " 371.549m  -3.452 line intensity
 ## >>chng 13 jun 27, from -8.049 to -3.504, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 15 aug 03, from -3.504 to -3.647, update LAMDA to 2015

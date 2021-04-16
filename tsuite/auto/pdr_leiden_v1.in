@@ -131,7 +131,8 @@ monitor line intensity "O  1" 63.1679m -6.388 error 0.1
 ## 
 ## >>chng 05 jun 07, from 11.2 to 11.8, NA add CO grain condensation
 ## >>chng 05 dec 08, from 11.80 to 13.22, update to Elwert Solomon rate
-monitor temperature "H2" 13.22 error 0.1 
+## >>chng 21 apr 16, from 13.22 to 12, remove bad UMIST reaction
+monitor temperature "H2" 12 error 0.1 
 ## 
 ## >>chng 05 sep 30, add these 5
 monitor column density "H2+"  11.72 error 0.1
@@ -235,7 +236,8 @@ monitor "H2O " 538.142m line intensity -9.517
 ## >>chng 16 mar 21, from -7.866 to -7.837, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -7.837 to -7.798, update H3+ rates Indriola+ 2012
 ## >>chng 21 apr 10, from -7.798 to -8.079, update chemistry and lamba
-monitor "HNC " 1652.90m  line intensity -8.079
+## >>chng 21 apr 16, from -8.079 to -7.819, remove bad UMIST reaction
+monitor "HNC " 1652.90m  line intensity -7.819
 ## >>chng 13 jun 27, from -8.563 to -10.19, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 13 aug 20, from -10.19 to -10.14, enable D chem by default
@@ -245,7 +247,8 @@ monitor "HNC " 1652.90m  line intensity -8.079
 ## >>chng 16 mar 21, from -10.3 to -10.19, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -10.19 to -10.08, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from -10.08 to -10.03, further update to McCall CR-related rate
-monitor "HCS+" 1755.88m  -10.03 line intensity
+## >>chng 21 apr 16, from -10.03 to -10.09, remove bad UMIST reaction
+monitor "HCS+" 1755.88m  -10.09 line intensity
 ## >>chng 13 jun 27, from -7.453 to -7.867, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from -7.867 to -7.891, C to external databases
@@ -278,7 +281,8 @@ monitor "CO  " 866.727m  -7.465 line intensity
 ## >>chng 15 aug 03, from -8.196 to -8.232, update LAMDA to 2015
 ## >>chng 16 mar 21, from -8.232 to -8.36, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -8.36 to -8.554, update H3+ rates Indriola+ 2012
-monitor "CO  " 650.074m  -8.554 line intensity
+## >>chng 21 apr 16, from -8.554 to -8.625, remove bad UMIST reaction
+monitor "CO  " 650.074m  -8.625 line intensity
 ## >>chng 13 jun 27, from -6.485 to -9.545, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 13 aug 20, from -9.545 to -9.52, enable D chem by default
@@ -288,7 +292,8 @@ monitor "CO  " 650.074m  -8.554 line intensity
 ## >>chng 16 mar 21, from -9.812 to -9.958, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -9.958 to -10.15, update H3+ rates Indriola+ 2012
 ## >>chng 21 apr 10, from -10.15 to -10.21, update chemistry and lamba
-monitor "CO  " 520.089m  -10.21 line intensity
+## >>chng 21 apr 16, from -10.21 to -10.27, remove bad UMIST reaction
+monitor "CO  " 520.089m  -10.27 line intensity
 ## >>chng 13 jun 27, from -6.954 to -11.28, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 13 aug 20, from -11.28 to -11.26, enable D chem by default
@@ -297,7 +302,8 @@ monitor "CO  " 520.089m  -10.21 line intensity
 ## >>chng 15 aug 03, from -11.48 to -11.55, update LAMDA to 2015
 ## >>chng 16 mar 21, from -11.55 to -11.63, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -11.63 to -11.71, update H3+ rates Indriola+ 2012
-monitor "CO  " 433.438m  -11.71 line intensity
+## >>chng 21 apr 16, from -11.71 to -11.77, remove bad UMIST reaction
+monitor "CO  " 433.438m  -11.77 line intensity
 ## >>chng 13 jun 27, from -7.48 to -12.53, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -12.53 to -12.21, update H2 - C II 158m collision rate
@@ -326,7 +332,8 @@ monitor "^13CO" 906.599m  -9.023 line intensity
 ## >>chng 16 mar 21, from -10.52 to -10.38, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -10.38 to -10.2, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from -10.2 to -10.16, further update to McCall CR-related rate
-monitor "CN  " 880.858m  -10.16  line intensity
+## >>chng 21 apr 16, from -10.16 to -10.24, remove bad UMIST reaction
+monitor "CN  " 880.858m  -10.24  line intensity
 #
 # pdr_leiden_v1.in
 # class pdr 

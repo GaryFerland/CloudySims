@@ -713,6 +713,138 @@ monitor temperature "H2" 30.24 error 0.1
 ## >>chng 12 aug 06, from 11.2 to 11.12, bugfix - include Pelec_esc in several places
 ## >>chng 14 jan 05, from 11.12 to 11.05, N to external databases
 monitor column density HeH+ 11.05 error 0.1
+## 
+## >>chng 21 apr 11 add all remaining molecules with N(x) > 1e10 cm-2
+## >>chng 21 apr 16, from 10.51 to 10.98, add molecular column densities
+monitor column density "C2+"       10.98  
+## >>chng 21 apr 16, from 17.01 to 14.67, add molecular column densities
+monitor column density "C2"        14.67  
+## >>chng 21 apr 16, from 10.68 to 10.37, add molecular column densities
+monitor column density "C2H+"      10.37  
+## >>chng 21 apr 16, from 16.17 to 13.96, add molecular column densities
+monitor column density "C2H"       13.96
+## >>chng 21 apr 16, from 12.9 to 13.25, add molecular column densities
+monitor column density "C2H2"      13.25  
+## >>chng 21 apr 16, from 13.23 to 10.95, add molecular column densities
+monitor column density "C2H2+"     10.95  
+## >>chng 21 apr 16, from 10.62 to 9.198, add molecular column densities
+monitor column density "C2H3+"     9.198  
+## >>chng 21 apr 16, from 15.46 to 12.46, add molecular column densities
+monitor column density "C3"        12.46  
+## >>chng 21 apr 16, from 12.28 to 10.62, add molecular column densities
+monitor column density "C3H+"      10.62
+## >>chng 21 apr 16, from 13.94 to 13.49, add molecular column densities
+monitor column density "C3H"       13.49  
+## >>chng 21 apr 16, from 10.42 to 10.47, new monitor added
+## >>chng 21 apr 16, from 10.47 to 10.59, add molecular column densities
+monitor column density "CCl+"      10.59  
+## >>chng 21 apr 16, from 11.96 to 11.46, new monitor added
+## >>chng 21 apr 16, from 11.46 to 6.858, add molecular column densities
+monitor column density "CCl"       6.858  
+## >>chng 21 apr 16, from 10.89 to 12.07, add molecular column densities
+monitor column density "CH+"       12.07  
+## >>chng 21 apr 16, from 16.11 to 14.55, add molecular column densities
+monitor column density "CH"        14.55  
+## >>chng 21 apr 16, from 10.96 to 11.65, add molecular column densities
+monitor column density "CH2+"      11.65  
+## >>chng 21 apr 16, from 15.55 to 14.11, add molecular column densities
+monitor column density "CH2"       14.11  
+## >>chng 21 apr 16, from 13.41 to 12.08, add molecular column densities
+monitor column density "CH3+"      12.08
+## >>chng 21 apr 16, from 15.2 to 12.41, add molecular column densities
+monitor column density "CH3"       12.41  
+## >>chng 21 apr 16, from 10.12 to 6.262, add molecular column densities
+monitor column density "CH4+"      6.262  
+## >>chng 21 apr 16, from 15.14 to 14.84, add molecular column densities
+monitor column density "CH4"       14.84  
+## >>chng 21 apr 16, from 11.76 to 9.322, add molecular column densities
+monitor column density "CH5+"      9.322  
+## >>chng 21 apr 16, from 15.6 to 13.35, add molecular column densities
+monitor column density "CN"        13.35  
+## >>chng 21 apr 16, from 17.28 to 7.013, add molecular column densities
+monitor column density "COgrn"     7.013  
+## >>chng 21 apr 16, from 10.56 to 10.34, add molecular column densities
+monitor column density "CS+"       10.34  
+## >>chng 21 apr 16, from 16.89 to 17.04, add molecular column densities
+monitor column density "CS"        17.04  
+## >>chng 21 apr 16, from 12.001to 12.0392, new monitor added
+## >>chng 21 apr 16, from 12.04 to 12.32, add molecular column densities
+monitor column density "H2Cl+"     12.32  
+## >>chng 21 apr 16, from 10.42 to 10.85, add molecular column densities
+monitor column density "H2O+"      10.85  
+## >>chng 21 apr 16, from 14.05 to 16.46, add molecular column densities
+monitor column density "H2O"       16.46  
+## >>chng 21 apr 16, from 11.41 to 12.91, add molecular column densities
+monitor column density "H3O+"      12.91  
+## >>chng 21 apr 16, from 11.29 to 12.21, add molecular column densities
+monitor column density "HCl+"      12.21  
+## >>chng 21 apr 16, from 13.8 to 13.42, new monitor added
+## >>chng 21 apr 16, from 13.42 to 14.61, add molecular column densities
+monitor column density "HCl"       14.61  
+## >>chng 21 apr 16, from 15.17 to 13.81, add molecular column densities
+monitor column density "HCN"       13.81  
+## >>chng 21 apr 16, from 12.61 to 10.27, add molecular column densities
+monitor column density "HCNH+"     10.27  
+## >>chng 21 apr 16, from 12.65 to 13.49, add molecular column densities
+monitor column density "HCO+"      13.49  
+## >>chng 21 apr 16, from 13.96 to 13.16, add molecular column densities
+monitor column density "HCS+"      13.16 
+## >>chng 21 apr 16, from 15.85 to 14.56, add molecular column densities
+monitor column density "HNC"       14.56
+## >>chng 21 apr 16, from 12.26 to 7.232, add molecular column densities
+monitor column density "HNO"       7.232  
+## >>chng 21 apr 16, from 12.97 to 11.73, add molecular column densities
+monitor column density "HS+"       11.73  
+## >>chng 21 apr 16, from 14.71 to 11.88, add molecular column densities
+monitor column density "HS"        11.88  
+## >>chng 21 apr 16, from 12.49 to 10.83, add molecular column densities
+monitor column density "N2+"       10.83  
+## >>chng 21 apr 16, from 17.44 to 18.31, add molecular column densities
+monitor column density "N2"        18.31  
+## >>chng 21 apr 16, from 13.95 to 13.03, add molecular column densities
+monitor column density "N2H+"      13.03
+## >>chng 21 apr 16, from 11.03 to 8.465, add molecular column densities
+monitor column density "N2O"       8.465
+## >>chng 21 apr 16, from 15.58 to 12.58, add molecular column densities
+monitor column density "NH"        12.58  
+## >>chng 21 apr 16, from 10.34 to 9.975, add molecular column densities
+monitor column density "NH2+"      9.975  
+## >>chng 21 apr 16, from 14.96 to 12.63, add molecular column densities
+monitor column density "NH2"       12.63  
+## >>chng 21 apr 16, from 12.45 to 10.69, add molecular column densities
+monitor column density "NH3+"      10.69
+## >>chng 21 apr 16, from 14.86 to 15.56, add molecular column densities
+monitor column density "NH3"       15.56  
+## >>chng 21 apr 16, from 11.03 to 11.11, add molecular column densities
+monitor column density "NH4+"      11.11  
+## >>chng 21 apr 16, from 13.76 to 15.13, add molecular column densities
+monitor column density "NO"        15.13
+## >>chng 21 apr 16, from 11.47 to 11.02, add molecular column densities
+monitor column density "NS+"       11.02  
+## >>chng 21 apr 16, from 14.72 to 10.97, add molecular column densities
+monitor column density "NS"        10.97
+## >>chng 21 apr 16, from 11.9 to 8.208, add molecular column densities
+monitor column density "OCN"       8.208  
+## >>chng 21 apr 16, from 10.98 to 16.82, add molecular column densities
+monitor column density "OCS"       16.82  
+## >>chng 21 apr 16, from 10.33 to 11.39, add molecular column densities
+monitor column density "OH+"       11.39  
+## >>chng 21 apr 16, from 14.95 to 1.704, add molecular column densities
+monitor column density "OHgrn"     1.704  
+## >>chng 21 apr 16, from 12.92 to 11.98, add molecular column densities
+monitor column density "SiH"       11.98  
+## >>chng 21 apr 16, from 10.19 to 9.611, add molecular column densities
+monitor column density "SiH2+"     9.611  
+## >>chng 21 apr 16, from 12.83 to 7.393, add molecular column densities
+monitor column density "SiN+"      7.393  
+## >>chng 21 apr 16, from 13.61 to 11.89, add molecular column densities
+monitor column density "SiN"       11.89  
+## >>chng 21 apr 16, from 11.25 to 11.98, add molecular column densities
+monitor column density "SiOH+"     11.98
+## >>chng 21 apr 16, from 10.1 to 12.34, add molecular column densities
+monitor column density "SO+"       12.34  
+## >>chng 21 apr 16, from 13.18 to 17.38, add molecular column densities
+monitor column density "SO"        17.38  
 ##
 ## >>chng 04 mar 04, from < 1200 to <900 improv conv
 ## >>chng 04 mar 31, from < 900 to <950 alter dr logic-test all chng hv mole
