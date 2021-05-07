@@ -288,129 +288,151 @@ STATIC void SaveAllSpeciesLabelsLevels( FILE *ioPUN, const vector<genericState> 
 
 STATIC void SaveSpeciesLines( FILE *ioPUN, const vector<genericState> &speciesList )
 {
-	static bool lgRunOnce = true;
-	if( lgRunOnce )
+	static vector<string> saved_species;
+
+	vector<genericState> speciesList_local;
+
+	for( auto spcit = speciesList.begin(); spcit != speciesList.end(); ++spcit )
 	{
-		lgRunOnce = false;
-		
-		SaveAllSpeciesLabelsLevels( ioPUN, speciesList );
-		
-		fprintf( ioPUN,"\n\n");
-		
-		//Species  ipLo ipHi gLo gHi wavelen EinA CS Rates
-		fprintf( ioPUN,"Spectrum");
-	
-		if( save.lgSaveDataWn )
-		{
-			fprintf( ioPUN,"\tWavenumbers");
-		}
-		else
-		{
-			fprintf( ioPUN,"\tWavelength");
-		}
-	
-		fprintf( ioPUN,"\tLo");
-		fprintf( ioPUN,"\tHi");
-		fprintf( ioPUN,"\tgLo");
-		fprintf( ioPUN,"\tgHi");
-	
-		if( save.lgSaveDataGf )
-		{
-			fprintf( ioPUN,"\t   gf   ");
-		}
-		else
-		{
-			fprintf( ioPUN,"\tEinstein A");
-		}
-		fprintf( ioPUN,"\tColl_Str");
-		fprintf( ioPUN,"\tgbar");
-	
-		if( save.lgSaveDataRates )
-		{
-			fprintf( ioPUN,"\tRate electron");
-			fprintf( ioPUN,"\tRate proton");
-			fprintf( ioPUN,"\tRate He+   ");
-			fprintf( ioPUN,"\tRate Alpha");
-			fprintf( ioPUN,"\tRate Atom H");
-			fprintf( ioPUN,"\tRate Atom He");
-			fprintf( ioPUN,"\tRate Ortho");
-			fprintf( ioPUN,"\tRate Para");
-			fprintf( ioPUN,"\tRate H2");
-		}
-	
-		fprintf( ioPUN,"\n");
-	
-	
-		for( size_t ipSpecies=0; ipSpecies < speciesList.size(); ++ipSpecies )
-		{
-			const molezone *this_mole = speciesList[ ipSpecies ].sp;
-			if( this_mole == NULL || this_mole == null_molezone )
-				continue; 
-			if( (*this_mole).lines == NULL )
-				continue;
+		bool found = false;
 
-			species *this_species = (*this_mole).dbase;
-			if( this_species == NULL )
-				continue;
-
-			for (TransitionList::iterator tr = (*this_mole).lines->begin();
-				tr != (*this_mole).lines->end(); ++tr )
+		for( auto sit = saved_species.begin(); sit != saved_species.end();
+			++sit )
+		{
+			if( *sit == spcit->label() )
 			{
-				long ipLo = tr->ipLo() +1;
-				long ipHi = tr->ipHi() +1;
-				int nelem = tr->Hi()->nelem();
-		
-				if( nelem != -1 && !dense.lgElmtOn[nelem-1] )
-				{
-					continue;
-				}
-
-				if( ipHi >= (*this_species).numLevels_local )
-				{
-					continue;
-				}
-	
-				string spectralLabel;
-				chemical_to_spectral( speciesList[ ipSpecies ].label(), spectralLabel );
-				fprintf( ioPUN,"%-8s", spectralLabel.c_str() );
-	
-				if( save.lgSaveDataWn )
-				{
-					fprintf( ioPUN,"\t%.3e", tr->EnergyWN() );
-				}
-				else
-				{
-					fprintf( ioPUN, "\t" );
-					prt_wl( ioPUN, realnum( tr->WLAng() ) );
-				}
-		
-				fprintf( ioPUN,"\t%li", ipLo);
-				fprintf( ioPUN,"\t%li", ipHi);
-				fprintf( ioPUN,"\t%i", int( tr->Lo()->g() ) );
-				fprintf( ioPUN,"\t%i", int( tr->Hi()->g() ) );
-	
-				if( save.lgSaveDataGf )
-				{
-					fprintf( ioPUN,"\t%.3e", tr->Emis().gf() );
-				}
-				else
-				{
-					fprintf( ioPUN,"\t%.3e", tr->Emis().Aul() );
-				}
-		
-				fprintf( ioPUN,"\t%.3e", tr->Coll().col_str());
-				fprintf( ioPUN,"\t%i", tr->Coll().is_gbar() );
-	
-				if( save.lgSaveDataRates )
-				{
-					for( long intCollNo=0; intCollNo<ipNCOLLIDER; intCollNo++)
-					{
-						fprintf( ioPUN,"\t%.3e",tr->Coll().rate_coef_ul()[intCollNo]);
-					}
-				}
-		
-				fprintf( ioPUN,"\n");
+				found = true;
+				break;
 			}
+		}
+
+		if( not found )
+		{
+			speciesList_local.insert( speciesList_local.end(), *spcit );
+			saved_species.push_back( spcit->label() );
+		}
+	}
+
+	if( speciesList_local.size() == 0 )
+		return;
+
+	SaveAllSpeciesLabelsLevels( ioPUN, speciesList_local );
+
+	fprintf( ioPUN,"\n\n");
+
+	//Species  ipLo ipHi gLo gHi wavelen EinA CS Rates
+	fprintf( ioPUN,"Spectrum");
+
+	if( save.lgSaveDataWn )
+	{
+		fprintf( ioPUN,"\tWavenumbers");
+	}
+	else
+	{
+		fprintf( ioPUN,"\tWavelength");
+	}
+
+	fprintf( ioPUN,"\tLo");
+	fprintf( ioPUN,"\tHi");
+	fprintf( ioPUN,"\tgLo");
+	fprintf( ioPUN,"\tgHi");
+
+	if( save.lgSaveDataGf )
+	{
+		fprintf( ioPUN,"\t   gf   ");
+	}
+	else
+	{
+		fprintf( ioPUN,"\tEinstein A");
+	}
+	fprintf( ioPUN,"\tColl_Str");
+	fprintf( ioPUN,"\tgbar");
+
+	if( save.lgSaveDataRates )
+	{
+		fprintf( ioPUN,"\tRate electron");
+		fprintf( ioPUN,"\tRate proton");
+		fprintf( ioPUN,"\tRate He+   ");
+		fprintf( ioPUN,"\tRate Alpha");
+		fprintf( ioPUN,"\tRate Atom H");
+		fprintf( ioPUN,"\tRate Atom He");
+		fprintf( ioPUN,"\tRate Ortho");
+		fprintf( ioPUN,"\tRate Para");
+		fprintf( ioPUN,"\tRate H2");
+	}
+
+	fprintf( ioPUN,"\n");
+
+
+	for( size_t ipSpecies=0; ipSpecies < speciesList_local.size(); ++ipSpecies )
+	{
+		const molezone *this_mole = speciesList_local[ ipSpecies ].sp;
+		if( this_mole == NULL || this_mole == null_molezone )
+			continue;
+		if( (*this_mole).lines == NULL )
+			continue;
+
+		species *this_species = (*this_mole).dbase;
+		if( this_species == NULL )
+			continue;
+
+		for (TransitionList::iterator tr = (*this_mole).lines->begin();
+			tr != (*this_mole).lines->end(); ++tr )
+		{
+			long ipLo = tr->ipLo() +1;
+			long ipHi = tr->ipHi() +1;
+			int nelem = tr->Hi()->nelem();
+
+			if( nelem != -1 && !dense.lgElmtOn[nelem-1] )
+			{
+				continue;
+			}
+
+			if( ipHi >= (*this_species).numLevels_local )
+			{
+				continue;
+			}
+
+			string spectralLabel;
+			chemical_to_spectral( speciesList_local[ ipSpecies ].label(), spectralLabel );
+			fprintf( ioPUN,"%-8s", spectralLabel.c_str() );
+
+			if( save.lgSaveDataWn )
+			{
+				fprintf( ioPUN,"\t%.3e", tr->EnergyWN() );
+			}
+			else
+			{
+				fprintf( ioPUN, "\t" );
+				prt_wl( ioPUN, realnum( tr->WLAng() ) );
+			}
+
+			fprintf( ioPUN,"\t%li", ipLo);
+			fprintf( ioPUN,"\t%li", ipHi);
+			fprintf( ioPUN,"\t%i", int( tr->Lo()->g() ) );
+			fprintf( ioPUN,"\t%i", int( tr->Hi()->g() ) );
+
+			if( save.lgSaveDataGf )
+			{
+				fprintf( ioPUN,"\t%.3e", tr->Emis().gf() );
+			}
+			else
+			{
+				fprintf( ioPUN,"\t%.3e", tr->Emis().Aul() );
+			}
+
+			fprintf( ioPUN,"\t%.3e", tr->Coll().col_str());
+			fprintf( ioPUN,"\t%i", tr->Coll().is_gbar() );
+
+			if( save.lgSaveDataRates )
+			{
+				for( long intCollNo=0; intCollNo<ipNCOLLIDER; intCollNo++)
+				{
+					fprintf( ioPUN,"\t%.3e",tr->Coll().rate_coef_ul()[intCollNo]);
+				}
+			}
+
+			fprintf( ioPUN,"\n");
 		}
 	}
 }
