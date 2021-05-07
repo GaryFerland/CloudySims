@@ -600,29 +600,28 @@ bool bands_file::load()
 				fileBands.c_str() );
 			return false;
 		}
-		{
-			long i = 1;
-			const long int iyr = 9, imo=6 , idy = 11;
-			long iyrread, imoread , idyread;
-			bool lgEOL;
-			iyrread = (long)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
-			imoread = (long)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
-			idyread = (long)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
 
-			if(( iyrread != iyr ) ||
-			  (  imoread != imo ) ||
-			  (  idyread != idy ) )
-			{
-				fprintf( ioQQQ, 
-					" PROBLEM BandsCreate: the version of %s is not the "
-					"current version.\n",
-					fileBands.c_str() );
-				fprintf( ioQQQ, 
-					"         BandsCreate: I expected the magic numbers %li %li %li "
-					"but found %li %li %li.\n", 
-					iyr, imo , idy ,iyrread, imoread , idyread  );
-				return false;
-			}
+		long i = 1;
+		const long int iyr = 9, imo=6 , idy = 11;
+		long iyrread, imoread , idyread;
+		bool lgEOL;
+		iyrread = (long)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
+		imoread = (long)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
+		idyread = (long)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
+
+		if(( iyrread != iyr ) ||
+		  (  imoread != imo ) ||
+		  (  idyread != idy ) )
+		{
+			fprintf( ioQQQ, 
+				" PROBLEM BandsCreate: the version of %s is not the "
+				"current version.\n",
+				fileBands.c_str() );
+			fprintf( ioQQQ, 
+				"         BandsCreate: I expected the magic numbers %li %li %li "
+				"but found %li %li %li.\n", 
+				iyr, imo , idy ,iyrread, imoread , idyread  );
+			return false;
 		}
 	}
 
@@ -658,9 +657,10 @@ bool bands_file::load()
 				fprintf( ioQQQ, "string==%s==\n" ,chLine.c_str() );
 				return false;
 			}
-			/* fprintf(ioQQQ,
-				" band data %f %f %f \n",
-				prt_wl[k], wlLo[k],wlHi[k] ); */
+			if( false )
+			{
+				fprintf(ioQQQ, " band data %f %f %f \n", prt_wl[k], wlLo[k],wlHi[k] );
+			}
 			++k;
 		}
 	}
