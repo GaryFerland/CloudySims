@@ -707,11 +707,11 @@ STATIC void findBandsFile( const string &filename,
 	}
 }
 
-STATIC void addBandsFile( const string &filename,
-				vector<bands_file>::iterator &it )
+STATIC void addBandsFile( const string &filename )
 {
 	DEBUG_ENTRY( "addBandsFile()" );
 
+	vector<bands_file>::iterator it;
 	findBandsFile( filename, it );
 
 	if( it == Bands.end() )
@@ -720,8 +720,6 @@ STATIC void addBandsFile( const string &filename,
 		b_tmp.setup( filename );
 		b_tmp.load();
 		Bands.push_back( b_tmp );
-		it = Bands.end();
-		--it;	// iterator pointer to last vector element
 	}
 }
 
@@ -894,11 +892,15 @@ void SpeciesBandsCreate()
 	if( SpecBands.size() != 0 )
 		return;
 
-	for( vector<save_species_bands>::iterator it = save.specBands.begin();
-		it != save.specBands.end(); ++it )
+	for( auto it = save.specBands.begin(); it != save.specBands.end(); ++it )
+	{
+		addBandsFile( (*it).filename );
+	}
+
+	for( auto it = save.specBands.begin(); it != save.specBands.end(); ++it )
 	{
 		vector<bands_file>::iterator b_it;
-		addBandsFile( (*it).filename, b_it );
+		findBandsFile( (*it).filename, b_it );
 
 		species_bands sb_tmp;
 		sb_tmp.setup( (*it).speciesLabel, b_it );
