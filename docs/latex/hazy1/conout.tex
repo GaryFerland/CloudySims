@@ -3420,8 +3420,13 @@ If no database name exists then the species does not have internal structure.
 \label{sec:CommandSaveSpeciesLines}
 
 This saves the atomic data that \Cloudy\ uses in a given simulation.
-If the keyword  \cdCommand{all} appears then data for
+If the keyword \cdCommand{all} appears then data for
 all active species are reported.
+Otherwise, a species is expected, e.g., ``Si+5''.
+Multiple instances of the command may be issued, but each species is
+processed once across all files.
+That is, if a species is requested for two output files, it will appear
+only in the first file.
 
 \par
 By default for each transition the spectral label is reported,
