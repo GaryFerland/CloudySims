@@ -561,17 +561,6 @@ bool bands_file::load()
 
 	string chLine;
 
-	if( fileBands == "FeII_bands.ini" )
-	{ 
-		/* first line is a version number and does not count */
-		if( !read_whole_line( chLine, ioDATA ) )
-		{
-			fprintf( ioQQQ, " BandsCreate could not read first line of %s.\n",
-				fileBands.c_str() );
-			return false;
-		}
-	}
-
 	while( read_whole_line( chLine, ioDATA ) )
 	{
 		/* we want to count the lines that do not start with #
@@ -591,40 +580,6 @@ bool bands_file::load()
 	prt_wl.resize( nBands );
 	wlLo.resize( nBands );
 	wlHi.resize( nBands );
-
-	/* first line is a version number - now confirm that it is valid */
-	if( fileBands == "FeII_bands.ini" )
-	{
-		if( !read_whole_line( chLine, ioDATA ) )
-		{
-			fprintf( ioQQQ, " BandsCreate could not read first line of %s.\n",
-				fileBands.c_str() );
-			return false;
-		}
-
-		long i = 1;
-		const long int iyr = 9, imo=6 , idy = 11;
-		long iyrread, imoread , idyread;
-		bool lgEOL;
-		iyrread = (long)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
-		imoread = (long)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
-		idyread = (long)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
-
-		if(( iyrread != iyr ) ||
-		  (  imoread != imo ) ||
-		  (  idyread != idy ) )
-		{
-			fprintf( ioQQQ, 
-				" PROBLEM BandsCreate: the version of %s is not the "
-				"current version.\n",
-				fileBands.c_str() );
-			fprintf( ioQQQ, 
-				"         BandsCreate: I expected the magic numbers %li %li %li "
-				"but found %li %li %li.\n", 
-				iyr, imo , idy ,iyrread, imoread , idyread  );
-			return false;
-		}
-	}
 
 	/* now read in data again, but save it this time */
 	long k = 0;
