@@ -152,7 +152,16 @@ more information and should be consulted.
 With no options this compiles the minimum number of grain types needed
 for the \cdCommand{grains} command to function.
 Examine the output to check
-for problems.
+for problems. If you change the continuum mesh the grains need to be recompiled. 
+This must be done in the data directory.
+
+The following steps are for running “Compile grains”:\\
+1) \texttt{cd} into the data directory\\
+2) create a \texttt{.in} file and paste the command \texttt{Compile grains} in the file\\
+3) Then run Cloudy like you normally do:
+\begin{verbatim}
+~/path to source/cloudy.exe  -r  <name of the .in file>
+\end{verbatim}
 
 \subsection{Compile grain 10 bins, [filename, ism graphite]}
 
