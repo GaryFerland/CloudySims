@@ -877,7 +877,7 @@ void SpeciesBandsAccum()
 	for( vector<species_bands>::iterator it = SpecBands.begin();
 		it != SpecBands.end(); ++it )
 	{
-		(*it).accumulate( nzone == 1, radius.dVeffAper );
+		(*it).accumulate( nzone == 1 );
 		(*it).insert();
 	}
 }
