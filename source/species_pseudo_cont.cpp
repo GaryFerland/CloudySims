@@ -870,6 +870,10 @@ void SpeciesBandsAccum()
 {
 	DEBUG_ENTRY( "SpeciesBandsAccum()" );
 
+	/* molecules */
+	long i = StuffComment( "bands" );
+	linadd( 0., (realnum)i , "####", 'i', "  bands");
+
 	for( vector<species_bands>::iterator it = SpecBands.begin();
 		it != SpecBands.end(); ++it )
 	{
