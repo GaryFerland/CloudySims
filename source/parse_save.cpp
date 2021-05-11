@@ -21,6 +21,7 @@
 #include "parser.h"
 #include "service.h"
 #include "species.h"
+#include "dense.h"
 
 /* check for keyword UNITS on line, then scan wavelength or energy units if present */
 STATIC const char* ChkUnits(Parser &p);
@@ -2565,7 +2566,8 @@ void ParseSave(Parser& p)
 	 * if a 'save species bands' command has not been issued
 	 * the bands will be computed, and printed on main output,
 	 * but no 'save' output file will be created */
-	addUniqueSpeciesBand( "FeII_bands.ini", "Fe+" );
+	if( dense.lgElmtOn[ipIRON] )
+		addUniqueSpeciesBand( "FeII_bands.ini", "Fe+" );
 
 	/* if not done already and chTitle has been set to a string then print title
 	 * logic to prevent more than one title in grid calculation */
