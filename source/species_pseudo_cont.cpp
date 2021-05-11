@@ -877,7 +877,11 @@ void SpeciesBandsAccum()
 	for( vector<species_bands>::iterator it = SpecBands.begin();
 		it != SpecBands.end(); ++it )
 	{
-		(*it).accumulate( nzone == 1 );
+		/* empty call processes only current zone
+		 * with no dVeffAper corrections;
+		 * both accumulation of intensity, and volume-aperture
+		 * corrections done by insert() below */
+		(*it).accumulate();
 		(*it).insert();
 	}
 }
