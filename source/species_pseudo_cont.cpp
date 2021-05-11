@@ -52,7 +52,8 @@ void getSpecies( const string &speciesLabel, genericState &species )
 	vector<genericState> v = matchGeneric( speciesLabel, false );
 	if( v.size() != 1 )
 	{
-		fprintf( ioQQQ, "Error: Incorrect number of matches (%d) for species '%s'\n",
+		fprintf( ioQQQ, "Error: Incorrect number of matches"
+				" (%d) for species '%s'\n",
 				int(v.size()), speciesLabel.c_str() );
 		cdEXIT( EXIT_FAILURE );
 	}
@@ -230,7 +231,8 @@ void pseudo_cont::sumBand( double *sumOutward, double *sumInward ) const
 	if( species.sp->lines == NULL )
 	{
 		fprintf( ioQQQ,
-			"WARNING: Species '%s' does not have any data for 'save species continuum'.\n",
+			"WARNING: Species '%s' does not have any"
+			" data for 'save species continuum'.\n",
 			species.label().c_str() );
 		return;
 	}
@@ -595,21 +597,24 @@ bool bands_file::load()
 			prt_wl[k] = (realnum)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
 			if( lgEOL )
 			{
-				fprintf( ioQQQ, " There should have been a number on this band column 1.   Sorry.\n" );
+				fprintf( ioQQQ, " There should have been a number"
+						" on this band column 1.   Sorry.\n" );
 				fprintf( ioQQQ, "string==%s==\n" ,chLine.c_str() );
 				return false;
 			}
 			wlLo[k] = (realnum)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
 			if( lgEOL )
 			{
-				fprintf( ioQQQ, " There should have been a number on this band column 2.   Sorry.\n" );
+				fprintf( ioQQQ, " There should have been a number"
+						" on this band column 2.   Sorry.\n" );
 				fprintf( ioQQQ, "string==%s==\n" ,chLine.c_str() );
 				return false;
 			}
 			wlHi[k] = (realnum)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
 			if( lgEOL )
 			{
-				fprintf( ioQQQ, " There should have been a number on this band column 3.   Sorry.\n" );
+				fprintf( ioQQQ, " There should have been a number"
+						" on this band column 3.   Sorry.\n" );
 				fprintf( ioQQQ, "string==%s==\n" ,chLine.c_str() );
 				return false;
 			}
@@ -763,7 +768,8 @@ void species_bands::sumBand( double *sumOutward, double *sumInward ) const
 	if( species.sp->lines == NULL )
 	{
 		fprintf( ioQQQ,
-			"WARNING: Species '%s' does not have any data for 'save species bands'.\n",
+			"WARNING: Species '%s' does not have any"
+			" data for 'save species bands'.\n",
 			species.label().c_str() );
 		return;
 	}
@@ -908,7 +914,8 @@ void SaveSpeciesBands( const long ipPun, const string &speciesLabel,
 	if( save.lgSaveHeader(ipPun) )
 	{
 		// one time print of header
-		fprintf( save.params[ipPun].ipPnunit, "#Wl(A)\t Intensity: Total\t Inward\t Outward\n" );
+		fprintf( save.params[ipPun].ipPnunit,
+				"#Wl(A)\t Intensity: Total\t Inward\t Outward\n" );
 		save.SaveHeaderDone(ipPun);
 	}
 
