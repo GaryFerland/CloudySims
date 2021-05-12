@@ -696,6 +696,8 @@ private:
 		comment;
 	vector<bands_file>::iterator bands_it;
 public:
+	const string inwdLabel = "InwdBnd";
+
 	void setup( const string &splab, vector<bands_file>::iterator it )
 	{
 		speciesLabel = splab;
@@ -712,6 +714,13 @@ public:
 			inten_inward[ iband ] = 0.;
 			inten_outward[ iband ] = 0.;
 		}
+
+		string spectralLabel;
+		chemical_to_spectral( speciesLabel, spectralLabel );
+		//	printf("spectralLabel = '%s'\n", spectralLabel.c_str());
+		bandLabel = spectralLabel + "b";
+		comment = spectralLabel + " emission in bands defined in " +
+				(*bands_it).bandFilename();
 	}
 private:
 	void check_index_fatal( const long iband ) const
@@ -735,6 +744,7 @@ public:
 	void insert();
 public:
 	string bandFilename() const { return (*bands_it).bandFilename(); }
+	string getLabel() const { return bandLabel; }
 	realnum getWl( const long iband ) const
 	{
 		check_index_fatal( iband );
@@ -795,16 +805,6 @@ void species_bands::insert()
 {
 	DEBUG_ENTRY( "species_bands::insert()" );
 
-	if( bandLabel.length() == 0 || comment.length() == 0 )
-	{
-		string spectralLabel;
-		chemical_to_spectral( speciesLabel, spectralLabel );
-		//	printf("spectralLabel = '%s'\n", spectralLabel.c_str());
-		bandLabel = spectralLabel + "b";
-		comment = spectralLabel + " emission in bands defined in " +
-				(*bands_it).bandFilename();
-	}
-
 	for( long iband = 0; iband < nBins; iband++ )
 	{
 		long ipnt;
@@ -816,7 +816,7 @@ void species_bands::insert()
 			(" total " + comment ).c_str() );
 		lindst( inten_inward[ iband ],
 			getWl( iband ),
-			"InwdBnd",
+			inwdLabel.c_str(),
 			ipnt, 't', false,
 			(" inward " + comment ).c_str() );
 	}
@@ -919,16 +919,30 @@ void SaveSpeciesBands( const long ipPun, const string &speciesLabel,
 		save.SaveHeaderDone(ipPun);
 	}
 
+	const int ipEmType = 0;	// intrinsic
+	long itot, inwd;
+	double tot_emiss, inwd_emiss;
+
 	for( long iband = 0; iband < (*it).bins(); iband++ )
 	{
-		fprintf( save.params[ipPun].ipPnunit, "%g",
-			(*it).getWl( iband ) );
+		LineID line_tot( (*it).getLabel().c_str(), (*it).getWl( iband ) );
+		itot = LineSave.findline(line_tot);
+		tot_emiss = LineSave.lines[itot].SumLine(ipEmType) *
+				radius.Conv2PrtInten;
+
+		LineID line_inw( (*it).inwdLabel.c_str(), (*it).getWl( iband ) );
+		inwd = LineSave.findline(line_inw);
+		inwd_emiss = LineSave.lines[inwd].SumLine(ipEmType) *
+				radius.Conv2PrtInten;
+
+		ASSERT( tot_emiss >= 0. && inwd_emiss >= 0. &&
+			tot_emiss - inwd_emiss >= 0. );
+
+		fprintf( save.params[ipPun].ipPnunit, "%g", (*it).getWl( iband ) );
+		fprintf( save.params[ipPun].ipPnunit, "\t%e", tot_emiss );
+		fprintf( save.params[ipPun].ipPnunit, "\t%e", inwd_emiss );
 		fprintf( save.params[ipPun].ipPnunit, "\t%e",
-			(*it).getInten( iband, TOTAL ) );
-		fprintf( save.params[ipPun].ipPnunit, "\t%e",
-			(*it).getInten( iband, INWARD ) );
-		fprintf( save.params[ipPun].ipPnunit, "\t%e",
-			(*it).getInten( iband, OUTWARD ) );
+				tot_emiss - inwd_emiss );
 		fprintf( save.params[ipPun].ipPnunit, "\n" );
 	}
 }
