@@ -705,11 +705,11 @@ STATIC void findBandsFile( const string &filename,
 	}
 }
 
-STATIC void addBandsFile( const string &filename,
-				vector<bands_file>::iterator &it )
+STATIC void addBandsFile( const string &filename )
 {
 	DEBUG_ENTRY( "addBandsFile()" );
 
+	vector<bands_file>::iterator it;
 	findBandsFile( filename, it );
 
 	if( it == Bands.end() )
@@ -718,8 +718,6 @@ STATIC void addBandsFile( const string &filename,
 		b_tmp.setup( filename );
 		b_tmp.load();
 		Bands.push_back( b_tmp );
-		it = Bands.end();
-		--it;	// iterator pointer to last vector element
 	}
 }
 
@@ -735,6 +733,8 @@ private:
 		comment;
 	vector<bands_file>::iterator bands_it;
 public:
+	string inwdLabel;	// Set below; not permissible here pre-C++11
+
 	void setup( const string &splab, vector<bands_file>::iterator it )
 	{
 		speciesLabel = splab;
@@ -751,6 +751,15 @@ public:
 			inten_inward[ iband ] = 0.;
 			inten_outward[ iband ] = 0.;
 		}
+
+		inwdLabel = "Inwd";
+
+		string spectralLabel;
+		chemical_to_spectral( speciesLabel, spectralLabel );
+		//	printf("spectralLabel = '%s'\n", spectralLabel.c_str());
+		bandLabel = spectralLabel + "b";
+		comment = spectralLabel + " emission in bands defined in " +
+				(*bands_it).bandFilename();
 	}
 private:
 	void check_index_fatal( const long iband ) const
@@ -774,6 +783,7 @@ public:
 	void insert();
 public:
 	string bandFilename() const { return (*bands_it).bandFilename(); }
+	string getLabel() const { return bandLabel; }
 	realnum getWl( const long iband ) const
 	{
 		check_index_fatal( iband );
@@ -833,16 +843,6 @@ void species_bands::insert()
 {
 	DEBUG_ENTRY( "species_bands::insert()" );
 
-	if( bandLabel.length() == 0 || comment.length() == 0 )
-	{
-		string spectralLabel;
-		chemical_to_spectral( speciesLabel, spectralLabel );
-		//	printf("spectralLabel = '%s'\n", spectralLabel.c_str());
-		bandLabel = spectralLabel + "b";
-		comment = spectralLabel + " emission in bands defined in " +
-				(*bands_it).bandFilename();
-	}
-
 	for( long iband = 0; iband < nBins; iband++ )
 	{
 		long ipnt;
@@ -854,7 +854,7 @@ void species_bands::insert()
 			(" total " + comment ).c_str() );
 		lindst( inten_inward[ iband ],
 			getWl( iband ),
-			"Inwd",
+			inwdLabel.c_str(),
 			ipnt, 't', false,
 			(" inward " + comment ).c_str() );
 	}
@@ -893,10 +893,16 @@ void SpeciesBandsCreate()
 		return;
 
 	for( vector<save_species_bands>::iterator it = save.specBands.begin();
-		it != save.specBands.end(); ++it )
+			it != save.specBands.end(); ++it )
+	{
+		addBandsFile( (*it).filename );
+	}
+
+	for( vector<save_species_bands>::iterator it = save.specBands.begin();
+			it != save.specBands.end(); ++it )
 	{
 		vector<bands_file>::iterator b_it;
-		addBandsFile( (*it).filename, b_it );
+		findBandsFile( (*it).filename, b_it );
 
 		species_bands sb_tmp;
 		sb_tmp.setup( (*it).speciesLabel, b_it );
@@ -944,16 +950,26 @@ void SaveSpeciesBands( const long ipPun, const string &speciesLabel,
 		save.SaveHeaderDone(ipPun);
 	}
 
+	const int ipEmType = 0;	// intrinsic
+	long itot, inwd;
+	double tot_emiss, inwd_emiss;
+
 	for( long iband = 0; iband < (*it).bins(); iband++ )
 	{
-		fprintf( save.params[ipPun].ipPnunit, "%g",
-			(*it).getWl( iband ) );
-		fprintf( save.params[ipPun].ipPnunit, "\t%e",
-			(*it).getInten( iband, TOTAL ) );
-		fprintf( save.params[ipPun].ipPnunit, "\t%e",
-			(*it).getInten( iband, INWARD ) );
-		fprintf( save.params[ipPun].ipPnunit, "\t%e",
-			(*it).getInten( iband, OUTWARD ) );
+		itot = LineSave.findline( (*it).getLabel().c_str(), (*it).getWl( iband ) );
+		tot_emiss = LineSave.lines[itot].SumLine(ipEmType) * radius.Conv2PrtInten;
+
+		inwd = LineSave.findline( (*it).inwdLabel.c_str(), (*it).getWl( iband ) );
+		inwd_emiss = LineSave.lines[inwd].SumLine(ipEmType) * radius.Conv2PrtInten;
+
+		ASSERT( tot_emiss >= 0. && inwd_emiss >= 0. &&
+			tot_emiss - inwd_emiss >= 0. );
+
+		fprintf( save.params[ipPun].ipPnunit, "%g", (*it).getWl( iband ) );
+		fprintf( save.params[ipPun].ipPnunit, "\t%e", tot_emiss );
+		fprintf( save.params[ipPun].ipPnunit, "\t%e", inwd_emiss );
+       		fprintf( save.params[ipPun].ipPnunit, "\t%e",
+				tot_emiss - inwd_emiss );
 		fprintf( save.params[ipPun].ipPnunit, "\n" );
 	}
 }
