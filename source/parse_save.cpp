@@ -2082,6 +2082,11 @@ void ParseSave(Parser& p)
 			//		chSecondFilename.c_str(), speciesLabel.c_str());
 
 			addUniqueSpeciesBand( chSecondFilename, speciesLabel );
+
+			// check whether intrinsic or emergent line emissivity
+			save.lgEmergent[save.nsave] = false;
+			if( p.nMatch("EMER") )
+				save.lgEmergent[save.nsave] = true;
 		}
 
 		/* second keyword appears as both 'density' and 'densities'

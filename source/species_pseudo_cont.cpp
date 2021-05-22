@@ -896,7 +896,7 @@ void SpeciesBandsAccum()
 
 
 void SaveSpeciesBands( const long ipPun, const string &speciesLabel,
-			const string &fileBands )
+			const string &fileBands, const bool lgEmergent )
 {
 	DEBUG_ENTRY( "SaveSpeciesBands()" );
 
@@ -919,9 +919,12 @@ void SaveSpeciesBands( const long ipPun, const string &speciesLabel,
 		save.SaveHeaderDone(ipPun);
 	}
 
-	const int ipEmType = 0;	// intrinsic
 	long itot, inwd;
 	double tot_emiss, inwd_emiss;
+
+	int ipEmType = 0;	// intrinsic
+	if( lgEmergent )
+		ipEmType = 1;	// emergent
 
 	for( long iband = 0; iband < (*it).bins(); iband++ )
 	{
