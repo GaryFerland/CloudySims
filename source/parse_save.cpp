@@ -2083,11 +2083,15 @@ void ParseSave(Parser& p)
 
 			addUniqueSpeciesBand( chSecondFilename, speciesLabel );
 		}
-		else if (p.nMatch( "COLUMN" ) )
+
+		/* second keyword appears as both 'density' and 'densities'
+		 * in the test suite */
+		else if (p.nMatch( "COLUMN" ) && p.nMatch( "DENSIT" ) )
 		{
 			/* column densities*/
 			strcpy( save.chSaveArgs[save.nsave], "COLU" );
 		}
+
 		else if( p.nMatch( "CONT" ) )
 		{
 			// Add species to vector only when not present
