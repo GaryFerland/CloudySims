@@ -3348,38 +3348,37 @@ and the following two columns hold the minimum and maximum wavelengths
 of the band, in that order.
 The remainder of the line is ignored.
 Comment lines, which begin with a hash (\#), are ignored.
-The first line in \cdFilename{FeII\_bands.ini} holds the version of
-the file, and it {\bf must not} appear in user-specified band files.
 Bands are independent of each other, which means that they are not
 expected in any specific order, and they may also overlap.
 
 \par
-In the main output the bands are identified by the spectral label of
-the species, followed by a single `b'; e.g., the band for ``Fe+'' is
-``Fe 2b''.
+The output created in the file specified by the \cdCommand{save} command
+has four tab-delimited columns.
+The first column reports the wavelength of the band specified in the
+first column of the (input) bands file.
+The following three columns report the total, inward, and outward
+species line emission over that band.
+The intensity units follow those for the \cdCommand{save continuum} command,
+Section~\ref{sec:CommandSaveContinuum}.
+By default, intrinsic intensities are reported; for emergent intensities the
+keyword \cdCommand{emergent} may be used.
+
+\par
+The bands will appear in the main output only if a \cdCommand{save} command is
+entered.
+The only exception to this rule is the ``FeII'' bands file: it is always parsed,
+and the summed up emission always appears in the main output.
+
+\par
+There, the bands are identified by the spectral label of the species, followed
+by a single `b'; e.g., the band for ``Fe+'' is ``Fe 2b''.
 This is then followed by the wavelength of the band, listed in the
 first column of the bands file.
 This entry contains the sum of the inward and outward flux. For each of the
 bands a second entry will be created that only contains the inward flux.
 These entries will have the label ``InwdBnd'' followed by the wavelength of
 the band.
-
-
-The bands file is only parsed and the bands created when the 
-\cdCommand{Save species bands} command is entered.
-The bands will appear in the main output only when 
-this \cdCommand{save} command is entered.
-
-
-\par
-The  output from this \cdCommand{save} command gives four tab-delimited columns.
-The first column reports the wavelength of the band specified in the
-first column of the input file.
-The following three columns report the total, inward, and outward
-species line emission over that band.
-The intensity units in the intensity and luminosity cases follow those
-for the \cdCommand{save continuum} command,
-Section~\ref{sec:CommandSaveContinuum}.
+See also Hazy 2, Section~\ref{Hazy2-sec:SpeciesBands}.
 
 \subsection{Save species optical depths}
 \label{sec:SaveSpeciesOpticalDepths}

@@ -3350,7 +3350,8 @@ void SaveDo(
 					if( lgLastOnly )
 						SaveSpeciesBands( ipPun,
 							save.chSaveSpecies[ipPun][0],
-							save.SpeciesBandFile[ipPun] );
+							save.SpeciesBandFile[ipPun],
+							save.lgEmergent[ipPun] );
 				}
 				else if( strcmp( save.chSaveArgs[ipPun], "OPTD" ) == 0 )
 				{

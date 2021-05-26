@@ -58,7 +58,7 @@ The \cdCommand{print line vacuum} command tells the code use use vacuum waveleng
 \cdCommand{Save continuum} output is always reported in vacuum wavelengths to avoid 
 a discontinuity at 2000\AA.
 
-\subsection{Blocks of lines\dots}
+\subsection{Blocks of lines in main output}
 
 Lines are organized by common origin with a comment, ending in a series
 of periods ``\dots'', beginning the section.
@@ -275,6 +275,22 @@ continuum.
 \item[CO C   13], C13O16 cooling
 
 \end{description}
+
+
+\subsection{Species Bands\dots}
+\label{sec:SpeciesBands}
+
+Bands in which the emission of a certain species is accumulated are reported in
+the section of block of lines on the main output headlined with
+``\verb+bands....+''.
+User-specified bands may be provided with the \cdCommand{save species bands}
+command, described in Hazy 1, Section~\ref{Hazy1-sec:SaveSpeciesBands}.
+By default, the Fe~{\sc ii} bands defined in \cdFilename{data/FeII\_bands.ini},
+if iron is enabled in the model, even if not specified with such a command.
+
+Note that these bands are more fully explained in the output of the command
+\cdCommand{save line labels}, see Hazy 1, Section~\ref{Hazy1-sec:SaveLineLabels}.
+
 
 \subsection{Grains\dots}
 

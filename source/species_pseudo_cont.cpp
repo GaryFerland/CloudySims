@@ -25,6 +25,7 @@ enum intenType
 	TOTAL = 3
 };
 
+
 STATIC string getIntenTypeStr( const int ipContType )
 {
 	DEBUG_ENTRY( "getIntenTypeStr()" );
@@ -51,7 +52,8 @@ void getSpecies( const string &speciesLabel, genericState &species )
 	vector<genericState> v = matchGeneric( speciesLabel, false );
 	if( v.size() != 1 )
 	{
-		fprintf( ioQQQ, "Error: Incorrect number of matches (%d) for species '%s'\n",
+		fprintf( ioQQQ, "Error: Incorrect number of matches"
+				" (%d) for species '%s'\n",
 				int(v.size()), speciesLabel.c_str() );
 		cdEXIT( EXIT_FAILURE );
 	}
@@ -229,7 +231,8 @@ void pseudo_cont::sumBand( double *sumOutward, double *sumInward ) const
 	if( species.sp->lines == NULL )
 	{
 		fprintf( ioQQQ,
-			"WARNING: Species '%s' does not have any data for 'save species continuum'.\n",
+			"WARNING: Species '%s' does not have any"
+			" data for 'save species continuum'.\n",
 			species.label().c_str() );
 		return;
 	}
@@ -560,17 +563,6 @@ bool bands_file::load()
 
 	string chLine;
 
-	if( fileBands == "FeII_bands.ini" )
-	{ 
-		/* first line is a version number and does not count */
-		if( !read_whole_line( chLine, ioDATA ) )
-		{
-			fprintf( ioQQQ, " BandsCreate could not read first line of %s.\n",
-				fileBands.c_str() );
-			return false;
-		}
-	}
-
 	while( read_whole_line( chLine, ioDATA ) )
 	{
 		/* we want to count the lines that do not start with #
@@ -591,41 +583,6 @@ bool bands_file::load()
 	wlLo.resize( nBands );
 	wlHi.resize( nBands );
 
-	/* first line is a version number - now confirm that it is valid */
-	if( fileBands == "FeII_bands.ini" )
-	{
-		if( !read_whole_line( chLine, ioDATA ) )
-		{
-			fprintf( ioQQQ, " BandsCreate could not read first line of %s.\n",
-				fileBands.c_str() );
-			return false;
-		}
-		{
-			long i = 1;
-			const long int iyr = 9, imo=6 , idy = 11;
-			long iyrread, imoread , idyread;
-			bool lgEOL;
-			iyrread = (long)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
-			imoread = (long)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
-			idyread = (long)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
-
-			if(( iyrread != iyr ) ||
-			  (  imoread != imo ) ||
-			  (  idyread != idy ) )
-			{
-				fprintf( ioQQQ, 
-					" PROBLEM BandsCreate: the version of %s is not the "
-					"current version.\n",
-					fileBands.c_str() );
-				fprintf( ioQQQ, 
-					"         BandsCreate: I expected the magic numbers %li %li %li "
-					"but found %li %li %li.\n", 
-					iyr, imo , idy ,iyrread, imoread , idyread  );
-				return false;
-			}
-		}
-	}
-
 	/* now read in data again, but save it this time */
 	long k = 0;
 	while( read_whole_line( chLine, ioDATA ) )
@@ -640,27 +597,31 @@ bool bands_file::load()
 			prt_wl[k] = (realnum)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
 			if( lgEOL )
 			{
-				fprintf( ioQQQ, " There should have been a number on this band column 1.   Sorry.\n" );
+				fprintf( ioQQQ, " There should have been a number"
+						" on this band column 1.   Sorry.\n" );
 				fprintf( ioQQQ, "string==%s==\n" ,chLine.c_str() );
 				return false;
 			}
 			wlLo[k] = (realnum)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
 			if( lgEOL )
 			{
-				fprintf( ioQQQ, " There should have been a number on this band column 2.   Sorry.\n" );
+				fprintf( ioQQQ, " There should have been a number"
+						" on this band column 2.   Sorry.\n" );
 				fprintf( ioQQQ, "string==%s==\n" ,chLine.c_str() );
 				return false;
 			}
 			wlHi[k] = (realnum)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
 			if( lgEOL )
 			{
-				fprintf( ioQQQ, " There should have been a number on this band column 3.   Sorry.\n" );
+				fprintf( ioQQQ, " There should have been a number"
+						" on this band column 3.   Sorry.\n" );
 				fprintf( ioQQQ, "string==%s==\n" ,chLine.c_str() );
 				return false;
 			}
-			/* fprintf(ioQQQ,
-				" band data %f %f %f \n",
-				prt_wl[k], wlLo[k],wlHi[k] ); */
+			if( false )
+			{
+				fprintf(ioQQQ, " band data %f %f %f \n", prt_wl[k], wlLo[k],wlHi[k] );
+			}
 			++k;
 		}
 	}
@@ -707,11 +668,11 @@ STATIC void findBandsFile( const string &filename,
 	}
 }
 
-STATIC void addBandsFile( const string &filename,
-				vector<bands_file>::iterator &it )
+STATIC void addBandsFile( const string &filename )
 {
 	DEBUG_ENTRY( "addBandsFile()" );
 
+	vector<bands_file>::iterator it;
 	findBandsFile( filename, it );
 
 	if( it == Bands.end() )
@@ -720,8 +681,6 @@ STATIC void addBandsFile( const string &filename,
 		b_tmp.setup( filename );
 		b_tmp.load();
 		Bands.push_back( b_tmp );
-		it = Bands.end();
-		--it;	// iterator pointer to last vector element
 	}
 }
 
@@ -737,6 +696,8 @@ private:
 		comment;
 	vector<bands_file>::iterator bands_it;
 public:
+	const string inwdLabel = "InwdBnd";
+
 	void setup( const string &splab, vector<bands_file>::iterator it )
 	{
 		speciesLabel = splab;
@@ -753,6 +714,13 @@ public:
 			inten_inward[ iband ] = 0.;
 			inten_outward[ iband ] = 0.;
 		}
+
+		string spectralLabel;
+		chemical_to_spectral( speciesLabel, spectralLabel );
+		//	printf("spectralLabel = '%s'\n", spectralLabel.c_str());
+		bandLabel = spectralLabel + "b";
+		comment = spectralLabel + " emission in bands defined in " +
+				(*bands_it).bandFilename();
 	}
 private:
 	void check_index_fatal( const long iband ) const
@@ -776,6 +744,7 @@ public:
 	void insert();
 public:
 	string bandFilename() const { return (*bands_it).bandFilename(); }
+	string getLabel() const { return bandLabel; }
 	realnum getWl( const long iband ) const
 	{
 		check_index_fatal( iband );
@@ -809,7 +778,8 @@ void species_bands::sumBand( double *sumOutward, double *sumInward ) const
 	if( species.sp->lines == NULL )
 	{
 		fprintf( ioQQQ,
-			"WARNING: Species '%s' does not have any data for 'save species bands'.\n",
+			"WARNING: Species '%s' does not have any"
+			" data for 'save species bands'.\n",
 			species.label().c_str() );
 		return;
 	}
@@ -835,16 +805,6 @@ void species_bands::insert()
 {
 	DEBUG_ENTRY( "species_bands::insert()" );
 
-	if( bandLabel.length() == 0 || comment.length() == 0 )
-	{
-		string spectralLabel;
-		chemical_to_spectral( speciesLabel, spectralLabel );
-		//	printf("spectralLabel = '%s'\n", spectralLabel.c_str());
-		bandLabel = spectralLabel + "b";
-		comment = spectralLabel + " emission in bands defined in " +
-				(*bands_it).bandFilename();
-	}
-
 	for( long iband = 0; iband < nBins; iband++ )
 	{
 		long ipnt;
@@ -856,7 +816,7 @@ void species_bands::insert()
 			(" total " + comment ).c_str() );
 		lindst( inten_inward[ iband ],
 			getWl( iband ),
-			"InwdBnd",
+			inwdLabel.c_str(),
 			ipnt, 't', false,
 			(" inward " + comment ).c_str() );
 	}
@@ -894,11 +854,15 @@ void SpeciesBandsCreate()
 	if( SpecBands.size() != 0 )
 		return;
 
-	for( vector<save_species_bands>::iterator it = save.specBands.begin();
-		it != save.specBands.end(); ++it )
+	for( auto it = save.specBands.begin(); it != save.specBands.end(); ++it )
+	{
+		addBandsFile( (*it).filename );
+	}
+
+	for( auto it = save.specBands.begin(); it != save.specBands.end(); ++it )
 	{
 		vector<bands_file>::iterator b_it;
-		addBandsFile( (*it).filename, b_it );
+		findBandsFile( (*it).filename, b_it );
 
 		species_bands sb_tmp;
 		sb_tmp.setup( (*it).speciesLabel, b_it );
@@ -912,9 +876,17 @@ void SpeciesBandsAccum()
 {
 	DEBUG_ENTRY( "SpeciesBandsAccum()" );
 
+	/* molecules */
+	long i = StuffComment( "bands" );
+	linadd( 0., (realnum)i , "####", 'i', "  bands");
+
 	for( vector<species_bands>::iterator it = SpecBands.begin();
 		it != SpecBands.end(); ++it )
 	{
+		/* empty call processes only current zone
+		 * with no dVeffAper corrections;
+		 * both accumulation of intensity, and volume-aperture
+		 * corrections done by insert() below */
 		(*it).accumulate();
 		(*it).insert();
 	}
@@ -924,7 +896,7 @@ void SpeciesBandsAccum()
 
 
 void SaveSpeciesBands( const long ipPun, const string &speciesLabel,
-			const string &fileBands )
+			const string &fileBands, const bool lgEmergent )
 {
 	DEBUG_ENTRY( "SaveSpeciesBands()" );
 
@@ -942,20 +914,38 @@ void SaveSpeciesBands( const long ipPun, const string &speciesLabel,
 	if( save.lgSaveHeader(ipPun) )
 	{
 		// one time print of header
-		fprintf( save.params[ipPun].ipPnunit, "#Wl(A)\t Intensity: Total\t Inward\t Outward\n" );
+		fprintf( save.params[ipPun].ipPnunit,
+				"#Wl(A)\t Intensity: Total\t Inward\t Outward\n" );
 		save.SaveHeaderDone(ipPun);
 	}
 
+	long itot, inwd;
+	double tot_emiss, inwd_emiss;
+
+	int ipEmType = 0;	// intrinsic
+	if( lgEmergent )
+		ipEmType = 1;	// emergent
+
 	for( long iband = 0; iband < (*it).bins(); iband++ )
 	{
-		fprintf( save.params[ipPun].ipPnunit, "%g",
-			(*it).getWl( iband ) );
+		LineID line_tot( (*it).getLabel().c_str(), (*it).getWl( iband ) );
+		itot = LineSave.findline(line_tot);
+		tot_emiss = LineSave.lines[itot].SumLine(ipEmType) *
+				radius.Conv2PrtInten;
+
+		LineID line_inw( (*it).inwdLabel.c_str(), (*it).getWl( iband ) );
+		inwd = LineSave.findline(line_inw);
+		inwd_emiss = LineSave.lines[inwd].SumLine(ipEmType) *
+				radius.Conv2PrtInten;
+
+		ASSERT( tot_emiss >= 0. && inwd_emiss >= 0. &&
+			tot_emiss - inwd_emiss >= 0. );
+
+		fprintf( save.params[ipPun].ipPnunit, "%g", (*it).getWl( iband ) );
+		fprintf( save.params[ipPun].ipPnunit, "\t%e", tot_emiss );
+		fprintf( save.params[ipPun].ipPnunit, "\t%e", inwd_emiss );
 		fprintf( save.params[ipPun].ipPnunit, "\t%e",
-			(*it).getInten( iband, TOTAL ) );
-		fprintf( save.params[ipPun].ipPnunit, "\t%e",
-			(*it).getInten( iband, INWARD ) );
-		fprintf( save.params[ipPun].ipPnunit, "\t%e",
-			(*it).getInten( iband, OUTWARD ) );
+				tot_emiss - inwd_emiss );
 		fprintf( save.params[ipPun].ipPnunit, "\n" );
 	}
 }

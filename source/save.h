@@ -85,12 +85,13 @@ void SaveSpeciesPseudoCont( const long ipPun, const string &speciesLabel );
 
 /** SaveSpeciesBands - save species bands emission
  *
- * \param ipPun		save file index
- * \param speciesLabel	species emission to be stored
- * \param fileBands	file that holds the bands' definitions
+ * \param ipPun		[in]	save file index
+ * \param speciesLabel	[in]	species emission to be stored
+ * \param fileBands	[in]	file that holds the bands' definitions
+ * \param lgEmergent	[in]	report emergent emission; intrinsic by default
  */
 void SaveSpeciesBands( const long ipPun, const string &speciesLabel,
-			const string &fileBands );
+			const string &fileBands, const bool lgEmergent );
 
 /**SaveSpeciesOptDep -- generate output for 'save species optical depth'
  *
