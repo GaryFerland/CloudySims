@@ -961,18 +961,33 @@ effect of electron scattering.
 Bound-electron scattering opacity is still
 included when this command is issued.
 
+\subsection{No scattering opacity}
+
+This command turns off all scattering opacity sources in the calculation.  It is described in detail in
+Section \ref{sec:CommandNoScatteringOpacity} above.
+This can have a major effect on the physics of the simulation.
+
 \subsection{No scattering escape}
 
 Turn off line escape following scattering off a free electron.
+Free electrons move far more quickly in a thermal gas than nuclei.
+A line photon scattered off an electron will receive a large Doppler shift away
+from line center and escape the cloud.  This command turns off that process.
+
+\subsection{No absorption escape}
+
+Lines can be removed by absorption by background opacities such as grain
+or photoelectric absorption.  
+This is a true absorption process and the line energy goes into heating the
+grain or ionizing the gas. 
+This command turns off that process so line photons are no longer
+destroyed by absorption opacities.
 
 \subsection{No scattering intensity}
 
-Line escape following scattering off a free electron is included as a photon loss mechanism
+Line escape following scattering off a free electron is still included as a photon escape mechanism
 but is not included in the reported line intensity due to it large line width.
 
-\subsection{No scattering opacity}
-
-See page \pageref{sec:CommandNoScatteringOpacity} above.
 
 \subsection{No secondary ionizations}
 

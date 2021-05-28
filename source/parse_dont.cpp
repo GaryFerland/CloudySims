@@ -366,6 +366,12 @@ void ParseDont(Parser &p )
 		rt.lgElecScatEscape = false;
 	}
 
+	else if( p.nMatch("ABSO") && p.nMatch("ESCA"))
+	{
+		/* NO ABSORPTION ESCAPE do not count opacity contribution to line escape probs - photon loss, actually */
+		rt.lgAbsorLineEscape = false;
+	}
+
 	else if( p.nMatch("SCAT") && p.nMatch("INTEN"))
 	{
 		/* electron scattering is included as a contribution to line escape probs but not the reported line intensity */
