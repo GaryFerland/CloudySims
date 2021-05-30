@@ -17,6 +17,14 @@ void ParseMetal(Parser &p)
 	abund.lgAbnSolar = false;	
 	if( p.nMatch("DEPL") )
 	{
+		realnum scale = (realnum)p.FFmtRead();
+		if( !p.lgEOL() )
+		{
+			fprintf( ioQQQ, "\nPROBLEM -- No number allowed with 'metals deplete'"
+			      		" but found '%g'\n", scale );
+			cdEXIT(EXIT_FAILURE);
+		}
+
 		/* keyword depletion is present
 		 * deplete by set of scale factors */
 		abund.lgDepln = true;
