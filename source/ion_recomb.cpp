@@ -248,7 +248,7 @@ void ion_recombAGN( FILE * io )
 	for( nelem=ipLITHIUM; nelem<LIMELM; ++nelem )
 	{
 		/* this list of elements included in the AGN tables is defined in zeroabun.c */
-		if( abund.lgAGN[nelem] )
+		if( dense.lgElmtOn[nelem] && abund.lgAGN[nelem] )
 		{
 			for( ion=0; ion<=nelem; ++ion )
 			{
@@ -306,7 +306,7 @@ void ion_recombAGN( FILE * io )
 	for( nelem=ipHYDROGEN; nelem<LIMELM; ++nelem )
 	{
 		/* this list of elements included in the AGN tables is defined in zeroabun.c */
-		if( abund.lgAGN[nelem] )
+		if( dense.lgElmtOn[nelem] && abund.lgAGN[nelem] )
 		{
 			for( ion=0; ion<=nelem; ++ion )
 			{
