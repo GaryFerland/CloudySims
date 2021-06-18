@@ -58,7 +58,8 @@ monitor set error 0.1
 ## >>chng 12 jun 07, from 59.1 to 56.42, vib_evap fix
 monitor temperature "H" 56.42
 monitor H2 column density 25.20 
-monitor CO column density 20.89 error 0.1 
+monitor CO column density 20.89
+monitor "ArH+" column density 
 ## >>chng 13 jul 15, from -4.459 to -1.652 move to Stout/Chianti for Si, botches are due to improved atomic data
 ## >>chng 20 aug 03, from -1.652 to -1.796, update H3+ rates Indriola+ 2012
 monitor line luminosity "Si 2" 34.8046m  -1.796
@@ -83,7 +84,7 @@ monitor line luminosity "Si 2" 34.8046m  -1.796
 ## >>chng 15 apr 28, from -0.6487 to -0.6086, CollisSuppres change suggested by Dragan Nikolic
 ## >>chng 15 may 29, from -0.6086 to -0.5647, double optical depth, iterate to convergence
 ## >>chng 20 aug 03, from -0.5647 to -0.6633, update H3+ rates Indriola+ 2012
-monitor eden -0.6633 error 0.1
+monitor eden -0.6633
 ##
 ## >>chng 08 dec 08, from 9 to 4.214, upper limit -> equals (r2515)
 ## >>chng 08 dec 13, from 4.214 to 9.777, merging newsolvers branch

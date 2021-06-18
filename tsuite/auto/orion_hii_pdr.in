@@ -848,6 +848,8 @@ monitor column density "SiOH+"     11.98
 monitor column density "SO+"       12.34  
 ## >>chng 21 apr 16, from 13.18 to 17.38, add molecular column densities
 monitor column density "SO"        17.38  
+## >>chng 21 jun 17, from 1 to 14.39, first run
+monitor column density "ArH+"        14.39
 ##
 ## >>chng 04 mar 04, from < 1200 to <900 improv conv
 ## >>chng 04 mar 31, from < 900 to <950 alter dr logic-test all chng hv mole

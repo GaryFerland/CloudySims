@@ -246,6 +246,8 @@ monitor column density "SiOH+"     6.016
 monitor column density "SO+"       6.137  
 ## >>chng 21 apr 16, from 13.18 to 9.978, add molecular column densities
 monitor column density "SO"        9.978  
+## >>chng 21 jun 17, from 1 to 8.598, first run
+monitor column density "ArH+"      8.598
 ## 
 ## >>chng 04 sep 08, add electron density of last zone
 ## >>chng 04 aug 10, from 3.753 to 4.206 grn rec aug rewrite

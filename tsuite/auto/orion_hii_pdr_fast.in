@@ -130,6 +130,9 @@ monitor h2 column density 21.26 error 0.1
 ## >>chng 13 feb 01, from 13.79 to 13.65, BUGFIX, largely undo r6703
 monitor co column density 13.65 error 0.15
 ##
+## >>chng 21 jun 17, from 1 to 10.12, first run
+monitor "ArH+" column density 10.12 error 0.1
+##
 ## >>chng 06 nov 29, from -3.164 to -7.428, Badnell DR turned on
 ## >>chng 07 oct 11, from -7.428 to -7.450, finer zoning, inc err
 ## >>chng 07 oct 22, from -7.450 to -7.394, resolve l-levels of h-like sequence
