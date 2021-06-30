@@ -107,7 +107,8 @@ void iso_solve(long ipISO, long nelem, double &maxerr)
 		{
 			/* solve for the level populations */
 			double renorm;
-			iso_level( ipISO , nelem, renorm, iso_sp[ipISO][nelem].lgPrtMatrix );
+			iso_level( ipISO, nelem, renorm, iso_sp[ipISO][nelem].lgPrtMatrix,
+					iso_sp[ipISO][nelem].lgImgMatrix );
 			if (fabs(renorm-1.0) > maxerr)
 				maxerr = fabs(renorm-1.0);
 

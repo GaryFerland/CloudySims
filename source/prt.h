@@ -111,7 +111,7 @@ void DatabasePrintReference();
  end of calculation */
 void PrtAllTau(void);
 
-class t_prt_matrix {
+class t_prt_matrix : public module {
 public:
 	/** species element and ionization stage set with print array command to print
 	  * matrixes input to solvers */
@@ -120,10 +120,43 @@ public:
 	vector<long> speciesLevelList;
 
 	void zero();
+	void comment(t_warnings&) {}
+
+	const char *chName() const
+	{
+		return "prt_matrix";
+	}
+
 	void setSpecies( const string &sspec );
 	void resolveLevels();
 	void prtRates( const long nlevels_local, const multi_arr<double,2,C_TYPE> &a,
 			valarray<double> &b );
+};
+
+class t_img_matrix : public t_prt_matrix {
+public:
+	bool lgImgRates;
+	long iteration;
+
+	void zero();
+	void comment(t_warnings&) {}
+
+	const char *chName() const
+	{
+		return "img_matrix";
+	}
+
+	inline bool matchIteration( const long this_iteration ) const
+	{
+		return ( ( iteration > 0 && iteration == this_iteration ) ||
+				! iteration );
+	}
+
+	void createImage( const string &fname,
+			const long iteration,
+			const long nzone,
+			const long nlevels_local,
+			const multi_arr<double,2,C_TYPE> &a );
 };
 
 /** struct for holding user-defined blend */
@@ -248,6 +281,7 @@ struct t_prt {
 	bool lgPrtArry[LIMELM];
 
 	t_prt_matrix matrix;
+	t_img_matrix img_matrix;
 
 	/** logical lgFaintOn normally true, says to not print very faint lines
 	  set false with print faint off command

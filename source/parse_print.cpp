@@ -192,7 +192,17 @@ void ParsePrint(
 				cdEXIT( EXIT_FAILURE );
 			}
 
-			prt.matrix.setSpecies( species );
+			if( p.nMatch( "IMAG" ) )
+			{
+				prt.img_matrix.lgImgRates = true;
+				prt.img_matrix.setSpecies( species );
+				if( p.nMatch( "ITER" ) )
+					prt.img_matrix.iteration = p.getNumberCheck( "iter" );
+			}
+			else
+			{
+				prt.matrix.setSpecies( species );
+			}
 		}
 		else
 		{

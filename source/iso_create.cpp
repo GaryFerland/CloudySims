@@ -569,10 +569,15 @@ STATIC void iso_allocate(void)
 				sp->numLevels_alloc = sp->numLevels_max;
 
 				{
-					sp->lgPrtMatrix = false;
 					string chemicalLabel = makeChemical( nelem, nelem-ipISO );
+
+					sp->lgPrtMatrix = false;
 					if( chemicalLabel == prt.matrix.species )
 						sp->lgPrtMatrix = true;
+
+					sp->lgImgMatrix = false;
+					if( chemicalLabel == prt.img_matrix.species )
+						sp->lgImgMatrix = true;
 				}
 
 				ASSERT( sp->numLevels_max > 0 );

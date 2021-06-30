@@ -199,8 +199,6 @@ void t_prt_matrix::setSpecies( const string &sspec )
 {
 	DEBUG_ENTRY( "t_prt_matrix::setSpecies()" );
 
-	zero();
-
 	size_t lbrac = sspec.find( "[" );
 	size_t rbrac = sspec.find( "]" );
 
@@ -265,4 +263,91 @@ void t_prt_matrix::prtRates( const long nlevels_local, const multi_arr<double,2,
 		}
 		fprintf( ioQQQ, "\n" );
 	}
+}
+
+void t_img_matrix::zero()
+{
+	t_prt_matrix::zero();
+	lgImgRates = false;
+	iteration = 0;
+}
+
+void t_img_matrix::createImage( const string &fname_prefix,
+				const long iteration,
+				const long nzone,
+				const long nlevels_local,
+				const multi_arr<double,2,C_TYPE> &a )
+{
+	DEBUG_ENTRY( "t_img_matrix::createImage()" );
+
+	if( speciesLevelList.size() == 0 )
+		return;
+
+	double amax = 0.0;
+
+	for( vector<long>::iterator ipLo = speciesLevelList.begin();
+		 ipLo != speciesLevelList.end(); ++ipLo )
+	{
+		if( *ipLo >= nlevels_local )
+			continue;
+		for( vector<long>::iterator ipHi = speciesLevelList.begin();
+			ipHi != speciesLevelList.end(); ++ipHi )
+		{
+			if( *ipHi >= nlevels_local )
+				continue;
+			amax = MAX2(amax, fabs( a[ *ipLo ][ *ipHi ] ) );
+		}
+	}
+
+	stringstream ss;
+	ss << species << "_it" << iteration << "_nz" << nzone << ".ppm";
+	string filename = ss.str();
+
+	if( fname_prefix.length() > 0 )
+	{
+		filename = fname_prefix + "_" + filename;
+	}
+
+	FILE *fp = open_data( filename, "w" );
+	const int ipix=4;
+	fprintf(fp, "P6\n%ld %ld\n255\n", ipix*nlevels_local, ipix*nlevels_local ); // PGM
+
+	char buf[3*ipix+1];
+	buf[3*ipix] = '\0';
+
+	for( vector<long>::iterator ipLo = speciesLevelList.begin();
+		 ipLo != speciesLevelList.end(); ++ipLo )
+	{
+		if( *ipLo >= nlevels_local )
+			continue;
+		for( int i1 = 0; i1 < ipix; ++i1 )
+		{
+			for( vector<long>::iterator ipHi = speciesLevelList.begin();
+				ipHi != speciesLevelList.end(); ++ipHi )
+			{
+				if( *ipHi >= nlevels_local )
+					continue;
+				unsigned char ch[3];
+				if ( a[ *ipLo ][ *ipHi ] == 0.0 )
+				{
+					ch[0] = ch[1] = ch[2] = 0;
+				}
+				else
+				{
+					double val = 1.+log10(fabs( a[ *ipLo ][ *ipHi ] )/amax)/16.;
+					ch[0] = (unsigned int)(MAX2(1.,MIN2(256.*val,255.)));
+					ch[1] = ch[0];
+					ch[2] = (255+ch[0])/2;
+				}
+				for( int i2=0; i2 < ipix; ++i2 )
+				{
+					buf[3*i2] = ch[0];
+					buf[3*i2+1] = ch[1];
+					buf[3*i2+2] = ch[2];
+				}
+				fwrite(buf,3*ipix,sizeof(char),fp);
+			}
+		}
+	}
+	fclose(fp);
 }

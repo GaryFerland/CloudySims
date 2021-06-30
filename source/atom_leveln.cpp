@@ -151,6 +151,8 @@ void Atom_LevelN::operator()(
 	const char *chLabel, 
 	/* flag to print matrices input to solvers */
 	const bool lgPrtMatrix,
+	/* flag to create image for rate matrix input to solvers */
+	const bool lgImgMatrix,
 	/* nNegPop flag indicating what we have done
 	 * positive if negative populations occurred
 	 * zero if normal calculation done
@@ -480,6 +482,12 @@ void Atom_LevelN::operator()(
 			prt.matrix.prtRates( nlev, amat, bvec );
 		}
 
+		if( lgImgMatrix && prt.img_matrix.matchIteration( iteration ) && nzone > 0 )
+		{
+			prt.img_matrix.createImage( "", iteration, nzone, nlev, amat );
+		}
+
+
 		ner = solve_system(amat.vals(), bvec, nlev, NULL);
 
 		if( ner != 0 )
@@ -730,6 +738,8 @@ void Atom_LevelN::operator()(
 		{
 			pops[level] = (double)MAX2(0.,pops[level]);
 		}
+
+		prt.img_matrix.createImage( "negPop", iteration, nzone, nlev, amat );
 	}
 
 	if(  lgDeBug || (trace.lgTrace && trace.lgTrLevN) )

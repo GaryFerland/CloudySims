@@ -30,6 +30,7 @@ public:
 		maxWN = 0.;
 		lgLTE = false;
 		lgPrtMatrix = false;
+		lgImgMatrix = false;
 	}
 	~species()
 	{
@@ -71,6 +72,8 @@ public:
 	bool lgLTE;
 	/** print Matrix input to solver */
 	bool lgPrtMatrix;
+	/** create image for Matrix input to solver */
+	bool lgImgMatrix;
 };
 
 struct t_pseudo_cont

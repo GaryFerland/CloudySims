@@ -30,7 +30,7 @@ STATIC void iso_multiplet_opacities_one(
 
 /* solve for level populations  */
 void iso_level( const long int ipISO, const long int nelem, double &renorm,
-		bool lgPrtMatrix )
+		const bool lgPrtMatrix, const bool lgImgMatrix )
 {
 	long int ipHi,
 		ipLo,
@@ -488,6 +488,12 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 			prt.matrix.prtRates( numlevels_local, z, c );
 		}
 
+		if( lgImgMatrix && prt.img_matrix.matchIteration( iteration ) && nzone > 0 )
+		{
+			prt.img_matrix.createImage( "", iteration, nzone, numlevels_local, SaveZ );
+		}
+
+
 		nerror = 0;
 
 		getrf_wrapper(numlevels_local,numlevels_local,
@@ -664,6 +670,9 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 			}	
 			ASSERT( sp->st[0].Pop() >= 0. );
 		}
+
+		if( lgNegPop )
+			prt.img_matrix.createImage( "negPop", iteration, nzone, numlevels_local, SaveZ );
 	}
 	/* all solvers end up here */
 

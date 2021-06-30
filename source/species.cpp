@@ -967,6 +967,12 @@ STATIC void states_nelemfill(void)
 			{
 				dBaseSpecies[i].lgPrtMatrix = true;
 			}
+
+			dBaseSpecies[i].lgImgMatrix = false;
+			if( prt.img_matrix.species == dBaseStates[i].chLabel() )
+			{
+				dBaseSpecies[i].lgImgMatrix = true;
+			}
 		}
 
 		molecule *sp = findspecies(chLabelChemical);
