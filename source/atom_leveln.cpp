@@ -482,7 +482,8 @@ void Atom_LevelN::operator()(
 			prt.matrix.prtRates( nlev, amat, bvec );
 		}
 
-		if( lgImgMatrix && prt.img_matrix.matchIteration( iteration ) && nzone > 0 )
+		if( lgImgMatrix && prt.img_matrix.matchIteration( iteration ) &&
+				prt.img_matrix.matchZone( nzone ) )
 		{
 			prt.img_matrix.createImage( "", iteration, nzone, nlev, amat );
 		}

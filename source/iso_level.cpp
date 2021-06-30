@@ -488,7 +488,8 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 			prt.matrix.prtRates( numlevels_local, z, c );
 		}
 
-		if( lgImgMatrix && prt.img_matrix.matchIteration( iteration ) && nzone > 0 )
+		if( lgImgMatrix && prt.img_matrix.matchIteration( iteration ) &&
+				prt.img_matrix.matchZone( nzone ) )
 		{
 			prt.img_matrix.createImage( "", iteration, nzone, numlevels_local, SaveZ );
 		}

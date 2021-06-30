@@ -198,6 +198,8 @@ void ParsePrint(
 				prt.img_matrix.setSpecies( species );
 				if( p.nMatch( "ITER" ) )
 					prt.img_matrix.iteration = p.getNumberCheck( "iter" );
+				if( p.nMatch( "ZONE" ) )
+					prt.img_matrix.zone = p.getNumberCheck( "zone" );
 			}
 			else
 			{

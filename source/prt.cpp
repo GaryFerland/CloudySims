@@ -270,6 +270,7 @@ void t_img_matrix::zero()
 	t_prt_matrix::zero();
 	lgImgRates = false;
 	iteration = 0;
+	zone = 0;
 }
 
 void t_img_matrix::createImage( const string &fname_prefix,

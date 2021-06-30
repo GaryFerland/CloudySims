@@ -137,6 +137,7 @@ class t_img_matrix : public t_prt_matrix {
 public:
 	bool lgImgRates;
 	long iteration;
+	long zone;
 
 	void zero();
 	void comment(t_warnings&) {}
@@ -150,6 +151,11 @@ public:
 	{
 		return ( ( iteration > 0 && iteration == this_iteration ) ||
 				! iteration );
+	}
+
+	inline bool matchZone( const long this_zone ) const
+	{
+		return ( ( zone > 0 && zone == this_zone ) || ! zone );
 	}
 
 	void createImage( const string &fname,
