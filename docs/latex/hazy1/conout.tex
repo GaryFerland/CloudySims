@@ -89,6 +89,9 @@ important timescales are determined.
 
 
 \section{Print arrays}
+
+These commands are intended mainly as debugging aids.
+
 \subsection{Print arrays ionization}
 
 This prints the array elements that enter into solution
@@ -120,6 +123,16 @@ e.g., ``C+[:]''.
 A subset may be specified by entering the desired levels
 in the brackets, e.g., ``C+[1:5]'' will print rows 1--5
 and columns 1--5 of the matrix.
+
+A PPM image of the same data will be generated instead, if the keyword
+\cdCommand{image} appears on the command.
+A FITS image will be generated instead of a PPM image, if the keyword
+\cdCommand{FITS} also appears.
+Either way, the image will be generated for the given species for all
+iterations and zones.
+This can be limited to specific iteration with the keyword
+\cdCommand{iteration} followed by an iteration number, and likewise to
+a specific zone with the keyword \cdCommand{zone} followed by a zone number.
 
 
 \section{Print citation}
