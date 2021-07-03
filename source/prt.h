@@ -129,13 +129,15 @@ public:
 
 	void setSpecies( const string &sspec );
 	void resolveLevels();
-	void prtRates( const long nlevels_local, const multi_arr<double,2,C_TYPE> &a,
+	void prtRates( const long numLevels,
+			const multi_arr<double,2,C_TYPE> &matrix,
 			valarray<double> &b );
 };
 
 class t_img_matrix : public t_prt_matrix {
 public:
 	bool lgImgRates;
+	bool lgFITS;
 	long iteration;
 	long zone;
 
@@ -161,8 +163,17 @@ public:
 	void createImage( const string &fname,
 			const long iteration,
 			const long nzone,
-			const long nlevels_local,
-			const multi_arr<double,2,C_TYPE> &a );
+			const long numLevels,
+			const multi_arr<double,2,C_TYPE> &matrix );
+
+private:
+	void createImage_PPM( const string &basename,
+			const long numLevels,
+			const multi_arr<double,2,C_TYPE> &matrix );
+
+	void createImage_FITS( const string &basename,
+			const long numLevels,
+			const multi_arr<double,2,C_TYPE> &matrix );
 };
 
 /** struct for holding user-defined blend */

@@ -196,6 +196,10 @@ void ParsePrint(
 			{
 				prt.img_matrix.lgImgRates = true;
 				prt.img_matrix.setSpecies( species );
+				if( p.nMatch( "FITS" ) )
+					prt.img_matrix.lgFITS = true;
+				else if( p.nMatch( " PPM" ) )
+					prt.img_matrix.lgFITS = false;
 				if( p.nMatch( "ITER" ) )
 					prt.img_matrix.iteration = p.getNumberCheck( "iter" );
 				if( p.nMatch( "ZONE" ) )
