@@ -79,6 +79,7 @@ grains PAH function 3
 normalize to "O  1" 63.1679m
 # print lots of faint CO lines
 print line faint -4
+save monitors "orion_hii_pdr.asr" last
 save performance "orion_hii_pdr.per"
 save overview last "orion_hii_pdr.ovr"
 save heating "orion_hii_pdr.het"
