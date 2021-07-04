@@ -299,12 +299,12 @@ void t_img_matrix::createImage( const string &fname_prefix,
 	else
 	{
 		long ifront = speciesLevelList.front();
-		if( ifront > numLevels )
-			ifront = numLevels;
+		if( ifront >= numLevels )
+			ifront = numLevels-1;
 
 		long ilast = speciesLevelList.back();
-		if( ilast > numLevels )
-			ilast = numLevels;
+		if( ilast >= numLevels )
+			ilast = numLevels - 1;
 
 		nlev = ilast - ifront + 1;
 
