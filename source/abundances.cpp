@@ -50,7 +50,7 @@ void AbundancesPrt( void )
 			{
 				/* fill in print buffer with abundances */
 				PrtElem("fill",(char*)elementnames.chElementSym[i],
-				  abund.solar[i]);
+				  abund.GasPhase[i]);
 			}
 		}
 
@@ -65,6 +65,7 @@ void AbundancesPrt( void )
 			/* we will first print the total abundances of each element locked up in grains */
 			/* initialize print routine for dust*/
 			PrtElem("initD","  ",0.);
+			double sum_grains = 0.;
 			for( i=0; i < LIMELM; i++ )
 			{
 				if( gv.elmSumAbund[i]>SMALLFLOAT )
@@ -72,10 +73,28 @@ void AbundancesPrt( void )
 					/* fill in print buffer with abundances */
 					PrtElem("fill",(char*)elementnames.chElementSym[i],
 						gv.elmSumAbund[i]/dense.gas_phase[ipHYDROGEN]);
+					sum_grains += gv.elmSumAbund[i]/dense.gas_phase[ipHYDROGEN];
 				}
 			}
 			/* flush the print buffer */
 			PrtElem("flus","  ",0.);
+
+			double sum_depl = abund.SumDepletedAtoms();
+			double offset = 0.;
+			if( sum_depl > 0. )
+			{
+				offset = (sum_depl / sum_grains - 1.) * 100.;
+				sum_depl = log10( sum_depl );
+			}
+			else
+			{
+				offset = - 100.;
+				sum_depl = -30.;
+			}
+			fprintf(ioQQQ, "                                                   "
+					"Sum Atoms Depleted: %.4f\n", sum_depl );
+			fprintf(ioQQQ, "                                                   "
+					"Depletion/Grains-1: %4.2f%%\n", offset );
 			/* final carriage return */
 			fprintf( ioQQQ, " \n" );
 
@@ -178,15 +197,14 @@ void AbundancesSet(void)
 	}
 
 	/* rescale so that abundances are H=1 */
-	for( i=ipHELIUM; i < LIMELM; i++ )
+	for( i=ipHYDROGEN; i < LIMELM; i++ )
 	{
-		abund.solar[i] /= abund.solar[0];
+		abund.GasPhase[i] = abund.ReferenceAbun[i] / abund.ReferenceAbun[ipHYDROGEN];
 	}
-	abund.solar[ipHYDROGEN] = 1.;
 
 	/* set current abundances to "solar" times metals scale factor
 	 * and grain depletion factor */
-	abund.solar[ipHELIUM] *= abund.depset[1]*abund.ScaleElement[1];
+	abund.GasPhase[ipHELIUM] *= abund.DepletionScaleFactor[ipHELIUM]*abund.ScaleElement[ipHELIUM];
 
 	/* option for density or abundance variations, this flag is true by default,
 	 * set in zero, but set false if variations are enabled AND these
@@ -204,8 +222,8 @@ void AbundancesSet(void)
 
 	for( i=ipLITHIUM; i < LIMELM; i++ )
 	{
-		abund.solar[i] *= (realnum)(abund.ScaleMetals*abund.depset[i]*
-		  abund.ScaleElement[i]*fac);
+		abund.GasPhase[i] *= (realnum)(abund.ScaleMetals*abund.DepletionScaleFactor[i]*
+					abund.ScaleElement[i]*fac);
 	}
 
 	/* now fix abundance of any element with element table set */
@@ -215,7 +233,7 @@ void AbundancesSet(void)
 		{
 			if( abund.lgAbunTabl[nelem] )
 			{
-				abund.solar[nelem] = (realnum)(AbundancesTable(radius.Radius,
+				abund.GasPhase[nelem] = (realnum)(AbundancesTable(radius.Radius,
 				  radius.depth,nelem+1));
 			}
 		}
@@ -225,17 +243,17 @@ void AbundancesSet(void)
 	/* the density of hydrogen itself has already been set at this point -
 	 * it is set when commands parsed, most likely by the hden command -
 	 * set all heavier elements */
-	/* if abund.solar[ipHYDROGEN] == 1, consistency doesn't hurt that much */
+	/* if abund.GasPhase[ipHYDROGEN] == 1, consistency doesn't hurt that much */
 	for( nelem=ipHYDROGEN; nelem < LIMELM; ++nelem )
 	{
 		/* this implements the element off limit xxx command, where
 		 * xxx is the limit to the smallest n(A)/n(H) that will remain on */
-		if( abund.solar[nelem] < dense.AbundanceLimit )
+		if( abund.GasPhase[nelem] < dense.AbundanceLimit )
 			dense.lgElmtOn[nelem] = false;
 
 		if( dense.lgElmtOn[nelem] )
 		{
-			dense.SetGasPhaseDensity( nelem, abund.solar[nelem]*dense.gas_phase[ipHYDROGEN] );
+			dense.SetGasPhaseDensity( nelem, abund.GasPhase[nelem]*dense.gas_phase[ipHYDROGEN] );
 			if( dense.gas_phase[nelem] <= 0. )
 			{
 				fprintf( ioQQQ, " Abundances must be greater than zero.  "
