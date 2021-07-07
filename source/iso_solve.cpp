@@ -137,42 +137,118 @@ void iso_solve(long ipISO, long nelem, double &maxerr)
 
 		if( 0 )
 		{
-			/*Print effective recombination coefficients to 2s level for H */
+			/* Calculate critical escape probabilities and critical densities */
+			/* we assume that the medium is fully ionized, so n_p=n_e and the neutral atoms are traces
+			 * In that way we can use l-changing collisions from protons with the electron density
+			 * */
+
+			/*Print effective recombination coeffic		fprintf(ioQQQ,"n2CritDens %e nelem %li ipISO %li te %e dens %e beta_c %e \n",n2CritDens,nelem,ipISO, phycon.te, dense.eden,betac);
+		fprintf(ioQQQ,"C %e, C2s %e, C2p %e, alpha2 %e alpha3 %e gamma %e\n",
+				C,C2s,C2p,alpha2,alpha3,gamma);
+			 * ients to 2s level for H */
 			if ( nelem == 0 && ipISO == 0 )
 			{
-				double alphaeff2s=0., pop, alphaeff2p = 0;
+				vector <double> alphaeff;
+				alphaeff.resize(5);
+				for (long j =0; j<5; j++)
+					alphaeff[j]= 0.;
+				double pop;
+				//2s=0., pop, alphaeff2p = 0;
+				//double a3s=0.,a3p = 0., a3d=0.;
 				long numLevs = iso_sp[ipISO][nelem].numLevels_max - iso_sp[ipISO][nelem].nCollapsed_max;
-				fprintf( ioQQQ,"Effective recombination 2S/2P, ipISO=%li, nelem=%li, Te = %e, dens=%e\t%e, numlevels=%li\n", ipISO, nelem, phycon.te,
-						dense.eden, dense.xIonDense[nelem][ipISO+1],numLevs );
-				fprintf( ioQQQ, "N\tL\tS\tAlphaEffec\n" );
-
-				for( long ipHi=3; ipHi < iso_sp[ipISO][nelem].numLevels_max; ipHi++ )
+				for (long ipCollider = ipELECTRON; ipCollider <= ipPROTON ; ipCollider++)
 				{
+
+					for( long ipHi=ipH3s; ipHi < iso_sp[ipISO][nelem].numLevels_max; ipHi++ )
+					{
 					//if (iso_sp[ipISO][nelem].st[ipHi].l()==1)
-					pop = iso_sp[ipISO][nelem].st[ipHi].Pop();
-					if (ipHi > numLevs )
-						pop /=(2.*pow2((double)iso_sp[ipISO][nelem].st[ipHi].n()));
+						pop = iso_sp[ipISO][nelem].st[ipHi].Pop();
+						if (ipHi > numLevs )
+							pop /=(2.*pow2((double)iso_sp[ipISO][nelem].st[ipHi].n()));
 
-					alphaeff2s +=  pop*iso_sp[ipISO][nelem].trans(ipHi,1).Emis().Aul();
+						for (long ipLo = ipH2s ; ipLo < ipH4s ; ipLo++)
+						{
+							if (ipHi >= ipH4s || ipLo < ipH3s)
+								alphaeff[ipLo-1] += pop*(iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().Aul()
+										+iso_sp[ipISO][nelem].trans(ipHi,ipLo).Coll().rate_coef_ul_set()[ipCollider]);
+						}
 
-					alphaeff2p +=  pop*iso_sp[ipISO][nelem].trans(ipHi,2).Emis().Aul();
-
+					}
+				}
+				for (long ipLo = ipH2s ; ipLo < ipH4s ; ipLo++)
+				{
+					alphaeff[ipLo-1] /= (dense.eden*dense.xIonDense[nelem][ipISO+1]);
+					alphaeff[ipLo-1] += iso_sp[ipISO][nelem].fb[ipLo].RateCont2Level/dense.eden;
 				}
 
-				alphaeff2s /= (dense.eden*dense.xIonDense[nelem][ipISO+1]);
-				alphaeff2s += iso_sp[ipISO][nelem].fb[1].RadRecomb[ipRecRad];
-
-                                alphaeff2p /= (dense.eden*dense.xIonDense[nelem][ipISO+1]);
-                                alphaeff2p += iso_sp[ipISO][nelem].fb[2].RadRecomb[ipRecRad];
-
+				/*print effective recombination to 2s*/
+				/*fprintf( ioQQQ,"Effective recombination 2S/2P, ipISO=%li, nelem=%li, Te = %e, dens=%e\t%e, numlevels=%li\n", ipISO, nelem, phycon.te,
+						dense.eden, dense.xIonDense[nelem][ipISO+1],numLevs );
+				fprintf( ioQQQ, "N\tL\tS\tAlphaEffec\n" );
 
 				fprintf( ioQQQ, "%li\t%li\t%li\t%e\t\n", iso_sp[ipISO][nelem].st[1].n(),iso_sp[ipISO][nelem].st[1].l() ,
 						iso_sp[ipISO][nelem].st[1].S(),alphaeff2s );
 				fprintf( ioQQQ, "%li\t%li\t%li\t%e\t\n", iso_sp[ipISO][nelem].st[2].n(),iso_sp[ipISO][nelem].st[2].l() ,
                                                 iso_sp[ipISO][nelem].st[2].S(),alphaeff2p );
 				fprintf( ioQQQ, "\n" );
+				 */
+				/* Calculate critical escape probabilities and critical densities */
+				/* we assume that the medium is fully ionized, so n_p=n_e and the neutral atoms are traces
+				 * In that way we can use l-changing collisions from protons with the electron density
+				 * */
+				double C =0.,Cp=0., Cs=0.;
+				double C2s= 0.,C2p=0.;
+				double gamma=0.;
+				double eta = 0;
+				for (long ipCollider = ipELECTRON; ipCollider <= ipPROTON ; ipCollider++)
+				{
+					C += iso_sp[ipISO][nelem].trans(ipH2p,ipH2s).Coll().rate_coef_ul_set()[ipCollider];
+					for (long ipHi = ipH3s ; ipHi < iso_sp[ipISO][nelem].numLevels_max; ipHi++ )
+					{
+						C2s += iso_sp[ipISO][nelem].trans(ipHi,ipH2s).Coll().rate_coef_ul_set()[ipCollider];
+						C2p += iso_sp[ipISO][nelem].trans(ipHi,ipH2p).Coll().rate_coef_ul_set()[ipCollider];
+					}
+					Cs += iso_sp[ipISO][nelem].trans(ipH2s,ipH1s).Coll().rate_coef_ul_set()[ipCollider];
+					Cp += iso_sp[ipISO][nelem].trans(ipH2p,ipH1s).Coll().rate_coef_ul_set()[ipCollider];
+					gamma += 3.*iso_sp[ipISO][nelem].trans(ipH2p,ipH1s).Coll().rate_coef_ul_set()[ipCollider] +
+									iso_sp[ipISO][nelem].trans(ipH2s,ipH1s).Coll().rate_coef_ul_set()[ipCollider];
+					for (long lHi = 0; lHi < 3 ; lHi++)
+					{
+						for( long lLo =0 ; lLo < 2 ; lLo++)
+							eta+= (2*lHi+1)*iso_sp[ipISO][nelem].trans(ipH3s+lHi,ipH2s+lLo).Coll().rate_coef_ul_set()[ipCollider];
+					}
+				}
+				Cs += C2s;
+				Cp += C2p;
+				double A2q = 8.2249*powi(double(nelem+1),6);
+				double Rs = (A2q/dense.eden) + Cs;
+				double betac = dense.eden*(Rs*(C+Cp)+3*C*Cp)/iso_sp[ipISO][nelem].trans(ipH2p,ipH1s).Emis().Aul()/(Rs+3*C);
+				double alpha2 = 0., alpha3 = 0.;
+				for (long ipLo = ipH2s ; ipLo < ipH4s ; ipLo++)
+				{
+					if (ipLo < ipH3s)
+						alpha2 += alphaeff[ipLo-1];
+					else
+						alpha3 += alphaeff[ipLo-1];
+				}
+				double p = 0.1;
+				double beta = 0;
+				eta *= alpha2/alpha3;
+				double n2CritDens;
+				if (gamma == 0. && eta == 0.)
+					n2CritDens = 0;
+				else
+					n2CritDens = p*(A2q+3*iso_sp[ipISO][nelem].trans(ipH2p,ipH1s).Emis().Aul()*beta)/(eta-p*gamma);
+
+				fprintf(ioQQQ,"n2CritDens %e nelem %li ipISO %li te %e dens %e beta_c %e \n",n2CritDens,nelem,ipISO, phycon.te, dense.eden,betac);
+				fprintf(ioQQQ,"C %e, C2s %e, C2p %e, alpha2 %e alpha3 %e gamma %e\n",
+						C,C2s,C2p,alpha2,alpha3,gamma);
+
+
+
 			}
 		}
+
 
 
 	}

@@ -464,7 +464,7 @@ STATIC double iso_get_collision_strength( long ipISO, long nelem, long ipCollide
 		double rate_test;
 		double oHi=1./(double)gHi;
 		//double ogLo=1./(double)gLo;
-		if ( nelem == 1 && ipISO == 1 && nHi == nLo+1 && nHi < 200 && (ipCollider == ipELECTRON ))
+		if ( nelem == 0 && ipISO == 0 && nHi == nLo+1 && nLo ==2  && (ipCollider == ipELECTRON ))
 		{
 			double reduced_mass_collider_system = dense.AtomicWeight[nelem]*colliders.list[ipCollider].mass_amu/
 							(dense.AtomicWeight[nelem]+colliders.list[ipCollider].mass_amu)*ATOMIC_MASS_UNIT;
