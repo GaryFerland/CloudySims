@@ -823,6 +823,7 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 				/* PS-M: Modified PS method
 				 * Refer to F. Guzman et al. MNRAS (2016) 464, 312
 				 */
+				bool lgPSM20 = true;
 				cs = CS_l_mixing_PS64_expI(
 						nelem,
 						ipHE_LIKE,
@@ -833,7 +834,8 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 						gHi,
 						lLo,
 						deltaE_eV,
-						Collider);
+						Collider,
+						lgPSM20);
 				*where = "PSM   ";
 			}
 		}
@@ -1383,6 +1385,7 @@ void my_Integrand_S62::operator() (const double proj_energy[], double res[], lon
 		res[i] = val[i] * (proj_energy[i]+deltaE)/EVRYD * cross_section;
 	}
 }
+
 /*CS_l_mixing_PS64 - find rate for l-mixing collisions by protons, for neutrals */
 /* This version does not assume that E_min/kt is small and works with the exponential integral */
 /* Pengelly, R.M., & Seaton, M.J., 1964, MNRAS, 127, 165
@@ -1399,7 +1402,8 @@ double CS_l_mixing_PS64_expI(
 		double g,
 		long lp,
 		double deltaE_eV,
-		long Collider)
+		long Collider,
+		bool lgPSM20)
 {
 	double cs;
 	double RD,R12,Sij,Plowb,RC,RC1,/*R1,*/EC,ED,
@@ -1491,7 +1495,7 @@ double CS_l_mixing_PS64_expI(
 		//R1 = sqrt(R12);
 		//RC = R1;
 	//}
-	double Emin = R12/(RC*RC);
+	double Emin = R12/(RC*RC); //\bar{Um}
 
 	if (RC == RD)
 			fb2=1.;
@@ -1506,11 +1510,11 @@ double CS_l_mixing_PS64_expI(
 	/* Resolved Dnl depending on Sij */
 	double Dnl = 2. * pow2(ChargIncoming)*Sij/(3.*(2.*l+1.));
 
-	ASSERT( Dnl > 0. );
 	ASSERT( phycon.te  / Dnl / reduced_mass_2_emass > 0. );
+	ASSERT( Dnl > 0. );
 
-	EC = RD*RD/(RC1*RC1);
-	ED = R12/(RD*RD);
+	EC = RD*RD/(RC1*RC1); //Uc
+	ED = R12/(RD*RD); //Um
 	eEm = exp(-1.*Emin);
 	eED = exp(-1.*ED);
 	eEC = exp(-1.*EC);
@@ -1559,7 +1563,19 @@ double CS_l_mixing_PS64_expI(
 		bracket += contr;
 	}
 
-
+	if (lgPSM20)
+	{
+		double Um = Emin;
+		double eUm = exp (-1.*Um);
+		if(fb2 == 1)
+			bracket = sqrt(PI/pow3(Um))*erf(sqrt(Um))/2.-eUm/Um + e1(Um);
+		else
+		{
+			double factor = 1 + Um + Um*Um/2.;
+			bracket = 4.*(1-eUm*factor)/pow3(Um);
+			bracket += 2*e1(Um)-e1(EC);
+		}
+	}
 	ASSERT( bracket >= 0.);
 
 	if (bracket == 0. )

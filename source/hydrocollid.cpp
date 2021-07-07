@@ -994,6 +994,7 @@ realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 						ipCollider);
 				if (0)
 				{
+				bool PSM20 = false;	//PSM 20 Nigel et al 2020
 				// New PS-M Refer F. Guzman MNRAS (2016)
 					CStemp = CS_l_mixing_PS64_expI(
 							nelem,
@@ -1005,7 +1006,8 @@ realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 							gHi,
 							lLo,
 							deltaE_eV,
-							ipCollider);
+							ipCollider,
+							PSM20);
 				}
 			}
 		}
@@ -1113,6 +1115,8 @@ realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 					*where = "PS64  ";
 				}
 				else
+				{
+					bool PSM20 = true;	//PSM 20 Nigel et al 2020
 				// PS-M Refer F. Guzman MNRAS (2016)
 					CStemp = CS_l_mixing_PS64_expI(
 							nelem,
@@ -1125,8 +1129,10 @@ realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 							lLo,
 							//sHi,
 							deltaE_eV,
-							ipCollider);
+							ipCollider,
+							PSM20);
 				*where = "PSM   ";
+				}
 			}
 			else
 				CStemp = 0.;

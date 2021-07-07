@@ -458,14 +458,14 @@ void iso_prt_pops( long ipISO, long nelem, bool lgPrtDeparCoef )
 		}
 		fprintf(ioQQQ,"\n");
 
-		/* loop over prin quant numbers, one per line, with l across */
+		/* loop over print quantum numbers, one per line, with l across */
 		for( in = 1; in <= nResolved; ++in)
 		{
 			if( is==3 && in==1 )
 				continue;
 
 			fprintf(ioQQQ," %2ld      ",in);
-
+			double TotalNumber=0.;
 			for( il = 0; il < in; ++il)
 			{
 				if( ipISO==ipHE_LIKE && (in==2) && (il==1) && (is==3) )
@@ -478,8 +478,11 @@ void iso_prt_pops( long ipISO, long nelem, bool lgPrtDeparCoef )
 				{
 					ipLo = iso_sp[ipISO][nelem].QN2Index(in, il, is);
 					fprintf( ioQQQ, "%9.3e ", ITEM_TO_PRINT(ipLo) );
+					TotalNumber += (2*il+1)*ITEM_TO_PRINT(ipLo);
 				}
 			}
+			TotalNumber/=pow2((double)in);
+			fprintf(ioQQQ,"\n Total = %9.3e",TotalNumber);
 			fprintf(ioQQQ,"\n");
 		}
 	}
