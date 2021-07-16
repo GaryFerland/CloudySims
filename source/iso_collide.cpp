@@ -458,13 +458,14 @@ STATIC double iso_get_collision_strength( long ipISO, long nelem, long ipCollide
 	}
 
 
-	if (1)
+	if (0)
 	{
 		//printing some of the rates for testing
+		/* this chunk of printing code has been really useful for debugging collisions */
 		double rate_test;
 		double oHi=1./(double)gHi;
 		//double ogLo=1./(double)gLo;
-		if ( nelem == 0 && ipISO == 0 && nHi == nLo && nHi<sp->n_HighestResolved_local && nHi>10 && lHi==10 && lLo== lHi-1 && (ipCollider == ipPROTON ))
+		if ( nelem == 1 && ipISO == 1 && nHi == nLo && nHi==5 && lHi==1 && lLo== 2 && (ipCollider == ipPROTON ))
 		{
 			double reduced_mass_collider_system = dense.AtomicWeight[nelem]*colliders.list[ipCollider].mass_amu/
 							(dense.AtomicWeight[nelem]+colliders.list[ipCollider].mass_amu)*ATOMIC_MASS_UNIT;

@@ -824,6 +824,11 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 				 * Refer to F. Guzman et al. MNRAS (2016) 464, 312
 				 */
 				bool lgPSM20 = true;
+				if(0 && nelem==1 && nHi==5 && nLo == 5 && lHi==1)
+				{
+					fprintf(ioQQQ,"checking %g %g %g %li %g\n",deltaE_eV,IP_Ryd_Hi,IP_Ryd_Lo, lLo,IP_Ryd_Hi-IP_Ryd_Lo);
+				}
+
 				cs = CS_l_mixing_PS64_expI(
 						nelem,
 						ipHE_LIKE,
@@ -1566,14 +1571,53 @@ double CS_l_mixing_PS64_expI(
 	if (lgPSM20)
 	{
 		double Um = Emin;
-		double eUm = exp (-1.*Um);
+		double Umc = sqrt(Um*EC);
+		//double eUm = exp (-1.*Um);
+		//double Umbar = Um*Emin/Te???
 		if(fb2 == 1)
-			bracket = sqrt(PI/pow3(Um))*erf(sqrt(Um))/2.-eUm/Um + e1(Um);
+		{
+			double bracket1 = 2./3.*exp(-1.*Um) + e1(Um);
+			double bracket2 = 2./3.*(3.*sqrt(PI/Um)*erf(sqrt(Um))/4. -exp(-1.*Um)*(3./2. + Um));
+			bracket2 = bracket2/Um;
+			//bracket = sqrt(PI/pow3(Um))*erf(sqrt(Um))/2.-exp(-1.*Um)/Um + e1(Um);
+			bracket = bracket1 + bracket2;
+
+			if (1 && nelem==0 && n==9 && l==8 && Collider ==1)
+				fprintf(ioQQQ," %g %g %g %g %g %g %g %g\n",fb2, bracket,sqrt(PI/pow3(Um))*erf(sqrt(Um))/2.,e1(Um),
+						Um, exp(-1.*Um)/Um, bracket1, bracket2);
+		}
 		else
 		{
-			double factor = 1 + Um + Um*Um/2.;
-			bracket = 4.*(1-eUm*factor)/pow3(Um);
-			bracket += 2*e1(Um)-e1(EC);
+			//double factor = 1 + Um + Um*Um/2.;
+			//bracket = 4.*(1-eUm*factor)/pow3(Um);
+			if (EC<Umc)
+			/* this is unlikely and correspond to contribution of eq (122) in Nigel's talk
+			 * it kicks on extreme high density cases
+			 */
+			{
+				bracket = 4.*(1-exp(-1.*EC)*(1. + EC + EC*EC/4.))/pow3(Umc) +
+						sqrt(PI/pow3(Um))*(erf(sqrt(Um))-erf(sqrt(EC)))/2.-exp(-1.*Um)/Um;
+				bracket += e1(Um);
+			}
+			else //eq 12 Badnell et al. 2021 MNRAS
+			{
+				bracket = 4.*(1-exp(-1.*Umc)*(1. + Umc + Umc*Umc/2.))/pow3(Umc);
+				bracket += 2.*e1(Umc)-e1(EC);
+			}
+
+
+			if (1 && nelem==0 && n==9 && l==8 )// && Collider ==1)
+			{
+				fprintf(ioQQQ,"Collider %li -----\n",Collider);
+				fprintf(ioQQQ," %g %g %g %g %g\n",fb2, bracket,2.*e1(Um)-e1(EC),Um,e1(Um));
+				//fprintf(ioQQQ," discrepant factor %g %g %g %g %g\n ",(1.-eUm*factor),(1-eUm*factor),eUm*factor,factor,eUm);
+				fprintf(ioQQQ," factor*eUm  %g %g %g\n", 4.*(1. - exp(-1.*Um)*(1. + Um + Um*Um/2.))/pow3(Um),exp(-1.*Um),(1. + Um + Um*Um/4.));
+				fprintf(ioQQQ," factor*eEC  %g %g %g\n", 4.*(1. - exp(-1.*EC)*(1. + EC + EC*EC/4.))/pow3(Um),exp(-1.*EC),(1. + EC + EC*EC/4.));
+				fprintf(ioQQQ,"EC factor2 %g %g\n",sqrt(PI/pow3(Um))*(erf(sqrt(Um))-erf(sqrt(EC)))/2,erf(sqrt(Um))-erf(sqrt(EC)));
+				//fprintf(ioQQQ," eUm %g eUm*um %g eUm*Um*Um %g\n",eUm, eUm*Um, eUm*Um*Um/2.);
+				fprintf(ioQQQ," Emin %g Um %g %g EC %g %g \n", Emin, Um, sqrt(Um*EC), EC, Umc);
+				fprintf(ioQQQ,"RC %g RC1 %g RD %g deltaE_eV %g \n",RC,RC1,RD,deltaE_eV);
+			}
 		}
 	}
 	ASSERT( bracket >= 0.);
@@ -1591,6 +1635,14 @@ double CS_l_mixing_PS64_expI(
 	/* NB - the term in parentheses corrects for the fact that COLL_CONST is only appropriate
 	 * for electron colliders and is off by reduced_mass_2_emass^-1.5 */
 	cs = rate / ( COLL_CONST * powpq(reduced_mass_2_emass, -3, 2) ) * phycon.sqrte * g;
+
+	if (0 && nelem==1 && n==5 && l==1 && EC< Emin && Collider ==1)
+	{
+		fprintf(ioQQQ," cs rate = %g %g\n",cs, rate);
+		fprintf(ioQQQ," param %li %g %g %g %li\n ",ipISO, tau, target_charge,g,lp);
+		fprintf(ioQQQ,"all params nelem %li ipISO %li tau %g tc %g n %li l %li g %g lp %li dE %g C %li\n",
+				nelem, ipISO, tau, target_charge, n,l,g,lp,deltaE_eV,Collider);
+	}
 
 	ASSERT( cs > 0. );
 
