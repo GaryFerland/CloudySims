@@ -1587,6 +1587,8 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 				while( splupsstream.peek() != '\n' )
 				{
 					splupsstream.get(qtemp,cs_values_col);
+					if( qtemp[0] == ' ' && qtemp[1] == ' ' )
+						break;
 					double temp = atof(qtemp);
 					if( DEBUGSTATE )
 					{
