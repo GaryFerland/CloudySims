@@ -164,7 +164,8 @@ public:
 			const long iteration,
 			const long nzone,
 			const long numLevels,
-			const multi_arr<double,2,C_TYPE> &matrix );
+			const multi_arr<double,2,C_TYPE> &matrix,
+			const valarray<double> &creation );
 
 private:
 	void createImage_PPM( const string &basename,
@@ -173,7 +174,8 @@ private:
 
 	void createImage_FITS( const string &basename,
 			const long numLevels,
-			const multi_arr<double,2,C_TYPE> &matrix );
+			const multi_arr<double,2,C_TYPE> &matrix,
+			const valarray<double> &creation );
 };
 
 /** struct for holding user-defined blend */

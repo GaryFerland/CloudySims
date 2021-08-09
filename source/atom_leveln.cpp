@@ -485,7 +485,7 @@ void Atom_LevelN::operator()(
 		if( lgImgMatrix && prt.img_matrix.matchIteration( iteration ) &&
 				prt.img_matrix.matchZone( nzone ) )
 		{
-			prt.img_matrix.createImage( "", iteration, nzone, nlev, amat );
+			prt.img_matrix.createImage( "", iteration, nzone, nlev, amat, bvec );
 		}
 
 
@@ -740,7 +740,7 @@ void Atom_LevelN::operator()(
 			pops[level] = (double)MAX2(0.,pops[level]);
 		}
 
-		prt.img_matrix.createImage( "negPop", iteration, nzone, nlev, amat );
+		prt.img_matrix.createImage( "negPop", iteration, nzone, nlev, amat, bvec );
 	}
 
 	if(  lgDeBug || (trace.lgTrace && trace.lgTrLevN) )

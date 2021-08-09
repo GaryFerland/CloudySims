@@ -280,7 +280,8 @@ void t_img_matrix::createImage( const string &fname_prefix,
 				const long iteration,
 				const long nzone,
 				const long numLevels,
-				const multi_arr<double,2,C_TYPE> &matrix )
+				const multi_arr<double,2,C_TYPE> &matrix,
+	       			const valarray<double> &creation )
 {
 	DEBUG_ENTRY( "t_img_matrix::createImage()" );
 
@@ -289,12 +290,14 @@ void t_img_matrix::createImage( const string &fname_prefix,
 
 	long nlev = 0;
 	multi_arr<double,2,C_TYPE> submatrix;
+	valarray<double> creation_subv;
 
 	if( speciesLevelList.front() == 1 &&
 		speciesLevelList.back() == numLevels )
 	{
 		nlev = numLevels;
 		submatrix = matrix;
+		creation_subv = creation;
 	}
 	else
 	{
@@ -309,6 +312,7 @@ void t_img_matrix::createImage( const string &fname_prefix,
 		nlev = ilast - ifront + 1;
 
 		submatrix.alloc( nlev, nlev );
+		creation_subv.resize( nlev );
 
 		for( vector<long>::iterator ipLo = speciesLevelList.begin();
 			 ipLo != speciesLevelList.end(); ++ipLo )
@@ -319,6 +323,8 @@ void t_img_matrix::createImage( const string &fname_prefix,
 			long iy = *ipLo - ifront;
 			if( iy >= nlev )
 				continue;
+
+			creation_subv[ iy ] = creation[ *ipLo ];
 
 			for( vector<long>::iterator ipHi = speciesLevelList.begin();
 				ipHi != speciesLevelList.end(); ++ipHi )
@@ -346,7 +352,7 @@ void t_img_matrix::createImage( const string &fname_prefix,
 
 	if( lgFITS )
 	{
-		createImage_FITS( basename, nlev, submatrix );
+		createImage_FITS( basename, nlev, submatrix, creation_subv );
 	}
 	else
 	{
@@ -357,14 +363,16 @@ void t_img_matrix::createImage( const string &fname_prefix,
 
 void t_img_matrix::createImage_FITS( const string &basename,
 				const long numLevels,
-				const multi_arr<double,2,C_TYPE> &matrix )
+				const multi_arr<double,2,C_TYPE> &matrix,
+	       			const valarray<double> &creation )
 {
 	DEBUG_ENTRY( "t_img_matrix::createImage_PPM()" );
 
 	string filename = basename + ".fits";
 
 	FILE *fp = open_data( filename, "w" );
-	saveFITSimg( fp, numLevels, matrix );
+	saveFITSimg( fp, "MATRIX", "s^{-1}", numLevels, matrix );
+	saveFITSimg( fp, "CREATION", "cm^3 s^{-1}", numLevels, creation );
 	fclose( fp );
 }
 

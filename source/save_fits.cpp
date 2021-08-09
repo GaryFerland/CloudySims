@@ -84,6 +84,7 @@ STATIC void writeCloudyDetails( void );
 STATIC long addComment( const string& CommentToAdd );
 STATIC long addKeyword_txt( const char *theKeyword, const void *theValue, const char *theComment, long Str_Or_Log );
 STATIC long addKeyword_num( const char *theKeyword, long theValue, const char *theComment);
+STATIC long addKeyword_dbl( const char *theKeyword, const double theValue, const char *theComment);
 inline string int2string(int val);
 
 void saveFITSfile( FILE* ioPUN, int option, realnum Elo, realnum Ehi, realnum Enorm )
@@ -779,6 +780,23 @@ STATIC long addKeyword_num( const char *theKeyword, long theValue, const char *t
 	return numberOfBytesWritten;
 }
 
+STATIC long addKeyword_dbl( const char *theKeyword, const double theValue, const char *theComment)
+{
+	long numberOfBytesWritten = 0;
+
+	DEBUG_ENTRY( "addKeyword_dbl()" );
+
+	numberOfBytesWritten = fprintf(ioFITS_OUTPUT, "%-8s%-2s%20.4e%3s%-47s",
+		theKeyword,
+		"= ",
+		theValue,
+		" / ",
+		theComment );
+
+	ASSERT( numberOfBytesWritten%LINESIZE == 0 );
+	return numberOfBytesWritten;
+}
+
 long addComment( const string& CommentToAdd )
 {
 	DEBUG_ENTRY( "addComment()" );
@@ -822,15 +840,34 @@ STATIC void get_data_minmax( const long nPixels,
 	datamax = -1e300;
 	datamin = 1e300;
 
-	for( long ix = 0; ix < nPixels; ix++ )
+	for( long irow = 0; irow < nPixels; irow++ )
 	{
-		for( long iy = 0; iy < nPixels; iy++ )
+		for( long icol = 0; icol < nPixels; icol++ )
 		{
-			if( a[iy][ix] > datamax )
-				datamax = a[iy][ix];
-			if( a[iy][ix] < datamin )
-				datamin = a[iy][ix];
+			if( a[irow][icol] > datamax )
+				datamax = a[irow][icol];
+			if( a[irow][icol] < datamin )
+				datamin = a[irow][icol];
 		}
+	}
+
+	return;
+}
+
+STATIC void get_data_minmax( const long nCols, const valarray<double> &a,
+				double &datamin, double &datamax )
+{
+	DEBUG_ENTRY( "get_data_minmax()" );
+
+	datamax = -1e300;
+	datamin = 1e300;
+
+	for( long icol = 0; icol < nCols; icol++ )
+	{
+		if( a[icol] > datamax )
+			datamax = a[icol];
+		if( a[icol] < datamin )
+			datamin = a[icol];
 	}
 
 	return;
@@ -862,23 +899,28 @@ STATIC void punchFITSimg_PrimaryHeader()
 	return;
 }
 
-STATIC void punchFITSimg_ExtensionHeader( const long nPixels,
+STATIC void punchFITSimg_ExtensionHeader( const string &extName,
+					const string &units,
+					const long nCols, const long nRows,
 					const double datamin, const double datamax )
 {
 	DEBUG_ENTRY( "punchFITSimg_ExtensionHeader()" );
 
+	string name = "'" + extName + "'";
+	string bunits = "'" + units + "'";
+
 	bytesAdded += addKeyword_txt( "XTENSION", "'IMAGE   '",	"IMAGE extension", 0 );
 	bytesAdded += addKeyword_num( "BITPIX"  , bitpix_img,	"number of bits per data pixel" );
 	bytesAdded += addKeyword_num( "NAXIS"   , 2,		"number of data axes" );
-	bytesAdded += addKeyword_num( "NAXIS1"  , nPixels,	"length of data axis 1" );
-	bytesAdded += addKeyword_num( "NAXIS2"  , nPixels,	"length of data axis 2" );
+	bytesAdded += addKeyword_num( "NAXIS1"  , nCols,	"length of data axis 1" );
+	bytesAdded += addKeyword_num( "NAXIS2"  , nRows,	"length of data axis 2" );
 	bytesAdded += addKeyword_num( "PCOUNT"  , 0,		"required keyword; must = 0" );
 	bytesAdded += addKeyword_num( "GCOUNT"  , 1,		"required keyword; must = 1" );
-	bytesAdded += addKeyword_txt( "EXTNAME" , "'Matrix'",	"Extension Name", 0 );
+	bytesAdded += addKeyword_txt( "EXTNAME" , name.c_str(),	"Extension Name", 0 );
 	bytesAdded += addKeyword_num( "EXTVER"  , 1,		"Extension Version" );
-	bytesAdded += addKeyword_num( "DATAMIN" , datamin,	"Lowest non-zero array value" );
-	bytesAdded += addKeyword_num( "DATAMAX" , datamax,	"Highest array value" );
-	bytesAdded += addKeyword_txt( "BUNIT"   , "'s^{-1}  '",	"Image Units", 0 );
+	bytesAdded += addKeyword_dbl( "DATAMIN" , datamin,	"Lowest non-zero array value" );
+	bytesAdded += addKeyword_dbl( "DATAMAX" , datamax,	"Highest array value" );
+	bytesAdded += addKeyword_txt( "BUNIT"   , bunits.c_str(),"Image Units", 0 );
 
 	/* After everything else */
 	bytesAdded += fprintf(ioFITS_OUTPUT, "%-80s", "END" );
@@ -893,16 +935,16 @@ STATIC void punchFITSimg_ExtensionHeader( const long nPixels,
 	return;
 }
 
-STATIC void punchFITSimg_ExtensionData( const long nPixels,
+STATIC void punchFITSimg_ExtensionData_matrix( const long nPixels,
 					const multi_arr<double,2,C_TYPE> &image )
 {
-	DEBUG_ENTRY( "punchFITSimg_ExtensionData()" );
+	DEBUG_ENTRY( "punchFITSimg_ExtensionData_matrix()" );
 
-	for( long iy = 0; iy < nPixels; iy++ )
+	for( long irow = 0; irow < nPixels; irow++ )
 	{
-		for( long ix = 0; ix < nPixels; ix++ )
+		for( long icol = 0; icol < nPixels; icol++ )
 		{
-			double v = image[iy][ix];
+			double v = image[irow][icol];
 #if !defined(_BIG_ENDIAN) 
 			ByteSwap5(v);
 #endif
@@ -917,8 +959,29 @@ STATIC void punchFITSimg_ExtensionData( const long nPixels,
 	return;
 }
 
-void saveFITSimg( FILE *ioPUN, const long nPixels,
-			const multi_arr<double,2,C_TYPE> &image )
+STATIC void punchFITSimg_ExtensionData_vector( const long nCols,
+					const valarray<double> &vec )
+{
+	DEBUG_ENTRY( "punchFITSimg_ExtensionData_vec()" );
+
+	for( long icol = 0; icol < nCols; icol++ )
+	{
+		double v = vec[icol];
+#if !defined(_BIG_ENDIAN) 
+		ByteSwap5(v);
+#endif
+		bytesAdded += (long)fwrite( &v, 1, sizeof(double), ioFITS_OUTPUT );
+	}
+
+	int tempInt = 0;
+	while( bytesAdded % RECORDSIZE > 0 )
+		bytesAdded += (long)fwrite( &tempInt, 1, 1, ioFITS_OUTPUT );
+
+	return;
+}
+
+void saveFITSimg( FILE *ioPUN, const string &extName, const string &units,
+		const long nPixels, const multi_arr<double,2,C_TYPE> &image )
 {
 	DEBUG_ENTRY( "saveFITSimg()" );
 
@@ -928,6 +991,21 @@ void saveFITSimg( FILE *ioPUN, const long nPixels,
 
 	ioFITS_OUTPUT = ioPUN;
 	punchFITSimg_PrimaryHeader();
-	punchFITSimg_ExtensionHeader( nPixels, datamin, datamax );
-	punchFITSimg_ExtensionData( nPixels, image );
+	punchFITSimg_ExtensionHeader( extName, units, nPixels, nPixels,
+					datamin, datamax );
+	punchFITSimg_ExtensionData_matrix( nPixels, image );
+}
+
+void saveFITSimg( FILE *ioPUN, const string &extName, const string &units,
+			const long nCols, const valarray<double> &vec )
+{
+	DEBUG_ENTRY( "saveFITSimg()" );
+
+	double datamin,
+	       datamax;
+	get_data_minmax( nCols, vec, datamin, datamax );
+
+	ioFITS_OUTPUT = ioPUN;
+	punchFITSimg_ExtensionHeader( extName, units, nCols, 1, datamin, datamax );
+	punchFITSimg_ExtensionData_vector( nCols, vec );
 }

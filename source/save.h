@@ -175,11 +175,24 @@ void saveFITSfile(
 
 /**Save rate matrix to a FITS file.  Mainly a debugging aid.
  * \param io       [in]	the file we will write to
+ * \param extName  [in]	extension name
+ * \param units    [in]	vector units
  * \param nPixels  [in]	dimension of (square) image
  * \param image    [in]	image to write in FITS extension
  */
-void saveFITSimg( FILE *io, const long nPixels,
+void saveFITSimg( FILE *io, const string &extName, const string &units,
+		const long nPixels,
 		const multi_arr<double,2,C_TYPE> &image );
+
+/**Save rate matrix to a FITS file.  Mainly a debugging aid.
+ * \param io       [in]	the file we will write to
+ * \param extName  [in]	extension name
+ * \param units    [in]	vector units
+ * \param nCols    [in]	length of vector
+ * \param vector   [in]	vector to write in FITS extension
+ */
+void saveFITSimg( FILE *io, const string &extName, const string &units,
+		const long nCols, const valarray<double> &vec );
 
 /**SaveHeat save contributors to local heating, with save heat command, called by save_do 
 \param io the file we will write to

@@ -237,7 +237,7 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 				else
 				{
 					RadDecay[ipLo] = MAX2( iso_ctrl.SmallA, sp->trans(level,ipLo).Emis().Aul()*
-												  (sp->trans(level,ipLo).Emis().Ploss()) );
+							       		  (sp->trans(level,ipLo).Emis().Ploss()) );
 					pump[ipLo] = MAX2( iso_ctrl.SmallA, sp->trans(level,ipLo).Emis().pump() );
 				}
 			}
@@ -491,7 +491,9 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 		if( lgImgMatrix && prt.img_matrix.matchIteration( iteration ) &&
 				prt.img_matrix.matchZone( nzone ) )
 		{
-			prt.img_matrix.createImage( "", iteration, nzone, numlevels_local, SaveZ );
+			valarray<double> c( get_ptr(creation), creation.size() );
+			prt.img_matrix.createImage( "", iteration, nzone,
+							numlevels_local, SaveZ, c );
 		}
 
 
@@ -673,7 +675,11 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 		}
 
 		if( lgNegPop )
-			prt.img_matrix.createImage( "negPop", iteration, nzone, numlevels_local, SaveZ );
+		{
+			valarray<double> c( get_ptr(creation), creation.size() );
+			prt.img_matrix.createImage( "negPop", iteration, nzone,
+							numlevels_local, SaveZ, c );
+		}
 	}
 	/* all solvers end up here */
 
