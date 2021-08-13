@@ -156,29 +156,30 @@ double hydro_energy(long nelem, long n, long l, long s, long j)
 
 	enum{ DEBUG_LOC = false };
 
-        double E_H;
-        if( n > iso_sp[ipH_LIKE][nelem].n_HighestResolved_max )
-        {
-                E_H = H_RYD_FACTOR * RYD_INF * POW2((double)(nelem+1)/(double)n);
-        }
-        else
-        {
-                E_H = iso_sp[ipH_LIKE][nelem].energy_ioniz(n, l, s, 2*j+1);
-		
-		if( DEBUG_LOC )
-		{
-         		fprintf( ioQQQ, "debug E_H n l s QN2ind %.2e %ld %ld %ld %ld %ld\n",
-					E_H, n, l, s, j, QN2ind(n, l, s, 2*j+1) );
-			fprintf( ioQQQ, "debug level_ion Ionpot %.2e %.2e \n",
-					iso_sp[ipH_LIKE][nelem].energy_ioniz(n, l, s, 2*j+1),
-					iso_sp[ipH_LIKE][nelem].IonPot );
-		}
+
+	/* NB NB
+	 * 2021-06-02, M.Chatzikos
+	 *
+	 * Do not use logic based on the number of resolved levels in the model,
+	 * as it leads to an ASSERT() being thrown when the command
+	 *    'compile recombination coefficients H-like'
+	 * is used.  That's b/c that command expects more resolved levels than
+	 * typically available in the Stout .nrg.dat files.
+	 */
+
+	double E_H = iso_sp[ipH_LIKE][nelem].energy_ioniz(n, l, s, 2*j+1);
+
+	if( E_H < 0. )
+	{
+		E_H = H_RYD_FACTOR * RYD_INF * POW2((double)(nelem+1)/(double)n);
 	}
 
 	if( DEBUG_LOC )
 	{
-		fprintf( ioQQQ, "debug E_H nelem n l s j %.2e %ld %ld %ld %ld %ld\n",
-				E_H, nelem, n, l, s, j );
+        	fprintf( ioQQQ, "debug E_H n l s j QN2ind IonPot"
+				" %.2e %ld %ld %ld %ld %ld %.2e\n",
+				E_H, n, l, s, j, QN2ind(n, l, s, 2*j+1),
+				iso_sp[ipH_LIKE][nelem].IonPot );
 	}
 
         ASSERT(E_H > 0.);

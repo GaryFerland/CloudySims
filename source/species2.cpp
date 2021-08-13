@@ -761,7 +761,7 @@ void dBase_solve()
 		}
 	}
 
-	// total heating for all dBase dBaseSpecies	
+	// total heating for all data base species
 	thermal.setHeating(0,27,totalHeating);
 
 	return;

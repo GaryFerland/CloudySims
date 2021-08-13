@@ -197,17 +197,22 @@ struct t_abund : public module {
 	/** logical flag saying whether to include this element in save output for AGN tables */
 	bool lgAGN[LIMELM];
 
-	realnum SolarSave[LIMELM];
-
-	bool lgAbnSolar;
+	/** indicates whether abundances still at reference value */
+	bool lgAbnReference;
 
 	/** set true if abundances set with command, if false then
 	 * must set default solar abundances
 	 */
 	bool lgAbundancesSet;
 
-	/** solar abundances for the current calculation */
-	realnum solar[LIMELM];
+	/** initial elemental abundances for the current calculation */
+	realnum ReferenceAbun[LIMELM];
+
+	/** final gas phase abundances for the current calculation */
+	realnum GasPhase[LIMELM];
+
+	/** number of atoms depleted into grains */
+	realnum AtomsDepleted;
 
 	/* isotope fractions */
 	t_isotope IsoAbn[LIMELM];
@@ -237,11 +242,8 @@ struct t_abund : public module {
 	/** scale factors to alter abundances of elements, set with element scale */
 	realnum ScaleElement[LIMELM];
 
-	/** Depletion is set of stored scale factors for depletion of general ism */
-	realnum Depletion[LIMELM], 
-
-	/** depset is unity unless depletion is used */
-	  depset[LIMELM];
+	/** grain depletion scale factor is unity unless METALS DEPLETE is used */
+	realnum DepletionScaleFactor[LIMELM];
 
 	/** lgDepln is true if depln used */
 	bool lgDepln;
@@ -249,6 +251,8 @@ struct t_abund : public module {
 	/** scale factor for metals, set with metals command	 */
 	realnum ScaleMetals;
 
+	/** sum up depletion across all elements */
+	double SumDepletedAtoms();
 	};
 extern t_abund abund;
 

@@ -221,12 +221,8 @@ void ParseDont(Parser &p )
 	/* no collisional ionization */
 	else if( p.nMatch("COLL") && p.nMatch("IONI") )
 	{
-		fixit("This variable doesn't do anything!");
-
 		/* turn off collisional ionization */
 		atmdat.lgCollIonOn = false;
-		fprintf( ioQQQ, " This option is not working.\n Sorry.\n" );
-		cdEXIT(EXIT_FAILURE);
 	}
 
 	else if( p.nMatch("LEVE") )

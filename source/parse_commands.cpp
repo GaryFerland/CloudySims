@@ -93,7 +93,7 @@ void ParseCommands(void)
 	DEBUG_ENTRY( "ParseCommands()" );
 
 	/* following says abundances are solar  */
-	abund.lgAbnSolar = true;
+	abund.lgAbnReference = true;
 
 	/* this flag remembers whether grains have ever been turned on.  It is passed
 	 * to routine ParseAbundances - there grains will be turned on with commands
@@ -369,13 +369,15 @@ void ParseCommands(void)
 	p.m_lgDSet = false;
 	p.m_lgEOF = false;
 
-	// set default solar abundances
+	// set default reference abundances
 	p.setline("abundances \"default.abn\"");
 	ParseAbundances( p );
 
 	// set default isotopic abundances
 	p.setline("abundances isotopes \"default-iso.abn\"");
 	ParseAbundances( p );
+	/* abundances just set to default reference value */
+	abund.lgAbnReference = true;
 
 	input.lgVisibilityStatus = true;
 

@@ -1091,7 +1091,9 @@ monitor temperature "O+5" 4.340
 ## >>chng 12 oct 22, from 3 to 4, zone tau in rt_line_one
 ## >>chng 12 oct 26, from 4 to 5, adjust montiors to this branch
 ## >>chng 13 nov 05, from 5 to 4, convergence branch changes
-monitor niter 4
+## >>chng 21 mar 22, replaced asserted 4 with range 3 to 6, drift after update to NIST energies & ionization potentials
+monitor niter > 3
+monitor niter < 6
 ##
 ## >>chng 02 nov 08, from 7.5 to 8.0, had been around 6.5
 ## >>chng 02 nov 24, from 8 to 9.5, caused by using iso he rec effic
