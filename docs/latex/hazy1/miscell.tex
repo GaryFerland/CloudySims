@@ -41,6 +41,10 @@ The code stops after executing the first \cdCommand{compile}
 command it comes across.
 It will not do more than one compilation in a single run.
 
+The script \cdFilename{data/make\_data.sh} runs all the \cdCommand{compile}
+commands mentioned in this Section.
+It can be used to update the relevant data files.
+
 \section{Compile stars}
 
 Kevin Volk incorporated several large grids of stellar atmosphere
@@ -69,7 +73,7 @@ you don't want to use these stellar atmospheres.
 
 Full instructions on how to download and install the stellar continua
 are given at
-\href{http://wiki.nublado.org/wiki/StellarAtmospheres}{wiki.nublado.org/wiki/StellarAtmospheres}.
+\href{https://gitlab.nublado.org/cloudy/cloudy/-/wikis/StellarAtmospheres}{gitlab.nublado.org/cloudy/cloudy/-/wikis/StellarAtmospheres}.
 
 \begin{shaded}
 \section{Compile opacities}
@@ -647,7 +651,10 @@ This turns off all charge transfer interactions.
 \subsection{No collisional ionization}
 
 This turns off collisional ionization from ground states of all atoms
-and ions.
+and ions treated as an equivalent two-level system \citep{2017RMxAA..53..385F}.
+Specifically, this disables the collisional ionization rate coefficients computed
+with the \citet{Voronov1997} results.  
+This should only be used in experimental conditions.
 
 \subsection{No Compton effect}
 

@@ -21,11 +21,12 @@
 #include "parser.h"
 #include "service.h"
 #include "species.h"
+#include "dense.h"
 
 /* check for keyword UNITS on line, then scan wavelength or energy units if present */
 STATIC const char* ChkUnits(Parser &p);
 
-STATIC bool specBandsExists(const string filename, const string speciesLabel );
+STATIC void addUniqueSpeciesBand( const string &filename, const string &speciesLabel );
 
 inline void saveXSPEC(unsigned int option)
 {
@@ -2080,20 +2081,22 @@ void ParseSave(Parser& p)
 			//	printf("fname = '%s'\t spec = '%s'\n",
 			//		chSecondFilename.c_str(), speciesLabel.c_str());
 
-			/* Unique band file and species */
-			if( ! specBandsExists( chSecondFilename, speciesLabel ) )
-			{
-				save_species_bands thisSpBand;
-				thisSpBand.filename = chSecondFilename;
-				thisSpBand.speciesLabel = speciesLabel;
-				save.specBands.push_back( thisSpBand );
-			}
+			addUniqueSpeciesBand( chSecondFilename, speciesLabel );
+
+			// check whether intrinsic or emergent line emissivity
+			save.lgEmergent[save.nsave] = false;
+			if( p.nMatch("EMER") )
+				save.lgEmergent[save.nsave] = true;
 		}
-		else if (p.nMatch( "COLUMN" ) )
+
+		/* second keyword appears as both 'density' and 'densities'
+		 * in the test suite */
+		else if (p.nMatch( "COLUMN" ) && p.nMatch( "DENSIT" ) )
 		{
 			/* column densities*/
 			strcpy( save.chSaveArgs[save.nsave], "COLU" );
 		}
+
 		else if( p.nMatch( "CONT" ) )
 		{
 			// Add species to vector only when not present
@@ -2568,6 +2571,13 @@ void ParseSave(Parser& p)
 		ioMAP = save.params[save.nsave].ipPnunit;
 	}
 
+	/* make sure FeII bands are always processed
+	 * if a 'save species bands' command has not been issued
+	 * the bands will be computed, and printed on main output,
+	 * but no 'save' output file will be created */
+	if( dense.lgElmtOn[ipIRON] )
+		addUniqueSpeciesBand( "FeII_bands.ini", "Fe+" );
+
 	/* if not done already and chTitle has been set to a string then print title
 	 * logic to prevent more than one title in grid calculation */
 	if( save.lgSaveTitle(save.nsave) && chTitle.length() > 0 )
@@ -2770,8 +2780,10 @@ STATIC const char* ChkUnits( Parser &p )
 	return val;
 }
 
-STATIC bool specBandsExists( const string filename, const string speciesLabel )
+STATIC bool specBandsExists( const string &filename, const string &speciesLabel )
 {
+	DEBUG_ENTRY( "specBandsExists()" );
+
 	bool exists = false;
 
 	for( vector<save_species_bands>::iterator it = save.specBands.begin();
@@ -2786,4 +2798,19 @@ STATIC bool specBandsExists( const string filename, const string speciesLabel )
 	}
 
 	return exists;
+}
+
+STATIC void addUniqueSpeciesBand( const string &filename, const string &speciesLabel )
+{
+	DEBUG_ENTRY( "addUniqueSpeciesBand()" );
+
+	if( specBandsExists( filename, speciesLabel ) )
+		return;
+
+	save_species_bands thisSpBand;
+	thisSpBand.filename = filename;
+	thisSpBand.speciesLabel = speciesLabel;
+	save.specBands.push_back( thisSpBand );
+
+	return;
 }

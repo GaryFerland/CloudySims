@@ -796,7 +796,7 @@ double t_ADfA::coll_ion(
 
 	rate = (CF[in-1][iz-1][2]*(1.0 + CF[in-1][iz-1][1]*
 	  sqrt(u))/(CF[in-1][iz-1][3] + u)*pow(u,CF[in-1][iz-1][4])*
-	  exp(-u));
+	  exp(-u)) * atmdat.lgCollIonOn;
 
 	return rate;
 }
