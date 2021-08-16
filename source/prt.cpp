@@ -372,7 +372,21 @@ void t_img_matrix::createImage_FITS( const string &basename,
 
 	FILE *fp = open_data( filename, "w" );
 	saveFITSimg( fp, "MATRIX", "s^{-1}", numLevels, matrix );
-	saveFITSimg( fp, "CREATION", "cm^3 s^{-1}", numLevels, creation );
+	saveFITSimg( fp, "CREATION", "cm^{-3} s^{-1}", numLevels, creation );
+	fclose( fp );
+}
+
+void t_img_matrix::addImagePop_FITS(
+				const long numLevels,
+				const valarray<double> &pop )
+{
+	stringstream ss;
+	ss << species << "_it" << iteration << "_nz" << nzone;
+	string basename = ss.str();
+	string filename = basename + ".fits";
+
+	FILE *fp = open_data( filename, "a" );
+	saveFITSimg( fp, "POPULATIONS", "cm^{-3}", numLevels, pop );
 	fclose( fp );
 }
 

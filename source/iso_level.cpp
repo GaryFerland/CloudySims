@@ -511,6 +511,14 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 			cdEXIT(EXIT_FAILURE);
 		}
 
+		if( lgImgMatrix && prt.img_matrix.matchIteration( iteration ) &&
+				prt.img_matrix.matchZone( nzone ) )
+		{
+			valarray<double> c( get_ptr(creation), creation.size() );
+			prt.img_matrix.addImagePop_FITS( numlevels_local, c );
+		}
+
+
 		/* check whether solution is valid */
 		/* >>chng 06 aug 28, both of these from numLevels_max to _local. */
 		for( level=ipH1s; level < numlevels_local; level++ )
@@ -641,10 +649,10 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 			/* sp->st[level].PopLTE = 0.; */
 		}
 
-		/* TotalPopExcited is sum of excited level pops */
 		/* renormalize the populations to agree with ion solver */
 		iso_renorm( nelem, ipISO, renorm );
 
+		/* TotalPopExcited is sum of excited level pops */
 		double TotalPopExcited = 0.;
 		/* create sum of populations */
 		for( level=1; level < numlevels_local; level++ )

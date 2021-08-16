@@ -167,6 +167,10 @@ public:
 			const multi_arr<double,2,C_TYPE> &matrix,
 			const valarray<double> &creation );
 
+	void addImagePop_FITS(
+			const long numLevels,
+			const valarray<double> &pop );
+
 private:
 	void createImage_PPM( const string &basename,
 			const long numLevels,
