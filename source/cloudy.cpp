@@ -31,7 +31,7 @@ STATIC inline void InitPrtPostAtmdat()
 {
 	DEBUG_ENTRY( "InitPrtPostAtmdat()" );
 	prt.matrix.resolveLevels();
-	prt.img_matrix.resolveLevels();
+	save.img_matrix.resolveLevels();
 }
 
 /* returns 1 if disaster strikes, 0 if everything appears ok */

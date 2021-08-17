@@ -22,6 +22,7 @@
 #include "dense.h"
 #include "vectorize.h"
 #include "prt.h"
+#include "save.h"
 #include "iterations.h"
 
 
@@ -488,11 +489,11 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 			prt.matrix.prtRates( numlevels_local, z, c );
 		}
 
-		if( lgImgMatrix && prt.img_matrix.matchIteration( iteration ) &&
-				prt.img_matrix.matchZone( nzone ) )
+		if( lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
+				save.img_matrix.matchZone( nzone ) )
 		{
 			valarray<double> c( get_ptr(creation), creation.size() );
-			prt.img_matrix.createImage( "", iteration, nzone,
+			save.img_matrix.createImage( "", iteration, nzone,
 							numlevels_local, SaveZ, c );
 		}
 
@@ -511,11 +512,11 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 			cdEXIT(EXIT_FAILURE);
 		}
 
-		if( lgImgMatrix && prt.img_matrix.matchIteration( iteration ) &&
-				prt.img_matrix.matchZone( nzone ) )
+		if( lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
+				save.img_matrix.matchZone( nzone ) )
 		{
 			valarray<double> c( get_ptr(creation), creation.size() );
-			prt.img_matrix.addImagePop_FITS( numlevels_local, c );
+			save.img_matrix.addImagePop_FITS( numlevels_local, c );
 		}
 
 
@@ -685,7 +686,7 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 		if( lgNegPop )
 		{
 			valarray<double> c( get_ptr(creation), creation.size() );
-			prt.img_matrix.createImage( "negPop", iteration, nzone,
+			save.img_matrix.createImage( "negPop", iteration, nzone,
 							numlevels_local, SaveZ, c );
 		}
 	}

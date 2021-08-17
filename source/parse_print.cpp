@@ -188,27 +188,11 @@ void ParsePrint(
 			p.GetQuote( species );
 			if( species == "" )
 			{
-				fprintf( ioQQQ, "Invalid species label: ''\n" );
+				fprintf( ioQQQ, "Empty species label: ''\n" );
 				cdEXIT( EXIT_FAILURE );
 			}
 
-			if( p.nMatch( "IMAG" ) )
-			{
-				prt.img_matrix.lgImgRates = true;
-				prt.img_matrix.setSpecies( species );
-				if( p.nMatch( "FITS" ) )
-					prt.img_matrix.lgFITS = true;
-				else if( p.nMatch( " PPM" ) )
-					prt.img_matrix.lgFITS = false;
-				if( p.nMatch( "ITER" ) )
-					prt.img_matrix.iteration = p.getNumberCheck( "iter" );
-				if( p.nMatch( "ZONE" ) )
-					prt.img_matrix.zone = p.getNumberCheck( "zone" );
-			}
-			else
-			{
-				prt.matrix.setSpecies( species );
-			}
+			prt.matrix.setSpecies( species );
 		}
 		else
 		{

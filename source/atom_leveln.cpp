@@ -14,6 +14,7 @@
 #include "conv.h"
 #include "vectorize.h"
 #include "prt.h"
+#include "save.h"
 
 // Enable eigen-analysis of interaction matrix, also need to link with
 // -llapack (and have appropriate development package installed to
@@ -482,10 +483,10 @@ void Atom_LevelN::operator()(
 			prt.matrix.prtRates( nlev, amat, bvec );
 		}
 
-		if( lgImgMatrix && prt.img_matrix.matchIteration( iteration ) &&
-				prt.img_matrix.matchZone( nzone ) )
+		if( lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
+				save.img_matrix.matchZone( nzone ) )
 		{
-			prt.img_matrix.createImage( "", iteration, nzone, nlev, amat, bvec );
+			save.img_matrix.createImage( "", iteration, nzone, nlev, amat, bvec );
 		}
 
 
@@ -740,7 +741,7 @@ void Atom_LevelN::operator()(
 			pops[level] = (double)MAX2(0.,pops[level]);
 		}
 
-		prt.img_matrix.createImage( "negPop", iteration, nzone, nlev, amat, bvec );
+		save.img_matrix.createImage( "negPop", iteration, nzone, nlev, amat, bvec );
 	}
 
 	if(  lgDeBug || (trace.lgTrace && trace.lgTrLevN) )

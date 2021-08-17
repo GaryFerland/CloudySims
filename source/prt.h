@@ -134,54 +134,6 @@ public:
 			valarray<double> &b );
 };
 
-class t_img_matrix : public t_prt_matrix {
-public:
-	bool lgImgRates;
-	bool lgFITS;
-	long iteration;
-	long zone;
-
-	void zero();
-	void comment(t_warnings&) {}
-
-	const char *chName() const
-	{
-		return "img_matrix";
-	}
-
-	inline bool matchIteration( const long this_iteration ) const
-	{
-		return ( ( iteration > 0 && iteration == this_iteration ) ||
-				! iteration );
-	}
-
-	inline bool matchZone( const long this_zone ) const
-	{
-		return ( ( zone > 0 && zone == this_zone ) || ! zone );
-	}
-
-	void createImage( const string &fname,
-			const long iteration,
-			const long nzone,
-			const long numLevels,
-			const multi_arr<double,2,C_TYPE> &matrix,
-			const valarray<double> &creation );
-
-	void addImagePop_FITS(
-			const long numLevels,
-			const valarray<double> &pop );
-
-private:
-	void createImage_PPM( const string &basename,
-			const long numLevels,
-			const multi_arr<double,2,C_TYPE> &matrix );
-
-	void createImage_FITS( const string &basename,
-			const long numLevels,
-			const multi_arr<double,2,C_TYPE> &matrix,
-			const valarray<double> &creation );
-};
-
 /** struct for holding user-defined blend */
 struct t_blend {
 	string chLabel;
@@ -304,7 +256,6 @@ struct t_prt {
 	bool lgPrtArry[LIMELM];
 
 	t_prt_matrix matrix;
-	t_img_matrix img_matrix;
 
 	/** logical lgFaintOn normally true, says to not print very faint lines
 	  set false with print faint off command

@@ -20,6 +20,7 @@
 #include "freebound.h"
 #include "lines_service.h"
 #include "prt.h"
+#include "save.h"
 #include "rfield.h"
 
 /*iso_zero zero data for hydrogen and helium */
@@ -576,7 +577,7 @@ STATIC void iso_allocate(void)
 						sp->lgPrtMatrix = true;
 
 					sp->lgImgMatrix = false;
-					if( chemicalLabel == prt.img_matrix.species )
+					if( chemicalLabel == save.img_matrix.species )
 						sp->lgImgMatrix = true;
 				}
 

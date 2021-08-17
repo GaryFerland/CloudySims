@@ -107,6 +107,7 @@ requested elements will be printed.
 This is a debugging aid.
 
 \subsection{Print arrays levels ``species''}
+\label{sec:PrintArraysLevels}
 
 \par
 This prints the matrix that enters the solver
@@ -123,16 +124,6 @@ e.g., ``C+[:]''.
 A subset may be specified by entering the desired levels
 in the brackets, e.g., ``C+[1:5]'' will print rows 1--5
 and columns 1--5 of the matrix.
-
-A PPM image of the same data will be generated instead, if the keyword
-\cdCommand{image} appears on the command.
-A FITS image will be generated instead of a PPM image, if the keyword
-\cdCommand{FITS} also appears.
-Either way, the image will be generated for the given species for all
-iterations and zones.
-This can be limited to specific iteration with the keyword
-\cdCommand{iteration} followed by an iteration number, and likewise to
-a specific zone with the keyword \cdCommand{zone} followed by a zone number.
 
 
 \section{Print citation}
@@ -889,6 +880,21 @@ The options are the following:  \cdCommand{charge} transfer,
 \cdCommand{recc} for hydrogen recombination cooling, \cdCommand{opacity},
 \cdCommand{hemis}, and \cdCommand{hecs} (for He$^0$
 collision strengths).
+
+\subsection{Save arrays levels ``species'' [fits or ppm] [iteration it] [zone nz]}
+
+This is a companion command to \cdCommand{print arrays levels}, and it is also a
+debugging aid.
+The syntax for the species is the same as in Section~\ref{sec:PrintArraysLevels}.
+Using this command generates either a FITS or a PPM image, depending on the
+keyword given, \cdCommand{fits} or \cdCommand{ppm}.
+A FITS image can be viewed and manipulated with standard software (e.g., ds9,
+FTOOLS, python, etc.) in post-processing.
+
+The image will be generated for the given species for all iterations and zones.
+This can be limited to specific iteration with the keyword
+\cdCommand{iteration} followed by an iteration number, and likewise to
+a specific zone with the keyword \cdCommand{zone} followed by a zone number.
 
 \section{Save monitors}
 \label{sec:SaveMonitorsCommand}

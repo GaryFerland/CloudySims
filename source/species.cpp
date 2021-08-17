@@ -969,7 +969,7 @@ STATIC void states_nelemfill(void)
 			}
 
 			dBaseSpecies[i].lgImgMatrix = false;
-			if( prt.img_matrix.species == dBaseStates[i].chLabel() )
+			if( save.img_matrix.species == dBaseStates[i].chLabel() )
 			{
 				dBaseSpecies[i].lgImgMatrix = true;
 			}

@@ -6,6 +6,7 @@
 
 #include "energy.h"
 #include "lines.h"
+#include "prt.h"
 
 class diatomics;
 class TransitionProxy;
@@ -232,6 +233,55 @@ class save_species_bands
 public:
 	string filename;
 	string speciesLabel;
+};
+
+class save_img_matrix : public t_prt_matrix
+{
+public:
+	bool lgImgRates;
+	bool lgFITS;
+	long iteration;
+	long zone;
+
+	void zero();
+	void comment(t_warnings&) {}
+
+	const char *chName() const
+	{
+		return "img_matrix";
+	}
+
+	inline bool matchIteration( const long this_iteration ) const
+	{
+		return ( ( iteration > 0 && iteration == this_iteration ) ||
+				! iteration );
+	}
+
+	inline bool matchZone( const long this_zone ) const
+	{
+		return ( ( zone > 0 && zone == this_zone ) || ! zone );
+	}
+
+	void createImage( const string &fname,
+			const long iteration,
+			const long nzone,
+			const long numLevels,
+			const multi_arr<double,2,C_TYPE> &matrix,
+			const valarray<double> &creation );
+
+	void addImagePop_FITS(
+			const long numLevels,
+			const valarray<double> &pop );
+
+private:
+	void createImage_PPM( const string &basename,
+			const long numLevels,
+			const multi_arr<double,2,C_TYPE> &matrix );
+
+	void createImage_FITS( const string &basename,
+			const long numLevels,
+			const multi_arr<double,2,C_TYPE> &matrix,
+			const valarray<double> &creation );
 };
 
 struct t_save {
@@ -549,6 +599,8 @@ public:
 	/** Parameters for species bands */
 	string SpeciesBandFile[LIMPUN];
 	vector<save_species_bands> specBands;
+
+	save_img_matrix img_matrix;
 };
 
 extern t_save save;
