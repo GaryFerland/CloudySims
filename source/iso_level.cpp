@@ -30,8 +30,7 @@ STATIC void iso_multiplet_opacities_one(
 	const long int ipISO, const long int nelem);
 
 /* solve for level populations  */
-void iso_level( const long int ipISO, const long int nelem, double &renorm,
-		const bool lgPrtMatrix, const bool lgImgMatrix )
+void iso_level( const long int ipISO, const long int nelem, double &renorm )
 {
 	long int ipHi,
 		ipLo,
@@ -483,13 +482,13 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 		}
 
 
-		if( lgPrtMatrix )
+		if( sp->lgPrtMatrix )
 		{
 			valarray<double> c( get_ptr(creation), creation.size() );
 			prt.matrix.prtRates( numlevels_local, z, c );
 		}
 
-		if( lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
+		if( sp->lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
 				save.img_matrix.matchZone( nzone ) )
 		{
 			valarray<double> c( get_ptr(creation), creation.size() );
@@ -512,7 +511,7 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 			cdEXIT(EXIT_FAILURE);
 		}
 
-		if( lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
+		if( sp->lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
 				save.img_matrix.matchZone( nzone ) )
 		{
 			valarray<double> c( get_ptr(creation), creation.size() );

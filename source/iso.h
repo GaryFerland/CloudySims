@@ -264,11 +264,8 @@ void iso_ionize_recombine( long ipISO , long nelem );
  * \param ipISO		iso-sequence index
  * \param nelem		element index
  * \param renorm	renormalization parameter
- * \param lgPrtMatrix	boolean to print the matrix input to solvers
- * \param lgImgMatrix	boolean to create an image of the matrix input to solvers
 */
-void iso_level( const long ipISO, const long nelem, double& renorm,
-		const bool lgPrtMatrix, const bool lgImgMatrix );
+void iso_level( const long ipISO, const long nelem, double& renorm );
 
 /**iso_photo do photoionization rates for element nelem on the ipISO isoelectronic sequence 
 \param ipISO
