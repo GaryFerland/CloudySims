@@ -226,6 +226,7 @@ void t_prt_matrix::resolveLevels()
 		return;
 
 	getLevelsGeneric( speciesLevels, true, speciesLevelList );
+	lgLevelsResolved = true;
 }
 
 void t_prt_matrix::prtRates( const long numLevels,
@@ -233,6 +234,11 @@ void t_prt_matrix::prtRates( const long numLevels,
 				valarray<double> &b )
 {
 	DEBUG_ENTRY( "t_prt_matrix::prtRates()" );
+
+	if( not lgLevelsResolved )
+	{
+		resolveLevels();
+	}
 
 	if( speciesLevelList.size() == 0 )
 		return;

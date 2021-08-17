@@ -27,12 +27,6 @@
 #include "called.h"
 #include "dense.h"
 
-STATIC inline void InitPrtPostAtmdat()
-{
-	DEBUG_ENTRY( "InitPrtPostAtmdat()" );
-	prt.matrix.resolveLevels();
-	save.img_matrix.resolveLevels();
-}
 
 /* returns 1 if disaster strikes, 0 if everything appears ok */
 bool cloudy()
@@ -119,8 +113,6 @@ bool cloudy()
 	 * calls iso_create
 	 * this routine only returns if this is a later call of code */
 	ContCreatePointers();
-
-	InitPrtPostAtmdat();
 
 	/* Badnell_rec_init This code is written by Terry Yun, 2005 *
 	 * It reads dielectronic recombination rate coefficient fits into 3D arrays */

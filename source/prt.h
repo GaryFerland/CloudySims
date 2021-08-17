@@ -118,6 +118,7 @@ public:
 	string species;
 	string speciesLevels;
 	vector<long> speciesLevelList;
+	bool lgLevelsResolved = false;
 
 	void zero();
 	void comment(t_warnings&) {}

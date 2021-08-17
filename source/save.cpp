@@ -23,6 +23,11 @@ void save_img_matrix::createImage( const string &fname_prefix,
 {
 	DEBUG_ENTRY( "save_img_matrix::createImage()" );
 
+	if( not lgLevelsResolved )
+	{
+		resolveLevels();
+	}
+
 	if( speciesLevelList.size() == 0 )
 		return;
 
