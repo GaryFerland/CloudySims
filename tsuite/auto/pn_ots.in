@@ -36,13 +36,15 @@ save monitors last "pn_ots.asr"
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 17, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
-monitor line "Q(H)" 4861.34A > 0.9
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "Q(H)" 4861.32A > 0.9
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 17, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
-monitor line "Q(H)" 4861.34A < 1.1
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "Q(H)" 4861.32A < 1.1
 monitor line "BaC " 3646 14.4
 ##
 ## >>chng 13 jul 24, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
@@ -50,7 +52,8 @@ monitor line "BaC " 3646 14.4
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
-monitor line "H  1" 4861.34A 1. error 0.02
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "H  1" 4861.32A 1. error 0.02
 ##
 ## >>chng 02 nov 20, from 0.11 to 0.104, new he ots diff
 ## >>chng 02 dec 11, from 0.104 to 0.099, new hei

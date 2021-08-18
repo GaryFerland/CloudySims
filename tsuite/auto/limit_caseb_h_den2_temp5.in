@@ -30,36 +30,43 @@ iterate
 ## >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 6562.80A to 6562.82A, update NIST energies
 ## >>chng 21 apr 08, wl from 6562.82A to 6562.83A, up 1-e energies to np
-monitor line "H  1"      6562.83A  2.773
+## >>chng 21 aug 18, wl from 6562.83A to 6562.80A, revert to PvH energies for H
+monitor line "H  1"      6562.80A  2.773
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
-monitor line "H  1"      4861.34A  1.0064
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "H  1"      4861.32A  1.0064
 ## >>chng 17 may 25, wl from 4340.49A to 4340.46A, up Rydberg constant
 ## >>chng 21 mar 16, wl from 4340.46A to 4340.47A, update NIST energies
-monitor line "H  1"      4340.47A  0.4713
+## >>chng 21 aug 18, wl from 4340.47A to 4340.46A, revert to PvH energies for H
+monitor line "H  1"      4340.46A  0.4713
 ## >>chng 16 jul 28, from 0.2606 to 0.2373, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.2373 to 0.1839, Fran bug fix
 ## >>chng 17 may 25, wl from 4101.76A to 4101.73A, up Rydberg constant
 ## >>chng 19 aug 06, from 0.1839 to 0.1937, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 21 mar 16, wl from 4101.73A to 4101.74A, update NIST energies
-monitor line "H  1"      4101.74A  0.1937
+## >>chng 21 aug 18, wl from 4101.74A to 4101.73A, revert to PvH energies for H
+monitor line "H  1"      4101.73A  0.1937
 ## >>chng 16 jul 28, from 0.16 to 0.1412, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.1412 to 0.1126, Fran bug fix
 ## >>chng 17 may 25, wl from 3970.09A to 3970.07A, up Rydberg constant
 ## >>chng 21 mar 16, wl from 3970.07A to 3970.08A, update NIST energies
-monitor line "H  1"      3970.08A  0.1126
+## >>chng 21 aug 18, wl from 3970.08A to 3970.07A, revert to PvH energies for H
+monitor line "H  1"      3970.07A  0.1126
 ## >>chng 16 jul 28, from 0.1057 to 0.091, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.091 to 0.074, Fran bug fix
 ## >>chng 17 may 25, wl from 3889.07A to 3889.05A, up Rydberg constant
 ## >>chng 21 mar 16, wl from 3889.05A to 3889.06A, update NIST energies
-monitor line "H  1"      3889.06A  0.074
+## >>chng 21 aug 18, wl from 3889.06A to 3889.05A, revert to PvH energies for H
+monitor line "H  1"      3889.05A  0.074
 ## >>chng 16 jul 28, from 0.0736 to 0.0622, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0622 to 0.0512, Fran bug fix
 ## >>chng 17 may 25, wl from 3835.40A to 3835.38A, up Rydberg constant
 ## >>chng 21 mar 16, wl from 3835.38A to 3835.39A, update NIST energies
-monitor line "H  1"      3835.39A  0.0512
+## >>chng 21 aug 18, wl from 3835.39A to 3835.38A, revert to PvH energies for H
+monitor line "H  1"      3835.38A  0.0512
 ## >>chng 16 jul 28, from 0.0534 to 0.0444, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0444 to 0.0369, Fran bug fix
 ## >>chng 17 may 25, wl from 3797.92A to 3797.89A, up Rydberg constant
@@ -69,12 +76,14 @@ monitor line "H  1"      3797.90A  0.0369
 ## >>chng 16 aug 07, from 0.0328 to 0.0275, Fran bug fix
 ## >>chng 17 may 25, wl from 3770.65A to 3770.63A, up Rydberg constant
 ## >>chng 21 mar 16, wl from 3770.63A to 3770.64A, update NIST energies
-monitor line "H  1"      3770.64A  0.0275
+## >>chng 21 aug 18, wl from 3770.64A to 3770.63A, revert to PvH energies for H
+monitor line "H  1"      3770.63A  0.0275
 ## >>chng 16 jul 28, from 0.0307 to 0.025, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.025 to 0.021, Fran bug fix
 ## >>chng 17 may 25, wl from 3750.17A to 3750.15A, up Rydberg constant
 ## >>chng 21 mar 16, wl from 3750.15A to 3750.16A, update NIST energies
-monitor line "H  1"      3750.16A  0.021
+## >>chng 21 aug 18, wl from 3750.16A to 3750.15A, revert to PvH energies for H
+monitor line "H  1"      3750.15A  0.021
 ## >>chng 16 jul 28, from 0.0241 to 0.0194, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0194 to 0.0164, Fran bug fix
 ## >>chng 17 may 25, wl from 3734.39A to 3734.36A, up Rydberg constant
@@ -85,22 +94,26 @@ monitor line "H  1"      3734.37A  0.0164
 ## >>chng 17 may 25, wl from 3721.96A to 3721.93A, up Rydberg constant
 ## >>chng 20 aug 22, wl from 3721.93A to 3721.94A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 3721.94A to 3721.95A, update NIST energies
-monitor line "H  1"      3721.95A  0.0131
+## >>chng 21 aug 18, wl from 3721.95A to 3721.94A, revert to PvH energies for H
+monitor line "H  1"      3721.94A  0.0131
 ## >>chng 16 jul 28, from 0.0157 to 0.0124, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0124 to 0.0106, Fran bug fix
 ## >>chng 17 may 25, wl from 3711.99A to 3711.97A, up Rydberg constant
 ## >>chng 21 mar 16, wl from 3711.97A to 3711.98A, update NIST energies
-monitor line "H  1"      3711.98A  0.0106
+## >>chng 21 aug 18, wl from 3711.98A to 3711.97A, revert to PvH energies for H
+monitor line "H  1"      3711.97A  0.0106
 ## >>chng 16 jul 28, from 0.0129 to 0.0102, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0102 to 0.0087, Fran bug fix
 ## >>chng 17 may 25, wl from 3703.87A to 3703.85A, up Rydberg constant
 ## >>chng 21 mar 16, wl from 3703.85A to 3703.86A, update NIST energies
-monitor line "H  1"      3703.86A  0.0087
+## >>chng 21 aug 18, wl from 3703.86A to 3703.85A, revert to PvH energies for H
+monitor line "H  1"      3703.85A  0.0087
 ## >>chng 16 jul 28, from 0.0108 to 0.0084, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0084 to 0.0072, Fran bug fix
 ## >>chng 17 may 25, wl from 3697.17A to 3697.15A, up Rydberg constant
 ## >>chng 21 mar 16, wl from 3697.15A to 3697.16A, update NIST energies
-monitor line "H  1"      3697.16A  0.0072
+## >>chng 21 aug 18, wl from 3697.16A to 3697.15A, revert to PvH energies for H
+monitor line "H  1"      3697.15A  0.0072
 ## >>chng 16 jul 28, from 0.3408 to 0.3056, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.3056 to 0.1879, Fran bug fix
 ## >>chng 17 may 25, wl from 1.87511m to 1.87510m, up Rydberg constant
@@ -126,38 +139,44 @@ monitor line "H  1"      1.09381m  0.0523
 ## >>chng 19 aug 06, from 0.0293 to 0.0316, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 22, wl from 1.00493m to 1.00494m, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 08, wl from 1.00494m to 1.00493m, up 1-e energies to np
-monitor line "H  1"      1.00493m  0.0316
+## >>chng 21 aug 18, wl from 1.00493m to 1.00494m, revert to PvH energies for H
+monitor line "H  1"      1.00494m  0.0316
 ## >>chng 16 jul 28, from 0.0368 to 0.0261, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0261 to 0.0195, Fran bug fix
 ## >>chng 17 may 25, wl from 9545.99A to 9545.93A, up Rydberg constant
 ## >>chng 19 aug 06, from 0.0195 to 0.0206, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 22, wl from 9545.93A to 9545.97A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 08, wl from 9545.97A to 9545.95A, up 1-e energies to np
-monitor line "H  1"      9545.95A  0.0206
+## >>chng 21 aug 18, wl from 9545.95A to 9545.97A, revert to PvH energies for H
+monitor line "H  1"      9545.97A  0.0206
 ## >>chng 16 jul 28, from 0.0256 to 0.0178, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0178 to 0.0136, Fran bug fix
 ## >>chng 17 may 25, wl from 9229.03A to 9228.97A, up Rydberg constant
 ## >>chng 20 aug 22, wl from 9228.97A to 9229.02A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 08, wl from 9229.02A to 9229.00A, up 1-e energies to np
-monitor line "H  1"      9229.00A  0.0136
+## >>chng 21 aug 18, wl from 9229.00A to 9229.02A, revert to PvH energies for H
+monitor line "H  1"      9229.02A  0.0136
 ## >>chng 16 jul 28, from 0.0185 to 0.0127, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0127 to 0.0099, Fran bug fix
 ## >>chng 17 may 25, wl from 9014.92A to 9014.87A, up Rydberg constant
 ## >>chng 20 aug 22, wl from 9014.87A to 9014.91A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 08, wl from 9014.91A to 9014.89A, up 1-e energies to np
-monitor line "H  1"      9014.89A  0.0099
+## >>chng 21 aug 18, wl from 9014.89A to 9014.91A, revert to PvH energies for H
+monitor line "H  1"      9014.91A  0.0099
 ## >>chng 16 jul 28, from 0.0139 to 0.0094, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0094 to 0.0074, Fran bug fix
 ## >>chng 17 may 25, wl from 8862.80A to 8862.74A, up Rydberg constant
 ## >>chng 20 aug 22, wl from 8862.74A to 8862.79A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 08, wl from 8862.79A to 8862.77A, up 1-e energies to np
-monitor line "H  1"      8862.77A  0.0074
+## >>chng 21 aug 18, wl from 8862.77A to 8862.79A, revert to PvH energies for H
+monitor line "H  1"      8862.79A  0.0074
 ## >>chng 16 jul 28, from 0.0107 to 0.0072, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0072 to 0.0057, Fran bug fix
 ## >>chng 17 may 25, wl from 8750.48A to 8750.43A, up Rydberg constant
 ## >>chng 20 aug 22, wl from 8750.43A to 8750.48A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 08, wl from 8750.48A to 8750.46A, up 1-e energies to np
-monitor line "H  1"      8750.46A  0.0057
+## >>chng 21 aug 18, wl from 8750.46A to 8750.48A, revert to PvH energies for H
+monitor line "H  1"      8750.48A  0.0057
 ## >>chng 16 aug 07, from 0.0807 to 0.0338, Fran bug fix
 ## >>chng 17 may 25, wl from 4.05113m to 4.05113m, up Rydberg constant
 ## >>chng 19 jun 28, from 0.0338 to 0.039, reintegrate iso_collisions branch
@@ -173,7 +192,8 @@ monitor line "H  1"      4.05115m  0.0474
 ## >>chng 19 aug 06, from 0.0203 to 0.0229, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 22, wl from 2.62513m to 2.62515m, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 08, wl from 2.62515m to 2.62514m, up 1-e energies to np
-monitor line "H  1"      2.62514m  0.0229
+## >>chng 21 aug 18, wl from 2.62514m to 2.62515m, revert to PvH energies for H
+monitor line "H  1"      2.62515m  0.0229
 ## >>chng 16 jul 28, from 0.028 to 0.0188, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0188 to 0.0115, Fran bug fix
 ## >>chng 17 may 25, wl from 2.16553m to 2.16551m, up Rydberg constant
@@ -181,14 +201,16 @@ monitor line "H  1"      2.62514m  0.0229
 ## >>chng 19 aug 06, from 0.0124 to 0.0133, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 22, wl from 2.16551m to 2.16553m, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 08, wl from 2.16553m to 2.16552m, up 1-e energies to np
-monitor line "H  1"      2.16552m  0.0133
+## >>chng 21 aug 18, wl from 2.16552m to 2.16553m, revert to PvH energies for H
+monitor line "H  1"      2.16553m  0.0133
 ## >>chng 16 jul 28, from 0.0184 to 0.0117, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0117 to 0.0078, Fran bug fix
 ## >>chng 17 may 25, wl from 1.94456m to 1.94454m, up Rydberg constant
 ## >>chng 19 aug 06, from 0.0078 to 0.0086, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 22, wl from 1.94454m to 1.94456m, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 08, wl from 1.94456m to 1.94455m, up 1-e energies to np
-monitor line "H  1"      1.94455m  0.0086
+## >>chng 21 aug 18, wl from 1.94455m to 1.94456m, revert to PvH energies for H
+monitor line "H  1"      1.94456m  0.0086
 ## >>chng 16 jul 28, from 0.0127 to 0.0079, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0079 to 0.0055, Fran bug fix
 ## >>chng 17 may 25, wl from 1.81741m to 1.81740m, up Rydberg constant
@@ -203,7 +225,8 @@ monitor line "H  1"      1.81741m  0.0059
 ## >>chng 19 aug 06, from 0.0114 to 0.0157, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 22, wl from 7.45777m to 7.45782m, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 13, wl from 7.45782m to 7.45780m
-monitor line "H  1"      7.45780m  Elow=105291.6  0.0157
+## >>chng 21 aug 18, wl from 7.45780m to 7.45782m and Elow from 105291.6 to 105291.7, revert to PvH energies for H
+monitor line "H  1"      7.45782m  Elow=105291.7  0.0157
 ## >>chng 16 jul 28, from 0.0163 to 0.0126, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.0126 to 0.0056, Fran bug fix
 ## >>chng 17 may 25, wl from 4.65250m to 4.65247m, up Rydberg constant
@@ -211,7 +234,8 @@ monitor line "H  1"      7.45780m  Elow=105291.6  0.0157
 ## >>chng 19 aug 06, from 0.0064 to 0.0075, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 22, wl from 4.65247m to 4.65251m, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 13, wl from 4.65251m to 4.65248m
-monitor line "H  1"      4.65248m  Elow=105291.6  0.0075
+## >>chng 21 aug 18, wl from 4.65248m to 4.65251m and Elow from 105291.6 to 105291.7, revert to PvH energies for H
+monitor line "H  1"      4.65251m  Elow=105291.7  0.0075
 ## >>chng 16 jul 28, from 0.0107 to 0.007, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 0.007 to 0.0038, Fran bug fix
 ## >>chng 17 may 25, wl from 3.73953m to 3.73951m, up Rydberg constant
@@ -219,7 +243,8 @@ monitor line "H  1"      4.65248m  Elow=105291.6  0.0075
 ## >>chng 19 aug 06, from 0.0041 to 0.0046, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 22, wl from 3.73951m to 3.73954m, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 08, wl from 3.73954m to 3.73952m, up 1-e energies to np
-monitor line "H  1"      3.73952m  0.0046
+## >>chng 21 aug 18, wl from 3.73952m to 3.73954m, revert to PvH energies for H
+monitor line "H  1"      3.73954m  0.0046
 ## >>chng 16 jul 28, from 1 to 2.998, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 2.998 to 2.429, Fran bug fix
 ## >>chng 19 aug 06, from 2.429 to 2.508, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences

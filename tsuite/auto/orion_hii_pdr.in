@@ -113,7 +113,8 @@ save grain temperature last "orion_hii_pdr.grntem"
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
-monitor line luminosity "h  1" 4861.34A 0.729
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line luminosity "h  1" 4861.32A 0.729
 ##
 ## >>chng 04 jan 23, from -1.272 to -1.229, rescale orion dust to gas
 ## >>chng 04 apr 23, from -1.229 to -1.247, slow drift

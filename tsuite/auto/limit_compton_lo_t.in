@@ -39,7 +39,8 @@ monitor temperature "H+" 3 linear error 0.01
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
-monitor line luminosity "h  1" 4861.34A -45.980 error 0.2
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line luminosity "h  1" 4861.32A -45.980 error 0.2
 ##
 ## >>chng 04 jun 28, from -11.850 to -15.097, include H2 in fraction
 ## >>chng 05 nov 25, from -15.097 to -15.075, NA add mole grain freeze out

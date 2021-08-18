@@ -151,7 +151,8 @@ monitor line luminosity "blnd" 2798 0.7122  ##total of sum of both Mg II comp
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
-monitor line luminosity "H  1" 4861.34A 6.785 error 0.1
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line luminosity "H  1" 4861.32A 6.785 error 0.1
 ##
 ## >>chng 09 jun 28, from 1 to 6.328, check convergence of outward Hb
 ## >>chng 09 oct 12, from 6.328 to 6.36, extend fine continuum to lower limit of code by default
@@ -166,7 +167,8 @@ monitor line luminosity "H  1" 4861.34A 6.785 error 0.1
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
-monitor line luminosity "Inwd" 4861.34A 6.486
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line luminosity "Inwd" 4861.32A 6.486
 ## 
 ## >>chng 07 dec 06, from 7.697 to 7.672, changes in h-like collisions
 ## >>chng 08 mar 17, from 7.672 to 7.582, r1844 - mostly iso PopOpc and rt_line_one_tauinc changes

@@ -46,7 +46,8 @@ save monitors last "agn_warm_absorber.asr"
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 17, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
-monitor line "cabo" 4861.34A 0.6883
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "cabo" 4861.32A 0.6883
 ##
 ## >>chng 01 dec 21, inner shell yields, 5.064 to 5.033
 ## >>chng 03 nov 23, from 5.033 to 5.131, Kraemer et al. guess of dr

@@ -129,7 +129,8 @@ monitor line luminosity "blnd" 1549 9.787 ##total of sum of both C IV comp
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
-monitor line luminosity "H  1" 4861.34A 8.5 error 0.1 
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line luminosity "H  1" 4861.32A 8.5 error 0.1 
 ##
 ## >>chng 09 jun 28, from 1 to 8.381, check convergence of outward Hb
 ## >>chng 12 apr 02, from 8.381 to 8.402, Chianti 7 change, gcc 4.4.6 wolkje
@@ -140,7 +141,8 @@ monitor line luminosity "H  1" 4861.34A 8.5 error 0.1
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
-monitor line luminosity "Inwd" 4861.34A 8.404, 
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line luminosity "Inwd" 4861.32A 8.404, 
 ## 
 ## >>chng 04 jun 12, from 9.290 to 9.255 chng cont shield fcn
 ## >>chng 06 jul 18, from 9.255 to 9.512, RP major upgrade VS coll strengths

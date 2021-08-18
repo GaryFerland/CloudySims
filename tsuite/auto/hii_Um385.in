@@ -14,12 +14,14 @@ iterate
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
-monitor line "H  1" 4861.34A luminosity -2.743
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "H  1" 4861.32A luminosity -2.743
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 17, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
-monitor line "Q(H)" 4861.34A  1.125.
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "Q(H)" 4861.32A  1.125.
 ## >>chng 18 feb 20, updated spectral label from "He 1" 5875.64A to "Blnd" 5877.29A, update He-like triplet labels and wl
 ## >>chng 18 mar 06, wl from 5877.29A to 5875.66A, adjust multiplet Blend WL for refraction index
 monitor line "Blnd" 5875.66A  0.1174
@@ -29,7 +31,8 @@ monitor line "Ca B" 5875.64A 0.1338
 monitor line "He 1" 3888.64A  0.1119
 ## >>chng 17 may 25, wl from 3889.07A to 3889.05A, update Rydberg constant
 ## >>chng 21 mar 16, wl from 3889.05A to 3889.06A, update NIST energies
-monitor line "Ca B" 3889.06A 0.104
+## >>chng 21 aug 18, wl from 3889.06A to 3889.05A, revert to PvH energies for H
+monitor line "Ca B" 3889.05A 0.104
 ## >>chng 18 feb 20, updated spectral label from "he 1" 7065.22A to "Blnd" 7067.20A, update He-like triplet labels and wl
 ## >>chng 18 mar 06, wl from 7067.20A to 7065.25A, adjust multiplet Blend WL for refraction index
 monitor line "Blnd" 7065.25A  0.0271

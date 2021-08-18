@@ -21,7 +21,8 @@ iterate
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
-normalize lines to "Ca B" 4861.34A
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+normalize lines to "Ca B" 4861.32A
 print ages
 print departure coef element hydrogen
 print line faint -5
@@ -46,7 +47,8 @@ save monitors "igm_z3.asr"
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
-monitor line "H  1" 4861.34A 109.8
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "H  1" 4861.32A 109.8
 ##
 monitor "H+" temperature 3000
 ##

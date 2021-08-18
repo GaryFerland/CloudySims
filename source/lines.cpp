@@ -7,6 +7,10 @@
 #include "version.h"
 #include "service.h"
 
+/* >>chng 21 april 7, H I wl from 4861.33A to 4861.34A, replacing average energy with np energies*/
+/* >>chng 21 august 18, H I wl from 4861.34A to 4861.32A, revert to H energies computed by Peter van Hoof*/
+const realnum Hbeta_WavLen = 4861.32f;
+
 t_LineSave LineSave;
 /* these are the definitions of the line save arrays in lines.h */
 

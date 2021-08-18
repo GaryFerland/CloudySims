@@ -24,7 +24,8 @@ set dr -10
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 17, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, update 1-e energies to np
-normalize to "Q(H)" 4861.34A
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+normalize to "Q(H)" 4861.32A
 # 
 # the normalizing line is not defined on the emergent line stack
 print lines emergent off
