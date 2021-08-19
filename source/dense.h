@@ -29,7 +29,8 @@ public:
 	t_dense()
 	{
 		/* list of atomic weights, mass in AMU, used for thermal line widths */
-		/* >>refer	all	atomic weight	Coplen, T.B. 2001, J. Phys. Chem Ref Data, 30, 701 */
+		/* >>refer      all     atomic weight   Coplen, T.B. 2001, J. Phys. Chem Ref Data, 30, 701
+		 * >>refercon           erratum for F   Coplen, T.B. 2003, J. Phys. Chem Ref Data, 32, 919 */
 		AtomicWeight[0] = 1.00794f;
 		AtomicWeight[1] = 4.0026022f;
 		AtomicWeight[2] = 6.9412f;

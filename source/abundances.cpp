@@ -160,6 +160,11 @@ void AbundancesPrt( void )
 	return;
 }
 
+/**ResetAtomicWeights
+ * \brief Calculate atomic weights from the isotopic composition
+ *
+ * The atomic weights used by default are appropriate to a terrestrial isotopic
+ * composition. Recompute using the isotopic composition employed in the run. */
 void ResetAtomicWeights()
 {
 	DEBUG_ENTRY( "ResetAtomicWeights()" );
