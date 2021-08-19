@@ -72,7 +72,8 @@ save lines emissivity last "m17_p07.ems"
 ## >>chng 20 dec 01, wl from 6562.81A to 6562.80A, update levels database to NIST
 ## >>chng 21 mar 17, wl from 6562.80A to 6562.82A, update NIST energies
 ## >>chng 21 apr 08, wl from 6562.82A to 6562.83A, update 1-e energies to np
-H  1 6562.83A 
+## >>chng 21 aug 19, wl from 6562.83A to 6562.80A, revert to PvH energies for H
+H  1 6562.80A 
 Blnd 6720 
 ## >>chng 13 jul 31, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
 CO   1300.05m 
@@ -110,7 +111,8 @@ save continuum last "m17_p07.con" units microns
 ## >>chng 20 dec 01, wl from 6562.81A to 6562.80A, update levels database to NIST
 ## >>chng 21 mar 17, wl from 6562.80A to 6562.82A, update NIST energies
 ## >>chng 21 apr 08, wl from 6562.82A to 6562.83A, update 1-e energies to np
-monitor line luminosity "H  1" 6562.83A 38.0166
+## >>chng 21 aug 19, wl from 6562.83A to 6562.80A, revert to PvH energies for H
+monitor line luminosity "H  1" 6562.80A 38.0166
 ## >>chng 11 jul 14, from 36.69 to 36.61, update after run with stellar grids
 ## >>chng 13 feb 01, from 36.61 to 36.66, BUGFIX, largely undo r6703 (missed on gtest since stars not installed)
 ## >>chng 13 mar 05, from 36.66 to 36.62, further updates S II CS
