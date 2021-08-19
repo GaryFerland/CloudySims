@@ -886,10 +886,15 @@ collision strengths).
 This is a companion command to \cdCommand{print arrays levels}, and it is also a
 debugging aid.
 The syntax for the species is the same as in Section~\ref{sec:PrintArraysLevels}.
-Using this command generates either a FITS or a PPM image, depending on the
+Using this command generates either a FITS file or a PPM image, depending on the
 keyword given, \cdCommand{fits} or \cdCommand{ppm}.
-A FITS image can be viewed and manipulated with standard software (e.g., ds9,
-FTOOLS, python, etc.) in post-processing.
+The benefit of FITS images is that they can be manipulated with standard
+software (e.g., with ds9, FTOOLS, python, etc.) in post-processing.
+Three images are contained in the FITS file, one each for the rate matrix, the
+vector of creation rates, and the computed level populations.
+In terms of the linear algebra system, $A x = b$, which Cloudy solves, these
+images hold the $A$ matrix, the $b$ vector, and the computed $x = A^{-1} b$
+vector, respectively.
 
 The image will be generated for the given species for all iterations and zones.
 This can be limited to specific iteration with the keyword
