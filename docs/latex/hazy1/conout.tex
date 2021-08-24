@@ -881,7 +881,7 @@ The options are the following:  \cdCommand{charge} transfer,
 \cdCommand{hemis}, and \cdCommand{hecs} (for He$^0$
 collision strengths).
 
-\subsection{Save arrays levels ``species'' [fits or ppm] [iteration it] [zone nz]}
+\section{Save arrays levels ``species'' [fits or ppm] [iteration it] [zone nz]}
 
 This is a companion command to \cdCommand{print arrays levels}, and it is also a
 debugging aid.
@@ -890,16 +890,29 @@ Using this command generates either a FITS file or a PPM image, depending on the
 keyword given, \cdCommand{fits} or \cdCommand{ppm}.
 The benefit of FITS images is that they can be manipulated with standard
 software (e.g., with ds9, FTOOLS, python, etc.) in post-processing.
-Three images are contained in the FITS file, one each for the rate matrix, the
-vector of creation rates, and the computed level populations.
-In terms of the linear algebra system, $A x = b$, which Cloudy solves, these
-images hold the $A$ matrix, the $b$ vector, and the computed $x = A^{-1} b$
-vector, respectively.
 
 The image will be generated for the given species for all iterations and zones.
 This can be limited to specific iteration with the keyword
 \cdCommand{iteration} followed by an iteration number, and likewise to
 a specific zone with the keyword \cdCommand{zone} followed by a zone number.
+
+The \cdCommand{fits} option builds upon, and extends the \cdCommand{save fits}
+command.
+Whereas the latter generates a table, the former creates a FITS file that
+contains three {\it images}, one for each of the rate matrix, the vector of
+creation rates, and the computed level populations.
+In terms of the linear algebra system, $A x = b$, which Cloudy solves, these
+images hold the $A$ matrix, the $b$ vector, and the computed $x = A^{-1} b$
+vector, respectively.
+
+Note that a FITS file with the three images mentioned above will be created if
+negative populations are computed for a species when solving the relevant linear
+algebra equation.
+The output file name contains the failing species, the iteration and zone where
+the failure occurred, as well as a substring to distinguish the FITS file from
+those generated with this command; e.g.,
+\cdFilename{Fe+2\_it1\_nz0\_NEG\_POP.fits}.
+This functionality is offered as a debugging aid.
 
 \section{Save monitors}
 \label{sec:SaveMonitorsCommand}
