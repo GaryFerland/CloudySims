@@ -888,14 +888,13 @@ debugging aid.
 The syntax for the species is the same as in Section~\ref{sec:PrintArraysLevels}.
 Using this command generates either a FITS file or a PPM image, depending on the
 keyword given, \cdCommand{fits} or \cdCommand{ppm}.
-The benefit of FITS images is that they can be manipulated with standard
-software (e.g., with ds9, FTOOLS, python, etc.) in post-processing.
-
 The image will be generated for the given species for all iterations and zones.
 This can be limited to specific iteration with the keyword
 \cdCommand{iteration} followed by an iteration number, and likewise to
 a specific zone with the keyword \cdCommand{zone} followed by a zone number.
 
+The benefit of FITS images is that they can be manipulated with standard
+software (e.g., with ds9, FTOOLS, python, etc.) in post-processing.
 The \cdCommand{fits} option builds upon, and extends the \cdCommand{save fits}
 command.
 Whereas the latter generates a table, the former creates a FITS file that
@@ -905,9 +904,17 @@ In terms of the linear algebra system, $A x = b$, which Cloudy solves, these
 images hold the $A$ matrix, the $b$ vector, and the computed $x = A^{-1} b$
 vector, respectively.
 
-Note that a FITS file with the three images mentioned above will be created if
-negative populations are computed for a species when solving the relevant linear
-algebra equation.
+Notice that if a subset of the energy levels is specified, only those levels
+will appear in the output images.
+For instance, ``Fe+[10:20]'' will generate an 11$\times$11 image for the rate
+matrix (centered on the diagonal), and two 11$\times$1 images for the creation
+rates, and computed populations.
+It is recommended that the full matrix be output at first, and then the range of
+levels be limited at a later stage, if needed.
+
+Also note that a FITS file with the three images mentioned above will be created
+if negative populations are computed for a species when solving the relevant
+linear algebra equation.
 The output file name contains the failing species, the iteration and zone where
 the failure occurred, as well as a substring to distinguish the FITS file from
 those generated with this command; e.g.,
