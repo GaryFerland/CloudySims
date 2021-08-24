@@ -743,8 +743,12 @@ can be turned off using this command.
 Free-free heating, cooling, and emission are turned off with this command.
 
 \subsection{No grain [process]}
+\label{sec:NoGrainProcess}
 
 This series of commands disables various processes involving grains.
+Photoelectric heating of the gas can be disabled with the \cdCommand{Set grain heating}
+command described in Section \ref{sec:SetGrainHeating}.
+
 \begin{description}
 \item[no grain electrons]   This turns off the effects of grain charging, either
 negative or positive, on the overall charge balance in the gas.  This
@@ -2112,12 +2116,17 @@ If there is no collision data and gbar is turned off ,
 then $0.01$ is used for the collision strength.
 
 \subsection{Set grain heating factor 2.}
+\label{sec:SetGrainHeating}
 
 This command allows you to enter a fudge factor to alter the amount of
 photoelectric heating from the grains (also when the \cdCommand{set PAH Bakes}
 command is in effect). The number you enter is a multiplicative factor and
 is always interpreted as a linear number. This command violates energy
-conservation and is intended for testing only.
+conservation and is intended for testing only.  
+
+You can disable grain photoelectric heating by setting the factor to zero.  
+Other grain processes can be disabled with the \cdCommand{No grain [process]}
+family of commands described in Section \ref{sec:NoGrainProcess}.
 
 \subsection{Set H2 \dots}
 \label{sec:SetH2}
