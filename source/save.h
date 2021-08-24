@@ -262,18 +262,25 @@ public:
 		return ( ( zone > 0 && zone == this_zone ) || ! zone );
 	}
 
-	void createImage( const string &fname,
-			const long iteration,
+	void createImage( const long iteration,
 			const long nzone,
 			const long numLevels,
 			const multi_arr<double,2,C_TYPE> &matrix,
-			const valarray<double> &creation );
+			const valarray<double> &creation,
+			bool haveNegPop = false );
 
 	void addImagePop_FITS(
+			const long iteration,
+			const long nzone,
 			const long numLevels,
-			const valarray<double> &pop );
+			const valarray<double> &pop,
+			bool haveNegPop = false );
 
 private:
+	string set_basename( const long iteration,
+			const long nzone,
+			bool haveNegPop = false );
+
 	void createImage_PPM( const string &basename,
 			const long numLevels,
 			const multi_arr<double,2,C_TYPE> &matrix );

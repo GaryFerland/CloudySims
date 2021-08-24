@@ -14,12 +14,28 @@ void save_img_matrix::zero()
 	zone = 0;
 }
 
-void save_img_matrix::createImage( const string &fname_prefix,
+string save_img_matrix::set_basename( const long iteration, const long nzone,
+	       				bool haveNegPop )
+{	
+	stringstream ss;
+	ss << species << "_it" << iteration << "_nz" << nzone;
+	string basename = ss.str();
+
+	if( haveNegPop )
+	{
+		basename += "_NEG_POP";
+	}
+
+	return basename;
+}
+
+void save_img_matrix::createImage(
 				const long iteration,
 				const long nzone,
 				const long numLevels,
 				const multi_arr<double,2,C_TYPE> &matrix,
-	       			const valarray<double> &creation )
+	       			const valarray<double> &creation,
+				bool haveNegPop )
 {
 	DEBUG_ENTRY( "save_img_matrix::createImage()" );
 
@@ -84,14 +100,7 @@ void save_img_matrix::createImage( const string &fname_prefix,
 		}
 	}
 
-	stringstream ss;
-	ss << species << "_it" << iteration << "_nz" << nzone;
-	string basename = ss.str();
-
-	if( fname_prefix.length() > 0 )
-	{
-		basename = fname_prefix + "_" + basename;
-	}
+	string basename = set_basename( iteration, nzone, haveNegPop );
 
 	if( lgFITS )
 	{
@@ -120,12 +129,13 @@ void save_img_matrix::createImage_FITS( const string &basename,
 }
 
 void save_img_matrix::addImagePop_FITS(
+				const long iteration,
+				const long nzone,
 				const long numLevels,
-				const valarray<double> &pop )
+				const valarray<double> &pop,
+				bool haveNegPop )
 {
-	stringstream ss;
-	ss << species << "_it" << iteration << "_nz" << nzone;
-	string basename = ss.str();
+	string basename = set_basename( iteration, nzone, haveNegPop );
 	string filename = basename + ".fits";
 
 	FILE *fp = open_data( filename, "a" );

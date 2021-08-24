@@ -348,6 +348,9 @@ void Atom_LevelN::operator()(
 	/* we will predict populations */
 	*lgZeroPop = false;
 
+	multi_arr<double,2,C_TYPE> Save_amat;
+	valarray<double> Save_bvec;
+
 	if( !lgLTE )
 	{
 		bvec.resize(nlev);
@@ -483,14 +486,26 @@ void Atom_LevelN::operator()(
 			prt.matrix.prtRates( nlev, amat, bvec );
 		}
 
+		Save_amat = amat;
+		Save_bvec = bvec;
+
 		if( lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
 				save.img_matrix.matchZone( nzone ) )
 		{
-			save.img_matrix.createImage( "", iteration, nzone, nlev, amat, bvec );
+			save.img_matrix.createImage( iteration, nzone, nlev,
+							Save_amat, Save_bvec );
 		}
 
 
 		ner = solve_system(amat.vals(), bvec, nlev, NULL);
+
+		if( lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
+				save.img_matrix.matchZone( nzone ) )
+		{
+			// bvec holds the populations by this point
+			//
+			save.img_matrix.addImagePop_FITS( iteration, nzone, nlev, bvec );
+		}
 
 		if( ner != 0 )
 		{
@@ -499,7 +514,6 @@ void Atom_LevelN::operator()(
 			fprintf( ioQQQ, " Old, new level pops follow\n" );
 			for( level=0; level < nlev; level++ )
 			{
-				/* save bvec into populations */
 				fprintf(ioQQQ, "%ld %.2e %.2e \n" , level, pops[level] , bvec[level] );
 			}
 			cdEXIT(EXIT_FAILURE);
@@ -741,7 +755,15 @@ void Atom_LevelN::operator()(
 			pops[level] = (double)MAX2(0.,pops[level]);
 		}
 
-		save.img_matrix.createImage( "negPop", iteration, nzone, nlev, amat, bvec );
+		if( !lgLTE )
+		{
+			save.img_matrix.createImage( iteration, nzone, nlev,
+							Save_amat, Save_bvec, true );
+
+			valarray<double> SavePops( get_ptr(pops), pops.size() );
+			save.img_matrix.addImagePop_FITS( iteration, nzone, nlev,
+								SavePops, true );
+		}
 	}
 
 	if(  lgDeBug || (trace.lgTrace && trace.lgTrLevN) )

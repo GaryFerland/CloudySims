@@ -491,9 +491,9 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm )
 		if( sp->lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
 				save.img_matrix.matchZone( nzone ) )
 		{
-			valarray<double> c( get_ptr(creation), creation.size() );
-			save.img_matrix.createImage( "", iteration, nzone,
-							numlevels_local, SaveZ, c );
+			valarray<double> SaveC( get_ptr(Save_creation), Save_creation.size() );
+			save.img_matrix.createImage( iteration, nzone,
+							numlevels_local, SaveZ, SaveC );
 		}
 
 
@@ -514,8 +514,9 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm )
 		if( sp->lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
 				save.img_matrix.matchZone( nzone ) )
 		{
-			valarray<double> c( get_ptr(creation), creation.size() );
-			save.img_matrix.addImagePop_FITS( numlevels_local, c );
+			valarray<double> SavePops( get_ptr(creation), creation.size() );
+			save.img_matrix.addImagePop_FITS( iteration, nzone,
+								numlevels_local, SavePops );
 		}
 
 
@@ -682,11 +683,15 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm )
 			ASSERT( sp->st[0].Pop() >= 0. );
 		}
 
-		if( lgNegPop )
+		if( lgNegPop && !iso_ctrl.lgLTE_levels[ipISO] )
 		{
-			valarray<double> c( get_ptr(creation), creation.size() );
-			save.img_matrix.createImage( "negPop", iteration, nzone,
-							numlevels_local, SaveZ, c );
+			valarray<double> SaveC( get_ptr(Save_creation), Save_creation.size() );
+			save.img_matrix.createImage( iteration, nzone,
+							numlevels_local, SaveZ, SaveC, true );
+
+			valarray<double> SavePops( get_ptr(creation), creation.size() );
+			save.img_matrix.addImagePop_FITS( iteration, nzone,
+							numlevels_local, SavePops, true );
 		}
 	}
 	/* all solvers end up here */
