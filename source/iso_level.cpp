@@ -24,6 +24,7 @@
 #include "prt.h"
 #include "save.h"
 #include "iterations.h"
+#include "species.h"
 
 
 STATIC void iso_multiplet_opacities_one(
@@ -685,12 +686,13 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm )
 
 		if( lgNegPop && !iso_ctrl.lgLTE_levels[ipISO] )
 		{
+			string species = makeChemical( nelem, nelem-ipISO );
 			valarray<double> SaveC( get_ptr(Save_creation), Save_creation.size() );
-			save.img_matrix.createImage( iteration, nzone,
+			save.img_matrix.createImage( species, iteration, nzone,
 							numlevels_local, SaveZ, SaveC, true );
 
 			valarray<double> SavePops( get_ptr(creation), creation.size() );
-			save.img_matrix.addImagePop_FITS( iteration, nzone,
+			save.img_matrix.addImagePop_FITS( species, iteration, nzone,
 							numlevels_local, SavePops, true );
 		}
 	}

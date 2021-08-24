@@ -262,13 +262,43 @@ public:
 		return ( ( zone > 0 && zone == this_zone ) || ! zone );
 	}
 
-	void createImage( const long iteration,
+	/** Create image (FITS or PPM) using the given species.
+	 *  Useful when generating FITS images when negative populations are
+	 *  computed.
+	 */
+	void createImage( const string &species,
+			const long iteration,
 			const long nzone,
 			const long numLevels,
 			const multi_arr<double,2,C_TYPE> &matrix,
 			const valarray<double> &creation,
 			bool haveNegPop = false );
 
+	/** Create image (FITS or PPM) using the species given in the
+	 *  'save arrays levels' command.
+	 */
+	void createImage(
+			const long iteration,
+			const long nzone,
+			const long numLevels,
+			const multi_arr<double,2,C_TYPE> &matrix,
+			const valarray<double> &creation,
+			bool haveNegPop = false );
+
+	/** Add FITS image to an existing file using the given species.
+	 *  Useful when generating FITS images when negative populations are
+	 *  computed.
+	 */
+	void addImagePop_FITS( const string &species,
+			const long iteration,
+			const long nzone,
+			const long numLevels,
+			const valarray<double> &pop,
+			bool haveNegPop = false );
+
+	/** Add FITS image to an existing file using the species given in the
+	 *  'save arrays levels' command.
+	 */
 	void addImagePop_FITS(
 			const long iteration,
 			const long nzone,
@@ -277,7 +307,8 @@ public:
 			bool haveNegPop = false );
 
 private:
-	string set_basename( const long iteration,
+	string set_basename( const string &species,
+			const long iteration,
 			const long nzone,
 			bool haveNegPop = false );
 

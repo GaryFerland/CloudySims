@@ -603,7 +603,7 @@ void dBase_solve()
 			/* total cooling and its derivative, set here but nothing done with it*/
 			&cooltl, 
 			&coolder, 
-			/* string used to identify calling program in case of error */
+			/* string used to identify species in case of error */
 			spName, 
 			dBaseSpecies[ipSpecies].lgPrtMatrix,
 			dBaseSpecies[ipSpecies].lgImgMatrix,

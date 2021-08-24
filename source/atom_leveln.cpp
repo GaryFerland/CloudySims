@@ -15,6 +15,7 @@
 #include "vectorize.h"
 #include "prt.h"
 #include "save.h"
+#include "species.h"
 
 // Enable eigen-analysis of interaction matrix, also need to link with
 // -llapack (and have appropriate development package installed to
@@ -757,11 +758,13 @@ void Atom_LevelN::operator()(
 
 		if( !lgLTE )
 		{
-			save.img_matrix.createImage( iteration, nzone, nlev,
+			string species;
+			spectral_to_chemical( species, chLabel );
+			save.img_matrix.createImage( species, iteration, nzone, nlev,
 							Save_amat, Save_bvec, true );
 
 			valarray<double> SavePops( get_ptr(pops), pops.size() );
-			save.img_matrix.addImagePop_FITS( iteration, nzone, nlev,
+			save.img_matrix.addImagePop_FITS( species, iteration, nzone, nlev,
 								SavePops, true );
 		}
 	}
