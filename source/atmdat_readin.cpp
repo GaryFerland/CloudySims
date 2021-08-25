@@ -355,8 +355,8 @@ STATIC void read_level2_lines()
 		 * following, each member of structure set to own type of impossible value */
 		TauLine2[i].Junk();
 
-		TauLine2[i].AddHiState();
 		TauLine2[i].AddLoState();
+		TauLine2[i].AddHiState();
 		TauLine2[i].AddLine2Stack();
 	}
 
@@ -1253,8 +1253,8 @@ STATIC void ReadBadnellAIData(const string& fnam,      // filename containing th
 
 inline void InitTransition(const TransitionProxy& t)
 {
-	t.AddHiState();
 	t.AddLoState();
+	t.AddHiState();
 	t.AddLine2Stack();
 }
 

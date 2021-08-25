@@ -544,8 +544,8 @@ void HyperfineCreate(void)
 	for( size_t i=0; i< HFLines.size(); ++i )
 	{
 		HFLines[i].Junk();
-		HFLines[i].AddHiState();
 		HFLines[i].AddLoState();
+		HFLines[i].AddHiState();
 		HFLines[i].AddLine2Stack();
 	}
 
