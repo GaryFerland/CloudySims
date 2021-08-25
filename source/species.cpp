@@ -934,6 +934,12 @@ STATIC void states_nelemfill(void)
 			nelem = -1;
 			IonStg = -1;
 			strcpy( chLabelChemical, dBaseSpecies[i].chLabel );
+
+			dBaseSpecies[i].lgImgMatrix = false;
+			if( save.img_matrix.species == dBaseStates[i].chLabel() )
+			{
+				dBaseSpecies[i].lgImgMatrix = true;
+			}
 		}
 		else
 		{
