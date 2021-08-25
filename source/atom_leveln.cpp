@@ -14,6 +14,8 @@
 #include "conv.h"
 #include "vectorize.h"
 #include "prt.h"
+#include "save.h"
+#include "species.h"
 
 // Enable eigen-analysis of interaction matrix, also need to link with
 // -llapack (and have appropriate development package installed to
@@ -151,6 +153,8 @@ void Atom_LevelN::operator()(
 	const char *chLabel, 
 	/* flag to print matrices input to solvers */
 	const bool lgPrtMatrix,
+	/* flag to create image for rate matrix input to solvers */
+	const bool lgImgMatrix,
 	/* nNegPop flag indicating what we have done
 	 * positive if negative populations occurred
 	 * zero if normal calculation done
@@ -345,6 +349,9 @@ void Atom_LevelN::operator()(
 	/* we will predict populations */
 	*lgZeroPop = false;
 
+	multi_arr<double,2,C_TYPE> Save_amat;
+	valarray<double> Save_bvec;
+
 	if( !lgLTE )
 	{
 		bvec.resize(nlev);
@@ -480,7 +487,26 @@ void Atom_LevelN::operator()(
 			prt.matrix.prtRates( nlev, amat, bvec );
 		}
 
+		Save_amat = amat;
+		Save_bvec = bvec;
+
+		if( lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
+				save.img_matrix.matchZone( nzone ) )
+		{
+			save.img_matrix.createImage( iteration, nzone, nlev,
+							Save_amat, Save_bvec );
+		}
+
+
 		ner = solve_system(amat.vals(), bvec, nlev, NULL);
+
+		if( lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
+				save.img_matrix.matchZone( nzone ) )
+		{
+			// bvec holds the populations by this point
+			//
+			save.img_matrix.addImagePop_FITS( iteration, nzone, nlev, bvec );
+		}
 
 		if( ner != 0 )
 		{
@@ -489,7 +515,6 @@ void Atom_LevelN::operator()(
 			fprintf( ioQQQ, " Old, new level pops follow\n" );
 			for( level=0; level < nlev; level++ )
 			{
-				/* save bvec into populations */
 				fprintf(ioQQQ, "%ld %.2e %.2e \n" , level, pops[level] , bvec[level] );
 			}
 			cdEXIT(EXIT_FAILURE);
@@ -729,6 +754,18 @@ void Atom_LevelN::operator()(
 		for( level=0; level < nlev; level++ )
 		{
 			pops[level] = (double)MAX2(0.,pops[level]);
+		}
+
+		if( !lgLTE )
+		{
+			string species;
+			spectral_to_chemical( species, chLabel );
+			save.img_matrix.createImage( species, iteration, nzone, nlev,
+							Save_amat, Save_bvec, true );
+
+			valarray<double> SavePops( get_ptr(pops), pops.size() );
+			save.img_matrix.addImagePop_FITS( species, iteration, nzone, nlev,
+								SavePops, true );
 		}
 	}
 

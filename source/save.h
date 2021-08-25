@@ -6,6 +6,7 @@
 
 #include "energy.h"
 #include "lines.h"
+#include "prt.h"
 
 class diatomics;
 class TransitionProxy;
@@ -173,6 +174,27 @@ void saveFITSfile(
 	realnum Ehi = 0.f,
 	realnum Enorm = 0.f);
 
+/**Save rate matrix to a FITS file.  Mainly a debugging aid.
+ * \param io       [in]	the file we will write to
+ * \param extName  [in]	extension name
+ * \param units    [in]	vector units
+ * \param nPixels  [in]	dimension of (square) image
+ * \param image    [in]	image to write in FITS extension
+ */
+void saveFITSimg( FILE *io, const string &extName, const string &units,
+		const long nPixels,
+		const multi_arr<double,2,C_TYPE> &image );
+
+/**Save rate matrix to a FITS file.  Mainly a debugging aid.
+ * \param io       [in]	the file we will write to
+ * \param extName  [in]	extension name
+ * \param units    [in]	vector units
+ * \param nCols    [in]	length of vector
+ * \param vector   [in]	vector to write in FITS extension
+ */
+void saveFITSimg( FILE *io, const string &extName, const string &units,
+		const long nCols, const valarray<double> &vec );
+
 /**SaveHeat save contributors to local heating, with save heat command, called by save_do 
 \param io the file we will write to
 */
@@ -211,6 +233,93 @@ class save_species_bands
 public:
 	string filename;
 	string speciesLabel;
+};
+
+class save_img_matrix : public t_prt_matrix
+{
+public:
+	bool lgImgRates;
+	bool lgFITS;
+	long iteration;
+	long zone;
+
+	void zero();
+	void comment(t_warnings&) {}
+
+	const char *chName() const
+	{
+		return "img_matrix";
+	}
+
+	inline bool matchIteration( const long this_iteration ) const
+	{
+		return ( ( iteration > 0 && iteration == this_iteration ) ||
+				! iteration );
+	}
+
+	inline bool matchZone( const long this_zone ) const
+	{
+		return ( ( zone > 0 && zone == this_zone ) || ! zone );
+	}
+
+	/** Create image (FITS or PPM) using the given species.
+	 *  Useful when generating FITS images when negative populations are
+	 *  computed.
+	 */
+	void createImage( const string &species,
+			const long iteration,
+			const long nzone,
+			const long numLevels,
+			const multi_arr<double,2,C_TYPE> &matrix,
+			const valarray<double> &creation,
+			bool haveNegPop = false );
+
+	/** Create image (FITS or PPM) using the species given in the
+	 *  'save arrays levels' command.
+	 */
+	void createImage(
+			const long iteration,
+			const long nzone,
+			const long numLevels,
+			const multi_arr<double,2,C_TYPE> &matrix,
+			const valarray<double> &creation,
+			bool haveNegPop = false );
+
+	/** Add FITS image to an existing file using the given species.
+	 *  Useful when generating FITS images when negative populations are
+	 *  computed.
+	 */
+	void addImagePop_FITS( const string &species,
+			const long iteration,
+			const long nzone,
+			const long numLevels,
+			const valarray<double> &pop,
+			bool haveNegPop = false );
+
+	/** Add FITS image to an existing file using the species given in the
+	 *  'save arrays levels' command.
+	 */
+	void addImagePop_FITS(
+			const long iteration,
+			const long nzone,
+			const long numLevels,
+			const valarray<double> &pop,
+			bool haveNegPop = false );
+
+private:
+	string set_basename( const string &species,
+			const long iteration,
+			const long nzone,
+			bool haveNegPop = false );
+
+	void createImage_PPM( const string &basename,
+			const long numLevels,
+			const multi_arr<double,2,C_TYPE> &matrix );
+
+	void createImage_FITS( const string &basename,
+			const long numLevels,
+			const multi_arr<double,2,C_TYPE> &matrix,
+			const valarray<double> &creation );
 };
 
 struct t_save {
@@ -528,6 +637,8 @@ public:
 	/** Parameters for species bands */
 	string SpeciesBandFile[LIMPUN];
 	vector<save_species_bands> specBands;
+
+	save_img_matrix img_matrix;
 };
 
 extern t_save save;

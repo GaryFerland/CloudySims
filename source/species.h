@@ -30,6 +30,7 @@ public:
 		maxWN = 0.;
 		lgLTE = false;
 		lgPrtMatrix = false;
+		lgImgMatrix = false;
 	}
 	~species()
 	{
@@ -71,6 +72,8 @@ public:
 	bool lgLTE;
 	/** print Matrix input to solver */
 	bool lgPrtMatrix;
+	/** create image for Matrix input to solver */
+	bool lgImgMatrix;
 };
 
 struct t_pseudo_cont
@@ -102,7 +105,15 @@ void makeChemical(char* chLabelChemical, long nelem, long ion);
  * \param chLabelSpec[in]       Spectral label, e.g., "C  2"
  * \param chLabelChem[out]      Chemical label, e.g., "C+"
  */
-void spectral_to_chemical( char *chLabelSpec, char* chLabelChem );
+void spectral_to_chemical( char *chLabelSpec, const char* chLabelChem );
+
+/**
+ * spectral_to_chemical - Convert a spectral label to chemical.
+ *
+ * \param chLabelSpec[in]       Spectral label, e.g., "C  2"
+ * \param chLabelChem[out]      Chemical label, e.g., "C+"
+ */
+void spectral_to_chemical( string &chLabelSpec, const char* chLabelChem );
 
 /**
  * parse_chemical - Parse the element and charge of a chemical label.
