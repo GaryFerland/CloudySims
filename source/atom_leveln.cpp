@@ -487,12 +487,12 @@ void Atom_LevelN::operator()(
 			prt.matrix.prtRates( nlev, amat, bvec );
 		}
 
-		Save_amat = amat;
-		Save_bvec = bvec;
-
 		if( lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
 				save.img_matrix.matchZone( nzone ) )
 		{
+			Save_amat = amat;
+			Save_bvec = bvec;
+
 			save.img_matrix.createImage( iteration, nzone, nlev,
 							Save_amat, Save_bvec );
 		}
