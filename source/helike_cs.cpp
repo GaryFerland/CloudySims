@@ -46,7 +46,7 @@ STATIC double collision_strength_VF01( long ipISO, double velOrEner,
 /* These are masses relative to the proton mass of the electron, proton, he+, and alpha particle. */
 static const double ColliderCharge[4] = {1.0, 1.0, 1.0, 2.0};
 
-inline double reduced_amu( long nelem, long Collider )
+double reduced_amu( long nelem, long Collider )
 {
 	return dense.AtomicWeight[nelem]*colliders.list[Collider].mass_amu/
 		(dense.AtomicWeight[nelem]+colliders.list[Collider].mass_amu)*ATOMIC_MASS_UNIT;	
@@ -858,7 +858,7 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 		{
 			/* >>refer He CS	Vriens, L., & Smeets, A.H.M. 1980, Phys Rev A 22, 940
 			 * statistical weight IS included in the routine */
-			cs = (realnum)CS_VS80( nHi, gHi, IP_Ryd_Hi, nLo, gLo, IP_Ryd_Lo, Aul, nelem, Collider, phycon.te );
+			cs = (realnum)CS_VS80( ipHE_LIKE, nHi, IP_Ryd_Hi, nLo, IP_Ryd_Lo, Aul, nelem, Collider, phycon.te );
 			*where = "Vriens";
 
 			lgResolvedData = false;
@@ -872,7 +872,7 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 				/* Lebedev and Beigman (1998) Phys. Highly excited atoms and ions p. 225 eq. 8.30
 				 */
 
-				cs = hydro_Lebedev_deexcit(nelem, ipHE_LIKE, nHi, nLo, gLo, IP_Ryd_Lo);
+				cs = hydro_Lebedev_deexcit(ipHE_LIKE, nelem, nHi, nLo, IP_Ryd_Lo);
 				*where = "lebed";
 				lgResolvedData = false;
 
@@ -881,72 +881,18 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 			else if(iso_ctrl.lgCS_Fujim[ipHE_LIKE])
 			{
 
-				cs = hydro_Fujimoto_deexcit(gHi, gLo, Aul, IP_Ryd_Hi, IP_Ryd_Lo);
+				cs = hydro_Fujimoto_deexcit(ipHE_LIKE, nHi, nLo, Aul, IP_Ryd_Hi, IP_Ryd_Lo);
 				*where = "Fuji ";
 				lgResolvedData = false;
 
 			}
 			else if( iso_ctrl.lgCS_vrgm[ipHE_LIKE])
 			{
-				/* Van regemorter formula for allowed transitions. Van Regemorter, ApJ 136 (1962) 906
-				 * The interval 0.005 < y < infty is interpolated from the results of Table 2
-				 * from Van Regemorter paper and adjusted at high energies to avoid discontinuities.
-				 */
-
-				/* ensure that the transition is allowed */
-				if ( lHi > 0 && lLo >0 && abs(lHi - lLo) !=1 )
-					cs =0.;
-				else
-				{
-					double Py = 1.;
-					double y = deltaE_eV*EVDEGK/phycon.te;
-					const double valy[11] ={log10(0.005),-2.,log10(0.02),log10(0.04),-1.,log10(0.2),log10(0.4),0.,log10(2.),log10(4.),1.} ;
-					double a1 = sqrt(3)/2/PI*e1(0.005);
-
-					if( nelem == ipHELIUM )
-					{
-						if (y <= 0.005)
-							Py = sqrt(3)/2/PI*e1(y);
-						else if (y <= 10.)
-						{
-							const double val[11]={log10(a1),log10(1.16), log10(0.956),log10(0.758),log10(0.493),log10(0.331),log10(0.209),-1.,log10(0.063),log10(0.040),log10(0.021)};
-							Py = linint(valy,val,11,log10(y));
-							Py=exp10(Py);
-							//Py = 0.128384/sqrt(y)- 0.019719;
-						}
-						else
-							Py = 0.066/sqrt(y);
-
-						/*if(nHi==nLo+1)
-							fprintf(ioQQQ,"vrgm nhi %li, nlo %li, y %g\n",nHi,nLo,y);*/
-
-					}
-					else
-					{
-						if (y <= 0.005)
-							Py = sqrt(3)/2/PI*e1(y);
-						else if (y <= 10.)
-						{
-							const double val[11]={log10(a1),log10(1.16),log10(0.977),log10(0.788),log10(0.554),log10(0.403),log10(0.290),log10(0.214),log10(0.201),log10(0.2),log10(0.2)};
-							Py = linint(valy,val,11,log10(y));
-							Py = exp10(Py);
-							//Py = 0.154023 + 0.1099165/sqrt(y);
-						}
-						else
-							Py = 0.200;
-					}
-					double massratio = reduced_amu(nelem,Collider)/ELECTRON_MASS;
-
-					cs = 20.6*Aul/pow3(EnerWN)/phycon.sqrte*Py;
-					double factor = ( COLL_CONST * powpq(massratio, -3, 2) ) / phycon.sqrte / (double)gHi;
-
-					/*convert to collision strength*/
-					cs /= factor;
-
-					lgResolvedData = false;
-
-					*where = "vrgm ";
-				}
+				cs = hydro_vanRegemorter_deexcit( ipHE_LIKE, nelem, nHi, lHi, lLo,
+									EnerWN, deltaE_eV, Aul,
+									Collider );
+				*where = "vrgm ";
+				lgResolvedData = false;
 			}
 
 			else if( iso_ctrl.nCS_new[ipHE_LIKE] && nelem==ipHELIUM )
@@ -1010,8 +956,8 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 				 * repulsion between ions will make these cross sections smaller only to be relevant at even higher energies.  */
 
 				/* Percival and Richards (1978) have got a Z dependence so their rates are preferred */
-				cs = CS_ThermAve_PR78( ipH_LIKE, nelem, nHi, nLo,
-						EnerErg / EN1RYD, phycon.te );
+				cs = CS_ThermAve_PR78( ipHE_LIKE, nelem, nHi, nLo,
+							EnerErg / EN1RYD, phycon.te );
 				*where = "PR78  ";
 
 				lgResolvedData = false;
@@ -1045,7 +991,7 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 	 */
 	if (!lgResolvedData  && nLo <= iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max)
 	{
-	cs *= CSresolver(ipHE_LIKE, nHi, lHi, sHi, nLo, lLo, sLo, iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max);
+		cs *= CSresolver(ipHE_LIKE, nHi, lHi, sHi, nLo, lLo, sLo, iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max);
 	}
 
 	{

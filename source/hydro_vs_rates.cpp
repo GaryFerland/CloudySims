@@ -10,10 +10,21 @@
 #include "dense.h"
 #include "phycon.h"
 #include "iso.h"
+#include "helike_cs.h"
 #include "hydro_vs_rates.h"
 #include "thirdparty.h"
 #include "lines_service.h"
 #include "integrate.h"
+
+inline double get_iso_statw( const long ipISO, const long n )
+{
+	if( ipISO == ipH_LIKE )
+		return 2.*double( pow2(n) );
+	else if( ipISO == ipHE_LIKE )
+		return 4.*double( pow2(n) );
+	else
+		TotalInsanity();
+}
 
 long global_ipISO, global_nelem, global_nHi, global_nLo;
 double kTRyd, global_deltaE;
@@ -52,9 +63,12 @@ namespace {
 
 /* VS80 stands for Vriens and Smeets 1980 */
 /* This routine calculates thermally-averaged collision strengths. */
-double CS_VS80( long nHi, long gHi, double IP_Ryd_Hi, long nLo, long gLo, double IP_Ryd_Lo, double Aul, long nelem, long Collider, double temp )
+double CS_VS80( long ipISO, long nHi, double IP_Ryd_Hi, long nLo, double IP_Ryd_Lo, double Aul, long nelem, long Collider, double temp )
 {
 	double coll_str;
+
+	double gLo = get_iso_statw( ipISO, nLo );
+	double gHi = get_iso_statw( ipISO, nHi );
 
 	if( Collider == ipELECTRON )
 	{
@@ -407,8 +421,11 @@ double hydro_vs_deexcit( long nHi, long gHi, double IP_Ryd_Hi, long nLo, long gL
 
 /* used original equation (6-12) from Fujimoto (1978) IPPJ-AM-8, Institute of Plasma Physics,
 * Nagoya University, Nagoya.*/
-double hydro_Fujimoto_deexcit(long gHi, long gLo, double Aul, double ip_Ryd_Hi, double ip_Ryd_Lo)
+double hydro_Fujimoto_deexcit(long ipISO, long nHi, long nLo, double Aul,
+				double ip_Ryd_Hi, double ip_Ryd_Lo)
 {
+	DEBUG_ENTRY( "hydro_Fujimoto_deexcit()" );
+
 	double ecollryd = phycon.te/TE1RYD;
 	double deltaE_Ryd = abs(ip_Ryd_Hi - ip_Ryd_Lo);
 	double osc_strength = Aul / (TRANS_PROB_CONST*POW2(deltaE_Ryd/WAVNRYD));
@@ -425,7 +442,10 @@ double hydro_Fujimoto_deexcit(long gHi, long gLo, double Aul, double ip_Ryd_Hi, 
 	double factor1 = (log(onepdelta)+expe1(onepdelta*u))/u;
 	double factor2 = exp(-2.*beta*oscgamma)/(beta*oscgamma+u);
 	double factor3 = log(onepdelta)+expe1(onepdelta*(beta*oscgamma +u));
-	double rate = k*(double)gLo/(double)gHi*(factor1 - factor2*factor3 );
+
+	double gLo = get_iso_statw( ipISO, nLo );
+	double gHi = get_iso_statw( ipISO, nHi );
+	double rate = k * gLo/gHi * (factor1 - factor2*factor3 );
 	double col_str = rate/COLL_CONST*phycon.sqrte*gHi;
 
 	ASSERT (col_str >= 0);
@@ -439,8 +459,10 @@ double hydro_Fujimoto_deexcit(long gHi, long gLo, double Aul, double ip_Ryd_Hi, 
  * Physics of Highly-Excited Atoms and Ions, Springer Series on Atoms and Plasmas, vol. 22, Springer chapter 8 eq. 8.30
  * Rates are excitation, but easily converted to collision strengths
  */
-double hydro_Lebedev_deexcit(long nelem, long ipISO, long nHi , long nLo, long gLo, double IP_Ryd_Lo)
+double hydro_Lebedev_deexcit(long ipISO, long nelem, long nHi, long nLo, double IP_Ryd_Lo)
 {
+	DEBUG_ENTRY( "hydro_Fujimoto_deexcit()" );
+
 	/*core charge*/
 	double Z = (double)nelem-(double)ipISO + 1.;
 	double deltan = (double)nHi-(double)nLo;
@@ -466,11 +488,92 @@ double hydro_Lebedev_deexcit(long nelem, long ipISO, long nHi , long nLo, long g
 
 	rate *= double(nLo)*pow3((double)nHi/deltan/Z)/sqrt(theta)*phi*ftheta;
 
+	double gLo = get_iso_statw( ipISO, nLo );
+
 	double col_str = rate/COLL_CONST*phycon.sqrte*gLo;
 
 	ASSERT (col_str >= 0);
 
 	return col_str;
+}
+
+/* Van regemorter formula for allowed transitions. Van Regemorter, 1962, ApJ, 136, 906
+ * The interval 0.005 < y < infty is interpolated from the results of Table 2
+ * from Van Regemorter paper and adjusted at high energies to avoid discontinuities. */
+double hydro_vanRegemorter_deexcit( const long ipISO, const long nelem, const long nHi, const long lHi, const long lLo,
+					const double EnerWN, const double deltaE_eV, const double Aul,
+					const long ipCollider )
+{
+	DEBUG_ENTRY( "hydro_vanRegemorter_deexcit()" );
+
+	/* ensure that the transition is allowed */
+	if ( lHi > 0 && lLo >0 && abs(lHi - lLo) !=1 )
+		return 0.;
+
+	double Py = 1.;
+	double y = deltaE_eV*EVDEGK/phycon.te;
+	static const double valy[11] =
+		{
+			log10(0.005), -2., log10(0.02), log10(0.04), -1., log10(0.2),
+			log10(0.4), 0., log10(2.), log10(4.), 1.
+		};
+
+	double a1 = sqrt(3.)/(2.*PI) * e1(0.005);
+
+	if ( nelem == ipHYDROGEN || nelem == ipHELIUM )
+	{
+		if (y <= 0.005)
+			Py = sqrt(3.)/(2.*PI) * e1(y);
+		else if (y <= 10.)
+		{
+			//Py = 0.128384/sqrt(y);
+
+			static const double val[11] =
+				{
+					log10(a1), log10(1.16), log10(0.956), log10(0.758),
+					log10(0.493), log10(0.331), log10(0.209), -1.,
+					log10(0.063), log10(0.040), log10(0.023)
+				};
+			Py = linint(valy,val,11,log10(y));
+			Py = exp10(Py);
+		}
+		else
+			Py = 0.066/sqrt(y);
+
+		/*if(nHi==nLo+1)
+		 	fprintf(ioQQQ,"vrgm nhi %li, nlo %li, y %g\n",nHi,nLo,y);*/
+	}
+	else
+	{
+		if (y <= 0.005)
+			Py = sqrt(3.)/(2.*PI) * e1(y);
+		else if (y <= 10.)
+		{
+			static const double val[11] =
+				{
+					log10(a1), log10(1.16), log10(0.977), log10(0.788),
+					log10(0.554), log10(0.403), log10(0.290), log10(0.214),
+					log10(0.201), log10(0.2), log10(0.2)
+				};
+			Py = linint(valy,val,11,log10(y));
+			Py = exp10(Py);
+			//Py = 0.154023 + 0.1099165/sqrt(y);
+		}
+		else
+			Py = 0.200;
+	}
+
+	double massratio = reduced_amu( nelem, ipCollider ) / ELECTRON_MASS;
+
+	double CStemp = 20.6*Aul/pow3(EnerWN)/phycon.sqrte*Py;
+
+	double gHi = get_iso_statw( ipISO, nHi );
+	double factor = ( COLL_CONST * powpq(massratio, -3, 2) ) / phycon.sqrte / gHi;
+
+	/* convert to collision strength */
+	CStemp /= factor;
+
+	return CStemp;
 }
 
 /* exp(xn)*e1(xn) is a function which slowly goes to 0 for big xn,
@@ -592,13 +695,8 @@ double CS_PercivalRichards78( double Ebar )
 	/* this is the result after solving equation 1 for the cross section */
 	cross_section *= PI*pow2(n2*BOHR_RADIUS_CM/Z3) / Ebar;
 
-	double stat_weight;
-	if( ipISO == ipH_LIKE )
-		stat_weight = 2.*n2;
-	else if( ipISO == ipHE_LIKE )
-		stat_weight = 4.*n2;
-	else
-		TotalInsanity();
+
+	double stat_weight = get_iso_statw( ipISO, n );
 
 	/* convert to collision strength */
 	return cross_section*stat_weight*Ebar / (PI*pow2(BOHR_RADIUS_CM));
