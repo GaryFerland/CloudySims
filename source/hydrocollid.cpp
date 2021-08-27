@@ -925,7 +925,7 @@ realnum HydroCSInterp(long nelem,
 	long nLo = iso_sp[ipH_LIKE][nelem].st[ipLo].n();
 	long lLo = iso_sp[ipH_LIKE][nelem].st[ipLo].l();
 	long sLo = iso_sp[ipH_LIKE][nelem].st[ipLo].S();
-	long gLo = iso_sp[ipH_LIKE][nelem].st[ipLo].g();
+	//	long gLo = iso_sp[ipH_LIKE][nelem].st[ipLo].g();
 	double IP_Ryd_Lo = iso_sp[ipH_LIKE][nelem].fb[ipLo].xIsoLevNIonRyd;
 	double Aul = iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo).Emis().Aul();
 	// collisions are from high to low level, then initial level lifetime is from higher level
@@ -934,16 +934,16 @@ realnum HydroCSInterp(long nelem,
 	double EnerErg = iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo).EnergyErg();
 	const char *where="      ";
 
-	double CStemp = GetHlikeCollisionStrength( nelem, ipCollider,
+	realnum CStemp = GetHlikeCollisionStrength( nelem, ipCollider,
 					nHi, lHi, sHi, gHi, IP_Ryd_Hi,
-					nLo, lLo, sLo, gLo, IP_Ryd_Lo,
+					nLo, lLo, sLo,/*gLo,*/ IP_Ryd_Lo,
 					Aul, tauLo, EnerWN, EnerErg, &where );
-	return (realnum)CStemp;
+	return CStemp;
 }
 
 realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 					long nHi, long lHi, long sHi, long gHi, double IP_Ryd_Hi,
-					long nLo, long lLo, long sLo, long gLo, double IP_Ryd_Lo,
+					long nLo, long lLo, long sLo, /*long gLo,*/ double IP_Ryd_Lo,
 					double Aul, double tauLo, double EnerWN, double EnerErg, const char **where )
 {
 	DEBUG_ENTRY( "GetHlikeCollisionStrength()" );

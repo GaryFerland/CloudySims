@@ -76,12 +76,12 @@ double hydro_Lebedev_deexcit(long ipISO, long nelem, long nHi, long nLo, double 
 /**hydro_Fujimoto_deexcit - Collisional de-excitation rates from original equation (6-12)
  * from Fujimoto (1978) IPPJ-AM-8, Institute of Plasma Physics, Nagoya University, Nagoya.
  *
- * \param ipISO     [in]  iso-sequence (0 for H-like, 1 for He-like)
- * \param nHi       [in]  upper level principal quantum number
- * \param lHi       [in]  upper level orbital angular momentum
- * \param Aul       [in]  Einstein A for transition between levels
- * \param ip_Ryd_Hi [in]  upper level ionization potential, in Rydberg
- * \param ip_Ryd_Lo [in]  lower level ionization potential, in Rydberg
+ * \param ipISO    [in]  iso-sequence (0 for H-like, 1 for He-like)
+ * \param nHi      [in]  upper level principal quantum number
+ * \param lHi      [in]  upper level orbital angular momentum
+ * \param Aul      [in]  Einstein A for transition between levels
+ * \param ip_Ryd_Hi[in]  upper level ionization potential, in Rydberg
+ * \param ip_Ryd_Lo[in]  lower level ionization potential, in Rydberg
  *
  * \returns n-n' collision strength
  */
@@ -111,11 +111,11 @@ double hydro_vanRegemorter_deexcit(long ipISO,  const long nelem,
 /**CS_ThermAve_PR78 - Calculate thermal averaged Percival and Richard excitation
  * rates
  *
- * \param ipISO     [in]  iso-sequence (0 for H-like, 1 for He-like)
- * \param nelem     [in]  element (0 for H)
- * \param nHi       [in]  upper level principal quantum number
- * \param deltaE    [in]  energy difference between levels, in Rydberg
- * \param temp      [in]  gas temparature
+ * \param ipISO [in]  iso-sequence (0 for H-like, 1 for He-like)
+ * \param nelem [in]  element (0 for H)
+ * \param nHi   [in]  upper level principal quantum number
+ * \param deltaE[in]  energy difference between levels, in Rydberg
+ * \param temp  [in]  gas temparature
  *
  * \returns n-n' collision strength
 */
