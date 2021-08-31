@@ -263,7 +263,7 @@ public:
 	}
 
 	/** Create image (FITS or PPM) using the given species.
-	 *  Useful when generating FITS images when negative populations are
+	 *  Useful for generating FITS images when negative populations are
 	 *  computed.
 	 */
 	void createImage( const string &species,
@@ -286,7 +286,7 @@ public:
 			bool haveNegPop = false );
 
 	/** Add FITS image to an existing file using the given species.
-	 *  Useful when generating FITS images when negative populations are
+	 *  Useful for generating FITS images when negative populations are
 	 *  computed.
 	 */
 	void addImagePop_FITS( const string &species,
