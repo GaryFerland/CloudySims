@@ -867,7 +867,7 @@ void PrtFinal(void)
 	{
 		/* table exceeded - kill all He case b predictions*/
 		static const int NWLHE = 20;
-		realnum wlhe[NWLHE] = {1640.40e0f, 1215.13e0f, 1084.94e0f, 1025.27e0f, 4685.70e0f, 3203.04e0f,
+		realnum wlhe[NWLHE] = {1640.40e0f, 1215.13e0f, 1084.94e0f, 1025.27e0f, 4685.68e0f, 3203.04e0f,
 						 2733.24e0f, 2511.15e0f, 1.01233e4f, 6559.91e0f, 5411.37e0f, 4859.18e0f,
 						 1.86362e4f, 1.16260e4f, 9344.62, 8236.51e0f, 303.784e0f, 256.317e0f,
 						 243.027e0f, 237.331e0f};
@@ -931,7 +931,7 @@ void PrtFinal(void)
 
 		/* get HeII 4686 */
 		/* >>chng 06 may 15, changed this so that it works for up to six sig figs. */
-		if( cdLine("He 2",wlAirVac(4685.70),&he4686,&absint)<=0 )
+		if( cdLine("He 2",wlAirVac(4685.68),&he4686,&absint)<=0 )
 		{
 			/* 06 aug 28, from numLevels_max to _local. */
 			if( iso_sp[ipH_LIKE][ipHELIUM].numLevels_local > 5 )

@@ -670,7 +670,9 @@ monitor line luminosity "Pump"  1025.72A 37.89
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 17, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "Q(H)"  4861.33A 0.9764 error 0.01
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "Q(H)"  4861.32A 0.9764 error 0.01
 #
 # this sim is really an existence prooof - include performance monitors
 ## >>chng 11 mar 13, from 269 to 250, gcc 4.2/mac gets 269, all others 249/250

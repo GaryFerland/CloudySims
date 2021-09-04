@@ -449,7 +449,7 @@ Cr+7	Chianti
 Cr+8	Chianti
 Cr+9	Stout
 Mn	Stout
-Mn+	
+Mn+	Stout
 Mn+10	Stout
 Mn+11	Stout
 Mn+12	Stout

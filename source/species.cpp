@@ -772,7 +772,7 @@ void makeChemical(char* chLabelChemical, long nelem, long ion)
 	chLabelChemical[CHARS_SPECIES-1] = '\0';
 }
 
-STATIC void spectral_to_chemical( char *chLabelChemical, char* chLabel, long &nelem, long &IonStg )
+STATIC void spectral_to_chemical( char *chLabelChemical, const char* chLabel, long &nelem, long &IonStg )
 {
 	DEBUG_ENTRY( "spectral_to_chemical()" );
 
@@ -793,12 +793,21 @@ STATIC void spectral_to_chemical( char *chLabelChemical, char* chLabel, long &ne
 	return;
 }
 
-void spectral_to_chemical( char *chLabelChemical, char* chLabel )
+void spectral_to_chemical( char *chLabelChemical, const char* chLabel )
 {
 	DEBUG_ENTRY( "spectral_to_chemical()" );
 
 	long nelem, IonStg;
 	return spectral_to_chemical( chLabelChemical, chLabel, nelem, IonStg );
+}
+
+void spectral_to_chemical( string &chemicalLabel, const char *chLabel )
+{
+	DEBUG_ENTRY( "spectral_to_chemical()" );
+
+	char speciesLabel[NCHLAB] = "";
+	spectral_to_chemical( speciesLabel, chLabel );
+	chemicalLabel = speciesLabel;
 }
 
 bool parse_chemical( const string &chLabelChem,
@@ -925,6 +934,12 @@ STATIC void states_nelemfill(void)
 			nelem = -1;
 			IonStg = -1;
 			strcpy( chLabelChemical, dBaseSpecies[i].chLabel );
+
+			dBaseSpecies[i].lgImgMatrix = false;
+			if( save.img_matrix.species == dBaseStates[i].chLabel() )
+			{
+				dBaseSpecies[i].lgImgMatrix = true;
+			}
 		}
 		else
 		{
@@ -966,6 +981,12 @@ STATIC void states_nelemfill(void)
 			if( prt.matrix.species == dBaseStates[i].chLabel() )
 			{
 				dBaseSpecies[i].lgPrtMatrix = true;
+			}
+
+			dBaseSpecies[i].lgImgMatrix = false;
+			if( save.img_matrix.species == dBaseStates[i].chLabel() )
+			{
+				dBaseSpecies[i].lgImgMatrix = true;
 			}
 		}
 

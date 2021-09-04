@@ -126,7 +126,9 @@ monitor line luminosity "blnd" 1549 5.186 ##total of sum of both C IV comp
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line luminosity "H  1" 4861.33A 6.75, 
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line luminosity "H  1" 4861.32A 6.75, 
 ##
 ## >>chng 09 jun 28, from 1 to 6.572, check convergence of outward Hb
 ## >>chng 11 jul 12, from 6.572 to 6.598, enable fit to Badnell DR suppression
@@ -136,13 +138,16 @@ monitor line luminosity "H  1" 4861.33A 6.75,
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line luminosity "Inwd" 4861.33A 6.735, 
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line luminosity "Inwd" 4861.32A 6.735, 
 ## 
 ## >>chng 06 aug 02, from 6.527 to 6.498, update O+2, N+2 CT
 ## >>chng 08 mar 17, from 6.498 to 6.588, r1844 - mostly iso PopOpc and rt_line_one_tauinc changes
 ## >>chng 08 apr 30, from 6.588 to 6.609 H, He topoff change
 ## >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
-monitor line luminosity "he 2"  1640.40A 6.609 ##total He II Balmer-alpha 1640
+## >>chng 21 apr 08, wl from 1640.40A to 1640.41A, up 1-e energies to np
+monitor line luminosity "he 2"  1640.41A 6.609 ##total He II Balmer-alpha 1640
 ## 
 ## >>chng 06 aug 02, from 4.709 to 4.734, update O+2, N+2 CT
 ## >>chng 06 aug 09, from 4.734 to 4.795 Meudon 06, Bowen change

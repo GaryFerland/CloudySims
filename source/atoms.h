@@ -100,6 +100,7 @@ public:
 		double *coolder, 
 		const char *chLabel, 
 		bool lgPrtMatrix,
+		bool lgImgMatrix,
 		int *nNegPop,
 		bool *lgZeroPop,
 		bool lgDeBug,

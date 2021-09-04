@@ -631,6 +631,20 @@ void SaveDo(
 				}
 			}
 
+			else if( strcmp(save.chSave[ipPun],"IMAG") == 0 )
+			{
+				// NB NB
+				//
+				// This command generates images for debugging purposes,
+				// and it is executed near the call to the linear algebra
+				// function that solves the rate equations for level
+				// populations
+				//
+				// Here we do nothing
+				//
+				continue;
+			}
+
 			else if( strcmp(save.chSave[ipPun],"MONI") == 0 )
 			{
 				if( lgLastOnly )

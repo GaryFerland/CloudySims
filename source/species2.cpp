@@ -19,6 +19,7 @@
 #include "doppvel.h"
 #include "oxy.h"
 #include "hydrogenic.h"
+#include "continuum.h"
 #include "vectorize.h"
 #include "container_classes.h"
 
@@ -602,9 +603,10 @@ void dBase_solve()
 			/* total cooling and its derivative, set here but nothing done with it*/
 			&cooltl, 
 			&coolder, 
-			/* string used to identify calling program in case of error */
+			/* string used to identify species in case of error */
 			spName, 
 			dBaseSpecies[ipSpecies].lgPrtMatrix,
+			dBaseSpecies[ipSpecies].lgImgMatrix,
 			/* nNegPop flag indicating what we have done
 			 * positive if negative populations occurred
 			 * zero if normal calculation done
@@ -638,6 +640,8 @@ void dBase_solve()
 			else
 			{
 				fprintf(ioQQQ," PROBLEM in dBase_solve, atom_levelN returned negative population .\n");
+				ContNegative();
+				ShowMe();
 				cdEXIT( EXIT_FAILURE );
 			}
 		}

@@ -111,18 +111,27 @@ void DatabasePrintReference();
  end of calculation */
 void PrtAllTau(void);
 
-class t_prt_matrix {
+class t_prt_matrix : public module {
 public:
 	/** species element and ionization stage set with print array command to print
 	  * matrixes input to solvers */
 	string species;
 	string speciesLevels;
 	vector<long> speciesLevelList;
+	bool lgLevelsResolved = false;
 
 	void zero();
+	void comment(t_warnings&) {}
+
+	const char *chName() const
+	{
+		return "prt_matrix";
+	}
+
 	void setSpecies( const string &sspec );
 	void resolveLevels();
-	void prtRates( const long nlevels_local, const multi_arr<double,2,C_TYPE> &a,
+	void prtRates( const long numLevels,
+			const multi_arr<double,2,C_TYPE> &matrix,
 			valarray<double> &b );
 };
 

@@ -889,6 +889,10 @@ void RT_DestProb(
 	}
 	t.Emis().Pdest() = eovrlp_v;
 
+	/* special case with NO ABSORPTION ESCAPE, ignore destruction by background opacity */
+	if( !rt.lgAbsorLineEscape)
+		t.Emis().Pdest() = 0.;
+
 	RT_line_electron_scatter( t , DopplerWidth );
 
 	/* true by default, set false with command No scattering intensity */
