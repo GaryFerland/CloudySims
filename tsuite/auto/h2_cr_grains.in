@@ -115,16 +115,19 @@ monitor "H2O " 538.142m line intensity -17.51
 ## >>chng 20 jul 21, from -20.42 to -20.22, update CR H2 dissoc as per  2020RNAAS...4...78S
 ## >>chng 21 apr 10, from -20.22 to -20.38, update chemistry and lamba
 ## >>chng 21 apr 16, from -20.38 to -20.21, remove bad UMIST reaction
-monitor "HNC " 1652.90m  line intensity -20.21
+## >>chng 21 sep 11, from -20.21 to -20.74, LAMDA update
+monitor "HNC " 1652.90m  line intensity -20.74
 ## >>chng 13 jun 27, from -8.563 to -23.08, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 27, from -23.08 to -22.98, fix the error in mole_h2_coll.cpp
 ## >>chng 13 jul 25, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 20 jul 21, from -22.98 to -22.93, update CR H2 dissoc as per  2020RNAAS...4...78S
-monitor "HCS+" 1755.88m  -22.93 line intensity
+## >>chng 21 sep 11, from -22.93 to -23.06, LAMDA update
+monitor "HCS+" 1755.88m  -23.06 line intensity
 ## >>chng 13 jun 27, from -7.453 to -20.34, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 27, from -20.34 to -20.26, fix the error in mole_h2_coll.cpp
 ## >>chng 13 jul 25, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
-monitor "CS  " 3058.86m  -20.26 line intensity
+## >>chng 21 sep 11, from -20.26 to -20.19, LAMDA update
+monitor "CS  " 3058.86m  -20.19 line intensity
 ## >>chng 13 jun 27, from -7.288 to -21.74, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 13 oct 30, from -21.74 to -21.76, change H2/HD secondary scale factors
@@ -163,7 +166,8 @@ monitor "CO  " 325.137m  -17.67 line intensity
 monitor "^13CO" 906.599m  -20.96 line intensity
 ## >>chng 13 jun 27, from -8.247 to -21.41, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
-monitor "CN  " 880.858m  -21.41  line intensity
+## >>chng 21 sep 11, from -21.41 to -22.67, LAMDA update
+monitor "CN  " 880.858m  -22.67  line intensity
 ## 
 # h2_cr_grains.in
 # class limit  

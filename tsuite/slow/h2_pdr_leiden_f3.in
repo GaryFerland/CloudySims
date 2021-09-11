@@ -93,11 +93,13 @@ monitor column density O2   16.99 error 0.1
 monitor column density H2O  16.58 error 0.1
 ## >>chng 11 jul 16, from 10 to 13.49, add column density monitors
 ## >>chng 13 dec 18, from 13.49 to 13.42, fixes to Federman shielding
-monitor column density C2   13.42 error 0.1
+## >>chng 21 sep 11, from 13.42 to 13.3, LAMDA update
+monitor column density C2   13.3 error 0.1
 ## >>chng 11 jul 16, from 10 to 12.56, add column density monitors
 ## >>chng 13 feb 01, from 12.56 to 12.48, BUGFIX, largely undo r6703
 ## >>chng 13 dec 18, from 12.48 to 12.38, fixes to Federman shielding
-monitor column density C3   12.38 error 0.1
+## >>chng 21 sep 11, from 12.38 to 12.06, LAMDA update
+monitor column density C3   12.06 error 0.1
 ## >>chng 11 jul 16, from 10 to 16.42, add column density monitors
 ## >>chng 20 aug 03, from 16.42 to 16.48, update H3+ rates Indriola+ 2012
 monitor column density SiO  16.48 error 0.1
@@ -105,7 +107,8 @@ monitor column density SiO  16.48 error 0.1
 ## >>chng 20 aug 03, from 13.42 to 13.56, update H3+ rates Indriola+ 2012
 monitor column density OH   13.56 error 0.1
 ## >>chng 11 jul 16, from 10 to 12.52, add column density monitors
-monitor column density CN   12.52 error 0.1
+## >>chng 21 sep 11, from 12.52 to 12.44, LAMDA update
+monitor column density CN   12.44 error 0.1
 ## >>chng 11 jul 16, from 10 to 13.66, add column density monitors
 ## >>chng 13 feb 01, from 13.66 to 13.71, BUGFIX, largely undo r6703
 ## >>chng 13 jun 27, from 13.71 to 13.66, BUGFIX use g-bar for H2-H2 collisions
@@ -148,7 +151,8 @@ monitor H2 column density level 0  3  14.55 error 0.1
 ## >>chng 13 jun 27, from 14.32 to 14.26, BUGFIX use g-bar for H2-H2 collisions
 ## >>chng 13 oct 30, from 14.26 to 14.15, change H2/HD secondary scale factors
 ## >>chng 13 dec 18, from 14.15 to 14.09, fixes to Federman shielding
-monitor H2 column density level 0  4  14.09 error 0.1
+## >>chng 21 sep 11, from 14.09 to 14.45, LAMDA update
+monitor H2 column density level 0  4  14.45 error 0.1
 ##
 ## >>chng 05 feb 12, from 15.81 to 15.85 update conv chck
 ## >>chng 05 jun 21, from 15.85 to 14.63, chng cr, grn deex
@@ -163,7 +167,8 @@ monitor H2 column density level 0  4  14.09 error 0.1
 ## >>chng 13 dec 18, from 14.28 to 14.2, fixes to Federman shielding
 ## >>chng 15 may 14, from 14.2 to 14.16, CollisSuppres, final version from Dragan Nikolic
 ## >>chng 20 jul 21, from 14.16 to 14.08, update DR H2 diss as per  2020RNAAS...4...78S
-monitor H2 column density level 0  5  14.08 error 0.1
+## >>chng 21 sep 11, from 14.08 to 14.13, LAMDA update
+monitor H2 column density level 0  5  14.13 error 0.1
 ##
 ## >>chng 05 feb 12, from 15.16 to 15.22 update conv chck
 ## >>chng 05 jun 21, from 15.22 to 14.09, chng cr, grn deex
@@ -305,7 +310,8 @@ monitor "H2O " 538.142m line intensity -4.992
 ## >>chng 13 jul 26, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -7.444 to -7.394, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -7.394 to -7.416, update H3+ rates Indriola+ 2012
-monitor "HNC " 1652.90m  line intensity -7.416
+## >>chng 21 sep 11, from -7.416 to -7.689, LAMDA update
+monitor "HNC " 1652.90m  line intensity -7.689
 ## >>chng 13 jun 27, from -8.563 to -8.543, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -8.543 to -8.453, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
@@ -349,7 +355,8 @@ monitor "^13CO" 906.599m  -5.706 line intensity
 ## >>chng 13 jun 27, from -8.38 to -8.402, fix the errors in mole_h2_coll.cpp
 ## >>chng 13 jul 26, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 18, from -8.402 to -8.431, fixes to Federman shielding
-monitor "CN  " 880.858m  -8.431  line intensity
+## >>chng 21 sep 11, from -8.431 to -9.513, LAMDA update
+monitor "CN  " 880.858m  -9.513  line intensity
 ##
 # 
 # h2_pdr_leiden_f3.in

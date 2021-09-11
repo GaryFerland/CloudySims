@@ -70,7 +70,8 @@ save wind "dynamics_HII_PDR.wnd"
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, update 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-monitor line "H  1" 4861.32A 0.4217
+## >>chng 21 sep 11, from 0.4217 to 0.4021, LAMDA update
+monitor line "H  1" 4861.32A 0.4021
 #
 # dynamics_HII_PDR.in
 #

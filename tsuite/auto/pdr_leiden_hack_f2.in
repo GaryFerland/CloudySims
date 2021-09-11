@@ -125,19 +125,23 @@ monitor "CO  " 650.074m  -5.667 line intensity
 ## >>chng 13 jun 27, from -6.485 to -5.848, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -5.848 to -5.797, update H3+ rates Indriola+ 2012
-monitor "CO  " 520.089m  -5.797 line intensity
+## >>chng 21 sep 11, from -5.797 to -5.839, LAMDA update
+monitor "CO  " 520.089m  -5.839 line intensity
 ## >>chng 13 jun 27, from -6.954 to -6.238, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -6.238 to -6.175, update H3+ rates Indriola+ 2012
-monitor "CO  " 433.438m  -6.175 line intensity
+## >>chng 21 sep 11, from -6.175 to -6.228, LAMDA update
+monitor "CO  " 433.438m  -6.228 line intensity
 ## >>chng 13 jun 27, from -7.48 to -6.767, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -6.767 to -6.702, update H3+ rates Indriola+ 2012
-monitor "CO  " 371.549m  -6.702 line intensity
+## >>chng 21 sep 11, from -6.702 to -6.756, LAMDA update
+monitor "CO  " 371.549m  -6.756 line intensity
 ## >>chng 13 jun 27, from -8.049 to -7.336, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -7.336 to -7.272, update H3+ rates Indriola+ 2012
-monitor "CO  " 325.137m  -7.272 line intensity
+## >>chng 21 sep 11, from -7.272 to -7.325, LAMDA update
+monitor "CO  " 325.137m  -7.325 line intensity
 ## >>chng 13 jun 27, from -7.522 to -6.996, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -6.996 to -6.952, update H3+ rates Indriola+ 2012

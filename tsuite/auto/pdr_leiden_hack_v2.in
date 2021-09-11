@@ -49,7 +49,8 @@ monitor H2 column density 21.69 error 0.1
 ## >>chng 06 jun 02, from 17.52 to 17.42, NA refactor chem, bug fix
 ## >>chng 11 nov 16, from 17.42 to 17.36, adjust newmole monitors
 ## >>chng 20 aug 03, from 17.26 to 17.4, update H3+ rates Indriola+ 2012
-monitor CO column density 17.4 error 0.1
+## >>chng 21 sep 11, from 17.4 to 17.25, LAMDA update
+monitor CO column density 17.25 error 0.1
 ##
 ## >>chng 05 aug 03, from 15.86 to 15.62, NA update CO, H chem net
 ## >>chng 05 aug 08, from 15.62 to 15.82, readd grain-gas coll energy exchange
@@ -64,7 +65,8 @@ monitor CO column density 17.4 error 0.1
 ## >>chng 13 sep 17, from 15 to 15.07, D chem off by default
 ## >>chng 13 nov 20, from 15.07 to 14.67, include H,H2+=>H+,H2 even when H2* is disabled
 ## >>chng 20 aug 03, from 14.67 to 15.12, update H3+ rates Indriola+ 2012
-monitor O2 column density 15.12 error 0.1
+## >>chng 21 sep 11, from 15.12 to 14.89, LAMDA update
+monitor O2 column density 14.89 error 0.1
 ##
 ## >>chng 05 aug 03, from 15.40 to 15.61, NA update CO, H chem net
 ## >>chng 05 aug 08, from 15.61 to 15.39, readd grain-gas coll energy exchange
@@ -76,7 +78,8 @@ monitor O2 column density 15.12 error 0.1
 ## >>chng 11 nov 16, from 15.57 to 15.51, adjust newmole monitors
 ## >>chng 13 nov 20, from 15.51 to 15.3, include H,H2+=>H+,H2 even when H2* is disabled
 ## >>chng 20 aug 03, from 15.3 to 15.6, update H3+ rates Indriola+ 2012
-monitor OH column density 15.6 error 0.1
+## >>chng 21 sep 11, from 15.6 to 15.54, LAMDA update
+monitor OH column density 15.54 error 0.1
 ## 
 ## >>chng 04 dec 08, from 258 to 282, co-ion feedback, check converg
 ## >>chng 05 mar 25, from 282 to 264 renorm H pops in level solver
@@ -165,40 +168,46 @@ monitor "H2O " 538.142m line intensity -8.297
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 20, from -7.382 to -7.414, include H,H2+=>H+,H2 even when H2* is disabled
 ## >>chng 20 aug 03, from -7.414 to -7.362, update H3+ rates Indriola+ 2012
-monitor "CO  " 2600.05m  -7.362 line intensity
+## >>chng 21 sep 11, from -7.362 to -7.428, LAMDA update
+monitor "CO  " 2600.05m  -7.428 line intensity
 ## >>chng 13 jun 27, from -6.463 to -6.771, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 20, from -6.771 to -6.813, include H,H2+=>H+,H2 even when H2* is disabled
 ## >>chng 13 dec 23, from -6.813 to -6.836, C to external databases
 ## >>chng 20 aug 03, from -6.836 to -6.741, update H3+ rates Indriola+ 2012
-monitor "CO  " 1300.05m  -6.741 line intensity
+## >>chng 21 sep 11, from -6.741 to -6.825, LAMDA update
+monitor "CO  " 1300.05m  -6.825 line intensity
 ## >>chng 13 jun 27, from -6.149 to -6.853, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 20, from -6.853 to -6.907, include H,H2+=>H+,H2 even when H2* is disabled
 ## >>chng 13 dec 23, from -6.907 to -6.949, C to external databases
 ## >>chng 20 aug 03, from -6.949 to -6.801, update H3+ rates Indriola+ 2012
-monitor "CO  " 866.727m  -6.801 line intensity
+## >>chng 21 sep 11, from -6.801 to -6.891, LAMDA update
+monitor "CO  " 866.727m  -6.891 line intensity
 ## >>chng 13 jun 27, from -6.177 to -7.423, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -7.423 to -7.383, update H2 - C II 158m collision rate
 ## >>chng 13 nov 20, from -7.383 to -7.408, include H,H2+=>H+,H2 even when H2* is disabled
 ## >>chng 13 dec 23, from -7.408 to -7.472, C to external databases
 ## >>chng 20 aug 03, from -7.472 to -7.341, update H3+ rates Indriola+ 2012
-monitor "CO  " 650.074m  -7.341 line intensity
+## >>chng 21 sep 11, from -7.341 to -7.268, LAMDA update
+monitor "CO  " 650.074m  -7.268 line intensity
 ## >>chng 13 jun 27, from -6.485 to -7.94, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -7.94 to -7.87, update H2 - C II 158m collision rate
 ## >>chng 13 nov 20, from -7.87 to -7.849, include H,H2+=>H+,H2 even when H2* is disabled
 ## >>chng 13 dec 23, from -7.849 to -7.923, C to external databases
 ## >>chng 20 aug 03, from -7.923 to -7.839, update H3+ rates Indriola+ 2012
-monitor "CO  " 520.089m  -7.839 line intensity
+## >>chng 21 sep 11, from -7.839 to -7.631, LAMDA update
+monitor "CO  " 520.089m  -7.631 line intensity
 ## >>chng 13 jun 27, from -6.954 to -8.369, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -8.369 to -8.276, update H2 - C II 158m collision rate
 ## >>chng 13 nov 20, from -8.276 to -8.242, include H,H2+=>H+,H2 even when H2* is disabled
 ## >>chng 13 dec 23, from -8.242 to -8.332, C to external databases
 ## >>chng 20 aug 03, from -8.332 to -8.258, update H3+ rates Indriola+ 2012
-monitor "CO  " 433.438m  -8.258 line intensity
+## >>chng 21 sep 11, from -8.258 to -7.99, LAMDA update
+monitor "CO  " 433.438m  -7.99 line intensity
 ## >>chng 13 jun 27, from -7.48 to -8.804, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -8.804 to -8.692, update H2 - C II 158m collision rate
@@ -206,7 +215,8 @@ monitor "CO  " 433.438m  -8.258 line intensity
 ## >>chng 13 dec 23, from -8.654 to -8.759, C to external databases
 ## >>chng 15 oct 14, from -8.759 to -8.737, update Ne 3 cs to McLaughlin+11
 ## >>chng 20 aug 03, from -8.737 to -8.687, update H3+ rates Indriola+ 2012
-monitor "CO  " 371.549m  -8.687 line intensity
+## >>chng 21 sep 11, from -8.687 to -8.378, LAMDA update
+monitor "CO  " 371.549m  -8.378 line intensity
 ## >>chng 13 jun 27, from -8.049 to -9.248, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 13 sep 17, from -9.248 to -9.229, D chem off by default
@@ -216,13 +226,15 @@ monitor "CO  " 371.549m  -8.687 line intensity
 ## >>chng 14 mar 26, from -9.198 to -9.222, Move oxygen data to stout and chianti files
 ## >>chng 15 may 30, from -9.222 to -9.176, updates after merge from mainline, r10248
 ## >>chng 20 aug 03, from -9.176 to -9.126, update H3+ rates Indriola+ 2012
-monitor "CO  " 325.137m  -9.126 line intensity
+## >>chng 21 sep 11, from -9.126 to -8.783, LAMDA update
+monitor "CO  " 325.137m  -8.783 line intensity
 ## >>chng 13 jun 27, from -7.522 to -8.334, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 20, from -8.334 to -8.405, include H,H2+=>H+,H2 even when H2* is disabled
 ## >>chng 13 dec 23, from -8.405 to -8.448, C to external databases
 ## >>chng 20 aug 03, from -8.448 to -8.273, update H3+ rates Indriola+ 2012
-monitor "^13CO" 906.599m  -8.273 line intensity
+## >>chng 21 sep 11, from -8.273 to -8.389, LAMDA update
+monitor "^13CO" 906.599m  -8.389 line intensity
 #
 # pdr_leiden_hack_v2.in
 # class pdr  

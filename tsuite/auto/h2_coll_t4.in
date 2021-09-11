@@ -32,7 +32,8 @@ monitor H2 column density 9 error 0.20
 ## >>chng 13 feb 01, from 10.05 to 10.18, BUGFIX, largely undo r6703
 ## >>chng 13 feb 10, from 10.18 to 9.754, H2,e-=>H-,H update
 ## >>chng 13 nov 19, from 9.754 to 10.44, fix CT bug in mole_eval_balance
-monitor CO column density 10.44 error 0.20
+## >>chng 21 sep 11, from 10.44 to 10.03, LAMDA update
+monitor CO column density 10.03 error 0.20
 ##
 ## >>chng 13 feb 01, from -3.05 to -3.136, BUGFIX, largely undo r6703
 ## >>chng 13 nov 19, from -3.136 to -3.597, fix CT bug in mole_eval_balance
@@ -40,7 +41,8 @@ monitor ionization Hydrogen  2 -3.597 error 0.15
 ##
 ## >>chng 13 nov 19, from -10.87 to -11.38, fix CT bug in mole_eval_balance
 ## >>chng 16 mar 21, from -11.38 to -11.27, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
-monitor ionization Helium    2 -11.27 error 0.30
+## >>chng 21 sep 11, from -11.27 to -11.09, LAMDA update
+monitor ionization Helium    2 -11.09 error 0.30
 ##
 ## >>chng 13 feb 10, from -2.775 to -2.878, H2,e-=>H-,H update
 ## >>chng 13 nov 19, from -2.878 to -3.037, fix CT bug in mole_eval_balance
@@ -109,52 +111,62 @@ monitor "CS  " 3058.86m  -15.3 line intensity
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 19, from -14.2 to -13.52, fix CT bug in mole_eval_balance
 ##
-monitor "CO  " 2600.05m  -13.52 line intensity
+## >>chng 21 sep 11, from -13.52 to -13.93, LAMDA update
+monitor "CO  " 2600.05m  -13.93 line intensity
 ## >>chng 13 jun 27, from -6.463 to -12.66, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 19, from -12.66 to -11.98, fix CT bug in mole_eval_balance
 ##
-monitor "CO  " 1300.05m  -11.98 line intensity
+## >>chng 21 sep 11, from -11.98 to -12.38, LAMDA update
+monitor "CO  " 1300.05m  -12.38 line intensity
 ## >>chng 13 jun 27, from -6.149 to -11.69, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 19, from -11.69 to -11.01, fix CT bug in mole_eval_balance
 ##
-monitor "CO  " 866.727m  -11.01 line intensity
+## >>chng 21 sep 11, from -11.01 to -11.41, LAMDA update
+monitor "CO  " 866.727m  -11.41 line intensity
 ## >>chng 13 jun 27, from -6.177 to -10.98, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 19, from -10.98 to -10.3, fix CT bug in mole_eval_balance
 ##
-monitor "CO  " 650.074m  -10.3 line intensity
+## >>chng 21 sep 11, from -10.3 to -10.71, LAMDA update
+monitor "CO  " 650.074m  -10.71 line intensity
 ## >>chng 13 jun 27, from -6.485 to -10.48, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 19, from -10.48 to -9.803, fix CT bug in mole_eval_balance
 ##
-monitor "CO  " 520.089m  -9.803 line intensity
+## >>chng 21 sep 11, from -9.803 to -10.21, LAMDA update
+monitor "CO  " 520.089m  -10.21 line intensity
 ## >>chng 13 jun 27, from -6.954 to -10.14, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 19, from -10.14 to -9.46, fix CT bug in mole_eval_balance
 ##
-monitor "CO  " 433.438m  -9.46 line intensity
+## >>chng 21 sep 11, from -9.46 to -9.866, LAMDA update
+monitor "CO  " 433.438m  -9.866 line intensity
 ## >>chng 13 jun 27, from -7.48 to -9.907, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 19, from -9.907 to -9.227, fix CT bug in mole_eval_balance
 ##
-monitor "CO  " 371.549m  -9.227 line intensity
+## >>chng 21 sep 11, from -9.227 to -9.633, LAMDA update
+monitor "CO  " 371.549m  -9.633 line intensity
 ## >>chng 13 jun 27, from -8.049 to -9.752, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 19, from -9.752 to -9.072, fix CT bug in mole_eval_balance
 ##
-monitor "CO  " 325.137m  -9.072 line intensity
+## >>chng 21 sep 11, from -9.072 to -9.477, LAMDA update
+monitor "CO  " 325.137m  -9.477 line intensity
 ## >>chng 13 jun 27, from -7.522 to -13.29, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 19, from -13.29 to -12.61, fix CT bug in mole_eval_balance
 ##
-monitor "^13CO" 906.599m  -12.61 line intensity
+## >>chng 21 sep 11, from -12.61 to -13.01, LAMDA update
+monitor "^13CO" 906.599m  -13.01 line intensity
 ## >>chng 13 jun 27, from -8.247 to -13.34, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 19, from -13.34 to -12.71, fix CT bug in mole_eval_balance
 ##
-monitor "CN  " 880.858m  -12.71  line intensity
+## >>chng 21 sep 11, from -12.71 to -14.5, LAMDA update
+monitor "CN  " 880.858m  -14.5  line intensity
 #
 # h2_coll_t4.in
 # class coronal  

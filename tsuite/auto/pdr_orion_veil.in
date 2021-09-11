@@ -124,7 +124,8 @@ monitor column density H2*  14.60
 ## >>chng 12 apr 09, from 10.62 to 11.13, update CR backbround to Indriolo+07, ~8x larger
 monitor column density HeH+ 11.13
 ## >>chng 21 jun 17, from 1 to 9.52, first run
-monitor column density "ArH+" 9.52
+## >>chng 21 sep 11, from 9.52 to 8.416, LAMDA update
+monitor column density "ArH+" 8.416
 ## 
 ##
 ## >>chng 03 nov 10, from 400 to 440, chng zoning, use He0
@@ -200,7 +201,8 @@ monitor "^13CO" 906.599m  25.88 line intensity
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from 23.84 to 23.68, C to external databases
 ## >>chng 14 mar 26, from 23.68 to 23.59, Move oxygen data to stout and chianti files
-monitor "CN  " 880.858m  23.59  line intensity
+## >>chng 21 sep 11, from 23.59 to 22.98, LAMDA update
+monitor "CN  " 880.858m  22.98  line intensity
 ##
 ## >>chng 13 dec 18, from 29.05 to 29.19, fixes to Federman shielding
 ## >>chng 17 nov 20, from 29.19 to 29.17, Bug-fix in DR suppression (r11900)

@@ -328,7 +328,8 @@ monitor itrzn 12.88
 ## >>chng 18 jun 17, from 208 to 206, improve zone 0 thermal relaxation
 ## >>chng 18 jun 20, from 206 to 200, #bugfixes at front face r12134:12136
 ## >>chng 19 sep 25, from 200 to 213, update Ne II H0 CS
-monitor nzone 213 error 0.01
+## >>chng 21 sep 11, from 213 to 193, LAMDA update
+monitor nzone 193 error 0.01
 ##
 ## >>chng 04 apr 16, add this assert
 ## >>chng 04 apr 28, from -1.125 to -1.101, He+ - H ct rate update

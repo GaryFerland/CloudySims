@@ -59,7 +59,7 @@ monitor set error 0.1
 monitor temperature "H" 56.42
 monitor H2 column density 25.20 
 monitor CO column density 20.89
-monitor "ArH+" column density 
+monitor "ArH+" column density 7.142
 ## >>chng 13 jul 15, from -4.459 to -1.652 move to Stout/Chianti for Si, botches are due to improved atomic data
 ## >>chng 20 aug 03, from -1.652 to -1.796, update H3+ rates Indriola+ 2012
 monitor line luminosity "Si 2" 34.8046m  -1.796
@@ -84,7 +84,8 @@ monitor line luminosity "Si 2" 34.8046m  -1.796
 ## >>chng 15 apr 28, from -0.6487 to -0.6086, CollisSuppres change suggested by Dragan Nikolic
 ## >>chng 15 may 29, from -0.6086 to -0.5647, double optical depth, iterate to convergence
 ## >>chng 20 aug 03, from -0.5647 to -0.6633, update H3+ rates Indriola+ 2012
-monitor eden -0.6633
+## >>chng 21 sep 11, from -0.6633 to -0.7449, LAMDA update
+monitor eden -0.7449
 ##
 ## >>chng 08 dec 08, from 9 to 4.214, upper limit -> equals (r2515)
 ## >>chng 08 dec 13, from 4.214 to 9.777, merging newsolvers branch
@@ -148,7 +149,8 @@ monitor "H2O " 160.466m line intensity -2.023
 monitor "HNC " 1652.90m  line intensity -4.2
 ## >>chng 13 jul 19, add this monitor
 ## >>chng 13 jul 24, wl from 178.2m to 178.228m, increased wl precision to 6 sig. fig.
-monitor "HCN " 178.228m line intensity -2.411
+## >>chng 21 sep 11, from -2.411 to -2.507, LAMDA update
+monitor "HCN " 178.228m line intensity -2.507
 ## >>chng 13 jun 27, from -8.563 to -4.031, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 19, from -4.031 to -4.086, set number of iterations to 8 for proper convergence of the model
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
@@ -297,7 +299,8 @@ monitor "^13CO" 906.599m  -3.509 line intensity
 ## >>chng 13 nov 04, from -3.101 to -3.032, remove Lyman line TauIn hack
 ## >>chng 13 nov 05, from -3.032 to -3.074, convergence branch changes
 ## >>chng 15 may 29, from -3.074 to -3.462, double optical depth, iterate to convergence
-monitor "CN  " 880.858m  -3.462  line intensity
+## >>chng 21 sep 11, from -3.462 to -3.508, LAMDA update
+monitor "CN  " 880.858m  -3.508  line intensity
 ## >>chng 13 jul 19, add this monitor
 ## >>chng 13 jul 24, wl from 986.1m to 986.129m, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 29, from -3.244 to -3.716, double optical depth, iterate to convergence
