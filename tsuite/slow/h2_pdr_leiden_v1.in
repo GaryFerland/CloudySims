@@ -497,7 +497,8 @@ monitor "^13CO" 906.599m  -10.2 line intensity
 ## >>chng 20 sep 06, from -10.77 to -10.73, further update to McCall CR-related rates from r14260
 ## >>chng 21 apr 16, from -10.73 to -10.79, remove bad UMIST reaction
 ## >>chng 21 sep 11, from -10.79 to -13.41, LAMDA update
-monitor "CN  " 880.858m  -13.41  line intensity
+## >>chng 21 sep 15, from -13.41 to -12.1, go back to unresolved model
+monitor "CN  " 880.858m  -12.1  line intensity
 #
 # h2_pdr_leiden_v1.in
 # class pdr 

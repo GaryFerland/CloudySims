@@ -236,7 +236,8 @@ monitor "^13CO" 906.599m  -6.506 line intensity
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -8.867 to -8.93, Move oxygen data to stout and chianti files
 ## >>chng 21 sep 11, from -8.93 to -9.54, LAMDA update
-monitor "CN  " 880.858m  -9.54  line intensity
+## >>chng 21 sep 15, from -9.54 to -8.836, go back to unresolved model
+monitor "CN  " 880.858m  -8.836  line intensity
 #
 # pdr_leiden_v4.in
 # class pdr 

@@ -404,7 +404,8 @@ monitor "^13CO" 906.599m  -10.27 line intensity
 ## >>chng 14 jan 05, from -16.91 to -17.34, N to external databases
 ## >>chng 17 feb 10, from -17.34 to -16.95, default size of N 1 model atom set to 50
 ## >>chng 21 sep 11, from -16.95 to -17.56, LAMDA update
-monitor "CN  " 880.858m  -17.56  line intensity
+## >>chng 21 sep 15, from -17.56 to -16.87, go back to unresolved model
+monitor "CN  " 880.858m  -16.87  line intensity
 ##
 # pdr_HTT91.in
 # class pdr 

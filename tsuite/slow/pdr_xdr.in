@@ -253,7 +253,8 @@ monitor "^13CO" 906.599m  -5.283 line intensity
 ## >>chng 13 nov 05, from -6.96 to -6.893, convergence branch changes
 ## >>chng 14 mar 26, from -6.893 to -7.017, move O to external databases
 ## >>chng 21 sep 11, from -7.017 to -7.976, LAMDA update
-monitor "CN  " 880.858m  -7.976  line intensity
+## >>chng 21 sep 15, from -7.976 to -6.985, go back to unresolved model
+monitor "CN  " 880.858m  -6.985  line intensity
 #
 # pdr_xdr.in
 # class pdr 

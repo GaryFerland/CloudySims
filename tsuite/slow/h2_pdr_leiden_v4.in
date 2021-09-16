@@ -449,7 +449,8 @@ monitor "^13CO" 906.599m  -6.506 line intensity
 ## >>chng 13 dec 23, from -8.852 to -8.873, C to external databases
 ## >>chng 14 mar 26, from -8.873 to -8.92, move O to external databases
 ## >>chng 21 sep 11, from -8.92 to -9.962, LAMDA update
-monitor "CN  " 880.858m  -9.962  line intensity
+## >>chng 21 sep 15, from -9.962 to -8.819, go back to unresolved model
+monitor "CN  " 880.858m  -8.819  line intensity
 #
 # h2_pdr_leiden_v4.in
 # class pdr 

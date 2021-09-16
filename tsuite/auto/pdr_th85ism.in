@@ -731,7 +731,8 @@ monitor "^13CO" 906.599m  -4.321 line intensity
 ## >>chng 15 aug 03, from -6.814 to -6.789, update LAMDA to 2015
 ## >>chng 20 aug 03, from -6.789 to -6.742, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -6.742 to -7.619, LAMDA update
-monitor "CN  " 880.858m  -7.619  line intensity
+## >>chng 21 sep 15, from -7.619 to -6.963, go back to unresolved model
+monitor "CN  " 880.858m  -6.963  line intensity
 ##
 # pdr_th85ism.in
 # class pdr 

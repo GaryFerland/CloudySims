@@ -409,7 +409,8 @@ monitor "^13CO" 906.599m  -19.66 line intensity
 ## >>chng 13 jun 27, from -23.75 to -23.65, fix the error in mole_h2_coll.cpp
 ## >>chng 13 jul 25, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -23.65 to -24.59, LAMDA update
-monitor "CN  " 880.858m  -24.59  line intensity
+## >>chng 21 sep 15, from -24.59 to -23.68, go back to unresolved model
+monitor "CN  " 880.858m  -23.68  line intensity
 ##
 # h2_t500.in 
 # class limit  

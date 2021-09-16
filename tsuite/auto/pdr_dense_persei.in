@@ -157,7 +157,8 @@ monitor "^13CO" 906.599m  -9.358 line intensity
 ## >>chng 13 jun 27, from -8.247 to -10.4, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -10.4 to -10.72, LAMDA update
-monitor "CN  " 880.858m  -10.72  line intensity
+## >>chng 21 sep 15, from -10.72 to -9.895, go back to unresolved model
+monitor "CN  " 880.858m  -9.895  line intensity
 ##
 # pdr_dense_persei.in
 # class pdr

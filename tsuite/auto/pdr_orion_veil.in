@@ -202,7 +202,8 @@ monitor "^13CO" 906.599m  25.88 line intensity
 ## >>chng 13 dec 23, from 23.84 to 23.68, C to external databases
 ## >>chng 14 mar 26, from 23.68 to 23.59, Move oxygen data to stout and chianti files
 ## >>chng 21 sep 11, from 23.59 to 22.98, LAMDA update
-monitor "CN  " 880.858m  22.98  line intensity
+## >>chng 21 sep 15, from 22.98 to 23.74, go back to unresolved model
+monitor "CN  " 880.858m  23.74  line intensity
 ##
 ## >>chng 13 dec 18, from 29.05 to 29.19, fixes to Federman shielding
 ## >>chng 17 nov 20, from 29.19 to 29.17, Bug-fix in DR suppression (r11900)

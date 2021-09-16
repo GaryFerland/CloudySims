@@ -170,7 +170,8 @@ monitor "^13CO" 906.599m  -8.487 line intensity
 ## >>chng 20 aug 03, from -8.13 to -8.031, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from -8.031 to -7.997, further update to McCall CR-related rate
 ## >>chng 21 sep 11, from -7.997 to -10.14, LAMDA update
-monitor "CN  " 880.858m  -10.14  line intensity
+## >>chng 21 sep 15, from -10.14 to -9.328, go back to unresolved model
+monitor "CN  " 880.858m  -9.328  line intensity
 # 
 monitor H2 column density 21.904 error 0.1
 ## 

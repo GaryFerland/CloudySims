@@ -166,7 +166,8 @@ monitor "^13CO" 906.599m  -13.01 line intensity
 ## >>chng 13 nov 19, from -13.34 to -12.71, fix CT bug in mole_eval_balance
 ##
 ## >>chng 21 sep 11, from -12.71 to -14.5, LAMDA update
-monitor "CN  " 880.858m  -14.5  line intensity
+## >>chng 21 sep 15, from -14.5 to -13.19, go back to unresolved model
+monitor "CN  " 880.858m  -13.19  line intensity
 #
 # h2_coll_t4.in
 # class coronal  

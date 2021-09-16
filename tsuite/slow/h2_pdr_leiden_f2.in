@@ -387,7 +387,8 @@ monitor "^13CO" 906.599m  -10.17 line intensity
 ## >>chng 20 aug 03, from -9.768 to -9.707, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from -9.707 to -9.636, further update to McCall CR-related rates from r14260
 ## >>chng 21 sep 11, from -9.636 to -11.95, LAMDA update
-monitor "CN  " 880.858m  -11.95  line intensity
+## >>chng 21 sep 15, from -11.95 to -10.84, go back to unresolved model
+monitor "CN  " 880.858m  -10.84  line intensity
 ##
 # 
 # h2_pdr_leiden_f2.in

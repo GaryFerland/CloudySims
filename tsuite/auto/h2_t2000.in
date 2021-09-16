@@ -140,7 +140,8 @@ monitor "^13CO" 906.599m  -20.21 line intensity
 ## >>chng 13 jun 27, from -8.247 to -25.86, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -25.86 to -24.57, LAMDA update
-monitor "CN  " 880.858m  -24.57  line intensity
+## >>chng 21 sep 15, from -24.57 to -23.86, go back to unresolved model
+monitor "CN  " 880.858m  -23.86  line intensity
 ##
 # h2_t2000.in 
 # class limit  

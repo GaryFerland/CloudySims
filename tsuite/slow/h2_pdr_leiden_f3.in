@@ -356,7 +356,8 @@ monitor "^13CO" 906.599m  -5.706 line intensity
 ## >>chng 13 jul 26, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 18, from -8.402 to -8.431, fixes to Federman shielding
 ## >>chng 21 sep 11, from -8.431 to -9.513, LAMDA update
-monitor "CN  " 880.858m  -9.513  line intensity
+## >>chng 21 sep 15, from -9.513 to -8.487, go back to unresolved model
+monitor "CN  " 880.858m  -8.487  line intensity
 ##
 # 
 # h2_pdr_leiden_f3.in

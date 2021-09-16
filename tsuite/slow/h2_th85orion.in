@@ -617,7 +617,8 @@ monitor "^13CO" 906.599m  -4.427 line intensity
 ## >>chng 20 jul 21, from -7.054 to -7.117, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from -7.117 to -7.064, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -7.064 to -7.916, LAMDA update
-monitor "CN  " 880.858m  -7.916  line intensity
+## >>chng 21 sep 15, from -7.916 to -7.23, go back to unresolved model
+monitor "CN  " 880.858m  -7.23  line intensity
 ##
 # h2_th85orion.in
 

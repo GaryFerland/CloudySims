@@ -306,7 +306,8 @@ monitor "^13CO" 906.599m  -8.519 line intensity
 ## >>chng 15 oct 14, from -9.241 to -9.206, update DR suppression in r10716
 ## >>chng 16 dec 20, from -9.206 to -9.238, add secondary autoionization to DR suppression
 ## >>chng 21 sep 11, from -9.238 to -10.28, LAMDA update
-monitor "CN  " 880.858m  -10.28  line intensity
+## >>chng 21 sep 15, from -10.28 to -9.09, go back to unresolved model
+monitor "CN  " 880.858m  -9.09  line intensity
 ##
 # orion_hii_pdr_fast.in
 # class hii pdr 

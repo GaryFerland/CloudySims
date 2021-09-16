@@ -300,7 +300,8 @@ monitor "^13CO" 906.599m  -3.509 line intensity
 ## >>chng 13 nov 05, from -3.032 to -3.074, convergence branch changes
 ## >>chng 15 may 29, from -3.074 to -3.462, double optical depth, iterate to convergence
 ## >>chng 21 sep 11, from -3.462 to -3.508, LAMDA update
-monitor "CN  " 880.858m  -3.508  line intensity
+## >>chng 21 sep 15, from -3.508 to -3.436, go back to unresolved model
+monitor "CN  " 880.858m  -3.436  line intensity
 ## >>chng 13 jul 19, add this monitor
 ## >>chng 13 jul 24, wl from 986.1m to 986.129m, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 29, from -3.244 to -3.716, double optical depth, iterate to convergence
