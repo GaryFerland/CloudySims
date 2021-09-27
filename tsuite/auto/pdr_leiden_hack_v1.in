@@ -147,7 +147,8 @@ monitor line luminosity "O  1" 145.495m -7.761
 ## >>chng 13 nov 05, from 10.43 to 6.256, convergence branch changes
 ## >>chng 14 apr 07, from 6.256 to 4.696, move H/C out of ConvBase loop
 ## >>chng 21 sep 11, from 4.696 to 5.895, LAMDA update
-monitor itrzn 5.895 
+## >>chng 21 sep 27, from 5.895 to 6.7, average over test suite runs
+monitor itrzn 6.702
 ##
 ## >>chng 05 dec 17, from 460 to 490 NA increase C chemistry
 ## >>chng 08 dec 08, from 490 to 452, upper limit -> equals (r2515)
