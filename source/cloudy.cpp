@@ -127,6 +127,12 @@ bool cloudy()
 
 	SetPrintLineCol();
 
+        /* Initialize pseudo-continua, if requested */
+	SpeciesPseudoContCreate();
+
+	/* Initialize species bands, if requested */
+	SpeciesBandsCreate();
+
 	/* print header */
 	PrtHeader();
 

@@ -856,11 +856,17 @@ void SpeciesBandsCreate()
 
 	for( auto it = save.specBands.begin(); it != save.specBands.end(); ++it )
 	{
+		if( ! isSpeciesActive( (*it).speciesLabel ) )
+			continue;
+
 		addBandsFile( (*it).filename );
 	}
 
 	for( auto it = save.specBands.begin(); it != save.specBands.end(); ++it )
 	{
+		if( ! isSpeciesActive( (*it).speciesLabel ) )
+			continue;
+
 		vector<bands_file>::iterator b_it;
 		findBandsFile( (*it).filename, b_it );
 
