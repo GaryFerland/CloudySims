@@ -35,6 +35,7 @@ double density(const genericState& gs)
 	else
 		return 0.;
 }
+
 double depart(const genericState& gs)
 {
 	if ( gs.sp != NULL )
@@ -46,6 +47,7 @@ double depart(const genericState& gs)
 	else
 		return 1.0;
 }
+
 double energy(const genericState& gs) 
 {
 	if ( gs.sp != NULL )
@@ -57,6 +59,7 @@ double energy(const genericState& gs)
 	else
 		return 0.0;
 }
+
 double levels(const genericState& gs) 
 {
 	if ( gs.sp != NULL && gs.sp->levels != NULL )
@@ -67,9 +70,17 @@ double levels(const genericState& gs)
 		return 0.0;
 }
 
+bool genericState::isSpecies() const
+{
+	if( sp != NULL && sp != null_molezone )
+		return true;
+	else
+		return false;
+}
+
 string genericState::label() const
 {
-	if ( sp != NULL && sp != null_molezone )
+	if( isSpecies() )
 		return sp->global()->label;
 	else if (q.associated())
 		return q.chLabel();
@@ -81,7 +92,7 @@ string genericState::label() const
 
 string genericState::database() const
 {
-	if ( sp != NULL && sp != null_molezone && sp->dbase != NULL )
+	if( isSpecies() && sp->dbase != NULL )
 		return sp->dbase->database;
 	else
 		return "";
@@ -89,7 +100,7 @@ string genericState::database() const
 
 bool genericState::associated() const
 {
-	if (sp != NULL && sp != null_molezone)
+	if( isSpecies() )
 		return true;
 	else if (q.associated())
 		return true;
@@ -341,4 +352,19 @@ vector<genericState> matchGeneric(const string &chLabel, bool lgValidate)
 		v.push_back(genericState(sp));
 	}
 	return v;
+}
+
+genericState getSpeciesGeneric(const string &speciesLabel)
+{
+	DEBUG_ENTRY( "getSpeciesGeneric()" );
+
+	vector<genericState> v = matchGeneric( speciesLabel, true );
+	if( v.size() == 0 || ! v[0].isSpecies() )
+	{
+		fprintf( ioQQQ, "PROBLEM: Invalid species '%s' requested.\n",
+				speciesLabel.c_str() );
+		cdEXIT( EXIT_FAILURE );
+	}
+
+	return v[0];
 }

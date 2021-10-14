@@ -45,22 +45,6 @@ STATIC string getIntenTypeStr( const int ipContType )
 	}
 }
 
-void getSpecies( const string &speciesLabel, genericState &species )
-{
-	DEBUG_ENTRY( "getSpecies()" );
-
-	vector<genericState> v = matchGeneric( speciesLabel, false );
-	if( v.size() != 1 )
-	{
-		fprintf( ioQQQ, "Error: Incorrect number of matches"
-				" (%d) for species '%s'\n",
-				int(v.size()), speciesLabel.c_str() );
-		cdEXIT( EXIT_FAILURE );
-	}
-	//	printf( "sp= '%s'\n", v[0].label().c_str() );
-	species = v[0];
-}
-
 
 
 /*==============================================================================*/
@@ -211,7 +195,7 @@ void pseudo_cont::setup( string &label, double wlo, double whi, long nb )
 		//			ibin, wl[ ibin ] );
 	}
 
-	getSpecies( speciesLabel, species );
+	species = getSpeciesGeneric( speciesLabel );
 	//	printf( "sp= '%s'\n", species.label().c_str() );
 }
 
@@ -701,7 +685,7 @@ public:
 	void setup( const string &splab, vector<bands_file>::iterator it )
 	{
 		speciesLabel = splab;
-		getSpecies( splab, species );
+		species = getSpeciesGeneric( splab );
 		//	printf("species: '%s'\n", species.label().c_str());
 
 		bands_it = it;

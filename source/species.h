@@ -149,16 +149,6 @@ void chemical_to_spectral( const string &chLabelChem, string &chLabelSpec );
  */
 bool isSpeciesActive( const string &chSpecLabel );
 
-
-class genericState;
-
-/** getSpecies - acquire the species matching the input string
- *
- * \param speciesLabel	input species string
- * \param species	output reference to requested species
- */
-void getSpecies( const string &speciesLabel, genericState &species );
-
 /** isAtomicIonValid - Tell if an atomic ion is has a charge consistent
  * 			with its atomic number.
  *

@@ -451,8 +451,7 @@ void SaveSpeciesOptDep( const long int ipPun, const string &speciesLabel )
 		save.SaveHeaderDone( ipPun );
 	}
 
-	genericState species;
-	getSpecies( speciesLabel, species );
+	genericState species = getSpeciesGeneric( speciesLabel );
 
 	if( species.sp->lines == NULL )
 	{
