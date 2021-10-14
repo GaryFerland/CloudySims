@@ -633,6 +633,8 @@ bool bands_file::load()
 }
 
 /*==============================================================================*/
+
+/** Bands -- list of bands files specified with 'save species bands' commands */
 static vector<bands_file> Bands;
 
 STATIC void findBandsFile( const string &filename,
@@ -673,7 +675,7 @@ STATIC void addBandsFile( const string &filename )
 /*==============================================================================*/
 /*				SPECIES BAND EMISSION				*/
 /*==============================================================================*/
-class species_bands : public band_cont
+class band_emission : public band_cont
 {
 private:
 	string bandLabel,
@@ -746,9 +748,9 @@ public:
 	}
 };
 
-void species_bands::sumBand( double *sumOutward, double *sumInward ) const
+void band_emission::sumBand( double *sumOutward, double *sumInward ) const
 {
-	DEBUG_ENTRY( "species_bands::sumBand()" );
+	DEBUG_ENTRY( "band_emission::sumBand()" );
 
 	for( long i=0; i<nBins; ++i )
 	{
@@ -785,9 +787,9 @@ void species_bands::sumBand( double *sumOutward, double *sumInward ) const
 	}
 }
 
-void species_bands::insert()
+void band_emission::insert()
 {
-	DEBUG_ENTRY( "species_bands::insert()" );
+	DEBUG_ENTRY( "band_emission::insert()" );
 
 	for( long iband = 0; iband < nBins; iband++ )
 	{
@@ -807,17 +809,17 @@ void species_bands::insert()
 }
 /*============================================================================*/
 
-static vector<species_bands> SpecBands;
+static vector<band_emission> BandsEmission;
 
-STATIC void getSpecBandsIndex( const string &speciesLabel, const string &fileBands,
-				 vector<species_bands>::iterator &this_it )
+STATIC void getBandsEmissionIndex( const string &speciesLabel, const string &fileBands,
+				 vector<band_emission>::iterator &this_it )
 {
-	DEBUG_ENTRY( "getSpecBandsIndex()" );
+	DEBUG_ENTRY( "getBandsEmissionIndex()" );
 
-	this_it = SpecBands.end();
+	this_it = BandsEmission.end();
 
-	for( vector<species_bands>::iterator it = SpecBands.begin();
-		it != SpecBands.end(); ++it )
+	for( vector<band_emission>::iterator it = BandsEmission.begin();
+		it != BandsEmission.end(); ++it )
 	{
 		if( speciesLabel == (*it).label() &&
 			fileBands == (*it).bandFilename() )
@@ -835,7 +837,7 @@ void SpeciesBandsCreate()
 	DEBUG_ENTRY( "SpeciesBandsCreate()" );
 
 	// Already initialized
-	if( SpecBands.size() != 0 )
+	if( BandsEmission.size() != 0 )
 		return;
 
 	for( auto it = save.specBands.begin(); it != save.specBands.end(); ++it )
@@ -854,9 +856,9 @@ void SpeciesBandsCreate()
 		vector<bands_file>::iterator b_it;
 		findBandsFile( (*it).filename, b_it );
 
-		species_bands sb_tmp;
+		band_emission sb_tmp;
 		sb_tmp.setup( (*it).speciesLabel, b_it );
-		SpecBands.push_back( sb_tmp );
+		BandsEmission.push_back( sb_tmp );
 	}
 }
 
@@ -870,8 +872,8 @@ void SpeciesBandsAccum()
 	long i = StuffComment( "bands" );
 	linadd( 0., (realnum)i , "####", 'i', "  bands");
 
-	for( vector<species_bands>::iterator it = SpecBands.begin();
-		it != SpecBands.end(); ++it )
+	for( vector<band_emission>::iterator it = BandsEmission.begin();
+		it != BandsEmission.end(); ++it )
 	{
 		/* empty call processes only current zone
 		 * with no dVeffAper corrections;
@@ -890,9 +892,9 @@ void SaveSpeciesBands( const long ipPun, const string &speciesLabel,
 {
 	DEBUG_ENTRY( "SaveSpeciesBands()" );
 
-	vector<species_bands>::iterator it;
-	getSpecBandsIndex( speciesLabel, fileBands, it );
-	if( it == SpecBands.end() )
+	vector<band_emission>::iterator it;
+	getBandsEmissionIndex( speciesLabel, fileBands, it );
+	if( it == BandsEmission.end() )
 	{
 		fprintf( ioQQQ,
 			"Error: Species band data unmatched for species "
