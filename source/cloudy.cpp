@@ -130,7 +130,10 @@ bool cloudy()
         /* Initialize pseudo-continua, if requested */
 	SpeciesPseudoContCreate();
 
-	/* Initialize species bands, if requested */
+	/* Initialize species bands, if requested 
+	 *
+	 * NB NB
+	 * This function requires that the atomic data be read in. */
 	SpeciesBandsCreate();
 
 	/* print header */

@@ -125,7 +125,7 @@ double band_cont::getInten( const long ibin, const int ipContType ) const
 			inten = inten_inward[ ibin ] + inten_outward[ ibin ];
 			break;
 		default:
-			fprintf( ioQQQ, "Error: Illegal continuum type: %d\n",
+			fprintf( ioQQQ, "PROBLEM: Illegal continuum type: %d\n",
 					ipContType );
 			cdEXIT( EXIT_FAILURE );
 			break;
@@ -154,7 +154,7 @@ private:
 	{
 		if( ! check_index( ibin ) )
 		{
-			fprintf( ioQQQ, "Error: Pseudo-continuum bin (%ld) "
+			fprintf( ioQQQ, "PROBLEM: Pseudo-continuum bin (%ld) "
 					"for species '%s' "
 					"out of range (0, %ld)\n",
 					ibin,
@@ -258,7 +258,7 @@ void pseudo_cont::sumBand( double *sumOutward, double *sumInward ) const
 }
 /*============================================================================*/
 
-static vector< pseudo_cont > PseudoCont;
+static vector<pseudo_cont> PseudoCont;
 
 STATIC void getPseudoIndex( const string &speciesLabel,
 				vector<pseudo_cont>::iterator &this_it )
@@ -402,7 +402,7 @@ void SaveSpeciesPseudoCont( const long ipPun, const string &speciesLabel )
 	if( it == PseudoCont.end() )
 	{
 		fprintf( ioQQQ,
-			"Error: Species continuum data unmatched for species '%s'\n",
+			"PROBLEM: Species continuum data unmatched for species '%s'\n",
 			speciesLabel.c_str() );
 		cdEXIT( EXIT_FAILURE );
 	}
@@ -681,6 +681,7 @@ private:
 	string bandLabel,
 		comment;
 	vector<bands_file>::iterator bands_it;
+	bool isInitd = false;
 public:
 	const string inwdLabel = "InwdBnd";
 
@@ -707,13 +708,14 @@ public:
 		bandLabel = spectralLabel + "b";
 		comment = spectralLabel + " emission in bands defined in " +
 				(*bands_it).bandFilename();
+		isInitd = true;
 	}
 private:
 	void check_index_fatal( const long iband ) const
 	{
 		if( ! check_index( iband ) )
 		{
-			fprintf( ioQQQ, "Error: Band (%ld) "
+			fprintf( ioQQQ, "PROBLEM: Band (%ld) "
 					"for species '%s' "
 					"from file '%s' "
 					"out of range (0, %ld)\n",
@@ -745,6 +747,10 @@ public:
 	{
 		check_index_fatal( iband );
 		return (*bands_it).getWlHi( iband );
+	}
+	bool initialized() const
+	{
+		return isInitd;
 	}
 };
 
@@ -809,25 +815,57 @@ void band_emission::insert()
 }
 /*============================================================================*/
 
-static vector<band_emission> BandsEmission;
-
-STATIC void getBandsEmissionIndex( const string &speciesLabel, const string &fileBands,
-				 vector<band_emission>::iterator &this_it )
+class species_band
 {
-	DEBUG_ENTRY( "getBandsEmissionIndex()" );
+public:
+	string filename;
+	string speciesLabel;
+	band_emission bandEmission;
 
-	this_it = BandsEmission.end();
+	explicit species_band(const string &file, const string &species)
+		: filename(file), speciesLabel(species) {};
+};
 
-	for( vector<band_emission>::iterator it = BandsEmission.begin();
-		it != BandsEmission.end(); ++it )
+static vector<species_band> SpecBands;
+typedef vector<species_band>::iterator sb_itor;
+
+STATIC sb_itor findSpecBand( const string &filename, const string &speciesLabel )
+{
+	DEBUG_ENTRY( "findSpecBand()" );
+
+	for( auto it = SpecBands.begin(); it != SpecBands.end(); ++it )
 	{
-		if( speciesLabel == (*it).label() &&
-			fileBands == (*it).bandFilename() )
+		if( it->filename == filename && it->speciesLabel == speciesLabel )
 		{
-			this_it = it;
-			break;
+			return it;
 		}
 	}
+
+	return SpecBands.end();
+}
+
+STATIC bool specBandsExists( const string &filename, const string &speciesLabel )
+{
+	DEBUG_ENTRY( "specBandsExists()" );
+
+	auto it = findSpecBand( filename, speciesLabel );
+	if( it == SpecBands.end() )
+		return false;
+	else
+		return true;
+}
+
+void addUniqueSpeciesBand( const string &filename, const string &speciesLabel )
+{
+	DEBUG_ENTRY( "addUniqueSpeciesBand()" );
+
+	if( specBandsExists( filename, speciesLabel ) )
+		return;
+
+	species_band thisSpBand( filename, speciesLabel );
+	SpecBands.push_back( thisSpBand );
+
+	return;
 }
 
 /*============================================================================*/
@@ -836,11 +874,15 @@ void SpeciesBandsCreate()
 {
 	DEBUG_ENTRY( "SpeciesBandsCreate()" );
 
-	// Already initialized
-	if( BandsEmission.size() != 0 )
-		return;
+	/* make sure FeII bands are always processed
+	 *
+	 * if a 'save species bands' command has not been issued
+	 * the bands will be computed, and printed on main output,
+	 * but no 'save' output file will be created
+	 */
+	addUniqueSpeciesBand( "FeII_bands.ini", "Fe+" );
 
-	for( auto it = save.specBands.begin(); it != save.specBands.end(); ++it )
+	for( auto it = SpecBands.begin(); it != SpecBands.end(); ++it )
 	{
 		if( ! isSpeciesActive( (*it).speciesLabel ) )
 			continue;
@@ -848,7 +890,7 @@ void SpeciesBandsCreate()
 		addBandsFile( (*it).filename );
 	}
 
-	for( auto it = save.specBands.begin(); it != save.specBands.end(); ++it )
+	for( auto it = SpecBands.begin(); it != SpecBands.end(); ++it )
 	{
 		if( ! isSpeciesActive( (*it).speciesLabel ) )
 			continue;
@@ -856,9 +898,7 @@ void SpeciesBandsCreate()
 		vector<bands_file>::iterator b_it;
 		findBandsFile( (*it).filename, b_it );
 
-		band_emission sb_tmp;
-		sb_tmp.setup( (*it).speciesLabel, b_it );
-		BandsEmission.push_back( sb_tmp );
+		it->bandEmission.setup( it->speciesLabel, b_it );
 	}
 }
 
@@ -872,15 +912,17 @@ void SpeciesBandsAccum()
 	long i = StuffComment( "bands" );
 	linadd( 0., (realnum)i , "####", 'i', "  bands");
 
-	for( vector<band_emission>::iterator it = BandsEmission.begin();
-		it != BandsEmission.end(); ++it )
+	for( auto it = SpecBands.begin(); it != SpecBands.end(); ++it )
 	{
+		if( ! it->bandEmission.initialized() )
+			continue;
+
 		/* empty call processes only current zone
 		 * with no dVeffAper corrections;
 		 * both accumulation of intensity, and volume-aperture
 		 * corrections done by insert() below */
-		(*it).accumulate();
-		(*it).insert();
+		it->bandEmission.accumulate();
+		it->bandEmission.insert();
 	}
 }
 
@@ -892,23 +934,35 @@ void SaveSpeciesBands( const long ipPun, const string &speciesLabel,
 {
 	DEBUG_ENTRY( "SaveSpeciesBands()" );
 
-	vector<band_emission>::iterator it;
-	getBandsEmissionIndex( speciesLabel, fileBands, it );
-	if( it == BandsEmission.end() )
-	{
-		fprintf( ioQQQ,
-			"Error: Species band data unmatched for species "
-			"'%s' and bands from file '%s'\n",
-			speciesLabel.c_str(), fileBands.c_str() );
-		cdEXIT( EXIT_FAILURE );
-	}
-
 	if( save.lgSaveHeader(ipPun) )
 	{
 		// one time print of header
 		fprintf( save.params[ipPun].ipPnunit,
 				"#Wl(A)\t Intensity: Total\t Inward\t Outward\n" );
 		save.SaveHeaderDone(ipPun);
+	}
+
+	auto it = findSpecBand( fileBands, speciesLabel );
+	if( it == SpecBands.end() )
+	{
+		fprintf( ioQQQ,
+			"PROBLEM: Species band data unmatched for combination of "
+			"species '%s' and bands file '%s'\n",
+			speciesLabel.c_str(), fileBands.c_str() );
+		cdEXIT( EXIT_FAILURE );
+	}
+
+	if( ! it->bandEmission.initialized() )
+	{
+		fprintf( save.params[ipPun].ipPnunit,
+				"#\n"
+				"#\tSpecies '%s' not active.\n"
+				"#\tMake sure the relevant elements are enabled and/or\n"
+				"#\tthe species is enabled in the relevant masterlist,\n"
+				"#\tLAMDA, Chianti, or Stout.\n"
+				"#\n",
+				speciesLabel.c_str() );
+		return;
 	}
 
 	long itot, inwd;
@@ -918,14 +972,16 @@ void SaveSpeciesBands( const long ipPun, const string &speciesLabel,
 	if( lgEmergent )
 		ipEmType = 1;	// emergent
 
-	for( long iband = 0; iband < (*it).bins(); iband++ )
+	auto bandsEm = it->bandEmission;
+
+	for( long iband = 0; iband < bandsEm.bins(); iband++ )
 	{
-		LineID line_tot( (*it).getLabel().c_str(), (*it).getWl( iband ) );
+		LineID line_tot( bandsEm.getLabel().c_str(), bandsEm.getWl( iband ) );
 		itot = LineSave.findline(line_tot);
 		tot_emiss = LineSave.lines[itot].SumLine(ipEmType) *
 				radius.Conv2PrtInten;
 
-		LineID line_inw( (*it).inwdLabel.c_str(), (*it).getWl( iband ) );
+		LineID line_inw( bandsEm.inwdLabel.c_str(), bandsEm.getWl( iband ) );
 		inwd = LineSave.findline(line_inw);
 		inwd_emiss = LineSave.lines[inwd].SumLine(ipEmType) *
 				radius.Conv2PrtInten;
@@ -933,7 +989,7 @@ void SaveSpeciesBands( const long ipPun, const string &speciesLabel,
 		ASSERT( tot_emiss >= 0. && inwd_emiss >= 0. &&
 			tot_emiss - inwd_emiss >= 0. );
 
-		fprintf( save.params[ipPun].ipPnunit, "%g", (*it).getWl( iband ) );
+		fprintf( save.params[ipPun].ipPnunit, "%g", bandsEm.getWl( iband ) );
 		fprintf( save.params[ipPun].ipPnunit, "\t%e", tot_emiss );
 		fprintf( save.params[ipPun].ipPnunit, "\t%e", inwd_emiss );
 		fprintf( save.params[ipPun].ipPnunit, "\t%e",

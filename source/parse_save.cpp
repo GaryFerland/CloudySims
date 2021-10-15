@@ -22,11 +22,10 @@
 #include "service.h"
 #include "species.h"
 #include "dense.h"
+#include "continuum.h"
 
 /* check for keyword UNITS on line, then scan wavelength or energy units if present */
 STATIC const char* ChkUnits(Parser &p);
-
-STATIC void addUniqueSpeciesBand( const string &filename, const string &speciesLabel );
 
 inline void saveXSPEC(unsigned int option)
 {
@@ -2615,13 +2614,6 @@ void ParseSave(Parser& p)
 		ioMAP = save.params[save.nsave].ipPnunit;
 	}
 
-	/* make sure FeII bands are always processed
-	 * if a 'save species bands' command has not been issued
-	 * the bands will be computed, and printed on main output,
-	 * but no 'save' output file will be created */
-	if( dense.lgElmtOn[ipIRON] )
-		addUniqueSpeciesBand( "FeII_bands.ini", "Fe+" );
-
 	/* if not done already and chTitle has been set to a string then print title
 	 * logic to prevent more than one title in grid calculation */
 	if( save.lgSaveTitle(save.nsave) && chTitle.length() > 0 )
@@ -2822,39 +2814,4 @@ STATIC const char* ChkUnits( Parser &p )
 		val = StandardEnergyUnit(" RYD ");
 	}
 	return val;
-}
-
-STATIC bool specBandsExists( const string &filename, const string &speciesLabel )
-{
-	DEBUG_ENTRY( "specBandsExists()" );
-
-	bool exists = false;
-
-	for( vector<save_species_bands>::iterator it = save.specBands.begin();
-		it != save.specBands.end(); ++it )
-	{
-		if( (*it).filename == filename &&
-			(*it).speciesLabel == speciesLabel )
-		{
-			exists = true;
-			break;
-		}
-	}
-
-	return exists;
-}
-
-STATIC void addUniqueSpeciesBand( const string &filename, const string &speciesLabel )
-{
-	DEBUG_ENTRY( "addUniqueSpeciesBand()" );
-
-	if( specBandsExists( filename, speciesLabel ) )
-		return;
-
-	save_species_bands thisSpBand;
-	thisSpBand.filename = filename;
-	thisSpBand.speciesLabel = speciesLabel;
-	save.specBands.push_back( thisSpBand );
-
-	return;
 }
