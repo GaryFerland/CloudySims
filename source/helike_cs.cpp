@@ -2515,7 +2515,13 @@ double CSresolver(long ipISO, long nHi,long lHi,long sHi,long nLo,
 	}
 	else if(ipISO==ipHE_LIKE)
 	{
-		S *= 10; //(1*1 + 3*3)
+		if( nLo == 1 )
+		{
+			ASSERT( sLo == 1 );
+			S *= sLo*sLo;
+		}
+		else
+			S *= 10; //(1*1 + 3*3)
 	}
 
 
@@ -2532,9 +2538,5 @@ double CSresolver(long ipISO, long nHi,long lHi,long sHi,long nLo,
 	else
 		TotalInsanity();
 
-
-
 	return factor;
-
 }
-
