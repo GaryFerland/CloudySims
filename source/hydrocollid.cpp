@@ -1209,6 +1209,27 @@ realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 	 */
 	if (!lgResolvedData && nLo <= iso_sp[ipH_LIKE][nelem].n_HighestResolved_max)
 	{
+		enum {DEBUG_LOC = false};
+		if( DEBUG_LOC )
+		{
+			if( nelem == ipHYDROGEN &&
+				(nHi == iso_sp[ipH_LIKE][nelem].n_HighestResolved_max + 15) &&
+				 nLo == iso_sp[ipH_LIKE][nelem].n_HighestResolved_max )
+			{
+				double frac = CSresolver(ipH_LIKE, nHi, lHi, sHi, nLo, lLo, sLo, iso_sp[ipH_LIKE][nelem].n_HighestResolved_max);
+				fprintf( ioQQQ, "nelem: %ld"
+						"  (nHi, lHi, sHi): (%ld, %ld, %ld) ->"
+						"  (nLo, lLo, sLo): (%ld, %ld, %ld)"
+						"\t CS: %.4e"
+						"\t frac: %.4e ->"
+						"\t final: %.4e\n",
+						nelem,
+						nHi, lHi, sHi,
+						nLo, lLo, sLo,
+						CStemp, frac, CStemp * frac );
+			}
+		}
+
 		CStemp *= CSresolver(ipH_LIKE, nHi, lHi, sHi, nLo, lLo, sLo, iso_sp[ipH_LIKE][nelem].n_HighestResolved_max);
 	}
 
