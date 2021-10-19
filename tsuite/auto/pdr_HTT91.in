@@ -106,7 +106,8 @@ monitor line luminosity "O  1" 63.1679m -3.392 error 0.15
 ## >>chng 13 dec 23, from -5.055 to -5.759, C to external databases
 ## >>chng 14 mar 26, from -5.759 to -5.881 Move oxygen data to stout and chianti files
 ## >>chng 15 may 29, from -5.881 to -6.403, H2 line cooling from Glover & Abel (2008)
-monitor line luminosity "H2 l" 2m -6.403 error 0.15
+## >>chng 21 apr 10, from -6.403 to -6.469, update chemistry and lamba
+monitor line luminosity "H2 l" 2m -6.469 error 0.15
 ##
 ## >>chng 03 mar 08, from -2.946 to -2.805 bugs in grn recom, solomon
 ## >>chng 03 aug 23, from -2.805 to -2.684, chng stopping, update co net
@@ -235,7 +236,8 @@ monitor column density H2O  12.14
 ## >>chng 11 jul 15, from 10 to 12.1, add column densities
 ## >>chng 12 apr 09, from 12.1 to 12.02, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 14 aug 28, from 12.02 to 12, EleyRideal H2 formation
-monitor column density C2   12
+## >>chng 21 sep 11, from 12 to 12.09, LAMDA update
+monitor column density C2   12.09
 ## >>chng 11 jul 15, from 10 to 9.394, add column densities
 ## >>chng 12 apr 09, from 9.394 to 9.328, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 13 nov 03, from 9.328 to 9.351, update H2 - C II 158m collision rate
@@ -263,11 +265,13 @@ monitor column density OH   12.88
 ## >>chng 13 dec 23, from 6.03 to 5.968, C to external databases
 ## >>chng 14 jan 05, from 5.968 to 5.814, N to external databases
 ## >>chng 17 feb 10, from 5.814 to 5.97, default size of N 1 model atom set to 50
-monitor column density CN   5.97
+## >>chng 21 sep 11, from 5.97 to 6.032, LAMDA update
+monitor column density CN   6.032
 ## >>chng 11 jul 15, from 10 to 12.72, add column densities
 ## >>chng 12 apr 09, from 12.72 to 12.69, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 13 dec 23, from 12.69 to 12.66, C to external databases
-monitor column density CH   12.66
+## >>chng 21 sep 11, from 12.66 to 13.19, LAMDA update
+monitor column density CH   13.19
 ## 
 ##
 ## >>chng 02 jun 19, from 12.298 to 180 better two photon
@@ -284,7 +288,8 @@ monitor column density CH   12.66
 ## >>chng 14 mar 26, from 396 to 418, Move oxygen data to stout and chianti files
 ## >>chng 18 jun 17, from 418 to 397, improve zone 0 thermal relaxation
 ## >>chng 18 jun 20, from 397 to 389, #bugfixes at front face r12134:12136
-monitor nzone 389 error 0.01
+## >>chng 21 apr 10, from 389 to 384, update chemistry and lamba
+monitor nzone 384 error 0.01
 ##
 ## >>chng 02 dec 13, from 4.6 to 3.5, better conv
 ## >>chng 03 may 17, from 4.6 to 5.5, actual 4.85, reeval pump
@@ -316,18 +321,21 @@ monitor "H2O " 538.142m line intensity -8.71
 ## >>chng 13 dec 23, from -16.66 to -16.8, C to external databases
 ## >>chng 14 jan 05, from -16.8 to -16.91, N to external databases
 ## >>chng 17 feb 10, from -16.91 to -16.8, default size of N 1 model atom set to 50
-monitor "HNC " 1652.90m  line intensity -16.8
+## >>chng 21 sep 11, from -16.8 to -16.95, LAMDA update
+monitor "HNC " 1652.90m  line intensity -16.95
 ## >>chng 13 jun 27, from -8.563 to -12.83, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -12.83 to -12.79, update H2 - C II 158m collision rate
 ## >>chng 13 dec 23, from -12.79 to -13.05, C to external databases
-monitor "HCS+" 1755.88m  -13.05 line intensity
+## >>chng 21 sep 11, from -13.05 to -12.02, LAMDA update
+monitor "HCS+" 1755.88m  -12.02 line intensity
 ## >>chng 13 jun 27, from -7.453 to -12.36, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -12.36 to -12.34, update H2 - C II 158m collision rate
 ## >>chng 13 dec 23, from -12.34 to -12.45, C to external databases
 ## >>chng 15 aug 03, from -12.45 to -12.51, update LAMDA to 2015
-monitor "CS  " 3058.86m  -12.51 line intensity
+## >>chng 21 sep 11, from -12.51 to -11.75, LAMDA update
+monitor "CS  " 3058.86m  -11.75 line intensity
 ## >>chng 13 jun 27, from -7.288 to -9.165, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -9.165 to -9.116, update H2 - C II 158m collision rate
@@ -395,7 +403,9 @@ monitor "^13CO" 906.599m  -10.27 line intensity
 ## >>chng 13 dec 23, from -16.66 to -16.91, C to external databases
 ## >>chng 14 jan 05, from -16.91 to -17.34, N to external databases
 ## >>chng 17 feb 10, from -17.34 to -16.95, default size of N 1 model atom set to 50
-monitor "CN  " 880.858m  -16.95  line intensity
+## >>chng 21 sep 11, from -16.95 to -17.56, LAMDA update
+## >>chng 21 sep 15, from -17.56 to -16.87, go back to unresolved model
+monitor "CN  " 880.858m  -16.87  line intensity
 ##
 # pdr_HTT91.in
 # class pdr 

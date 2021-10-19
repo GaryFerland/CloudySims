@@ -22,7 +22,8 @@ save continuum "coll_t4_Z30.con"  units angstroms
 # commands giving the monitors    =========
 ##
 ## >>chng 12 dec 12, from 8.783 to 10.6, first run
-monitor CO column density 10.6 errr 0.1
+## >>chng 21 sep 11, from 10.6 to 10.53, LAMDA update
+monitor CO column density 10.53 errr 0.1
 ## >>chng 12 dec 12, from 7.696 to 7.935, first run
 ## >>chng 13 feb 10, from 7.935 to 7.829, H2,e-=>H-,H update
 monitor H2 column density 7.829 errr 0.1

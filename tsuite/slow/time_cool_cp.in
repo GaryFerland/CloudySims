@@ -121,7 +121,8 @@ monitor line luminosity cumulative intrinsic "O  7"      22.1012A   13.3
 monitor line luminosity cumulative intrinsic "O  6"      1037.62A   12.9
 ## >>chng 20 oct 05, from 12.09 to 12.11, limit more elements for load leveling
 monitor line luminosity cumulative intrinsic "O  5"      1213.81A   12.11
-monitor line luminosity cumulative intrinsic "N  5"      1242.80A   11.6935
+## >>chng 21 mar 31, from 11.69 to 11.71, add HF+ chemistry
+monitor line luminosity cumulative intrinsic "N  5"      1242.80A   11.71
 ## >>chng 20 oct 05, from 11.17 to 11.2, limit more elements for load leveling
 monitor line luminosity cumulative intrinsic "Si 7"      2146.64A   11.2
 ## >>chng 20 oct 05, from 11.04 to 11.07, limit more elements for load leveling
@@ -144,7 +145,8 @@ monitor line luminosity cumulative intrinsic "O  3"      5006.84A   12.0517
 ## >>chng 19 aug 06, from 11.84 to 11.87, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 nov 30, wl from 1640.43A to 1640.40A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 jan 19, from 11.87 to 11.84, timestep logic change from tcool to n(H+)
-monitor line luminosity cumulative intrinsic "He 2"      1640.40A   11.84
+## >>chng 21 apr 08, wl from 1640.40A to 1640.41A, update 1-e energies to np
+monitor line luminosity cumulative intrinsic "He 2"      1640.41A   11.84
 ## >>chng 16 jul 01, from 11.83 to 12.04, increase iterations, let Te drop to 1e4K
 ## >>chng 16 jul 24, from 12.04 to 12.01, update C III to 2014A&A...566A.104F
 ## >>chng 16 jul 24, from 12.01 to 12.05, update C III to 2014A&A...566A.104F

@@ -182,14 +182,17 @@ monitor "H2O " 538.142m line intensity -6.205
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 15 mar 07, from -7.758 to -7.778, merging newmesh branch
 ## >>chng 16 mar 21, from -7.778 to -7.745, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
-monitor "HNC " 1652.90m  line intensity -7.745
+## >>chng 21 sep 11, from -7.745 to -8.069, LAMDA update
+monitor "HNC " 1652.90m  line intensity -8.069
 ## >>chng 13 jun 27, from -8.563 to -10.06, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -10.06 to -10.02, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
-monitor "HCS+" 1755.88m  -10.02 line intensity
+## >>chng 21 sep 11, from -10.02 to -9.38, LAMDA update
+monitor "HCS+" 1755.88m  -9.38 line intensity
 ## >>chng 13 jun 27, from -7.453 to -8.129, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
-monitor "CS  " 3058.86m  -8.129 line intensity
+## >>chng 21 sep 11, from -8.129 to -8.015, LAMDA update
+monitor "CS  " 3058.86m  -8.015 line intensity
 ## >>chng 13 jun 27, from -7.288 to -7.195, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 monitor "CO  " 2600.05m  -7.195 line intensity
@@ -217,20 +220,24 @@ monitor "CO  " 433.438m  -6.429 line intensity
 ## >>chng 13 dec 23, from -7.069 to -7.112, C to external databases
 ## >>chng 14 mar 26, from -7.112 to -7.21, Move oxygen data to stout and chianti files
 ## >>chng 20 aug 03, from -7.21 to -7.238, update H3+ rates Indriola+ 2012
-monitor "CO  " 371.549m  -7.238 line intensity
+## >>chng 21 sep 11, from -7.238 to -7.136, LAMDA update
+monitor "CO  " 371.549m  -7.136 line intensity
 ## >>chng 13 jun 27, from -8.049 to -7.666, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 13 sep 17, from -7.666 to -7.645, D chem off by default
 ## >>chng 13 dec 23, from -7.645 to -7.727, C to external databases
 ## >>chng 14 mar 26, from -7.727 to -7.899, Move oxygen data to stout and chianti files
-monitor "CO  " 325.137m  -7.899 line intensity
+## >>chng 21 sep 11, from -7.899 to -7.682, LAMDA update
+monitor "CO  " 325.137m  -7.682 line intensity
 ## >>chng 13 jun 27, from -7.522 to -6.506, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 monitor "^13CO" 906.599m  -6.506 line intensity
 ## >>chng 13 jun 27, from -8.247 to -8.867, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -8.867 to -8.93, Move oxygen data to stout and chianti files
-monitor "CN  " 880.858m  -8.93  line intensity
+## >>chng 21 sep 11, from -8.93 to -9.54, LAMDA update
+## >>chng 21 sep 15, from -9.54 to -8.836, go back to unresolved model
+monitor "CN  " 880.858m  -8.836  line intensity
 #
 # pdr_leiden_v4.in
 # class pdr 

@@ -64,7 +64,8 @@ monitor H2 column density 21.781 error 0.1
 ## >>chng 12 aug 24, from 15.79 to 15.74, BUGFIX r6603 DR rates not updated in const temp sim
 ## >>chng 16 mar 21, from 15.74 to 15.64, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from 15.64 to 15.29, update H3+ rates Indriola+ 2012
-monitor CO column density 15.29 error 0.1
+## >>chng 21 sep 11, from 15.29 to 14.44, LAMDA update
+monitor CO column density 14.44 error 0.1
 ## 
 ## >>chng 11 jul 16, add these
 ## >>chng 11 jul 16, from 10 to 13.63, add column density monitors
@@ -115,7 +116,8 @@ monitor column density H2O  13.43 error 0.1
 ## >>chng 20 jul 21, from 15.56 to 15.61, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from 15.61 to 15.68, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from 15.68 to 15.75, further update to McCall CR-related rates from r14260
-monitor column density C2   15.75 error 0.1
+## >>chng 21 sep 11, from 15.75 to 14.62, LAMDA update
+monitor column density C2   14.62 error 0.1
 ## >>chng 11 jul 16, from 10 to 12.32, add column density monitors
 ## >>chng 12 jun 08, from 12.32 to 12.12, Updates to grain chemistry
 ## >>chng 12 jul 01, from 12.12 to 12.41, update Badnell DR to 13-electron iso sequence
@@ -125,7 +127,8 @@ monitor column density C2   15.75 error 0.1
 ## >>chng 16 mar 21, from 12.51 to 12.61, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from 12.61 to 12.74, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from 12.74 to 12.81, further update to McCall CR-related rates from r14260
-monitor column density C3   12.81 error 0.1
+## >>chng 21 sep 11, from 12.81 to 12.23, LAMDA update
+monitor column density C3   12.23 error 0.1
 ## >>chng 11 jul 16, from 10 to 14.29, add column density monitors
 ## >>chng 11 nov 16, from 14.29 to 14.24, adjust newmole monitors
 ## >>chng 12 jul 01, from 14.24 to 14.18, update Badnell DR to 13-electron iso sequence
@@ -144,13 +147,15 @@ monitor column density OH   13.82 error 0.1
 ## >>chng 16 mar 21, from 14.05 to 14.1, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from 14.1 to 14.18, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from 14.18 to 14.24, further update to McCall CR-related rates from r14260
-monitor column density CN   14.24 error 0.1
+## >>chng 21 sep 11, from 14.24 to 13.1, LAMDA update
+monitor column density CN   13.1 error 0.1
 ## >>chng 11 jul 16, from 10 to 14.68, add column density monitors
 ## >>chng 12 jul 01, from 14.68 to 14.8, update Badnell DR to 13-electron iso sequence
 ## >>chng 12 aug 24, from 14.8 to 14.84, BUGFIX r6603 DR rates not updated in const temp sim
 ## >>chng 16 mar 21, from 14.84 to 14.88, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 sep 06, from 14.88 to 14.98, further update to McCall CR-related rates from r14260
-monitor column density CH   14.98 error 0.1
+## >>chng 21 sep 11, from 14.98 to 13.38, LAMDA update
+monitor column density CH   13.38 error 0.1
 ##
 ## these added 05 jan 22
 monitor H2 column density level 0  0  21.67 error 0.1
@@ -296,7 +301,8 @@ monitor "H2O " 538.142m line intensity -9.137
 ## >>chng 20 jul 21, from -8.748 to -8.725, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from -8.725 to -8.69, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from -8.69 to -8.648, further update to McCall CR-related rates from r14260
-monitor "HNC " 1652.90m  line intensity -8.648
+## >>chng 21 sep 11, from -8.648 to -10.46, LAMDA update
+monitor "HNC " 1652.90m  line intensity -10.46
 ## >>chng 13 jun 27, from -8.563 to -10.48, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 15 mar 07, from -10.48 to -10.46, merging newmesh branch
@@ -304,72 +310,85 @@ monitor "HNC " 1652.90m  line intensity -8.648
 ## >>chng 20 jul 21, from -10.4 to -10.35, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from -10.35 to -10.3, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from -10.3 to -10.23, further update to McCall CR-related rates from r14260
-monitor "HCS+" 1755.88m  -10.23 line intensity
+## >>chng 21 sep 11, from -10.23 to -10.49, LAMDA update
+monitor "HCS+" 1755.88m  -10.49 line intensity
 ## >>chng 13 jun 27, from -7.453 to -8.881, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 20 jul 21, from -8.881 to -8.838, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from -8.838 to -8.785, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from -8.785 to -8.732, further update to McCall CR-related rates from r14260
-monitor "CS  " 3058.86m  -8.732 line intensity
+## >>chng 21 sep 11, from -8.732 to -9.18, LAMDA update
+monitor "CS  " 3058.86m  -9.18 line intensity
 ## >>chng 13 jun 27, from -7.288 to -8.072, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -8.072 to -8.142, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -8.142 to -8.433, update H3+ rates Indriola+ 2012
-monitor "CO  " 2600.05m  -8.433 line intensity
+## >>chng 21 sep 11, from -8.433 to -9.219, LAMDA update
+monitor "CO  " 2600.05m  -9.219 line intensity
 ## >>chng 13 jun 27, from -6.463 to -7.388, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -7.388 to -7.468, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -7.468 to -7.795, update H3+ rates Indriola+ 2012
-monitor "CO  " 1300.05m  -7.795 line intensity
+## >>chng 21 sep 11, from -7.795 to -8.621, LAMDA update
+monitor "CO  " 1300.05m  -8.621 line intensity
 ## >>chng 13 jun 27, from -6.149 to -7.367, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
 ## >>chng 15 mar 07, from -7.367 to -7.388, merging newmesh branch
 ## >>chng 16 mar 21, from -7.388 to -7.461, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -7.461 to -7.829, update H3+ rates Indriola+ 2012
-monitor "CO  " 866.727m  -7.829 line intensity
+## >>chng 21 sep 11, from -7.829 to -8.689, LAMDA update
+monitor "CO  " 866.727m  -8.689 line intensity
 ## >>chng 13 jun 27, from -6.177 to -7.66, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 15 mar 07, from -7.66 to -7.682, merging newmesh branch
 ## >>chng 16 mar 21, from -7.682 to -7.76, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -7.76 to -8.143, update H3+ rates Indriola+ 2012
-monitor "CO  " 650.074m  -8.143 line intensity
+## >>chng 21 sep 11, from -8.143 to -9.013, LAMDA update
+monitor "CO  " 650.074m  -9.013 line intensity
 ## >>chng 13 jun 27, from -6.485 to -8.063, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 15 mar 07, from -8.063 to -8.085, merging newmesh branch
 ## >>chng 16 mar 21, from -8.085 to -8.161, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -8.161 to -8.54, update H3+ rates Indriola+ 2012
-monitor "CO  " 520.089m  -8.54 line intensity
+## >>chng 21 sep 11, from -8.54 to -9.405, LAMDA update
+monitor "CO  " 520.089m  -9.405 line intensity
 ## >>chng 13 jun 27, from -6.954 to -8.528, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 15 mar 07, from -8.528 to -8.55, merging newmesh branch
 ## >>chng 16 mar 21, from -8.55 to -8.626, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -8.626 to -9.007, update H3+ rates Indriola+ 2012
-monitor "CO  " 433.438m  -9.007 line intensity
+## >>chng 21 sep 11, from -9.007 to -9.874, LAMDA update
+monitor "CO  " 433.438m  -9.874 line intensity
 ## >>chng 13 jun 27, from -7.48 to -9.058, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 15 mar 07, from -9.058 to -9.081, merging newmesh branch
 ## >>chng 16 mar 21, from -9.081 to -9.158, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -9.158 to -9.539, update H3+ rates Indriola+ 2012
-monitor "CO  " 371.549m  -9.539 line intensity
+## >>chng 21 sep 11, from -9.539 to -10.41, LAMDA update
+monitor "CO  " 371.549m  -10.41 line intensity
 ## >>chng 13 jun 27, from -8.049 to -9.643, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 15 mar 07, from -9.643 to -9.666, merging newmesh branch
 ## >>chng 16 mar 21, from -9.666 to -9.742, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -9.742 to -10.12, update H3+ rates Indriola+ 2012
-monitor "CO  " 325.137m  -10.12 line intensity
+## >>chng 21 sep 11, from -10.12 to -10.99, LAMDA update
+monitor "CO  " 325.137m  -10.99 line intensity
 ## >>chng 13 jun 27, from -7.522 to -8.868, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 15 mar 07, from -8.868 to -8.889, merging newmesh branch
 ## >>chng 16 mar 21, from -8.889 to -8.96, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -8.96 to -9.319, update H3+ rates Indriola+ 2012
-monitor "^13CO" 906.599m  -9.319 line intensity
+## >>chng 21 sep 11, from -9.319 to -10.17, LAMDA update
+monitor "^13CO" 906.599m  -10.17 line intensity
 ## >>chng 13 jun 27, from -8.247 to -9.822, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -9.822 to -9.789, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 jul 21, from -9.789 to -9.768, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from -9.768 to -9.707, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from -9.707 to -9.636, further update to McCall CR-related rates from r14260
-monitor "CN  " 880.858m  -9.636  line intensity
+## >>chng 21 sep 11, from -9.636 to -11.95, LAMDA update
+## >>chng 21 sep 15, from -11.95 to -10.84, go back to unresolved model
+monitor "CN  " 880.858m  -10.84  line intensity
 ##
 # 
 # h2_pdr_leiden_f2.in

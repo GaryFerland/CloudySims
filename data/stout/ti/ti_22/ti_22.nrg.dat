@@ -7,15 +7,15 @@
 #
 # NIST data for n<=5 were downloaded using ADM.
 #
-# NB NB NB  n=2 energy ignores energy of 2s
+# NB NB NB  np energy used for shell n up to n=5
 #
 # The remaining data were calculated using the ATLL r123
 #
  1 -1 -1 -1 0 10
  2 -1 -1 -1 40112290 74.5356
- 3 -1 -1 -1 47523854.4444444 226.351
- 4 -1 -1 -1 50115868.75
- 5 -1 -1 -1 51313950.96
+ 3 -1 -1 -1 47518086.6666667 667.499
+ 4 -1 -1 -1 50110902.6666667
+ 5 -1 -1 -1 51310555.3333333
  6 -1 -1 -1 51965500
  7 -1 -1 -1 52357400
  8 -1 -1 -1 52611720

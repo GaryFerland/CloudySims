@@ -20,7 +20,8 @@ Blnd  1406  #   total S IV 1406
 blnd  1486
 blnd 1549
 # >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
-he 2     1640.40A  #   total He II Balmer-alpha 1640
+# >>chng 21 april 7, wl from 1640.40 to 1640.41A, replacing average energy with np energies
+he 2     1640.41A  #   total He II Balmer-alpha 1640
 blnd  1750   #  total N III] 1750 (all components; not computed seperately)
 blnd  1860
 blnd 1909
@@ -46,23 +47,29 @@ Blnd     4074
 S  2     4076.35
 # >>chng 17 may 25, wl from 4101.76 to 4101.73A, up Rydberg constant
 # >>chng 21 mar 16, wl from 4101.73A to 4101.74A, update NIST energies
-h  1     4101.74A #    total H-delta
+# >>chng 21 aug 18, wl from 4101.74A to 4101.73A, revert to PvH energies for H
+h  1     4101.73A #    total H-delta
 # >>chng 17 may 25, wl from 4340.49 to 4340.46A, up Rydberg constant
 # >>chng 21 mar 16, wl from 4340.46A to 4340.47A, update NIST energies
-h  1     4340.47A  #   total H-gamma
+# >>chng 21 aug 18, wl from 4340.47A to 4340.46A, revert to PvH energies for H
+h  1     4340.46A  #   total H-gamma
 ## >>chng 19 mar 01, change "Blnd" 4363 -> "O  3" 4363.21
 O  3     4363.21
 # >>chng 20 aug 22, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
-he 2     4685.70  #   total He II 4686 (Paschen-alpha)
+# >>chng 21 apr 08, wl from 4685.70 to 4685.68A, up 1-e energies to np
+he 2     4685.68A  #   total He II 4686 (Paschen-alpha)
 # >>chng 20 aug 22, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
-Ca B     4685.70
+# >>chng 21 apr 08, wl from 4685.70 to 4685.68A, up 1-e energies to np
+Ca B     4685.68A
 ne 4  4724.17
 Ar 4     4740.12
 Inci     4860
 # >>chng 17 may 26, wl from 4861.36 to 4861.33A, update Rydberg constant
 # >>chng 20 aug 22, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 # >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-H  1     4861.33A
+# >>chng 21 april 7, H I wl from 4861.33 to 4861.34A, replacing average energy with np energies
+# >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+H  1     4861.32A
 o  3     4958.91
 o  3     5006.84
 n  1  5200.26
@@ -78,7 +85,9 @@ o  1     6363.78
 # >>chng 17 may 26, wl from 6562.85 to 6562.81A, update Rydberg constant
 # >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
 # >>chng 21 mar 16, wl from 6562.80A to 6562.82A, update NIST energies
-h  1     6562.82A  #   total H-alpha 6563
+# >>chng 21 apr 08, wl from 6562.82A to 6562.83A, up 1-e energies to np
+# >>chng 21 aug 18, wl from 6562.83A to 6562.80A, revert to PvH energies for H
+h  1     6562.80A  #   total H-alpha 6563
 n  2  6583.45
 s  2     6716.44
 Blnd     6720
@@ -98,6 +107,8 @@ S  3     9068.62
 S  3     9530.62
 # >>chng 17 may 25, wl from 9545.99 to 9545.93A, up Rydberg constant
 # >>chng 20 aug 22, wl from 9545.93A to 9545.97A, switched from computed to tabulated energies for H and He isoseq
+# >>chng 21 apr 08, wl from 9545.97A to 9545.95A, up 1-e energies to np
+# >>chng 21 aug 18, wl from 9545.95A to 9545.97A, revert to PvH energies for H
 h  1     9545.97A
 # >>chng 13 jul 30, wl from 10829.9 to 1.08303m, increased wl precision to 6 sig. fig.
 ## >>chng 18 feb 20, updated spectral label from "He 1" 1.08303m to "Blnd" 1.08331m, update He-like triplet labels and wl
@@ -116,21 +127,30 @@ H  1     1.28181m
 H  1     1.09381m
 # >>chng 17 may 25, wl from 1.00494m to 1.00493m, up Rydberg constant
 # >>chng 20 aug 22, wl from 1.00493m to 1.00494m, switched from computed to tabulated energies for H and He isoseq
+# >>chng 21 apr 08, wl from 1.00494m to 1.00493m, up 1-e energies to np
+# >>chng 21 aug 18, wl from 1.00493m to 1.00494m, revert to PvH energies for H
 H  1     1.00494m
 #
 # Brackett series
 #
 # >>chng 20 aug 22, wl from 4.05113m to 4.05115m, switched from computed to tabulated energies for H and He isoseq
 # >>chng 21 mar 16, wl from 4.05115m to 4.05116m, update NIST energies
-H  1     4.05116m
+# >>chng 21 apr 08, wl from 4.05116m to 4.05115m, up 1-e energies to np
+H  1     4.05115m
 # >>chng 17 may 25, wl from 2.62515m to 2.62513m, up Rydberg constant
 # >>chng 20 aug 22, wl from 2.62513m to 2.62515m, switched from computed to tabulated energies for H and He isoseq
+# >>chng 21 apr 08, wl from 2.62515m to 2.62514m, up 1-e energies to np
+# >>chng 21 aug 18, wl from 2.62514m to 2.62515m, revert to PvH energies for H
 H  1     2.62515m
 # >>chng 17 may 25, wl from 2.16553m to 2.16551m, up Rydberg constant
 # >>chng 20 aug 22, wl from 2.16551m to 2.16553m, switched from computed to tabulated energies for H and He isoseq
+# >>chng 21 apr 08, wl from 2.16553m to 2.16552m, up 1-e energies to np
+# >>chng 21 aug 18, wl from 2.16552m to 2.16553m, revert to PvH energies for H
 H  1     2.16553m # Brackett gamma
 # >>chng 17 may 25, wl from 1.94456m to 1.94454m, up Rydberg constant
 # >>chng 20 aug 22, wl from 1.94454m to 1.94456m, switched from computed to tabulated energies for H and He isoseq
+# >>chng 21 apr 08, wl from 1.94456m to 1.94455m, up 1-e energies to np
+# >>chng 21 aug 18, wl from 1.94455m to 1.94456m, revert to PvH energies for H
 H  1     1.94456m
 #
 # IR and coronal lines

@@ -71,8 +71,10 @@ save monitors "pdr_dense_persei.asr"
 ## >> chng 20 sep 06 change default error to acknowledge stability of ISM chemistry
 monitor set error 0.1
 ##
-monitor C2 column density 12.908 error 0.2 
-monitor C3 column density 11.866 error 0.2
+## >>chng 21 sep 11, from 12.91 to 12.41, LAMDA update
+monitor C2 column density 12.41 error 0.2 
+## >>chng 21 sep 11, from 11.87 to 11.23, LAMDA update
+monitor C3 column density 11.23 error 0.2
 monitor "H" temperature 20K
 ## 
 ## >>chng 06 mar 02, from 13.30 to 13.46, NA Fe0, Mg0, <-> Si+, S+, C+ ct,
@@ -82,7 +84,8 @@ monitor CO column density 13.46 error 0.2
 ## >>chng 08 dec 08, from 300 to 226, upper limit -> equals (r2515)
 ## >>chng 09 jun 15, from 226 to 244, gradual approach to outer edge
 ## >>chng 11 nov 16, from 244 to 211, adjust newmole monitors
-monitor nzone 211 error 0.01
+## >>chng 21 sep 11, from 211 to 165, LAMDA update
+monitor nzone 165 error 0.01
 ##
 ## >>chng 08 dec 08, from 10 to 3.898, upper limit -> equals (r2515)
 ## >>chng 08 dec 13, from 3.898 to 5.628, merging newsolvers branch
@@ -94,7 +97,8 @@ monitor nzone 211 error 0.01
 ## >>chng 12 mar 07, from 4.507 to 4.619, renorm to r5961 results
 ## >>chng 12 jul 01, from 4.619 to 4.479, update Badnell DR to 13-electron iso sequence
 ## >>chng 13 nov 05, from 4.479 to 2.948, convergence branch changes
-monitor itrzn 2.948
+## >>chng 21 sep 11, from 2.948 to 2.345, LAMDA update
+monitor itrzn 2.345
 ##
 ## >>chng 13 jun 27, from -8.869 to -10.98, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
@@ -104,44 +108,57 @@ monitor itrzn 2.948
 monitor "H2O " 538.142m line intensity -10.58
 ## >>chng 13 jun 27, from -7.357 to -10.03, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
-monitor "HNC " 1652.90m  line intensity -10.03
+## >>chng 21 sep 11, from -10.03 to -10.68, LAMDA update
+monitor "HNC " 1652.90m  line intensity -10.68
 ## >>chng 13 jun 27, from -8.563 to -10.86, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
-monitor "HCS+" 1755.88m  -10.86 line intensity
+## >>chng 21 sep 11, from -10.86 to -10.91, LAMDA update
+monitor "HCS+" 1755.88m  -10.91 line intensity
 ## >>chng 13 jun 27, from -7.453 to -8.632, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 15 aug 03, from -8.632 to -8.659, update LAMDA to 2015
 monitor "CS  " 3058.86m  -8.659 line intensity
 ## >>chng 13 jun 27, from -7.288 to -9.192, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
-monitor "CO  " 2600.05m  -9.192 line intensity
+## >>chng 21 sep 11, from -9.192 to -9.272, LAMDA update
+monitor "CO  " 2600.05m  -9.272 line intensity
 ## >>chng 13 jun 27, from -6.463 to -8.039, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
-monitor "CO  " 1300.05m  -8.039 line intensity
+## >>chng 21 sep 11, from -8.039 to -8.118, LAMDA update
+monitor "CO  " 1300.05m  -8.118 line intensity
 ## >>chng 13 jun 27, from -6.149 to -7.779, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
-monitor "CO  " 866.727m  -7.779 line intensity
+## >>chng 21 sep 11, from -7.779 to -7.859, LAMDA update
+monitor "CO  " 866.727m  -7.859 line intensity
 ## >>chng 13 jun 27, from -6.177 to -8.014, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
-monitor "CO  " 650.074m  -8.014 line intensity
+## >>chng 21 sep 11, from -8.014 to -8.095, LAMDA update
+monitor "CO  " 650.074m  -8.095 line intensity
 ## >>chng 13 jun 27, from -6.485 to -8.576, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
-monitor "CO  " 520.089m  -8.576 line intensity
+## >>chng 21 sep 11, from -8.576 to -8.659, LAMDA update
+monitor "CO  " 520.089m  -8.659 line intensity
 ## >>chng 13 jun 27, from -6.954 to -9.371, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
-monitor "CO  " 433.438m  -9.371 line intensity
+## >>chng 21 sep 11, from -9.371 to -9.455, LAMDA update
+monitor "CO  " 433.438m  -9.455 line intensity
 ## >>chng 13 jun 27, from -7.48 to -10.34, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
-monitor "CO  " 371.549m  -10.34 line intensity
+## >>chng 21 sep 11, from -10.34 to -10.42, LAMDA update
+monitor "CO  " 371.549m  -10.42 line intensity
 ## >>chng 13 jun 27, from -8.049 to -11.45, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
-monitor "CO  " 325.137m  -11.45 line intensity
+## >>chng 21 sep 11, from -11.45 to -11.53, LAMDA update
+monitor "CO  " 325.137m  -11.53 line intensity
 ## >>chng 13 jun 27, from -7.522 to -9.277, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
-monitor "^13CO" 906.599m  -9.277 line intensity
+## >>chng 21 sep 11, from -9.277 to -9.358, LAMDA update
+monitor "^13CO" 906.599m  -9.358 line intensity
 ## >>chng 13 jun 27, from -8.247 to -10.4, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
-monitor "CN  " 880.858m  -10.4  line intensity
+## >>chng 21 sep 11, from -10.4 to -10.72, LAMDA update
+## >>chng 21 sep 15, from -10.72 to -9.895, go back to unresolved model
+monitor "CN  " 880.858m  -9.895  line intensity
 ##
 # pdr_dense_persei.in
 # class pdr

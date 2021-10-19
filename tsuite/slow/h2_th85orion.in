@@ -150,7 +150,8 @@ monitor line luminosity "H2  " 2.40594m  -3.05 error 0.1
 ## >>chng 14 aug 28, from -4.676 to -4.604, EleyRideal H2 formation
 ## >>chng 14 dec 04, from -4.604 to -4.481, fix double-counting of big-H2 Solomon rate
 ## >>chng 16 dec 28, wl from 12.2752m to 12.2753m, energies updated to Komasa+2011
-monitor line luminosity "H2  " 12.2753m  -4.481 error 0.15
+## >>chng 21 sep 11, from -4.481 to -4.306, LAMDA update
+monitor line luminosity "H2  " 12.2753m  -4.306 error 0.15
 ## 
 ## >>chng 04 dec 08, from -2.953 to -3.016 co-ion feedback, check converg
 ## >>chng 05 jan 07, from -3.016 to -3.09, chem net, incr err
@@ -278,7 +279,8 @@ monitor column density H2O  16.71 error 0.1
 ## >>chng 12 apr 09, from 14.34 to 14.62, update backbround CR to Indiolo_07 (8x larger)
 ## >>chng 13 aug 05, from 14.62 to 14.58, SDIV->safe_div for H2 Boltzmann ratios
 ## >>chng 20 jul 21, from 14.58 to 14.43, update DR H2 diss as per  2020RNAAS...4...78S
-monitor column density C2   14.43 error 0.1
+## >>chng 21 sep 11, from 14.43 to 14.66, LAMDA update
+monitor column density C2   14.66 error 0.1
 ## >>chng 11 jul 16, from 10 to 11.94, add column density monitors
 ## >>chng 11 nov 16, from 11.94 to 11.82, adjust newmole monitors
 ## >>chng 12 jan 06, from 11.82 to 11.96, several H2 model changes
@@ -288,7 +290,8 @@ monitor column density C2   14.43 error 0.1
 ## >>chng 14 mar 26, from 11.98 to 11.94, move O to external databases
 ## >>chng 20 jul 21, from 11.94 to 11.79, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from 11.79 to 11.72, update H3+ rates Indriola+ 2012
-monitor column density C3   11.72 error 0.1
+## >>chng 21 sep 11, from 11.72 to 11.95, LAMDA update
+monitor column density C3   11.95 error 0.1
 ## >>chng 11 jul 16, from 10 to 15.76, add column density monitors
 ## >>chng 12 apr 09, from 15.76 to 15.97, update backbround CR to Indiolo_07 (8x larger)
 ## >>chng 12 aug 21, from 15.97 to 16.06, fix CRPHOT botches and HD crash
@@ -305,12 +308,14 @@ monitor column density OH   15.03 error 0.1
 ## >>chng 12 apr 09, from 11.8 to 12.31, update backbround CR to Indiolo_07 (8x larger)
 ## >>chng 20 jul 21, from 12.31 to 12.27, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from 12.27 to 12.32, update H3+ rates Indriola+ 2012
-monitor column density CN   12.32 error 0.1
+## >>chng 21 sep 11, from 12.32 to 12.15, LAMDA update
+monitor column density CN   12.15 error 0.1
 ## >>chng 11 jul 16, from 10 to 14.38, add column density monitors
 ## >>chng 12 apr 09, from 14.38 to 14.69, update backbround CR to Indiolo_07 (8x larger)
 ## >>chng 13 aug 05, from 14.69 to 14.65, SDIV->safe_div for H2 Boltzmann ratios
 ## >>chng 20 jul 21, from 14.65 to 14.49, update DR H2 diss as per  2020RNAAS...4...78S
-monitor column density CH   14.49 error 0.1
+## >>chng 21 sep 11, from 14.49 to 15.01, LAMDA update
+monitor column density CH   15.01 error 0.1
 ##
 monitor grain 01 temperatuer 59.63
 ##
@@ -387,7 +392,8 @@ monitor H2 column density level 0  3  18.48 error 0.15
 ## >>chng 13 dec 18, from 16.76 to 16.68, fixes to Federman shielding
 ## >>chng 14 aug 28, from 16.68 to 16.75, EleyRideal H2 formation
 ## >>chng 14 dec 04, from 16.75 to 16.87, fix double-counting of big-H2 Solomon rate
-monitor H2 column density level 0  4  16.87 error 0.15
+## >>chng 21 sep 11, from 16.87 to 17.05, LAMDA update
+monitor H2 column density level 0  4  17.05 error 0.15
 ## 
 ## >>chng 05 sep 08, from 17.31 to 17.23 first run in 2 mo
 ## >>chng 07 dec 04, from 17.23 to 17.08, update H-H2 coll rates
@@ -546,7 +552,8 @@ monitor "H2O " 538.142m line intensity -3.84
 ## >>chng 13 sep 17, from -7.924 to -7.947, D chemistry off by default
 ## >>chng 20 jul 21, from -7.947 to -8.155, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from -8.155 to -8.322, update H3+ rates Indriola+ 2012
-monitor "HNC " 1652.90m  line intensity -8.322
+## >>chng 21 sep 11, from -8.322 to -8.391, LAMDA update
+monitor "HNC " 1652.90m  line intensity -8.391
 ## >>chng 13 jun 27, from -8.563 to -7.311, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 27, from -7.311 to -7.331, fix the errors in mole_h2_coll.cpp
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
@@ -555,7 +562,8 @@ monitor "HNC " 1652.90m  line intensity -8.322
 ## >>chng 14 mar 26, from -7.334 to -7.361, move O to external databases
 ## >>chng 20 jul 21, from -7.361 to -7.339, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from -7.339 to -7.164, update H3+ rates Indriola+ 2012
-monitor "HCS+" 1755.88m  -7.164 line intensity
+## >>chng 21 sep 11, from -7.164 to -6.99, LAMDA update
+monitor "HCS+" 1755.88m  -6.99 line intensity
 ## >>chng 13 jun 27, from -7.453 to -5.829, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 20 jul 21, from -5.829 to -5.802, update DR H2 diss as per  2020RNAAS...4...78S
@@ -608,7 +616,9 @@ monitor "^13CO" 906.599m  -4.427 line intensity
 ## >>chng 15 aug 03, from -7.074 to -7.054, update LAMDA to 2015
 ## >>chng 20 jul 21, from -7.054 to -7.117, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from -7.117 to -7.064, update H3+ rates Indriola+ 2012
-monitor "CN  " 880.858m  -7.064  line intensity
+## >>chng 21 sep 11, from -7.064 to -7.916, LAMDA update
+## >>chng 21 sep 15, from -7.916 to -7.23, go back to unresolved model
+monitor "CN  " 880.858m  -7.23  line intensity
 ##
 # h2_th85orion.in
 

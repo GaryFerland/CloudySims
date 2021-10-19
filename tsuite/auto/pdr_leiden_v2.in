@@ -58,7 +58,8 @@ monitor H2 column density 21.76 error 0.1
 ## also energy barrier for H + (CH and CH2) reactions
 ## >>chng 07 jan 07, from 17.02 to 17.11, enable McCall et al. H3+ rate
 ## >>chng 20 sep 06, from 17.11 to 17.16, further update to McCall CR-related rate
-monitor CO column density 17.16 error 0.1
+## >>chng 21 sep 11, from 17.16 to 17.04, LAMDA update
+monitor CO column density 17.04 error 0.1
 ##
 ## >>chng 05 jul 05, from 14.34 to 13.66, cdsqte err
 ## >>chng 05 aug 03, from 13.66 to 13.70, NA update CO, H chem net
@@ -213,44 +214,52 @@ monitor "H2O " 538.142m line intensity -8.323
 ## >>chng 13 dec 23, from -11.13 to -11.21, C to external databases
 ## >>chng 16 mar 21, from -11.21 to -11.15, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -11.15 to -11.26, update H3+ rates Indriola+ 2012
-monitor "HNC " 1652.90m  line intensity -11.26
+## >>chng 21 sep 11, from -11.26 to -11.76, LAMDA update
+monitor "HNC " 1652.90m  line intensity -11.76
 ## >>chng 13 jun 27, from -8.563 to -13.49, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from -13.49 to -13.55, C to external databases
 ## >>chng 16 mar 21, from -13.55 to -13.45, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -13.45 to -13.55, update H3+ rates Indriola+ 2012
-monitor "HCS+" 1755.88m  -13.55 line intensity
+## >>chng 21 sep 11, from -13.55 to -12.37, LAMDA update
+monitor "HCS+" 1755.88m  -12.37 line intensity
 ## >>chng 13 jun 27, from -7.453 to -10.92, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 14 jan 05, from -10.92 to -10.94, N to external databases
 ## >>chng 15 aug 03, from -10.94 to -11.05, update LAMDA to 2015
 ## >>chng 16 mar 21, from -11.05 to -10.92, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -10.92 to -11.06, update H3+ rates Indriola+ 2012
-monitor "CS  " 3058.86m  -11.06 line intensity
+## >>chng 21 sep 11, from -11.06 to -10.83, LAMDA update
+monitor "CS  " 3058.86m  -10.83 line intensity
 ## >>chng 13 jun 27, from -7.288 to -7.823, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
-monitor "CO  " 2600.05m  -7.823 line intensity
+## >>chng 21 sep 11, from -7.823 to -7.866, LAMDA update
+monitor "CO  " 2600.05m  -7.866 line intensity
 ## >>chng 13 jun 27, from -6.463 to -7.41, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from -7.41 to -7.432, C to external databases
-monitor "CO  " 1300.05m  -7.432 line intensity
+## >>chng 21 sep 11, from -7.432 to -7.485, LAMDA update
+monitor "CO  " 1300.05m  -7.485 line intensity
 ## >>chng 13 jun 27, from -6.149 to -7.972, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from -7.972 to -8.01, C to external databases
 ## >>chng 20 sep 06, from -8.01 to -7.99, further update to McCall CR-related rate
-monitor "CO  " 866.727m  -7.99 line intensity
+## >>chng 21 sep 11, from -7.99 to -8.16, LAMDA update
+monitor "CO  " 866.727m  -8.16 line intensity
 ## >>chng 13 jun 27, from -6.177 to -9.518, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from -9.518 to -9.614, C to external databases
 ## >>chng 16 mar 21, from -9.614 to -9.646, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 sep 06, from -9.646 to -9.612, further update to McCall CR-related rate
-monitor "CO  " 650.074m  -9.612 line intensity
+## >>chng 21 sep 11, from -9.612 to -9.87, LAMDA update
+monitor "CO  " 650.074m  -9.87 line intensity
 ## >>chng 13 jun 27, from -6.485 to -11.39, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from -11.39 to -11.76, C to external databases
 ## >>chng 14 mar 26, from -11.76 to -11.8, Move oxygen data to stout and chianti files
 ## >>chng 20 aug 03, from -11.8 to -11.82, update H3+ rates Indriola+ 2012
-monitor "CO  " 520.089m  -11.82 line intensity
+## >>chng 21 sep 11, from -11.82 to -12, LAMDA update
+monitor "CO  " 520.089m  -12 line intensity
 ## >>chng 13 jun 27, from -6.954 to -12.96, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -12.96 to -12.88, update H2 - C II 158m collision rate
@@ -258,35 +267,41 @@ monitor "CO  " 520.089m  -11.82 line intensity
 ## >>chng 14 jun 11, from -13.31 to -13.33, BUGFIX 14 jan 05, N to external databases, did not include N I, Mg II excited state photo
 ## >>chng 20 aug 03, from -13.33 to -13.29, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from -13.29 to -13.26, further update to McCall CR-related rate
-monitor "CO  " 433.438m  -13.26 line intensity
+## >>chng 21 sep 11, from -13.26 to -13.19, LAMDA update
+monitor "CO  " 433.438m  -13.19 line intensity
 ## >>chng 13 jun 27, from -7.48 to -13.86, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -13.86 to -13.64, update H2 - C II 158m collision rate
 ## >>chng 13 dec 23, from -13.64 to -13.92, C to external databases
 ## >>chng 20 aug 03, from -13.92 to -13.88, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from -13.88 to -13.85, further update to McCall CR-related rate
-monitor "CO  " 371.549m  -13.85 line intensity
+## >>chng 21 sep 11, from -13.85 to -13.73, LAMDA update
+monitor "CO  " 371.549m  -13.73 line intensity
 ## >>chng 13 jun 27, from -8.049 to -14.4, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -14.4 to -14.15, update H2 - C II 158m collision rate
 ## >>chng 13 dec 23, from -14.15 to -14.44, C to external databases
 ## >>chng 20 aug 03, from -14.44 to -14.41, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from -14.41 to -14.39, further update to McCall CR-related rate
-monitor "CO  " 325.137m  -14.39 line intensity
+## >>chng 21 sep 11, from -14.39 to -14.26, LAMDA update
+monitor "CO  " 325.137m  -14.26 line intensity
 ## >>chng 13 jun 27, from -7.522 to -9.534, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from -9.534 to -9.579, C to external databases
 ## >>chng 19 jun 14, from -9.579 to -9.599, update to CODATA 2018
 ## >>chng 20 aug 03, from -9.599 to -9.579, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from -9.579 to -9.557, further update to McCall CR-related rate
-monitor "^13CO" 906.599m  -9.557 line intensity
+## >>chng 21 sep 11, from -9.557 to -9.75, LAMDA update
+monitor "^13CO" 906.599m  -9.75 line intensity
 ## >>chng 13 jun 27, from -8.247 to -12.88, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from -12.88 to -13.08, C to external databases
 ## >>chng 14 mar 26, from -13.08 to -13.1, Move oxygen data to stout and chianti files
 ## >>chng 16 mar 21, from -13.1 to -13.05, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -13.05 to -12.94, update H3+ rates Indriola+ 2012
-monitor "CN  " 880.858m  -12.94  line intensity
+## >>chng 21 sep 11, from -12.94 to -12.7, LAMDA update
+## >>chng 21 sep 15, from -12.7 to -12.5, go back to unresolved model
+monitor "CN  " 880.858m  -12.5  line intensity
 #
 # pdr_leiden_v2.in
 # class pdr  

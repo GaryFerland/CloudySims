@@ -56,7 +56,10 @@ monitor "H2O " 538.142m line intensity -8.66
 ##
 ## >>chng 10 aug 21, from -9.341 to -6.126, add these lines
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
-monitor "HNC " 1652.90m  line intensity -6.126 
+## >>chng 21 apr 10, from -6.126 to -6.448, update chemistry and lamba
+## >>chng 21 apr 16, from -6.448 to -6.109, remove bad UMIST reaction
+## >>chng 21 sep 11, from -6.109 to -6.731, LAMDA update
+monitor "HNC " 1652.90m  line intensity -6.731 
 ##
 ## >>chng 10 aug 21, from -9.86 to -7.326, add these lines
 ## >>chng 11 nov 16, from -7.326 to -7.469, adjust newmole monitors
@@ -80,7 +83,8 @@ monitor "CS  " 3058.86m  -6.89 line intensity
 ## >>chng 13 feb 01, from -9.42 to -9.45, BUGFIX, largely undo r6703
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -9.45 to -9.509, update H3+ rates Indriola+ 2012
-monitor "CO  " 2600.05m  -9.509 line intensity
+## >>chng 21 sep 11, from -9.509 to -9.376, LAMDA update
+monitor "CO  " 2600.05m  -9.376 line intensity
 ## >>chng 10 aug 21, from -7.637 to -6.403, add these lines
 ## >>chng 11 nov 16, from -6.403 to -7.393, adjust newmole monitors
 ## >>chng 12 jun 07, from -7.393 to -8.033, vib_evap fix
@@ -88,7 +92,8 @@ monitor "CO  " 2600.05m  -9.509 line intensity
 ## >>chng 13 feb 01, from -8.013 to -8.043, BUGFIX, largely undo r6703
 ## >>chng 13 jul 24, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -8.043 to -8.101, update H3+ rates Indriola+ 2012
-monitor "CO  " 1300.05m  -8.101 line intensity
+## >>chng 21 sep 11, from -8.101 to -7.969, LAMDA update
+monitor "CO  " 1300.05m  -7.969 line intensity
 ## >>chng 10 aug 21, from -7.173 to -5.747, add these lines
 ## >>chng 11 nov 16, from -5.747 to -6.675, adjust newmole monitors
 ## >>chng 12 jun 07, from -6.675 to -7.307, vib_evap fix
@@ -96,7 +101,8 @@ monitor "CO  " 1300.05m  -8.101 line intensity
 ## >>chng 13 feb 01, from -7.287 to -7.317, BUGFIX, largely undo r6703
 ## >>chng 13 jul 24, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -7.317 to -7.375, update H3+ rates Indriola+ 2012
-monitor "CO  " 866.727m  -7.375 line intensity
+## >>chng 21 sep 11, from -7.375 to -7.244, LAMDA update
+monitor "CO  " 866.727m  -7.244 line intensity
 ## >>chng 10 aug 21, from -7.114 to -5.364, add these lines
 ## >>chng 11 nov 16, from -5.364 to -6.274, adjust newmole monitors
 ## >>chng 12 jun 07, from -6.274 to -6.904, vib_evap fix
@@ -104,7 +110,8 @@ monitor "CO  " 866.727m  -7.375 line intensity
 ## >>chng 13 feb 01, from -6.884 to -6.914, BUGFIX, largely undo r6703
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -6.914 to -6.972, update H3+ rates Indriola+ 2012
-monitor "CO  " 650.074m  -6.972 line intensity
+## >>chng 21 sep 11, from -6.972 to -6.84, LAMDA update
+monitor "CO  " 650.074m  -6.84 line intensity
 ## >>chng 10 aug 21, from -7.324 to -5.146, add these lines
 ## >>chng 11 nov 16, from -5.146 to -6.082, adjust newmole monitors
 ## >>chng 12 jun 07, from -6.082 to -6.715, vib_evap fix
@@ -112,7 +119,8 @@ monitor "CO  " 650.074m  -6.972 line intensity
 ## >>chng 13 feb 01, from -6.695 to -6.725, BUGFIX, largely undo r6703
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -6.725 to -6.784, update H3+ rates Indriola+ 2012
-monitor "CO  " 520.089m  -6.784 line intensity
+## >>chng 21 sep 11, from -6.784 to -6.652, LAMDA update
+monitor "CO  " 520.089m  -6.652 line intensity
 ## >>chng 10 aug 21, from -7.731 to -5.056, add these lines
 ## >>chng 11 nov 16, from -5.056 to -6.056, adjust newmole monitors
 ## >>chng 12 jun 07, from -6.056 to -6.699, vib_evap fix
@@ -120,7 +128,8 @@ monitor "CO  " 520.089m  -6.784 line intensity
 ## >>chng 13 feb 01, from -6.679 to -6.709, BUGFIX, largely undo r6703
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -6.709 to -6.768, update H3+ rates Indriola+ 2012
-monitor "CO  " 433.438m  -6.768 line intensity
+## >>chng 21 sep 11, from -6.768 to -6.635, LAMDA update
+monitor "CO  " 433.438m  -6.635 line intensity
 ## >>chng 10 aug 21, from -8.299 to -5.102, add these lines
 ## >>chng 11 nov 16, from -5.102 to -6.18, adjust newmole monitors
 ## >>chng 12 jun 07, from -6.18 to -6.831, vib_evap fix
@@ -128,7 +137,8 @@ monitor "CO  " 433.438m  -6.768 line intensity
 ## >>chng 13 feb 01, from -6.811 to -6.841, BUGFIX, largely undo r6703
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -6.841 to -6.9, update H3+ rates Indriola+ 2012
-monitor "CO  " 371.549m  -6.9 line intensity
+## >>chng 21 sep 11, from -6.9 to -6.766, LAMDA update
+monitor "CO  " 371.549m  -6.766 line intensity
 ## >>chng 10 aug 21, from -8.997 to -5.293, add these lines
 ## >>chng 11 nov 16, from -5.293 to -6.435, adjust newmole monitors
 ## >>chng 12 jun 07, from -6.435 to -7.091, vib_evap fix
@@ -136,7 +146,8 @@ monitor "CO  " 371.549m  -6.9 line intensity
 ## >>chng 13 feb 01, from -7.071 to -7.101, BUGFIX, largely undo r6703
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -7.101 to -7.16, update H3+ rates Indriola+ 2012
-monitor "CO  " 325.137m  -7.16 line intensity
+## >>chng 21 sep 11, from -7.16 to -7.026, LAMDA update
+monitor "CO  " 325.137m  -7.026 line intensity
 ## >>chng 10 aug 21, from -9.336 to -6.676, add these lines
 ## >>chng 10 dec 19, from -6.676 to -6.56, changes due to LAMDA update in r4457
 ## >>chng 11 nov 16, from -6.56 to -6.837, adjust newmole monitors
@@ -144,7 +155,11 @@ monitor "CO  " 325.137m  -7.16 line intensity
 ## >>chng 13 feb 01, from -7.07 to -7.045, BUGFIX, largely undo r6703
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -7.045 to -6.921, update H3+ rates Indriola+ 2012
-monitor "CN  " 880.858m  -6.921  line intensity
+## >>chng 21 apr 10, from -6.921 to -6.963, update chemistry and lamba
+## >>chng 21 apr 16, from -6.963 to -6.916, remove bad UMIST reaction
+## >>chng 21 sep 11, from -6.916 to -8.127, LAMDA update
+## >>chng 21 sep 15, from -8.127 to -7.436, go back to unresolved model
+monitor "CN  " 880.858m  -7.436  line intensity
 monitor H2 column density 21.840 error 0.1
 ##
 ## >>chng 05 oct 01, from 17.79 to 17.75, drift down
@@ -160,7 +175,8 @@ monitor H2 column density 21.840 error 0.1
 ## >>chng 11 nov 16, from 16.49 to 15.36, adjust newmole monitors
 ## >>chng 12 jun 07, from 15.36 to 14.71, vib_evap fix
 ## >>chng 20 aug 03, from 14.71 to 14.64, update H3+ rates Indriola+ 2012
-monitor CO column density 14.64 error 0.1
+## >>chng 21 sep 11, from 14.64 to 14.77, LAMDA update
+monitor CO column density 14.77 error 0.1
 ##
 ## >>chng 05 nov 22, from 15.26 to 10.84, NA add freeze out onto grains
 ## >>chng 06 mar 06, from 10.84 to 10.65, PvH grain freeze out
@@ -203,7 +219,9 @@ monitor column density H2+  9.16 error 0.1
 ## >>chng 07 jan 07, from 12.10 to 12.16, enable McCall et al. H3+ rate
 ## >>chng 11 nov 16, from 12.16 to 12.23, adjust newmole monitors
 ## >>chng 12 jun 07, from 12.23 to 12.31, vib_evap fix
-monitor column density H3+  12.31 error 0.1
+## >>chng 21 apr 10, from 12.31 to 12.35, update chemistry and lamba
+## >>chng 21 sep 11, from 12.35 to 12.47, LAMDA update
+monitor column density H3+  12.47 error 0.1
 ## 
 monitor column density H2g  21.84 error 0.1
 ## 
@@ -225,13 +243,15 @@ monitor line luminosity "c  2" 157.636m -3.84
 ## >>chng 12 jun 07, from -4.809 to -4.891, vib_evap fix
 ## >>chng 13 dec 23, from -4.891 to -4.815, C to external databases
 ## >>chng 20 aug 03, from -4.815 to -4.788, update H3+ rates Indriola+ 2012
-monitor line luminosity "c  1" 370.269m -4.788
+## >>chng 21 sep 11, from -4.788 to -4.845, LAMDA update
+monitor line luminosity "c  1" 370.269m -4.845
 ## >>chng 11 nov 16, from -5.368 to -5.414, adjust newmole monitors
 ## >>chng 12 jun 07, from -5.414 to -5.5, vib_evap fix
 ## >>chng 13 feb 01, from -5.5 to -5.481, BUGFIX, largely undo r6703
 ## >>chng 13 dec 23, from -5.481 to -5.423, C to external databases
 ## >>chng 20 aug 03, from -5.423 to -5.396, update H3+ rates Indriola+ 2012
-monitor line luminosity "c  1" 609.590m -5.396
+## >>chng 21 sep 11, from -5.396 to -5.454, LAMDA update
+monitor line luminosity "c  1" 609.590m -5.454
 ## >>chng 11 nov 16, from -3.662 to -3.64, adjust newmole monitors
 ## >>chng 14 mar 26, from -3.64 to -3.265, Move oxygen data to stout and chianti files
 monitor line luminosity "O  1" 63.1679m -3.265

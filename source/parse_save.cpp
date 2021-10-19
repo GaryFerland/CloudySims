@@ -470,6 +470,50 @@ void ParseSave(Parser& p)
 		}
 	}
 
+	else if( p.nMatch("ARRA") && p.nMatch( "LEVE" ) )
+	{
+		strcpy( save.chSave[save.nsave], "IMAG" );
+
+		string species = chLabel;
+
+		if( species == "" )
+		{
+			fprintf( ioQQQ, "Empty species label: ''\n" );
+			cdEXIT( EXIT_FAILURE );
+		}
+
+		save.img_matrix.lgImgRates = true;
+		save.img_matrix.setSpecies( species );
+		if( p.nMatch( "FITS" ) )
+			save.img_matrix.lgFITS = true;
+		else if( p.nMatch( " PPM" ) )
+			save.img_matrix.lgFITS = false;
+		else
+		{
+			fprintf( ioQQQ, "Please use either the FITS or PPM keywords\n" );
+			cdEXIT( EXIT_FAILURE );
+		}
+
+		if( p.nMatch( "ITER" ) )
+			save.img_matrix.iteration = p.getNumberCheck( "iter" );
+		if( p.nMatch( "ZONE" ) )
+			save.img_matrix.zone = p.getNumberCheck( "zone" );
+
+		// NB NB
+		//
+		// This command generates images for debugging purposes,
+		// and it is executed near the call to the linear algebra
+		// function that solves the rate equations for level
+		// populations
+		//
+		// Because there is no output file for save_do.cpp to
+		// write in, we have to leave the function immediately,
+		// or a file will be created with the given species as
+		// its name
+		//
+		return;
+	}
+
 	else if( p.nMatch("AVER") )
 	{
 		/* save averages */
