@@ -1293,9 +1293,9 @@ STATIC double CoolH2_GA08 ( double Temp )
 {
 	DEBUG_ENTRY( "CoolH2_GA08()" );
 
-	double x_para = h2.para_density / dense.gas_phase[ ipHYDROGEN ];
-	double x_ortho = h2.ortho_density / dense.gas_phase[ ipHYDROGEN ];
-	double f_para = h2.para_density / (h2.para_density + h2.ortho_density);
+	double x_para = safe_div( h2.para_density, double( dense.gas_phase[ ipHYDROGEN ] ) );
+	double x_ortho = safe_div( h2.ortho_density, double( dense.gas_phase[ ipHYDROGEN ] ) );
+	double f_para = safe_div( h2.para_density, h2.para_density + h2.ortho_density );
 	double f_ortho = 1. - f_para;
 
 	/* Collisions with atomic H */
@@ -1354,14 +1354,7 @@ STATIC double CoolH2_GA08 ( double Temp )
 		}
 	}
 
-	/* NB NB NB
-	 * 
-	 * The interpolation below will fail if the high density cooling is 0,
-	 * that is, the total cooling will be 0, even if the low-density cooling
-	 * is not.  This may happen if permitted by the function that computes
-	 * LTE cooling, and/or the tabulated data (see definition of
-	 * interpolate_LTE_Cooling() and associated data file). */
-	return cooling_high / (1. + cooling_high / cooling_low);
+	return safe_div( cooling_low * cooling_high, cooling_low + cooling_high );
 }
 
 STATIC void CoolHyperfine (void)
