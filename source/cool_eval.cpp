@@ -1355,6 +1355,8 @@ STATIC double CoolH2_GA08 ( double Temp )
 	}
 
 	// originally cooling_high / (1. + cooling_high / cooling_low)
+	// See Eq. (39) therein
+	//
 	return safe_div( cooling_low * cooling_high, cooling_low + cooling_high );
 }
 
