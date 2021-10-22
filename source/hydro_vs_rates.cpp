@@ -469,28 +469,34 @@ double hydro_Lebedev_deexcit(long ipISO, long nelem, long nHi, long nLo, double 
 	double npn = (double)nHi + (double)nLo;
 	double npn2 = npn*npn;
 	double xn = IP_Ryd_Lo*TE1RYD/phycon.te;
-	double e1expxn = 0.;
+	double e1expxn = expe1(xn);
 
-	e1expxn = expe1(xn);
-
-	double theta = phycon.te / TE1RYD/pow2(Z);
+	//
+	// these are the two terms in the curly brackets in Eq. (8.30)
+	//
 	double phi = 2.*pow2(nHi*nLo/npn2)/deltan*(4*deltan - 1.)*e1expxn/deltan;
-
-
-
 	phi += pow3(2.*nLo/npn)*npn*(deltan - 0.6)*(1.33+pow2(nLo)*deltan)*(1.-xn*e1expxn)/deltan/pow2(nLo)/pow2(nHi);
 
+	double theta = phycon.te / TE1RYD/pow2(Z);
 	double ftheta = log(1.+nLo*theta/(Z*deltan*sqrt(theta)+2.5));
-
 	ftheta /= log(1.+nLo*sqrt(theta)/Z/deltan);
 
-	double rate = 2.*BOHR_RADIUS_CM*BOHR_RADIUS_CM*FINE_STRUCTURE*SPEEDLIGHT*SQRTPI;
-
-	rate *= double(nLo)*pow3((double)nHi/deltan/Z)/sqrt(theta)*phi*ftheta;
+	//
+	// NB NB
+	//
+	// Eq. (8.30) gives the excitation rate coefficient, and involves the
+	// term exp(-DE/kT).  Omit that term here to obtain its product with the
+	// excitation rate coeff, q(exc)*exp(+DE/KT), stored in rate_x_exp.
+	//
+	// Omission gives the impression we compute the CS incorrectly.
+	// Tripped over this twice already.  Added comment for clarity.
+	//
+	double rate_x_exp = 2.* pow2(BOHR_RADIUS_CM) * FINE_STRUCTURE * SPEEDLIGHT * SQRTPI;
+	rate_x_exp *= double(nLo)*pow3((double)nHi/(deltan*Z))/sqrt(theta)*phi*ftheta;
 
 	double gLo = get_iso_statw( ipISO, nLo );
 
-	double col_str = rate/COLL_CONST*phycon.sqrte*gLo;
+	double col_str = rate_x_exp / COLL_CONST * phycon.sqrte * gLo;
 
 	ASSERT (col_str >= 0);
 
