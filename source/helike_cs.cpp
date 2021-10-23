@@ -375,7 +375,7 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 	realnum cs = -1.f; 
 
 	/* this may be used for splitting up the collision strength within 2^3P */
-	realnum factor1 = 1.f;
+	realnum j_resolve = 1.f;
 
 	/* Energy difference in eV */
 	double deltaE_eV = EnerErg/EN1EV;
@@ -383,13 +383,13 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 	/* lower level is within 2^3P */
 	if( nLo==2 && lLo==1 && sLo==3 )
 	{
-	        factor1 *= (2.f*jLo+1.f) / 9.f;
+		j_resolve *= (2.f*jLo+1.f) / 9.f;
 	}
 
 	/* upper level is within 2^3P */
 	if( nHi==2 && lHi==1 && sHi==3 )
 	{
-	        factor1 *= (2.f*jHi+1.f) / 9.f;
+		j_resolve *= (2.f*jHi+1.f) / 9.f;
 	}
 
 	/* for most of the helium iso sequence, the order of the J levels within 2 3P 
@@ -402,7 +402,7 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 		// These are already j-resolved, so return this to unity.
 		if( nLo==2 && lLo==1 && sLo==3 && nHi==2 && lHi==1 && sHi==3 ) 
 		{
-			factor1 = 1.f;
+			j_resolve = 1.f;
 		}
 
 		*where = "table";
@@ -418,7 +418,7 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 		*where = "Zhang ";
 		if( nelem == ipIRON )
 			*where = "Si+2017";
-		factor1 = 1.;
+		j_resolve = 1.;
 
 		/* Collisions from gound	*/
 		if( nLo == 1 )
@@ -871,11 +871,9 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 			{
 				/* Lebedev and Beigman (1998) Phys. Highly excited atoms and ions p. 225 eq. 8.30
 				 */
-
 				cs = hydro_Lebedev_deexcit(ipHE_LIKE, nelem, nHi, nLo, IP_Ryd_Lo);
 				*where = "lebed";
 				lgResolvedData = false;
-
 			}
 
 			else if(iso_ctrl.lgCS_Fujim[ipHE_LIKE])
@@ -964,7 +962,7 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 			}
 		}
 		else
-			cs =0.;
+			cs = 0.;
 
 	}
 	else if (sHi != sLo)
@@ -981,18 +979,53 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 		TotalInsanity();
 
 
+	/*
+	 * Resolve collision strengths for n-changing collisions
+	 * from collapsed to resolved levels
+	 */
+	if (!lgResolvedData && nLo <= iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max)
+	{
+		realnum l_resolve = 
+				realnum( CSresolver(ipHE_LIKE, nHi, lHi, sHi, nLo, lLo, sLo,
+						iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max) );
+
+		enum {DEBUG_LOC = false};
+		if( DEBUG_LOC )
+		{ 
+			if( nelem == ipIRON &&
+				//(nHi == iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max + 15) &&
+				// nLo == iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max )
+				nLo == 2 && nHi == 3 ) 
+				// nHi == 3 && sHi == 1 && (nLo == 1 || nLo == 2) )
+				//	sLo == 1 )
+			{
+				if( l_resolve > 0. )
+				fprintf( ioQQQ, "nelem: %ld"
+						"  (nHi, lHi, sHi): (%ld, %ld, %ld) ->"
+						"  (nLo, lLo, sLo): (%ld, %ld, %ld)"
+						"\t nn' CS: %.4e"
+						"\t l-reslv: %.4e ->"
+						"\t j-reslv: %.4e"
+						"\t lj-reslv: %.4e\t"
+						"\t final CS: %.4e"
+						"\t '%s'\n",
+						nelem,
+						nHi, lHi, sHi,
+						nLo, lLo, sLo,
+						cs, l_resolve, j_resolve,
+						l_resolve * j_resolve,
+						cs * l_resolve * j_resolve,
+				      		*where );
+			}
+		}
+
+		cs *= l_resolve;
+	}
+
 	/* take factor into account, usually 1, ratio of stat weights if within 2 3P 
 	 * and with collisions from collapsed to resolved levels */
-	cs *= factor1;
+	cs *= j_resolve;
 
-
-	/*
-	 * Resolved routines can also provide collapsed data
-	 */
-	if (!lgResolvedData  && nLo <= iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max)
-	{
-		cs *= CSresolver(ipHE_LIKE, nHi, lHi, sHi, nLo, lLo, sLo, iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max);
-	}
 
 	{
 		/*@-redef@*/
@@ -2465,35 +2498,36 @@ STATIC double collision_strength_VF01( long ipISO, double E_Proj_Ryd,
 
 	return coll_str;
 }
-/*resolved to resolved and collapsed to resolved modification */
-	 /***************************************************************
-	 * convert resolved to collapsed:
-	 * rates: q(n->n') = \sum_l' \sum_l (2l+1)(2s+1) q(nl->nl')/ 2n^2
-	 * upsilons: Y(nn') = \sum_l' \sum_l Y(nln'l')
-	 * example: q(n=3->n=2) = 1/18(6q(3p->2s) + 2q(3s->2p) + 10q(3d->2p) + ...
-	 *
-	 * convert collapsed to collapsed to resolved:
-	 * rates: q(nl-n'l') = (2s'+1)(2l'+1)q(n->n')*n2/[\sum\sum(2s+1)(2l+1)(2s'+1)(2l'+1)]
-	 * with the constrains [{|s-s'|=0}]
-	 * upsilons: Y(nln'l') =(2s+1)(2l+1)(2s'+1)(2l'+1)Y(nn')/S
-	 * with the constrains {|s-s'|=0}
-	 *
-	 *where: S=[\sum\sum(2s+1)(2l+1)(2s'+1)(2l'+1)] = (2s+1)^2 n^2n'^2
-	 *
-	 * If i want a collapsed to resolved coefficient:
-	 *
-	 * 1) If the routine returns a collapsed value:
-	 *
-	 * rates: q(n -> n'l') = (2s+1)^2\sum(2l+1)(2l'+1)q(n->n')*n^2/S
-	 * upsilon: Y(nn'l') = (2s+1)^2\sum(2l+1)(2l'+1)Y(nn')/S
-	 *
-	 *
-	 * 2) If it is a resolved value
-	 *
-	 * rates: q(n->n'l') = \sum_l (2l+1)(2s+1)q(nl->n'l')/2n^2
-	 * upsilons: Y(nn'l') = \sum_l Y(nln'l')
-	 *
-	 */
+
+/* resolved to resolved and collapsed to resolved modification 
+ *
+ * convert resolved to collapsed:
+ * rates: q(n->n') = \sum_l' \sum_l (2l+1)(2s+1) q(nl->nl')/ 2n^2
+ * upsilons: Y(nn') = \sum_l' \sum_l Y(nln'l')
+ * example: q(n=3->n=2) = 1/18(6q(3p->2s) + 2q(3s->2p) + 10q(3d->2p) + ...
+ *
+ * convert collapsed to collapsed to resolved:
+ * rates: q(nl-n'l') = (2s'+1)(2l'+1)q(n->n')*n2/[\sum\sum(2s+1)(2l+1)(2s'+1)(2l'+1)]
+ * with the constrains [{|s-s'|=0}]
+ * upsilons: Y(nln'l') =(2s+1)(2l+1)(2s'+1)(2l'+1)Y(nn')/S
+ * with the constrains {|s-s'|=0}
+ *
+ *where: S=[\sum\sum(2s+1)(2l+1)(2s'+1)(2l'+1)] = (2s+1)^2 n^2n'^2
+ *
+ * If i want a collapsed to resolved coefficient:
+ *
+ * 1) If the routine returns a collapsed value:
+ *
+ * rates: q(n -> n'l') = (2s+1)^2\sum(2l+1)(2l'+1)q(n->n')*n^2/S
+ * upsilon: Y(nn'l') = (2s+1)^2\sum(2l+1)(2l'+1)Y(nn')/S
+ *
+ *
+ * 2) If it is a resolved value
+ *
+ * rates: q(n->n'l') = \sum_l (2l+1)(2s+1)q(nl->n'l')/2n^2
+ * upsilons: Y(nn'l') = \sum_l Y(nln'l')
+ *
+ */
 double CSresolver(long ipISO, long nHi,long lHi,long sHi,long nLo,
 		long lLo, long sLo, long n_HighestResolved)
 {
