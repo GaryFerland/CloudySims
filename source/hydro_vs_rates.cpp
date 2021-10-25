@@ -21,7 +21,16 @@ inline double get_iso_statw( const long ipISO, const long n )
 	if( ipISO == ipH_LIKE )
 		return 2.*double( pow2(n) );
 	else if( ipISO == ipHE_LIKE )
-		return 4.*double( pow2(n) );
+	{
+		if( n == 1 )
+		{
+			return 1;  // ipSINGLET * pow2( 1 );
+		}
+		else
+		{
+			return (ipSINGLET+ipTRIPLET) * double( pow2(n) );
+		}
+	}
 	else
 		TotalInsanity();
 }

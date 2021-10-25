@@ -995,7 +995,7 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 			if( nelem == ipIRON &&
 				//(nHi == iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max + 15) &&
 				// nLo == iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max )
-				nLo == 2 && nHi == 3 ) 
+				nLo == 1 && nHi == 3 ) 
 				// nHi == 3 && sHi == 1 && (nLo == 1 || nLo == 2) )
 				//	sLo == 1 )
 			{
@@ -1004,9 +1004,9 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 						"  (nHi, lHi, sHi): (%ld, %ld, %ld) ->"
 						"  (nLo, lLo, sLo): (%ld, %ld, %ld)"
 						"\t nn' CS: %.4e"
-						"\t l-reslv: %.4e ->"
+						"\t l-reslv: %.4e"
 						"\t j-reslv: %.4e"
-						"\t lj-reslv: %.4e\t"
+						"\t lj-reslv: %.4e"
 						"\t final CS: %.4e"
 						"\t '%s'\n",
 						nelem,
@@ -2551,7 +2551,7 @@ double CSresolver(long ipISO, long nHi,long lHi,long sHi,long nLo,
 	{
 		if( nLo == 1 )
 		{
-			ASSERT( sLo == 1 );
+			ASSERT( sLo == ipSINGLET );
 			S *= sLo*sLo;
 		}
 		else
