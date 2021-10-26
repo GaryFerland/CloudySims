@@ -24,7 +24,7 @@ inline double get_iso_statw( const long ipISO, const long n )
 	{
 		if( n == 1 )
 		{
-			return 1;  // ipSINGLET * pow2( 1 );
+			return 1.;  // ipSINGLET * pow2( 1 );
 		}
 		else
 		{

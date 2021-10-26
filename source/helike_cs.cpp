@@ -860,9 +860,7 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 			 * statistical weight IS included in the routine */
 			cs = (realnum)CS_VS80( ipHE_LIKE, nHi, IP_Ryd_Hi, nLo, IP_Ryd_Lo, Aul, nelem, Collider, phycon.te );
 			*where = "Vriens";
-
 			lgResolvedData = false;
-
 		}
 		/* only electron impact collisions */
 		else if (Collider == ipELECTRON)
@@ -875,14 +873,12 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 				*where = "lebed";
 				lgResolvedData = false;
 			}
-
 			else if(iso_ctrl.lgCS_Fujim[ipHE_LIKE])
 			{
 
 				cs = hydro_Fujimoto_deexcit(ipHE_LIKE, nHi, nLo, Aul, IP_Ryd_Hi, IP_Ryd_Lo);
 				*where = "Fuji ";
 				lgResolvedData = false;
-
 			}
 			else if( iso_ctrl.lgCS_vrgm[ipHE_LIKE])
 			{
@@ -892,7 +888,6 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 				*where = "vrgm ";
 				lgResolvedData = false;
 			}
-
 			else if( iso_ctrl.nCS_new[ipHE_LIKE] && nelem==ipHELIUM )
 			{
 				/* Don't know if stat weights are included in this, but they're probably
@@ -963,7 +958,6 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 		}
 		else
 			cs = 0.;
-
 	}
 	else if (sHi != sLo)
 	{
@@ -999,7 +993,6 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 				// nHi == 3 && sHi == 1 && (nLo == 1 || nLo == 2) )
 				//	sLo == 1 )
 			{
-				if( l_resolve > 0. )
 				fprintf( ioQQQ, "nelem: %ld"
 						"  (nHi, lHi, sHi): (%ld, %ld, %ld) ->"
 						"  (nLo, lLo, sLo): (%ld, %ld, %ld)"
@@ -1015,7 +1008,7 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 						cs, l_resolve, j_resolve,
 						l_resolve * j_resolve,
 						cs * l_resolve * j_resolve,
-				      		*where );
+						*where );
 			}
 		}
 
@@ -2531,10 +2524,12 @@ STATIC double collision_strength_VF01( long ipISO, double E_Proj_Ryd,
 double CSresolver(long ipISO, long nHi,long lHi,long sHi,long nLo,
 		long lLo, long sLo, long n_HighestResolved)
 {
-	double factor=1.;
+	DEBUG_ENTRY( "CSresolver()" );
 
 	if (sHi != sLo && nHi <= n_HighestResolved )
 		return 0.;
+
+	double factor=1.;
 
 	/* S= \sum\sum (2s+1)(2l+1)(2s'+1)(2l'+1)
 	 * with |s-s'|=0
