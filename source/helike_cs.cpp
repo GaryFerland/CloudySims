@@ -420,7 +420,7 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 			*where = "Si+2017";
 		j_resolve = 1.;
 
-		/* Collisions from gound	*/
+		/* Collisions from ground	*/
 		if( nLo == 1 )
 		{
 			if( lHi==0 && sHi==3 ) // to 2tripS
