@@ -94,6 +94,7 @@ si 4 1393.75  #   total Si IV 1394
 si 4  1402.77  #   total Si IV 1403
 BLND  1397   #  total of sum of both Si IV components
 #inwd  1397  #   inward flux of sum of both Si IV components
+Blnd  1400A # "Si 4"      1393.75A "Si 4"      1402.77A "O  4"     1397.20A "O  4"     1399.77A "O  4"     1401.16A "O  4"     1404.78A "O  4"     1407.38A
 blnd  1402   #  total O IV] 1402; 5 components to line: 
 #
 # 1397.2, 1399.77, 1401.16, 1404.81, 1407.39 --- not computed individually
