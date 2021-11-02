@@ -12,11 +12,9 @@ int main( void )
 	DEBUG_ENTRY( "main()" );
 
 	try {
-		double hdenLimit , hdenInit , hden, TeInc ,
-			r5007,r4363,r1665,ro3_88,ro3_52, r1661 ,
-			absolute , temp, TeLimit, TeInit , hdenInc;
+		double hdenLimit , hdenInit , hden, TeInc , temp, TeLimit, TeInit , hdenInc;
 
-		FILE *ioDATA ;
+		FILE *ioGRD ;
 		char chLine[100];
 
 		/* initialize the code for this run */
@@ -25,12 +23,33 @@ int main( void )
 		cdOutput( "CaseB.out" );
 
 		// one of these must be selected
+		string chName;
 		int lgH1do = false;
+		if( lgH1do )
+			chName = "H1";
 		int lgHe1do = true;
+		if( lgHe1do )
+			chName = "He1";
 		int lgHe2do = false;
+		if( lgHe2do )
+			chName = "He2";
 
-		/* calculation's results will go to this file*/
-		ioDATA = open_data("CaseB.txt","w");
+		string chBaseFilename = chName+"CaseB";
+
+		/* calculation's grid points (density, temperature) will go to this file*/
+		fprintf(ioQQQ, "Filename = %s\n",chBaseFilename.c_str());
+		ioGRD = open_data(chBaseFilename+".grd","w");  
+		fprintf(ioGRD,	"#Density\tTemperature\n");
+
+		string chLineList = "LineList_"+chName+"_CaseB.dat";
+		fprintf(stderr, "line list input is %s\n",chLineList.c_str());
+		string chSaveData = chName+"CaseB.dat";
+		fprintf(stderr, "saving predictions in %s\n",chSaveData.c_str());
+
+		string chSaveLineListCommand = "save linelist absolute \""+chName+"CaseB.dat\" \"LineList_"+chName+"_CaseB.dat\" last no hash no clobber ";
+		fprintf(stderr, "save line list command string is %s\n",chSaveLineListCommand.c_str());
+		//exit(1);
+
 
 		/* the range of density, and the increment in density, for this grid */
 		hdenInit = 0.;
@@ -47,8 +66,6 @@ int main( void )
 		hden = hdenInit;
 		temp = TeInit;
 
-		/* print the header for the data file */
-		fprintf(ioDATA,	"density\ttemp\n");
 
 		while( temp < 1.01*TeLimit )
 		{
@@ -58,7 +75,7 @@ int main( void )
 				cdInit();
 
 				/* option to not execute the code, uncomment when debugging setup */
-				cdNoExec( );/**/
+				/*cdNoExec( );*/
 
 				/* gas temperature for this calculation */
 				sprintf(chLine,"constant temperature %f", temp);
@@ -77,16 +94,20 @@ int main( void )
 				/* set upline optical depth  */
 				cdRead( "case B" );
 
+				/* save linelist command */
+				cdRead( chSaveLineListCommand.c_str() );	
+
+				/* adjust thickness to get 4 pi J in line */
+				sprintf(chLine,"set dr linear %e", 1./(pow(10.,2.*hden)*1.1 ) ) ;
+				cdRead( chLine );
+
+
 				/* an incident continuum must be specified to get the code
 				 * to run at all - not very important since we will set
 				 * the gas temperature */
 				if( lgHe1do )
 				{
 					cdRead( "laser 2 Ryd" );
-					cdRead( "save linelist absolute \"He1CaseB.dat\" \"LineList_He1_CaseB.dat\" last no hash no clobber ");	
-					/* adjust thickness to get 4 pi J in line */
-					sprintf(chLine,"set dr linear %e", 1./(pow(10.,2.*hden)*1.1 ) ) ;
-					cdRead( chLine );
 					cdRead( "database levels He-like element Helium resolved 10" );
 					cdRead( "database levels He-like element Helium collapsed 200" );
 				}
@@ -103,13 +124,11 @@ int main( void )
 				/* flush the output so we see it on the screen */
 				fflush(ioQQQ);
 
-				fprintf(ioDATA,"%.3e\t%.5f",	hden, temp );
-				fprintf(stderr,"%.3e\t%.5f",	hden, temp );
+				fprintf(ioGRD,"%.3e\t%.5f\n",	hden, temp );
+				fprintf(stderr,"%.3e\t%.5f\n",	hden, temp );
 
 				/************************* end lines with lf and flush it ***************/
-				fprintf(ioDATA,"\n" );
-				fflush(ioDATA );
-				fprintf(stderr,"\n" );
+				fflush(ioGRD );
 				hden += hdenInc;
 			}
 			temp += TeInc;
