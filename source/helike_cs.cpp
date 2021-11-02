@@ -2540,17 +2540,18 @@ double CSresolver(long ipISO, long nHi,long lHi,long sHi,long nLo,
 
 	if (ipISO==ipH_LIKE)
 	{
-		S *= 4;
+		ASSERT( sLo == ipDOUBLET );
+		S *= pow2( ipDOUBLET );
 	}
 	else if(ipISO==ipHE_LIKE)
 	{
 		if( nLo == 1 )
 		{
 			ASSERT( sLo == ipSINGLET );
-			S *= sLo*sLo;
+			S *= pow2( ipSINGLET );
 		}
 		else
-			S *= 10; //(1*1 + 3*3)
+			S *= pow2( ipSINGLET ) + pow2( ipTRIPLET );
 	}
 
 

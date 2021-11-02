@@ -19,7 +19,9 @@
 inline double get_iso_statw( const long ipISO, const long n )
 {
 	if( ipISO == ipH_LIKE )
-		return 2.*double( pow2(n) );
+	{
+		return ipDOUBLET * double( pow2(n) );
+	}
 	else if( ipISO == ipHE_LIKE )
 	{
 		if( n == 1 )
