@@ -1,2 +1,0 @@
-density	temp	[O III] 5007	[O III] 4363	[O III] 1665	[O III] 88	[O III] 52	[O III] 1661
-0.000e+00	3.50000	1.000e+00
