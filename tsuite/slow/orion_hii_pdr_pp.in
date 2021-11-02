@@ -447,7 +447,8 @@ monitor temperature "H2" 22.8
 ## >>chng 11 nov 16, from 1854 to 1987, adjust newmole monitors
 ## >>chng 12 apr 09, from 1987 to 1662, update backbround CR to Indiolo_07 (8x larger)
 ## >>chng 12 jun 08, from 1662 to 1831, Updates to grain chemistry
-monitor nzone 1831 
+## >>chng 21 nov 02, from 1831 to 1914, fix bug with overresolving CS in isoseq
+monitor nzone 1914 
 ##
 ## >>chng 05 mar 28, from 24 to 14 impr mol converg
 ## >>chng 05 apr 10, from 14 to 16, chng ci conv
