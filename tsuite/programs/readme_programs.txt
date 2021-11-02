@@ -23,6 +23,7 @@ The shell script
 complink.sh directory [gcc/clang] 
 will use gcc to build the cpp program within directory by default.
 If a compiler is provided uses the given compiler and assumes that cloudy was build in the sys subdirectory.
+Note that the files cloudyconfig.h and libcloudy.a must be locaed in source
 
 template.cpp  -  This is a template you can use to write your own
 program that calls Cloudy as a subroutine.  This provides a
