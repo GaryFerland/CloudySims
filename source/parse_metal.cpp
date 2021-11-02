@@ -327,7 +327,7 @@ void ParseMetal(Parser &p)
 				/*  pointer to where to write */
 				optimize.nvfpnt[optimize.nparm] = input.nRead;
 				optimize.vparm[0][optimize.nparm] = (realnum)FsLog;
-				optimize.vparm[2][optimize.nparm] = (realnum)DxLimitLog;
+				optimize.vparm[1][optimize.nparm] = (realnum)DxLimitLog;
 				optimize.nvarxt[optimize.nparm] = 2;
 				/* initial increment is 0.1 and allowed range i 0 to 1 */
 				optimize.vincr[optimize.nparm] = 0.1;
