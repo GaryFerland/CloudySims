@@ -916,6 +916,24 @@ void chemical_to_spectral( const string &chLabelChem, string &chLabelSpec )
 	}
 }
 
+/* Tell if the given species is enabled */
+bool isSpeciesActive( const string &chLabelChem )
+{
+	DEBUG_ENTRY( "isSpeciesActive()" );
+
+	for( size_t i=0; i<mole_global.list.size(); ++i )
+	{
+		if( mole.species[i].levels == NULL )
+			continue;
+		if( mole.species[i].dbase == NULL )
+			continue;
+		if( mole.species[i].levels->chLabel() == chLabelChem )
+			return mole.species[i].dbase->lgActive;
+	}
+
+	return false;
+}
+
 /*This function fills the nelem and IonStg fields */
 STATIC void states_nelemfill(void)
 {

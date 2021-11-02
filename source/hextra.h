@@ -109,7 +109,7 @@ struct t_hextra : public module {
 		 hextra.background_density = 1.99e-9f;*/
 		/* >>chng 05 apr 16, to get proper ionization rate in ism_set_cr_rate, where
 		 * H is forced to be fully atomic, no molecules, density from 1.99 to 2.15 */
-		/* >>chng 02 apr 05, update to
+		/* >>chng 12 apr 05, update to
 		 * >>refer	cosmic ray 	ionization	Indriolo, N., Geballe, T., Oka, T., & McCall, B.J. 2007, ApJ, 671, 1736
 		 */
 		background_density = 2.15e-9f*7.9f;
