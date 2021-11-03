@@ -306,7 +306,8 @@ monitor niter <5
 ## >>chng 18 jun 20, from 416 to 393, #bugfixes at front face r12134:12136
 ## >>chng 19 jul 14, from 393 to 411, increased number of levels for Fe III, drift over time
 ## >>chng 19 aug 06, from 411 to 385, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
-monitor nzone 385 
+## >>chng 21 nov 02, from 385 to 400, fix bug with overresolving CS in isoseq, increase for FLT_IS_DBL
+monitor nzone 390 
 ##
 ## >>chng 14 jul 10, from 1.01 to 4.449, Add monitors for WillsNetzerWills FeII Lines
 ## >>chng 16 mar 23, drop WillsNetzerWills FeII Lines
