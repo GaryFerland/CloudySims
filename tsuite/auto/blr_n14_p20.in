@@ -77,7 +77,8 @@ monitor line luminosity "Blnd" 1888 4.803 0.10  ##total of sum of Si III] 1892+
 ## >>chng 19 aug 06, from 5.79 to 5.809, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 monitor line luminosity "Blnd"  1860 5.809  ##total sum of both Al III comp
 ##
-monitor line luminosity "blnd" 2326 5.292 0.10 ##total C II] 2324.69 + 2328.12
+## >>chng 21 nov 02, from 5.292 to 5.242, fix bug with overresolving CS in isoseq
+monitor line luminosity "blnd" 2326 5.242 0.10 ##total C II] 2324.69 + 2328.12
 ##
 monitor line luminosity "blnd" 2798 7.84  ##total of sum of both Mg II comp
 ##

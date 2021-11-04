@@ -39,7 +39,7 @@ normalize to "C  2" 157.636m
 sphere
 ## >>chng 16 apr 14, had been case B, this gets same effect with
 ## no large Lyman optical depths
-Database H-like Lyman pumping off
+database H-like Lyman pumping off
 cosmic rays, background
 ##
 ## stopping criteria

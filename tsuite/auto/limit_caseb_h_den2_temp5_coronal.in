@@ -305,7 +305,8 @@ monitor departure "H[250]"  6.576
 ## >>chng 16 aug 07, from 1.687 to 1.12, Marios bug fixes
 ## >>chng 19 jun 28, from 1.12 to 3.338, reintegrate iso_collisions branch
 ## >>chng 19 aug 06, from 3.338 to 7.52, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
-monitor departure "H[350]"  7.52
+## >>chng 21 nov 02, from 7.52 to 7.474, fix bug with overresolving CS in isoseq
+monitor departure "H[350]"  7.474
 ## >>chng 16 jul 28, from 1 to 11.93, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 11.93 to 1.559, Fran bug fix
 ## >>chng 16 aug 07, from 1.559 to 1.067, Marios bug fixes

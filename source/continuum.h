@@ -115,6 +115,15 @@ void SpeciesPseudoContCreate();
 /** SpeciesPseudoContAccum - accumulate pseudo-continua */
 void SpeciesPseudoContAccum();
 
+/** addUniqueSpeciesBand - add unique combination of species and bands file to list
+ *
+ *  Note that this command requires that the atomic data be read in.
+ *
+ *  \param [in] filename     name of bands file
+ *  \param [in[ speciesLabel species whose emission to accumulate
+ */
+void addUniqueSpeciesBand( const string &filename, const string &speciesLabel );
+
 /** SpeciesBandsCreate - initialize requested species bands files */
 void SpeciesBandsCreate();
 

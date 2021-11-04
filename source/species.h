@@ -135,14 +135,19 @@ bool parse_chemical( const string &chLabelChem,
  */
 void chemical_to_spectral( const string &chLabelChem, string &chLabelSpec );
 
-class genericState;
-
-/** getSpecies - acquire the species matching the input string
+/**
+ * isSpeciesActive - Tell if the species is enabled
  *
- * \param speciesLabel	input species string
- * \param species	output reference to requested species
+ * An atomic/ionic species may be inactive if the relevant element is disabled.
+ * Likewise, a molecular species may be inactive if one of its constituents
+ * elements is disabled.  This function reports on the given species.
+ * If not found, the result is false.
+ *
+ * \param chLabelChem [in]	Chemical label, e.g., "C+2", or "HCl"
+ *
+ * \return bool			True, if species active; false, otherwise.
  */
-void getSpecies( const string &speciesLabel, genericState &species );
+bool isSpeciesActive( const string &chSpecLabel );
 
 /** isAtomicIonValid - Tell if an atomic ion is has a charge consistent
  * 			with its atomic number.

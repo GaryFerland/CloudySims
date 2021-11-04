@@ -1,4 +1,10 @@
 set save prefix "limit_caseb_h_den4_temp4"
+#
+# Gary tripped over a bug when this command is issued before
+# the 'init "honly.ini"' below.
+# Keep this command up here to always exercise the fix.
+#
+save species bands ".band" "FeII_bands.ini" "Fe+"
 constant temperature 1e4
 hden 4
 set eden 4

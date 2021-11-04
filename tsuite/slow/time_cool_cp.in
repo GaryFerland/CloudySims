@@ -103,11 +103,13 @@ monitor line luminosity cumulative intrinsic "O  7"      16.7699A   12.3
 ## >>chng 19 aug 06, from 11.77 to 11.81, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 oct 05, from 11.81 to 11.84, limit more elements for load leveling
 ## >>chng 21 jan 19, from 11.84 to 11.81, timestep logic change from tcool to n(H+)
-monitor line luminosity cumulative intrinsic "O  7"      18.6270A   11.81
+## >>chng 21 nov 02, from 11.81 to 12.11, fix bug with overresolving CS in isoseq
+monitor line luminosity cumulative intrinsic "O  7"      18.6270A   12.11
 ## >>chng 19 jun 11, from 13.17 to 13.2, Percival and Richards (1978) used for He-like ions
 ## >>chng 19 jul 24, from 13.2 to 13.18, fix bug on Presolving ions excitation on He like collisions
 ## >>chng 20 oct 05, from 13.18 to 13.22, limit more elements for load leveling
-monitor line luminosity cumulative intrinsic "O  7"      21.6020A   13.22
+## >>chng 21 nov 02, from 13.22 to 13.25, fix bug with overresolving CS in isoseq
+monitor line luminosity cumulative intrinsic "O  7"      21.6020A   13.25
 ## >>chng 19 jun 11, from 12.73 to 12.76, Percival and Richards (1978) used for He-like ions
 ## >>chng 19 jul 24, from 12.76 to 12.74, fix bug on Presolving ions excitation on He like collisions
 ## >>chng 20 oct 05, from 12.74 to 12.78, limit more elements for load leveling

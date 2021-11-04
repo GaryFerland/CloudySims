@@ -66,10 +66,12 @@ monitor line luminosity cumulative intrinsic "O  7"      16.7699A   12.0288
 ## >>chng 19 jun 11, from 11.51 to 11.72, Percival and Richards (1978) used for He-like ions
 ## >>chng 19 jul 24, from 11.72 to 11.47, fix bug on resolving ions excitation on He like
 ## >>chng 19 aug 06, from 11.47 to 11.51, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
-monitor line luminosity cumulative intrinsic "O  7"      18.6270A   11.51
+## >>chng 21 nov 02, from 11.51 to 11.83, fix bug with overresolving CS in isoseq
+monitor line luminosity cumulative intrinsic "O  7"      18.6270A   11.83
 ## >>chng 19 jun 11, from 12.95 to 12.98, Percival and Richards (1978) used for He-like ions
 ## >>chng 19 jul 24, from 12.98 to 12.96, fix bug on resolving ions excitation on He like
-monitor line luminosity cumulative intrinsic "O  7"      21.6020A   12.96
+## >>chng 21 nov 02, from 12.96 to 13, fix bug with overresolving CS in isoseq
+monitor line luminosity cumulative intrinsic "O  7"      21.6020A   13
 ## >>chng 19 jun 11, from 12.49 to 12.52, Percival and Richards (1978) used for He-like ions
 ## >>chng 19 jul 24, from 12.52 to 12.49, fix bug on resolving ions excitation on He like
 monitor line luminosity cumulative intrinsic "O  7"      21.8070A   12.49
