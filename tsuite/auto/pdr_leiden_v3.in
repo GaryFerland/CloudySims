@@ -271,11 +271,13 @@ monitor "CO  " 433.438m  -6.2 line intensity
 ## >>chng 13 jun 27, from -7.48 to -6.546, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -6.546 to -6.574, Move oxygen data to stout and chianti files
-monitor "CO  " 371.549m  -6.574 line intensity
+## >>chng 21 nov 04, from -6.574 to -6.616, update mole co data
+monitor "CO  " 371.549m  -6.616 line intensity
 ## >>chng 13 jun 27, from -8.049 to -6.95, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -6.95 to -6.996, Move oxygen data to stout and chianti files
-monitor "CO  " 325.137m  -6.996 line intensity
+## >>chng 21 nov 04, from -6.996 to -7.042, update mole co data
+monitor "CO  " 325.137m  -7.042 line intensity
 ## >>chng 13 jun 27, from -7.522 to -6.681, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 monitor "^13CO" 906.599m  -6.681 line intensity

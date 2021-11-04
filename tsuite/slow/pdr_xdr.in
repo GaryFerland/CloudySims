@@ -63,7 +63,8 @@ monitor column density H2   22 error 0.1
 ## >>chng 14 mar 26, from 17.83 to 17.66, move O to external databases
 ## >>chng 20 sep 06, from 17.66 to 17.74, further update to McCall CR-related rates from r14260
 ## >>chng 21 sep 11, from 17.74 to 17.68, LAMDA update
-monitor column density CO   17.68 error 0.1
+## >>chng 21 nov 04, from 17.68 to 17.73, update co mole data
+monitor column density CO   17.73 error 0.1
 ## >>chng 11 jul 22, from 10 to 15.62, first run
 ## >>chng 14 mar 26, from 15.62 to 15.56, move O to external databases
 ## >>chng 20 sep 06, from 15.56 to 15.67, further update to McCall CR-related rates from r14260
@@ -99,7 +100,8 @@ monitor column density H2O  16.14 error 0.1
 ## >>chng 14 mar 26, from 15.48 to 15.37, move O to external databases
 ## >>chng 20 sep 06, from 15.37 to 15.44, further update to McCall CR-related rates from r14260
 ## >>chng 21 sep 11, from 15.44 to 14.74, LAMDA update
-monitor column density C2   14.74 error 0.1
+## >>chng 21 nov 04, from 14.74 to 15.28, update co mole data
+monitor column density C2   15.28 error 0.1
 ## >>chng 11 jul 22, from 10 to 13.17, first run
 ## >>chng 11 nov 16, from 13.17 to 13.24, adjust newmole monitors
 ## >>chng 12 aug 21, from 13.24 to 13.3, fix CRPHOT botches and HD crash
@@ -107,7 +109,8 @@ monitor column density C2   14.74 error 0.1
 ## >>chng 14 mar 26, from 13.45 to 13.28, move O to external databases
 ## >>chng 20 sep 06, from 13.28 to 13.37, further update to McCall CR-related rates from r14260
 ## >>chng 21 sep 11, from 13.37 to 12.65, LAMDA update
-monitor column density C3   12.65 error 0.1
+## >>chng 21 nov 04, from 12.65 to 13.2, update co mole data
+monitor column density C3   13.2 error 0.1
 ## >>chng 11 jul 22, from 10 to 14.94, first run
 ## >>chng 14 mar 26, from 14.94 to 14.81, move O to external databases
 monitor column density SiO  14.81 error 0.1
@@ -120,14 +123,16 @@ monitor column density OH   16.88 error 0.1
 ## >>chng 12 aug 21, from 14.41 to 14.45, fix CRPHOT botches and HD crash
 ## >>chng 13 nov 05, from 14.45 to 14.5, convergence branch changes
 ## >>chng 14 mar 26, from 14.5 to 14.42, move O to external databases
-monitor column density CN   14.42 error 0.1
+## >>chng 21 nov 04, from 14.42 to 14.51, update co mole data
+monitor column density CN   14.51 error 0.1
 ## >>chng 11 jul 22, from 10 to 16.13, first run
 ## >>chng 13 feb 16, from 16.13 to 16.17, update iso recom files
 ## >>chng 13 nov 05, from 16.17 to 16.21, convergence branch changes
 ## >>chng 14 mar 26, from 16.21 to 16.14, move O to external databases
 ## >>chng 20 sep 06, from 16.14 to 16.2, further update to McCall CR-related rates from r14260
 ## >>chng 21 sep 11, from 16.2 to 15.53, LAMDA update
-monitor column density CH   15.53 error 0.1
+## >>chng 21 nov 04, from 15.53 to 16.07, update co mole data
+monitor column density CH   16.07 error 0.1
 ## 
 ## >>chng 12 mar 07, from 14.9 to 8.032, renorm to r5961 results
 ## >>chng 13 nov 05, from 8.032 to 4.819, convergence branch changes
@@ -154,7 +159,8 @@ monitor itrzn 3.63
 ## >>chng 20 sep 06, from 852 to 877, further update to McCall CR-related rates from r14260
 ## >>chng 21 mar 31, from 877 to 913, add HF+ chemistry, undertainty from 0.03 to default
 ## >>chng 21 sep 11, from 913 to 851, LAMDA update
-monitor nzone 851 error 0.03
+## >>chng 21 nov 04, from 851 to 899, LAMDA update
+monitor nzone 899 error 0.03
 ##
 ## >>chng 13 jun 27, from -8.869 to -5.357, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
@@ -166,14 +172,16 @@ monitor "H2O " 538.142m line intensity -4.983
 ## >>chng 13 aug 16, from -7.101 to -7.248, subtraction of isotropic continua
 ## >>chng 18 jun 15, from -7.248 to -7.292, modified ion trimming scheme
 ## >>chng 21 sep 11, from -7.292 to -7.423, LAMDA update
-monitor "HNC " 1652.90m  line intensity -7.423
+## >>chng 21 nov 04, from -7.423 to -7.37, update co mole data
+monitor "HNC " 1652.90m  line intensity -7.37
 ## >>chng 13 jun 27, from -8.563 to -6.642, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 05, from -6.642 to -6.564, convergence branch changes
 ## >>chng 14 mar 26, from -6.564 to -6.736, move O to external databases
 ## >>chng 20 sep 06, from -6.736 to -6.673, further update to McCall CR-related rates from r14260
 ## >>chng 21 sep 11, from -6.673 to -7.069, LAMDA update
-monitor "HCS+" 1755.88m  -7.069 line intensity
+## >>chng 21 nov 04, from -7.069 to -6.623, update co mole data
+monitor "HCS+" 1755.88m  -6.623 line intensity
 ## >>chng 13 jun 27, from -7.453 to -6.575, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 13 aug 11, from -6.575 to -6.509, r7961/r7952
@@ -192,7 +200,8 @@ monitor "HCS+" 1755.88m  -7.069 line intensity
 ## >>chng 15 oct 14, from -6.852 to -6.814, update Ne 3 cs to McLaughlin+11
 ## >>chng 20 sep 06, from -6.814 to -6.771, further update to McCall CR-related rates from r14260
 ## >>chng 21 sep 11, from -6.771 to -7.038, LAMDA update
-monitor "CS  " 3058.86m  -7.038 line intensity
+## >>chng 21 nov 04, from -7.038 to -6.739, update co mole data
+monitor "CS  " 3058.86m  -6.739 line intensity
 ## >>chng 13 jun 27, from -7.288 to -5.951, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -5.951 to -6.06, move O to external databases
@@ -240,13 +249,15 @@ monitor "CO  " 371.549m  -3.922 line intensity
 ## >>chng 20 aug 03, from -4.033 to -3.995, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from -3.995 to -3.955, further update to McCall CR-related rates from r14260
 ## >>chng 21 sep 11, from -3.955 to -4.012, LAMDA update
-monitor "CO  " 325.137m  -4.012 line intensity
+## >>chng 21 nov 04, from -4.012 to -3.966, update co mole data
+monitor "CO  " 325.137m  -3.966 line intensity
 ## >>chng 13 jun 27, from -7.522 to -5.147, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -5.147 to -5.292, move O to external databases
 ## >>chng 20 sep 06, from -5.292 to -5.238, further update to McCall CR-related rates from r14260
 ## >>chng 21 sep 11, from -5.238 to -5.283, LAMDA update
-monitor "^13CO" 906.599m  -5.283 line intensity
+## >>chng 21 nov 04, from -5.283 to -5.245, update co mole data
+monitor "^13CO" 906.599m  -5.245 line intensity
 ## >>chng 13 jun 27, from -8.247 to -6.917, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 13 sep 12, from -6.917 to -6.96, Mg converted to database
@@ -254,7 +265,8 @@ monitor "^13CO" 906.599m  -5.283 line intensity
 ## >>chng 14 mar 26, from -6.893 to -7.017, move O to external databases
 ## >>chng 21 sep 11, from -7.017 to -7.976, LAMDA update
 ## >>chng 21 sep 15, from -7.976 to -6.985, go back to unresolved model
-monitor "CN  " 880.858m  -6.985  line intensity
+## >>chng 21 nov 04, from -6.985 to -6.927, update co mole data
+monitor "CN  " 880.858m  -6.927  line intensity
 #
 # pdr_xdr.in
 # class pdr 

@@ -105,14 +105,16 @@ monitor line luminosity "c  2" 157.636m -3.222
 ## >>chng 11 jul 12, from -5.739 to -5.814, enable fit to Badnell DR suppression
 ## >>chng 13 feb 01, from -5.814 to -5.738, BUGFIX, largely undo r6703
 ## >>chng 21 sep 11, from -5.738 to -6.155, LAMDA update
-monitor line luminosity "c  1" 370.269m -6.155
+## >>chng 21 nov 04, from -6.155 to -5.659, update mole co data
+monitor line luminosity "c  1" 370.269m -5.659
 ## 
 ## >>chng 06 nov 29, from -6.698 to -6.561, Badnell DR turned on
 ## >>chng 11 jul 12, from -6.561 to -6.629, enable fit to Badnell DR suppression
 ## >>chng 13 feb 01, from -6.629 to -6.552, BUGFIX, largely undo r6703
 ## >>chng 15 may 14, from -6.552 to -6.519, CollisSuppres, final version from Dragan Nikolic
 ## >>chng 21 sep 11, from -6.519 to -6.981, LAMDA update
-monitor line luminosity "c  1" 609.590m -6.981
+## >>chng 21 nov 04, from -6.981 to -6.448, update mole co data
+monitor line luminosity "c  1" 609.590m -6.448
 ## 
 ## >>chng 11 nov 16, from -1.46 to -1.426, adjust newmole monitors
 ## >>chng 12 mar 07, from -1.426 to -1.457, renorm to r5961 results
@@ -158,31 +160,37 @@ monitor "CO  " 1300.05m  -5.696 line intensity
 ## >>chng 13 jun 27, from -6.149 to -5.14, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -5.14 to -5.101, LAMDA update
-monitor "CO  " 866.727m  -5.101 line intensity
+## >>chng 21 nov 04, from -5.101 to -5.171, update mole co data
+monitor "CO  " 866.727m  -5.171 line intensity
 ## >>chng 13 jun 27, from -6.177 to -4.79, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -4.79 to -4.743, LAMDA update
-monitor "CO  " 650.074m  -4.743 line intensity
+## >>chng 21 nov 04, from -4.743 to -4.831, update mole co data
+monitor "CO  " 650.074m  -4.831 line intensity
 ## >>chng 13 jun 27, from -6.485 to -4.566, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 14, from -4.566 to -4.586, CollisSuppres, final version from Dragan Nikolic
 ## >>chng 21 sep 11, from -4.586 to -4.507, LAMDA update
-monitor "CO  " 520.089m  -4.507 line intensity
+## >>chng 21 nov 04, from -4.507 to -4.617, update mole co data
+monitor "CO  " 520.089m  -4.617 line intensity
 ## >>chng 13 jun 27, from -6.954 to -4.436, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -4.436 to -4.462, Move oxygen data to stout and chianti files
 ## >>chng 21 sep 11, from -4.462 to -4.362, LAMDA update
-monitor "CO  " 433.438m  -4.362 line intensity
+## >>chng 21 nov 04, from -4.362 to -4.503, update mole co data
+monitor "CO  " 433.438m  -4.503 line intensity
 ## >>chng 13 jun 27, from -7.48 to -4.394, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -4.394 to -4.429, Move oxygen data to stout and chianti files
 ## >>chng 21 sep 11, from -4.429 to -4.298, LAMDA update
-monitor "CO  " 371.549m  -4.298 line intensity
+## >>chng 21 nov 04, from -4.298 to -4.484, update mole co data
+monitor "CO  " 371.549m  -4.484 line intensity
 ## >>chng 13 jun 27, from -8.049 to -4.449, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -4.449 to -4.499, Move oxygen data to stout and chianti files
 ## >>chng 21 sep 11, from -4.499 to -4.32, LAMDA update
-monitor "CO  " 325.137m  -4.32 line intensity
+## >>chng 21 nov 04, from -4.32 to -4.576, update mole co data
+monitor "CO  " 325.137m  -4.576 line intensity
 ## >>chng 13 jun 27, from -7.522 to -5.898, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 monitor "^13CO" 906.599m  -5.898 line intensity
