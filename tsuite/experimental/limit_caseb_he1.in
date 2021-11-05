@@ -1,0 +1,39 @@
+title model He I atom in Case B limit over range of density, temperature
+set save prefix "limit_caseb_he1"
+#
+# commands controlling continuum =========
+laser 2 ryd
+ionization parameter 1
+constant temperature 1e4 K vary
+grid list linear "limit_caseb_he1.tgrid"
+#
+# commands for density & abundances =========
+init "hheonly.ini"
+hden 1 vary
+grid 2 4 2
+#
+# commands controlling geometry  =========
+stop zone 1
+set dr 0
+#
+# other commands for details     =========
+iterate 3
+database He-like element helium levels resolved 10
+database He-like element helium levels collapsed 100
+Case B 
+#
+# commands controlling output    =========
+print line column
+print line sort wavelength
+print line faint 1
+save grid ".grd" 
+save line list ratio ".lrat" "limit_caseb_he1_ratio.dat" last nohash column
+# 
+# limit_caseb_he1.in 
+# class limit 
+# ========================================
+# 
+
+
+find the ratio of our current predictions relative to the values stored in the
+table in data directory
