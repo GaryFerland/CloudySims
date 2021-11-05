@@ -125,7 +125,8 @@ monitor column density H2*  14.60
 monitor column density HeH+ 11.13
 ## >>chng 21 jun 17, from 1 to 9.52, first run
 ## >>chng 21 sep 11, from 9.52 to 8.416, LAMDA update
-monitor column density "ArH+" 8.416
+## >>chng 21 nov 04, from 8.416 to 8.183, update mole co data
+monitor column density "ArH+" 8.183
 ## 
 ##
 ## >>chng 03 nov 10, from 400 to 440, chng zoning, use He0

@@ -99,7 +99,8 @@ monitor column density C2   13.3 error 0.1
 ## >>chng 13 feb 01, from 12.56 to 12.48, BUGFIX, largely undo r6703
 ## >>chng 13 dec 18, from 12.48 to 12.38, fixes to Federman shielding
 ## >>chng 21 sep 11, from 12.38 to 12.06, LAMDA update
-monitor column density C3   12.06 error 0.1
+## >>chng 21 nov 04, from 12.06 to 12.01, update co mole data
+monitor column density C3   12.01 error 0.1
 ## >>chng 11 jul 16, from 10 to 16.42, add column density monitors
 ## >>chng 20 aug 03, from 16.42 to 16.48, update H3+ rates Indriola+ 2012
 monitor column density SiO  16.48 error 0.1
@@ -113,7 +114,8 @@ monitor column density CN   12.44 error 0.1
 ## >>chng 13 feb 01, from 13.66 to 13.71, BUGFIX, largely undo r6703
 ## >>chng 13 jun 27, from 13.71 to 13.66, BUGFIX use g-bar for H2-H2 collisions
 ## >>chng 13 dec 18, from 13.66 to 13.59, fixes to Federman shielding
-monitor column density CH   13.59 error 0.1
+## >>chng 21 nov 04, from 13.59 to 13.52, update co mole data
+monitor column density CH   13.52 error 0.1
 ##
 ## these added 05 jan 22
 ## >>chng 05 feb 12, from 21.91 to 21.88 update conv chck

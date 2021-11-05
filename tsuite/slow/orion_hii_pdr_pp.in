@@ -447,7 +447,8 @@ monitor temperature "H2" 22.8
 ## >>chng 11 nov 16, from 1854 to 1987, adjust newmole monitors
 ## >>chng 12 apr 09, from 1987 to 1662, update backbround CR to Indiolo_07 (8x larger)
 ## >>chng 12 jun 08, from 1662 to 1831, Updates to grain chemistry
-monitor nzone 1831 
+## >>chng 21 nov 02, from 1831 to 1914, fix bug with overresolving CS in isoseq
+monitor nzone 1914 
 ##
 ## >>chng 05 mar 28, from 24 to 14 impr mol converg
 ## >>chng 05 apr 10, from 14 to 16, chng ci conv
@@ -489,7 +490,8 @@ monitor "HNC " 1652.90m  line intensity -5.271
 ## >>chng 13 jun 27, from -8.563 to -5.569, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -5.569 to -5.51, LAMDA update
-monitor "HCS+" 1755.88m  -5.51 line intensity
+## >>chng 21 nov 04, from -5.51 to -5.489, update co mole data
+monitor "HCS+" 1755.88m  -5.489 line intensity
 ## >>chng 13 jun 27, from -7.453 to -5.818, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 monitor "CS  " 3058.86m  -5.818 line intensity
@@ -502,27 +504,33 @@ monitor "CO  " 1300.05m  -4.708 line intensity
 ## >>chng 13 jun 27, from -6.149 to -4.189, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -4.189 to -4.168, LAMDA update
-monitor "CO  " 866.727m  -4.168 line intensity
+## >>chng 21 nov 04, from -4.168 to -4.194, update co mole data
+monitor "CO  " 866.727m  -4.194 line intensity
 ## >>chng 13 jun 27, from -6.177 to -3.843, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -3.843 to -3.819, LAMDA update
-monitor "CO  " 650.074m  -3.819 line intensity
+## >>chng 21 nov 04, from -3.819 to -3.848, update co mole data
+monitor "CO  " 650.074m  -3.848 line intensity
 ## >>chng 13 jun 27, from -6.485 to -3.595, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -3.595 to -3.569, LAMDA update
-monitor "CO  " 520.089m  -3.569 line intensity
+## >>chng 21 nov 04, from -3.569 to -3.601, update co mole data
+monitor "CO  " 520.089m  -3.601 line intensity
 ## >>chng 13 jun 27, from -6.954 to -3.416, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -3.416 to -3.386, LAMDA update
-monitor "CO  " 433.438m  -3.386 line intensity
+## >>chng 21 nov 04, from -3.386 to -3.421, update co mole data
+monitor "CO  " 433.438m  -3.421 line intensity
 ## >>chng 13 jun 27, from -7.48 to -3.287, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -3.287 to -3.256, LAMDA update
-monitor "CO  " 371.549m  -3.256 line intensity
+## >>chng 21 nov 04, from -3.256 to -3.293, update co mole data
+monitor "CO  " 371.549m  -3.293 line intensity
 ## >>chng 13 jun 27, from -8.049 to -3.203, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -3.203 to -3.169, LAMDA update
-monitor "CO  " 325.137m  -3.169 line intensity
+## >>chng 21 nov 04, from -3.169 to -3.209, update co mole data
+monitor "CO  " 325.137m  -3.209 line intensity
 ## >>chng 13 jun 27, from -7.522 to -4.446, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 monitor "^13CO" 906.599m  -4.446 line intensity

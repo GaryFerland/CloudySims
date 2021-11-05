@@ -58,7 +58,8 @@ monitor H2 column density 15.683
 ## >>chng 11 nov 16, from 12.36 to 12.12, adjust newmole monitors
 ## >>chng 21 apr 10, from 12.12 to 11.93, update chemistry and lamba
 ## >>chng 21 apr 16, from 11.93 to 11.97, remove bad UMIST reaction
-monitor CO column density 11.97
+## >>chng 21 nov 04, from 11.97 to 12.01, update mole co data
+monitor CO column density 12.01
 ## 
 ## >>chng 10 mar 03, from -7.43 to -7.327, enable all LAMDA and increase max num levels
 ## >>chng 11 nov 16, from -7.327 to -7.371, adjust newmole monitors
@@ -200,7 +201,8 @@ monitor "CO  " 866.727m  23.68 line intensity
 ## >>chng 14 aug 28, from 24 to 23.96, EleyRideal H2 formation
 ## >>chng 21 apr 10, from 23.96 to 23.77, update chemistry and lamba
 ## >>chng 21 apr 16, from 23.77 to 23.82, remove bad UMIST reaction
-monitor "CO  " 650.074m  23.82 line intensity
+## >>chng 21 nov 04, from 23.82 to 23.86, update mole co data
+monitor "CO  " 650.074m  23.86 line intensity
 ## >>chng 13 jun 27, from -6.485 to 23.91, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 23.91 to 23.87, EleyRideal H2 formation
@@ -234,7 +236,8 @@ monitor "CO  " 325.137m  22.26 line intensity
 ## >>chng 14 aug 28, from 22.29 to 22.26, EleyRideal H2 formation
 ## >>chng 21 apr 10, from 22.26 to 22.09, update chemistry and lamba
 ## >>chng 21 apr 16, from 22.09 to 22.13, remove bad UMIST reaction
-monitor "^13CO" 906.599m  22.13 line intensity
+## >>chng 21 nov 04, from 22.13 to 22.17, update mole co data
+monitor "^13CO" 906.599m  22.17 line intensity
 ## >>chng 13 jun 27, from -8.247 to 21.59, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 21.59 to 21.57, EleyRideal H2 formation

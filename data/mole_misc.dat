@@ -31,7 +31,8 @@ ArH+,H2=>Ar,H3+:hmrate:8.e-10:0:0 #Schilke et al. (2014)# GargiShaw 15thJune,202
 ArH+,CO=>Ar,HCO+:hmrate:1.25e-9:0:0 #Schilke et al. (2014)# GargiShaw 15thJune,2021
 ArH+,C=>Ar,CH+:hmrate:8.e-10:0:0 #Schilke et al. (2014)# GargiShaw 15thJune,2021
 ArH+,O=>Ar,OH+:hmrate:8.e-10:0:0 #Schilke et al. (2014)# GargiShaw 15thJune,2021
-ArH+,PHOTON=>Ar+,H:hmrate:4.2e-12:0:3.27 #Roueff et al. (2014)# GargiShaw 15thJune,2021
+#ArH+,PHOTON=>Ar+,H:hmrate:4.2e-12:0:3.27 #Roueff et al. (2014)# GargiShaw 15thJune,2021
+ArH+,PHOTON=>Ar+,H:th85rate:4.2e-12:0:3.27 #Roueff et al. (2014)# updated by GS on 18thOct2021, rate corrected to th85rate
 #
 # test these!
 #"ArH+,H=>H2+,Ar:hmrate:2.3e-9 * SAHA * 3.635e-5 * pow(300.,-1.50),-1.50,0 

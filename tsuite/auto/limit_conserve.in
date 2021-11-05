@@ -484,7 +484,8 @@ monitor pressure error < 0.003 ##this is ratio of std dev to mean
 ## >>chng 10 dec 25, from 422 to 624, include chemistry
 ## >>chng 12 mar 09, from 625 to 654, several renorms due to mid 5960s revisions
 ## >>chng 14 mar 26, from 654 to 624, Move oxygen data to stout and chianti files
-monitor nzone 624
+## >>chng 21 nov 04, from 624 to 741, update mole co data
+monitor nzone 741
 ##
 ## >>chng 03 aug 28, from 25 to 20 Nick Abel co fix, let go to end
 ## >>chng 03 dec 08, from < 20 to < 15, chng zones, ots
