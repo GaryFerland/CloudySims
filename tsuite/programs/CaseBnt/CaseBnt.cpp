@@ -24,10 +24,10 @@ int main( void )
 
 		// one of these must be selected
 		string chName;
-		int lgH1do = false;
+		int lgH1do = true;
 		if( lgH1do )
 			chName = "H1";
-		int lgHe1do = true;
+		int lgHe1do = false;
 		if( lgHe1do )
 			chName = "He1";
 		int lgHe2do = false;
@@ -105,11 +105,23 @@ int main( void )
 				/* an incident continuum must be specified to get the code
 				 * to run at all - not very important since we will set
 				 * the gas temperature */
-				if( lgHe1do )
+				if( lgH1do )
+				{
+					cdRead( "laser 2 Ryd" );
+					cdRead( "database levels H-like element Hydrogen resolved 10" );
+					cdRead( "database levels H-like element Hydrogen collapsed 200" );
+				}
+				else if( lgHe1do )
 				{
 					cdRead( "laser 2 Ryd" );
 					cdRead( "database levels He-like element Helium resolved 10" );
 					cdRead( "database levels He-like element Helium collapsed 200" );
+				}
+				else if( lgHe2do )
+				{
+					cdRead( "laser 5 Ryd" );
+					cdRead( "database levels H-like element Helium resolved 10" );
+					cdRead( "database levels H-like element Helium collapsed 200" );
 				}
 				else
 				{
