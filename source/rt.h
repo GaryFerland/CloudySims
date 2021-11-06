@@ -214,7 +214,6 @@ struct t_rt : public module {
 
 	/** flag saying that stark broadening is enabled, set false with no stark */
 	bool lgStarkON;
-
 };
 
 extern t_rt rt;
@@ -232,6 +231,9 @@ enum
 	LINE_CONT_SHIELD_RODGERS,
 	LINE_CONT_SHIELD_INTEGRAL
 };
+
+/** Minimum optical depth for masers (max in absolute value) */
+extern const double MASER_OPTDEP_MIN;
 
 void prt_trans_opc_debug( const char *LineGroup, const TransitionProxy &t );
 

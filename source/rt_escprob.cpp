@@ -289,7 +289,7 @@ double RTesc_lya(
 	return escla_v;
 }
 
-/*esc_PRD escape probability radiative transfer for incomplete redistribution */
+/*esc_PRD escape probability radiative transfer from both sides of the cloud */
 inline double esc_2side_base(
 	double tau, 
 	double tau_out, 
@@ -345,6 +345,7 @@ inline double esc_2side_base(
 	return escgrd_v;
 }
 
+/*esc_PRD escape probability radiative transfer for incomplete (partial) redistribution */
 double esc_PRD(double tau, 
 					double tau_out, 
 					double damp )
@@ -478,7 +479,6 @@ double esca0k2(double taume)
 	return esca0k2_v;
 }
 
-/*escmase escape probability for negative (masing) optical depths */
 STATIC void FindNeg( void )
 {
 	DEBUG_ENTRY( "FindNeg()" );
@@ -517,6 +517,7 @@ STATIC void FindNeg( void )
 	return;
 }
 
+/*escmase escape probability for negative (masing) optical depths */
 STATIC double escmase(double tau)
 {
 	double escmase_v;
@@ -530,14 +531,14 @@ STATIC double escmase(double tau)
 	{
 		escmase_v = 1. - tau*(0.5 - tau/6.);
 	}
-	else if( tau > -30. )
+	else if( tau > MASER_OPTDEP_MIN )
 	{
 		escmase_v = (1. - exp(-tau))/tau;
 	}
 	else
 	{
-		fprintf( ioQQQ, " DISASTER escmase called with 2big tau%10.2e the limit is -30\n",
-		  tau  );
+		fprintf( ioQQQ, " DISASTER escmase called with 2big tau%10.2e the limit is %.0f\n",
+				tau, MASER_OPTDEP_MIN  );
 		fprintf( ioQQQ, " This is zone number%4ld\n", nzone );
 		FindNeg();
 		ShowMe();
@@ -995,7 +996,7 @@ double RT_LineWidth(const TransitionProxy& t, realnum DopplerWidth)
 	}
 	/* do not evaluate line width if quite optically thin - will be dominated
 	 * by noise in this case */
-	if( tau <1e-3 )
+	if( tau < 1e-3 )
 		return 0;
 
 	t.Emis().damp() = t.Emis().dampXvel() / DopplerWidth;
@@ -1053,7 +1054,6 @@ double RT_LineWidth(const TransitionProxy& t, realnum DopplerWidth)
 
 		/* we want full width, not half width */
 		RT_LineWidth_v *= 2.;
-
 	}
 	else
 	{

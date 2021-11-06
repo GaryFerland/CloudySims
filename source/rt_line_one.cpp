@@ -102,7 +102,7 @@ STATIC void RT_line_escape(
 	DEBUG_ENTRY( "RT_line_escape()" );
 
 	/* a runaway maser */
-	if( t.Emis().TauIn() < -30. )
+	if( t.Emis().TauIn() < MASER_OPTDEP_MIN )
 	{
 		fprintf( ioQQQ, "PROBLEM RT_line_escape called with large negative "
 			"optical depth, zone %.2f, aborting.\n",

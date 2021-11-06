@@ -2,6 +2,10 @@
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cddefines.h"
 #include "rt.h"
+
+
+const double MASER_OPTDEP_MIN = -30.;
+
 t_rt rt;
 
 void t_rt::zero()
