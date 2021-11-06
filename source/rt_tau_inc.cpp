@@ -86,10 +86,11 @@ void RT_tau_inc(void)
 
 	/* prevent maser runaway */
 	rt.dTauMase = 0;
-	rt.mas_species = 0;
-	rt.mas_ion = 0;
+	rt.mas_species = "";
 	rt.mas_hi = 0;
 	rt.mas_lo = 0;
+
+	string species = "";
 
 	static vector<realnum> DopplerWidth(LIMELM);
 	for (long nelem=ipHYDROGEN; nelem < LIMELM; ++nelem)
@@ -108,6 +109,9 @@ void RT_tau_inc(void)
 			/* this is the parent ion, for HI lines, is 1, 
 			 * for element He is 1 for He-like (HeI) and 2 for H-like (HeII) */
 			int ion = nelem+1-ipISO;
+			species = makeChemical( nelem, ion );
+			string speciesLy = "LymanLine " + species; 
+
 			/* do not evaluate in case where trivial parent ion */
 			if( ion <=dense.IonHigh[nelem] && dense.xIonDense[nelem][ion] > dense.density_low_limit )
 			{
@@ -116,8 +120,8 @@ void RT_tau_inc(void)
 					// SatelliteLines are indexed by lower level
 					for( long ipLo=0; ipLo < iso_sp[ipISO][nelem].numLevels_local; ipLo++ )
 					{
-						RT_line_one_tauinc(SatelliteLines[ipISO][nelem][ipSatelliteLines[ipISO][nelem][ipLo]], ipISO, nelem, -1, ipLo, 
-							 DopplerWidth[nelem] );
+						RT_line_one_tauinc(SatelliteLines[ipISO][nelem][ipSatelliteLines[ipISO][nelem][ipLo]],
+							species, -1, ipLo, DopplerWidth[nelem] );
 					}
 				}
 
@@ -129,10 +133,11 @@ void RT_tau_inc(void)
 							continue;
 
 						/* actually do the work */
-						RT_line_one_tauinc(iso_sp[ipISO][nelem].trans(ipHi,ipLo), ipISO, nelem, ipHi, ipLo, 
-							DopplerWidth[nelem] );
+						RT_line_one_tauinc(iso_sp[ipISO][nelem].trans(ipHi,ipLo),
+							species, ipHi, ipLo, DopplerWidth[nelem] );
 					}
 				}
+
 				/* these are the extra Lyman lines, use all lines so
 				 * totals are correct as attribution may change */
 				for( long ipHi=2; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
@@ -141,8 +146,7 @@ void RT_tau_inc(void)
 					(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
 
 					/* actually do the work */
-					RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, ipHi,
-						DopplerWidth[nelem] );
+					RT_line_one_tauinc(*tr, speciesLy, -1, ipHi, DopplerWidth[nelem] );
 				}
 			}
 		}
@@ -160,7 +164,12 @@ void RT_tau_inc(void)
 		 * these are already counted in iso sequences */
 		if( (*TauLine2[i].Hi()).IonStg() < (*TauLine2[i].Hi()).nelem()+1-NISO )
 		{
-			RT_line_one_tauinc(TauLine2[i], -3, -3, -3, i, DopplerWidth[(*TauLine2[i].Hi()).nelem()-1] );
+			species = "Level2 " +
+				makeChemical( (*TauLine2[i].Hi()).nelem()-1,
+						(*TauLine2[i].Hi()).IonStg()-1 );
+
+			RT_line_one_tauinc(TauLine2[i], species, -1, i,
+						DopplerWidth[(*TauLine2[i].Hi()).nelem()-1] );
 		}
 	}
 
@@ -174,18 +183,29 @@ void RT_tau_inc(void)
 		UTALines[i].Emis().PopOpc() = dense.xIonDense[(*UTALines[i].Hi()).nelem()-1][(*UTALines[i].Hi()).IonStg()-1];
 		(*UTALines[i].Lo()).Pop() = dense.xIonDense[(*UTALines[i].Hi()).nelem()-1][(*UTALines[i].Hi()).IonStg()-1];
 		(*UTALines[i].Hi()).Pop() = 0.;
-		RT_line_one_tauinc(UTALines[i], -4 , -4 , -4 , i, DopplerWidth[(*UTALines[i].Hi()).nelem()-1] );
+
+		species = "UTA " +
+			makeChemical( (*UTALines[i].Hi()).nelem()-1,
+					(*UTALines[i].Hi()).IonStg()-1 );
+
+		RT_line_one_tauinc(UTALines[i], species, -1 , i,
+					DopplerWidth[(*UTALines[i].Hi()).nelem()-1] );
 
 		//	prt_trans_opc_debug( "UTA", UTALines[i] );
 	}
 
-	/* all hyper fine structure lines  */
+	/* all hyper fine structure lines */
 	for( size_t i=0; i < HFLines.size(); i++ )
 	{
 		if( ! dense.lgElmtOn[ (*HFLines[i].Hi()).nelem()-1 ] )
 			continue;
 
-		RT_line_one_tauinc(HFLines[i] , -5 , -5 , -5 , i, DopplerWidth[(*HFLines[i].Hi()).nelem()-1] );
+		species = "HFS " +
+			makeChemical( (*HFLines[i].Hi()).nelem()-1,
+					(*HFLines[i].Hi()).IonStg()-1 );
+
+		RT_line_one_tauinc(HFLines[i], species, -1, i,
+					DopplerWidth[(*HFLines[i].Hi()).nelem()-1] );
 	}
 
 	/* increment optical depth for the H2 molecule */
@@ -197,20 +217,26 @@ void RT_tau_inc(void)
 	{
 		if( dBaseSpecies[ipSpecies].lgActive )
 		{
+			if( dBaseSpecies[ipSpecies].lgMolecular )
+				species = dBaseSpecies[ipSpecies].chLabel;
+			else
+				spectral_to_chemical( species, dBaseSpecies[ipSpecies].chLabel );
 			realnum DopplerWidth = GetDopplerWidth( dBaseSpecies[ipSpecies].fmolweight );
+
 			for (TransitionList::iterator tr=dBaseTrans[ipSpecies].begin(); 
-				  tr != dBaseTrans[ipSpecies].end(); ++tr)
+				tr != dBaseTrans[ipSpecies].end(); ++tr)
 			{	
 				int ipHi = (*tr).ipHi();
 				if (ipHi >= dBaseSpecies[ipSpecies].numLevels_local || (*tr).ipCont() <= 0)
 					continue;
 				int ipLo = (*tr).ipLo();
 
-				RT_line_one_tauinc( *tr, -10, ipSpecies, ipHi, ipLo, DopplerWidth );
+				// indices incremented to refer to levels in original data files
+				RT_line_one_tauinc( *tr, species, ipHi+1, ipLo+1, DopplerWidth );
 			}
 		}
 	}
-	
+
 	if( trace.lgTrace && trace.lgOptcBug )
 	{
 		fprintf( ioQQQ, " RT_tau_inc updated optical depths:\n" );

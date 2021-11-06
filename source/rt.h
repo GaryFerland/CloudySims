@@ -87,20 +87,18 @@ void RT_OTS_ChkSum(
 	long int ipPnt);
 
 /**RT_line_one_tauinc increment optical depths for all heavy element lines, zone by zone 
-\param t
-\param mas_species
-\param mas_ion
-\param mas_hi
-\param mas_lo
-\param DopplerWidth
+\param t           [in] transition to process
+\param mas_species [in] species that mased
+\param mas_hi      [in] upper level in maser
+\param mas_lo      [in] lower level in maser
+\param DopplerWidth[in] Doppler velocity width
 */
 void RT_line_one_tauinc(
 	const TransitionProxy & t ,
-	long int mas_species,
-	long int mas_ion,
-	long int mas_hi,
-	long int mas_lo,
-	realnum DopplerWidth);
+	const string &mas_species,
+	const long int mas_hi,
+	const long int mas_lo,
+	const realnum DopplerWidth);
 
 /**RT_tau_init set initial outward optical depths at start of first iteration */
 void RT_tau_init(void);
@@ -211,7 +209,8 @@ struct t_rt : public module {
 	bool lgMaserCapHit;
 
 	/** these identify the species that had a major maser, for debugging */
-	long int mas_species , mas_ion , mas_hi , mas_lo;
+	string mas_species;
+	long int mas_hi , mas_lo;
 
 	/** flag saying that stark broadening is enabled, set false with no stark */
 	bool lgStarkON;

@@ -13,11 +13,10 @@
 
 void RT_line_one_tauinc(const TransitionProxy&  t ,
 	/* following four are flags to generate info if some species has extreme maser */
-	long int maser_flag_species,
-	long int maser_flag_ion,
-	long int maser_flag_hi,
-	long int maser_flag_lo,
-	realnum DopplerWidth )
+	const string &maser_flag_species,
+	const long int maser_flag_hi,
+	const long int maser_flag_lo,
+	const realnum DopplerWidth )
 {
 	DEBUG_ENTRY( "RT_line_one_tauinc()" );
 
@@ -144,7 +143,6 @@ void RT_line_one_tauinc(const TransitionProxy&  t ,
 	{
 		rt.dTauMase = dTau_total;
 		rt.mas_species = maser_flag_species;
-		rt.mas_ion = maser_flag_ion;
 		rt.mas_hi = maser_flag_hi;
 		rt.mas_lo = maser_flag_lo;
 		if( rt.dTauMase < -1. )

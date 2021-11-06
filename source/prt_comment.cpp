@@ -2164,7 +2164,7 @@ void PrtComment(void)
 		notein(chLine);
 	}
 
-	/* following set true in adius_next if maser cap set dr */
+	/* following set true in radius_next if maser cap set dr */
 	if( rt.lgMaserSetDR )
 	{
 		sprintf( chLine, "  !Line maser set zone thickness in some zones." );

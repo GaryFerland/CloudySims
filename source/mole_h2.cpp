@@ -429,7 +429,7 @@ void diatomics::H2_RT_tau_inc(void)
 	for( TransitionList::iterator tr = trans.begin(); tr != rad_end; ++tr )
 	{
 		ASSERT( (*tr).ipCont() > 0 );
-		RT_line_one_tauinc( *tr,-9, -9, -9, -9, doppler_width );
+		RT_line_one_tauinc( *tr, "H2", -9, -9, doppler_width );
 	}
 
 	return;

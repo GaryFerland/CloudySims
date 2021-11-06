@@ -81,7 +81,7 @@ public:
 		m_map.insert(pair<const double,drChoiceItem>(val,drChoiceItem(str,flag)));
 	}
 	void clear()
-		{
+	{
 		m_map.clear();
 	}
 	const_iterator begin() const
@@ -168,18 +168,12 @@ void radius_next()
 
 	if( rt.dTauMase < -0.01 )
 	{
-		/* maser so powerful, must limit inc in tay
+		/* maser so powerful, must limit inc in tau
 		 * >>chng 96 aug 08, from 0.3 to 0.1 due to large maser crash */
 		double drHMase = radius.drad*MAX2(0.1,-0.2/rt.dTauMase);
 		ostringstream oss;
-		//
-		// NB NB -- DON'T ALTER THIS STRING, setting rt.lgMaserSetDR below keys from this!
-		// No longer true:
-		// >>chng 13 oct 01 rjrw take logical pointer argument for
-		// >>optional flag to be set if selected
-		//
-		oss << "H maser dTauMase=" << scientific << setprecision(2) << rt.dTauMase << " ";
-		oss << rt.mas_species << " " << rt.mas_ion << " " << rt.mas_hi << " " << rt.mas_lo;
+		oss << rt.mas_species << " maser, levels " << rt.mas_hi << " " << rt.mas_lo;
+		oss << ", dTauMase=" << scientific << setprecision(2) << rt.dTauMase << " ";
 		drChoice.insert( drHMase, oss.str(), &rt.lgMaserSetDR );
 	}
 
