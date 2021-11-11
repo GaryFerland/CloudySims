@@ -13,8 +13,7 @@ and \citet{Henney2007} describe first applications.
 These calculations begin by doing several iterations to compute the static
 structure.
 This establishes the optical depth scale that is used in later
-calculations.
-The number of static calculations is 3 by default and is
+calculations. The number of static calculations is 3 by default and is
 reset with the \cdCommand{set dynamics relax} command.
 
 Advective terms are included in the balance equations by adding
@@ -203,15 +202,54 @@ hden 5
 stop zone 1
 \end{verbatim}
 
-In this example only one radiation field is given and the flux of
-hydrogen-ionizing photons varies with time.  A constant time step of $10^7$~s is used.
-The \cdCommand{time} command is followed by the series of lines giving the
-brightness of the incident radiation field as a function of time.
+In this example, only one radiation field is given and the flux of
+hydrogen-ionizing photons varies with time.  Right after the \cdCommand{time} command, a constant time step of $10^7$~s is used and the stopping time is also determined. These are followed by a series of lines giving the
+brightness of the incident radiation field as a function of time, as an age---brightness table. Each of the lines in this table starts
+with \cdCommand{age} but these characters are ignored. They are only present to improve readability.
+
+
+Because of the static structures calculated at the beginning, it is critical to always start the scale of brightness by 
+zero. It means  that age zero always goes with the scale zero, meaning  there are no changes in the brightness at the beginning. It gives the ions enough time to reach the 
+equilibrium with the continuum. The first non-zero age but be bigger than the time step, otherwise, the code will pass this non-zero age without considering its scale.  
+
 The series ends with the line
-starting with \cdCommand{end}.
-Each of the lines in the age---brightness table starts
-with \cdCommand{age} but these characters are ignored.
-They are only present to improve readability.
+starting with \cdCommand{end}. The dynamical calculations will be terminated when one of these three conditions happens:
+1- all of the determined iterations are completed.
+2- the stop time defined by the \cdCommand{time} command is reached.
+3- the last defined age is reached.
+
+One can have more than one radiation field and still use the time command. In such cases there are two possibilities: In some cases, only one of the radiation fields is changing and in other cases, all of the radiation fields are changing. The following example is a simple case of having two lasers  (luminosity case) in which one of them varies with time :
+
+\begin{verbatim}
+# set the lasers, their brightness  and the distance
+laser 1 Ryd
+luminosity 43 total time
+laser 4 Ryd
+luminosity 43 total 
+radius 20
+# set a limit of 500 time steps.  The calculations will actually
+# stop when we reach total age
+iterate 500 times
+# the time command sets a time step of 1e5 s and a stop time of 1e7 s.
+# This requires ten time steps.  We set 500 iterations above but the
+# calculation will actually stop when the age of 1e7 s is reached.
+# The time command is followed by a table giving the log of the age and the
+# log of the brightness of the energy source relative to its initial value.
+# The table ends with the line saying "end of times"
+time steps=5 s stop at 7 s
+age = 0 scale = 0
+age = 5.3 scale = 0
+age = 5.35 scale = 1
+age = 5.5 scale = 1
+age = 7 scale = 1
+end of times
+# commands to set hydrogen density, only done one zone
+hden 5
+stop zone 1
+\end{verbatim}
+
+In the above example, the code will apply the time variations on the first laser and then will add it to the constant laser. It is also possible to use the time keyword for both of the lasers. In such cases there will be still only one  age?brightness table and it will be applied to both radiation fields with time command. 
+
 
 \subsection{Time-step size increment}
 \begin{verbatim}
@@ -256,7 +294,7 @@ scale factor.
 It is also possible to give a time-step scale factor saying
 how to increase the time step.
 
-If any are missing then the time step on the command is used and is kept
+If any of the time steps are missing then the time step on the command is used and is kept
 constant.
 The table ends with a line saying \cdCommand{end}.
 If the optional end
