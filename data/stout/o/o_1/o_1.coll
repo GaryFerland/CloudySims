@@ -13,7 +13,21 @@ CS ELECTRON	3	5	2.45E-03	2.97E-03	4.20E-03	6.05E-03	8.03E-03	1.09E-02	1.61E-02
 CS ELECTRON	1	6	2.34E-02	6.86E-02	8.82E-02	1.02E-01	1.11E-01	1.22E-01	1.43E-01
 CS ELECTRON	2	6	1.41E-02	4.11E-02	5.29E-02	6.14E-02	6.68E-02	7.31E-02	8.57E-02
 CS ELECTRON	3	6	4.69E-03	1.37E-02	1.76E-02	2.05E-02	2.23E-02	2.44E-02	2.86E-02
+
+#   2021.05.07. File created by Antonio García Muñoz (antonio.garciamunoz@cea.fr; tonhingm@gmail.com)
+#   Upsilon_lu Effective Collision Strengths for O i^* + e <--> O i^** + e excitation
+#   Based on calculations reported by Barklem 2007, A&A 462, 781-788, 
+#   as posted on https://github.com/barklem/public-data
+#   For transitions involving fine-structure states at 0.0000000, 0.0196224 and 0.0281416 eV,
+#   the quoted Upsilon_lu consider partitioning according to their statistical weights.
+
+# original stout data
 CS ELECTRON	1	7	2.41E-03	4.34E-03	4.88E-03	5.49E-03	6.25E-03	7.86E-03	1.44E-02
+#2021 Garcia corrected
+CS ELECTRON	1	7	6.03E-02	1.09E-01	1.22E-01	1.37E-01	1.56E-01	1.94E-01	3.28E-01
+CS ELECTRON	2	7	3.62E-02	6.52E-02	7.32E-02	8.21E-02	9.34E-02	1.16E-01	1.97E-01
+CS ELECTRON	3	7	1.21E-02	2.17E-02	2.44E-02	2.74E-02	3.11E-02	3.88E-02	6.57E-02
+
 CS ELECTRON	1	8	3.13E-03	6.33E-03	8.40E-03	1.04E-02	1.23E-02	1.59E-02	2.81E-02
 CS ELECTRON	1	9	5.22E-03	1.06E-02	1.40E-02	1.73E-02	2.05E-02	2.65E-02	4.68E-02
 CS ELECTRON	1	10	7.31E-03	1.48E-02	1.96E-02	2.43E-02	2.87E-02	3.72E-02	6.55E-02
