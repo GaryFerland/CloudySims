@@ -1,14 +1,23 @@
 190101   # magic number for this file 
 #
-# 21 11 12, Giulio Del Zanna told us that "2-12 and 2-14 transitions are inverted in the CLOUDY CE file for the Bray+ data.
+# 21 11 12, Giulio Del Zanna told us that:
+# "The 2-12 and 2-14 transitions are inverted in the CLOUDY CE file for the Bray+ data.
 # That should have caused a small effect on the 3188 and 4713 A lines at higher densities.
 # I checked all the other transitions and they looked OK. "
+#
+# NB NB
+#   The indices Giulio reported are off by 1 compared to Cloudy's
+#   (C-scale vs physics scale), so it was expected that transitions
+#   1-11 and 1-13 would be affected.
+#   Instead, Fran Guzman found that it was transitions 1-13 and 1-15
+#   that were affected -- they were swapped; 1-11 is OK.
 #
 # 19 07 27, Giulio Del Zanna found problem in splitting of 2 ^P_J collision strenghts.  Fixed by Fran Guzman.
 #
 # this file contains atomic data from
 # >>refer He 1	cs	Bray, I., Burgess, A., Fursa, D.V., & Tully, J.A.,
 # >>refercon 2000, A&AS, 146, 481-498
+# >>refercon https://ui.adsabs.harvard.edu/abs/2000A%26AS..146..481B/abstract
 # for transitions from ground and n=2 levels, except that, since they include no data from 2 1P, we use the work of
 # >>refer He 1	cs	Sawey, P.M.J., & Berrington, K.A. 1993, ADNDT 55, 81
 #
