@@ -21,11 +21,11 @@
 #include "parser.h"
 #include "service.h"
 #include "species.h"
+#include "dense.h"
+#include "continuum.h"
 
 /* check for keyword UNITS on line, then scan wavelength or energy units if present */
 STATIC const char* ChkUnits(Parser &p);
-
-STATIC bool specBandsExists(const string filename, const string speciesLabel );
 
 inline void saveXSPEC(unsigned int option)
 {
@@ -467,6 +467,50 @@ void ParseSave(Parser& p)
 			fprintf( ioQQQ, " Sorry.\n" );
 			cdEXIT(EXIT_FAILURE);
 		}
+	}
+
+	else if( p.nMatch("ARRA") && p.nMatch( "LEVE" ) )
+	{
+		strcpy( save.chSave[save.nsave], "IMAG" );
+
+		string species = chLabel;
+
+		if( species == "" )
+		{
+			fprintf( ioQQQ, "Empty species label: ''\n" );
+			cdEXIT( EXIT_FAILURE );
+		}
+
+		save.img_matrix.lgImgRates = true;
+		save.img_matrix.setSpecies( species );
+		if( p.nMatch( "FITS" ) )
+			save.img_matrix.lgFITS = true;
+		else if( p.nMatch( " PPM" ) )
+			save.img_matrix.lgFITS = false;
+		else
+		{
+			fprintf( ioQQQ, "Please use either the FITS or PPM keywords\n" );
+			cdEXIT( EXIT_FAILURE );
+		}
+
+		if( p.nMatch( "ITER" ) )
+			save.img_matrix.iteration = p.getNumberCheck( "iter" );
+		if( p.nMatch( "ZONE" ) )
+			save.img_matrix.zone = p.getNumberCheck( "zone" );
+
+		// NB NB
+		//
+		// This command generates images for debugging purposes,
+		// and it is executed near the call to the linear algebra
+		// function that solves the rate equations for level
+		// populations
+		//
+		// Because there is no output file for save_do.cpp to
+		// write in, we have to leave the function immediately,
+		// or a file will be created with the given species as
+		// its name
+		//
+		return;
 	}
 
 	else if( p.nMatch("AVER") )
@@ -2080,20 +2124,22 @@ void ParseSave(Parser& p)
 			//	printf("fname = '%s'\t spec = '%s'\n",
 			//		chSecondFilename.c_str(), speciesLabel.c_str());
 
-			/* Unique band file and species */
-			if( ! specBandsExists( chSecondFilename, speciesLabel ) )
-			{
-				save_species_bands thisSpBand;
-				thisSpBand.filename = chSecondFilename;
-				thisSpBand.speciesLabel = speciesLabel;
-				save.specBands.push_back( thisSpBand );
-			}
+			addUniqueSpeciesBand( chSecondFilename, speciesLabel );
+
+			// check whether intrinsic or emergent line emissivity
+			save.lgEmergent[save.nsave] = false;
+			if( p.nMatch("EMER") )
+				save.lgEmergent[save.nsave] = true;
 		}
-		else if (p.nMatch( "COLUMN" ) )
+
+		/* second keyword appears as both 'density' and 'densities'
+		 * in the test suite */
+		else if (p.nMatch( "COLUMN" ) && p.nMatch( "DENSIT" ) )
 		{
 			/* column densities*/
 			strcpy( save.chSaveArgs[save.nsave], "COLU" );
 		}
+
 		else if( p.nMatch( "CONT" ) )
 		{
 			// Add species to vector only when not present
@@ -2768,22 +2814,4 @@ STATIC const char* ChkUnits( Parser &p )
 		val = StandardEnergyUnit(" RYD ");
 	}
 	return val;
-}
-
-STATIC bool specBandsExists( const string filename, const string speciesLabel )
-{
-	bool exists = false;
-
-	for( vector<save_species_bands>::iterator it = save.specBands.begin();
-		it != save.specBands.end(); ++it )
-	{
-		if( (*it).filename == filename &&
-			(*it).speciesLabel == speciesLabel )
-		{
-			exists = true;
-			break;
-		}
-	}
-
-	return exists;
 }

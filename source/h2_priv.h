@@ -587,6 +587,8 @@ private:
 
 	/** print Matrix input to solver */
 	bool lgPrtMatrix;
+	/** create image for Matrix input to solver */
+	bool lgImgMatrix;
 
 public:
 	/* Read LTE cooling per molecule */

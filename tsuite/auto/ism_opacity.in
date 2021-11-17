@@ -28,6 +28,9 @@ save total opacity last "ism_opacity.opc" units kev
 ## >>chng 13 nov 04, from -24.89 to -24.92, remove Lyman line TauIn hack
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
 monitor line "H  1" 4861.32A intensity -24.92
 ## 
 ## >>chng 01 feb 20, from 9070 to 10075 when default ISM O abundance changed
@@ -38,6 +41,9 @@ monitor temperature "H+" 1.059e+04
 ## >>chng 15 oct 14, from -24.86 to -24.88, update Ne 3 cs to McLaughlin+11
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
 monitor line "ca b" 4861.32A intensity -24.88
 ## 
 ## >>chng 01 feb 20, from 1.461 to 1.227 when default ISM O abundance changed

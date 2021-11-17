@@ -248,7 +248,7 @@ void InitDefaultsPreparse( void )
 	* this says to use Zeippen 1982 [OII] transition probabilities */
 	dense.lgAsChoose[ipOXYGEN][1] = false;
 
-	abund.lgAbnSolar = false;
+	abund.lgAbnReference = false;
 	abund.lgAbundancesSet = false;
 
 	/* option to turn off an element */
@@ -256,7 +256,6 @@ void InitDefaultsPreparse( void )
 	{
 		/* set of scale factors for changing abundances with elements command */
 		abund.ScaleElement[nelem] = 1.;
-		abund.solar[nelem] = abund.SolarSave[nelem];
 
 		// default scale factors for SET DIELECTRONIC RECOMBINATION KLUDGE SCALE
 		ionbal.DR_mean_scale[nelem] = 1.;
@@ -654,7 +653,7 @@ void InitDefaultsPreparse( void )
 	/* line overlap opacity, turn off with no fine opacity command */
 	rfield.lgOpacityFine = true;
 
-	pseudoContDef.wlLo = 1000;
+	pseudoContDef.wlLo = 1000.;
 	pseudoContDef.wlHi = 7000.;
 	pseudoContDef.nBins = 1000;
 

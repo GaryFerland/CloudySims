@@ -80,6 +80,9 @@ monitor line "H  1" 1215.67A luminosity 8.609
 ## >>chng 16 aug 07, from 3.247 to 5.083, Fran bug fix
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
 monitor line "H  1" 4861.32A    5.083 error 0.1
 ##
 ## >>chng 01 jul 04, from 23.1 to 21.5 diffuse fields
@@ -115,6 +118,9 @@ monitor line "H  1" 4861.32A    5.083 error 0.1
 ## >>chng 16 aug 07, from 21.71 to 24.53, Fran bug fix
 ## >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
+## >>chng 21 mar 16, wl from 6562.80A to 6562.82A, update NIST energies
+## >>chng 21 apr 08, wl from 6562.82A to 6562.83A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 6562.83A to 6562.80A, revert to PvH energies for H
 monitor line "H  1" 6562.80A    24.53 error 0.1 
 ##
 ## >>chng 01 jul 04, from 68.1 to 62.6 diffuse fields
@@ -480,7 +486,8 @@ monitor line "he 1" 6678.15A   0.2473 error 0.1
 ## >>chng 16 nov 14, from 0.5199 to 0.5557, Reintegration of RydDep after several bug fixes
 ## >>chng 16 dec 15, from 0.5557 to 0.5194, fix bug on Hlike Percival annd Richard collisions
 ## >>chng 20 aug 25, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
-monitor line "He 2" 4685.70A    0.5194
+## >>chng 21 apr 08, wl from 4685.70A to 4685.68A, up 1-e energies to np
+monitor line "He 2" 4685.68A    0.5194
 ##
 ## >>chng 01 jul 04, from 4.272 to 4.607 diffuse fields
 ## >>chng 03 apr 11, from 4.607 to 4.237 PopOpc bug
@@ -493,7 +500,8 @@ monitor line "He 2" 4685.70A    0.5194
 ## >>chng 11 aug 05, from 3.839 to 4.057, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 13 jan 13, from 4.057 to 4.247, Pelec_esc change
 ## >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
-monitor line "He 2" 1640.40A    4.247
+## >>chng 21 apr 08, wl from 1640.40A to 1640.41A, up 1-e energies to np
+monitor line "He 2" 1640.41A    4.247
 ##
 ## >>chng 01 jul 04, from 0.776 to 0.849 diffuse fields
 ## >>chng 02 may 09, from 0.849 to 0.761 elec scat escape

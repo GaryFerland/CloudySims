@@ -79,7 +79,7 @@ void cdEmis(
 
 static const int NHOLDCOMMENTS = 100;
 
-static const realnum Hbeta_WavLen = 4861.32f;
+extern const realnum Hbeta_WavLen;
 
 /** this struc is different from following since they are only pointer here, will be allocated 
  * to form a large array after number of lines is counted, but this is the final form */

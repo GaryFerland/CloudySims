@@ -49,7 +49,8 @@ monitor line luminosity "blnd"  1666 -3.696 error 0.1  ##total O III] 1666
 ## >>chng 19 mar 01, from -0.1831 to -0.7269, remove recombination, etc, components from blends (#415)
 ## >>chng 19 jun 28, from -0.7269 to -0.7517, reintegrate iso_collisions branch
 ## >>chng 20 jan 13, from -0.7517 to -0.7317, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor line luminosity "blnd"  1909 -0.7317  ##total of sum of CIII] 1908.73+
+## >>chng 21 nov 02, from -0.7317 to -0.756, fix bug with overresolving CS in isoseq
+monitor line luminosity "blnd"  1909 -0.756  ##total of sum of CIII] 1908.73+
 ##
 ## >>chng 13 jul 24, wl from 1216 to 1215.68A, increased wl precision to 6 sig. fig.
 ## >>chng 16 aug 07, from 6.035 to 6.06, Fran bug fix
@@ -62,10 +63,16 @@ monitor line luminosity "H  1"  1215.67A 6.06 ##total Hydrogen Lyman-alpha 1215.
 ## >>chng 16 aug 07, from 6.344 to 6.374, Fran bug fix
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
 monitor line luminosity "H  1"  4861.32A 6.374 ##total of sum of both Si IV comp
 ##
 ## >>chng 18 jan 13, from 7.854 to 6.355, first run
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
 monitor line luminosity "Inwd" 4861.32A 6.355, 
 ##
 ##total HeII Balmer-a 1640
@@ -74,7 +81,9 @@ monitor line luminosity "Inwd" 4861.32A 6.355,
 ## >>chng 16 nov 14, from 3.801 to 3.661, Reintegration of RydDep after several bug fixes
 ## >>chng 19 jun 28, from 3.661 to 3.768, reintegrate iso_collisions branch
 ## >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
-monitor line luminosity "he 2"  1640.40A 3.768 err 0.1
+## >>chng 21 apr 08, wl from 1640.40A to 1640.41A, up 1-e energies to np
+## >>chng 21 nov 02, from 3.768 to 3.721, fix bug with overresolving CS in isoseq
+monitor line luminosity "he 2"  1640.41A 3.721 err 0.1
 ##
 ## >>chng 13 apr 23, from 1.216 to 1.237, move Cr, Sc, Na to Stout, rm cool_xxx, enable all other Chianti ions of these elements
 ## >>chng 13 nov 19, from 1.237 to 1.205, fix CT bug in mole_eval_balance

@@ -1,25 +1,28 @@
 20190102 # magic number
-# Give level energies in cm^-1 for each H-like ion.
+# Give level energies in cm^-1 for each ion.
 # Each line gives n, l, S, J, energy.
 # The last entry for each ion is the ionization potential.
 # It is marked with negative quantum numbers. The ionization
 # potential MUST be the last entry for a given element!
-# It is used as a sentinel to switch to the next element.
 #
-# These data were calculated using the ATLL r123.
+# NIST data for n<=10 were downloaded using ADM.
 #
- 1 -1 -1 -1 0.000000
-# 20 08 17 adjust this edge away from H I edge
-# 2 -1 -1 -1 329182.3
+# NB NB NB  np energy used for shell n up to n=10
+#
+# The remaining data were calculated using the ATLL r123
+#
+ 1 -1 -1 -1 0 0.0002
+# 21 03 12 adjust this edge away from H I edge
+# 2 -1 -1 -1 329183.198361 2.60342e-06
  2 -1 -1 -1 329181.7029
- 3 -1 -1 -1 390142.4
- 4 -1 -1 -1 411477.95
- 5 -1 -1 -1 421353.16
- 6 -1 -1 -1 426717.44
- 7 -1 -1 -1 429951.916
- 8 -1 -1 -1 432051.211
- 9 -1 -1 -1 433490.479
-10 -1 -1 -1 434519.977
+ 3 -1 -1 -1 390141.981602 9.42809e-07
+ 4 -1 -1 -1 411477.610510033 3.77124e-07
+ 5 -1 -1 -1 421352.928494433 1.88562e-07
+ 6 -1 -1 -1 426717.280435 1.49071e-06
+ 7 -1 -1 -1 429951.805769 1.49071e-06
+ 8 -1 -1 -1 432051.131829533 7.45356e-07
+ 9 -1 -1 -1 433490.419835233 7.45356e-07
+10 -1 -1 -1 434519.932255933 6.7082e-07
 11 -1 -1 -1 435281.689
 12 -1 -1 -1 435861.0327
 13 -1 -1 -1 436311.8982
@@ -60,4 +63,23 @@
 48 -1 -1 -1 438718.388832
 49 -1 -1 -1 438726.084600
 50 -1 -1 -1 438733.323255
--1 -1 -1 -1 438908.878911
+-1 -1 -1 -1 438908.8785      0.0002     
+#
+# 
+# Bibliography:
+# -------------
+# PUB     Refcode: L3620c107 on NIST
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3620&comment_code=c107&amp;element=He&amp;spectr_charge=2&amp;ref=3620&amp;type=E
+# PUBCON    Title: Energy Levels of One-Electron Atoms
+# PUBCON  Authors: G. W. Erickson
+# PUBCON  Journal: J. Phys. Chem. Ref. Data 6, 831–869 (1977)
+# PUBCON      DOI: https://doi.org/10.1063/1.555557
+# PUBCON  Comment: The energy level values were derived from Erickson's theoretical values of the total energies by scaling them to the CODATA-2006 values of the fundamental constants, as given by Kramida et al. 2008       
+# 
+# PUB     Refcode: L7188c95 on NIST
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7188&comment_code=c95&amp;element=He&amp;spectr_charge=2&amp;ref=7188&amp;type=E
+# PUBCON    Title: The Lamb Shift in Hydrogen-like Atoms, 1 ≤ Z ≤ 110
+# PUBCON  Authors: W. R. Johnson, and G. Soff
+# PUBCON  Journal: At. Data Nucl. Data Tables 33, 405–446 (1985)
+# PUBCON      DOI: https://doi.org/10.1016/0092-640X(85)90010-5
+# PUBCON  Comment: The energy values reported in this paper have been scaled to the CODATA 2006 values of fundamental constants as given by Mohr et al. 2008 .      

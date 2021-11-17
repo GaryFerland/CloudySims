@@ -74,13 +74,15 @@ monitor line "Ne 9"  74.3603A 0.11
 ## >>chng 13 jul 30, wl from 78.3037A to 78.2564A, increased wl precision to 6 sig. fig.
 ## >>chng 13 aug 2, wl from 78.2564A to 78.2092A, now using middle multiplet wl
 ## >>chng 18 feb 20, updated spectral label from "Ne 9" 78.2092A to "Blnd" 78.2596A, update He-like triplet labels and wl
-monitor line "Blnd"  78.2596A 0.26
+## >>chng 21 mar 16, wl from 78.2596A to 78.2594A, update NIST energies
+monitor line "Blnd"  78.2594A 0.26
 ##
 ## the entire 2^3S - 2^3P multiplet
 ## >>chng 13 jul 25, wl from 1266A to 1266.26A, increased wl precision to 6 sig. fig.
 ## >>chng 13 jul 30, wl from 1266.26A to 1272.81A, increased wl precision to 6 sig. fig.
 ## >>chng 18 feb 20, updated spectral label from "TOTL" 1272.81A to "Blnd" 1259.54A, update He-like triplet labels and wl
-monitor line "Blnd"  1259.54A  0.0231
+## >>chng 21 mar 16, wl from 1259.54A to 1259.58A, update NIST energies
+monitor line "Blnd"  1259.58A  0.0231
 # 
 # helike_ne.in
 # class limit 

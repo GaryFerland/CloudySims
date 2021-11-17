@@ -25,8 +25,8 @@ void ParseAbundances(Parser &p)
 
 	DEBUG_ENTRY( "ParseAbundances()" );
 
-	/* abundances no longer solar */
-	abund.lgAbnSolar = false;
+	/* abundances no longer set at reference value */
+	abund.lgAbnReference = false;
 
 	if( p.nMatch("STAR") )
 	{
@@ -124,7 +124,7 @@ void ParseAbundances(Parser &p)
 		 * although Hydrogen's abundance will still be set to
 		 * whatever value is found in the code. This is just in
 		 * case it is assumed */
-		abund.solar[ipHYDROGEN] = 1.0;//The value found in abund.solar[0] before this point is found to be 1.0 as well
+		abund.ReferenceAbun[ipHYDROGEN] = 1.0;//The value found in abund.ReferenceAbun[0] before this point is found to be 1.0 as well
 
 		string chLine;
 		while( read_whole_line( chLine, ioDATA ) )
@@ -180,8 +180,8 @@ void ParseAbundances(Parser &p)
 					lgFound = true;
 					i = 1;
 					bool lgEOL;
-					abund.solar[nelem] = FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
-					if( abund.solar[nelem] <= 0. )
+					abund.ReferenceAbun[nelem] = FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
+					if( abund.ReferenceAbun[nelem] <= 0. )
 					{
 						fprintf(ioQQQ, "PROBLEM in ABUNDANCES: negative abundance not allowed.\n");
 						fprintf(ioQQQ, "Non-positive abundance found on this line: %s\n", chLine.c_str());
@@ -210,14 +210,14 @@ void ParseAbundances(Parser &p)
 			}
 		}
 
-		//Normalizes all elements in abund.solar relative to the quantity of Hydrogen
-		ASSERT( abund.solar[0]>0. );
+		//Normalizes all elements in abund.ReferenceAbun relative to the quantity of Hydrogen
+		ASSERT( abund.ReferenceAbun[0]>0. );
 		for(int nelem=0; nelem<LIMELM; nelem++)
 		{
-			abund.solar[nelem] /= abund.solar[ipHYDROGEN];
+			abund.ReferenceAbun[nelem] /= abund.ReferenceAbun[ipHYDROGEN];
 			if( lgPrint && dense.lgElmtOn[nelem] )
 				fprintf(ioQQQ,"%s\t%.3e\t%.3f\n",elementnames.chElementName[nelem],
-						abund.solar[nelem] , log10(SDIV(abund.solar[nelem])) );
+						abund.ReferenceAbun[nelem] , log10(SDIV(abund.ReferenceAbun[nelem])) );
 		}
 		fclose( ioDATA );
 		return;
@@ -239,7 +239,7 @@ void ParseAbundances(Parser &p)
 				absav[0] = exp10(absav[0]);
 
 			for( i=1; i < LIMELM; i++ )
-				abund.solar[i] = (realnum)absav[0];
+				abund.ReferenceAbun[i] = (realnum)absav[0];
 			return;
 		}
 
@@ -300,22 +300,22 @@ void ParseAbundances(Parser &p)
 		{
 			/* entered as log of number rel to hydrogen */
 			for( i=0; i < npSolar; i++ )
-				abund.solar[ipSolar[i]] = (realnum)exp10(absav[i]);
+				abund.ReferenceAbun[ipSolar[i]] = (realnum)exp10(absav[i]);
 		}
 		else
 		{
 			/* scale factors relative to solar */
 			for( i=0; i < npSolar; i++ )
-				abund.solar[ipSolar[i]] *= (realnum)absav[i];
+				abund.ReferenceAbun[ipSolar[i]] *= (realnum)absav[i];
 		}
 
 		/* check whether the abundances are reasonable */
 		for( i=1; i < LIMELM; i++ )
 		{
-			if( abund.solar[i] > 0.2 )
+			if( abund.ReferenceAbun[i] > 0.2 )
 			{
 				fprintf( ioQQQ, " Is an abundance of %.3e relative to H reasonable for %2.2s?\n",
-					abund.solar[i], elementnames.chElementSym[i] );
+					abund.ReferenceAbun[i], elementnames.chElementSym[i] );
 			}
 		}
 		return;

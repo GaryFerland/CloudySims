@@ -34,11 +34,13 @@ save performance ".per"
 #
 ## >>chng 19 jul 20, -27.72, first run
 ## >>chng 20 aug 26, from -27.72 to -27.47, He-like Fe collisions strengths updated to Si+2017
-monitor line luminosity "Fe25"    1.85040A -27.47
+## >>chng 21 nov 02, from -27.47 to -27.45, fix bug with overresolving CS in isoseq
+monitor line luminosity "Fe25"    1.85040A -27.45
 #
 ## >>chng 19 jul 20, -27.81, first run
 ## >>chng 20 aug 26, from -27.81 to -27.88, He-like Fe collisions strengths updated to Si+2017
-monitor line luminosity "Fe25"    1.85541A -27.88
+## >>chng 21 mar 16, wl from 1.85541A to 1.85540A, update NIST energies
+monitor line luminosity "Fe25"    1.85540A -27.88
 #
 ## >>chng 19 jul 20, -27.94, first run
 ## >>chng 20 aug 26, from -27.94 to -27.91, He-like Fe collisions strengths updated to Si+2017
@@ -53,13 +55,15 @@ monitor line luminosity "Fe25"    1.57456A -28.52
 #
 ## >>chng 19 jul 20, -28.84, first run
 ## >>chng 19 aug 06, from -28.84 to -28.82, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
-monitor line luminosity "Fe25"    1.57317A -28.82
+## >>chng 21 nov 02, from -28.82 to -28.65, fix bug with overresolving CS in isoseq
+monitor line luminosity "Fe25"    1.57317A -28.65
 #
 ## >>chng 19 jul 20, -28.95, first run
 monitor line luminosity "Fe25"    1.49513A -28.95
 #
 ## >>chng 19 jul 20, -29.23, first run
-monitor line luminosity "Fe25"    1.49460A -29.23
+## >>chng 21 nov 02, from -29.23 to -29.13, fix bug with overresolving CS in isoseq
+monitor line luminosity "Fe25"    1.49460A -29.13
 #
 ## >>chng 19 jul 20, -28.03, first run
 ## >>chng 20 aug 25, wl from 1.78177A to 1.77982A, switched from computed to tabulated energies for H and He isoseq
@@ -67,15 +71,21 @@ monitor line luminosity "Fe26"    1.77982A -28.03
 #
 ## >>chng 19 jul 20, -28.91, first run
 ## >>chng 20 aug 25, wl from 1.50337A to 1.50273A, switched from computed to tabulated energies for H and He isoseq
+## >>chng 21 mar 16, wl from 1.50273A to 1.50248A, update NIST energies
+## >>chng 21 apr 08, wl from 1.50248A to 1.50273A, up 1-e energies to np
 monitor line luminosity "Fe26"    1.50273A -28.91
 #
 ## >>chng 19 jul 20, -29.43, first run
 ## >>chng 19 aug 06, from -29.43 to -29.4, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 22, wl from 1.42541A to 1.42505A, switched from computed to tabulated energies for H and He isoseq
+## >>chng 21 mar 16, wl from 1.42505A to 1.42485A, update NIST energies
+## >>chng 21 apr 08, wl from 1.42485A to 1.42505A, up 1-e energies to np
 monitor line luminosity "Fe26"    1.42505A -29.4
 #
 ## >>chng 19 jul 20, -29.74, first run
 ## >>chng 20 aug 22, wl from 1.39200A to 1.39177A, switched from computed to tabulated energies for H and He isoseq
+## >>chng 21 mar 16, wl from 1.39177A to 1.39164A, update NIST energies
+## >>chng 21 apr 08, wl from 1.39164A to 1.39177A, up 1-e energies to np
 monitor line luminosity "Fe26"    1.39177A -29.74
 #
 ## >>chng 19 jul 20, -29.98, first run

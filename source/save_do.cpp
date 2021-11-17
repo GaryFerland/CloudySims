@@ -631,6 +631,20 @@ void SaveDo(
 				}
 			}
 
+			else if( strcmp(save.chSave[ipPun],"IMAG") == 0 )
+			{
+				// NB NB
+				//
+				// This command generates images for debugging purposes,
+				// and it is executed near the call to the linear algebra
+				// function that solves the rate equations for level
+				// populations
+				//
+				// Here we do nothing
+				//
+				continue;
+			}
+
 			else if( strcmp(save.chSave[ipPun],"MONI") == 0 )
 			{
 				if( lgLastOnly )
@@ -2256,34 +2270,20 @@ void SaveDo(
 				else if( strcmp(save.chSave[ipPun],"HYDr") == 0 )
 				{
 					/* save hydrogen recc - recombination cooling for AGN3 */
-					TempChange(2500.f, false);
-					while( phycon.te <= 20000. )
+					vector<double> Temps { 5000., 10000., 20000. };
+					for( auto &t: Temps )
 					{
-						double r1;
-						double ThinCoolingCaseB; 
+						TempChange( t, false );
 
-						r1 = HydroRecCool(1,0);
-						ThinCoolingCaseB = exp10(((-25.859117 + 
-						  0.16229407*phycon.telogn[0] + 
-						  0.34912863*phycon.telogn[1] - 
-						  0.10615964*phycon.telogn[2])/(1. + 
-						  0.050866793*phycon.telogn[0] - 
-						  0.014118924*phycon.telogn[1] + 
-						  0.0044980897*phycon.telogn[2] + 
-						  6.0969594e-5*phycon.telogn[3])))/phycon.te;
+						double rtot = iso_RRCoef_Te(0, 0, phycon.te,
+										iso_sp[ipH_LIKE][0].numLevels_max -
+										iso_sp[ipH_LIKE][0].nCollapsed_max);
+						double rgrd = iso_RRCoef_Te(0, 0, phycon.te, 0);
 
-						fprintf( save.params[ipPun].ipPnunit, " %10.2e\t", 
-							phycon.te);
-						fprintf( save.params[ipPun].ipPnunit, " %10.2e\t", 
-							(r1+ThinCoolingCaseB)/(BOLTZMANN*phycon.te) );
-
-						fprintf( save.params[ipPun].ipPnunit, " %10.2e\t", 
-							r1/(BOLTZMANN*phycon.te));
-
-						fprintf( save.params[ipPun].ipPnunit, " %10.2e\n", 
-							ThinCoolingCaseB/(BOLTZMANN*phycon.te));
-
-						TempChange(phycon.te *2.f , false);
+						fprintf( save.params[ipPun].ipPnunit, " %3.1f\t", phycon.te);
+						fprintf( save.params[ipPun].ipPnunit, " %10.3e\t", rtot );
+						fprintf( save.params[ipPun].ipPnunit, " %10.3e\t", rgrd);
+						fprintf( save.params[ipPun].ipPnunit, " %10.3e\n", rtot-rgrd);
 					}
 					/* must exit since we have disturbed the solution */
 					fprintf(ioQQQ , "save agn now exits since solution is disturbed.\n");
@@ -3350,7 +3350,8 @@ void SaveDo(
 					if( lgLastOnly )
 						SaveSpeciesBands( ipPun,
 							save.chSaveSpecies[ipPun][0],
-							save.SpeciesBandFile[ipPun] );
+							save.SpeciesBandFile[ipPun],
+							save.lgEmergent[ipPun] );
 				}
 				else if( strcmp( save.chSaveArgs[ipPun], "OPTD" ) == 0 )
 				{

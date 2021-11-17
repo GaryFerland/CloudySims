@@ -56,6 +56,7 @@ set the initial stepsize, limit the range of a physical parameter,
 set the convergence tolerance, etc. See Section~\ref{sec:controlling_optimizer} for more details.
 
 \section{Commands with vary option}
+\label{sec:CommandsVaryOption}
 
 This section lists all commands which have the \cdCommand{vary} option.
 Table \ref{tab:CommandWithVaryOption} lists all commands, and
@@ -71,13 +72,13 @@ Command& Quantity varied& Min& Max& Inc.\\
 \hline
 abundances starburst& metallicity& $-3$& $\log(35.5)$& 0.2\\
 AGN& Big Bump temperature& $-\infty$& $+\infty$& 0.5\\
-species H-like Lyman pumping scale & line blocking scale factor& $-\infty$& $+\infty$& 0.1\\
 blackbody& temperature& $-\infty$& $+\infty$& 0.5\\
 bremsstrahlung& temperature& $-\infty$& $+\infty$& 0.5\\
 constant pressure set& pressure& $-\infty$& $+\infty$& 0.1\\
 constant temperature& temperature& $\log(2.8)$& 10& 0.1\\
 coronal equilibrium& temperature& $\log(2.8)$& 10& 0.1\\
 cosmic rays& cosmic ray density& $-\infty$& $+\infty$& 0.2\\
+database H-like Lyman pumping scale & line blocking scale factor& $-\infty$& $+\infty$& 0.1\\
 distance& distance& $-\infty$& $+\infty$& 0.3\\
 dlaw& first dlaw parameter& $-\infty$& $+\infty$& 0.5\\
 eden& electron density& $-\infty$& 20 & 0.1\\
@@ -95,6 +96,7 @@ ionization parameter& ionization parameter& $-\infty$& $+\infty$& 0.5\\
 luminosity& luminosity of source& $-\infty$& $+\infty$& 0.5\\
 magnetic field \ldots& magnetic field& $-\infty$& $+\infty$& 0.5\\
 metals& metallicity& $-\infty$& $+\infty$& 0.5\\
+metals deplete Jenkins 2009 Fstar 0.5 & Fstar & 0 & 1 & 0.1 \\
 phi(H)& photon flux& $-\infty$& $+\infty$& 0.5\\
 power law& see below& var& var& 0.2\\
 Q(H)& no.\ of ionizing photons& $-\infty$& $+\infty$& 0.5\\

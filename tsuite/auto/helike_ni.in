@@ -40,7 +40,8 @@ save monitors "helike_ni.asr"
 ## >>chng 10 aug 12, from -18.34 to -23.38, fix botches related to r4125; star botches from recent continuum mesh changes
 ## >>chng 11 feb 05, from -23.38 to -18.35, due to r4622, which reverts much of r4125 and addresses that fix in a better way
 ## >>chng 13 jul 24, wl from 1.604A to 1.60362A, increased wl precision to 6 sig. fig.
-monitor line luminosity "Ni27" 1.60362A -18.35
+## >>chng 21 mar 16, wl from 1.60362A to 1.60360A, update NIST energies
+monitor line luminosity "Ni27" 1.60360A -18.35
 ## 
 #
 # helike_ni.in

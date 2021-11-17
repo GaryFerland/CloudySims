@@ -52,6 +52,9 @@ save dr last "ism_hot_brems.dr"
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 19 aug 06, from -5.014 to -4.969, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
 monitor line luminosity "H  1" 4861.32A -4.969
 ##
 ## >>chng 01 mar 17, all lines to luminosity instead of rel intensity

@@ -59,11 +59,17 @@ save wind "dynamics_orion_flow.wnd" last
 ## >>chng 13 jul 24, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
 monitor line "H  1" 4861.32A intensity -11.350
 ##
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+## >>chng 21 mar 17, wl from 4861.32A to 4861.33A, update NIST energies
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
 monitor line "CaBo" 4861.32A 1.0
 ##
 ## >>chng 05 oct 01, from 0.103 to 0.082, RP update He levels
@@ -83,9 +89,11 @@ monitor line "Ca B" 5875.64A 0.127
 ## 
 ## >>chng 13 jul 24, wl from 3889 to 3888.63A, increased wl precision to 6 sig. fig.
 ## >>chng 16 aug 07, from 0.0801 to 0.104, Marios bug fixes
-monitor line "He 1" 3888.63A 0.104
+## >>chng 21 mar 16, wl from 3888.63A to 3888.64A, update NIST energies
+monitor line "He 1" 3888.64A 0.104
 ## >>chng 13 jul 24, wl from 3889 to 3888.63A, increased wl precision to 6 sig. fig.
-monitor line "Ca B" 3888.63A 0.105
+## >>chng 21 mar 16, wl from 3888.63A to 3888.64A, update NIST energies
+monitor line "Ca B" 3888.64A 0.105
 ## 
 ## >>chng 13 jul 24, wl from 7065 to 7065.18A, increased wl precision to 6 sig. fig.
 ## >>chng 13 jul 30, wl from 7065.18A to 7065.22A, increased wl precision to 6 sig. fig.
@@ -182,7 +190,8 @@ monitor velocity -0.1362
 ## >>chng 14 apr 07, from 31 to 23.94, move H/C out of ConvBase loop
 ## >>chng 14 jun 11, from 23.94 to 25.68, BUGFIX 14 jan 05, N to external databases, did not include N I, Mg II excited state photo
 ## >>chng 15 oct 14, from 25.68 to 24.19, update DR suppression in r10716
-monitor itrzn 24.19 error 0.05
+## >>chng 21 mar 22, error from 0.05 to 0.10, drift after update to NIST energies & ionization potentials
+monitor itrzn 24.19 error 0.10
 ##
 ## >>chng 06 jul 06, from 900 to 1000 sim goes much deeper, CO chem now
 ## includes dynamics but no cross talk between CO and H2 in H2 part

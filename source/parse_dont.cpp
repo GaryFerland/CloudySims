@@ -221,12 +221,8 @@ void ParseDont(Parser &p )
 	/* no collisional ionization */
 	else if( p.nMatch("COLL") && p.nMatch("IONI") )
 	{
-		fixit("This variable doesn't do anything!");
-
 		/* turn off collisional ionization */
 		atmdat.lgCollIonOn = false;
-		fprintf( ioQQQ, " This option is not working.\n Sorry.\n" );
-		cdEXIT(EXIT_FAILURE);
 	}
 
 	else if( p.nMatch("LEVE") )
@@ -364,6 +360,12 @@ void ParseDont(Parser &p )
 	{
 		/* no electron scattering contribution to line escape probs */
 		rt.lgElecScatEscape = false;
+	}
+
+	else if( p.nMatch("ABSO") && p.nMatch("ESCA"))
+	{
+		/* NO ABSORPTION ESCAPE do not count opacity contribution to line escape probs - photon loss, actually */
+		rt.lgAbsorLineEscape = false;
 	}
 
 	else if( p.nMatch("SCAT") && p.nMatch("INTEN"))

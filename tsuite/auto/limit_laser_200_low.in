@@ -31,7 +31,9 @@ save monitors "limit_laser_200_low.asr" last
 ## >>chng 08 mar 22, from -1.563 to -1.684 bugfix r1879
 ## >>chng 12 nov 08, from -1.684 to -1.45, fix e-,H2 dissociation rate
 ## >>chng 13 nov 19, from -1.45 to -1.498, fix CT bug in mole_eval_balance
-monitor carbon ionization 2 -1.498 error 0.1
+## >>chng 21 sep 11, from -1.498 to -1.068, LAMDA update
+## >>chng 21 nov 04, from -1.068 to -1.642, update mole co data
+monitor carbon ionization 2 -1.642 error 0.1
 ## 
 monitor carbon ionization 3 -4.664
 # 

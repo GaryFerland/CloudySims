@@ -3,6 +3,16 @@ One of these files will be used if the command
 abundances "filename.abn"
 appears.
 
+These abn files may also specify grains, although grains are not included by default.
+default.abn specifies our default composition.  default-reference.abn is a copy of that file.
+
+The *.dpl files specify depletion factors that account for the elements that are used to build grains.
+These may be parsed by the
+metals deplete "filename.dpl"
+or 
+metals deplete Jenkins 2009 Fstar=0.5 "filename.dpl"
+commands.  The default file, described below, will be used if no file appears between the quotes.
+
 ==================================================
 default "solar" composition
 default.abn gives the default composition used if no others are specified.
@@ -20,6 +30,17 @@ of the code.
 
 Other .abn files - see the comments within the file for more details.
 The file name gives a good indication of its contents
+
+=======================================================
+default depletion files
+
+metals deplete
+by default will read the ISM_CloudyClassic.dpl files.  The format should be clear.
+If the element is not specified then its depletion is set to unity.
+
+metals deplete Jankins2009 Fstar
+reads the ISM_Jenkins09_Tab4.dpl file.  If this file is updated or replaced then
+its current format must be maintained.
 
 =======================================================
 
@@ -45,6 +66,13 @@ of 1.
 All elements heavier than hydrogen are turned off before the abn files are read.
 An element is turned on if it appears in the abn file.
 If an element is not included in the *.abn file it will not be included in the calculation.
+
+==========================================================
+
+Chamani Gunasekera created the spreadsheet from Table 4 of Jenkins 2009,
+https://ui.adsabs.harvard.edu/abs/2009ApJ...700.1299J/abstract
+S does not have data in Table 4 so Chamani used the information
+provided in Section 9
 
 ==========================================================
 

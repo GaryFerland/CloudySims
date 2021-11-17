@@ -314,11 +314,15 @@ first line of the continuum output.
 {\setverbatimfontsize{\tiny}
 \begin{verbatim}
                                                   Gas Phase Chemical Composition
-        H :  0.0000  He: -1.0223  C : -3.5229  N : -4.1549  O : -3.3979  Ne: -4.2218  Mg: -5.5229  Si: -5.3979  S : -5.0000
-                                               Cl: -7.0000  Ar: -5.5229  Fe: -5.5229
+        H :  0.0000  He: -1.0159  Li: -9.4456  Be:-10.7418  B :-10.0360  C : -3.9385  N : -4.1002  O : -3.4622  F : -7.9927
+        Ne: -4.0501  Na: -6.3298  Mg: -5.0788  Al: -7.4597  Si: -5.9133  P : -7.0617  S : -4.7399  Cl: -7.0675  Ar: -5.3799
+        K : -7.3439  Ca: -9.5901  Sc:-11.1518  Ti: -9.0969  V :-10.1537  Cr: -8.5017  Mn: -7.7212  Fe: -6.4597  Co: -9.0200
+                                               Ni: -7.7100  Cu: -8.6596  Zn: -7.9022 
 
                                                     Grain Chemical Composition
-                                  C : -3.6259  O : -3.9526  Mg: -4.5547  Si: -4.5547  Fe: -4.5547
+                                  C : -3.5553  O : -3.8821  Mg: -4.4841  Si: -4.4841  Fe: -4.4841
+                                                   Sum Atoms Depleted: -3.2828
+                                                    Depletion/Grains-1: 2.65%
 
                                                   Number of grains per hydrogen
                                             Carbonaceous: -14.166  silicate: -14.103
@@ -331,6 +335,11 @@ numbers give the gas-phase abundances of the elements, the abundances
 contained in grains, and the number of each type of grains per unit hydrogen.
 The numbers are the logs of the number densities of the elements, relative
 to the gas-phase hydrogen abundance of unity (so, 0 on the log scale).
+The sum of all atoms depleted with the \cdCommand{metals deplete} command is
+given in \verb|Sum Atoms Depleted|.
+This is not guaranteed to agree with the atoms depleted with \cdCommand{grains}
+command.
+The percent offset is reported in \verb|Depletion/Grains-1|.
 Only the active elements are included (those turned off with the \cdCommand{elements off} command are not printed).
 If grains are not present then the second
 two blocks are not printed.
