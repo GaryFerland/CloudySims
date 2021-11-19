@@ -58,19 +58,6 @@ STATIC void OpacityCreateReilMan(long int low,
   long int *ipop, 
   const char *chLabl);
 
-/*OpacityCreatePowerLaw generate array of cross sections using a simple power law fit */
-STATIC void OpacityCreatePowerLaw(
-	/* lower energy limit on continuum mesh */
-	long int ilo, 
-	/* upper energy limit on continuum mesh */
-	long int ihi, 
-	/* threshold cross section */
-	double cross, 
-	/* power law index */
-	double s, 
-	/* pointer to opacity offset where this starts */
-	long int *ip);
-
 /*ofit compute cross sections for all shells of atomic oxygen */
 STATIC void ofit(double e, 
 	  realnum opart[]);
@@ -466,14 +453,14 @@ void OpacityCreateAll()
 	return;
 }
 /*OpacityCreatePowerLaw generate array of cross sections using a simple power law fit */
-STATIC void OpacityCreatePowerLaw(
+void OpacityCreatePowerLaw(
 	/* lower energy limit on continuum mesh */
 	long int ilo, 
 	/* upper energy limit on continuum mesh */
 	long int ihi, 
 	/* threshold cross section */
 	double cross, 
-	/* power law index */
+	/* power law index with implicit negative sign, H-like s=3 */
 	double s, 
 	/* pointer to opacity offset where this starts */
 	long int *ip)

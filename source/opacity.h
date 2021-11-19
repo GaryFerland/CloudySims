@@ -30,6 +30,26 @@ void OpacityAdd1Subshell(
 	realnum abundance,
 	char chStat );
 
+
+/*OpacityCreatePowerLaw generate array of cross sections using a simple power law fit
+\param ilo lower energy limit on continuum mesh
+\param ihi upper energy limit on continuum mesh
+\param cross threshold cross section
+\param s power law index
+\param *ip pointer to opacity offset where this starts
+*/
+void OpacityCreatePowerLaw(
+	/* lower energy limit on continuum mesh */
+	long int ilo,
+	/* upper energy limit on continuum mesh */
+	long int ihi,
+	/* threshold cross section */
+	double cross,
+	/* power law index */
+	double s,
+	/* pointer to opacity offset where this starts */
+	long int *ip);
+
 /**OpacityAddTotal derive total opacity for this position */
 void OpacityAddTotal(void);
 
