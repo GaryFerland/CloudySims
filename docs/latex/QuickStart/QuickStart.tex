@@ -1445,6 +1445,21 @@ either the \cdCommand{background} or \cdCommand{table HM} commands.
 Pairs of intensity and shape commands should be kept together.  They
 may be misinterpreted if they are not.
 
+\subsection{The coarse and fine continua, and lines}
+
+\Cloudy\ solves the line and continuum radiative transfer in three different spaces.
+The \emph{coarse continuum} is the broad-band spectrum shown in plots 
+like Figure \ref{fig:PN_spectrum}.
+The \emph{fine continuum} is used to map line opacities onto the continuum and was designed
+to fully account for line overlap.
+Finally, the line transfer is solved separately and self consistently, 
+using information from the coarse and fine continua.
+Each emergent line is mapped into a single bin in the coarse continuum.
+
+Although the coarse continuum shows the line intensities, that is not its purpose.
+The family of \cdCommand{save line list} commands is the most helpful way 
+to extract line predictions.
+
 \section{Other commands}
 \label{sec:OtherCommands}
 
