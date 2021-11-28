@@ -236,10 +236,13 @@ The following shows some examples of optimizing molecular and state column
 densities:
 \begin{verbatim}
 optimize column densities
-"H-"   < 17 # The H- column density is a limit
-"H2"   17.4 error =.001 # Match the H_2 column density exactly
-"H2+"  14.6 # The H2+ molecular ion
-"O11*" 16.3 # This is an excited level within the O^0 ground term
+"H-"      < 17 # The H- column density is a limit
+"H2"      17.4 error =.001 # Match the total H_2 column density exactly
+"H2+"     14.6 # The H2+ molecular ion
+"O11*"    16.3 # This is an excited level within the O^0 ground term
+"He+[2]"  16.3 # This selects just one level from the He+ ion
+"CO[2]"   16.3 # This is a level in the CO molecule
+"CO[1:3]" 18.3 # This is the sum of levels 1,2,3 in the CO molecule
 end of column densities
 \end{verbatim}
 
