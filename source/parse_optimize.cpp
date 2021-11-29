@@ -304,31 +304,48 @@ STATIC void GetOptColDen(Parser &p )
 
 	while( !p.m_lgEOF )
 	{
-		/* order on line is element label (col 1-4), ionization stage, column density, err */
-		/* copy cap'd version of first 4 char of chCard to chColDen_label */
-		optimize.chColDen_label.push_back(elementnames.chElementNameShort[p.getElement()]);
-
-		/* now get the ion stage, this should be 1 for atom, up to element
-		 * number plus one */
-		long ion = nint(p.FFmtRead());
-		if( p.lgEOL() )
+		string chLabel;
+		if ( p.GetQuote( chLabel ) == 0 )
 		{
-			p.PrintLine( ioQQQ );
-			fprintf( ioQQQ, " The ionization stage MUST appear on this line.  Sorry.\n" );
-			cdEXIT(EXIT_FAILURE);
+			// Read a quote-delimited string, which will be interpreted
+			// by cdColm as a generic species label.  It would be better
+			// to do the lookup earlier, to validate the input and save
+			// repeated effort.
+			
+			/* order on line is species, column density, err */
+			optimize.chColDen_label.push_back(chLabel);
+			optimize.ion_ColDen.push_back(0);
 		}
-
-		/* the ion must be 1 or greater unless requesting a special,
-		 * like a molecule or excited state population, in which
-		 * case ion = 0
-		 * can't check on upper limit yet since have not resolved element name */
-		if( ion < 0 )
+		else
 		{
-			p.PrintLine( ioQQQ );
-			fprintf( ioQQQ, " An ionization stage of %ld does not make sense.  Sorry.\n", ion );
-			cdEXIT(EXIT_FAILURE);
+			/* order on line is element name (at least 4 characters), ionization stage, column density, err */
+			/* copy cap'd version of first 4 char of chCard to chColDen_label */
+			// The other branch can handle also ions, with the 'chemical'
+			// syntax '"H+"' (in quotes), rather than 'HYDR 2' below
+			optimize.chColDen_label.push_back(elementnames.chElementNameShort[p.getElement()]);
+			
+			/* now get the ion stage, this should be 1 for atom, up to element
+			 * number plus one */
+			long ion = nint(p.FFmtRead());
+			if( p.lgEOL() )
+			{
+				p.PrintLine( ioQQQ );
+				fprintf( ioQQQ, " The ionization stage MUST appear on this line.  Sorry.\n" );
+				cdEXIT(EXIT_FAILURE);
+			}
+			
+			/* the ion must be 1 or greater unless requesting a special,
+			 * like a molecule or excited state population, in which
+			 * case ion = 0
+			 * can't check on upper limit yet since have not resolved element name */
+			if( ion < 0 )
+			{
+				p.PrintLine( ioQQQ );
+				fprintf( ioQQQ, " An ionization stage of %ld does not make sense.  Sorry.\n", ion );
+				cdEXIT(EXIT_FAILURE);
+			}
+			optimize.ion_ColDen.push_back(ion);
 		}
-		optimize.ion_ColDen.push_back(ion);
 
 		optimize.ColDen_Obs.push_back( realnum(exp10(p.FFmtRead())) );
 		if( p.lgEOL() )
