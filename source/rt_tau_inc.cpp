@@ -47,8 +47,6 @@ void RT_tau_inc(void)
 	}
 
 	/* call RT_line_all one last time in this zone, to get fine opacities defined */
-	ASSERT( !conv.lgFirstSweepThisZone );
-	conv.lgLastSweepThisZone = true;
 	RT_fine_clear();
 	RT_line_all( RT_line_one_fine );
 

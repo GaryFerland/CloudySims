@@ -1226,10 +1226,6 @@ void ConvBase(
 	 * first attempt at solution in this iteration */
 	++conv.nTotalIoniz;
 
-	/* first sweep is over if this is not search phase */
-	if( !conv.lgSearch )
-		conv.lgFirstSweepThisZone = false;
-
 	if( save.lgTraceConvergeBase )
 	{
 		if( iteration > 1 && save.lgTraceConvergeBaseHash )
@@ -1250,39 +1246,35 @@ void UpdateUTAs()
 {
 	DEBUG_ENTRY( "UpdateUTAs()" );
 
-	/* only reevaluate this on first pass through on this zone */
-	if( conv.lgFirstSweepThisZone )
+	/* inner shell ionization */
+	for( long nelem=0; nelem< LIMELM; ++nelem )
 	{
-		/* inner shell ionization */
-		for( long nelem=0; nelem< LIMELM; ++nelem )
+		for( long ion=0; ion<nelem+1; ++ion )
 		{
-			for( long ion=0; ion<nelem+1; ++ion )
-			{
-				ionbal.UTA_ionize_rate[nelem][ion] = 0.;
-				ionbal.UTA_heat_rate[nelem][ion] = 0.;
-			}
+			ionbal.UTA_ionize_rate[nelem][ion] = 0.;
+			ionbal.UTA_heat_rate[nelem][ion] = 0.;
 		}
-		/* inner shell ionization by UTA lines */
-		/* this flag turned off with no UTA command */
-		for( size_t i=0; i < UTALines.size(); ++i )
+	}
+	/* inner shell ionization by UTA lines */
+	/* this flag turned off with no UTA command */
+	for( size_t i=0; i < UTALines.size(); ++i )
+	{
+		/* rateone is inverse lifetime of level against autoionization */
+		double rateone = UTALines[i].Emis().pump() * UTALines[i].Emis().AutoIonizFrac();
+		ionbal.UTA_ionize_rate[(*UTALines[i].Hi()).nelem()-1][(*UTALines[i].Hi()).IonStg()-1] += rateone;
+		/* heating rate in erg atom-1 s-1 */
+		ionbal.UTA_heat_rate[(*UTALines[i].Hi()).nelem()-1][(*UTALines[i].Hi()).IonStg()-1] += rateone*UTALines[i].Coll().heat();
 		{
-			/* rateone is inverse lifetime of level against autoionization */
-			double rateone = UTALines[i].Emis().pump() * UTALines[i].Emis().AutoIonizFrac();
-			ionbal.UTA_ionize_rate[(*UTALines[i].Hi()).nelem()-1][(*UTALines[i].Hi()).IonStg()-1] += rateone;
-			/* heating rate in erg atom-1 s-1 */
-			ionbal.UTA_heat_rate[(*UTALines[i].Hi()).nelem()-1][(*UTALines[i].Hi()).IonStg()-1] += rateone*UTALines[i].Coll().heat();
+			/* DEBUG OTS rates - turn this on to debug line, continuum or both rates */
+			/*@-redef@*/
+			enum {DEBUG_LOC=false};
+			/*@+redef@*/
+			if( DEBUG_LOC /*&& UTALines[i].nelem==ipIRON+1 && (UTALines[i].IonStg==15||UTALines[i].IonStg==14)*/ )
 			{
-				/* DEBUG OTS rates - turn this on to debug line, continuum or both rates */
-				/*@-redef@*/
-				enum {DEBUG_LOC=false};
-				/*@+redef@*/
-				if( DEBUG_LOC /*&& UTALines[i].nelem==ipIRON+1 && (UTALines[i].IonStg==15||UTALines[i].IonStg==14)*/ )
-				{
-					fprintf(ioQQQ,"DEBUG UTA %3i %3i %.3f %.2e %.2e %.2e\n",
-						(*UTALines[i].Hi()).nelem() , (*UTALines[i].Hi()).IonStg() , UTALines[i].WLAng() ,
-						rateone, UTALines[i].Coll().heat(), 
-						UTALines[i].Coll().heat()*dense.xIonDense[(*UTALines[i].Hi()).nelem()-1][(*UTALines[i].Hi()).IonStg()-1] );
-				}
+				fprintf(ioQQQ,"DEBUG UTA %3i %3i %.3f %.2e %.2e %.2e\n",
+					(*UTALines[i].Hi()).nelem() , (*UTALines[i].Hi()).IonStg() , UTALines[i].WLAng() ,
+					rateone, UTALines[i].Coll().heat(),
+					UTALines[i].Coll().heat()*dense.xIonDense[(*UTALines[i].Hi()).nelem()-1][(*UTALines[i].Hi()).IonStg()-1] );
 			}
 		}
 	}

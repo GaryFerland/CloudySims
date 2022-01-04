@@ -21,11 +21,8 @@
 void RT_line_all_escape( realnum *error )
 {
 	DEBUG_ENTRY( "RT_line_all_escape()" );
-	/* this flag says whether to update the line escape probabilities */
-	bool lgPescUpdate = conv.lgFirstSweepThisZone || conv.lgIonStageTrimed;
-	/* find Stark escape probabilities for hydrogen itself */
-	if( lgPescUpdate )
-		RT_stark();
+
+	RT_stark();
 
 	bool lgCheck = (error != NULL);
 	vector<realnum> oldPesc, oldPdest, oldPelec_esc;
@@ -86,9 +83,7 @@ void RT_line_all_escape( realnum *error )
 	/* note that pesc and dest are updated no matter what escprob logic we
 	 * specify, and that these are not updated if we have overrun the
 	 * optical depth scale.  only update here in that case */
-	// Logic must be kept consistent with mask for RT_line_escape in rt_line_one.cpp
-	if( lgTauGood( iso_sp[ipH_LIKE][ipHYDROGEN].trans(iso_ctrl.nLyaLevel[ipH_LIKE],0)) &&
-		  !conv.lgLastSweepThisZone )
+	if( lgTauGood( iso_sp[ipH_LIKE][ipHYDROGEN].trans(iso_ctrl.nLyaLevel[ipH_LIKE],0)) )
 	{
 		/*fprintf(ioQQQ,"DEBUG fe2 %.2e %.2e\n", hydro.dstfe2lya ,
 			hydro.HLineWidth);*/
@@ -272,59 +267,52 @@ void RT_line_all( linefunc line_one )
 		}
 	}
 
-	if (conv.lgFirstSweepThisZone || conv.lgLastSweepThisZone ) 
+	for( ipISO=ipH_LIKE; ipISO < NISO; ++ipISO )
 	{
-		for( ipISO=ipH_LIKE; ipISO < NISO; ++ipISO )
+		/* loop over all iso-electronic sequences */
+		for( nelem=ipISO; nelem < LIMELM; ++nelem )
 		{
-			/* loop over all iso-electronic sequences */
-			for( nelem=ipISO; nelem < LIMELM; ++nelem )
+			/* parent ion stage, for H is 1, for He is 1 for He-like and
+			 * 2 for H-like */
+			ion = nelem+1-ipISO;
+
+			/* element turned off */
+			if( !dense.lgElmtOn[nelem] )
+				continue;
+			/* need we consider this ion? */
+			if( ion <= dense.IonHigh[nelem] )
 			{
-				/* parent ion stage, for H is 1, for He is 1 for He-like and 
-				 * 2 for H-like */
-				ion = nelem+1-ipISO;
-				
-				/* element turned off */
-				if( !dense.lgElmtOn[nelem] )
-					continue;
-				/* need we consider this ion? */
-				if( ion <= dense.IonHigh[nelem] )
+				/* loop over all lines */
+				ipLo = 0;
+				/* these are the extra Lyman lines for the iso sequences */
+				/*for( ipHi=2; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )*/
+				/* only update if significant abundance and need to update fine opac */
+				if( dense.xIonDense[nelem][ion] > 1e-30 )
 				{
-					/* loop over all lines */
-					ipLo = 0;
-					/* these are the extra Lyman lines for the iso sequences */
-					/*for( ipHi=2; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )*/
-					/* only update if significant abundance and need to update fine opac */
-					if( dense.xIonDense[nelem][ion] > 1e-30 )
+					for( ipHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
 					{
-						for( ipHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
-						{
-							TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi];
-							/* we just want the population of the ground state */
-							(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
-							(*(*tr).Lo()).Pop() =
-								iso_sp[ipISO][nelem].st[ipLo].Pop();
-							
-							/* actually do the work */
-							line_one( *tr, true, 0.f, DopplerWidth[nelem]);
-						}
-					}					
-				}/* if nelem if ion <=dense.IonHigh */
-			}/* loop over nelem */
-		}/* loop over ipISO */
+						TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi];
+						/* we just want the population of the ground state */
+						(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
+						(*(*tr).Lo()).Pop() =
+							iso_sp[ipISO][nelem].st[ipLo].Pop();
 
-		/* this is a major time sink for this routine - only evaluate on last
-		 * sweep when fine opacities are updated since only effect of UTAs is
-		 * to pump inner shell lines and add to total opacity */
+						/* actually do the work */
+						line_one( *tr, true, 0.f, DopplerWidth[nelem]);
+					}
+				}
+			}/* if nelem if ion <=dense.IonHigh */
+		}/* loop over nelem */
+	}/* loop over ipISO */
 
-		for( size_t i=0; i < UTALines.size(); i++ )
-		{
-			/* these are not defined in cooling routines so must be set here */
-			UTALines[i].Emis().PopOpc() = dense.xIonDense[(*UTALines[i].Hi()).nelem()-1][(*UTALines[i].Hi()).IonStg()-1];
-			(*UTALines[i].Lo()).Pop() = dense.xIonDense[(*UTALines[i].Hi()).nelem()-1][(*UTALines[i].Hi()).IonStg()-1];
-			(*UTALines[i].Hi()).Pop() = 0.;
-			line_one( UTALines[i], true,0.f, 
-						 DopplerWidth[(*UTALines[i].Hi()).nelem()-1] );
-		}
+	for( size_t i=0; i < UTALines.size(); i++ )
+	{
+		/* these are not defined in cooling routines so must be set here */
+		UTALines[i].Emis().PopOpc() = dense.xIonDense[(*UTALines[i].Hi()).nelem()-1][(*UTALines[i].Hi()).IonStg()-1];
+		(*UTALines[i].Lo()).Pop() = dense.xIonDense[(*UTALines[i].Hi()).nelem()-1][(*UTALines[i].Hi()).IonStg()-1];
+		(*UTALines[i].Hi()).Pop() = 0.;
+
+		line_one( UTALines[i], true,0.f, DopplerWidth[(*UTALines[i].Hi()).nelem()-1] );
 	}
 
 
