@@ -321,9 +321,6 @@ void ZoneStart(const char *chMode)
 	if( dynamics.lgAdvection || dynamics.lgTimeDependentStatic )
 		DynaStartZone();
 
-	/* clear flag indicating the ionization convergence failures 
-	 * have ever occurred in current zone
-	conv.lgConvIonizThisZone = false; */
 	conv.resetCountersZone();
 
 	/* this will say how many times the large H2 molecule has been called in this zone -

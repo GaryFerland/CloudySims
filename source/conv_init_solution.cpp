@@ -322,8 +322,6 @@ void ConvInitSolution()
 		 * secondary ionization, and auger yields, can converge more quickly to 
 		 * proper values */
 		conv.lgSearch = lgSearchPhaseLogicEnabled;
-		conv.lgFirstSweepThisZone = true;
-		conv.lgLastSweepThisZone = false;
 
 		/* reset to the zone one temperature from the previous iteration */
 		TempChange( struc.testr[0] , false);
@@ -361,8 +359,6 @@ void ConvInitSolution()
 
 		/* say that we are in search phase */
 		conv.lgSearch = lgSearchPhaseLogicEnabled;
-		conv.lgFirstSweepThisZone = true;
-		conv.lgLastSweepThisZone = false;
 
 		if( trace.lgTrace )
 		{

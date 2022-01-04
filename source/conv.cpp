@@ -10,12 +10,6 @@ void t_conv::zero()
 	 * these are reset here, so that we count from first zone not search */
 	nPres2Ioniz = 0;
 
-	/* clear flag indicating the ionization convergence failures 
-	 * have ever occurred in current zone
-	lgConvIonizThisZone = false; */
-	lgFirstSweepThisZone = false;
-	lgLastSweepThisZone = false;
-
 	resetCounters();
 
 	/* cooling tolerance heating tolerance - allowed error in heating -  cooling balance */

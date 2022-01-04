@@ -27,8 +27,7 @@ void ConvPresTempEdenIoniz()
 	 * counter is incremented there 
 	 * zero indicates first pass through solvers on this zone */
 	conv.nPres2Ioniz = 0;
-	conv.lgFirstSweepThisZone = true;
-	conv.lgLastSweepThisZone = false;
+
 	/* this will save the  history of density - pressure relationship
 	 * for the current zone */
 	if( nzone != conv.hist_pres_nzone )

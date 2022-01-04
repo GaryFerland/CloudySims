@@ -135,11 +135,6 @@ public:
 	/** this will count the number of ionizations in one call from ConvPresTempEdenIoniz*/
 	long int nPres2Ioniz;
 
-	/** first sweep through solvers in this zone. also true is search phase */
-	bool lgFirstSweepThisZone;
-	/** last sweep through solvers in this zone, so update fine opacities */
-	bool lgLastSweepThisZone;
-
 	/** a limit to the above, in case where one zone takes forever to not converge,
 	 * usually very large, set with SET PRESIONIZ command */
 	long int limPres2Ioniz;
