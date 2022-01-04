@@ -18,6 +18,9 @@
 #include "iso.h"
 #include "wind.h"
 #include "geometry.h"
+#include "transition.h"
+#include "cddrive.h"
+#include "lines.h"
 
 /*RT_line_pumping pumping by external and locally emitted radiation fields */
 STATIC void RT_line_pumping(
@@ -40,7 +43,7 @@ STATIC void RT_line_pumping(
 	{
 		t.Emis().pump() = 0.;
 	}
-	else if( conv.lgFirstSweepThisZone || t.Emis().iRedisFun() == ipLY_A )
+	else
 	{
 		double EffectiveThickness = radius.drad_x_fillfac;
 		if( cosmology.lgDo )
@@ -61,14 +64,21 @@ STATIC void RT_line_pumping(
 		t.Emis().pump() = t.Emis().Aul() * (*t.Hi()).g() / (*t.Lo()).g() * shield_continuum *(
 			rfield.OccNumbIncidCont[t.ipCont()-1] + rfield.OccNumbContEmitOut[t.ipCont()-1] );
 
-		if( 0 && t.chLabel() == "H  1 1215.67A" )
+		if( 0 && t.chLabel() == "OH                  17.4317c" )
+		{
 			fprintf(ioQQQ,
-				"LINE PUMPING:\t label= \"%s\"\t %g\t %g\t %g\n",
+				"LINE PUMPING:\t zone: %4ld\tlabel= \"%s\""
+				" %10.3e %10.3e %10.3e %10.3e %10.3e %10.3e\n",
+				nzone,
 				t.chLabel().c_str(),
+				t.Emis().TauCon(),
+				dTau,
+				OccupationNumberLine( t ),
 				shield_continuum,
 				rfield.OccNumbIncidCont[t.ipCont()-1] + rfield.OccNumbContEmitOut[t.ipCont()-1],
 				t.Emis().pump()
 				);
+		}
 		/* 
 		 * This is an option to account for intrinsic absorption or emission line the lyman 
 		 * lines.  This is done without changing the incident coarse continuum.  
@@ -114,7 +124,7 @@ STATIC void RT_line_escape(
 	if( cosmology.lgDo )
 	{
 		/* Sobolev escape */
-		if( conv.lgFirstSweepThisZone && lgGoodTau )
+		if( lgGoodTau )
 		{
 			realnum tau_Sobolev =  t.Emis().TauTot();
 
@@ -135,7 +145,7 @@ STATIC void RT_line_escape(
 	}
 	else if (0) // LVG escape from Castor, Radiation Hydrodynamics
 	{
-		if( conv.lgFirstSweepThisZone && lgGoodTau )
+		if( lgGoodTau )
 		{
 			long int ipLineCenter = t.Emis().ipFine() + rfield.ipFineConVelShift;
 
@@ -181,7 +191,7 @@ STATIC void RT_line_escape(
 	else if( t.Emis().iRedisFun() == ipPRD )
 	{
 		/* incomplete redistribution with wings */
-		if( conv.lgFirstSweepThisZone && lgGoodTau )
+		if( lgGoodTau )
 		{
 			t.Emis().Pesc() = (realnum)esc_PRD( t.Emis().TauIn(), t.Emis().TauTot(), t.Emis().damp() );
 
@@ -199,7 +209,7 @@ STATIC void RT_line_escape(
 	/* complete redistribution without wings - t.ipLnRedis is ipCRD == -1 */
 	else if( t.Emis().iRedisFun() == ipCRD )
 	{
-		if( conv.lgFirstSweepThisZone && lgGoodTau )
+		if( lgGoodTau )
 		{
 			/* >>chng 01 mar -6, escsub will call any of several esc prob routines,
 			* depending of how core is set.  We always want core-only for this option,
@@ -219,7 +229,7 @@ STATIC void RT_line_escape(
 	else if( t.Emis().iRedisFun() == ipCRDW )
 	{
 		/* complete redistribution with damping wings */
-		if( conv.lgFirstSweepThisZone && lgGoodTau )
+		if( lgGoodTau )
 		{
 			t.Emis().Pesc() = (realnum)esc_CRDwing( t.Emis().TauIn(), t.Emis().TauTot(), t.Emis().damp() );
 
@@ -291,7 +301,6 @@ STATIC void RT_line_fine_opacity(
 	/* define fine opacity fine grid fine mesh */
 	/* rfield.lgOpacityFine flag set false with no fine opacities command */
 	/* opacities can be negative if masers are allowed */
-	ASSERT (conv.lgLastSweepThisZone);
 	if( ipLineCenter < 0 || abs(t.Emis().PopOpc()) < SMALLFLOAT ||
 		ipLineCenter>rfield.nfine || !rfield.lgOpacityFine )
 	{
