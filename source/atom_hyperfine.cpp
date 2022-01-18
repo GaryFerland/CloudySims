@@ -632,7 +632,6 @@ void HyperfineCreate(void)
 		ASSERT(hyperfine.HFLabundance[j] >= 0.0 && hyperfine.HFLabundance[j] <= 1.0);
 
 		HFLines[j].Emis().Aul()	= (realnum) atof(data[4].c_str());
-		HFLines[j].Emis().damp() = 1e-20f;
 
 		(*HFLines[j].Hi()).g() = (realnum) (2*(abund.IsoAbn[nelem-1].getSpin( Aiso ) + .5) + 1);
 		(*HFLines[j].Lo()).g() = (realnum) (2*(abund.IsoAbn[nelem-1].getSpin( Aiso ) - .5) + 1);
@@ -648,6 +647,10 @@ void HyperfineCreate(void)
 		double fenergyWN = MAX2(ENERGY_MIN_WN, 1.0 / wavelength);
 		HFLines[j].WLAng() = (realnum)(wavelength * 1e8f);
 		HFLines[j].EnergyWN() = (realnum) fenergyWN;
+
+		HFLines[j].Emis().dampXvel() = (realnum)( HFLines[j].Emis().Aul()
+							/ HFLines[j].EnergyWN() / PI4 );
+		HFLines[j].Emis().damp() = 1e-20f;
 
 		HFLines[j].Emis().gf() = (realnum)(GetGF(HFLines[j].Emis().Aul(), fenergyWN, (*HFLines[j].Hi()).g()));
 		ASSERT(HFLines[j].Emis().gf() > 0.0);
