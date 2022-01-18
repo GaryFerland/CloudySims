@@ -1,0 +1,18 @@
+set save prefix "he1n2t4"
+iterate 3
+init "hheonly.ini"
+element helium abundance 3
+# this results in an electron density of near 100 cm-3
+hden -1
+database He-like element helium levels resolved 10
+database He-like element helium levels collapsed 100
+laser 2 ryd
+ionization parameter 1
+stop zone 1
+Case B 
+set dr 0
+constant temperature 1e4 K
+print line column
+print line sort wavelength
+print line faint 1
+save line list ratio ".lrat" "he1ratio.dat" last nohash column
