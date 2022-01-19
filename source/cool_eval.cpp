@@ -1433,7 +1433,7 @@ STATIC void CoolHyperfine (void)
 	double cs = (electron_rate_21cm * dense.eden + 
 		atomic_rate_21cm * dense.xIonDense[ipHYDROGEN][0] +
 		proton_rate_21cm * dense.xIonDense[ipHYDROGEN][1] ) *
-		3./	dense.cdsqte;
+		3. / dense.cdsqte;
 	PutCS(  cs , HFLines[0] );
 
 	/* do level pops for H 21 cm which is a special case since Lya pumping in included */
@@ -1475,6 +1475,8 @@ STATIC void CoolHyperfine (void)
 
 		/* use the collision strength generated above and find pops and cooling */
 		atom_level2( HFLines[i], true );
+
+		hyperfine.Tspin[ i ] = HyperfineTspin( HFLines[i] );
 
 		/* put the correct gas-phase abundance back in the array */
 		dense.xIonDense[(*HFLines[i].Hi()).nelem()-1][(*HFLines[i].Hi()).IonStg()-1] = save;
