@@ -5,7 +5,7 @@ element helium abundance 3
 # this results in an electron density of near 1e8 cm-3
 hden 5
 # PS64 recommends 5 resolved for this density
-database He-like element helium levels resolved 5
+database He-like element helium levels resolved 10
 database He-like element helium levels collapsed 100
 laser 2 ryd
 ionization parameter 1
