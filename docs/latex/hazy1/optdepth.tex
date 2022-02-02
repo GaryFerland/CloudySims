@@ -333,6 +333,21 @@ The code should not have convergence
 problems if the outer edge is determined by the outer radius, total column density,
 or an equivalent, such as $A_V$.
 
+
+\section{LVG = -15}
+\label{sec:CommandLVG}
+
+This sets the velocity gradient ${dv} / {dr}$ [s$^{-1}$] in large velocity gradient (LVG) line transfer calculation
+\citep{CastorAbbotKlein75}. 
+The number is the log of ${dv} / {dr}$.
+The only effect of this command is to set ${dv} / {dr}$ in the evaluation of the radiation transport.
+It does not solve the for dynamics or change the density self consistently.
+The \cdCommand{wind} family of commands, described in 
+Section \ref{sec:CommandWind}, does this.
+
+This command has the vary option.
+
+
 \section{No scattering opacity}
 \label{sec:CommandNoScatteringOpacity}
 
