@@ -83,6 +83,7 @@ void ParseTauMin(Parser &p);
 void ParseTitle(Parser &);
 void ParseTolerance(Parser &);
 void ParseVLaw(Parser &p);
+void ParseLVG(Parser &p);
 void ParseTurbulence(Parser &p);
 
 void ParseCommands(void)
@@ -288,6 +289,8 @@ void ParseCommands(void)
 		{"L(NU)",ParseL_nu},
 		{"LASER",ParseLaser},
 		{"LUMINOSITY",ParseLuminosity},
+		/* Large Velocity Gradient */
+		{"LVG ",ParseLVG},
 		{"MAGNETIC", ParseMagnet},
 		/* parse the magnetic field command, routine in magnetic.c */
 		{"MAP",ParseMap},
@@ -354,7 +357,7 @@ void ParseCommands(void)
 		/* some temperature vs depth law */
 		{"TOLERANCE", ParseTolerance},
 		{"TRACE", ParseTrace},
-		/* turn on trace output, in reads2 */
+		/* turbulent velocity that is a power law in radius. */
 		{"VLAW",ParseVLaw},
 		{"TURBULENCE",ParseTurbulence},
 		{"WIND",ParseDynaWind},
@@ -2201,6 +2204,33 @@ void ParseTolerance(Parser &)
 			  "Sorry, this command has been replaced with the SET TEMPERATURE TOLERANCE command.\n");
 	cdEXIT(EXIT_FAILURE);
 }
+void ParseLVG(Parser &p)
+{
+	/* large velocity gradient. */
+	wind.dvdr = (realnum)p.FFmtRead();
+	//fprintf(ioQQQ,"DEBUGGG38 dvdr enter %.2e",wind.dvdr);
+	/* parameter is log of dv / dr code will use linear */
+	wind.dvdr = (realnum)exp10(wind.dvdr);
+	wind.lgDVDRset = true;
+	//fprintf(ioQQQ," DEBUGGG38  after %.2e\n",wind.dvdr);
+
+	/* vary option */
+	if( optimize.lgVarOn )
+	{
+		/* only one parameter to vary */
+		optimize.nvarxt[optimize.nparm] = 1;
+		// the line image
+		strcpy( optimize.chVarFmt[optimize.nparm], "LVG %f LOG" );
+
+		/* pointer to where to write */
+		optimize.nvfpnt[optimize.nparm] = input.nRead;
+		/* turbulent velocity */
+		optimize.vparm[0][optimize.nparm] = log10(wind.dvdr);
+		//fprintf(ioQQQ,"DEBUGGG38  vpar ener %.2e\n",optimize.vparm[0][optimize.nparm]);
+		optimize.vincr[optimize.nparm] = 0.1f;
+		++optimize.nparm;
+	}
+}
 void ParseVLaw(Parser &p)
 {
 	/* velocity power law as a function of radius. */
@@ -2212,6 +2242,7 @@ void ParseVLaw(Parser &p)
 	 * so that velocity decreases with increasing radius. */
 	ASSERT( DoppVel.TurbVelLaw <= 0.f );
 }
+
 void ParseTurbulence(Parser &p)
 {
 	DEBUG_ENTRY( "ParseTurbulence()" );

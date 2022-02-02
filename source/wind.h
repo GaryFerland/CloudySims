@@ -20,12 +20,15 @@ struct Wind {
 	/** acceleration within local zone */
 	realnum dvdr;
 
+	/** has dvdr been set with DVDR in CLI? */
+	bool lgDVDRset;
+
 	/** test for static model */
 	bool lgStatic(void) const
-		{
-			ASSERT( ( windv0 == 0.) == m_lgStatic);
-			return m_lgStatic;
-		}
+	{
+		ASSERT( ( windv0 == 0.) == m_lgStatic);
+		return m_lgStatic;
+	}
 
 	/** test for model in ballistic approximation */
 	bool lgBallistic(void) const

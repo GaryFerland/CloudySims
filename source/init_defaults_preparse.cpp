@@ -181,6 +181,7 @@ void InitDefaultsPreparse( void )
 	wind.comass = 0.;
 	wind.windv = 0.;
 	wind.dvdr = 0.;
+	wind.lgDVDRset = 0;
 	wind.emdot = 0.;
 	wind.AccelAver = 0.;
 	wind.acldr = 0.;

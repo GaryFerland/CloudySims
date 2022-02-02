@@ -5,6 +5,7 @@
 #include "cddefines.h"
 #include "geometry.h"
 #include "rfield.h"
+#include "conv.h"
 #include "radius.h"
 #include "wind.h"
 #include "rt.h"
@@ -76,10 +77,11 @@ void RT_line_one_tauinc(const TransitionProxy&  t ,
 
 	/* use cumulated fine optical depth for both d-critical and static, 
 	 * for d-critical speeds are only roughly sonic
-	 * optical depth is computed including velocity shift */
-	else if( ! wind.lgBallistic() )
+	 * optical depth is computed including velocity shift
+	 * static case wind.lgBallistic() == 0 */
+	else if( ! wind.lgBallistic() && !wind.lgDVDRset )
 	{
-		/* static and negative velocity solutions */
+		/* static and negative velocity solutions, but no LVG, that is next */
 		EffectiveThickness = radius.drad_x_fillfac;
 		dTau_total = (realnum)(OpacityEffective * EffectiveThickness);
 		
@@ -95,20 +97,33 @@ void RT_line_one_tauinc(const TransitionProxy&  t ,
 		 * >>refer	RT	wind	Castor, J.I., Abbott, D.C., & Klein, R.I., 1975, ApJ, 195, 157
 		 */
 
-		/* dv/dr (s-1), equal to dv/dt / v */
-		wind.dvdr = fabs(wind.AccelTotalOutward - wind.AccelGravity) / wind.windv;
+		/* dv/dr (s-1), equal to dv/dt / v; wind.lgDVDRset set true with LVG command,
+		 * otherwise solve for dv/dr with local conditions  */
+		if( !wind.lgDVDRset )
+			wind.dvdr = fabs(wind.AccelTotalOutward - wind.AccelGravity) / wind.windv;
+		//fprintf(ioQQQ,"DEBUGGG line1 dvdr %.2e\n", wind.dvdr );
 		/* depth (cm) over which wind accelerates by one velocity width
 		 * include filling factor */
 		EffectiveThickness = DopplerWidth / SDIV(wind.dvdr) * geometry.FillFac;
 
 		/* min2 is to not let the physical scale exceed the current depth */
 		EffectiveThickness = MIN2( radius.depth, EffectiveThickness );
+		if( conv.lgSearch )
+			OpacityEffective = MAX2(0., OpacityEffective );
 		dTau_total = (realnum)(OpacityEffective * EffectiveThickness);
+		/* masers can occur but are not self-quencing */
+		if(dTau_total < -20. )
+		{
+			fprintf(ioQQQ,"Master cap %.2e\n", dTau_total );
+			dTau_total = -20.;
+		}
 		
 		t.Emis().TauIn() = dTau_total;
 		t.Emis().TauCon() = dTau_total;
 		t.Emis().TauTot() = dTau_total;
 		t.Emis().TauInSpecific() = realnum( OpacitySpecific * EffectiveThickness );
+		//fprintf(ioQQQ,"dEBUGGG CrAsH21 %.2e %.2e %.2e %.2e\n",
+		//		dTau_total, EffectiveThickness , OpacityEffective , wind.dvdr);
 	}
 
 	{
