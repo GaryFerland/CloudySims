@@ -64,7 +64,11 @@ monitor "H2O " 538.142m line intensity -8.676
 ## >>chng 10 dec 19, from -7.385 to -7.357, changes due to LAMDA update in r4457
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -7.357 to -7.312, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
-monitor "HNC " 1652.90m  line intensity -7.312 
+## >>chng 21 apr 10, from -7.312 to -7.498, update chemistry and lamba
+## >>chng 21 apr 16, from -7.498 to -7.306, remove bad UMIST reaction
+## >>chng 21 sep 11, from -7.306 to -8.372, LAMDA update
+## >>chng 21 nov 04, from -8.372 to -7.958, update mole co data
+monitor "HNC " 1652.90m  line intensity -7.958 
 ## >>chng 10 aug 21, from -9.86 to -8.428, add these lines
 ## >>chng 11 nov 16, from -8.428 to -8.452, adjust newmole monitors
 ## >>chng 12 jun 07, from -8.452 to -8.582, vib_evap fix
@@ -75,55 +79,71 @@ monitor "HNC " 1652.90m  line intensity -7.312
 ## >>chng 16 mar 21, from -8.563 to -8.451, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -8.451 to -8.389, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from -8.389 to -8.333, further update to McCall CR-related rate
-monitor "HCS+" 1755.88m  -8.333 line intensity
+## >>chng 21 sep 11, from -8.333 to -8.969, LAMDA update
+## >>chng 21 nov 04, from -8.969 to -8.268, update mole co data
+monitor "HCS+" 1755.88m  -8.268 line intensity
 ## >>chng 10 aug 21, from -8.288 to -7.402, add these lines
 ## >>chng 12 jun 07, from -7.402 to -7.453, vib_evap fix
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 15 aug 03, from -7.453 to -7.424, update LAMDA to 2015
 ## >>chng 20 aug 03, from -7.424 to -7.387, update H3+ rates Indriola+ 2012
-monitor "CS  " 3058.86m  -7.387 line intensity
+## >>chng 21 sep 11, from -7.387 to -7.622, LAMDA update
+## >>chng 21 nov 04, from -7.622 to -7.348, update mole co data
+monitor "CS  " 3058.86m  -7.348 line intensity
 ## >>chng 10 aug 21, from -8.887 to -7.141, add these lines
 ## >>chng 11 nov 16, from -7.141 to -7.191, adjust newmole monitors
 ## >>chng 12 jun 07, from -7.191 to -7.288, vib_evap fix
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -7.288 to -7.341, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -7.341 to -7.415, update H3+ rates Indriola+ 2012
-monitor "CO  " 2600.05m  -7.415 line intensity
+## >>chng 21 sep 11, from -7.415 to -7.827, LAMDA update
+## >>chng 21 nov 04, from -7.827 to -7.389, update mole co data
+monitor "CO  " 2600.05m  -7.389 line intensity
 ## >>chng 10 aug 21, from -7.637 to -6.303, add these lines
 ## >>chng 11 nov 16, from -6.303 to -6.355, adjust newmole monitors
 ## >>chng 12 jun 07, from -6.355 to -6.463, vib_evap fix
 ## >>chng 13 jul 24, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -6.463 to -6.523, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -6.523 to -6.609, update H3+ rates Indriola+ 2012
-monitor "CO  " 1300.05m  -6.609 line intensity
+## >>chng 21 sep 11, from -6.609 to -7.092, LAMDA update
+## >>chng 21 nov 04, from -7.092 to -6.579, update mole co data
+monitor "CO  " 1300.05m  -6.579 line intensity
 ## >>chng 10 aug 21, from -7.173 to -5.946, add these lines
 ## >>chng 11 nov 16, from -5.946 to -6.007, adjust newmole monitors
 ## >>chng 12 jun 07, from -6.007 to -6.149, vib_evap fix
 ## >>chng 13 jul 24, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -6.149 to -6.23, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -6.23 to -6.348, update H3+ rates Indriola+ 2012
-monitor "CO  " 866.727m  -6.348 line intensity
+## >>chng 21 sep 11, from -6.348 to -6.988, LAMDA update
+## >>chng 21 nov 04, from -6.988 to -6.306, update mole co data
+monitor "CO  " 866.727m  -6.306 line intensity
 ## >>chng 10 aug 21, from -7.114 to -5.887, add these lines
 ## >>chng 11 nov 16, from -5.887 to -5.973, adjust newmole monitors
 ## >>chng 12 jun 07, from -5.973 to -6.177, vib_evap fix
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -6.177 to -6.29, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -6.29 to -6.451, update H3+ rates Indriola+ 2012
-monitor "CO  " 650.074m  -6.451 line intensity
+## >>chng 21 sep 11, from -6.451 to -7.24, LAMDA update
+## >>chng 21 nov 04, from -7.24 to -6.395, update mole co data
+monitor "CO  " 650.074m  -6.395 line intensity
 ## >>chng 10 aug 21, from -7.324 to -6.114, add these lines
 ## >>chng 11 nov 16, from -6.114 to -6.224, adjust newmole monitors
 ## >>chng 12 jun 07, from -6.224 to -6.485, vib_evap fix
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -6.485 to -6.622, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -6.622 to -6.808, update H3+ rates Indriola+ 2012
-monitor "CO  " 520.089m  -6.808 line intensity
+## >>chng 21 sep 11, from -6.808 to -7.641, LAMDA update
+## >>chng 21 nov 04, from -7.641 to -6.744, update mole co data
+monitor "CO  " 520.089m  -6.744 line intensity
 ## >>chng 10 aug 21, from -7.731 to -6.56, add these lines
 ## >>chng 11 nov 16, from -6.56 to -6.674, adjust newmole monitors
 ## >>chng 12 jun 07, from -6.674 to -6.954, vib_evap fix
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -6.954 to -7.095, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -7.095 to -7.282, update H3+ rates Indriola+ 2012
-monitor "CO  " 433.438m  -7.282 line intensity
+## >>chng 21 sep 11, from -7.282 to -8.104, LAMDA update
+## >>chng 21 nov 04, from -8.104 to -7.218, update mole co data
+monitor "CO  " 433.438m  -7.218 line intensity
 ## >>chng 10 aug 21, from -8.299 to -7.122, add these lines
 ## >>chng 10 dec 19, from -7.122 to -7.073, changes due to LAMDA update in r4457
 ## >>chng 11 nov 16, from -7.073 to -7.201, adjust newmole monitors
@@ -131,7 +151,9 @@ monitor "CO  " 433.438m  -7.282 line intensity
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -7.48 to -7.618, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -7.618 to -7.804, update H3+ rates Indriola+ 2012
-monitor "CO  " 371.549m  -7.804 line intensity
+## >>chng 21 sep 11, from -7.804 to -8.63, LAMDA update
+## >>chng 21 nov 04, from -8.63 to -7.74, update mole co data
+monitor "CO  " 371.549m  -7.74 line intensity
 ## >>chng 10 aug 21, from -8.997 to -7.739, add these lines
 ## >>chng 10 dec 19, from -7.739 to -7.644, changes due to LAMDA update in r4457
 ## >>chng 11 nov 16, from -7.644 to -7.772, adjust newmole monitors
@@ -139,13 +161,17 @@ monitor "CO  " 371.549m  -7.804 line intensity
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -8.049 to -8.189, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -8.189 to -8.377, update H3+ rates Indriola+ 2012
-monitor "CO  " 325.137m  -8.377 line intensity
+## >>chng 21 sep 11, from -8.377 to -9.208, LAMDA update
+## >>chng 21 nov 04, from -9.208 to -8.312, update mole co data
+monitor "CO  " 325.137m  -8.312 line intensity
 ## >>chng 11 nov 16, from -7.214 to -7.310, adjust newmole monitors
 ## >>chng 12 jun 07, from -7.31 to -7.522, vib_evap fix
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -7.522 to -7.632, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -7.632 to -7.783, update H3+ rates Indriola+ 2012
-monitor "^13CO" 906.599m  -7.783 line intensity
+## >>chng 21 sep 11, from -7.783 to -8.487, LAMDA update
+## >>chng 21 nov 04, from -8.487 to -7.731, update mole co data
+monitor "^13CO" 906.599m  -7.731 line intensity
 ## >>chng 10 aug 21, from -9.336 to -8.233, add these lines
 ## >>chng 10 dec 19, from -8.233 to -8.071, changes due to LAMDA update in r4457
 ## >>chng 12 jun 07, from -8.071 to -8.305, vib_evap fix
@@ -155,7 +181,10 @@ monitor "^13CO" 906.599m  -7.783 line intensity
 ## >>chng 16 mar 21, from -8.247 to -8.13, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -8.13 to -8.031, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from -8.031 to -7.997, further update to McCall CR-related rate
-monitor "CN  " 880.858m  -7.997  line intensity
+## >>chng 21 sep 11, from -7.997 to -10.14, LAMDA update
+## >>chng 21 sep 15, from -10.14 to -9.328, go back to unresolved model
+## >>chng 21 nov 04, from -9.328 to -7.987, update mole co data
+monitor "CN  " 880.858m  -7.987  line intensity
 # 
 monitor H2 column density 21.904 error 0.1
 ## 
@@ -172,7 +201,9 @@ monitor H2 column density 21.904 error 0.1
 ## >>chng 12 jun 07, from 17.22 to 17.01, vib_evap fix
 ## >>chng 16 mar 21, from 17.01 to 16.9, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from 16.9 to 16.75, update H3+ rates Indriola+ 2012
-monitor CO column density 16.75 error 0.1
+## >>chng 21 sep 11, from 16.75 to 16.05, LAMDA update
+## >>chng 21 nov 04, from 16.05 to 16.8, update mole co data
+monitor CO column density 16.8 error 0.1
 ## 
 ## >>chng 05 jul 02, from 17.26 to 17.20, A_V zoning was not exact
 ## >>chng 05 aug 24, from 17.20 to 16.91, NA update CO cr ion rate
@@ -209,7 +240,9 @@ monitor OH column density 14.01 error 0.1
 ## >>chng 07 jan 07, from 14.94 to 14.98, enable McCall et al. H3+ rate
 ## >>chng 16 mar 21, from 14.98 to 14.93, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from 14.93 to 14.99, update H3+ rates Indriola+ 2012
-monitor SiO column density 14.99 error 0.1
+## >>chng 21 sep 11, from 14.99 to 14.95, LAMDA update
+## >>chng 21 nov 04, from 14.95 to 15.02, update mole co data
+monitor SiO column density 15.02 error 0.1
 ## 
 ## >>chng 05 sep 30, add these 5
 monitor column density H2+  11.72 error 0.1
@@ -220,6 +253,8 @@ monitor column density H2+  11.72 error 0.1
 ## >>chng 08 feb 20, from 14.49 to 14.54, grain charge transfer changes in ion_solver and iso*
 ## >>chng 12 jul 01, from 14.54 to 14.59, update Badnell DR to 13-electron iso sequence
 ## >>chng 20 sep 06, from 14.59 to 14.69, further update to McCall CR-related rate
+## >>chng 21 sep 11, from 14.69 to 14.57, LAMDA update
+## >>chng 21 nov 04, from 14.57 to 14.69, update mole co data
 monitor column density H3+  14.69 error 0.1
 ## 
 monitor column density H2g  21.90 error 0.1
@@ -231,6 +266,180 @@ monitor column density H2*  14.00 error 0.1
 ## >>chng 12 jul 01, from 8.06 to 8.011, update Badnell DR to 13-electron iso sequence
 monitor column density HeH+ 8.011  error 0.1
 ## 
+## >>chng 21 apr 11 add all remaining molecules with N(x) > 1e10 cm-2
+## >>chng 21 sep 11, from 10.51 to 9.844, LAMDA update
+## >>chng 21 nov 04, from 9.844 to 10.45, update mole co data
+monitor column density "C2+"       10.45  
+## >>chng 21 sep 11, from 17.01 to 15.69, LAMDA update
+## >>chng 21 nov 04, from 15.69 to 16.97, update mole co data
+monitor column density "C2"        16.97  
+## >>chng 21 sep 11, from 10.68 to 10.18, LAMDA update
+## >>chng 21 nov 04, from 10.18 to 10.64, update mole co data
+monitor column density "C2H+"      10.64  
+## >>chng 21 sep 11, from 16.17 to 15.59, LAMDA update
+## >>chng 21 nov 04, from 15.59 to 16.15, update mole co data
+monitor column density "C2H"       16.15
+## >>chng 21 sep 11, from 12.9 to 10.26, LAMDA update
+## >>chng 21 nov 04, from 10.26 to 12.7, update mole co data
+monitor column density "C2H2"      12.7  
+## >>chng 21 sep 11, from 13.23 to 12.51, LAMDA update
+## >>chng 21 nov 04, from 12.51 to 13.2, update mole co data
+monitor column density "C2H2+"     13.2  
+## >>chng 21 sep 11, from 10.62 to 7.786, LAMDA update
+## >>chng 21 nov 04, from 7.786 to 10.4, update mole co data
+monitor column density "C2H3+"     10.4  
+## >>chng 21 sep 11, from 15.46 to 14.81, LAMDA update
+## >>chng 21 nov 04, from 14.81 to 15.54, update mole co data
+monitor column density "C3"        15.54  
+## >>chng 21 sep 11, from 12.28 to 11.54, LAMDA update
+## >>chng 21 nov 04, from 11.54 to 12.36, update mole co data
+monitor column density "C3H+"      12.36
+## >>chng 21 sep 11, from 13.94 to 11.73, LAMDA update
+## >>chng 21 nov 04, from 11.73 to 13.72, update mole co data
+monitor column density "C3H"       13.72  
+## >>chng 21 apr 16, from 10.42 to 10.47, new monitor added
+monitor column density "CCl+"      10.47  
+## >>chng 21 apr 16, from 11.96 to 11.46, new monitor added
+## >>chng 21 sep 11, from 11.46 to 11.66, LAMDA update
+## >>chng 21 nov 04, from 11.66 to 11.3, update mole co data
+monitor column density "CCl"       11.3  
+## >>chng 21 sep 11, from 10.89 to 11.31, LAMDA update
+## >>chng 21 nov 04, from 11.31 to 10.87, update mole co data
+monitor column density "CH+"       10.87  
+## >>chng 21 sep 11, from 16.11 to 13.89, LAMDA update
+## >>chng 21 nov 04, from 13.89 to 16.07, update mole co data
+monitor column density "CH"        16.07  
+## >>chng 21 sep 11, from 10.96 to 11.34, LAMDA update
+## >>chng 21 nov 04, from 11.34 to 10.95, update mole co data
+monitor column density "CH2+"      10.95  
+## >>chng 21 sep 11, from 15.55 to 13.57, LAMDA update
+## >>chng 21 nov 04, from 13.57 to 15.04, update mole co data
+monitor column density "CH2"       15.04  
+## >>chng 21 sep 11, from 13.41 to 13.58, LAMDA update
+## >>chng 21 nov 04, from 13.58 to 13.27, update mole co data
+monitor column density "CH3+"      13.27
+## >>chng 21 sep 11, from 15.2 to 12.43, LAMDA update
+## >>chng 21 nov 04, from 12.43 to 15.04, update mole co data
+monitor column density "CH3"       15.04  
+## >>chng 21 sep 11, from 10.12 to 9.244, LAMDA update
+## >>chng 21 nov 04, from 9.244 to 9.955, update mole co data
+monitor column density "CH4+"      9.955  
+## >>chng 21 sep 11, from 15.14 to 11.8, LAMDA update
+## >>chng 21 nov 04, from 11.8 to 14.95, update mole co data
+monitor column density "CH4"       14.95  
+## >>chng 21 sep 11, from 11.76 to 11.56, LAMDA update
+monitor column density "CH5+"      11.56  
+## >>chng 21 sep 11, from 15.6 to 14.51, LAMDA update
+## >>chng 21 nov 04, from 14.51 to 15.61, update mole co data
+monitor column density "CN"        15.61  
+## >>chng 21 sep 11, from 17.28 to 16.58, LAMDA update
+## >>chng 21 nov 04, from 16.58 to 17.33, update mole co data
+monitor column density "COgrn"     17.33  
+## >>chng 21 sep 11, from 10.56 to 10.3, LAMDA update
+## >>chng 21 nov 04, from 10.3 to 10.62, update mole co data
+monitor column density "CS+"       10.62  
+## >>chng 21 sep 11, from 16.89 to 16.35, LAMDA update
+## >>chng 21 nov 04, from 16.35 to 16.97, update mole co data
+monitor column density "CS"        16.97  
+## >>chng 21 apr 16, from 12.001to 12.0392, new monitor added
+monitor column density "H2Cl+"     12.0392  
+monitor column density "H2O+"      10.423  
+monitor column density "H2O"       14.048  
+monitor column density "H3O+"      11.412  
+monitor column density "HCl+"      11.288  
+## >>chng 21 apr 16, from 13.8 to 13.42, new monitor added
+## >>chng 21 sep 11, from 13.42 to 13.47, LAMDA update
+## >>chng 21 nov 04, from 13.47 to 13.41, update mole co data
+monitor column density "HCl"       13.41  
+## >>chng 21 sep 11, from 15.17 to 14.59, LAMDA update
+## >>chng 21 nov 04, from 14.59 to 15.2, update mole co data
+monitor column density "HCN"       15.2  
+## >>chng 21 sep 11, from 12.61 to 11.72, LAMDA update
+## >>chng 21 nov 04, from 11.72 to 12.59, update mole co data
+monitor column density "HCNH+"     12.59  
+## >>chng 21 sep 11, from 12.65 to 11.69, LAMDA update
+## >>chng 21 nov 04, from 11.69 to 12.7, update mole co data
+monitor column density "HCO+"      12.7  
+## >>chng 21 sep 11, from 13.96 to 13.33, LAMDA update
+## >>chng 21 nov 04, from 13.33 to 14.02, update mole co data
+monitor column density "HCS+"      14.02 
+## >>chng 21 sep 11, from 15.85 to 14.62, LAMDA update
+## >>chng 21 nov 04, from 14.62 to 15.05, update mole co data
+monitor column density "HNC"       15.05
+## >>chng 21 sep 11, from 12.26 to 10.8, LAMDA update
+## >>chng 21 nov 04, from 10.8 to 12.07, update mole co data
+monitor column density "HNO"       12.07  
+## >>chng 21 nov 04, from 12.97 to 12.86, update mole co data
+monitor column density "HS+"       12.86  
+## >>chng 21 sep 11, from 14.71 to 14.34, LAMDA update
+## >>chng 21 nov 04, from 14.34 to 14.6, update mole co data
+monitor column density "HS"        14.6  
+## >>chng 21 sep 11, from 12.49 to 12.11, LAMDA update
+## >>chng 21 nov 04, from 12.11 to 12.47, update mole co data
+monitor column density "N2+"       12.47  
+## >>chng 21 sep 11, from 17.44 to 16.95, LAMDA update
+## >>chng 21 nov 04, from 16.95 to 17.43, update mole co data
+monitor column density "N2"        17.43  
+## >>chng 21 sep 11, from 13.95 to 13.15, LAMDA update
+## >>chng 21 nov 04, from 13.15 to 13.95, update mole co data
+monitor column density "N2H+"      13.95
+## >>chng 21 sep 11, from 11.03 to 8.993, LAMDA update
+## >>chng 21 nov 04, from 8.993 to 10.68, update mole co data
+monitor column density "N2O"       10.68
+## >>chng 21 sep 11, from 15.58 to 14.47, LAMDA update
+## >>chng 21 nov 04, from 14.47 to 15.43, update mole co data
+monitor column density "NH"        15.43  
+## >>chng 21 sep 11, from 10.34 to 9.985, LAMDA update
+## >>chng 21 nov 04, from 9.985 to 10.3, update mole co data
+monitor column density "NH2+"      10.3  
+## >>chng 21 sep 11, from 14.96 to 13.89, LAMDA update
+## >>chng 21 nov 04, from 13.89 to 14.67, update mole co data
+monitor column density "NH2"       14.67  
+## >>chng 21 sep 11, from 12.45 to 11.91, LAMDA update
+## >>chng 21 nov 04, from 11.91 to 12.4, update mole co data
+monitor column density "NH3+"      12.4
+## >>chng 21 sep 11, from 14.86 to 14.42, LAMDA update
+## >>chng 21 nov 04, from 14.42 to 14.8, update mole co data
+monitor column density "NH3"       14.8  
+## >>chng 21 sep 11, from 11.03 to 10.26, LAMDA update
+## >>chng 21 nov 04, from 10.26 to 10.98, update mole co data
+monitor column density "NH4+"      10.98  
+## >>chng 21 sep 11, from 13.76 to 13.46, LAMDA update
+## >>chng 21 nov 04, from 13.46 to 13.62, update mole co data
+monitor column density "NO"        13.62
+## >>chng 21 sep 11, from 11.47 to 11.65, LAMDA update
+## >>chng 21 nov 04, from 11.65 to 11.32, update mole co data
+monitor column density "NS+"       11.32  
+## >>chng 21 sep 11, from 14.72 to 12.85, LAMDA update
+## >>chng 21 nov 04, from 12.85 to 13.41, update mole co data
+monitor column density "NS"        13.41
+## >>chng 21 sep 11, from 11.9 to 8.036, LAMDA update
+## >>chng 21 nov 04, from 8.036 to 9.699, update mole co data
+monitor column density "OCN"       9.699  
+## >>chng 21 sep 11, from 10.98 to 10.62, LAMDA update
+## >>chng 21 nov 04, from 10.62 to 11.95, update mole co data
+monitor column density "OCS"       11.95  
+monitor column density "OH+"       10.331  
+monitor column density "OHgrn"     14.953  
+## >>chng 21 sep 11, from 12.92 to 12.76, LAMDA update
+## >>chng 21 nov 04, from 12.76 to 12.91, update mole co data
+monitor column density "SiH"       12.91  
+monitor column density "SiH2+"     10.187  
+## >>chng 21 sep 11, from 12.83 to 11.76, LAMDA update
+## >>chng 21 nov 04, from 11.76 to 12.68, update mole co data
+monitor column density "SiN+"      12.68  
+## >>chng 21 sep 11, from 13.61 to 13.72, LAMDA update
+## >>chng 21 nov 04, from 13.72 to 13.62, update mole co data
+monitor column density "SiN"       13.62  
+## >>chng 21 sep 11, from 11.25 to 11.16, LAMDA update
+## >>chng 21 nov 04, from 11.16 to 11.25, update mole co data
+monitor column density "SiOH+"     11.25
+## >>chng 21 sep 11, from 10.1 to 10.05, LAMDA update
+monitor column density "SO+"       10.05  
+## >>chng 21 sep 11, from 13.18 to 12.87, LAMDA update
+## >>chng 21 nov 04, from 12.87 to 13.07, update mole co data
+monitor column density "SO"        13.07  
+## 
 ## >>chng 06 nov 28, add these lines
 ## >>chng 06 nov 29, from -4.611 to -4.644, Badnell DR turned on
 ## >>chng 13 nov 03, from -4.644 to -4.816, update H2 - C II collision rates
@@ -241,13 +450,17 @@ monitor line luminosity "C  2" 157.636m -4.682
 ## >>chng 07 jan 07, from -5.060 to -5.084, enable McCall et al. H3+ rate
 ## >>chng 12 jun 07, from -5.084 to -5.139, vib_evap fix
 ## >>chng 16 mar 21, from -5.139 to -5.103, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
-monitor line luminosity "c  1" 370.269m -5.103
+## >>chng 21 sep 11, from -5.103 to -4.932, LAMDA update
+## >>chng 21 nov 04, from -4.932 to -5.105, update mole co data
+monitor line luminosity "c  1" 370.269m -5.105
 ## 
 ## >>chng 07 jan 07, from -5.485 to -5.505, enable McCall et al. H3+ rate
 ## >>chng 12 jun 07, from -5.505 to -5.55, vib_evap fix
 ## >>chng 13 dec 23, from -5.55 to -5.49, C to external databases
 ## >>chng 20 aug 03, from -5.49 to -5.46, update H3+ rates Indriola+ 2012
-monitor line luminosity "c  1" 609.590m -5.46
+## >>chng 21 sep 11, from -5.46 to -5.333, LAMDA update
+## >>chng 21 nov 04, from -5.333 to -5.477, update mole co data
+monitor line luminosity "c  1" 609.590m -5.477
 ## 
 ## >>chng 07 jan 07, from -5.835 to -5.877, enable McCall et al. H3+ rate
 ## >>chng 11 nov 16, from -5.877 to -5.782, adjust newmole monitors

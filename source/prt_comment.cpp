@@ -958,7 +958,7 @@ void PrtComment(void)
 	}
 
 	/* grains and solar abundances do not make sense */
-	if( gv.lgDustOn() && abund.lgAbnSolar )
+	if( gv.lgDustOn() && abund.lgAbnReference )
 	{
 		sprintf( chLine, 
 			"  !Grains are present, but the gas phase abundances were left at the solar default.  This is not physical." );
@@ -971,6 +971,19 @@ void PrtComment(void)
 		sprintf( chLine, 
 			"  !Grains are not present, but the gas phase abundances were depleted.  This is not physical." );
 		bangin(chLine);
+	}
+
+	/* check if grains depletion INCREASED the abundance of an element, a feature of Jenkins 2009 */
+	for( long int i=0; i < LIMELM; i++ )
+	{
+		if( abund.DepletionScaleFactor[i] > 1. )
+		{
+			sprintf( chLine,
+				 "  !The grain depletion scale factor was %.2e for %s",
+				 abund.DepletionScaleFactor[i] , elementnames.chElementName[i] );
+			bangin(chLine);
+
+		}
 	}
 
 	if( gv.lgDustOn() )

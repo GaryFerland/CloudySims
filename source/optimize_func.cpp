@@ -154,8 +154,18 @@ chi2_type optimize_func(const realnum param[],
 		cdWarnings(ioQQQ);
 
 		/* print header before any of the individual chi2 values are printed */
+		int wlab = 4;
+		for( i=0; i < long(optimize.chTempLab.size()); i++ )
+		{
+			wlab = max(wlab,optimize.chTempLab[i].size());
+		}
+		for( i=0; i < long(optimize.chColDen_label.size()); i++ )
+		{
+			wlab = max(wlab,optimize.chColDen_label[i].size());
+		}
 		if( optimize.lgOptimize )
-			fprintf( ioQQQ, "  ID                    Model       Observed    error      chi**2     Type\n" );
+			fprintf( ioQQQ, " %*.*s%7s%12.12s%12.12s%12.12s%12.12s Type\n",
+						wlab,wlab,"ID","","Model","Observed","error","chi**2");
 		else
 			ASSERT( grid.lgGrid );
 
@@ -251,7 +261,8 @@ chi2_type optimize_func(const realnum param[],
 			nobs_cat[cat]++;
 			chi2_cat[cat] += chi1;
 
-			fprintf( ioQQQ, " %4.4s%7ld%12.4e%12.4e%12.5f%12.2e Temperature\n",
+			fprintf( ioQQQ, " %*.*s%7ld%12.4e%12.4e%12.5f%12.2e Temperature\n",
+						wlab, wlab,
 				 optimize.chTempLab[i].c_str(), optimize.ionTemp[i], temp_theory,
 				 optimize.temp_obs[i], optimize.temp_error[i], chi1 );
 		}
@@ -272,8 +283,9 @@ chi2_type optimize_func(const realnum param[],
 			cat = 1;
 			nobs_cat[cat]++;
 			chi2_cat[cat] += chi1;
-
-			fprintf( ioQQQ, " %4.4s%7ld%12.4e%12.4e%12.5f%12.2e Column density\n", 
+			
+			fprintf( ioQQQ, " %*.*s%7ld%12.4e%12.4e%12.5f%12.2e Column density\n",
+						wlab,wlab,
 				 optimize.chColDen_label[i].c_str(), optimize.ion_ColDen[i], theocl, 
 				 optimize.ColDen_Obs[i], optimize.ColDen_error[i], chi1 );
 		}

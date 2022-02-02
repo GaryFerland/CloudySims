@@ -22,15 +22,16 @@
 #include "dense.h"
 #include "vectorize.h"
 #include "prt.h"
+#include "save.h"
 #include "iterations.h"
+#include "species.h"
 
 
 STATIC void iso_multiplet_opacities_one(
 	const long int ipISO, const long int nelem);
 
 /* solve for level populations  */
-void iso_level( const long int ipISO, const long int nelem, double &renorm,
-		bool lgPrtMatrix )
+void iso_level( const long int ipISO, const long int nelem, double &renorm )
 {
 	long int ipHi,
 		ipLo,
@@ -237,7 +238,7 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 				else
 				{
 					RadDecay[ipLo] = MAX2( iso_ctrl.SmallA, sp->trans(level,ipLo).Emis().Aul()*
-												  (sp->trans(level,ipLo).Emis().Ploss()) );
+							       		  (sp->trans(level,ipLo).Emis().Ploss()) );
 					pump[ipLo] = MAX2( iso_ctrl.SmallA, sp->trans(level,ipLo).Emis().pump() );
 				}
 			}
@@ -482,11 +483,20 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 		}
 
 
-		if( lgPrtMatrix )
+		if( sp->lgPrtMatrix )
 		{
 			valarray<double> c( get_ptr(creation), creation.size() );
 			prt.matrix.prtRates( numlevels_local, z, c );
 		}
+
+		if( sp->lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
+				save.img_matrix.matchZone( nzone ) )
+		{
+			valarray<double> SaveC( get_ptr(Save_creation), Save_creation.size() );
+			save.img_matrix.createImage( iteration, nzone,
+							numlevels_local, SaveZ, SaveC );
+		}
+
 
 		nerror = 0;
 
@@ -501,6 +511,15 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 			fprintf( ioQQQ, " iso_level: dgetrs finds singular or ill-conditioned matrix\n" );
 			cdEXIT(EXIT_FAILURE);
 		}
+
+		if( sp->lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
+				save.img_matrix.matchZone( nzone ) )
+		{
+			valarray<double> SavePops( get_ptr(creation), creation.size() );
+			save.img_matrix.addImagePop_FITS( iteration, nzone,
+								numlevels_local, SavePops );
+		}
+
 
 		/* check whether solution is valid */
 		/* >>chng 06 aug 28, both of these from numLevels_max to _local. */
@@ -632,10 +651,10 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 			/* sp->st[level].PopLTE = 0.; */
 		}
 
-		/* TotalPopExcited is sum of excited level pops */
 		/* renormalize the populations to agree with ion solver */
 		iso_renorm( nelem, ipISO, renorm );
 
+		/* TotalPopExcited is sum of excited level pops */
 		double TotalPopExcited = 0.;
 		/* create sum of populations */
 		for( level=1; level < numlevels_local; level++ )
@@ -663,6 +682,18 @@ void iso_level( const long int ipISO, const long int nelem, double &renorm,
 				sp->lgPopsRescaled = true;
 			}	
 			ASSERT( sp->st[0].Pop() >= 0. );
+		}
+
+		if( lgNegPop && !iso_ctrl.lgLTE_levels[ipISO] )
+		{
+			string species = makeChemical( nelem, nelem-ipISO );
+			valarray<double> SaveC( get_ptr(Save_creation), Save_creation.size() );
+			save.img_matrix.createImage( species, iteration, nzone,
+							numlevels_local, SaveZ, SaveC, true );
+
+			valarray<double> SavePops( get_ptr(creation), creation.size() );
+			save.img_matrix.addImagePop_FITS( species, iteration, nzone,
+							numlevels_local, SavePops, true );
 		}
 	}
 	/* all solvers end up here */

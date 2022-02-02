@@ -98,7 +98,9 @@ monitor line luminosity "blnd" 1549 9.645  ##total of sum of both C IV comp
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line luminosity "H  1" 4861.33A 8.972 error 0.1 
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line luminosity "H  1" 4861.32A 8.972 error 0.1 
 ##
 ## >>chng 12 oct 09, from 8.929 to 8.952, fix CRD esc prob
 ## >>chng 12 dec 11, from 8.952 to 8.93, CX to ground state
@@ -107,7 +109,9 @@ monitor line luminosity "H  1" 4861.33A 8.972 error 0.1
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line luminosity "Inwd" 4861.33A 8.906, 
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line luminosity "Inwd" 4861.32A 8.906, 
 ## 
 ## >>chng 12 apr 02, from 9.469 to 9.789, Chianti 7 change, gcc 4.4.6 wolkje
 ## >>chng 12 apr 18, from 9.789 to 9.76, stout merge
@@ -154,7 +158,8 @@ monitor line luminosity "Inwd" 4861.33A 8.906,
 ## >>chng 16 aug 18, from 9.442 to 9.06, enhanced coll ion from highest n
 ## >>chng 16 nov 14, from 9.06 to 8.917, Reintegration of RydDep after several bug fixes
 ## >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
-monitor line luminosity "he 2"  1640.40A 8.917 error 0.2  ##total He II Balmer-alpha 1640
+## >>chng 21 apr 08, wl from 1640.40A to 1640.41A, up 1-e energies to np
+monitor line luminosity "he 2"  1640.41A 8.917 error 0.2  ##total He II Balmer-alpha 1640
 ## 
 ## >>chng 12 apr 02, from 7.349 to 7.457, Chianti 7 change, gcc 4.4.6 wolkje
 ## >>chng 12 apr 28, from 7.457 to 7.44  middling of all runs

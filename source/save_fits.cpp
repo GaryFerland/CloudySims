@@ -65,6 +65,8 @@ static long gcount = 1;
 static long maxParamValues = 0;
 const char ModelUnits[2][17] = {"'dimensionless '", "'photons/cm^2/s'" };
 
+static const long bitpix_img = -64;
+
 STATIC void punchFITS_PrimaryHeader( bool lgAddModel, bool lgNormalize );
 STATIC void punchFITS_ParamHeader( /* long *numParamValues, */ long nintparm, long naddparm );
 STATIC void punchFITS_ParamData( const vector<string>& paramNames, vector<long>& paramMethods,
@@ -82,6 +84,7 @@ STATIC void writeCloudyDetails( void );
 STATIC long addComment( const string& CommentToAdd );
 STATIC long addKeyword_txt( const char *theKeyword, const void *theValue, const char *theComment, long Str_Or_Log );
 STATIC long addKeyword_num( const char *theKeyword, long theValue, const char *theComment);
+STATIC long addKeyword_dbl( const char *theKeyword, const double theValue, const char *theComment);
 inline string int2string(int val);
 
 void saveFITSfile( FILE* ioPUN, int option, realnum Elo, realnum Ehi, realnum Enorm )
@@ -126,7 +129,7 @@ void saveFITSfile( FILE* ioPUN, int option, realnum Elo, realnum Ehi, realnum En
 		punchFITS_GenericData();
 	}
 	/* These are specially designed XSPEC outputs. */
-	/* the code below will only be executed during te gather phase of the grid */
+	/* the code below will only be executed during the gather phase of the grid */
 	else if( option < NUM_OUTPUT_TYPES )
 	{
 		/* option 10 is exp(-tau). */
@@ -777,6 +780,23 @@ STATIC long addKeyword_num( const char *theKeyword, long theValue, const char *t
 	return numberOfBytesWritten;
 }
 
+STATIC long addKeyword_dbl( const char *theKeyword, const double theValue, const char *theComment)
+{
+	long numberOfBytesWritten = 0;
+
+	DEBUG_ENTRY( "addKeyword_dbl()" );
+
+	numberOfBytesWritten = fprintf(ioFITS_OUTPUT, "%-8s%-2s%20.4e%3s%-47s",
+		theKeyword,
+		"= ",
+		theValue,
+		" / ",
+		theComment );
+
+	ASSERT( numberOfBytesWritten%LINESIZE == 0 );
+	return numberOfBytesWritten;
+}
+
 long addComment( const string& CommentToAdd )
 {
 	DEBUG_ENTRY( "addComment()" );
@@ -810,3 +830,182 @@ inline string int2string(int val)
 	return oss2.str();
 }
 
+//------------------------------------------------------------------------------
+STATIC void get_data_minmax( const long nPixels,
+				const multi_arr<double,2,C_TYPE> &a,
+				double &datamin, double &datamax )
+{
+	DEBUG_ENTRY( "get_data_minmax()" );
+
+	datamax = -1e300;
+	datamin = 1e300;
+
+	for( long irow = 0; irow < nPixels; irow++ )
+	{
+		for( long icol = 0; icol < nPixels; icol++ )
+		{
+			if( a[irow][icol] > datamax )
+				datamax = a[irow][icol];
+			if( a[irow][icol] < datamin )
+				datamin = a[irow][icol];
+		}
+	}
+
+	return;
+}
+
+STATIC void get_data_minmax( const long nCols, const valarray<double> &a,
+				double &datamin, double &datamax )
+{
+	DEBUG_ENTRY( "get_data_minmax()" );
+
+	datamax = -1e300;
+	datamin = 1e300;
+
+	for( long icol = 0; icol < nCols; icol++ )
+	{
+		if( a[icol] > datamax )
+			datamax = a[icol];
+		if( a[icol] < datamin )
+			datamin = a[icol];
+	}
+
+	return;
+}
+
+STATIC void punchFITSimg_PrimaryHeader()
+{
+	DEBUG_ENTRY( "punchFITSimg_PrimaryHeader()" );
+
+	bytesAdded = 0;
+
+	bytesAdded += addKeyword_txt( "SIMPLE", "T",	"file does conform to FITS standard", 1 );
+	bytesAdded += addKeyword_num( "BITPIX", bitpix,	"number of bits per data pixel" );
+	bytesAdded += addKeyword_num( "NAXIS" , 0,	"number of data axes" );
+	bytesAdded += addKeyword_txt( "EXTEND", "T",	"FITS dataset may contain extensions", 1 );
+
+	/* bytes are added here as well */
+	writeCloudyDetails();
+
+	bytesAdded += fprintf(ioFITS_OUTPUT, "%-80s", "END" );
+
+	ASSERT( bytesAdded % LINESIZE == 0 );
+
+	/* Now add blanks */
+	while( bytesAdded % RECORDSIZE > 0 )
+	{
+		bytesAdded += fprintf(ioFITS_OUTPUT, "%-1s", " " );
+	}
+	return;
+}
+
+STATIC void punchFITSimg_ExtensionHeader( const string &extName,
+					const string &units,
+					const long nCols, const long nRows,
+					const double datamin, const double datamax )
+{
+	DEBUG_ENTRY( "punchFITSimg_ExtensionHeader()" );
+
+	string name = "'" + extName + "'";
+	string bunits = "'" + units + "'";
+
+	bytesAdded += addKeyword_txt( "XTENSION", "'IMAGE   '",	"IMAGE extension", 0 );
+	bytesAdded += addKeyword_num( "BITPIX"  , bitpix_img,	"number of bits per data pixel" );
+	bytesAdded += addKeyword_num( "NAXIS"   , 2,		"number of data axes" );
+	bytesAdded += addKeyword_num( "NAXIS1"  , nCols,	"length of data axis 1" );
+	bytesAdded += addKeyword_num( "NAXIS2"  , nRows,	"length of data axis 2" );
+	bytesAdded += addKeyword_num( "PCOUNT"  , 0,		"required keyword; must = 0" );
+	bytesAdded += addKeyword_num( "GCOUNT"  , 1,		"required keyword; must = 1" );
+	bytesAdded += addKeyword_txt( "EXTNAME" , name.c_str(),	"Extension Name", 0 );
+	bytesAdded += addKeyword_num( "EXTVER"  , 1,		"Extension Version" );
+	bytesAdded += addKeyword_dbl( "DATAMIN" , datamin,	"Lowest non-zero array value" );
+	bytesAdded += addKeyword_dbl( "DATAMAX" , datamax,	"Highest array value" );
+	bytesAdded += addKeyword_txt( "BUNIT"   , bunits.c_str(),"Image Units", 0 );
+
+	/* After everything else */
+	bytesAdded += fprintf(ioFITS_OUTPUT, "%-80s", "END" );
+
+	ASSERT( bytesAdded%LINESIZE == 0 );
+
+	/* Now add blanks */
+	while( bytesAdded%RECORDSIZE > 0 )
+	{
+		bytesAdded += fprintf(ioFITS_OUTPUT, "%-1s", " " );
+	}
+	return;
+}
+
+STATIC void punchFITSimg_ExtensionData_matrix( const long nPixels,
+					const multi_arr<double,2,C_TYPE> &image )
+{
+	DEBUG_ENTRY( "punchFITSimg_ExtensionData_matrix()" );
+
+	for( long irow = 0; irow < nPixels; irow++ )
+	{
+		for( long icol = 0; icol < nPixels; icol++ )
+		{
+			double v = image[irow][icol];
+#if !defined(_BIG_ENDIAN) 
+			ByteSwap5(v);
+#endif
+			bytesAdded += (long)fwrite( &v, 1, sizeof(double), ioFITS_OUTPUT );
+		}
+	}
+
+	int tempInt = 0;
+	while( bytesAdded % RECORDSIZE > 0 )
+		bytesAdded += (long)fwrite( &tempInt, 1, 1, ioFITS_OUTPUT );
+
+	return;
+}
+
+STATIC void punchFITSimg_ExtensionData_vector( const long nCols,
+					const valarray<double> &vec )
+{
+	DEBUG_ENTRY( "punchFITSimg_ExtensionData_vec()" );
+
+	for( long icol = 0; icol < nCols; icol++ )
+	{
+		double v = vec[icol];
+#if !defined(_BIG_ENDIAN) 
+		ByteSwap5(v);
+#endif
+		bytesAdded += (long)fwrite( &v, 1, sizeof(double), ioFITS_OUTPUT );
+	}
+
+	int tempInt = 0;
+	while( bytesAdded % RECORDSIZE > 0 )
+		bytesAdded += (long)fwrite( &tempInt, 1, 1, ioFITS_OUTPUT );
+
+	return;
+}
+
+void saveFITSimg( FILE *ioPUN, const string &extName, const string &units,
+		const long nPixels, const multi_arr<double,2,C_TYPE> &image )
+{
+	DEBUG_ENTRY( "saveFITSimg()" );
+
+	double datamin,
+	       datamax;
+	get_data_minmax( nPixels, image, datamin, datamax );
+
+	ioFITS_OUTPUT = ioPUN;
+	punchFITSimg_PrimaryHeader();
+	punchFITSimg_ExtensionHeader( extName, units, nPixels, nPixels,
+					datamin, datamax );
+	punchFITSimg_ExtensionData_matrix( nPixels, image );
+}
+
+void saveFITSimg( FILE *ioPUN, const string &extName, const string &units,
+			const long nCols, const valarray<double> &vec )
+{
+	DEBUG_ENTRY( "saveFITSimg()" );
+
+	double datamin,
+	       datamax;
+	get_data_minmax( nCols, vec, datamin, datamax );
+
+	ioFITS_OUTPUT = ioPUN;
+	punchFITSimg_ExtensionHeader( extName, units, nCols, 1, datamin, datamax );
+	punchFITSimg_ExtensionData_vector( nCols, vec );
+}

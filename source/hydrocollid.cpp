@@ -565,7 +565,7 @@ STATIC double C6cs123(QNPack inLo, QNPack inHi)
 	}
 	else if( inLo == in2 && ( inHi == in4 || inHi == in5 || inHi == in6 ) )
 	{
-		/* 2s - 3 (second entry)         */
+		/* 2s - 3 (second entry) */
 		C6cs123_v = a[1] + b[1]*x + c[1]*pow2(x)*sqrt(x) + d[1]*logx + 
 		  e[1]*logx/pow2(x);
 	}
@@ -640,7 +640,7 @@ STATIC double Ca20cs123(QNPack inLo, QNPack inHi)
 	}
 	else if( inLo == in2 && ( inHi == in4 || inHi == in5 || inHi == in6 ))
 	{
-		/* 2s - 3 (second entry)         */
+		/* 2s - 3 (second entry) */
 		Ca20cs123_v = a[1] + b[1]*x + c[1]*pow2(x)*sqrt(x) + d[1]*logx + 
 		  e[1]*logx/pow2(x);
 	}
@@ -713,7 +713,7 @@ STATIC double Ne10cs123(QNPack inLo, QNPack inHi)
 	}
 	else if( inLo == in2 && ( inHi == in4 || inHi == in5 || inHi == in6 ) )
 	{
-		/* 2s - 3 (second entry)         */
+		/* 2s - 3 (second entry) */
 		Ne10cs123_v = a[1] + b[1]*x + c[1]*pow2(x)*sqrt(x) + d[1]*logx + 
 		  e[1]*logx/pow2(x);
 	}
@@ -799,7 +799,7 @@ STATIC double He2cs123(QNPack inLo, QNPack inHi)
 	}
 	else if( inLo == in2 && inHi == in4 )
 	{
-		/* 2s - 3s (sixth entry)         */
+		/* 2s - 3s (sixth entry) */
 		He2cs123_v = (a[5] + c[5]*t)/(1 + b[5]*t);
 	}
 	else if( inLo == in2 && inHi == in5 )
@@ -891,7 +891,7 @@ STATIC double Fe26cs123(QNPack inLo, QNPack inHi)
 	}
 	else if( inLo == in2 && ( inHi == in4 || inHi == in5 || inHi == in6 ) )
 	{
-		/* 2s - 3 (second entry)         */
+		/* 2s - 3 (second entry) */
 		Fe26cs123_v = a[1] + b[1]*x + c[1]*pow2(x)*sqrt(x) + d[1]*logx + 
 		  e[1]*logx/pow2(x);
 	}
@@ -925,7 +925,7 @@ realnum HydroCSInterp(long nelem,
 	long nLo = iso_sp[ipH_LIKE][nelem].st[ipLo].n();
 	long lLo = iso_sp[ipH_LIKE][nelem].st[ipLo].l();
 	long sLo = iso_sp[ipH_LIKE][nelem].st[ipLo].S();
-	long gLo = iso_sp[ipH_LIKE][nelem].st[ipLo].g();
+	//	long gLo = iso_sp[ipH_LIKE][nelem].st[ipLo].g();
 	double IP_Ryd_Lo = iso_sp[ipH_LIKE][nelem].fb[ipLo].xIsoLevNIonRyd;
 	double Aul = iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo).Emis().Aul();
 	// collisions are from high to low level, then initial level lifetime is from higher level
@@ -934,16 +934,16 @@ realnum HydroCSInterp(long nelem,
 	double EnerErg = iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo).EnergyErg();
 	const char *where="      ";
 
-	double CStemp = GetHlikeCollisionStrength( nelem, ipCollider,
+	realnum CStemp = GetHlikeCollisionStrength( nelem, ipCollider,
 					nHi, lHi, sHi, gHi, IP_Ryd_Hi,
-					nLo, lLo, sLo, gLo, IP_Ryd_Lo,
+					nLo, lLo, sLo,/*gLo,*/ IP_Ryd_Lo,
 					Aul, tauLo, EnerWN, EnerErg, &where );
-	return (realnum)CStemp;
+	return CStemp;
 }
 
 realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 					long nHi, long lHi, long sHi, long gHi, double IP_Ryd_Hi,
-					long nLo, long lLo, long sLo, long gLo, double IP_Ryd_Lo,
+					long nLo, long lLo, long sLo, /*long gLo,*/ double IP_Ryd_Lo,
 					double Aul, double tauLo, double EnerWN, double EnerErg, const char **where )
 {
 	DEBUG_ENTRY( "GetHlikeCollisionStrength()" );
@@ -1022,7 +1022,7 @@ realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 			else if( ipCollider == ipELECTRON )
 			{
 				CStemp = CS_ThermAve_PR78( ipH_LIKE, nelem, nHi, nLo,
-					EnerErg / EN1RYD, phycon.te );
+								EnerErg / EN1RYD, phycon.te );
 
 				/* The data retourned by the previous routine is not resolved in l */
 				lgResolvedData = false;
@@ -1152,7 +1152,7 @@ realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 			/* V&S do not have Z dependence, so is only used for neutrals */
 			if( nelem==ipHYDROGEN && (iso_ctrl.lgCS_Vriens[ipH_LIKE] || ipCollider != ipELECTRON) )
 			{
-				CStemp = CS_VS80( nHi, gHi, IP_Ryd_Hi, nLo, gLo, IP_Ryd_Lo, Aul, nelem, ipCollider, phycon.te );
+				CStemp = CS_VS80( ipH_LIKE, nHi, IP_Ryd_Hi, nLo, IP_Ryd_Lo, Aul, nelem, ipCollider, phycon.te );
 				*where = "Vriens";
 				/* This routine gives NO l-resolved data */
 				lgResolvedData = false;
@@ -1164,7 +1164,7 @@ realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 				{
 					/* Lebedev and Beigman (1998) Phys. Highly excited atoms and ions p. 222
 					 * D. Docenko 2013 Baltic Astr. 22, 363 */
-					CStemp = hydro_Lebedev_deexcit(nelem, ipH_LIKE, nHi, nLo, gLo, IP_Ryd_Lo);
+					CStemp = hydro_Lebedev_deexcit(ipH_LIKE, nelem, nHi, nLo, IP_Ryd_Lo);
 					*where = "lebed";
 					lgResolvedData = false;
 				}
@@ -1172,79 +1172,24 @@ realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 				{
 
 
-					CStemp = hydro_Fujimoto_deexcit(gHi, gLo, Aul, IP_Ryd_Hi, IP_Ryd_Lo);
+					CStemp = hydro_Fujimoto_deexcit(ipH_LIKE, nHi, nLo, Aul, IP_Ryd_Hi, IP_Ryd_Lo);
 					*where = "Fuji ";
-
 					lgResolvedData = false;
 				}
 				else if( iso_ctrl.lgCS_vrgm[ipH_LIKE])
 				{
-					/* Van regemorter formula for allowed transitions. Van Regemorter, ApJ 136 (1962) 906
-					 * The interval 0.005 < y < infty is interpolated from the results of Table 2
-					 * from Van Regemorter paper.
-					 */
-					double Py = 1.;
-					double y = deltaE_eV*EVDEGK/phycon.te;
-					const double valy[11] ={log10(0.005),-2.,log10(0.02),log10(0.04),-1.,log10(0.2),log10(0.4),0.,log10(2.),log10(4.),1.} ;
-					double a1 = sqrt(3)/2/PI*e1(0.005);
-
-					/* ensure that the transition is allowed */
-					if ( lHi > 0 && lLo >0 && abs(lHi - lLo) !=1 )
-						CStemp =0.;
-					else
-					{
-						if ( nelem == ipHYDROGEN)
-						{
-							if (y < 0.005)
-								Py = sqrt(3)/2/PI*e1(y);
-							else if (y <= 10.)
-							{
-								//Py = 0.128384/sqrt(y);
-
-								const double val[11]={log10(a1),log10(1.16), log10(0.956),log10(0.758),log10(0.493),log10(0.331),log10(0.209),-1.,log10(0.063),log10(0.040),log10(0.021)};
-								Py = linint(valy,val,11,log10(y));
-								Py=exp10(Py);
-							}
-							else
-								Py = 0.066/sqrt(y);
-
-						}
-						else
-						{
-							if (y < 0.005)
-								Py = sqrt(3)/2/PI*e1(y);
-							else if (y <= 10.)
-							{
-								const double val[11]={log10(a1),log10(1.16), log10(0.977),log10(0.788),log10(0.554),log10(0.403),log10(0.290),log10(0.214),log10(0.201),log10(0.2),log10(0.2)};
-								Py = linint(valy,val,11,log10(y));
-								Py=exp10(Py);
-								//Py = 0.154023 + 0.1099165/sqrt(y);
-							}
-							else
-								Py = 0.200;
-						}
-						double massratio = dense.AtomicWeight[nelem]*colliders.list[ipCollider].mass_amu/
-								(dense.AtomicWeight[nelem]+colliders.list[ipCollider].mass_amu)*ATOMIC_MASS_UNIT/ELECTRON_MASS;
-
-						CStemp = 20.6*Aul/pow3(EnerWN)/phycon.sqrte*Py;
-
-						double factor = ( COLL_CONST * powpq(massratio, -3, 2) ) / phycon.sqrte / gHi;
-
-						/* convert to collision strength */
-						CStemp = CStemp / factor;
-						*where = "vrgm ";
-
-						lgResolvedData = false;
-					}
+					CStemp = hydro_vanRegemorter_deexcit( ipH_LIKE, nelem, nHi, lHi, lLo,
+										EnerWN, deltaE_eV, Aul, ipCollider );
+					*where = "vrgm ";
+					lgResolvedData = false;
 				}
-
 				else
 				{
 					/* highly excited levels */
 					/* Vriens&Smeets (1980) give no Z dependence on their cross sections,
 					 * Percival and Richards (1978) have got a Z dependence so their rates are preferred */
 					CStemp = CS_ThermAve_PR78( ipH_LIKE, nelem, nHi, nLo,
-                                        EnerErg / EN1RYD, phycon.te );
+									EnerErg / EN1RYD, phycon.te );
 					*where = "PR78  ";
 					/* This routine gives NO l-resolved data */
 					lgResolvedData = false;
@@ -1260,11 +1205,36 @@ realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 	}
 
 	/*
-	 * Resolved routines can also provide collapsed data
+	 * Resolve collision strengths for n-changing collisions
+	 * from collapsed to resolved levels
 	 */
 	if (!lgResolvedData && nLo <= iso_sp[ipH_LIKE][nelem].n_HighestResolved_max)
 	{
-	CStemp *= CSresolver(ipH_LIKE, nHi, lHi, sHi, nLo, lLo, sLo, iso_sp[ipH_LIKE][nelem].n_HighestResolved_max);
+		double l_resolve =
+			CSresolver(ipH_LIKE, nHi, lHi, sHi, nLo, lLo, sLo,
+					iso_sp[ipH_LIKE][nelem].n_HighestResolved_max);
+
+		enum {DEBUG_LOC = false};
+		if( DEBUG_LOC )
+		{
+			if( nelem == ipHYDROGEN &&
+				(nHi == iso_sp[ipH_LIKE][nelem].n_HighestResolved_max + 15) &&
+				 nLo == iso_sp[ipH_LIKE][nelem].n_HighestResolved_max )
+			{
+				fprintf( ioQQQ, "nelem: %ld"
+						"  (nHi, lHi, sHi): (%ld, %ld, %ld) ->"
+						"  (nLo, lLo, sLo): (%ld, %ld, %ld)"
+						"\t CS: %.4e"
+						"\t l-reslv: %.4e ->"
+						"\t final: %.4e\n",
+						nelem,
+						nHi, lHi, sHi,
+						nLo, lLo, sLo,
+						CStemp, l_resolve, CStemp * l_resolve );
+			}
+		}
+
+		CStemp *= l_resolve;
 	}
 
 	return (realnum)CStemp;
