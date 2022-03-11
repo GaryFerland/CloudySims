@@ -118,7 +118,7 @@ void RT_line_one_tauinc(const TransitionProxy&  t ,
 			dTau_total = -20.;
 		}
 		
-		t.Emis().TauIn() = dTau_total;
+		t.Emis().TauIn() = 0.5*dTau_total;
 		t.Emis().TauCon() = dTau_total;
 		t.Emis().TauTot() = dTau_total;
 		t.Emis().TauInSpecific() = realnum( OpacitySpecific * EffectiveThickness );
