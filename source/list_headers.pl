@@ -1,10 +1,10 @@
 #!/usr/bin/perl
-# program to find out the C files using the header(.h) files.
+# program to find out the C++ files using the header(.h) files.
 
 # this will be list of headers
 $hfiles='headers.txt';
 
-# List of header files  and C files using them  
+# List of header files  and C++ files using them  
 $result='listfiles.list'; 
 
 print "A list of header files will be placed in ", $hfiles , "\n";
@@ -28,8 +28,9 @@ while(<IHFILE>)
   $header=$_;
   print LFILE "$header";
   $header=~s/\n//;  
-  while(defined($input=glob("*.cpp")))  #Scanning through the C files
+  while(defined($input=glob("*.h *.cpp")))  #Scanning through the C++ files
   {
+     next if $header eq $input;
      open(CFILE,"$input");
      while(<CFILE>)
      {
