@@ -179,6 +179,9 @@ bool lgElemsConserved (void)
 				sum_monatomic + sum_molecules,
 				sum_gas_phase,
 				(sum_monatomic + sum_molecules - sum_gas_phase)/sum_gas_phase );
+			fprintf(ioQQQ," Consider increasing value of conv.GasPhaseAbundErrorAllowed with SET DENSITY TOLERANCE as a workaround. "
+					"Its current value is %.2e\n" , conv.GasPhaseAbundErrorAllowed );
+			fprintf(ioQQQ," Temperature %.2e H density %.2e zone %ld \n", phycon.te, dense.gas_phase[ipHYDROGEN], nzone);
 			lgOK=false;
 		}
 		
