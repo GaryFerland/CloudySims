@@ -1,37 +1,68 @@
-Readme for Doxygen
+# Readme for Doxygen
 
-This directory contains the file needed to create doxygen documentation for the Cloudy source.  You must have doxygen, latex, and graphviz installed for this to work.
+This directory contains the file needed to create Doxygen documentation for the
+Cloudy source.  You must have `doxygen`, `latex`, and `graphviz` installed for
+this to work.
 
-Create the documentation with the command
-doxygen Doxyfile
-Open the index.html file in the html directory to view the documentation.
+To create the Doxygen documentation run the commands
+```
+$ cd doxygen 
+$ doxygen Doxyfile
+```
+(i.e., run `doxygen` from this directory).
+The documentation will be stored in the `html` directory that is created.
+Open the `html/index.html` file to view the documentation.
 
-======================================================================
 
-Doxygen is a source code documentation system that is widely used in open source projects.  It is available on the web at http://www.stack.nl/~dimitri/doxygen/  You will need a copy of the doxygen executable on your system to create the documentation.
+## Requirements
 
-graphviz
-Doxygen must be able to find the graphviz.  This is used to create equations from embedded LaTex.  Download graphviz from http://www.graphviz.org/ 
+### Doxygen
+
+Doxygen is a source code documentation system that is widely used in open
+source projects.
+You will need a copy of the `doxygen` executable on your system to create the
+documentation.
+
+It is available [on its website](https://www.doxygen.nl), along with its
+[manual](https://www.doxygen.nl/manual/index.html).
+The full description of its commands is under the
+[Special Commands](https://www.doxygen.nl/manual/commands.html) section.
+
+### Graphviz
+
+Doxygen must be able to find the `graphviz`.
+This is used to create equations from embedded LaTex.
+You may download `graphviz` from [its website](http://www.graphviz.org).
+
 If you receive the error message
+```
 > sh: dot: command not found
 > Problems running dot. Check your installation!
-this means that doxygen cannot find graphviz.
+```
+this means that `doxygen` cannot find `graphviz`.
 
-This directory includes the setup file "Doxyfile" that is needed to run doxygen.  The Cloudy download does not include the output documentation it generates.  To create documentation run doxygen with the command
-doxygen Doxyfile
-in this directory.  Doxgyen will create a new html directory below this one.  The index.html file in the html directory is the top of the documentation.
 
-The manual for doxygen can be found at http://www.stack.nl/~dimitri/doxygen/download.html#latestman
-The full description of its commands is under "Special Commands" in the "Reference Manual" section.
+## Files
 
-The document file doxygen_setup_style.txt in this directory contains some notes on how Cloudy uses doxygen.
-
-==============================================
-
-the file Doxyfile was created with the gui that is lauchned with the command 
+This directory includes the setup file `Doxyfile` that is needed to run
+`doxygen`.
+It was created with the gui that is lauchned with the command 
+```
 doxywizard Doxyfile
+```
 this is used to set the parameters for the generated output.
 
-Good luck,
-Gary Ferland
-http://www.nublado.org 
+The document file `doxygen_setup_style.txt` in this directory contains some
+notes on how Cloudy uses `doxygen`.
+
+
+
+## Questions
+
+If you run into problems, visit the
+[Cloudy forum](https://cloudyastrophysics.groups.io), where you can search
+among previous questions for help, or post a new question.
+
+Good luck,<br>
+Gary Ferland<br>
+[https://www.nublado.org](https://www.nublado.org)
