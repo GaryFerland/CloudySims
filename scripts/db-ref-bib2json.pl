@@ -130,6 +130,8 @@
 # Chatzikos, 2016-Jan-27
 # Chatzikos, 2016-Mar-28
 # 	Implement non-interactive mode.
+# Chatzikos, 2022-Apr-12
+# 	Update ADS URL
 #
 
 use warnings;
@@ -846,7 +848,8 @@ sub query_ADS_one_db
 		Authors		=>	$authors,
 		AuthorLogic	=>	"AND",
 		StartYear	=>	$year,
-		EndYear		=>	$year );
+		EndYear		=>	$year,
+       		URL		=>	"ui.adsabs.harvard.edu", );
 	$query->{OPTIONS}{db_key} = $ads_db;
 
 	my $results = $query->querydb();
@@ -1903,8 +1906,11 @@ foreach my $db ( @$db )
 	#	die "$dbdir:\t @all\n";
 
 	my $species_hash = &get_species_subset( $species_list, $all_species, $db );
-	#	my @all = keys %$species_hash;
-	#	die "$dbdir:\t @all\n";
+	if( 0 )
+	{
+		my @all = keys %$species_hash;
+		die "$dbdir:\t @all\n";
+	}
 
 	&get_references( $forceADSquery, $db, $ds, $species_hash );
 	&clean_hash( $all_species );
