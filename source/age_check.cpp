@@ -39,14 +39,17 @@ void AgeCheck(void)
 
 	for( i=0; i < limit; i++ )
 	{
-		timesc.time_therm_long = 
-			MAX2( timesc.time_therm_long ,
-			struc.DenParticles[i]*BOLTZMANN*1.5*struc.testr[i]/struc.coolstr[i]);
-		timesc.time_therm_short = 
-			MIN2( timesc.time_therm_short ,
-			struc.DenParticles[i]*BOLTZMANN*1.5*struc.testr[i]/struc.coolstr[i]);
-		/*>>chng 99 feb 01, had div by heating, changed to cooling so constant
-		 * temperature models are more realistic */
+		if( struc.coolstr[i]>SMALLFLOAT )
+		{
+			timesc.time_therm_long =
+				MAX2( timesc.time_therm_long ,
+				struc.DenParticles[i]*BOLTZMANN*1.5*struc.testr[i]/struc.coolstr[i]);
+			timesc.time_therm_short =
+				MIN2( timesc.time_therm_short ,
+				struc.DenParticles[i]*BOLTZMANN*1.5*struc.testr[i]/struc.coolstr[i]);
+			/*>>chng 99 feb 01, had div by heating, changed to cooling so constant
+			 * temperature models are more realistic */
+		}
 	}
 
 	tlong = MAX2(tlong,timesc.time_therm_long);
