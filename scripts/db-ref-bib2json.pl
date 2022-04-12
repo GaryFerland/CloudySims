@@ -131,7 +131,7 @@
 # Chatzikos, 2016-Mar-28
 # 	Implement non-interactive mode.
 # Chatzikos, 2022-Apr-12
-# 	Update ADS URL
+# 	Update and parametrize ADS URL
 #
 
 use warnings;
@@ -208,6 +208,8 @@ my $empty_files = "empty-files.txt";
 my $broken_bibtex = "broken-bibtex.txt";
 my $unresolved_ref = "unresolved-refs.txt";
 
+my $ADS_URL_service = "ui.adsabs.harvard.edu";
+my $ADS_URL = "https://". $ADS_URL_service;
 my @ads_dbs = qw/ AST PHYS PRE /;
 
 my $verbose = 1;
@@ -849,7 +851,7 @@ sub query_ADS_one_db
 		AuthorLogic	=>	"AND",
 		StartYear	=>	$year,
 		EndYear		=>	$year,
-       		URL		=>	"ui.adsabs.harvard.edu", );
+       		URL		=>	$ADS_URL, );
 	$query->{OPTIONS}{db_key} = $ads_db;
 
 	my $results = $query->querydb();
@@ -1048,7 +1050,7 @@ sub enter_ref_by_hand
 	print	"Please enter one of:\n"
 	  .	"    d to delete entry\n"
 	  .	" or r to enter a reference (as in, 'r: Ferland et al 2013, RMxAA, 49, 137'):\n"
-	  .	" or l to enter a link (as in: 'l: http://adsabs.harvard.edu/abs/2007ApJ...654.1171A'):\n"
+	  .	" or l to enter a link (as in: 'l: $ADS_URL/abs/2007ApJ...654.1171A'):\n"
 	  .	" or b to enter a bibcode (as in: 'b: 2007ApJ...654.1171A'):\t";
 	my $read_ref = <STDIN>;
 	chomp( $read_ref );
@@ -1574,7 +1576,7 @@ sub update_datafile
 		#	print "bibcode = $bibcode\t bibcode_esc = $bibcode_esc\n";
 		if( not grep( /$bibcode_esc/, @$contents ) )
 		{
-			my $line = "# http://adsabs.harvard.edu/abs/" . $bibcode ."\n";
+			my $line = "# $ADS_URL/abs/" . $bibcode ."\n";
 			push( @lines, $line );
 		}
 	}
@@ -1882,7 +1884,7 @@ sub get_references
 
 my( $forceADSquery, $db, $ds, $species_list ) = &getInput();
 
-&Astro::ADS::Query::ads_mirror( 'adsabs.harvard.edu' );
+&Astro::ADS::Query::ads_mirror( $ADS_URL_service );
 
 &BiblioToTeX::set_globals();
 &set_globals();
