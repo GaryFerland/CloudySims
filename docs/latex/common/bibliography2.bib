@@ -1,31 +1,31 @@
-The ARTICLE stuff below is /all/ latex will pick up -- that's the way
-Bibtex files work.
-
-The format is described in the Lamport's book, or (from 2 mins on
-Google...)
-
-http://www.bibtex.org/
-http://www.hep.manchester.ac.uk/u/jenny/jcwdocs/latex/bibtexbasics.html
-
-It it's a kind of basic text-only database with records
-
-doctype{name,
-  field = value,
-  nextfield = othervalue
-}
-
--- there are special rules with {} to ensure things get capitalized
- properly.  The best way to add stuff in the right format is probably
- to find a similar entry, copy it and edit...
-
-The NASA ADS database automatically provides bibtex-format data, but
-being automatically generated, it sometimes needs some tidying.  The
-ADS reference codes are obscure, so entries have been added with only
-a cross-reference which act as human-friendly aliases to the main
-entries.
-
-The \bibitem stuff is now just comments to show where the data came from,
-in case the references were messed up by ADS, it gets ignored.
+% The ARTICLE stuff below is /all/ latex will pick up -- that's the way
+% Bibtex files work.
+% 
+% The format is described in the Lamport's book, or (from 2 mins on
+% Google...)
+% 
+% http://www.bibtex.org/
+% http://www.hep.manchester.ac.uk/u/jenny/jcwdocs/latex/bibtexbasics.html
+% 
+% It it's a kind of basic text-only database with records
+% 
+% doctype{name,
+%   field = value,
+%   nextfield = othervalue
+% }
+% 
+% -- there are special rules with {} to ensure things get capitalized
+%  properly.  The best way to add stuff in the right format is probably
+%  to find a similar entry, copy it and edit...
+% 
+% The NASA ADS database automatically provides bibtex-format data, but
+% being automatically generated, it sometimes needs some tidying.  The
+% ADS reference codes are obscure, so entries have been added with only
+% a cross-reference which act as human-friendly aliases to the main
+% entries.
+% 
+% The \bibitem stuff is now just comments to show where the data came from,
+% in case the references were messed up by ADS, it gets ignored.
 
 
 @ARTICLE{2009ApJ...700.1299J,
@@ -1063,8 +1063,8 @@ archivePrefix = "arXiv",
   adsnote = {Provided by the SAO/NASA Astrophysics Data System}
 }
 
-CloudyReview should also point to the current review.  The specific paper should also
-have a unique name that does not change.
+% CloudyReview should also point to the current review.
+% The specific paper should also have a unique name that does not change.
 
 
 @ARTICLE{C17,
@@ -4368,14 +4368,14 @@ booktitle = {Research supported by SERC.~Bristol, England and Boston, MA, Adam H
   adsnote = {Provided by the SAO/NASA Astrophysics Data System}
 }
 
-\bibitem[Drake(1993)]{Drake1993}
-Drake, G., 1993, Chapt 3 in \emph{Long Range Casimir Forces, theory and
-recent experiments on atomic systems}, edited by Levin \& Mihca, Plenum
-Press
-
-\bibitem[Drake(1996)]{Drake1996}
-Drake, G. W. F. 1996, in \emph{Atomic, Molecular, and Optical Physics
-Handbook}, ed. G. W. F. Drake (Woodbury: AIP), 154
+% \bibitem[Drake(1993)]{Drake1993}
+% Drake, G., 1993, Chapt 3 in \emph{Long Range Casimir Forces, theory and
+% recent experiments on atomic systems}, edited by Levin \& Mihca, Plenum
+% Press
+% 
+% \bibitem[Drake(1996)]{Drake1996}
+% Drake, G. W. F. 1996, in \emph{Atomic, Molecular, and Optical Physics
+% Handbook}, ed. G. W. F. Drake (Woodbury: AIP), 154
 
 @ARTICLE{Drake1980,
  crossref = "1980ApJS...42..351D"
@@ -5702,9 +5702,19 @@ publisher = {Berlin: Springer},
      year = {1998}
 }
 
-\bibitem[Fuhr, Martin \& Wiese(1988)]{Fuhr1988}
-Fuhr, J. R., Martin, G. A., \& Wiese, W. L. 1988, J. Phys. Chem. Ref. Data,
-17, Suppl. 4
+@ARTICLE{FuhrMartinWiese1988,
+     crossref = "1988JPCRD..17S....F"
+}
+@ARTICLE{1988JPCRD..17S....F,
+       author = {{Fuhr}, J.~R. and {Martin}, G.~A. and {Wiese}, W.~L.},
+        title = "{Atomic transition probabilities. Iron through Nickel}",
+      journal = {Journal of Physical and Chemical Reference Data},
+         year = 1988,
+        month = jan,
+       volume = {17},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/1988JPCRD..17S....F},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
 
 @ARTICLE{Gaetz1983,
  crossref = "1983ApJS...52..155G"
@@ -6584,10 +6594,6 @@ archivePrefix = "arXiv",
 	Volume = 46,
 	Year = 2008}
 
-\bibitem[Hilborn(1982)]{Hilborn1982}
-%ADS: 1982AmJPh..50..982H
-Hilborn, Robert C., 1982, American Journal of Physics, 50, 982-986,
-erratum, 51 471
 @ARTICLE{Hilborn1982,
  crossref = "1982AmJPh..50..982H"
 }
@@ -6603,6 +6609,24 @@ erratum, 51 471
       doi = {10.1119/1.12937},
    adsurl = {http://cdsads.u-strasbg.fr/abs/1982AmJPh..50..982H},
   adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+@ARTICLE{Hilborn1982-erratum,
+     crossref = "1983AmJPh..51..471H"
+}
+@ARTICLE{1983AmJPh..51..471H,
+       author = {{Hilborn}, Robert C.},
+        title = "{Erratum: ``Einstein coefficients, cross sections, f values, dipole moments, and all that'' [Am. J. Phys. 50, 982 (1982)]}",
+      journal = {American Journal of Physics},
+     keywords = {32.80.-t, 32.70.Cs, 33.80.-b, 99.10.+g, Photon interactions with atoms, Oscillator strengths lifetimes transition moments, Photon interactions with molecules},
+         year = 1983,
+        month = may,
+       volume = {51},
+       number = {5},
+        pages = {471-471},
+          doi = {10.1119/1.13515},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/1983AmJPh..51..471H},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
 }
 
 @ARTICLE{Hjellming1966,
@@ -8234,9 +8258,6 @@ archivePrefix = "arXiv",
   adsnote = {Provided by the SAO/NASA Astrophysics Data System}
 }
 
-\bibitem[MacAlpine(1971)]{MacAlpine1971}
-%ADS: 1971ApJ...175...11M
-MacAlpine, G. M. 1971, ApJ, 175, 11
 @ARTICLE{MacAlpine1971,
  crossref = "1972ApJ...175...11M"
 }
