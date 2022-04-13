@@ -5,6 +5,10 @@
 # Chatzikos, 2016-Jan-28
 # Chatzikos, 2022-Apr-12
 # 	Bugfix: In custom_to_json, protect against missing 'ref' key.
+# Chatzikos, 2022-Apr-13
+# 	Rename prep_bibtex to define_month_macros, and disable its calling
+# 	-- current installation issues warnings like:
+# 	   warning: overriding existing definition of macro "sep"
 #
 use warnings;
 use strict;
@@ -503,7 +507,7 @@ sub sort_biblio
 	#	die;
 }
 
-sub prep_bibtex
+sub define_month_macros
 {
 	foreach my $month ( qw/jan feb mar apr may jun jul aug sep oct nov dec/ )
 	{
@@ -513,7 +517,9 @@ sub prep_bibtex
 
 sub load_cloudy_bibliography
 {
-	&prep_bibtex();
+	&define_month_macros()
+		if 0;	# Enable if you get warnings about
+			# unknown macros for months
 
 	my $bibfile = Text::BibTeX::File->new( $bibliography ) ;
 
