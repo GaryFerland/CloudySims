@@ -143,6 +143,8 @@
 # 	- always prune non-existent refs from data structure (for JSON file),
 # 	  not only in interactive mode;
 # 	- process ADAS refs, and private communications;
+# 	- report files without references, after the references have been
+# 	  processed (BUGFIX).
 #
 
 use warnings;
@@ -1719,6 +1721,7 @@ sub get_file_references
 		print "filename= '$filename'\n";
 		print "db = '$db'\n";
 	}
+
 	my $contents = &BiblioToTeX::read_contents( $filename );
 	my $data;
 	if( $db eq 'stout' )
@@ -1727,16 +1730,20 @@ sub get_file_references
 		my $refs = &get_stout_refs( $db, $contents );
 		$data = $contents;
 		$contents = $refs;
-		&report_empty_files( "../data/stout/".$filename, $data, $refs );
 	}
 	else
 	{
 		$data = &get_data( $db, $contents );
 	}
+
 	return
 		if( not @$data );
-	#	print "data:\t". @$data ."\n";
-	#	print "rest:\t". @$contents ."\n";
+
+	if( 0 )
+	{
+		print "data:\t". @$data ."\n";
+		print "rest:\t". @$contents ."\n";
+	}
 
 	my $refs;
 	if( $db eq "stout" )
@@ -1752,7 +1759,6 @@ sub get_file_references
 		$refs = &parse_lamda_comments( $filename, $contents );
 	}
 
-
 	if( defined( $interactive ) )
 	{
 		#	&report_refs( $refs );
@@ -1766,6 +1772,9 @@ sub get_file_references
 				$species, $refs );
 	&update_datafile( $bibcodes, $contents, $filename )
 		if( defined( $interactive ) and $db eq "stout" );
+
+	&report_empty_files( "../data/stout/".$filename, $data, $refs )
+		if( $db eq 'stout' );
 
 	return	$refs;
 }
@@ -1895,7 +1904,7 @@ sub update_refs_data
 		# Now do the reverse: prune all stored data that are not in the
 		# current version of the file
 		my @rm_index;
-		#	print @{ $$refs_data{$sp}{ref}{$datatype} }."\n";
+		print @{ $$refs_data{$sp}{ref}{$datatype} }."\n"	if 0;
 		for( my $iref = 0; $iref < @{ $$refs_data{$sp}{ref}{$datatype} }; $iref++ )
 		{
 			my $ref = $$refs_data{$sp}{ref}{$datatype}[ $iref ];
