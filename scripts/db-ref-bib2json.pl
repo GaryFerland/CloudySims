@@ -142,7 +142,7 @@
 # 	  if needed;
 # 	- always prune non-existent refs from data structure (for JSON file),
 # 	  not only in interactive mode;
-# 	- process ADAS refs;
+# 	- process ADAS refs, and private communications;
 #
 
 use warnings;
@@ -1237,6 +1237,10 @@ sub parse_stout_comments
 				$version .= "  $1";
 			}
 			$ref{name} = $version;
+		}
+		elsif( $ref =~ m/private comm/ )
+		{
+			$ref{name} = $ref;
 		}
 		elsif( defined( $interactive ) )
 		{
