@@ -111,7 +111,6 @@
 # 	$ cpanm JSON
 # 	$ cpanm Astro::ADS
 # 	$ cpanm Text::BibTeX
-# 	$ cpanm LWP::Simple
 #
 # Usage examples:
 # 1. Process the entire Stout data base, that is, all files of all species.
@@ -157,7 +156,6 @@ use JSON;
 
 use Astro::ADS::Query;
 use Text::BibTeX;
-use LWP::Simple;
 
 use BiblioToTeX;
 
@@ -223,7 +221,9 @@ my $unresolved_ref = "unresolved-refs.txt";
 
 my $ADS_URL_service = "ui.adsabs.harvard.edu";
 my $ADS_URL = "https://". $ADS_URL_service;
-my @ads_dbs = qw/ AST PHYS PRE /;
+
+my $ADS_URL_token = $ADS_URL ."/user/settings/token";
+my $ADS_token = undef;
 
 my $verbose = 1;
 my $interactive;
@@ -528,7 +528,7 @@ sub clean_hash
 {
 	my $all_species = shift;
 
-	my @keys_to_delete = qw/ inCloudyBib link ads_db /;
+	my @keys_to_delete = qw/ inCloudyBib link /;
 
 	foreach my $sp ( sort keys %$all_species )
 	{
@@ -854,9 +854,9 @@ sub form_bibcode_ending
 #################################################################################
 sub query_ADS_one_db
 {
-	my( $bibcode_match, $year, $authors, $ads_db ) = @_;
+	my( $bibcode_match, $year, $authors ) = @_;
 
-	print "Querying ADS db $ads_db ...";
+	print "Querying ADS...";
 
 
 	my $query = Astro::ADS::Query->new(
@@ -864,7 +864,6 @@ sub query_ADS_one_db
 		AuthorLogic	=>	"AND",
 		StartYear	=>	$year,
 		EndYear		=>	$year, );
-	$query->{OPTIONS}{db_key} = $ads_db;
 
 	my $results = $query->querydb();
 	my @papers = $results->papers();
@@ -875,8 +874,7 @@ sub query_ADS_one_db
 		return;
 	}
 
-	print	"\nADS query of $ads_db database yielded "
-	  .	@papers ." matching citations:\n";
+	print	"\nADS query yielded " . @papers ." matching citations:\n";
 
 	foreach my $paper ( @papers )
 	{
@@ -912,7 +910,7 @@ sub query_ADS_one_db
 
 sub enter_bibcode_by_hand
 {
-	my( $bt, $ads_db, $skip ) = @_;
+	my( $bt, $skip ) = @_;
 
 	print "Please enter bibcode for:\n";
 	&BiblioToTeX::print_bibentry( $bt );
@@ -922,6 +920,7 @@ sub enter_bibcode_by_hand
 	print ":\t";
 	my $bibcode = <STDIN>;
 	chomp( $bibcode );
+
 	if( $bibcode eq "" and defined( $skip ) )
 	{
 		return;
@@ -930,26 +929,8 @@ sub enter_bibcode_by_hand
 	{
 		print "\t => Ignoring this reference\n";
 	}
-	else
-	{
-		if( not defined( $ads_db ) )
-		{
-			GET_ADS_DB:
-			{
-				print "Please enter ADS db:\t";
-				$ads_db = <STDIN>;
-				chomp( $ads_db );
-				if( join( ' ', @ads_dbs ) !~ $ads_db )
-				{
-					print	"Illegal choice. Options are:\t"
-					  .	join( ',', @ads_dbs ) ."\n";
-					goto GET_ADS_DB;
-				}
-			}
-		}
-	}
 
-	return	( $bibcode, $ads_db );
+	return	$bibcode;
 }
 
 sub query_ADS
@@ -962,43 +943,38 @@ sub query_ADS
 	$authors[0] = "^". $authors[0];
 	#	print "'@authors'\n";
 
-	my( $bibcode, $ads_db );
-	foreach my $this_ads_db ( @ads_dbs )
-	{
-		$ads_db = $this_ads_db;
-		$bibcode = &query_ADS_one_db( $bibcode_match, $$bt{year},
-						\@authors, $this_ads_db );
-		last
-			if( defined( $bibcode ) );
+	my $bibcode =
+		&query_ADS_one_db( $bibcode_match, $$bt{year}, \@authors );
 
-		( $bibcode, $ads_db ) =
-			&enter_bibcode_by_hand( $bt, $ads_db, 1 );
+	$bibcode = &enter_bibcode_by_hand( $bt, 1 )
+		if( not defined( $bibcode ) );
 
-		last
-			if( defined( $bibcode ) );
-
-		$bibcode = $ads_db = undef;
-	}
-
-	( $bibcode, $ads_db ) = &enter_bibcode_by_hand( $bt, $ads_db )
+	$bibcode = &enter_bibcode_by_hand( $bt )
 		if( not defined( $bibcode ) );
 
 	#	print "Got bibcode:\t $bibcode\n";
 	#	die;
 
-	return	( $bibcode, $ads_db );
+	return	$bibcode;
 }
 
 sub get_ads_bibtex
 {
-	my( $bibcode, $ads_db ) = @_;
-	my $req = "http://adsabs.harvard.edu/cgi-bin/nph-bib_query"
-		. "?bibcode=$bibcode"
-		. "&data_type=BIBTEX"
-		. "&db_key=$ads_db"
-		. "&nocookieset=1";
-	#	print "$req\n";
-	return	&LWP::Simple::get( $req );
+	my( $bibcode ) = @_;
+
+	#
+	# For detais see:
+	# https://github.com/adsabs/adsabs-dev-api/blob/master/Export_API.ipynb
+	#
+	my $req = "curl -H \"Authorization: Bearer $ADS_token\""
+		. ' -H "Content-Type: application/json"'
+		. ' https://api.adsabs.harvard.edu/v1/export/bibtex'
+		. ' -X POST'
+		. " -d '{\"bibcode\":[\"$bibcode\"]}'";
+	print $req ."\n";
+	my $resp = `$req`;
+	$resp = &JSON::from_json( $resp );
+	return $$resp{export};
 }
 
 
@@ -1397,14 +1373,12 @@ sub get_bibcodes_update_biblio
 				}
 				else
 				{
-					( $$this_ref{bibcode}, $$this_ref{ads_db} ) =
-						&query_ADS( $bt );
+					$$this_ref{bibcode} = &query_ADS( $bt );
 				}
 			}
 			else
 			{
-				( $$this_ref{bibcode}, $$this_ref{ads_db} ) =
-					&query_ADS( $bt );
+				$$this_ref{bibcode} = &query_ADS( $bt );
 				$$this_ref{inCloudyBib} = 1
 					if( defined(
 						&BiblioToTeX::get_bibcode_from_Cloudy_bib( $bt ) ) );
@@ -1523,34 +1497,15 @@ sub add_ref_to_bibliography
 		return;
 	}
 
-	my $resp;
-	if( exists( $$ref{ads_db} ) and defined( $$ref{ads_db} ) )
+	my $resp = &get_ads_bibtex( $$ref{bibcode} );
+	if( defined( $resp ) and $resp ne "" )
 	{
-		$resp = &get_ads_bibtex( $$ref{bibcode}, $$ref{ads_db} );
-	}
-	else
-	{
-		foreach my $ads_db ( @ads_dbs )
+		&report_verbatim( $resp );
+		if( $resp !~ m/$$ref{bibcode}/ )
 		{
-			$resp = &get_ads_bibtex( $$ref{bibcode}, $ads_db );
-			if( defined( $resp ) and $resp ne "" )
+			if( &get_response( 1 ) eq "n" )
 			{
-				print 	"ADS database queried: $ads_db,"
-				  .	" for: $$ref{bibcode}, got:\n";
-				&report_verbatim( $resp );
-				if( $resp =~ m/$$ref{bibcode}/ )
-				{
-					$$ref{ads_db} = $ads_db;
-					last;
-				}
-				else
-				{
-					if( &get_response( 1 ) eq "y" )
-					{
-						$$ref{ads_db} = $ads_db;
-						last;
-					}
-				}
+				$resp = undef;
 			}
 		}
 	}
@@ -1976,6 +1931,19 @@ sub get_references
 #################################################################################
 
 my( $forceADSquery, $db, $ds, $species_list ) = &getInput();
+
+if( defined( $interactive ) )
+{
+	print "Please enter an ADS token.  You may create one at:\n"
+	  .	"\t$ADS_URL_token\n";
+	while( 1 )
+	{
+		print "Enter token:\t";
+		$ADS_token = <STDIN>;
+		chomp( $ADS_token );
+		last	if( defined( $ADS_token ) );
+	}
+}
 
 &Astro::ADS::Query::ads_mirror( $ADS_URL_service );
 
