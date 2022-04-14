@@ -137,6 +137,9 @@
 # 	- process new ADS URLs, starting with 'https://ui.adsabs';
 # 	- process Stout files that either miss the 'Reference' line,
 # 	  or contain data in it;
+# 	- always process NIST refs, not only in interactive mode;
+# 	- update NIST references on data structure (for JSON file),
+# 	  if needed;
 #
 
 use warnings;
@@ -1211,20 +1214,25 @@ sub parse_stout_comments
 			my @f = split( '/', $ref{link} );
 			$ref{bibcode} = pop( @f );
 		}
+		elsif( $ref =~ m/NIST/i )
+		{
+			# The phrase 'not in NIST' appears in si_2.coll
+			next if( $line =~ m/ not / );
+
+			my $version = "NIST";
+		       	if( $ref =~ m/.*NIST\s*(\d\d\d\d-\d\d-\d\d)/ )
+			{
+				$version .= "  $1";
+			}
+			$ref{name} = $version;
+		}
 		elsif( defined( $interactive ) )
 		{
-			if( $ref =~ m/NIST/ )
-			{
-				$ref{name} = $ref;
-			}
-			else
-			{
-				# Citations employ at least 3 commas
-				#
-				my $ncommas = () = $ref =~ m/,/g;
-				$ref{name} = $ref
-					if( $ncommas >= 3 );
-			}
+			# Citations employ at least 3 commas
+			#
+			my $ncommas = () = $ref =~ m/,/g;
+			$ref{name} = $ref
+				if( $ncommas >= 3 );
 		}
 		push( @refs, \%ref )
 			if( %ref );
@@ -1780,11 +1788,17 @@ sub get_stored_ref
 	my $this_hr;
 	foreach my $hr ( @{ $refs_arr } )
 	{
-		if( exists( $$hr{$ref_type} ) and
-			$$hr{$ref_type} eq $$file_ref{$ref_type} )
+		if( exists( $$hr{$ref_type} ) )
 		{
-			$this_hr = $hr;
-			last;
+			print "$$hr{$ref_type}\t $$file_ref{$ref_type}\n"
+				if 0;
+			if( ( $$hr{$ref_type} =~ 'NIST' and
+				$$file_ref{$ref_type} =~ 'NIST' ) or
+				$$hr{$ref_type} eq $$file_ref{$ref_type} )
+			{
+				$this_hr = $hr;
+				last;
+			}
 		}
 	}
 
@@ -1811,11 +1825,47 @@ sub update_refs_data
 		}
 		elsif( exists( $$ref{name} ) and $$ref{name} ne "" )
 		{
-			#	print "ref name=\t $$ref{name}\n";
+			print "ref name=\t $$ref{name}\n"	if 0;
 			$this_hr = &get_stored_ref( $ref, 'name',
 					$$refs_data{$sp}{ref}{$datatype} );
+
+			# Update existing record, instead of adding a new one
+			if( defined( $this_hr ) )
+			{
+				my $new_date;
+
+				if( $$ref{name} =~ m/NIST +\d/ and
+					defined( $this_hr ) )
+				{
+					$$ref{name} =~ m/NIST +(\d{4}-\d\d-\d\d)/;
+					$new_date = $1;
+				}
+				elsif( $$ref{name} =~ m/NIST *\(?\d/i )
+				{
+					$$ref{name} =~ m/NIST *\(?(\d{4})/;
+					$new_date = $1;
+				}
+
+				$$this_hr{name} =~ m/NIST *(.*)/;
+
+				my $old_date = $1;
+				if( defined( $old_date ) )
+				{
+					$old_date =~ s/\(//g;
+					$old_date =~ s/\)//g;
+				}
+
+				if( defined( $new_date ) and
+					defined( $old_date ) and
+					$new_date gt $old_date )
+				{
+					print "Update $new_date > $old_date\n"
+						if 0;
+					$$this_hr{name} = $$ref{name};
+				}
+			}
 		}
-		#	print defined( $this_hr ) ? "yes\n" : "no\n";
+		print defined( $this_hr ) ? "yes\n" : "no\n"	if 0;
 
 		if( not defined( $this_hr ) )
 		{
