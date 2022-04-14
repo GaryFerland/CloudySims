@@ -295,7 +295,9 @@ sub print_species_multiple_TeX_rows
 		{
 			my $citation;
 			print	$FILE	"\t\t\t";
-			if( $i < $$nrows_per_file{$file} )
+			if( exists $$nrows_per_file{$file} and
+				defined( $$nrows_per_file{$file} ) and
+				$i < $$nrows_per_file{$file} )
 			{
 				$citation = $$ref{$file}[ $i ]{bibcode};
 				if( defined( $citation ) )
