@@ -13,7 +13,7 @@
 # The script begins by asking for an ADS token, to be obtained from:
 # 	https://ui.adsabs.harvard.edu/user/settings/token
 # and to use with queries to the ADS database for BibTeX records.  In non-
-# interactive runs ('-ni' flag, see below), this step is skipped.
+# interactive runs ('-ni' switch, see below), this step is skipped.
 #
 # It then reads the default Cloudy bibliography data base in common/.  This is
 # needed for updates of the data base itself, as discussed below.
@@ -1494,6 +1494,11 @@ sub add_ref_to_bibliography
 		   if( defined( $interactive ) );
 		return;
 	}
+	elsif( not defined( $interactive ) )
+	{
+		print "Bibcode not in .bib:\t$$ref{bibcode}\n";
+		return;
+	}
 
 	my $resp = &get_ads_bibtex( $$ref{bibcode} );
 	if( defined( $resp ) and $resp ne "" )
@@ -1510,7 +1515,7 @@ sub add_ref_to_bibliography
 
 	if( not defined( $resp ) )
 	{
-		print "Did not find $$ref{bibcode}\n";
+		print "Bibcode not on ADS:\t$$ref{bibcode}\n";
 	}
 	else
 	{
