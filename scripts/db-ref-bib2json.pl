@@ -138,8 +138,10 @@
 # 	- process Stout files that either miss the 'Reference' line,
 # 	  or contain data in it;
 # 	- always process NIST refs, not only in interactive mode;
-# 	- update NIST references on data structure (for JSON file),
+# 	- update NIST references in data structure (for JSON file),
 # 	  if needed;
+# 	- always prune non-existent refs from data structure (for JSON file),
+# 	  not only in interactive mode;
 #
 
 use warnings;
@@ -1873,7 +1875,7 @@ sub update_refs_data
 		}
 	}
 
-	if( defined( $interactive ) )
+	if( exists $$refs_data{$sp}{ref}{$datatype} )
 	{
 		# Now do the reverse: prune all stored data that are not in the
 		# current version of the file
@@ -1894,7 +1896,7 @@ sub update_refs_data
 				#	print 'name=  '. $$ref{name} ."\n";
 				$this_hr = &get_stored_ref( $ref, 'name', $file_refs );
 			}
-			#	print defined( $this_hr ) ? "yes\n" : "no\n";
+			print defined( $this_hr ) ? "yes\n" : "no\n"	if 0;
 
 			if( not defined( $this_hr ) )
 			{
