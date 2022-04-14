@@ -142,6 +142,7 @@
 # 	  if needed;
 # 	- always prune non-existent refs from data structure (for JSON file),
 # 	  not only in interactive mode;
+# 	- process ADAS refs;
 #
 
 use warnings;
@@ -1228,6 +1229,15 @@ sub parse_stout_comments
 			}
 			$ref{name} = $version;
 		}
+		elsif( $ref =~ m/\s*ADAS\s*/i )
+		{
+			my $version = "ADAS";
+		       	if( $ref =~ m/.*ADAS\s*(\d\d\d\d-\d\d-\d\d)/ )
+			{
+				$version .= "  $1";
+			}
+			$ref{name} = $version;
+		}
 		elsif( defined( $interactive ) )
 		{
 			# Citations employ at least 3 commas
@@ -1366,6 +1376,7 @@ sub get_bibcodes_update_biblio
 			push( @bibcodes, $$this_ref{bibcode} );
 		}
 		elsif( $$this_ref{name} !~ m/NIST/i and
+			$$this_ref{name} !~ m/ADAS/i and
 			$$this_ref{name} !~ m/Chianti/i and
 			$$this_ref{name} !~ m/(unpublished|private comm)/ )
 		{
