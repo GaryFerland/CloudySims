@@ -133,7 +133,10 @@
 # Chatzikos, 2022-Apr-12
 # 	Update and parametrize ADS URL
 # Chatzikos, 2022-Apr-14
-# 	Let script process new ADS URLs, starting with 'https://ui.adsabs'
+# 	Let script
+# 	- process new ADS URLs, starting with 'https://ui.adsabs';
+# 	- process Stout files that either miss the 'Reference' line,
+# 	  or contain data in it;
 #
 
 use warnings;
@@ -1150,20 +1153,14 @@ sub parse_stout_comments
 {
 	my( $filename, $contents_orig ) = @_;
 
-	my @contents = @$contents_orig;
-	if( grep( /Reference/, @contents ) )
-	{
-		shift( @contents ) while ( @contents and
-						$contents[0] !~ m/Reference/ );
-	}
-
 	my @refs;
-	foreach my $line ( @contents )
+	foreach my $line ( @$contents_orig )
 	{
+		print $line	if 0;
 		chomp( $line );
 
-		$line =~ s/^#Reference://;
-		$line =~ s/$comment_sentinel{stout}//;
+		$line =~ s/^$comment_sentinel{stout}//;
+		$line =~ s/^Reference://;
 		my $ref = $line;
 
 		if( $line =~ m/\t\w+$/ )
@@ -1624,19 +1621,37 @@ sub get_stout_refs
 {
 	my( $db, $contents ) = @_;
 
-	my( $ilines_stars, @refs ) = ( 0 );
-	do
+	my $have_Reference = 0;
+	$have_Reference = 1
+		if( grep /Reference/, @$contents );
+
+	my( $ilines_stars, $got_Reference, @refs ) = ( 0, 0 );
+	while( @$contents )
 	{
-		@refs = ();
 		unshift( @refs, pop( @$contents ) )
-			while( defined( $$contents[ -1 ] ) and
-					$$contents[ -1 ] !~ $end_of_data{$db} );
-		pop( @$contents );
-		$ilines_stars++;
-		#$ilines_stars = 2
-		#	if( @refs and $refs[0] =~ 'Reference' );
+			while( @$contents and
+				      ( $$contents[ -1 ] !~ $end_of_data{$db} and
+				        $$contents[ -1 ] !~ 'Reference' ) );
+
+		last	if not defined( $$contents[ -1 ] );
+
+		my $line = pop( @$contents );
+		$ilines_stars++		if( $line =~ $end_of_data{$db} );
+		$got_Reference = 1	if( $line =~ m/Reference/i );
+
+		last	if( $ilines_stars and not $have_Reference );
+
+		if( $have_Reference and $got_Reference )
+		{
+			# Retain reference line, as it may include data;
+			# e.g.,
+			#	'#Reference: http://adsabs....'
+			# in stout/ni/ni_11/ni_11.tp 
+			#
+			unshift( @refs, $line );
+			last;
+		}
 	}
-	while( $ilines_stars < 1 );
 
 	pop( @$contents )
 		if( defined( $$contents[-1] ) and
