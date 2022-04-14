@@ -132,6 +132,8 @@
 # 	Implement non-interactive mode.
 # Chatzikos, 2022-Apr-12
 # 	Update and parametrize ADS URL
+# Chatzikos, 2022-Apr-14
+# 	Let script process new ADS URLs, starting with 'https://ui.adsabs'
 #
 
 use warnings;
@@ -850,8 +852,7 @@ sub query_ADS_one_db
 		Authors		=>	$authors,
 		AuthorLogic	=>	"AND",
 		StartYear	=>	$year,
-		EndYear		=>	$year,
-       		URL		=>	$ADS_URL, );
+		EndYear		=>	$year, );
 	$query->{OPTIONS}{db_key} = $ads_db;
 
 	my $results = $query->querydb();
@@ -1043,6 +1044,7 @@ sub report_refs
 		print "\n";
 	}
 }
+
 sub enter_ref_by_hand
 {
 	my $ref = shift;
@@ -1202,7 +1204,7 @@ sub parse_stout_comments
 		$ref =~ s/\s*$//;
 
 		my %ref;
-		if( $ref =~ m#http://adsabs# )
+		if( $ref =~ m#adsabs\.harvard\.edu# )
 		{
 			#	print "ref:\t '$ref'\n";
 			my( $name, $http ) = split( 'http', $ref );
