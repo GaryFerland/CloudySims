@@ -128,7 +128,7 @@
 # Chatzikos, 2022-Apr-12
 # 	Update and parametrize ADS URL
 # Chatzikos, 2022-Apr-14
-# 	Let script
+# 	Let script:
 # 	- process new ADS URLs, starting with 'https://ui.adsabs';
 # 	- process Stout files that either miss the 'Reference' line,
 # 	  or contain data in it;
@@ -139,8 +139,10 @@
 # 	  not only in interactive mode;
 # 	- process ADAS refs, and private communications;
 # 	- report files without references, after the references have been
-# 	  processed (BUGFIX);
+# 	  processed (BUGFIX).
+# 	Other improvements:
 # 	- update ADS BibTeX acquisition;
+# 	- request and store ADS tokens;
 # 	- update instructions above.
 #
 
@@ -222,6 +224,7 @@ my $ADS_URL = "https://". $ADS_URL_service;
 
 my $ADS_URL_token = $ADS_URL ."/user/settings/token";
 my $ADS_token = undef;
+my $ADS_token_file = ".token.ads";
 
 my $verbose = 1;
 my $interactive;
@@ -299,6 +302,51 @@ sub getInput
 	push( @species, @ARGV );
 
 	return	( $forceADSquery, $db, $dataset, \@species );
+}
+
+
+#################################################################################
+#				   ADS TOKEN					#
+#################################################################################
+sub get_ADS_token
+{
+	if( not -s $ADS_token_file )
+	{
+		print "Please enter an ADS token.  You may create one at:\n"
+		  .	"\t$ADS_URL_token\n";
+		while( 1 )
+		{
+			print "Enter 40-character token:\t";
+			$ADS_token = <STDIN>;
+			chomp( $ADS_token );
+			last	if( defined( $ADS_token ) and 
+					length( $ADS_token ) == 40 );
+		}
+
+		open( TOKEN, '>', $ADS_token_file )
+		  or die "Error: Could not open $ADS_token_file\n";
+
+	  	print TOKEN "$ADS_token\n";
+
+		close TOKEN
+		  or warn "Warning: Could not close $ADS_token_file\n";
+	}
+	else
+	{
+		open( TOKEN, '<', $ADS_token_file )
+		  or die "Error: Could not open $ADS_token_file\n";
+
+		my @contents = <TOKEN>;
+		$ADS_token = shift @contents;
+		chomp( $ADS_token );
+
+		die "Error: Undefined ADS token"
+		 if( not defined( $ADS_token ) or
+			length( $ADS_token ) != 40 );
+
+		close TOKEN
+		  or warn "Warning: Could not close $ADS_token_file\n";
+	}
 }
 
 
@@ -1935,18 +1983,8 @@ sub get_references
 
 my( $forceADSquery, $db, $ds, $species_list ) = &getInput();
 
-if( defined( $interactive ) )
-{
-	print "Please enter an ADS token.  You may create one at:\n"
-	  .	"\t$ADS_URL_token\n";
-	while( 1 )
-	{
-		print "Enter token:\t";
-		$ADS_token = <STDIN>;
-		chomp( $ADS_token );
-		last	if( defined( $ADS_token ) );
-	}
-}
+&get_ADS_token()
+	if( defined( $interactive ) );
 
 &Astro::ADS::Query::ads_mirror( $ADS_URL_service );
 
