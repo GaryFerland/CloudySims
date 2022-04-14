@@ -4,14 +4,19 @@
 #
 # Crawl through the atomic data base (Stout) to gather the references to the
 # papers the data were obtained from.  Use flag '-ni' to non-interactively
-# get the ADS links ONLY.  A JSON file that holds the data is created (or
-# updated) in the database directory (e.g., data/Stout/refs.json).
+# get the ADS links, update NIST records, and prune the database of unused
+# references.  A JSON file that holds the data is created (or updated) in the
+# database directory (e.g., data/Stout/refs.json).
 #
 # DESCRIPTION:
 #
-# The script begins by reading the default Cloudy bibliography data base in
-# common/.  This is needed for updates of the data base itself, as discussed
-# below.
+# The script begins by asking for an ADS token, to be obtained from:
+# 	https://ui.adsabs.harvard.edu/user/settings/token
+# and to use with queries to the ADS database for BibTeX records.  In non-
+# interactive runs ('-ni' flag, see below), this step is skipped.
+#
+# It then reads the default Cloudy bibliography data base in common/.  This is
+# needed for updates of the data base itself, as discussed below.
 #
 # For the data base of choice (Stout), the script reads both the default and
 # the 'all' masterlists (*All.ini) to learn what species are available and which
@@ -22,12 +27,12 @@
 #
 # For each species, the script opens in succession the relevant data files,
 # parses the comment section at the end of the file, and attempts to isolate the
-# references.  In Stout, these are either contained between the last two fields
-# of stars (i.e., lines that contain only stars) in the file, or if there is
-# only one field of stars after the end of data, by the section header
-# 'Reference'.  This last limitation is due to the fact that in some Stout files
-# there are several fields of stars to essentially comment out unwanted sections
-# of the data.
+# references.  In the Stout format, these are either contained between the last
+# two fields of stars (i.e., lines that contain only stars) in the file, or if
+# there is only one field of stars after the end of data, by the section header
+# 'Reference' (may be omitted).  This last limitation is due to the fact that
+# in some Stout files there are several fields of stars to essentially comment
+# out unwanted sections of the data.
 #
 # Once the references have been isolated, each line is parsed in succession.
 # Because there is no single format (tabs, colons, or a single space may be
@@ -40,11 +45,14 @@
 # communications that are not picked up.
 #
 # Alternatively, the script may be used in non-interactive mode with the flag
-# '-ni'.  In this case, it gathers only the ADS links from each file, and
-# requires no user validation.  This is intended as a quick way to update the
-# JSON file.  NB NB: Pre-existing references in the JSON file that are not
-# ADS links are preserved by this process.  Files that contain no references
-# are reported in the file 'empty-files.txt'.
+# '-ni'.  In this case, it does the following operations without interacting
+# with the user: it gathers the ADS links from each file, updates NIST records
+# (if any dates are found), and prunes references from the internal data
+# structure that do not appear in the Stout files.  This is intended as a quick
+# way to update the JSON file.
+#
+# In either mode, files that contain no references are reported in the file
+# 'empty-files.txt'.
 #
 # Note that for Stout, the script expects each reference to occupy its own line,
 # or at least to be at the end of the line, separated from leading text by means
@@ -55,30 +63,18 @@
 # details, and searches for the citation in the Cloudy bibliography.  If found,
 # the script proceeds to the next reference.
 #
-# If the reference isn't found, the script proceeds to query ADS.  ADS possesses
-# 3 data bases (AST, PHYS, and PRE -- listed on the browser at the top of the
-# abstract request page as 'Astronomy', 'Physics', and 'arXiv e-prints').  Each
-# data base is queried successively, the results are reported to the user, and
-# checked against the input reference for a match.  If a match is not found, the
-# user is asked to provide a bibcode (presumably because the used filter didn't
-# catch the right citation), or proceed to the next ADS data base.  If none of
-# the ADS data bases provide a match, the user is asked to enter a bibcode by
-# hand, or skip the reference.  In that event, the reference is reported as an
-# unmatched reference in the file 'unresolved-refs.txt', in the directory from
-# which the script is run.
+# If the reference is not found, the script proceeds to query ADS.  The query
+# results are reported to the user, and checked against the input reference for
+# a match.  If a match is not found, the user is asked to provide a bibcode
+# (presumably because the used filter did not catch the right citation).  If
+# no match is found, the user is asked to enter a bibcode by hand, or skip the
+# reference.  In that event, the reference is reported as an unmatched
+# reference in the file 'unresolved-refs.txt', in the directory from which the
+# script is run.
 #
 # Once a bibcode is obtained, the Cloudy bibliography is queried for it, to
 # make sure that the citation is truly absent from the bibliography data base.
-# If so, ADS is queried anew for the BibTeX entry of the citation.  Knowledge
-# of the data base where the match was found is important, as querying a
-# different data base could lead to acquiring the wrong BibTeX.  (The last data
-# base listed on the URL for the BibTeX request is the one that takes effect.
-# This is why the original ADS query was done separately for each ADS data base:
-# to preserve the origin of the match.  Note that all three data bases could be
-# searched at the same time in the original query -- as on the browser.)  The
-# BibTeX entry is then added to the bibliography data base, along with a unique
-# human-readable cross-reference.  (The bibliography data on memory are also
-# appropriately updated.)
+# If so, ADS is queried anew for the BibTeX entry of the citation.
 #
 # Note that in some rare occassions, the BibTeX entry may be missing some
 # information.  If possible, these entries are corrected from information at
@@ -93,7 +89,7 @@
 # by reading this file prior to processing the atomic data base, as discussed
 # above.
 #
-# The error files 'empty-files.txt', 'broken-bibtex.txt', and 'unresolved-refs.txt'
+# The files 'empty-files.txt', 'broken-bibtex.txt', and 'unresolved-refs.txt'
 # should be searched for and inspected, if they exist, after each run.  If no
 # problems were found, the relevant files will not be created.
 #
@@ -143,7 +139,9 @@
 # 	  not only in interactive mode;
 # 	- process ADAS refs, and private communications;
 # 	- report files without references, after the references have been
-# 	  processed (BUGFIX).
+# 	  processed (BUGFIX);
+# 	- update ADS BibTeX acquisition;
+# 	- update instructions above.
 #
 
 use warnings;
