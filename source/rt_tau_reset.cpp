@@ -128,6 +128,7 @@ void RT_tau_reset(void)
 				realnum f;
 				/* La may be case B, tlamin set to 1e9 by default with case b command */
 				iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauIn() = opac.tlamin;
+				iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauInRest() = opac.tlamin;
 				/* >>>chng 99 nov 22, did not reset TauCon */
 				iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauCon() = iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauIn();
 				iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauTot() = 
@@ -140,6 +141,8 @@ void RT_tau_reset(void)
 						continue;
 
 					iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauIn() = 
+						f*iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().opacity();
+					iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauInRest() = 
 						f*iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().opacity();
 					/* reset line optical depth to continuum source */
 					iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauCon() = iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauIn();
@@ -159,6 +162,7 @@ void RT_tau_reset(void)
 				realnum ratio;
 				/* La may be case B, tlamin set to 1e9 by default with case b command */
 				iso_sp[ipHE_LIKE][nelem].trans(ipHe2p1P,ipHe1s1S).Emis().TauIn() = opac.tlamin;
+				iso_sp[ipHE_LIKE][nelem].trans(ipHe2p1P,ipHe1s1S).Emis().TauInRest() = opac.tlamin;
 
 				iso_sp[ipHE_LIKE][nelem].trans(ipHe2p1P,ipHe1s1S).Emis().TauCon() = iso_sp[ipHE_LIKE][nelem].trans(ipHe2p1P,ipHe1s1S).Emis().TauIn();
 
@@ -183,6 +187,8 @@ void RT_tau_reset(void)
 					{
 						Aprev = iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().Aul();
 						iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().TauIn() = 
+							ratio*iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().opacity();
+						iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().TauInRest() = 
 							ratio*iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().opacity();
 						/* reset line optical depth to continuum source */
 						iso_sp[ipHE_LIKE][nelem].trans(i,ipHe1s1S).Emis().TauCon() = 

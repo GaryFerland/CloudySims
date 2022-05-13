@@ -56,6 +56,7 @@ void RT_line_one_tauinc(const TransitionProxy&  t ,
 		dTau_total = 1.e10;
 
 		t.Emis().TauIn() = dTau_total;
+		t.Emis().TauInRest() = dTau_total;
 		t.Emis().TauCon() = dTau_total;
 		t.Emis().TauTot() = dTau_total;
 	}
@@ -70,6 +71,7 @@ void RT_line_one_tauinc(const TransitionProxy&  t ,
 		dTau_total = (realnum)(OpacityEffective * EffectiveThickness);
 
 		t.Emis().TauIn() = dTau_total;
+		t.Emis().TauInRest() = dTau_total;
 		t.Emis().TauCon() = dTau_total;
 		t.Emis().TauTot() = dTau_total;
 		t.Emis().TauInSpecific() = realnum( OpacitySpecific * EffectiveThickness );
@@ -86,6 +88,7 @@ void RT_line_one_tauinc(const TransitionProxy&  t ,
 		dTau_total = (realnum)(OpacityEffective * EffectiveThickness);
 		
 		t.Emis().TauIn() += dTau_total;
+		t.Emis().TauInRest() += dTau_total;
 		t.Emis().TauCon() += dTau_total;
 		t.Emis().TauInSpecific() += realnum( OpacitySpecific * EffectiveThickness );
 	}
@@ -119,6 +122,7 @@ void RT_line_one_tauinc(const TransitionProxy&  t ,
 		}
 		
 		t.Emis().TauIn() = 0.5*dTau_total;
+		t.Emis().TauInRest() = 0.5*dTau_total;
 		t.Emis().TauCon() = dTau_total;
 		t.Emis().TauTot() = dTau_total;
 		t.Emis().TauInSpecific() = realnum( OpacitySpecific * EffectiveThickness );

@@ -60,10 +60,13 @@ void RT_line_one_tau_reset(const TransitionProxy& t)
 	if( iteration > tracker::PREV_ITER )
 		TauNext = t.Emis().TauTrack().next_val( t.Emis().TauTot(), TauNext );
 	
-	if( geometry.lgSphere && geometry.lgStatic )
+	if( geometry.lgSphere && geometry.lgStatic ) {
 		t.Emis().TauIn() = TauNext/2.f;
-	else
+		t.Emis().TauInRest() = TauNext/2.f;
+	} else {
 		t.Emis().TauIn() = opac.taumin;
+		t.Emis().TauInRest() = opac.taumin;
+	}
 
 	t.Emis().TauInSpecific() = opac.taumin;
 
