@@ -19,6 +19,7 @@ void EmLineJunk( EmissionList::reference t )
 
 	/* inward and total line optical depths */
 	t.TauIn() = -FLT_MAX;
+	t.TauInRest() = -FLT_MAX;
 	t.TauInSpecific() = -FLT_MAX;
 	t.TauTot() = -FLT_MAX;
 
@@ -83,6 +84,7 @@ void TauZero( EmissionList::reference t )
 	/* inward and total line optical depths */
 	/* >>chng 03 feb 14, from 0 to opac.taumin */
 	t.TauIn() = opac.taumin;
+	t.TauInRest() = opac.taumin;
 	t.TauInSpecific() = opac.taumin;
 
 	/* total optical depths */

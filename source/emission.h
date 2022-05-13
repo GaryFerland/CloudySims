@@ -66,6 +66,10 @@ public:
 	 * It includes the effects of line overlap. */
 	realnum &TauIn() const;
 
+	/* Optical depth inward at rest -- equal to TauIn for static flows,
+	 * but different in flows with LVG corrections */
+	realnum &TauInRest() const;
+
 	/** TauInSpecific - the inward optical line depth [Napier], in the direction of
 	 *  the continuum source.
 	 *  This is much like TauIn(), except that it does not contain contributions
@@ -221,6 +225,10 @@ public:
 	 * It includes the effects of line overlap. */
 	realnum TauIn() const;
 
+	/* Optical depth inward at rest -- equal to TauIn for static flows,
+	 * but different in flows with LVG corrections */
+	realnum TauInRest() const;
+
 	/** TauInSpecific - the inward optical line depth [Napier], in the direction of
 	 *  the continuum source.
 	 *  This is much like TauIn(), except that it does not contain contributions
@@ -350,6 +358,7 @@ class EmissionList
 	vector<double> m_pump;
 	vector<realnum> m_TauCon;
 	vector<realnum> m_TauIn;
+	vector<realnum> m_TauInRest;
 	vector<realnum> m_TauInSpecific;
 	vector<realnum> m_TauTot;
 	vector<tracker > m_TauTrack;
@@ -430,6 +439,7 @@ inline void EmissionList::resize(size_t i)
 	m_VoigtLineCen.resize(i);
 	m_TauCon.resize(i);
 	m_TauIn.resize(i);
+	m_TauInRest.resize(i);
 	m_TauInSpecific.resize(i);
 	m_TauTot.resize(i);
 	m_TauTrack.resize(i);
@@ -477,6 +487,16 @@ inline realnum &EmissionProxy::TauIn() const
 inline realnum EmissionConstProxy::TauIn() const
 {
 	return m_list->m_TauIn[m_index];
+}
+
+inline realnum &EmissionProxy::TauInRest() const
+{
+	return m_list->m_TauInRest[m_index];
+}
+
+inline realnum EmissionConstProxy::TauInRest() const
+{
+	return m_list->m_TauInRest[m_index];
 }
 
 inline realnum &EmissionProxy::TauInSpecific() const
@@ -714,6 +734,7 @@ inline void EmissionProxy::copy(const EmissionProxy& other)
 	iRedisFun() = other.iRedisFun();
 	ipFine() = other.ipFine();
 	TauIn() = other.TauIn();
+	TauInRest() = other.TauInRest();
 	TauInSpecific() = other.TauInSpecific();
 	TauTot() = other.TauTot();
 	TauCon() = other.TauCon();
