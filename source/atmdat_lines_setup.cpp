@@ -54,6 +54,7 @@ void lines_setup(void)
 			/* these are line optical depth arrays
 			 * inward optical depth */
 			TauLine2[i].Emis().TauIn() = opac.taumin;
+			TauLine2[i].Emis().TauInRest() = opac.taumin;
 			TauLine2[i].Emis().TauCon() = opac.taumin;
 			TauLine2[i].Emis().ColOvTot() = 0.;
 			/* outward optical depth */
@@ -107,6 +108,7 @@ void lines_setup(void)
 		/* these are line optical depth arrays
 		 * inward optical depth */
 		UTALines[i].Emis().TauIn() = opac.taumin;
+		UTALines[i].Emis().TauInRest() = opac.taumin;
 		UTALines[i].Emis().TauCon() = opac.taumin;
 		UTALines[i].Emis().ColOvTot() = 0.;
 		/* outward optical depth */
@@ -173,6 +175,7 @@ void lines_setup(void)
 		/* these are line optical depth arrays
 		 * inward optical depth */
 		HFLines[i].Emis().TauIn() = opac.taumin;
+		HFLines[i].Emis().TauInRest() = opac.taumin;
 		HFLines[i].Emis().TauCon() = opac.taumin;
 		HFLines[i].Emis().ColOvTot()=0;
 		/* outward optical depth */
