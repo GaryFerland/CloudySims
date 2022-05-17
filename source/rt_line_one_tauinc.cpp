@@ -55,8 +55,8 @@ void RT_line_one_tauinc(const TransitionProxy&  t ,
 		/* transition is below plasma frequency - make optical depth huge */
 		dTau_total = 1.e10;
 
-		t.Emis().TauIn() = dTau_total;
 		t.Emis().TauInRest() = dTau_total;
+		t.Emis().TauIn() = t.Emis().TauInRest();
 		t.Emis().TauCon() = dTau_total;
 		t.Emis().TauTot() = dTau_total;
 	}
@@ -70,8 +70,8 @@ void RT_line_one_tauinc(const TransitionProxy&  t ,
 		EffectiveThickness = DopplerWidth / wind.dvdr;
 		dTau_total = (realnum)(OpacityEffective * EffectiveThickness);
 
-		t.Emis().TauIn() = dTau_total;
 		t.Emis().TauInRest() = dTau_total;
+		t.Emis().TauIn() = t.Emis().TauInRest();
 		t.Emis().TauCon() = dTau_total;
 		t.Emis().TauTot() = dTau_total;
 		t.Emis().TauInSpecific() = realnum( OpacitySpecific * EffectiveThickness );
@@ -87,8 +87,8 @@ void RT_line_one_tauinc(const TransitionProxy&  t ,
 		EffectiveThickness = radius.drad_x_fillfac;
 		dTau_total = (realnum)(OpacityEffective * EffectiveThickness);
 		
-		t.Emis().TauIn() += dTau_total;
 		t.Emis().TauInRest() += dTau_total;
+		t.Emis().TauIn() = dTau_total;
 		t.Emis().TauCon() += dTau_total;
 		t.Emis().TauInSpecific() += realnum( OpacitySpecific * EffectiveThickness );
 	}
@@ -121,8 +121,8 @@ void RT_line_one_tauinc(const TransitionProxy&  t ,
 			dTau_total = -20.;
 		}
 		
+		t.Emis().TauInRest() += realnum(OpacityEffective * radius.drad_x_fillfac);
 		t.Emis().TauIn() = 0.5*dTau_total;
-		t.Emis().TauInRest() = 0.5*dTau_total;
 		t.Emis().TauCon() = dTau_total;
 		t.Emis().TauTot() = dTau_total;
 		t.Emis().TauInSpecific() = realnum( OpacitySpecific * EffectiveThickness );
