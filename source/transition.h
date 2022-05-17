@@ -642,9 +642,9 @@ inline bool lgTauGood( const TransitionProxy& t )
 		// first iteration only use inward optical depths so scale good
 		return ( iteration == 1 || 
 					// maser - optical depths also ok (but bizarre) 
-					t.Emis().TauIn() <= 0. || 
+					t.Emis().TauInRest() <= 0. || 
 					// TauIn < TauTot means outward optical depth is positive, so OK
-					t.Emis().TauIn() < t.Emis().TauTot() );
+					t.Emis().TauInRest() < t.Emis().TauTot() );
 	}
 }
 
