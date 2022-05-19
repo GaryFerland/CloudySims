@@ -41,12 +41,16 @@ void t_timesc::calc_therm_timesc( long int izone )
 	{
 		/* >>chng 99 feb 01, had div by heating, changed to cooling so constant
 		 * temperature models are more realistic */
-		double dt = 1.5 * BOLTZMANN * struc.DenParticles[i] * struc.testr[i] / struc.coolstr[i];
-		time_therm_long = MAX2( time_therm_long , dt );
-		time_therm_short= MIN2( time_therm_short, dt );
-		//      printf("dt = %g\t long = %g\t short = %g\n", dt, time_therm_long, time_therm_short);
-	}
+		if( struc.coolstr[i] > SMALLFLOAT )
+		{
+			double dt = 1.5 * BOLTZMANN * struc.DenParticles[i] * struc.testr[i] / struc.coolstr[i];
+			//double dt = 1.5 * BOLTZMANN * struc.DenParticles[i] * safe_div( (double)struc.testr[i] , struc.coolstr[i] );
+			time_therm_long = MAX2( time_therm_long , dt );
+			time_therm_short= MIN2( time_therm_short, dt );
+			//      printf("dt = %g\t long = %g\t short = %g\n", dt, time_therm_long, time_therm_short);}
+		}
 	//      printf( "*** long = %g\t short = %g\n", time_therm_long, time_therm_short );
+	}
 
 	return;
 }
