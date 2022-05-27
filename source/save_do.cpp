@@ -1183,27 +1183,15 @@ void SaveDo(
 						// -- rfield.fine_lstack works with original position
 						//
 						long fine_index_no_wind = j - rfield.ipFineConVelShift;
-						if( fine_index_no_wind > 0 )
+
+						realnum sum1 = 0.,
+							xnu = 0.;
+
+						for( long jj=0; jj<nskip; ++jj, ++j, ++fine_index_no_wind )
 						{
-							auto got = rfield.fine_lstack.find( fine_index_no_wind );
-							if( got != rfield.fine_lstack.end() )
-							{
-								for( auto &lst_ind : got->second )
-								{
-									all_stack_lines.emplace_back( lst_ind );
-								}
-							}
-						}
+							xnu += rfield.fine_anu[j];
+							sum1 += rfield.fine_opt_depth[j];
 
-						realnum sum1 = rfield.fine_opt_depth[j];
-						realnum xnu = rfield.fine_anu[j];
-
-						for( long jj=1; jj<nskip; ++jj )
-						{
-							xnu += rfield.fine_anu[j+jj];
-							sum1 += rfield.fine_opt_depth[j+jj];
-
-							fine_index_no_wind = j + jj - rfield.ipFineConVelShift;
 							if( fine_index_no_wind > 0 )
 							{
 								auto got = rfield.fine_lstack.find( fine_index_no_wind );
@@ -1242,7 +1230,6 @@ void SaveDo(
 							fprintf( save.params[ipPun].ipPnunit,
 								"\t%s\t%.3e", label.c_str(), max_odep );
 						fprintf( save.params[ipPun].ipPnunit, "\n" );
-						j += nskip;
 					} while( j < nu_hi );
 				}
 			}
