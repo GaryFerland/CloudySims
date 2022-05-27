@@ -69,6 +69,45 @@ void LineStackCreate()
 	if( trace.lgTrace )
 		fprintf( ioQQQ, "%7ld lines printed in main line array\n",
 		  LineSave.nsum );
+
+	if( false )
+	{
+		fprintf( ioQQQ, "Overlap in fine continuum:\n" );
+		fprintf( ioQQQ, "==========================\n" );
+		int nlines_per_bin = 0;
+		while( nlines_per_bin < 20 )
+		{
+			int ntot = 0;
+
+			for( auto it = rfield.fine_lstack.begin();
+				it != rfield.fine_lstack.end(); ++it )
+			{
+				if( int( it->second.size() ) == nlines_per_bin )
+				{
+					ntot++;
+					if( nlines_per_bin > 10 )
+					{
+						TransitionProxy tr;
+						for( auto itl = it->second.begin();
+							itl != it->second.end(); ++itl )
+						{
+							tr = LineSave.lines[*itl].getTransition();
+							fprintf( ioQQQ, "%s\n", tr.chLabel().c_str() );
+						}
+						fprintf( ioQQQ, "----------------------------\n" );
+					}
+				}
+			}
+
+			if( ntot > 0 )
+			{
+				fprintf( ioQQQ, "%d lines per bin: %d bins\n",
+						nlines_per_bin, ntot );
+				fprintf( ioQQQ, "----------------------------\n" );
+			}
+			nlines_per_bin++;
+		}
+	}
 }
 
 /*eina convert a gf into an Einstein A */
@@ -364,7 +403,7 @@ STATIC LinSv* lincom(
 			}
 		}
 	}
-		
+
 	else if( LineSave.ipass == 0 )
 	{
 		LineSave.init(LineSave.nsum,(char) chInfo,chComment,chLab,lgAdd,wavelength,tr);
@@ -381,8 +420,18 @@ STATIC LinSv* lincom(
 					  fabs( rfield.anu(ipnt-1) - RYDLAM / wavelength) < error );
 #		endif
 		}
+
+		if( tr.associated() )
+		{
+			auto got = rfield.fine_lstack.find( tr.Emis().ipFine() );
+			if( got == rfield.fine_lstack.end() )
+			{
+				rfield.fine_lstack.insert( make_pair( tr.Emis().ipFine(), vector<int>() ) );
+			}
+			rfield.fine_lstack[ tr.Emis().ipFine() ].emplace_back( LineSave.nsum );
+		}
 	}
-		
+
 	/* increment the line counter */
 	++LineSave.nsum;
 

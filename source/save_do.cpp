@@ -1166,7 +1166,7 @@ void SaveDo(
 
 					/* upper limit set with range option */
 					if( save.punarg[ipPun][1]> 0. )
-						nu_hi = ipFineCont( save.punarg[ipPun][1]);
+						nu_hi = ipFineCont( save.punarg[ipPun][1] );
 					else
 						nu_hi = rfield.nfine;
 
@@ -1176,17 +1176,72 @@ void SaveDo(
 
 					do
 					{
+						vector<int> all_stack_lines;
+
+						// when winds are present, line center in opacity
+						// vector is offset from its original position
+						// -- rfield.fine_lstack works with original position
+						//
+						long fine_index_no_wind = j - rfield.ipFineConVelShift;
+						if( fine_index_no_wind > 0 )
+						{
+							auto got = rfield.fine_lstack.find( fine_index_no_wind );
+							if( got != rfield.fine_lstack.end() )
+							{
+								for( auto &lst_ind : got->second )
+								{
+									all_stack_lines.emplace_back( lst_ind );
+								}
+							}
+						}
+
 						realnum sum1 = rfield.fine_opt_depth[j];
 						realnum xnu = rfield.fine_anu[j];
+
 						for( long jj=1; jj<nskip; ++jj )
 						{
 							xnu += rfield.fine_anu[j+jj];
 							sum1 += rfield.fine_opt_depth[j+jj];
+
+							fine_index_no_wind = j + jj - rfield.ipFineConVelShift;
+							if( fine_index_no_wind > 0 )
+							{
+								auto got = rfield.fine_lstack.find( fine_index_no_wind );
+								if( got != rfield.fine_lstack.end() )
+								{
+									for( auto &lst_ind : got->second )
+									{
+										all_stack_lines.emplace_back( lst_ind );
+									}
+								}
+							}
 						}
+
+						// identify most opaque line in bin
+						//
+						string label = "";
+						realnum max_odep = 0.;
+						for( auto &lst_ind : all_stack_lines )
+						{
+							realnum this_odep =
+								  LineSave.lines[lst_ind].getTransition()
+								  		.Emis().TauInSpecific();
+							if( this_odep > max_odep )
+							{
+								max_odep = this_odep;
+								label = string( LineSave.lines[lst_ind].chALab() );
+							}
+						}
+
+						double transm = sexp(sum1/nskip);
 						fprintf( save.params[ipPun].ipPnunit, 
-							"%.6e\t%.3e\n", 
-							AnuUnit(xnu/nskip), 
-							sexp(sum1/nskip) );
+							"%.6e\t%.3e", 
+							AnuUnit(xnu/nskip),
+							transm );
+						if( label != "" and max_odep > 0.01 )
+							fprintf( save.params[ipPun].ipPnunit,
+								"\t%s\t%.3e", label.c_str(), max_odep );
+						fprintf( save.params[ipPun].ipPnunit, "\n" );
 						j += nskip;
 					} while( j < nu_hi );
 				}
