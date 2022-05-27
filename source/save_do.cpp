@@ -1205,30 +1205,34 @@ void SaveDo(
 							}
 						}
 
-						// identify most opaque line in bin
+						// sort lines in decreasing opacity
 						//
-						string label = "";
-						realnum max_odep = 0.;
-						for( auto &lst_ind : all_stack_lines )
-						{
-							realnum this_odep =
-								  LineSave.lines[lst_ind].getTransition()
-								  		.Emis().TauInSpecific();
-							if( this_odep > max_odep )
+						sort( all_stack_lines.begin(),
+							all_stack_lines.end(),
+							[](int i1, int i2)
 							{
-								max_odep = this_odep;
-								label = string( LineSave.lines[lst_ind].chALab() );
-							}
-						}
+								return LineSave.lines[i1].getTransition().Emis().TauInSpecific()
+								     > LineSave.lines[i2].getTransition().Emis().TauInSpecific();
+							} );
 
 						double transm = sexp(sum1/nskip);
 						fprintf( save.params[ipPun].ipPnunit, 
 							"%.6e\t%.3e", 
 							AnuUnit(xnu/nskip),
 							transm );
-						if( label != "" and max_odep > 0.01 )
+
+						static const realnum odep_limit = 0.01;
+
+						for( auto &ind: all_stack_lines )
+						{
+							realnum odep = LineSave.lines[ind].getTransition() .Emis().TauInSpecific();
+							if( odep < odep_limit )
+								break;
+
 							fprintf( save.params[ipPun].ipPnunit,
-								"\t%s\t%.3e", label.c_str(), max_odep );
+								"\t%s\t%.3e",
+								LineSave.lines[ind].chALab(), odep );
+						}
 						fprintf( save.params[ipPun].ipPnunit, "\n" );
 					} while( j < nu_hi );
 				}

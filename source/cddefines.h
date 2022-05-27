@@ -66,6 +66,7 @@
 #include <fstream>
 #include <bitset>
 #include <unordered_map>
+#include <numeric>
 
 // Workaround for Windows...
 #if defined(_MSC_VER) && !defined(SYS_CONFIG)
