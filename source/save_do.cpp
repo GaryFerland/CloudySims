@@ -1225,13 +1225,14 @@ void SaveDo(
 
 						for( auto &ind: all_stack_lines )
 						{
-							realnum odep = LineSave.lines[ind].getTransition() .Emis().TauInSpecific();
+							TransitionProxy tr = LineSave.lines[ind].getTransition();
+							realnum odep = tr.Emis().TauInSpecific();
 							if( odep < odep_limit )
 								break;
 
 							fprintf( save.params[ipPun].ipPnunit,
-								"\t%s\t%.3e",
-								LineSave.lines[ind].chALab(), odep );
+								"\t\"%s\"\t%.3e",
+								tr.chLabel().c_str(), odep );
 						}
 						fprintf( save.params[ipPun].ipPnunit, "\n" );
 					} while( j < nu_hi );
