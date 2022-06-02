@@ -1226,7 +1226,11 @@ void SaveDo(
 						for( auto &ind: all_stack_lines )
 						{
 							TransitionProxy tr = LineSave.lines[ind].getTransition();
-							realnum odep = tr.Emis().TauInSpecific();
+
+							// Report mean optical depths, rather than line center
+							// Keeps optical depths consistent with main output
+							//
+							realnum odep = tr.Emis().TauInSpecific() * SQRTPI;
 							if( odep < odep_limit )
 								break;
 
