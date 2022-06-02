@@ -1444,11 +1444,12 @@ This multi-grid approach is needed to combine precision and speed.
 This command reports the energy (see below) of the fine continuum bin in the
 first column, and the line transmission coefficient,
 $I_{transmitted}/I_{incident}$, for the fine continuum in the second column.
-If a line is centered in that energy bin, its spectral label is reported
+What follows is a list of absorption lines centered on that energy bin.
+Each line is identified by its spectral label (species and wavelength), and is
 followed by its mean optical depth.
-This is the same as the last entry reported by
+The latter is the same as the last entry reported by
 \cdCommand{print line optical depths}, see Section \ref{sec:PrintLineOptDep}.
-All lines centered on that bin are reported, sorted from most to least opaque.
+All lines centered on that bin are reported, sorted from most-to-least opaque.
 
 The resulting output will be huge if the entire fine continuum is saved.
 {\it Users are advised to make use of the {\rm\cdCommand{range}} option
