@@ -72,6 +72,14 @@ void LineStackCreate()
 
 	if( false )
 	{
+		//
+		// Go over the map of fine continuum indices just generated
+		// and quantify the amount of line overlap present.
+		// Currently (Jun 03, 2022) there exist bins with up to 14
+		// lines centered on them -- these are mainly due to hyperfine
+		// molecular lines.
+		//
+
 		fprintf( ioQQQ, "Overlap in fine continuum:\n" );
 		fprintf( ioQQQ, "==========================\n" );
 		int nlines_per_bin = 0;
@@ -92,7 +100,8 @@ void LineStackCreate()
 							itl != it->second.end(); ++itl )
 						{
 							tr = LineSave.lines[*itl].getTransition();
-							fprintf( ioQQQ, "%s\n", tr.chLabel().c_str() );
+							fprintf( ioQQQ, "%d\t%s\n",
+									*itl, tr.chLabel().c_str() );
 						}
 						fprintf( ioQQQ, "----------------------------\n" );
 					}
