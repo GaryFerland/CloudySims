@@ -80,41 +80,57 @@ void LineStackCreate()
 		// molecular lines.
 		//
 
+		// Create an ordered map of the number of lines per bin (key)
+		// and store a list (value) of all fine continuum indices that
+		// have that many lines overlap.
+		//
+		map<size_t, vector<long> > overlap;
+		for( auto it = rfield.fine_lstack.begin();
+			it != rfield.fine_lstack.end(); ++it )
+		{
+			if( overlap.find( it->second.size() ) == overlap.end() )
+			{
+				overlap.insert( make_pair( it->second.size(), vector<long>() ) );
+			}
+			overlap[ it->second.size() ].emplace_back( it->first );
+		}
+
 		fprintf( ioQQQ, "Overlap in fine continuum:\n" );
 		fprintf( ioQQQ, "==========================\n" );
-		int nlines_per_bin = 0;
-		while( nlines_per_bin < 20 )
-		{
-			int ntot = 0;
 
-			for( auto it = rfield.fine_lstack.begin();
-				it != rfield.fine_lstack.end(); ++it )
+		const size_t nlines_per_bin = 10;
+
+		// loop over line overlap (number of lines in a fine cont bin)
+		//
+		for( auto it = overlap.begin(); it != overlap.end(); ++it )
+		{
+			if( it->first > nlines_per_bin )
 			{
-				if( int( it->second.size() ) == nlines_per_bin )
+				sort( it->second.begin(), it->second.end() );
+
+				// loop over fine continuum indices
+				//
+				for( auto itf = it->second.begin();
+					itf != it->second.end(); ++itf )
 				{
-					ntot++;
-					if( nlines_per_bin > 10 )
+					TransitionProxy tr;
+
+					// loop over line stack indices
+					//
+					for( auto itl = rfield.fine_lstack[ *itf ].begin();
+						itl != rfield.fine_lstack[ *itf ].end(); ++itl )
 					{
-						TransitionProxy tr;
-						for( auto itl = it->second.begin();
-							itl != it->second.end(); ++itl )
-						{
-							tr = LineSave.lines[*itl].getTransition();
-							fprintf( ioQQQ, "%d\t%s\n",
-									*itl, tr.chLabel().c_str() );
-						}
-						fprintf( ioQQQ, "----------------------------\n" );
+						tr = LineSave.lines[*itl].getTransition();
+						fprintf( ioQQQ, "%d\t%s\n",
+								*itl, tr.chLabel().c_str() );
 					}
+					fprintf( ioQQQ, "----------------------------\n" );
 				}
 			}
 
-			if( ntot > 0 )
-			{
-				fprintf( ioQQQ, "%d lines per bin: %d bins\n",
-						nlines_per_bin, ntot );
-				fprintf( ioQQQ, "----------------------------\n" );
-			}
-			nlines_per_bin++;
+			fprintf( ioQQQ, "%d lines per bin: %d bins\n",
+					int( it->first ), int( it->second.size() ) );
+			fprintf( ioQQQ, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" );
 		}
 	}
 }
