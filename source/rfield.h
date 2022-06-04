@@ -508,6 +508,10 @@ public:
 	/** energies at center of each bin for fine continuum */
 	vector<realnum> fine_anu;
 
+	/** map of list of line stack indices (value)
+	 *  centered on fine opacity vector index (key) */
+	unordered_map<long, vector<int> > fine_lstack;
+
 	/** shift in fine continuum rest frame scale due to velocity gradient, 
 	 * rest frame is velocity of first zone, positive means that first zone 
 	 * is blue shifted relative to current zone.  This is a decelerating

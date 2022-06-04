@@ -69,6 +69,70 @@ void LineStackCreate()
 	if( trace.lgTrace )
 		fprintf( ioQQQ, "%7ld lines printed in main line array\n",
 		  LineSave.nsum );
+
+	if( false )
+	{
+		//
+		// Go over the map of fine continuum indices just generated
+		// and quantify the amount of line overlap present.
+		// Currently (Jun 03, 2022) there exist bins with up to 14
+		// lines centered on them -- these are mainly due to hyperfine
+		// molecular lines.
+		//
+
+		// Create an ordered map of the number of lines per bin (key)
+		// and store a list (value) of all fine continuum indices that
+		// have that many lines overlap.
+		//
+		map<size_t, vector<long> > overlap;
+		for( auto it = rfield.fine_lstack.begin();
+			it != rfield.fine_lstack.end(); ++it )
+		{
+			if( overlap.find( it->second.size() ) == overlap.end() )
+			{
+				overlap.insert( make_pair( it->second.size(), vector<long>() ) );
+			}
+			overlap[ it->second.size() ].emplace_back( it->first );
+		}
+
+		fprintf( ioQQQ, "Overlap in fine continuum:\n" );
+		fprintf( ioQQQ, "==========================\n" );
+
+		const size_t nlines_per_bin = 10;
+
+		// loop over line overlap (number of lines in a fine cont bin)
+		//
+		for( auto it = overlap.begin(); it != overlap.end(); ++it )
+		{
+			if( it->first > nlines_per_bin )
+			{
+				sort( it->second.begin(), it->second.end() );
+
+				// loop over fine continuum indices
+				//
+				for( auto itf = it->second.begin();
+					itf != it->second.end(); ++itf )
+				{
+					TransitionProxy tr;
+
+					// loop over line stack indices
+					//
+					for( auto itl = rfield.fine_lstack[ *itf ].begin();
+						itl != rfield.fine_lstack[ *itf ].end(); ++itl )
+					{
+						tr = LineSave.lines[*itl].getTransition();
+						fprintf( ioQQQ, "%d\t%s\n",
+								*itl, tr.chLabel().c_str() );
+					}
+					fprintf( ioQQQ, "----------------------------\n" );
+				}
+			}
+
+			fprintf( ioQQQ, "%d lines per bin: %d bins\n",
+					int( it->first ), int( it->second.size() ) );
+			fprintf( ioQQQ, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" );
+		}
+	}
 }
 
 /*eina convert a gf into an Einstein A */
@@ -364,7 +428,7 @@ STATIC LinSv* lincom(
 			}
 		}
 	}
-		
+
 	else if( LineSave.ipass == 0 )
 	{
 		LineSave.init(LineSave.nsum,(char) chInfo,chComment,chLab,lgAdd,wavelength,tr);
@@ -381,8 +445,18 @@ STATIC LinSv* lincom(
 					  fabs( rfield.anu(ipnt-1) - RYDLAM / wavelength) < error );
 #		endif
 		}
+
+		if( tr.associated() )
+		{
+			auto got = rfield.fine_lstack.find( tr.Emis().ipFine() );
+			if( got == rfield.fine_lstack.end() )
+			{
+				rfield.fine_lstack.insert( make_pair( tr.Emis().ipFine(), vector<int>() ) );
+			}
+			rfield.fine_lstack[ tr.Emis().ipFine() ].emplace_back( LineSave.nsum );
+		}
 	}
-		
+
 	/* increment the line counter */
 	++LineSave.nsum;
 
