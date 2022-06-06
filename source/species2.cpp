@@ -1119,13 +1119,13 @@ STATIC void setXtraRatesFe2(const TransitionProxy& tr, double &xtraExRate, doubl
 	double EnerLyaProf3 = 82259.0 + de;
 	double EnerLyaProf4 = 82259.0 + de*2.0;
 
-	double PhotOccNumLyaCenter = 0.;
+	hydro.PhotOccNumLyaCenter = 0.;
 
 	/* find Lya photon occupation number */
 	if( iso_sp[ipH_LIKE][ipHYDROGEN].st[ipH2p].Pop() > SMALLFLOAT )
 	{
 		/* This is the photon occupation number at the Lya line center */
-		PhotOccNumLyaCenter =
+		hydro.PhotOccNumLyaCenter =
 			MAX2(0.,1.0-
 			iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).Emis().Pesc_total())/
 			(iso_sp[ipH_LIKE][ipHYDROGEN].st[ipH1s].Pop()/iso_sp[ipH_LIKE][ipHYDROGEN].st[ipH2p].Pop()*3. - 1.0);
@@ -1152,7 +1152,7 @@ STATIC void setXtraRatesFe2(const TransitionProxy& tr, double &xtraExRate, doubl
 		/* this branch, line is within the Lya profile */
 
 		/*
-		 * Lya source function, at peak is PhotOccNumLyaCenter,
+		 * Lya source function, at peak is hydro.PhotOccNumLyaCenter,
 		 *
 		 *     Prof2    Prof3
 		 *       ----------
@@ -1169,17 +1169,17 @@ STATIC void setXtraRatesFe2(const TransitionProxy& tr, double &xtraExRate, doubl
 		if( EnergyWN < EnerLyaProf2 )
 		{
 			/* linear interpolation on edge of trapazoid */
-			PhotOccNum_at_nu = PhotOccNumLyaCenter*(EnergyWN - EnerLyaProf1)/ de;
+			PhotOccNum_at_nu = hydro.PhotOccNumLyaCenter*(EnergyWN - EnerLyaProf1)/ de;
 		}
 		else if( EnergyWN < EnerLyaProf3 )
 		{
 			/* this is the central plateau */
-			PhotOccNum_at_nu = PhotOccNumLyaCenter;
+			PhotOccNum_at_nu = hydro.PhotOccNumLyaCenter;
 		}
 		else
 		{
 			/* linear interpolation on edge of trapazoid */
-			PhotOccNum_at_nu = PhotOccNumLyaCenter*(EnerLyaProf4 - EnergyWN)/de;
+			PhotOccNum_at_nu = hydro.PhotOccNumLyaCenter*(EnerLyaProf4 - EnergyWN)/de;
 		}
 
 		/* at this point Lya source function at FeII line energy is defined, but

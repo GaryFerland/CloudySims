@@ -99,6 +99,10 @@ struct t_hydro : public module {
 	/** width of Lya */
 	realnum HLineWidth;
 
+	/** Lya photon occupation number at line center - defined species2.cpp:122
+	 * Lya line pumping described in Verner+1999 ApJS */
+	double PhotOccNumLyaCenter = 0.;
+
 	/** TexcLya is the excitation temperature of Lya */
 	realnum TexcLya;
 

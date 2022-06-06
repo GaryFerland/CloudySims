@@ -22,6 +22,9 @@ void t_hydro::zero()
 	/*strcpy( chHTopType, "scal" );*/
 	strcpy( chHTopType, " add" );
 
+	/* Lya photon occupation number at line center */
+	PhotOccNumLyaCenter = 0.;
+
 	/* Lya excitation temperature, counter for hotter than gas */
 	TexcLya = 0.;
 	TLyaMax = 0.;
