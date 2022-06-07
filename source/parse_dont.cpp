@@ -35,6 +35,10 @@ void ParseDont(Parser &p )
 		/* no Lya 21 cm pump turns off 21 cm pumping of Lya */
 		hyperfine.lgLya_pump_21cm = false;
 	}
+	else if( p.nMatch( " LYA"  ) && p.nMatch( "PUMP")  )
+	{
+		hydro.lgLyaPumpAllLines = false;
+	}
 	else if( p.nMatch("ADVE") )
 	{
 		/*  turn off different aspects of advection */

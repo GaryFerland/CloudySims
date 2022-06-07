@@ -2302,7 +2302,7 @@ void SaveDo(
 						/* the excitation temperature of Lya */
 						double texc = TexcLine( iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s) );
 						fprintf( save.params[ipPun].ipPnunit, 
-						  "%.5e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\n", 
+						  "%.5e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\n",
 						  radius.depth_mid_zone,
 						  iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).Emis().TauIn(), 
 						  iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).Emis().TauTot(), 
@@ -2314,7 +2314,9 @@ void SaveDo(
 						  iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).Emis().Pdest(), 
 						  iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).Emis().pump(), 
 						  opac.opacity_abs[iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).ipCont()-1],
-						  opac.albedo[iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).ipCont()-1] );
+						  opac.albedo[iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).ipCont()-1] ,
+						  /* photon occupation number at center of Lya */
+						  hydro.PhotOccNumLyaCenter);
 					}
 				}
 

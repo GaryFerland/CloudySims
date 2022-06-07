@@ -1378,7 +1378,7 @@ void ParseSave(Parser& p)
 			/* save hydrogen Lya some details about Lyman alpha  */
 			strcpy( save.chSave[save.nsave], "HYDL" );
 			sncatf( chHeader, 
-				"#depth\tTauIn\tTauTot\tn(2p)/n(1s)\tTexc\tTe\tTex/T\tPesc\tPdes\tpump\topacity\talbedo\n" );
+				"#depth\tTauIn\tTauTot\tn(2p)/n(1s)\tTexc\tTe\tTex/T\tPesc\tPdes\tpump\topacity\talbedo\tLya occ num\n" );
 		}
 		else
 		{

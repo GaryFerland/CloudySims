@@ -24,6 +24,8 @@ void t_hydro::zero()
 
 	/* Lya photon occupation number at line center */
 	PhotOccNumLyaCenter = 0.;
+	/* disable for testing with NO LYA PUMP, default is to pump */
+	lgLyaPumpAllLines = true;
 
 	/* Lya excitation temperature, counter for hotter than gas */
 	TexcLya = 0.;

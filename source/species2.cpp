@@ -1122,7 +1122,8 @@ STATIC void setXtraRatesFe2(const TransitionProxy& tr, double &xtraExRate, doubl
 	hydro.PhotOccNumLyaCenter = 0.;
 
 	/* find Lya photon occupation number */
-	if( iso_sp[ipH_LIKE][ipHYDROGEN].st[ipH2p].Pop() > SMALLFLOAT )
+	if( iso_sp[ipH_LIKE][ipHYDROGEN].st[ipH2p].Pop() > SMALLFLOAT
+			&& hydro.lgLyaPumpAllLines )
 	{
 		/* This is the photon occupation number at the Lya line center */
 		hydro.PhotOccNumLyaCenter =
@@ -1130,6 +1131,8 @@ STATIC void setXtraRatesFe2(const TransitionProxy& tr, double &xtraExRate, doubl
 			iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).Emis().Pesc_total())/
 			(iso_sp[ipH_LIKE][ipHYDROGEN].st[ipH1s].Pop()/iso_sp[ipH_LIKE][ipHYDROGEN].st[ipH2p].Pop()*3. - 1.0);
 	}
+	else
+		hydro.PhotOccNumLyaCenter = 0.;
 
 
 	/* on first iteration optical depth in line is inward only, on later
