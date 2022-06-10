@@ -58,8 +58,14 @@ STATIC void RT_line_pumping(
 		/* continuum upward pumping rate, A gu/gl abs prob occnum
 		* the "no induced" command causes continuum pumping to be set to 0 
 		* this includes pumping by diffuse continuum */
-		t.Emis().pump() = t.Emis().Aul() * (*t.Hi()).g() / (*t.Lo()).g() * shield_continuum *(
-			rfield.OccNumbIncidCont[t.ipCont()-1] + rfield.OccNumbContEmitOut[t.ipCont()-1] );
+		double OccNumContTotal = shield_continuum *(
+				rfield.OccNumbIncidCont[t.ipCont()-1] + rfield.OccNumbContEmitOut[t.ipCont()-1] );
+		if( t.Lo()->nelem()!=ipHYDROGEN && t.EnergyWN()>=hydro.EnerLyaProf2 && t.EnergyWN()<=hydro.EnerLyaProf3)
+			OccNumContTotal += hydro.PhotOccNumLyaCenter;
+		//fprintf(ioQQQ,"DEBUGGG %.2e",t.Emis().pump() );
+		//t.Emis().pump() = t.Emis().Aul() * (*t.Hi()).g() / (*t.Lo()).g() * OccNumContTotal;
+		//fprintf(ioQQQ," %.2e\nSS",t.Emis().pump() );
+
 
 		if( 0 && t.chLabel() == "H  1 1215.67A" )
 			fprintf(ioQQQ,

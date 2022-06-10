@@ -1115,8 +1115,9 @@ STATIC void setXtraRatesFe2(const TransitionProxy& tr, double &xtraExRate, doubl
 	double de = 1.37194e-06*hydro.HLineWidth*2.0/3.0;
 	/* 82259 is energy of Lya in wavenumbers, so these are the form of the trapezoid */
 	double EnerLyaProf1 = 82259.0 - de*2.0;
-	double EnerLyaProf2 = 82259.0 - de;
-	double EnerLyaProf3 = 82259.0 + de;
+	/* upper and lower bound of energy of Lya source function in wn */
+	hydro.EnerLyaProf2 = 82259.0 - de;
+	hydro.EnerLyaProf3 = 82259.0 + de;
 	double EnerLyaProf4 = 82259.0 + de*2.0;
 
 	hydro.PhotOccNumLyaCenter = 0.;
@@ -1169,12 +1170,12 @@ STATIC void setXtraRatesFe2(const TransitionProxy& tr, double &xtraExRate, doubl
 
 		double PhotOccNum_at_nu = 0.,
 			PumpRate = 0.;
-		if( EnergyWN < EnerLyaProf2 )
+		if( EnergyWN < hydro.EnerLyaProf2 )
 		{
 			/* linear interpolation on edge of trapazoid */
 			PhotOccNum_at_nu = hydro.PhotOccNumLyaCenter*(EnergyWN - EnerLyaProf1)/ de;
 		}
-		else if( EnergyWN < EnerLyaProf3 )
+		else if( EnergyWN < hydro.EnerLyaProf3 )
 		{
 			/* this is the central plateau */
 			PhotOccNum_at_nu = hydro.PhotOccNumLyaCenter;

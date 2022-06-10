@@ -103,6 +103,9 @@ struct t_hydro : public module {
 	 * Lya line pumping described in Verner+1999 ApJS */
 	double PhotOccNumLyaCenter = 0.;
 	bool lgLyaPumpAllLines = true;
+	/* upper and lower bound of energy of Lya source function in wn */
+	double EnerLyaProf2 = 82259.0;
+	double EnerLyaProf3 = 82259.0;
 
 	/** TexcLya is the excitation temperature of Lya */
 	realnum TexcLya;

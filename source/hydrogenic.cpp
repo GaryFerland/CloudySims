@@ -26,6 +26,9 @@ void t_hydro::zero()
 	PhotOccNumLyaCenter = 0.;
 	/* disable for testing with NO LYA PUMP, default is to pump */
 	lgLyaPumpAllLines = true;
+	/* upper and lower bound of energy of Lya source function in wn */
+	EnerLyaProf2 = 82259.0;
+	EnerLyaProf3 = 82259.0;
 
 	/* Lya excitation temperature, counter for hotter than gas */
 	TexcLya = 0.;
