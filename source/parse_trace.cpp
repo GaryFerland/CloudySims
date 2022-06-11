@@ -189,7 +189,10 @@ void ParseTrace(Parser &p )
 	if( p.nMatch("LEVELN") )
 		trace.lgTrLevN = true;
 
-	if( p.nMatch("LINE") )
+	if( p.nMatch("LYAPUMP") )
+		trace.lgLyAPump = true;;
+
+	if( p.nMatch("LINE" ) )
 		trace.lgTrLine = true;
 
 	if( p.nMatch("NEON") )

@@ -438,6 +438,7 @@ void InitDefaultsPreparse( void )
 	trace.lgFeBug = false;
 	trace.lgHBug = false;
 	trace.lgTrLine = false;
+	trace.lgLyAPump = false;
 	trace.nznbug = 10000;
 	trace.npsbug = 10000;
 	trace.lgTrace = false;
