@@ -64,13 +64,17 @@ STATIC void RT_line_pumping(
 		if( (t.Lo()->nelem()-1)!=ipHYDROGEN &&
 				t.EnergyWN()>=hydro.EnerLyaProf2 &&
 				t.EnergyWN()<=hydro.EnerLyaProf3)
+		{
 			OccNumContTotal += hydro.PhotOccNumLyaCenter;
+			//fprintf(ioQQQ,"DEBUGGG2 %d %d %d \n",
+			//					(t.Lo()->nelem()-1) , (t.Lo()->IonStg()) , ipIRON);
+		}
 
 
 		if( trace.lgLyaPump )
 		{
 			fprintf(ioQQQ,"DEBUGGG %d %d  occNum %.2e p1 %.2e",
-					(t.Lo()->nelem()-1) , ipHYDROGEN , hydro.PhotOccNumLyaCenter,
+					(t.Lo()->nelem()-1) , (t.Lo()->IonStg()) , hydro.PhotOccNumLyaCenter,
 					t.Emis().pump() );
 		}
 

@@ -1099,6 +1099,19 @@ STATIC void setXtraRatesFe2(const TransitionProxy& tr, double &xtraExRate, doubl
 {
 	DEBUG_ENTRY( "setXtraRatesFe2()" );
 
+	STATIC bool lgPrintFirstTime = true;
+	if( trace.lgLyaPump && lgPrintFirstTime )
+	{
+		fprintf(ioQQQ, "DEBUG setXtraRatesFe2 trace.lgLyaPump %d\n"
+				"hydro.lgLyaPumpAllLines = %d\n"
+				"hydro.lgLyaFeIIPumpOn %d\n",
+				trace.lgLyaPump,
+				hydro.lgLyaPumpAllLines ,
+				hydro.lgLyaFeIIPumpOn );
+		lgPrintFirstTime = false;
+	}
+
+
 	if( ! hydro.lgLyaFeIIPumpOn )
 		return;
 
@@ -1134,7 +1147,6 @@ STATIC void setXtraRatesFe2(const TransitionProxy& tr, double &xtraExRate, doubl
 	}
 	else
 		hydro.PhotOccNumLyaCenter = 0.;
-
 
 	/* on first iteration optical depth in line is inward only, on later
 	 * iterations is total optical depth */
