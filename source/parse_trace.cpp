@@ -190,7 +190,7 @@ void ParseTrace(Parser &p )
 		trace.lgTrLevN = true;
 
 	if( p.nMatch("LYAPUMP") )
-		trace.lgLyAPump = true;;
+		trace.lgLyaPump = true;;
 
 	if( p.nMatch("LINE" ) )
 		trace.lgTrLine = true;

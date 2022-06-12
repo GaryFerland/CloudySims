@@ -11,6 +11,7 @@
 #include "opacity.h"
 #include "conv.h"
 #include "radius.h"
+#include "trace.h"
 #include "rt_escprob.h"
 #include "rt.h"
 #include "cosmology.h"
@@ -60,11 +61,26 @@ STATIC void RT_line_pumping(
 		* this includes pumping by diffuse continuum */
 		double OccNumContTotal = shield_continuum *(
 				rfield.OccNumbIncidCont[t.ipCont()-1] + rfield.OccNumbContEmitOut[t.ipCont()-1] );
-		if( t.Lo()->nelem()!=ipHYDROGEN && t.EnergyWN()>=hydro.EnerLyaProf2 && t.EnergyWN()<=hydro.EnerLyaProf3)
+		if( (t.Lo()->nelem()-1)!=ipHYDROGEN &&
+				t.EnergyWN()>=hydro.EnerLyaProf2 &&
+				t.EnergyWN()<=hydro.EnerLyaProf3)
 			OccNumContTotal += hydro.PhotOccNumLyaCenter;
-		//fprintf(ioQQQ,"DEBUGGG %.2e",t.Emis().pump() );
-		//t.Emis().pump() = t.Emis().Aul() * (*t.Hi()).g() / (*t.Lo()).g() * OccNumContTotal;
-		//fprintf(ioQQQ," %.2e\nSS",t.Emis().pump() );
+
+
+		if( trace.lgLyaPump )
+		{
+			fprintf(ioQQQ,"DEBUGGG %d %d  occNum %.2e p1 %.2e",
+					(t.Lo()->nelem()-1) , ipHYDROGEN , hydro.PhotOccNumLyaCenter,
+					t.Emis().pump() );
+		}
+
+		t.Emis().pump() = t.Emis().Aul() * (*t.Hi()).g() / (*t.Lo()).g() * OccNumContTotal;
+
+		if( trace.lgLyaPump )
+		{
+			fprintf(ioQQQ," p2 %.2e\n",t.Emis().pump() );
+		}
+
 
 
 		if( 0 && t.chLabel() == "H  1 1215.67A" )

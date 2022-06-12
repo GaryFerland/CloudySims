@@ -43,7 +43,7 @@ struct t_trace {
 	bool lgTrLine; 
 
 	/** flag to turn on Lya pumping overlap information */
-	bool lgLyAPump;
+	bool lgLyaPump;
 
 	/** flag set with trace iron bug */
 	bool lgFeBug;

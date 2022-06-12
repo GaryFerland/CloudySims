@@ -5,6 +5,7 @@
 #include "input.h"
 #include "prt.h"
 #include "rt.h"
+#include "trace.h"
 #include "phycon.h"
 #include "optimize.h"
 #include "hcmap.h"
@@ -70,6 +71,11 @@ void ParseSet(Parser &p)
 			/* S_nu = constant, as assumed in stellar atmosphere calculations */
 			hyperfine.LyaSourceFunctionShape_assumed = t_hyperfine::CONSTANT;
 		}
+	}
+
+	else if(p.nMatch("LYAPUMP") )
+	{
+		trace.lgLyaPump = true;
 	}
 
 	else if (p.nMatch("MONI") && p.nMatch("SCIE"))
