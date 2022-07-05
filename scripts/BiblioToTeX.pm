@@ -3,6 +3,12 @@
 # TeX tables relevant to atomic data.
 #
 # Chatzikos, 2016-Jan-28
+# Chatzikos, 2022-Apr-12
+# 	Bugfix: In custom_to_json, protect against missing 'ref' key.
+# Chatzikos, 2022-Apr-13
+# 	Rename prep_bibtex to define_month_macros, and disable its calling
+# 	-- current installation issues warnings like:
+# 	   warning: overriding existing definition of macro "sep"
 #
 use warnings;
 use strict;
@@ -16,6 +22,7 @@ use Cwd;
 use File::Basename;
 use Text::BibTeX;
 use URI::Escape;
+use JSON;
 
 # Immediately flush output
 #
@@ -242,50 +249,58 @@ sub custom_to_json
 					$$hash{$species}{$subhash_elm} ."\",\n";
 		}
 
-		$string .= ($tab x $ntabs) .'"ref" : {'."\n";
-		my @datatypes = sort keys $$hash{$species}{ref};
-		for( my $idt = 0; $idt < @datatypes; $idt++ )
+		if( not exists $$hash{$species}{ref} )
 		{
-			my $datatype = $datatypes[ $idt ];
-			$ntabs++;
-			$string .= ($tab x $ntabs) ."\"$datatype\" : [";
-			my $nrefs = @{ $$hash{$species}{ref}{$datatype} };
-			if( $nrefs > 0 )
+			# drop last comma
+			$string = substr( $string, 0, -2 ) ."\n";
+		}
+		else
+		{
+			$string .= ($tab x $ntabs) .'"ref" : {'."\n";
+			my @datatypes = sort keys $$hash{$species}{ref};
+			for( my $idt = 0; $idt < @datatypes; $idt++ )
 			{
-				$string .= "\n";
-				for( my $iref = 0; $iref < $nrefs; $iref++ )
+				my $datatype = $datatypes[ $idt ];
+				$ntabs++;
+				$string .= ($tab x $ntabs) ."\"$datatype\" : [";
+				my $nrefs = @{ $$hash{$species}{ref}{$datatype} };
+				if( $nrefs > 0 )
 				{
-					my $ref = $$hash{$species}{ref}{$datatype}[ $iref ];
-					$ntabs++;
-					$string .= ($tab x $ntabs) ."{\n";
-					$ntabs++;
-					my @keys = sort keys %$ref;
-					for( my $ikey = 0; $ikey < @keys; $ikey++ )
-					{
-						my $key = $keys[ $ikey ];
-						$string .= ($tab x $ntabs) ."\"$key\" : \"$$ref{$key}\"";
-						$string .= ","
-							if( $ikey != @keys-1 );
-						$string .= "\n";
-					}
-					$ntabs--;
-					$string .= ($tab x $ntabs) ."}";
-					$string .= ","
-						if( $iref != $nrefs-1 );
 					$string .= "\n";
-					$ntabs--;
+					for( my $iref = 0; $iref < $nrefs; $iref++ )
+					{
+						my $ref = $$hash{$species}{ref}{$datatype}[ $iref ];
+						$ntabs++;
+						$string .= ($tab x $ntabs) ."{\n";
+						$ntabs++;
+						my @keys = sort keys %$ref;
+						for( my $ikey = 0; $ikey < @keys; $ikey++ )
+						{
+							my $key = $keys[ $ikey ];
+							$string .= ($tab x $ntabs) ."\"$key\" : \"$$ref{$key}\"";
+							$string .= ","
+								if( $ikey != @keys-1 );
+							$string .= "\n";
+						}
+						$ntabs--;
+						$string .= ($tab x $ntabs) ."}";
+						$string .= ","
+							if( $iref != $nrefs-1 );
+						$string .= "\n";
+						$ntabs--;
+					}
+					$string .= ($tab x $ntabs);
 				}
-				$string .= ($tab x $ntabs);
+				$string .=  "]";
+				$string .= ","
+					if( $idt != @datatypes-1 );
+				$string .= "\n";
+				$ntabs--;
 			}
-			$string .=  "]";
-			$string .= ","
-				if( $idt != @datatypes-1 );
-			$string .= "\n";
+
+			$string .= ($tab x $ntabs) ."}\n";
 			$ntabs--;
 		}
-
-		$string .= ($tab x $ntabs) ."}\n";
-		$ntabs--;
 
 		$string .= ($tab x $ntabs) ."}";
 		$string .= ","
@@ -492,7 +507,7 @@ sub sort_biblio
 	#	die;
 }
 
-sub prep_bibtex
+sub define_month_macros
 {
 	foreach my $month ( qw/jan feb mar apr may jun jul aug sep oct nov dec/ )
 	{
@@ -502,7 +517,9 @@ sub prep_bibtex
 
 sub load_cloudy_bibliography
 {
-	&prep_bibtex();
+	&define_month_macros()
+		if 0;	# Enable if you get warnings about
+			# unknown macros for months
 
 	my $bibfile = Text::BibTeX::File->new( $bibliography ) ;
 

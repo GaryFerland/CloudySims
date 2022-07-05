@@ -448,6 +448,7 @@ appear, then only the intrinsic or the emergent, respectively,
 block of lines will be inhibited.
 
 \subsection{Print line optical depths [\_off, faint]}
+\label{sec:PrintLineOptDep}
 
 Mean line optical depths are not printed by default\footnote{Line center optical
 depths were printed through version C10.  Mean line optical depths
@@ -1438,18 +1439,27 @@ The fine continuum is designed to account for line transfer.
 It shows a normalized attenuated incident continuum and 
 does not include continuous
 emission or absorption from the cloud.  
-This multi-grid approach is needed to combine
-precision and speed.  This command reports the line transmission coefficient,
-$I_{transmitted}/I_{incident}$, for the fine continuum.
+This multi-grid approach is needed to combine precision and speed.
+
+This command reports the energy (see below) of the fine continuum bin in the
+first column, and the continuum transmission coefficient,
+$I_{transmitted}/I_{incident}$, for the fine continuum in the second column.
+What follows is a list of absorption lines centered on that energy bin.
+Each line is identified by its spectral label (species and wavelength), and is
+followed by its mean optical depth.
+The latter is the same as the last entry reported by
+\cdCommand{print line optical depths}, see Section \ref{sec:PrintLineOptDep}.
+All lines centered on that bin are reported, sorted from most-to-least opaque.
 
 The resulting output will be huge if the entire fine continuum is saved.
-The command accepts a \cdCommand{range} option to limit the size of the output file.
+{\it Users are advised to make use of the {\rm\cdCommand{range}} option
+to limit the size of the output file.}
 If the keyword \cdCommand{range} appears then
 the lower and upper limits to the range
 of the fine continuum must be entered.
 The command also accepts
 a \cdCommand{units} option,
-described on \pageref{output_units}, to change the units used
+described on page \pageref{output_units}, to change the units used
 in the specified energy range, and in resulting output.
 
 The optional third numerical parameter gives the number
@@ -1458,6 +1468,8 @@ reducing the size of the output file.  The default is to average over 10
 cells.  If the number of cells to be combined is specified then it must
 be the third number on the command line, following the limits
 of the range.
+Note that in a given energy range, the same number of features is reported,
+irrespective of the number of cells merged.
 
 The resolving power of the fine continuum is adjusted when the calculation begins so
 that lines of the heavy elements can be resolved.

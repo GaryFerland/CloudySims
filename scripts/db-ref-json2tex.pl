@@ -54,6 +54,8 @@
 # 	 ./db-ref-json2tex.pl -nr=35 -e -d
 #
 # Chatzikos, 2016-Jan-28
+# Chatzikos, 2022-Apr-12
+# 	Bugfix: Count TeX rows only if data ref exists
 #
 
 use warnings;
@@ -224,13 +226,17 @@ sub get_nrows_in_TeX_table
 	my $ref = $$species{ref};
 
 	my %nrows;
-	   $nrows{energy} = @{ $$ref{energy} };
-	   $nrows{trans} = @{ $$ref{trans} };
-	   $nrows{coll} = @{ $$ref{coll} };
+	   $nrows{energy} = @{ $$ref{energy} } if( exists $$ref{energy} );
+	   $nrows{trans} = @{ $$ref{trans} } if( exists $$ref{trans} );
+	   $nrows{coll} = @{ $$ref{coll} } if( exists $$ref{coll} );
 
-	my $nrows = $nrows{energy};
-	   $nrows = $nrows{trans}	if( $nrows{trans} > $nrows );
-	   $nrows = $nrows{coll}	if( $nrows{coll} > $nrows );
+	my $nrows = 0;
+	   $nrows = $nrows{energy}
+	   	if( exists $nrows{energy} and $nrows{energy} > $nrows );
+	   $nrows = $nrows{trans}
+	   	if( exists $nrows{trans} and $nrows{trans} > $nrows );
+	   $nrows = $nrows{coll}
+	   	if( exists $nrows{coll} and $nrows{coll} > $nrows );
 
 	return	( $nrows, { %nrows } );
 }
@@ -289,7 +295,9 @@ sub print_species_multiple_TeX_rows
 		{
 			my $citation;
 			print	$FILE	"\t\t\t";
-			if( $i < $$nrows_per_file{$file} )
+			if( exists $$nrows_per_file{$file} and
+				defined( $$nrows_per_file{$file} ) and
+				$i < $$nrows_per_file{$file} )
 			{
 				$citation = $$ref{$file}[ $i ]{bibcode};
 				if( defined( $citation ) )

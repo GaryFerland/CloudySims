@@ -779,7 +779,7 @@ void ParseSave(Parser& p)
 			strcpy( save.chSave[save.nsave], "CONf" );
 
 			sncatf( chHeader, 
-				"#Energy/%s\tTransmitted\n",
+				"#Energy/%s\tTransmitted\tSpecLine\tSingle-Line Opt Depth\n",
 				save.chConSavEnr[save.nsave] );
 
 			/* range option - important since so much data */

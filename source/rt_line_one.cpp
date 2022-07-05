@@ -305,7 +305,7 @@ STATIC void RT_line_fine_opacity(
 
 	/* line center opacity - type realnum since will add to fine opacity array,
 	 * which is realnum */
-	realnum opac_line =  (realnum)t.Emis().PopOpc() * t.Emis().opacity() / DopplerWidth;
+	realnum opac_line = (realnum)t.Emis().PopOpc() * t.Emis().opacity() / DopplerWidth;
 
 	// this is effective optical depth to this point. Do not do line if 
 	// this product is less than SMALLFLOAT
