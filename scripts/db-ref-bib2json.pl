@@ -4,14 +4,19 @@
 #
 # Crawl through the atomic data base (Stout) to gather the references to the
 # papers the data were obtained from.  Use flag '-ni' to non-interactively
-# get the ADS links ONLY.  A JSON file that holds the data is created (or
-# updated) in the database directory (e.g., data/Stout/refs.json).
+# get the ADS links, update NIST records, and prune the database of unused
+# references.  A JSON file that holds the data is created (or updated) in the
+# database directory (e.g., data/Stout/refs.json).
 #
 # DESCRIPTION:
 #
-# The script begins by reading the default Cloudy bibliography data base in
-# common/.  This is needed for updates of the data base itself, as discussed
-# below.
+# The script begins by asking for an ADS token, to be obtained from:
+# 	https://ui.adsabs.harvard.edu/user/settings/token
+# and to use with queries to the ADS database for BibTeX records.  In non-
+# interactive runs ('-ni' switch, see below), this step is skipped.
+#
+# It then reads the default Cloudy bibliography data base in common/.  This is
+# needed for updates of the data base itself, as discussed below.
 #
 # For the data base of choice (Stout), the script reads both the default and
 # the 'all' masterlists (*All.ini) to learn what species are available and which
@@ -22,12 +27,12 @@
 #
 # For each species, the script opens in succession the relevant data files,
 # parses the comment section at the end of the file, and attempts to isolate the
-# references.  In Stout, these are either contained between the last two fields
-# of stars (i.e., lines that contain only stars) in the file, or if there is
-# only one field of stars after the end of data, by the section header
-# 'Reference'.  This last limitation is due to the fact that in some Stout files
-# there are several fields of stars to essentially comment out unwanted sections
-# of the data.
+# references.  In the Stout format, these are either contained between the last
+# two fields of stars (i.e., lines that contain only stars) in the file, or if
+# there is only one field of stars after the end of data, by the section header
+# 'Reference' (may be omitted).  This last limitation is due to the fact that
+# in some Stout files there are several fields of stars to essentially comment
+# out unwanted sections of the data.
 #
 # Once the references have been isolated, each line is parsed in succession.
 # Because there is no single format (tabs, colons, or a single space may be
@@ -40,11 +45,14 @@
 # communications that are not picked up.
 #
 # Alternatively, the script may be used in non-interactive mode with the flag
-# '-ni'.  In this case, it gathers only the ADS links from each file, and
-# requires no user validation.  This is intended as a quick way to update the
-# JSON file.  NB NB: Pre-existing references in the JSON file that are not
-# ADS links are preserved by this process.  Files that contain no references
-# are reported in the file 'empty-files.txt'.
+# '-ni'.  In this case, it does the following operations without interacting
+# with the user: it gathers the ADS links from each file, updates NIST records
+# (if any dates are found), and prunes references from the internal data
+# structure that do not appear in the Stout files.  This is intended as a quick
+# way to update the JSON file.
+#
+# In either mode, files that contain no references are reported in the file
+# 'empty-files.txt'.
 #
 # Note that for Stout, the script expects each reference to occupy its own line,
 # or at least to be at the end of the line, separated from leading text by means
@@ -55,30 +63,18 @@
 # details, and searches for the citation in the Cloudy bibliography.  If found,
 # the script proceeds to the next reference.
 #
-# If the reference isn't found, the script proceeds to query ADS.  ADS possesses
-# 3 data bases (AST, PHYS, and PRE -- listed on the browser at the top of the
-# abstract request page as 'Astronomy', 'Physics', and 'arXiv e-prints').  Each
-# data base is queried successively, the results are reported to the user, and
-# checked against the input reference for a match.  If a match is not found, the
-# user is asked to provide a bibcode (presumably because the used filter didn't
-# catch the right citation), or proceed to the next ADS data base.  If none of
-# the ADS data bases provide a match, the user is asked to enter a bibcode by
-# hand, or skip the reference.  In that event, the reference is reported as an
-# unmatched reference in the file 'unresolved-refs.txt', in the directory from
-# which the script is run.
+# If the reference is not found, the script proceeds to query ADS.  The query
+# results are reported to the user, and checked against the input reference for
+# a match.  If a match is not found, the user is asked to provide a bibcode
+# (presumably because the used filter did not catch the right citation).  If
+# no match is found, the user is asked to enter a bibcode by hand, or skip the
+# reference.  In that event, the reference is reported as an unmatched
+# reference in the file 'unresolved-refs.txt', in the directory from which the
+# script is run.
 #
 # Once a bibcode is obtained, the Cloudy bibliography is queried for it, to
 # make sure that the citation is truly absent from the bibliography data base.
-# If so, ADS is queried anew for the BibTeX entry of the citation.  Knowledge
-# of the data base where the match was found is important, as querying a
-# different data base could lead to acquiring the wrong BibTeX.  (The last data
-# base listed on the URL for the BibTeX request is the one that takes effect.
-# This is why the original ADS query was done separately for each ADS data base:
-# to preserve the origin of the match.  Note that all three data bases could be
-# searched at the same time in the original query -- as on the browser.)  The
-# BibTeX entry is then added to the bibliography data base, along with a unique
-# human-readable cross-reference.  (The bibliography data on memory are also
-# appropriately updated.)
+# If so, ADS is queried anew for the BibTeX entry of the citation.
 #
 # Note that in some rare occassions, the BibTeX entry may be missing some
 # information.  If possible, these entries are corrected from information at
@@ -93,7 +89,7 @@
 # by reading this file prior to processing the atomic data base, as discussed
 # above.
 #
-# The error files 'empty-files.txt', 'broken-bibtex.txt', and 'unresolved-refs.txt'
+# The files 'empty-files.txt', 'broken-bibtex.txt', and 'unresolved-refs.txt'
 # should be searched for and inspected, if they exist, after each run.  If no
 # problems were found, the relevant files will not be created.
 #
@@ -111,7 +107,6 @@
 # 	$ cpanm JSON
 # 	$ cpanm Astro::ADS
 # 	$ cpanm Text::BibTeX
-# 	$ cpanm LWP::Simple
 #
 # Usage examples:
 # 1. Process the entire Stout data base, that is, all files of all species.
@@ -130,6 +125,25 @@
 # Chatzikos, 2016-Jan-27
 # Chatzikos, 2016-Mar-28
 # 	Implement non-interactive mode.
+# Chatzikos, 2022-Apr-12
+# 	Update and parametrize ADS URL
+# Chatzikos, 2022-Apr-14
+# 	Let script:
+# 	- process new ADS URLs, starting with 'https://ui.adsabs';
+# 	- process Stout files that either miss the 'Reference' line,
+# 	  or contain data in it;
+# 	- always process NIST refs, not only in interactive mode;
+# 	- update NIST references in data structure (for JSON file),
+# 	  if needed;
+# 	- always prune non-existent refs from data structure (for JSON file),
+# 	  not only in interactive mode;
+# 	- process ADAS refs, and private communications;
+# 	- report files without references, after the references have been
+# 	  processed (BUGFIX).
+# 	Other improvements:
+# 	- update ADS BibTeX acquisition;
+# 	- request and store ADS tokens;
+# 	- update instructions above.
 #
 
 use warnings;
@@ -142,7 +156,6 @@ use JSON;
 
 use Astro::ADS::Query;
 use Text::BibTeX;
-use LWP::Simple;
 
 use BiblioToTeX;
 
@@ -206,7 +219,12 @@ my $empty_files = "empty-files.txt";
 my $broken_bibtex = "broken-bibtex.txt";
 my $unresolved_ref = "unresolved-refs.txt";
 
-my @ads_dbs = qw/ AST PHYS PRE /;
+my $ADS_URL_service = "ui.adsabs.harvard.edu";
+my $ADS_URL = "https://". $ADS_URL_service;
+
+my $ADS_URL_token = $ADS_URL ."/user/settings/token";
+my $ADS_token = undef;
+my $ADS_token_file = ".token.ads";
 
 my $verbose = 1;
 my $interactive;
@@ -284,6 +302,51 @@ sub getInput
 	push( @species, @ARGV );
 
 	return	( $forceADSquery, $db, $dataset, \@species );
+}
+
+
+#################################################################################
+#				   ADS TOKEN					#
+#################################################################################
+sub get_ADS_token
+{
+	if( not -s $ADS_token_file )
+	{
+		print "Please enter an ADS token.  You may create one at:\n"
+		  .	"\t$ADS_URL_token\n";
+		while( 1 )
+		{
+			print "Enter 40-character token:\t";
+			$ADS_token = <STDIN>;
+			chomp( $ADS_token );
+			last	if( defined( $ADS_token ) and 
+					length( $ADS_token ) == 40 );
+		}
+
+		open( TOKEN, '>', $ADS_token_file )
+		  or die "Error: Could not open $ADS_token_file\n";
+
+	  	print TOKEN "$ADS_token\n";
+
+		close TOKEN
+		  or warn "Warning: Could not close $ADS_token_file\n";
+	}
+	else
+	{
+		open( TOKEN, '<', $ADS_token_file )
+		  or die "Error: Could not open $ADS_token_file\n";
+
+		my @contents = <TOKEN>;
+		$ADS_token = shift @contents;
+		chomp( $ADS_token );
+
+		die "Error: Undefined ADS token"
+		 if( not defined( $ADS_token ) or
+			length( $ADS_token ) != 40 );
+
+		close TOKEN
+		  or warn "Warning: Could not close $ADS_token_file\n";
+	}
 }
 
 
@@ -511,7 +574,7 @@ sub clean_hash
 {
 	my $all_species = shift;
 
-	my @keys_to_delete = qw/ inCloudyBib link ads_db /;
+	my @keys_to_delete = qw/ inCloudyBib link /;
 
 	foreach my $sp ( sort keys %$all_species )
 	{
@@ -837,17 +900,16 @@ sub form_bibcode_ending
 #################################################################################
 sub query_ADS_one_db
 {
-	my( $bibcode_match, $year, $authors, $ads_db ) = @_;
+	my( $bibcode_match, $year, $authors ) = @_;
 
-	print "Querying ADS db $ads_db ...";
+	print "Querying ADS...";
 
 
 	my $query = Astro::ADS::Query->new(
 		Authors		=>	$authors,
 		AuthorLogic	=>	"AND",
 		StartYear	=>	$year,
-		EndYear		=>	$year );
-	$query->{OPTIONS}{db_key} = $ads_db;
+		EndYear		=>	$year, );
 
 	my $results = $query->querydb();
 	my @papers = $results->papers();
@@ -858,8 +920,7 @@ sub query_ADS_one_db
 		return;
 	}
 
-	print	"\nADS query of $ads_db database yielded "
-	  .	@papers ." matching citations:\n";
+	print	"\nADS query yielded " . @papers ." matching citations:\n";
 
 	foreach my $paper ( @papers )
 	{
@@ -895,7 +956,7 @@ sub query_ADS_one_db
 
 sub enter_bibcode_by_hand
 {
-	my( $bt, $ads_db, $skip ) = @_;
+	my( $bt, $skip ) = @_;
 
 	print "Please enter bibcode for:\n";
 	&BiblioToTeX::print_bibentry( $bt );
@@ -905,6 +966,7 @@ sub enter_bibcode_by_hand
 	print ":\t";
 	my $bibcode = <STDIN>;
 	chomp( $bibcode );
+
 	if( $bibcode eq "" and defined( $skip ) )
 	{
 		return;
@@ -913,26 +975,8 @@ sub enter_bibcode_by_hand
 	{
 		print "\t => Ignoring this reference\n";
 	}
-	else
-	{
-		if( not defined( $ads_db ) )
-		{
-			GET_ADS_DB:
-			{
-				print "Please enter ADS db:\t";
-				$ads_db = <STDIN>;
-				chomp( $ads_db );
-				if( join( ' ', @ads_dbs ) !~ $ads_db )
-				{
-					print	"Illegal choice. Options are:\t"
-					  .	join( ',', @ads_dbs ) ."\n";
-					goto GET_ADS_DB;
-				}
-			}
-		}
-	}
 
-	return	( $bibcode, $ads_db );
+	return	$bibcode;
 }
 
 sub query_ADS
@@ -945,43 +989,38 @@ sub query_ADS
 	$authors[0] = "^". $authors[0];
 	#	print "'@authors'\n";
 
-	my( $bibcode, $ads_db );
-	foreach my $this_ads_db ( @ads_dbs )
-	{
-		$ads_db = $this_ads_db;
-		$bibcode = &query_ADS_one_db( $bibcode_match, $$bt{year},
-						\@authors, $this_ads_db );
-		last
-			if( defined( $bibcode ) );
+	my $bibcode =
+		&query_ADS_one_db( $bibcode_match, $$bt{year}, \@authors );
 
-		( $bibcode, $ads_db ) =
-			&enter_bibcode_by_hand( $bt, $ads_db, 1 );
+	$bibcode = &enter_bibcode_by_hand( $bt, 1 )
+		if( not defined( $bibcode ) );
 
-		last
-			if( defined( $bibcode ) );
-
-		$bibcode = $ads_db = undef;
-	}
-
-	( $bibcode, $ads_db ) = &enter_bibcode_by_hand( $bt, $ads_db )
+	$bibcode = &enter_bibcode_by_hand( $bt )
 		if( not defined( $bibcode ) );
 
 	#	print "Got bibcode:\t $bibcode\n";
 	#	die;
 
-	return	( $bibcode, $ads_db );
+	return	$bibcode;
 }
 
 sub get_ads_bibtex
 {
-	my( $bibcode, $ads_db ) = @_;
-	my $req = "http://adsabs.harvard.edu/cgi-bin/nph-bib_query"
-		. "?bibcode=$bibcode"
-		. "&data_type=BIBTEX"
-		. "&db_key=$ads_db"
-		. "&nocookieset=1";
-	#	print "$req\n";
-	return	&LWP::Simple::get( $req );
+	my( $bibcode ) = @_;
+
+	#
+	# For detais see:
+	# https://github.com/adsabs/adsabs-dev-api/blob/master/Export_API.ipynb
+	#
+	my $req = "curl -H \"Authorization: Bearer $ADS_token\""
+		. ' -H "Content-Type: application/json"'
+		. ' https://api.adsabs.harvard.edu/v1/export/bibtex'
+		. ' -X POST'
+		. " -d '{\"bibcode\":[\"$bibcode\"]}'";
+	print $req ."\n";
+	my $resp = `$req`;
+	$resp = &JSON::from_json( $resp );
+	return $$resp{export};
 }
 
 
@@ -1038,6 +1077,7 @@ sub report_refs
 		print "\n";
 	}
 }
+
 sub enter_ref_by_hand
 {
 	my $ref = shift;
@@ -1045,7 +1085,7 @@ sub enter_ref_by_hand
 	print	"Please enter one of:\n"
 	  .	"    d to delete entry\n"
 	  .	" or r to enter a reference (as in, 'r: Ferland et al 2013, RMxAA, 49, 137'):\n"
-	  .	" or l to enter a link (as in: 'l: http://adsabs.harvard.edu/abs/2007ApJ...654.1171A'):\n"
+	  .	" or l to enter a link (as in: 'l: $ADS_URL/abs/2007ApJ...654.1171A'):\n"
 	  .	" or b to enter a bibcode (as in: 'b: 2007ApJ...654.1171A'):\t";
 	my $read_ref = <STDIN>;
 	chomp( $read_ref );
@@ -1143,20 +1183,14 @@ sub parse_stout_comments
 {
 	my( $filename, $contents_orig ) = @_;
 
-	my @contents = @$contents_orig;
-	if( grep( /Reference/, @contents ) )
-	{
-		shift( @contents ) while ( @contents and
-						$contents[0] !~ m/Reference/ );
-	}
-
 	my @refs;
-	foreach my $line ( @contents )
+	foreach my $line ( @$contents_orig )
 	{
+		print $line	if 0;
 		chomp( $line );
 
-		$line =~ s/^#Reference://;
-		$line =~ s/$comment_sentinel{stout}//;
+		$line =~ s/^$comment_sentinel{stout}//;
+		$line =~ s/^Reference://;
 		my $ref = $line;
 
 		if( $line =~ m/\t\w+$/ )
@@ -1197,7 +1231,7 @@ sub parse_stout_comments
 		$ref =~ s/\s*$//;
 
 		my %ref;
-		if( $ref =~ m#http://adsabs# )
+		if( $ref =~ m#adsabs\.harvard\.edu# )
 		{
 			#	print "ref:\t '$ref'\n";
 			my( $name, $http ) = split( 'http', $ref );
@@ -1207,20 +1241,38 @@ sub parse_stout_comments
 			my @f = split( '/', $ref{link} );
 			$ref{bibcode} = pop( @f );
 		}
+		elsif( $ref =~ m/NIST/i )
+		{
+			# The phrase 'not in NIST' appears in si_2.coll
+			next if( $line =~ m/ not / );
+
+			my $version = "NIST";
+		       	if( $ref =~ m/.*NIST\s*(\d\d\d\d-\d\d-\d\d)/ )
+			{
+				$version .= "  $1";
+			}
+			$ref{name} = $version;
+		}
+		elsif( $ref =~ m/\s*ADAS\s*/i )
+		{
+			my $version = "ADAS";
+		       	if( $ref =~ m/.*ADAS\s*(\d\d\d\d-\d\d-\d\d)/ )
+			{
+				$version .= "  $1";
+			}
+			$ref{name} = $version;
+		}
+		elsif( $ref =~ m/private comm/ )
+		{
+			$ref{name} = $ref;
+		}
 		elsif( defined( $interactive ) )
 		{
-			if( $ref =~ m/NIST/ )
-			{
-				$ref{name} = $ref;
-			}
-			else
-			{
-				# Citations employ at least 3 commas
-				#
-				my $ncommas = () = $ref =~ m/,/g;
-				$ref{name} = $ref
-					if( $ncommas >= 3 );
-			}
+			# Citations employ at least 3 commas
+			#
+			my $ncommas = () = $ref =~ m/,/g;
+			$ref{name} = $ref
+				if( $ncommas >= 3 );
 		}
 		push( @refs, \%ref )
 			if( %ref );
@@ -1352,6 +1404,7 @@ sub get_bibcodes_update_biblio
 			push( @bibcodes, $$this_ref{bibcode} );
 		}
 		elsif( $$this_ref{name} !~ m/NIST/i and
+			$$this_ref{name} !~ m/ADAS/i and
 			$$this_ref{name} !~ m/Chianti/i and
 			$$this_ref{name} !~ m/(unpublished|private comm)/ )
 		{
@@ -1366,14 +1419,12 @@ sub get_bibcodes_update_biblio
 				}
 				else
 				{
-					( $$this_ref{bibcode}, $$this_ref{ads_db} ) =
-						&query_ADS( $bt );
+					$$this_ref{bibcode} = &query_ADS( $bt );
 				}
 			}
 			else
 			{
-				( $$this_ref{bibcode}, $$this_ref{ads_db} ) =
-					&query_ADS( $bt );
+				$$this_ref{bibcode} = &query_ADS( $bt );
 				$$this_ref{inCloudyBib} = 1
 					if( defined(
 						&BiblioToTeX::get_bibcode_from_Cloudy_bib( $bt ) ) );
@@ -1491,42 +1542,28 @@ sub add_ref_to_bibliography
 		   if( defined( $interactive ) );
 		return;
 	}
-
-	my $resp;
-	if( exists( $$ref{ads_db} ) and defined( $$ref{ads_db} ) )
+	elsif( not defined( $interactive ) )
 	{
-		$resp = &get_ads_bibtex( $$ref{bibcode}, $$ref{ads_db} );
+		print "Bibcode not in .bib:\t$$ref{bibcode}\n";
+		return;
 	}
-	else
+
+	my $resp = &get_ads_bibtex( $$ref{bibcode} );
+	if( defined( $resp ) and $resp ne "" )
 	{
-		foreach my $ads_db ( @ads_dbs )
+		&report_verbatim( $resp );
+		if( $resp !~ m/$$ref{bibcode}/ )
 		{
-			$resp = &get_ads_bibtex( $$ref{bibcode}, $ads_db );
-			if( defined( $resp ) and $resp ne "" )
+			if( &get_response( 1 ) eq "n" )
 			{
-				print 	"ADS database queried: $ads_db,"
-				  .	" for: $$ref{bibcode}, got:\n";
-				&report_verbatim( $resp );
-				if( $resp =~ m/$$ref{bibcode}/ )
-				{
-					$$ref{ads_db} = $ads_db;
-					last;
-				}
-				else
-				{
-					if( &get_response( 1 ) eq "y" )
-					{
-						$$ref{ads_db} = $ads_db;
-						last;
-					}
-				}
+				$resp = undef;
 			}
 		}
 	}
 
 	if( not defined( $resp ) )
 	{
-		print "Did not find $$ref{bibcode}\n";
+		print "Bibcode not on ADS:\t$$ref{bibcode}\n";
 	}
 	else
 	{
@@ -1571,7 +1608,7 @@ sub update_datafile
 		#	print "bibcode = $bibcode\t bibcode_esc = $bibcode_esc\n";
 		if( not grep( /$bibcode_esc/, @$contents ) )
 		{
-			my $line = "# http://adsabs.harvard.edu/abs/" . $bibcode ."\n";
+			my $line = "# $ADS_URL/abs/" . $bibcode ."\n";
 			push( @lines, $line );
 		}
 	}
@@ -1617,19 +1654,37 @@ sub get_stout_refs
 {
 	my( $db, $contents ) = @_;
 
-	my( $ilines_stars, @refs ) = ( 0 );
-	do
+	my $have_Reference = 0;
+	$have_Reference = 1
+		if( grep /Reference/, @$contents );
+
+	my( $ilines_stars, $got_Reference, @refs ) = ( 0, 0 );
+	while( @$contents )
 	{
-		@refs = ();
 		unshift( @refs, pop( @$contents ) )
-			while( defined( $$contents[ -1 ] ) and
-					$$contents[ -1 ] !~ $end_of_data{$db} );
-		pop( @$contents );
-		$ilines_stars++;
-		#$ilines_stars = 2
-		#	if( @refs and $refs[0] =~ 'Reference' );
+			while( @$contents and
+				      ( $$contents[ -1 ] !~ $end_of_data{$db} and
+				        $$contents[ -1 ] !~ 'Reference' ) );
+
+		last	if not defined( $$contents[ -1 ] );
+
+		my $line = pop( @$contents );
+		$ilines_stars++		if( $line =~ $end_of_data{$db} );
+		$got_Reference = 1	if( $line =~ m/Reference/i );
+
+		last	if( $ilines_stars and not $have_Reference );
+
+		if( $have_Reference and $got_Reference )
+		{
+			# Retain reference line, as it may include data;
+			# e.g.,
+			#	'#Reference: http://adsabs....'
+			# in stout/ni/ni_11/ni_11.tp 
+			#
+			unshift( @refs, $line );
+			last;
+		}
 	}
-	while( $ilines_stars < 1 );
 
 	pop( @$contents )
 		if( defined( $$contents[-1] ) and
@@ -1672,6 +1727,7 @@ sub get_file_references
 		print "filename= '$filename'\n";
 		print "db = '$db'\n";
 	}
+
 	my $contents = &BiblioToTeX::read_contents( $filename );
 	my $data;
 	if( $db eq 'stout' )
@@ -1680,16 +1736,20 @@ sub get_file_references
 		my $refs = &get_stout_refs( $db, $contents );
 		$data = $contents;
 		$contents = $refs;
-		&report_empty_files( "../data/stout/".$filename, $data, $refs );
 	}
 	else
 	{
 		$data = &get_data( $db, $contents );
 	}
+
 	return
 		if( not @$data );
-	#	print "data:\t". @$data ."\n";
-	#	print "rest:\t". @$contents ."\n";
+
+	if( 0 )
+	{
+		print "data:\t". @$data ."\n";
+		print "rest:\t". @$contents ."\n";
+	}
 
 	my $refs;
 	if( $db eq "stout" )
@@ -1705,7 +1765,6 @@ sub get_file_references
 		$refs = &parse_lamda_comments( $filename, $contents );
 	}
 
-
 	if( defined( $interactive ) )
 	{
 		#	&report_refs( $refs );
@@ -1719,6 +1778,9 @@ sub get_file_references
 				$species, $refs );
 	&update_datafile( $bibcodes, $contents, $filename )
 		if( defined( $interactive ) and $db eq "stout" );
+
+	&report_empty_files( "../data/stout/".$filename, $data, $refs )
+		if( $db eq 'stout' );
 
 	return	$refs;
 }
@@ -1758,11 +1820,17 @@ sub get_stored_ref
 	my $this_hr;
 	foreach my $hr ( @{ $refs_arr } )
 	{
-		if( exists( $$hr{$ref_type} ) and
-			$$hr{$ref_type} eq $$file_ref{$ref_type} )
+		if( exists( $$hr{$ref_type} ) )
 		{
-			$this_hr = $hr;
-			last;
+			print "$$hr{$ref_type}\t $$file_ref{$ref_type}\n"
+				if 0;
+			if( ( $$hr{$ref_type} =~ 'NIST' and
+				$$file_ref{$ref_type} =~ 'NIST' ) or
+				$$hr{$ref_type} eq $$file_ref{$ref_type} )
+			{
+				$this_hr = $hr;
+				last;
+			}
 		}
 	}
 
@@ -1789,11 +1857,47 @@ sub update_refs_data
 		}
 		elsif( exists( $$ref{name} ) and $$ref{name} ne "" )
 		{
-			#	print "ref name=\t $$ref{name}\n";
+			print "ref name=\t $$ref{name}\n"	if 0;
 			$this_hr = &get_stored_ref( $ref, 'name',
 					$$refs_data{$sp}{ref}{$datatype} );
+
+			# Update existing record, instead of adding a new one
+			if( defined( $this_hr ) )
+			{
+				my $new_date;
+
+				if( $$ref{name} =~ m/NIST +\d/ and
+					defined( $this_hr ) )
+				{
+					$$ref{name} =~ m/NIST +(\d{4}-\d\d-\d\d)/;
+					$new_date = $1;
+				}
+				elsif( $$ref{name} =~ m/NIST *\(?\d/i )
+				{
+					$$ref{name} =~ m/NIST *\(?(\d{4})/;
+					$new_date = $1;
+				}
+
+				$$this_hr{name} =~ m/NIST *(.*)/;
+
+				my $old_date = $1;
+				if( defined( $old_date ) )
+				{
+					$old_date =~ s/\(//g;
+					$old_date =~ s/\)//g;
+				}
+
+				if( defined( $new_date ) and
+					defined( $old_date ) and
+					$new_date gt $old_date )
+				{
+					print "Update $new_date > $old_date\n"
+						if 0;
+					$$this_hr{name} = $$ref{name};
+				}
+			}
 		}
-		#	print defined( $this_hr ) ? "yes\n" : "no\n";
+		print defined( $this_hr ) ? "yes\n" : "no\n"	if 0;
 
 		if( not defined( $this_hr ) )
 		{
@@ -1801,12 +1905,12 @@ sub update_refs_data
 		}
 	}
 
-	if( defined( $interactive ) )
+	if( exists $$refs_data{$sp}{ref}{$datatype} )
 	{
 		# Now do the reverse: prune all stored data that are not in the
 		# current version of the file
 		my @rm_index;
-		#	print @{ $$refs_data{$sp}{ref}{$datatype} }."\n";
+		print @{ $$refs_data{$sp}{ref}{$datatype} }."\n"	if 0;
 		for( my $iref = 0; $iref < @{ $$refs_data{$sp}{ref}{$datatype} }; $iref++ )
 		{
 			my $ref = $$refs_data{$sp}{ref}{$datatype}[ $iref ];
@@ -1822,7 +1926,7 @@ sub update_refs_data
 				#	print 'name=  '. $$ref{name} ."\n";
 				$this_hr = &get_stored_ref( $ref, 'name', $file_refs );
 			}
-			#	print defined( $this_hr ) ? "yes\n" : "no\n";
+			print defined( $this_hr ) ? "yes\n" : "no\n"	if 0;
 
 			if( not defined( $this_hr ) )
 			{
@@ -1879,7 +1983,10 @@ sub get_references
 
 my( $forceADSquery, $db, $ds, $species_list ) = &getInput();
 
-&Astro::ADS::Query::ads_mirror( 'adsabs.harvard.edu' );
+&get_ADS_token()
+	if( defined( $interactive ) );
+
+&Astro::ADS::Query::ads_mirror( $ADS_URL_service );
 
 &BiblioToTeX::set_globals();
 &set_globals();
@@ -1903,8 +2010,11 @@ foreach my $db ( @$db )
 	#	die "$dbdir:\t @all\n";
 
 	my $species_hash = &get_species_subset( $species_list, $all_species, $db );
-	#	my @all = keys %$species_hash;
-	#	die "$dbdir:\t @all\n";
+	if( 0 )
+	{
+		my @all = keys %$species_hash;
+		die "$dbdir:\t @all\n";
+	}
 
 	&get_references( $forceADSquery, $db, $ds, $species_hash );
 	&clean_hash( $all_species );
