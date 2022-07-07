@@ -508,7 +508,7 @@ void Atom_LevelN::operator()(
 		// matrices in double precision.
 
 
-		bool DO_GTH = false, compareGTH = false;
+		bool DO_GTH = true, compareGTH = false;
 		if (DO_GTH || compareGTH )
 		{
 			amat2 = amat;
@@ -563,7 +563,7 @@ void Atom_LevelN::operator()(
 
 
 		if (!DO_GTH)
-		{			
+		{
 			// Use old matrix solution infrastructure
 			ner = solve_system(amat.vals(), bvec, nlev, NULL);
 			
@@ -590,7 +590,7 @@ void Atom_LevelN::operator()(
 		{
 			// Only use GTH solution to deal with problem in hand, look
 			// to extend the scope of this in due course.
-			if ( totsrc <= 0. && strcmp(chLabel,"Ca 1") == 0 )
+			if ( totsrc <= 0. /* && strcmp(chLabel,"Ca 1") == 0 */ )
 			{
 				gthsolve(amat2, bvec, nlev, abund);
 				ner = 0;
@@ -600,7 +600,7 @@ void Atom_LevelN::operator()(
 				ner = solve_system(amat.vals(), bvec, nlev, NULL);
 			}
 		}
-		
+
 		if( lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
 				save.img_matrix.matchZone( nzone ) )
 		{
