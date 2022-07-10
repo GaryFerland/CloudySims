@@ -792,35 +792,35 @@ void PrtComment(void)
 	if( !rfield.lgMMok )
 	{
 		sprintf( chLine, 
-			" C-Continuum not defined in extreme infrared - Compton scat, grain heating, not treated properly?" );
-		caunin(chLine);
+			"  !Continuum not defined in extreme infrared - Compton scat, grain heating, not treated properly?" );
+		bangin(chLine);
 	}
 
 	if( !rfield.lgHPhtOK )
 	{
 		sprintf( chLine, 
-			" C-Continuum not defined at photon energies which ionize excited states of H, important for H- and ff heating." );
-		caunin(chLine);
+			"  !Continuum not defined at photon energies which ionize excited states of H, important for H- and ff heating." );
+		bangin(chLine);
 	}
 
 	if( !rfield.lgXRayOK )
 	{
 		sprintf( chLine, 
-			" C-Continuum not defined at X-Ray energies - Compton scattering and Auger ionization wrong?" );
-		caunin(chLine);
+			"  !Continuum not defined at X-Ray energies - Compton scattering and Auger ionization wrong?" );
+		bangin(chLine);
 	}
 
 	if( !rfield.lgGamrOK )
 	{
 		sprintf( chLine, 
-			" C-Continuum not defined at gamma-ray energies - pair production and Compton scattering OK?" );
-		caunin(chLine);
+			"  !Continuum not defined at gamma-ray energies - pair production and Compton scattering OK?" );
+		bangin(chLine);
 	}
 
 	if( continuum.lgCon0 )
 	{
-		sprintf( chLine, " C-Continuum zero at some energies." );
-		caunin(chLine);
+		sprintf( chLine, "  !Continuum zero at some energies." );
+		bangin(chLine);
 	}
 
 	if( continuum.lgCoStarInterpolationCaution )
@@ -958,7 +958,7 @@ void PrtComment(void)
 	}
 
 	/* grains and solar abundances do not make sense */
-	if( gv.lgDustOn() && abund.lgAbnSolar )
+	if( gv.lgDustOn() && abund.lgAbnReference )
 	{
 		sprintf( chLine, 
 			"  !Grains are present, but the gas phase abundances were left at the solar default.  This is not physical." );
@@ -971,6 +971,19 @@ void PrtComment(void)
 		sprintf( chLine, 
 			"  !Grains are not present, but the gas phase abundances were depleted.  This is not physical." );
 		bangin(chLine);
+	}
+
+	/* check if grains depletion INCREASED the abundance of an element, a feature of Jenkins 2009 */
+	for( long int i=0; i < LIMELM; i++ )
+	{
+		if( abund.DepletionScaleFactor[i] > 1. )
+		{
+			sprintf( chLine,
+				 "  !The grain depletion scale factor was %.2e for %s",
+				 abund.DepletionScaleFactor[i] , elementnames.chElementName[i] );
+			bangin(chLine);
+
+		}
 	}
 
 	if( gv.lgDustOn() )

@@ -30,6 +30,7 @@ public:
 		maxWN = 0.;
 		lgLTE = false;
 		lgPrtMatrix = false;
+		lgImgMatrix = false;
 	}
 	~species()
 	{
@@ -71,6 +72,8 @@ public:
 	bool lgLTE;
 	/** print Matrix input to solver */
 	bool lgPrtMatrix;
+	/** create image for Matrix input to solver */
+	bool lgImgMatrix;
 };
 
 struct t_pseudo_cont
@@ -102,7 +105,15 @@ void makeChemical(char* chLabelChemical, long nelem, long ion);
  * \param chLabelSpec[in]       Spectral label, e.g., "C  2"
  * \param chLabelChem[out]      Chemical label, e.g., "C+"
  */
-void spectral_to_chemical( char *chLabelSpec, char* chLabelChem );
+void spectral_to_chemical( char *chLabelSpec, const char* chLabelChem );
+
+/**
+ * spectral_to_chemical - Convert a spectral label to chemical.
+ *
+ * \param chLabelSpec[in]       Spectral label, e.g., "C  2"
+ * \param chLabelChem[out]      Chemical label, e.g., "C+"
+ */
+void spectral_to_chemical( string &chLabelSpec, const char* chLabelChem );
 
 /**
  * parse_chemical - Parse the element and charge of a chemical label.
@@ -124,14 +135,19 @@ bool parse_chemical( const string &chLabelChem,
  */
 void chemical_to_spectral( const string &chLabelChem, string &chLabelSpec );
 
-class genericState;
-
-/** getSpecies - acquire the species matching the input string
+/**
+ * isSpeciesActive - Tell if the species is enabled
  *
- * \param speciesLabel	input species string
- * \param species	output reference to requested species
+ * An atomic/ionic species may be inactive if the relevant element is disabled.
+ * Likewise, a molecular species may be inactive if one of its constituents
+ * elements is disabled.  This function reports on the given species.
+ * If not found, the result is false.
+ *
+ * \param chLabelChem [in]	Chemical label, e.g., "C+2", or "HCl"
+ *
+ * \return bool			True, if species active; false, otherwise.
  */
-void getSpecies( const string &speciesLabel, genericState &species );
+bool isSpeciesActive( const string &chSpecLabel );
 
 /** isAtomicIonValid - Tell if an atomic ion is has a charge consistent
  * 			with its atomic number.

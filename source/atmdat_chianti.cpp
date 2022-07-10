@@ -1362,7 +1362,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 
 			fenergyWN = (realnum)(1e+8/fWLAng);
 
-			// TODO::Check the wavelength in the file with the difference in energy levels
+			// \todo Check the wavelength in the file with the difference in energy levels
 
 			tr->EnergyWN() = fenergyWN;
 			if( rfield.isEnergyBound( Energy( fenergyWN, "cm^-1" ) ) )

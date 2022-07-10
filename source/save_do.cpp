@@ -631,6 +631,20 @@ void SaveDo(
 				}
 			}
 
+			else if( strcmp(save.chSave[ipPun],"IMAG") == 0 )
+			{
+				// NB NB
+				//
+				// This command generates images for debugging purposes,
+				// and it is executed near the call to the linear algebra
+				// function that solves the rate equations for level
+				// populations
+				//
+				// Here we do nothing
+				//
+				continue;
+			}
+
 			else if( strcmp(save.chSave[ipPun],"MONI") == 0 )
 			{
 				if( lgLastOnly )
@@ -1152,7 +1166,7 @@ void SaveDo(
 
 					/* upper limit set with range option */
 					if( save.punarg[ipPun][1]> 0. )
-						nu_hi = ipFineCont( save.punarg[ipPun][1]);
+						nu_hi = ipFineCont( save.punarg[ipPun][1] );
 					else
 						nu_hi = rfield.nfine;
 
@@ -1162,18 +1176,69 @@ void SaveDo(
 
 					do
 					{
-						realnum sum1 = rfield.fine_opt_depth[j];
-						realnum xnu = rfield.fine_anu[j];
-						for( long jj=1; jj<nskip; ++jj )
+						vector<int> all_stack_lines;
+
+						// when winds are present, line center in opacity
+						// vector is offset from its original position
+						// -- rfield.fine_lstack works with original position
+						//
+						long fine_index_no_wind = j - rfield.ipFineConVelShift;
+
+						realnum sum1 = 0.,
+							xnu = 0.;
+
+						for( long jj=0; jj<nskip; ++jj, ++j, ++fine_index_no_wind )
 						{
-							xnu += rfield.fine_anu[j+jj];
-							sum1 += rfield.fine_opt_depth[j+jj];
+							xnu += rfield.fine_anu[j];
+							sum1 += rfield.fine_opt_depth[j];
+
+							if( fine_index_no_wind > 0 )
+							{
+								auto got = rfield.fine_lstack.find( fine_index_no_wind );
+								if( got != rfield.fine_lstack.end() )
+								{
+									for( auto &lst_ind : got->second )
+									{
+										all_stack_lines.emplace_back( lst_ind );
+									}
+								}
+							}
 						}
+
+						// sort lines in decreasing opacity
+						//
+						sort( all_stack_lines.begin(),
+							all_stack_lines.end(),
+							[](int i1, int i2)
+							{
+								return LineSave.lines[i1].getTransition().Emis().TauInSpecific()
+								     > LineSave.lines[i2].getTransition().Emis().TauInSpecific();
+							} );
+
+						double transm = sexp(sum1/nskip);
 						fprintf( save.params[ipPun].ipPnunit, 
-							"%.6e\t%.3e\n", 
-							AnuUnit(xnu/nskip), 
-							sexp(sum1/nskip) );
-						j += nskip;
+							"%.6e\t%.3e", 
+							AnuUnit(xnu/nskip),
+							transm );
+
+						static const realnum odep_limit = 0.01;
+
+						for( auto &ind: all_stack_lines )
+						{
+							TransitionProxy tr = LineSave.lines[ind].getTransition();
+
+							// Report mean optical depths, rather than line center
+							// Keeps optical depths consistent with main output
+							//
+							realnum odep = tr.Emis().TauInSpecific() * SQRTPI;
+							if( odep < odep_limit )
+								break;
+
+							fprintf( save.params[ipPun].ipPnunit,
+								"\t\"%s\"\t%.3e",
+								tr.chLabel().c_str(), odep );
+						}
+						fprintf( save.params[ipPun].ipPnunit, "\n" );
 					} while( j < nu_hi );
 				}
 			}

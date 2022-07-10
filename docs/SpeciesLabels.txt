@@ -35,9 +35,9 @@ C+3	Chianti
 C+4	He-like
 C+5	H-like 
 C+6	
-CH	
+CH	LAMDA
 CH+	
-CH2	
+CH2	LAMDA
 CH2+	
 CH3	
 CH3+	
@@ -121,6 +121,10 @@ F+6	Stout
 F+7	He-like
 F+8	H-like 
 F+9	
+HF	LAMDA
+HF+	
+H2F+	
+CF+	LAMDA
 Ne	Stout
 Ne+	Stout
 Ne+10	
@@ -287,7 +291,7 @@ Ar+6	Chianti
 Ar+7	Chianti
 Ar+8	Chianti
 Ar+9	Chianti
-ArH+	
+ArH+	LAMDA
 K	Stout
 K+	Stout
 K+10	Chianti
@@ -449,7 +453,7 @@ Cr+7	Chianti
 Cr+8	Chianti
 Cr+9	Stout
 Mn	Stout
-Mn+	
+Mn+	Stout
 Mn+10	Stout
 Mn+11	Stout
 Mn+12	Stout

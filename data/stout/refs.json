@@ -188,10 +188,6 @@
         "ref" : {
             "coll" : [
                 {
-                    "bibcode" : "1985ADNDT..33..195B",
-                    "name" : "Berrington, K. A., Burke, P. G., Dufton, P. L., Kingston, A. E. 1985, At. Data Nucl. Data Tables, 33, 195"
-                },
-                {
                     "bibcode" : "2014A%26A...566A.104F"
                 }
             ],
@@ -204,9 +200,6 @@
                 }
             ],
             "trans" : [
-                {
-                    "name" : "NIST  2013-10-20"
-                },
                 {
                     "bibcode" : "2014A%26A...566A.104F"
                 }
@@ -284,12 +277,12 @@
             "coll" : [],
             "energy" : [
                 {
-                    "name" : "NIST  2014-09-16"
+                    "name" : "NIST  2017-10-05"
                 }
             ],
             "trans" : [
                 {
-                    "name" : "NIST  2014-09-16"
+                    "name" : "NIST  2017-10-05"
                 }
             ]
         }
@@ -313,9 +306,6 @@
                 }
             ],
             "trans" : [
-                {
-                    "name" : "NIST  2014-09-16"
-                },
                 {
                     "bibcode" : "2017JPhB...50f5203F"
                 }
@@ -488,9 +478,6 @@
             ],
             "trans" : [
                 {
-                    "name" : "NIST  2014-09-16"
-                },
-                {
                     "bibcode" : "2014A%26A...566A.104F"
                 }
             ]
@@ -616,9 +603,6 @@
             ],
             "trans" : [
                 {
-                    "name" : "NIST  2014-09-16"
-                },
-                {
                     "bibcode" : "2014A%26A...566A.104F"
                 }
             ]
@@ -671,8 +655,10 @@
                     "name" : "Griffin,D.C., Mitnik,D.M. & Badnell, N. R.,2001,JPhB,34,4401"
                 },
                 {
-                    "bibcode" : "1989ApJ...342..306H",
-                    "name" : "Hollenbach, D. & McKee, C. F. 1989, ApJ, 342, 306"
+                    "bibcode" : "2019ApJ...881....3W"
+                },
+                {
+                    "bibcode" : "2017MNRAS.469.1225W"
                 }
             ],
             "energy" : [
@@ -970,12 +956,12 @@
             ],
             "energy" : [
                 {
-                    "name" : "NIST  2013-10-01"
+                    "name" : "NIST  2017-10-09"
                 }
             ],
             "trans" : [
                 {
-                    "name" : "NIST  2013-10-01"
+                    "name" : "NIST  2017-10-09"
                 }
             ]
         }
@@ -1147,7 +1133,7 @@
                     "name" : "NIST  2018-01-09"
                 },
                 {
-                    "bibcode" : "2011A&A...528A..69L"
+                    "bibcode" : "2011A%26A...528A..69L"
                 }
             ],
             "trans" : [
@@ -1165,12 +1151,12 @@
             "coll" : [],
             "energy" : [
                 {
-                    "name" : "NIST  2013-10-01"
+                    "name" : "NIST  2017-10-09"
                 }
             ],
             "trans" : [
                 {
-                    "name" : "NIST  2013-10-01"
+                    "name" : "NIST  2017-10-09"
                 }
             ]
         }
@@ -1657,8 +1643,7 @@
         "ref" : {
             "coll" : [
                 {
-                    "bibcode" : "1970RSPSA.318..531K",
-                    "name" : "Krueger, T.K., and Czyzak, S.J. 1970, Proc Roy Soc London A, 318, 531"
+                    "bibcode" : "2004ApJS..150..465T"
                 }
             ],
             "energy" : [
@@ -2916,12 +2901,12 @@
             "coll" : [],
             "energy" : [
                 {
-                    "name" : "NIST  2014-09-16"
+                    "name" : "NIST  2017-10-05"
                 }
             ],
             "trans" : [
                 {
-                    "name" : "NIST  2014-09-16"
+                    "name" : "NIST  2017-10-05"
                 }
             ]
         }
@@ -4500,6 +4485,23 @@
             ]
         }
     },
+    "mn_2" : {
+        "element" : "mn",
+        "ion" : "2",
+        "list" : "default",
+        "ref" : {
+            "energy" : [
+                {
+                    "name" : "NIST  2014-09-16"
+                }
+            ],
+            "trans" : [
+                {
+                    "name" : "NIST  2014-09-16"
+                }
+            ]
+        }
+    },
     "mn_5" : {
         "element" : "mn",
         "ion" : "5",
@@ -5009,9 +5011,6 @@
             ],
             "trans" : [
                 {
-                    "name" : "NIST  2014-09-16"
-                },
-                {
                     "bibcode" : "2014A%26A...565A..77D"
                 }
             ]
@@ -5130,15 +5129,19 @@
         "ion" : "17",
         "list" : "all",
         "ref" : {
-            "coll" : [],
+            "coll" : [
+                {
+                    "name" : "ADAS  2021-07-22"
+                }
+            ],
             "energy" : [
                 {
-                    "name" : "NIST  2014-09-16"
+                    "name" : "ADAS  2021-07-22"
                 }
             ],
             "trans" : [
                 {
-                    "name" : "NIST  2014-09-16"
+                    "name" : "ADAS  2021-07-22"
                 }
             ]
         }
@@ -5785,9 +5788,6 @@
                 }
             ],
             "trans" : [
-                {
-                    "name" : "NIST  2014-09-16"
-                },
                 {
                     "bibcode" : "2014A%26A...566A.123D"
                 }

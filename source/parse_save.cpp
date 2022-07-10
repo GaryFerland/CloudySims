@@ -22,11 +22,10 @@
 #include "service.h"
 #include "species.h"
 #include "dense.h"
+#include "continuum.h"
 
 /* check for keyword UNITS on line, then scan wavelength or energy units if present */
 STATIC const char* ChkUnits(Parser &p);
-
-STATIC void addUniqueSpeciesBand( const string &filename, const string &speciesLabel );
 
 inline void saveXSPEC(unsigned int option)
 {
@@ -470,6 +469,50 @@ void ParseSave(Parser& p)
 		}
 	}
 
+	else if( p.nMatch("ARRA") && p.nMatch( "LEVE" ) )
+	{
+		strcpy( save.chSave[save.nsave], "IMAG" );
+
+		string species = chLabel;
+
+		if( species == "" )
+		{
+			fprintf( ioQQQ, "Empty species label: ''\n" );
+			cdEXIT( EXIT_FAILURE );
+		}
+
+		save.img_matrix.lgImgRates = true;
+		save.img_matrix.setSpecies( species );
+		if( p.nMatch( "FITS" ) )
+			save.img_matrix.lgFITS = true;
+		else if( p.nMatch( " PPM" ) )
+			save.img_matrix.lgFITS = false;
+		else
+		{
+			fprintf( ioQQQ, "Please use either the FITS or PPM keywords\n" );
+			cdEXIT( EXIT_FAILURE );
+		}
+
+		if( p.nMatch( "ITER" ) )
+			save.img_matrix.iteration = p.getNumberCheck( "iter" );
+		if( p.nMatch( "ZONE" ) )
+			save.img_matrix.zone = p.getNumberCheck( "zone" );
+
+		// NB NB
+		//
+		// This command generates images for debugging purposes,
+		// and it is executed near the call to the linear algebra
+		// function that solves the rate equations for level
+		// populations
+		//
+		// Because there is no output file for save_do.cpp to
+		// write in, we have to leave the function immediately,
+		// or a file will be created with the given species as
+		// its name
+		//
+		return;
+	}
+
 	else if( p.nMatch("AVER") )
 	{
 		/* save averages */
@@ -736,7 +779,7 @@ void ParseSave(Parser& p)
 			strcpy( save.chSave[save.nsave], "CONf" );
 
 			sncatf( chHeader, 
-				"#Energy/%s\tTransmitted\n",
+				"#Energy/%s\tTransmitted\tSpecLine\tSingle-Line Opt Depth\n",
 				save.chConSavEnr[save.nsave] );
 
 			/* range option - important since so much data */
@@ -2590,13 +2633,6 @@ void ParseSave(Parser& p)
 		ioMAP = save.params[save.nsave].ipPnunit;
 	}
 
-	/* make sure FeII bands are always processed
-	 * if a 'save species bands' command has not been issued
-	 * the bands will be computed, and printed on main output,
-	 * but no 'save' output file will be created */
-	if( dense.lgElmtOn[ipIRON] )
-		addUniqueSpeciesBand( "FeII_bands.ini", "Fe+" );
-
 	/* if not done already and chTitle has been set to a string then print title
 	 * logic to prevent more than one title in grid calculation */
 	if( save.lgSaveTitle(save.nsave) && chTitle.length() > 0 )
@@ -2797,39 +2833,4 @@ STATIC const char* ChkUnits( Parser &p )
 		val = StandardEnergyUnit(" RYD ");
 	}
 	return val;
-}
-
-STATIC bool specBandsExists( const string &filename, const string &speciesLabel )
-{
-	DEBUG_ENTRY( "specBandsExists()" );
-
-	bool exists = false;
-
-	for( vector<save_species_bands>::iterator it = save.specBands.begin();
-		it != save.specBands.end(); ++it )
-	{
-		if( (*it).filename == filename &&
-			(*it).speciesLabel == speciesLabel )
-		{
-			exists = true;
-			break;
-		}
-	}
-
-	return exists;
-}
-
-STATIC void addUniqueSpeciesBand( const string &filename, const string &speciesLabel )
-{
-	DEBUG_ENTRY( "addUniqueSpeciesBand()" );
-
-	if( specBandsExists( filename, speciesLabel ) )
-		return;
-
-	save_species_bands thisSpBand;
-	thisSpBand.filename = filename;
-	thisSpBand.speciesLabel = speciesLabel;
-	save.specBands.push_back( thisSpBand );
-
-	return;
 }

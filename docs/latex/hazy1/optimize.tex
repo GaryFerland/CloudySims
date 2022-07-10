@@ -56,6 +56,7 @@ set the initial stepsize, limit the range of a physical parameter,
 set the convergence tolerance, etc. See Section~\ref{sec:controlling_optimizer} for more details.
 
 \section{Commands with vary option}
+\label{sec:CommandsVaryOption}
 
 This section lists all commands which have the \cdCommand{vary} option.
 Table \ref{tab:CommandWithVaryOption} lists all commands, and
@@ -71,13 +72,13 @@ Command& Quantity varied& Min& Max& Inc.\\
 \hline
 abundances starburst& metallicity& $-3$& $\log(35.5)$& 0.2\\
 AGN& Big Bump temperature& $-\infty$& $+\infty$& 0.5\\
-species H-like Lyman pumping scale & line blocking scale factor& $-\infty$& $+\infty$& 0.1\\
 blackbody& temperature& $-\infty$& $+\infty$& 0.5\\
 bremsstrahlung& temperature& $-\infty$& $+\infty$& 0.5\\
 constant pressure set& pressure& $-\infty$& $+\infty$& 0.1\\
 constant temperature& temperature& $\log(2.8)$& 10& 0.1\\
 coronal equilibrium& temperature& $\log(2.8)$& 10& 0.1\\
 cosmic rays& cosmic ray density& $-\infty$& $+\infty$& 0.2\\
+database H-like Lyman pumping scale & line blocking scale factor& $-\infty$& $+\infty$& 0.1\\
 distance& distance& $-\infty$& $+\infty$& 0.3\\
 dlaw& first dlaw parameter& $-\infty$& $+\infty$& 0.5\\
 eden& electron density& $-\infty$& 20 & 0.1\\
@@ -95,6 +96,7 @@ ionization parameter& ionization parameter& $-\infty$& $+\infty$& 0.5\\
 luminosity& luminosity of source& $-\infty$& $+\infty$& 0.5\\
 magnetic field \ldots& magnetic field& $-\infty$& $+\infty$& 0.5\\
 metals& metallicity& $-\infty$& $+\infty$& 0.5\\
+metals deplete Jenkins 2009 Fstar 0.5 & Fstar & 0 & 1 & 0.1 \\
 phi(H)& photon flux& $-\infty$& $+\infty$& 0.5\\
 power law& see below& var& var& 0.2\\
 Q(H)& no.\ of ionizing photons& $-\infty$& $+\infty$& 0.5\\
@@ -179,13 +181,17 @@ to match.
 
 \subsection{Optimize column density}
 
-This specifies a set of column densities.
-A series of column densities,
+This specifies a set of column densities to be optimized.
+A series of species and constraints are read,
 ending with a line with the keyword \cdCommand{end} in columns 1 to 3,
 will be read
 in from subsequent lines.
-One column density is entered per line and there is no limit to
+One species is entered per line and there is no limit to
 the number of entries.
+
+The species can be specified in one of two ways:
+
+\cdTerm{Atomic ions:}
 Columns 1 to 4 of the column density lines must
 contain the first four characters of the name of the element spelled as
 in the output from the zone results.
@@ -209,34 +215,36 @@ silicon 3 14.6 # The Si+2 column density
 end of column densities
 \end{verbatim}
 
-\cdTerm{Molecular and level column densities:  how this command works:}
-The label
-and ion that are parsed from the lines giving the column densities
+\cdTerm{Molecular and level column densities:}
+The species is specified as a quoted, case-sensitive string, and no ionization
+stage is specified.  (This is different from previous
+versions of Cloudy, where the species did not need to be quoted, but
+only the first 4 characters were used, and an ionization stage
+of 0 had to be specified.)
+The species names which are parsed from the lines giving the column density
+constraints
 are simply
 passed to routine \cdTerm{cdColm}.
 That routine is described in Part 2 of \Hazy.
 This optimization command accepts any species that
 \cdTerm{cdColm} recognizes.
 Column densities of molecules and excited states of some ions
-can be specified by entering an ion stage of zero and one of the strings
-that is described where \cdTerm{cdColm} is described.
-The first four characters
-of the label given on the input line must agree with those listed there.
+can be specified by special syntax, and one of the cases
+that is described where \cdTerm{cdColm} is shown in the example below.
 
 The following shows some examples of optimizing molecular and state column
 densities:
 \begin{verbatim}
 optimize column densities
-H-   0  < 17 # The H- column density is a limit
-H2   0 17.4 error =.001 # Match the H_2 column density exactly
-H2+  0 14.6 # The H2+ molecular ion
-O11* 0  16.3 # This is an excited level within the O^0 ground term
+"H-"      < 17 # The H- column density is a limit
+"H2"      17.4 error =.001 # Match the total H_2 column density exactly
+"H2+"     14.6 # The H2+ molecular ion
+"O11*"    16.3 # This is an excited level within the O^0 ground term
+"He+[2]"  16.3 # This selects just one level from the He+ ion
+"CO[2]"   16.3 # This is a level in the CO molecule
+"CO[1:3]" 18.3 # This is the sum of levels 1,2,3 in the CO molecule
 end of column densities
 \end{verbatim}
-Note that extra spaces were placed after the labels for the molecules to
-pad out the needed four-character label.
-The ion, the first number after
-the four-character label, is always zero
 
 \subsection{Optimize, [intensity, luminosity]=36.425 [error =0.1]}
 

@@ -366,7 +366,8 @@ monitor "H2O " 538.142m line intensity -15.81
 ## >>chng 13 jun 27, from -23.33 to -23.28, fix the error in mole_h2_coll.cpp
 ## >>chng 13 jul 25, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 04, from -23.28 to -23.25, fix double-counting of big-H2 Solomon rate
-monitor "HNC " 1652.90m  line intensity -23.25
+## >>chng 21 sep 11, from -23.25 to -23.73, LAMDA update
+monitor "HNC " 1652.90m  line intensity -23.73
 ## >>chng 13 jun 27, from -8.563 to -22.81, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 27, from -22.81 to -23.02, fix the error in mole_h2_coll.cpp
 ## >>chng 13 jul 25, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
@@ -375,7 +376,8 @@ monitor "HCS+" 1755.88m  -23.02 line intensity
 ## >>chng 13 jun 27, from -24.22 to -24.37, fix the error in mole_h2_coll.cpp
 ## >>chng 13 jul 25, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 15 aug 03, from -24.37 to -24.45, update LAMDA to 2015
-monitor "CS  " 3058.86m  -24.45 line intensity
+## >>chng 21 sep 11, from -24.45 to -24.34, LAMDA update
+monitor "CS  " 3058.86m  -24.34 line intensity
 ## >>chng 13 jun 27, from -7.288 to -20.45, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 monitor "CO  " 2600.05m  -20.45 line intensity
@@ -406,7 +408,9 @@ monitor "^13CO" 906.599m  -19.66 line intensity
 ## >>chng 13 jun 27, from -8.247 to -23.75, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 27, from -23.75 to -23.65, fix the error in mole_h2_coll.cpp
 ## >>chng 13 jul 25, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
-monitor "CN  " 880.858m  -23.65  line intensity
+## >>chng 21 sep 11, from -23.65 to -24.59, LAMDA update
+## >>chng 21 sep 15, from -24.59 to -23.68, go back to unresolved model
+monitor "CN  " 880.858m  -23.68  line intensity
 ##
 # h2_t500.in 
 # class limit  

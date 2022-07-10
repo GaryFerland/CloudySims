@@ -32,7 +32,9 @@ iterate
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-normalize to "Ca B" 4861.33A
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 22 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+normalize to "Ca B" 4861.32A
 # the normalizing line is not defined on the emergent line stack
 print lines emergent off
 print line faint .01
@@ -73,7 +75,8 @@ end of lines
 set blend "HepsNe3" 3968
 Ne 3  3967.47
 ## >>chng 13 jul 26, wl from H 1 3970.07A to 3970.08A, update to NIST.
-H  1  3970.08
+## >>chng 22 aug 18, wl from H 1 3970.08A to 3970.07A, revert to PvH energies for H
+H  1  3970.07
 end of lines
 ##
 save performance "hii_blister.per"
@@ -88,17 +91,23 @@ print line optical depths
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "H  1" 4861.33A luminosity 0.667
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 22 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "H  1" 4861.32A luminosity 0.667
 ## >>chng 13 jul 26, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 17, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "Q(H)" 4861.33A > 1.
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 22 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "Q(H)" 4861.32A > 1.
 ## >>chng 13 jul 26, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 17, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "Q(H)" 4861.33A < 1.1 
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 22 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "Q(H)" 4861.32A < 1.1 
 ##assert line "totl" 5 876  0.13
 ## >>chng 02 dec 11, new entry, new hei
 ## >>chng 03 feb 28, from 0.121 to 0.131, better hei coll
@@ -127,7 +136,8 @@ monitor line "He 1" 3888.64A  0.0261
 ## >>chng 13 jul 26, wl from 3889 to 3889.07A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 25, wl from 3889.07A to 3889.05A, up Rydberg constant
 ## >>chng 21 mar 16, wl from 3889.05A to 3889.06A, update NIST energies
-monitor line "Ca B" 3889.06A 0.104
+## >>chng 22 aug 18, wl from 3889.06A to 3889.05A, revert to PvH energies for H
+monitor line "Ca B" 3889.05A 0.104
 ## 
 ## >>chng 09 jun 15, from 0.0843 to 0.0798, gradual approach to outer edge
 ## >>chng 13 jul 26, wl from 7065 to 7065.18A, increased wl precision to 6 sig. fig.

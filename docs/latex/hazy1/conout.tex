@@ -89,6 +89,9 @@ important timescales are determined.
 
 
 \section{Print arrays}
+
+These commands are intended mainly as debugging aids.
+
 \subsection{Print arrays ionization}
 
 This prints the array elements that enter into solution
@@ -104,6 +107,7 @@ requested elements will be printed.
 This is a debugging aid.
 
 \subsection{Print arrays levels ``species''}
+\label{sec:PrintArraysLevels}
 
 \par
 This prints the matrix that enters the solver
@@ -444,6 +448,7 @@ appear, then only the intrinsic or the emergent, respectively,
 block of lines will be inhibited.
 
 \subsection{Print line optical depths [\_off, faint]}
+\label{sec:PrintLineOptDep}
 
 Mean line optical depths are not printed by default\footnote{Line center optical
 depths were printed through version C10.  Mean line optical depths
@@ -876,6 +881,46 @@ The options are the following:  \cdCommand{charge} transfer,
 \cdCommand{recc} for hydrogen recombination cooling, \cdCommand{opacity},
 \cdCommand{hemis}, and \cdCommand{hecs} (for He$^0$
 collision strengths).
+
+\section{Save arrays levels ``species'' [fits or ppm] [iteration it] [zone nz]}
+
+This is a companion command to \cdCommand{print arrays levels}, and it is also a
+debugging aid.
+The syntax for the species is the same as in Section~\ref{sec:PrintArraysLevels}.
+Using this command generates either a FITS file or a PPM image, depending on the
+keyword given, \cdCommand{fits} or \cdCommand{ppm}.
+The image will be generated for the given species for all iterations and zones.
+This can be limited to specific iteration with the keyword
+\cdCommand{iteration} followed by an iteration number, and likewise to
+a specific zone with the keyword \cdCommand{zone} followed by a zone number.
+
+The benefit of FITS images is that they can be manipulated with standard
+software (e.g., with ds9, FTOOLS, python, etc.) in post-processing.
+The \cdCommand{fits} option builds upon, and extends the \cdCommand{save fits}
+command.
+Whereas the latter generates a table, the former creates a FITS file that
+contains three {\it images}, one for each of the rate matrix, the vector of
+creation rates, and the computed level populations.
+In terms of the linear algebra system, $A x = b$, which Cloudy solves, these
+images hold the $A$ matrix, the $b$ vector, and the computed $x = A^{-1} b$
+vector, respectively.
+
+Notice that if a subset of the energy levels is specified, only those levels
+will appear in the output images.
+For instance, ``Fe+[10:20]'' will generate an 11$\times$11 image for the rate
+matrix (centered on the diagonal), and two 11$\times$1 images for the creation
+rates, and computed populations.
+It is recommended that the full matrix be output at first, and then the range of
+levels be limited at a later stage, if needed.
+
+Also note that a FITS file with the three images mentioned above will be created
+if negative populations are computed for a species when solving the relevant
+linear algebra equation.
+The output file name contains the failing species, the iteration and zone where
+the failure occurred, as well as a substring to distinguish the FITS file from
+those generated with this command; e.g.,
+\cdFilename{Fe+2\_it1\_nz0\_NEG\_POP.fits}.
+This functionality is offered as a debugging aid.
 
 \section{Save monitors}
 \label{sec:SaveMonitorsCommand}
@@ -1394,18 +1439,27 @@ The fine continuum is designed to account for line transfer.
 It shows a normalized attenuated incident continuum and 
 does not include continuous
 emission or absorption from the cloud.  
-This multi-grid approach is needed to combine
-precision and speed.  This command reports the line transmission coefficient,
-$I_{transmitted}/I_{incident}$, for the fine continuum.
+This multi-grid approach is needed to combine precision and speed.
+
+This command reports the energy (see below) of the fine continuum bin in the
+first column, and the continuum transmission coefficient,
+$I_{transmitted}/I_{incident}$, for the fine continuum in the second column.
+What follows is a list of absorption lines centered on that energy bin.
+Each line is identified by its spectral label (species and wavelength), and is
+followed by its mean optical depth.
+The latter is the same as the last entry reported by
+\cdCommand{print line optical depths}, see Section \ref{sec:PrintLineOptDep}.
+All lines centered on that bin are reported, sorted from most-to-least opaque.
 
 The resulting output will be huge if the entire fine continuum is saved.
-The command accepts a \cdCommand{range} option to limit the size of the output file.
+{\it Users are advised to make use of the {\rm\cdCommand{range}} option
+to limit the size of the output file.}
 If the keyword \cdCommand{range} appears then
 the lower and upper limits to the range
 of the fine continuum must be entered.
 The command also accepts
 a \cdCommand{units} option,
-described on \pageref{output_units}, to change the units used
+described on page \pageref{output_units}, to change the units used
 in the specified energy range, and in resulting output.
 
 The optional third numerical parameter gives the number
@@ -1414,6 +1468,8 @@ reducing the size of the output file.  The default is to average over 10
 cells.  If the number of cells to be combined is specified then it must
 be the third number on the command line, following the limits
 of the range.
+Note that in a given energy range, the same number of features is reported,
+irrespective of the number of cells merged.
 
 The resolving power of the fine continuum is adjusted when the calculation begins so
 that lines of the heavy elements can be resolved.
