@@ -361,7 +361,7 @@ void database_readin( void )
 		d.open( chPath, ES_NONE );
 		d.getline();
 		/* magic numbers for this version of Chianti masterlist */
-		static const long int nYr = 11, nMon = 10, nDay = 3;
+		static const long int nYr = 22, nMon = 7, nDay = 9;
 		d.checkMagic( nYr, nMon, nDay );
 
 		while( d.getline() )
