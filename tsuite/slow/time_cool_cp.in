@@ -51,11 +51,13 @@ monitor line luminosity cumulative intrinsic "O  6"      1031.91A   13.2
 ## >>chng 16 jul 24, from 13.35 to 13.6, update C III to 2014A&A...566A.104F
 ## >>chng 16 jul 24, from 13.6 to 13.35, update C III to 2014A&A...566A.104F
 ## >>chng 20 oct 05, from 13.35 to 13.38, limit more elements for load leveling
-monitor line luminosity cumulative intrinsic "Fe24"      11.4271A   13.38
+## >>chng 22 jul 09, wl from 11.4271A to 11.4260A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe24"      11.4260A   13.38
 ## >>chng 16 jul 24, from 13.44 to 13.5, update C III to 2014A&A...566A.104F
 ## >>chng 16 jul 24, from 13.5 to 13.44, update C III to 2014A&A...566A.104F
 ## >>chng 20 oct 05, from 13.44 to 13.46, limit more elements for load leveling
-monitor line luminosity cumulative intrinsic "Fe23"      12.1612A   13.46
+## >>chng 22 jul 09, wl from 12.1612A to 12.1610A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe23"      12.1610A   13.46
 ## >>chng 20 oct 05, from 12.59 to 12.62, limit more elements for load leveling
 monitor line luminosity cumulative intrinsic "Fe20"      13.0520A   12.62
 ## >>chng 20 oct 05, from 13.79 to 13.84, limit more elements for load leveling
@@ -63,15 +65,18 @@ monitor line luminosity cumulative intrinsic "Fe17"      17.0510A   13.84
 ## >>chng 20 oct 05, from 13.65 to 13.69, limit more elements for load leveling
 monitor line luminosity cumulative intrinsic "Fe17"      17.0960A   13.69
 ## >>chng 20 oct 05, from 12.05 to 12.1, limit more elements for load leveling
-monitor line luminosity cumulative intrinsic "Fe14"      5303.01A   12.1
+## >>chng 22 jul 09, wl from 5303.01A to 5303.00A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe14"      5303.00A   12.1
 ## >>chng 20 oct 05, from 11.81 to 11.85, limit more elements for load leveling
 monitor line luminosity cumulative intrinsic "Fe13"      1.07462m   11.85
 ## >>chng 20 oct 05, from 11.59 to 11.63, limit more elements for load leveling
 monitor line luminosity cumulative intrinsic "Fe13"      1.07978m   11.63
 ## >>chng 20 oct 05, from 11.34 to 11.38, limit more elements for load leveling
-monitor line luminosity cumulative intrinsic "Fe12"      2405.69A   11.38
+## >>chng 22 jul 09, wl from 2405.69A to 2405.68A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe12"      2405.68A   11.38
 ## >>chng 20 oct 05, from 11.25 to 11.29, limit more elements for load leveling
-monitor line luminosity cumulative intrinsic "Fe12"      2169.09A   11.29
+## >>chng 22 jul 09, wl from 2169.09A to 2169.08A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe12"      2169.08A   11.29
 ## >>chng 20 oct 05, from 10.56 to 10.6, limit more elements for load leveling
 monitor line luminosity cumulative intrinsic "Fe12"      1349.40A   10.6
 ## >>chng 20 oct 05, from 10.79 to 10.83, limit more elements for load leveling
@@ -79,7 +84,8 @@ monitor line luminosity cumulative intrinsic "Fe12"      1242.01A   10.83
 ## >>chng 20 oct 05, from 11.47 to 11.5, limit more elements for load leveling
 monitor line luminosity cumulative intrinsic "Fe11"      2648.71A   11.5
 ## >>chng 20 oct 05, from 11.51 to 11.54, limit more elements for load leveling
-monitor line luminosity cumulative intrinsic "Fe10"      6374.54A   11.54
+## >>chng 22 jul 09, wl from 6374.54A to 6374.53A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe10"      6374.53A   11.54
 ## >>chng 20 oct 05, from 11.11 to 11.15, limit more elements for load leveling
 monitor line luminosity cumulative intrinsic "Fe 9"      8234.56A   11.15
 ## >>chng 16 jul 24, from 14.21 to 14.28, update C III to 2014A&A...566A.104F
@@ -120,7 +126,8 @@ monitor line luminosity cumulative intrinsic "O  7"      21.8070A   12.78
 ## >>chng 20 oct 05, from 13.26 to 13.3, limit more elements for load leveling
 monitor line luminosity cumulative intrinsic "O  7"      22.1012A   13.3
 ## >>chng 20 oct 05, from 12.87 to 12.9, limit more elements for load leveling
-monitor line luminosity cumulative intrinsic "O  6"      1037.62A   12.9
+## >>chng 22 jul 09, wl from 1037.62A to 1037.61A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "O  6"      1037.61A   12.9
 ## >>chng 20 oct 05, from 12.09 to 12.11, limit more elements for load leveling
 monitor line luminosity cumulative intrinsic "O  5"      1213.81A   12.11
 ## >>chng 21 mar 31, from 11.69 to 11.71, add HF+ chemistry
@@ -130,8 +137,10 @@ monitor line luminosity cumulative intrinsic "Si 7"      2146.64A   11.2
 ## >>chng 20 oct 05, from 11.04 to 11.07, limit more elements for load leveling
 monitor line luminosity cumulative intrinsic "Mg 6"      1806.00A   11.07
 ## >>chng 20 oct 05, from 11.15 to 11.18, limit more elements for load leveling
-monitor line luminosity cumulative intrinsic "Mg 6"      1806.43A   11.18
-monitor line luminosity cumulative intrinsic "O  4"      1404.78A   11.7153
+## >>chng 22 jul 09, wl from 1806.43A to 1806.42A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Mg 6"      1806.42A   11.18
+## >>chng 22 jul 09, wl from 1404.78A to 1404.81A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "O  4"      1404.81A   11.7153
 monitor line luminosity cumulative intrinsic "C  4"      1548.19A   12.2393
 ## >>chng 16 jul 24, from 11.84 to 11.81, update C III to 2014A&A...566A.104F
 monitor line luminosity cumulative intrinsic "C  3"      1906.68A   11.81

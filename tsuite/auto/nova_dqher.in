@@ -170,13 +170,15 @@ monitor line "blnd"  5199 0.002
 ## >>chng 06 aug 02, from 3.26 to 3.72, update O+2, N+2 CT
 ## >>chng 06 nov 29, from 3.72 to 4.20 Badnell DR turned on
 ## >>chng 14 jan 05, from 4.2 to 3.919, N to external databases
-monitor line "n  2"  121.767m 3.919
+## >>chng 22 jul 09, wl from 121.767m to 121.769m, upgrade to Chianti v10
+monitor line "n  2"  121.769m 3.919
 ## 
 ## >>chng 04 sep 08, from 0.696 to 0.662, slow drift down
 ## >>chng 06 aug 02, from 0.662 to 0.755, update O+2, N+2 CT
 ## >>chng 06 nov 29, from 0.755 to 0.855 Badnell DR turned on
 ## >>chng 14 jan 05, from 0.855 to 0.8128, N to external databases
-monitor line "n  2"  205.244m 0.8128
+## >>chng 22 jul 09, wl from 205.244m to 205.283m, upgrade to Chianti v10
+monitor line "n  2"  205.283m 0.8128
 ##
 ## >>chng 03 feb 04, from 9.63 to 9.10 better rec diffuse fields
 ## >>chng 06 aug 02, from 9.10 to 4.59, update O+2, N+2 CT

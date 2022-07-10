@@ -39,20 +39,26 @@ monitor line luminosity cumulative intrinsic "Fe17"      15.0130A   13.7830
 monitor line luminosity cumulative intrinsic "Fe17"      17.0960A   13.4331
 monitor line luminosity cumulative intrinsic "Fe17"      17.0510A   13.5761
 monitor line luminosity cumulative intrinsic "O  6"      1031.91A   12.9464
-monitor line luminosity cumulative intrinsic "Fe24"      11.4271A   13.1374
-monitor line luminosity cumulative intrinsic "Fe23"      12.1612A   13.2285
+## >>chng 22 jul 09, wl from 11.4271A to 11.4260A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe24"      11.4260A   13.1374
+## >>chng 22 jul 09, wl from 12.1612A to 12.1610A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe23"      12.1610A   13.2285
 monitor line luminosity cumulative intrinsic "Fe20"      13.0520A   12.3831
 monitor line luminosity cumulative intrinsic "Fe17"      17.0510A   13.5761
 monitor line luminosity cumulative intrinsic "Fe17"      17.0960A   13.4331
-monitor line luminosity cumulative intrinsic "Fe14"      5303.01A   11.8301
+## >>chng 22 jul 09, wl from 5303.01A to 5303.00A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe14"      5303.00A   11.8301
 monitor line luminosity cumulative intrinsic "Fe13"      1.07462m   11.5900
 monitor line luminosity cumulative intrinsic "Fe13"      1.07978m   11.3674
-monitor line luminosity cumulative intrinsic "Fe12"      2405.69A   11.1247
-monitor line luminosity cumulative intrinsic "Fe12"      2169.09A   11.0342
+## >>chng 22 jul 09, wl from 2405.69A to 2405.68A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe12"      2405.68A   11.1247
+## >>chng 22 jul 09, wl from 2169.09A to 2169.08A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe12"      2169.08A   11.0342
 monitor line luminosity cumulative intrinsic "Fe12"      1349.40A   10.3404
 monitor line luminosity cumulative intrinsic "Fe12"      1242.01A   10.5713
 monitor line luminosity cumulative intrinsic "Fe11"      2648.71A   11.2461
-monitor line luminosity cumulative intrinsic "Fe10"      6374.54A   11.2796
+## >>chng 22 jul 09, wl from 6374.54A to 6374.53A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe10"      6374.53A   11.2796
 monitor line luminosity cumulative intrinsic "Fe 9"      8234.56A   10.8790
 ## >>chng 17 may 25, wl from 18.9732A to 18.9709A, up Rydberg constant
 ## >>chng 19 jul 24, fix bug on resolving ions excitation on He like
@@ -78,13 +84,16 @@ monitor line luminosity cumulative intrinsic "O  7"      21.8070A   12.49
 ## >>chng 19 jun 11, from 13.01 to 13.04, Percival and Richards (1978) used for He-like ions
 ## >>chng 19 jul 24, from 13.04 to 13.01, fix bug on resolving ions excitation on He like
 monitor line luminosity cumulative intrinsic "O  7"      22.1012A   13.01
-monitor line luminosity cumulative intrinsic "O  6"      1037.62A   12.6438
+## >>chng 22 jul 09, wl from 1037.62A to 1037.61A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "O  6"      1037.61A   12.6438
 monitor line luminosity cumulative intrinsic "O  5"      1213.81A   11.9151
 monitor line luminosity cumulative intrinsic "N  5"      1242.80A   11.4594
 monitor line luminosity cumulative intrinsic "Si 7"      2146.64A   10.9219
 monitor line luminosity cumulative intrinsic "Mg 6"      1806.00A   10.7775
-monitor line luminosity cumulative intrinsic "Mg 6"      1806.43A   10.8847
-monitor line luminosity cumulative intrinsic "O  4"      1404.78A   11.4476
+## >>chng 22 jul 09, wl from 1806.43A to 1806.42A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Mg 6"      1806.42A   10.8847
+## >>chng 22 jul 09, wl from 1404.78A to 1404.81A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "O  4"      1404.81A   11.4476
 monitor line luminosity cumulative intrinsic "C  4"      1548.19A   12.0837
 ## >>chng 16 jul 24, from 11.77 to 11.74, update C III to 2014A&A...566A.104F
 monitor line luminosity cumulative intrinsic "C  3"      1906.68A   11.74

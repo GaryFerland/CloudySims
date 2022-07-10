@@ -288,7 +288,8 @@ monitor line "blnd"  1402 0.6326
 ## >>chng 06 nov 12, from 6.61 to 6.07 NA update [OIV] cs to Tayal 06
 ## >>chng 12 oct 22, from 6.07 to 6.354, zone tau in rt_line_one
 ## >>chng 14 mar 26, from 6.354 to 5.609, Move oxygen data to stout and chianti files
-monitor line "o  4"  25.8832m  5.609
+## >>chng 22 jul 09, wl from 25.8832m to 25.8863m, upgrade to Chianti v10
+monitor line "o  4"  25.8863m  5.609
 ##
 ## >>chng 01 may 10, from 0.264 to 0.246 ct network rates change
 ## >>chng 01 dec 21, from 0.246 to 0.265, inner shell yields
@@ -377,7 +378,8 @@ monitor line "blnd" 2424 1.442
 ## >>chng 09 feb 23, from 1.22 to 1.163, remove otslin, otscon dampers (PR #84, r2758)
 ## >>chng 13 jul 24, from 1.163 to 1.096, Ne to external databases
 ## >>chng 13 jul 26, wl from 3426 to 3426.03A, increased wl precision to 6 sig. fig.
-monitor line "ne 5" 3426.03A 1.096
+## >>chng 22 jul 09, wl from 3426.03A to 3425.88A, upgrade to Chianti v10
+monitor line "ne 5" 3425.88A 1.096
 ##
 ## >>chng 01 may 10, from 2.688 to 2.508 ct network rates change
 ## >>chng 02 nov 20, from 2.508 to 2.701, new he ots diff
@@ -386,7 +388,8 @@ monitor line "ne 5" 3426.03A 1.096
 ## >>chng 12 dec 13, from 2.74 to 2.863, various convergence test tweaks
 ## >>chng 13 feb 01, from 2.863 to 2.716, BUGFIX, largely undo r6703
 ## >>chng 13 jul 24, from 2.716 to 2.956, Ne to external databases
-monitor line "Ne 5" 24.2065m  2.956
+## >>chng 22 jul 09, wl from 24.2065m to 24.3109m, upgrade to Chianti v10
+monitor line "Ne 5" 24.3109m  2.956
 ##
 ## >>chng 06 jul 06, add this line
 ## >>chng 06 aug 11, from 2.44 to 2.64 Meudon 06 compar, bowen CT cs update
@@ -394,7 +397,8 @@ monitor line "Ne 5" 24.2065m  2.956
 ## >>chng 13 feb 01, from 2.764 to 2.622, BUGFIX, largely undo r6703
 ## >>chng 13 jul 24, from 2.622 to 2.875, Ne to external databases
 ## >>chng 13 jul 26, wl from 14.32m to 14.3228m, increased wl precision to 6 sig. fig.
-monitor line "ne 5" 14.3228m 2.875
+## >>chng 22 jul 09, wl from 14.3228m to 14.3178m, upgrade to Chianti v10
+monitor line "ne 5" 14.3178m 2.875
 ##
 ## >>chng 00 oct xx, from 1.62 to 1.767 H- opacity bug, rebin optical continuum
 ## >>chng 03 may 22, from 1.77 to 1.57, chng in Lya dest prob, DEST0

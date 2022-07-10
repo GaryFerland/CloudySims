@@ -32,7 +32,8 @@ blnd 2326  #   total C II] 2324.69 + 2328.12
 BLND  2335 #    total Si II] 2335
 blnd  2665
 blnd   2798
-ne 5  3426.03
+# >>chng 22 jul 09, wl from 3426.03 to 3425.88A, upgrade to Chianti v10
+ne 5  3425.88A
 BA C     0
 BaC      3646
 O  2  3726.03
@@ -73,9 +74,11 @@ H  1     4861.32A
 o  3     4958.91
 o  3     5006.84
 n  1  5200.26
-Fe14     5303.01
+# >>chng 22 jul 09, wl from 5303.01 to 5303.00A, upgrade to Chianti v10
+Fe14     5303.00A
 O  1     5577.34
-n  2  5754.61
+# >>chng 22 jul 09, wl from 5754.61 to 5754.59A, upgrade to Chianti v10
+n  2  5754.59A
 # >>chng 13 jul 30, wl from 5875.61 to 5875.64A, increased wl precision to 6 sig. fig.
 ## >>chng 18 feb 20, updated spectral label from "He 1" 5875.64A to "Blnd" 5877.29A, update He-like triplet labels and wl
 # >>chng 18 mar 06, wl from 5877.29A to 5875.66A, adjust multiplet Blend WL for refraction index
@@ -156,36 +159,52 @@ H  1     1.94456m
 # IR and coronal lines
 #
 c  2  157.636m
-n  2  121.767m
-n  2  205.244m
+# >>chng 22 jul 09, wl from 121.767m to 121.769m, upgrade to Chianti v10
+n  2  121.769m
+# >>chng 22 jul 09, wl from 205.244m to 205.283m, upgrade to Chianti v10
+n  2  205.283m
 n  3  57.3238m
 o  1     63.1679m
 o  1     145.495m
 o  3     51.8004m
 o  3     88.3323m
-o  4     25.8832m
+# >>chng 22 jul 09, wl from 25.8832m to 25.8863m, upgrade to Chianti v10
+o  4     25.8863m
 ne 2  12.8101m
 ne 3  15.5509m
 ne 3  36.0036m
-ne 5  14.3228m
-ne 5  24.2065m
-ne 6  7.64318m
-Na 3  7.31706m
-Na 4  9.03098m
+# >>chng 22 jul 09, wl from 14.3228m to 14.3178m, upgrade to Chianti v10
+ne 5  14.3178m
+# >>chng 22 jul 09, wl from 24.2065m to 24.3109m, upgrade to Chianti v10
+ne 5  24.3109m
+# >>chng 22 jul 09, wl from 7.64318m to 7.65019m, upgrade to Chianti v10
+ne 6  7.65019m
+# >>chng 22 jul 09, wl from 7.31706m to 7.31570m, upgrade to Chianti v10
+Na 3  7.31570m
+# >>chng 22 jul 09, wl from 9.03098m to 9.03096m, upgrade to Chianti v10
+Na 4  9.03096m
 Na 4  21.3162m
-Na 6  14.3228m
-Na 6  8.61836m
-mg 4   4.48712m
+# >>chng 22 jul 09, wl from 14.3228m to 14.3925m, upgrade to Chianti v10
+Na 6  14.3925m
+# >>chng 22 jul 09, wl from 8.61836m to 8.60825m, upgrade to Chianti v10
+Na 6  8.60825m
+# >>chng 22 jul 09, wl from 4.48712m to 4.48711m, upgrade to Chianti v10
+mg 4   4.48711m
 mg 5   5.60700m
 mg 5   13.5464m
-mg 7   5.50177m
-mg 7   9.00655m
-mg 8   3.02765m
+# >>chng 22 jul 09, wl from 5.50177m to 5.49270m, upgrade to Chianti v10
+mg 7   5.49270m
+# >>chng 22 jul 09, wl from 9.00655m to 9.03094m, upgrade to Chianti v10
+mg 7   9.03094m
+# >>chng 22 jul 09, wl from 3.02765m to 3.02764m, upgrade to Chianti v10
+mg 8   3.02764m
 Al 5  2.90450m
 Al 6  3.65932m
 Al 6  9.11329m
-Al 8  5.82933m
-Al 8  3.69722m
+# >>chng 22 jul 09, wl from 5.82933m to 5.84641m, upgrade to Chianti v10
+Al 8  5.84641m
+# >>chng 22 jul 09, wl from 3.69722m to 3.69719m, upgrade to Chianti v10
+Al 8  3.69719m
 si 2  34.8046m
 si 6  1.96247m
 si 7  2.48071m
@@ -196,18 +215,22 @@ si10  1.43008m
 S  3     18.7078m
 S  3     33.4704m
 s  4  10.5076m
-S  8     9914A
+# >>chng 22 jul 09, wl from 9914A to 9913.98A, upgrade to Chianti v10
+S  8     9913.98A
 s  9     1.25201m
 s  9     3.75414m
-s 11     1.91960m
-s 11     1.39238m
+# >>chng 22 jul 09, wl from 1.91960m to 1.91958m, upgrade to Chianti v10
+s 11     1.91958m
+# >>chng 22 jul 09, wl from 1.39238m to 1.39232m, upgrade to Chianti v10
+s 11     1.39232m
 Ar 2  6.98337m
 Ar 3  8.98898m
 Ar 3  21.8253m
 Ar 5  7.89971m
 Ar 5  13.0985m
 Ar 6  4.52800m
-Ar10     5534.02A
+# >>chng 22 jul 09, wl from 5534.02A to 5534.01A, upgrade to Chianti v10
+Ar10     5534.01A
 Ar11     2.59535m
 Ca 4  3.20610m
 Ca 5     4.15739m
@@ -216,8 +239,10 @@ Ca 8     2.32117m
 Sc 5     2.31119m
 Ti 6     1.71509m
 V  7     1.30376m
-Cr 8     1.01065m
-Mn 9     7968.49
+# >>chng 22 jul 09, wl from 1.01065m to 1.01064m, upgrade to Chianti v10
+Cr 8     1.01064m
+# >>chng 22 jul 09, wl from 7968.49 to 7968.48A, upgrade to Chianti v10
+Mn 9     7968.48A
 Ni12     4230.90
 #
 O  3     1660.81
