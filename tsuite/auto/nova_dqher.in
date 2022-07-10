@@ -185,7 +185,8 @@ monitor line "n  2"  205.283m 0.8128
 ## >>chng 06 aug 17, from 4.59 to 5.05 HN update fit O3 cs, incr err
 ## >>chng 06 nov 29, from 5.05 to 5.51 Badnell DR turned on
 ## >>chng 14 jan 05, from 5.51 to 7.291, N to external databases
-monitor line "n  3"  57.3238m 7.291 error 0.1
+## >>chng 22 jul 09, from 7.291 to 5.66, upgrade to Chianti v10
+monitor line "n  3"  57.3238m 5.66 error 0.1
 ##
 ## >>chng 00 dec 12, cs  for [NII] lines, from 1.563 to 1.662
 ## >>chng 00 dec 20, from 1.662 to 1.405, changed pumping treatment
@@ -211,7 +212,8 @@ monitor line "blnd" 990 1.188 error 0.1
 ## >>chng 13 feb 01, from 7.58 to 7.204, BUGFIX, largely undo r6703
 ## >>chng 14 jan 05, from 7.204 to 6.564, N to external databases
 ## >>chng 15 nov 03, from 6.564 to 6.945, update O III CS to Storey+14
-monitor line "O  3"  88.3323m 6.945
+## >>chng 22 jul 09, from 6.945 to 7.304, upgrade to Chianti v10
+monitor line "O  3"  88.3323m 7.304
 ##
 ## >>chng 02 apr 02, from 6.00 to 5.696, slow drift down
 ## >>chng 04 jul 02, from 5.696 to 5.321, O H ct
@@ -238,7 +240,8 @@ monitor line luminosity "Ne 2" 12.8101m  30.2 error 0.1
 ## >>chng 15 oct 14, from 30.33 to 30.1, update Ne 3 cs to McLaughlin+11
 ## >>chng 15 oct 15, wl from 15.5503m to 15.5509m, update Ne III energies
 ## >>chng 16 sep 04, from 30.1 to 30.25, update low-T CS to Wang, Loch+16
-monitor line luminosity "Ne 3" 15.5509m  30.25 error 0.1
+## >>chng 22 jul 09, from 30.25 to 30.29, upgrade to Chianti v10
+monitor line luminosity "Ne 3" 15.5509m  30.29 error 0.1
 ##
 ## >>chng 06 aug 02, from 29.16 to 29.004, update O+2, N+2 CT
 ## >>chng 06 aug 17, from 29.004 to 29.08 HN update fit O3 cs, incr err
@@ -249,7 +252,8 @@ monitor line luminosity "Ne 3" 15.5509m  30.25 error 0.1
 ## >>chng 15 oct 14, from 29.1 to 28.87, update Ne 3 cs to McLaughlin+11
 ## >>chng 15 oct 15, wl from 36.0132m to 36.0036m, update Ne III energies
 ## >>chng 16 sep 04, from 28.87 to 28.98, update low-T CS to Wang, Loch+16
-monitor line luminosity "Ne 3" 36.0036m  28.98 error 0.1 
+## >>chng 22 jul 09, from 28.98 to 29.02, upgrade to Chianti v10
+monitor line luminosity "Ne 3" 36.0036m  29.02 error 0.1 
 ##
 ## >>chng  00 mar 22 from .574 to .522 after changes in cont pumping
 ## and continuum binning 

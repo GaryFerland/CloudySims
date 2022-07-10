@@ -362,7 +362,8 @@ monitor line "O  3"  4363.21 0.2949
 ## >>chng 15 oct 14, from 0.3965 to 0.4144, update DR suppression in r10716
 ## >>chng 16 jul 24, from 0.4144 to 0.437, update C III to 2014A&A...566A.104F
 ## >>chng 16 dec 20, from 0.437 to 0.4144, add secondary autoionization to DR suppression
-monitor line "blnd"  1402 0.4144
+## >>chng 22 jul 09, from 0.4144 to 0.3788, upgrade to Chianti v10
+monitor line "blnd"  1402 0.3788
 ##
 ## >>chng 03 may 22, from 1.45 to 1.35, Lya dest prob DEST0
 ## >>chng 04 sep 06, from 1.35 to 1.279 bug nej Auger
@@ -417,7 +418,8 @@ monitor line "ne 5" 3425.88A 0.3765
 ## >>chng 13 feb 01, from 0.3912 to 0.3536, BUGFIX, largely undo r6703
 ## >>chng 13 jul 24, from 0.3536 to 0.3865, Ne use external database
 ## >>chng 22 jul 09, wl from 24.2065m to 24.3109m, upgrade to Chianti v10
-monitor line "Ne 5" 24.3109m 0.3865
+## >>chng 22 jul 09, from 0.3865 to 0.3493, upgrade to Chianti v10
+monitor line "Ne 5" 24.3109m 0.3493
 ##
 ## >>chng 06 jul 06, add this line
 ## >>chng 06 aug 11, from 0.700 to 0.818 Meudon06 badnell, bowen CT cs update
@@ -428,7 +430,8 @@ monitor line "Ne 5" 24.3109m 0.3865
 ## >>chng 13 jul 24, from 0.7833 to 0.8588, Ne use external database
 ## >>chng 13 jul 26, wl from 14.32m to 14.3228m, increased wl precision to 6 sig. fig.
 ## >>chng 22 jul 09, wl from 14.3228m to 14.3178m, upgrade to Chianti v10
-monitor line "ne 5" 14.3178m 0.8588
+## >>chng 22 jul 09, from 0.8588 to 0.5901, upgrade to Chianti v10
+monitor line "ne 5" 14.3178m 0.5901
 ##
 ## >>chng 00 oct 03, from 1.48 to 1.576, H- opacity bug
 ## >>chng 03 may 22, from 1.576 to 1.385, Lya dest prob DEST0
@@ -441,7 +444,8 @@ monitor line "ne 5" 14.3178m 0.8588
 ## >>chng 13 mar 03, from 1.048 to 1.097, update atomic models for S II, S III
 ## >>chng 14 jan 05, from 1.097 to 1.175, N to external databases
 ## >>chng 14 jun 11, from 1.175 to 1.094, BUGFIX 14 jan 05, N to external databases, did not include N I, Mg II excited state photo
-monitor line "blnd" 2798 1.094
+## >>chng 22 jul 09, from 1.094 to 1.192, upgrade to Chianti v10
+monitor line "blnd" 2798 1.192
 ##
 ## >>chng 00 dec 28, from 0.898 to 0.950, improved 2-nu transport
 ## >>chng 01 jul 01, from 0.950 to 0.884, better diffuse fields

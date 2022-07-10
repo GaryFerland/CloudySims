@@ -207,11 +207,13 @@ monitor line "O  3"  4363.21 0.1992
 monitor line "O  3" 51.8004m  0.9137
 ## >>chng 14 mar 26, from 3.11 to 2.896, Move oxygen data to stout and chianti files
 ## >>chng 22 jul 09, wl from 25.8832m to 25.8863m, upgrade to Chianti v10
-monitor line "o  4"  25.8863m  2.896
+## >>chng 22 jul 09, from 2.896 to 3.29, upgrade to Chianti v10
+monitor line "o  4"  25.8863m  3.29
 monitor line "blnd"  1402  0.2057 error 0.1
 ## >>chng 16 aug 17, from 0.1485 to 0.0904, botches due to bugfix at r11237
 ## >>chng 16 aug 17, from 0.0904 to 0.1531, botches, in O 5, due to update to head of this branch
-monitor line "blnd"  1218  0.1531 error 0.1
+## >>chng 22 jul 09, from 0.1531 to 0.1696, upgrade to Chianti v10
+monitor line "blnd"  1218  0.1696 error 0.1
 ## 
 ## >>chng 13 feb 01, from 0.0392 to 0.042, BUGFIX, largely undo r6703
 ## >>chng 13 jul 24, from 0.042 to 0.0448, Ne to external databases
@@ -238,16 +240,19 @@ monitor line "Ne 5" 3425.88A  0.4224 error 0.1
 ## >>chng 13 feb 01, from 0.9091 to 0.8424, BUGFIX, largely undo r6703
 ## >>chng 13 jul 24, from 0.8424 to 0.9339 Ne to external databases
 ## >>chng 22 jul 09, wl from 24.2065m to 24.3109m, upgrade to Chianti v10
-monitor line "Ne 5" 24.3109m  0.9339
+## >>chng 22 jul 09, from 0.9339 to 0.7386, upgrade to Chianti v10
+monitor line "Ne 5" 24.3109m  0.7386
 ## 
 ## >>chng 12 oct 26, from 1.576 to 1.184, adjust montiors to this branch
 ## >>chng 13 nov 25, from 1.184 to 1.128, remove jump from Federman shielding fn
 ## >>chng 13 dec 18, from 1.128 to 1.184, fixes to Federman shielding
-monitor line "blnd" 2798  1.184
+## >>chng 22 jul 09, from 1.184 to 1.276, upgrade to Chianti v10
+monitor line "blnd" 2798  1.276
 ## 
 ## >>chng 13 sep 12, from 0.1292 to 0.1364, database Mg
 ## >>chng 22 jul 09, wl from 4.48712m to 4.48711m, upgrade to Chianti v10
-monitor line "mg 4" 4.48711m  0.1364
+## >>chng 22 jul 09, from 0.1364 to 0.1101, upgrade to Chianti v10
+monitor line "mg 4" 4.48711m  0.1101
 monitor line "Blnd" 2335  0.1853
 ## >>chng 14 mar 26, from 0.5483 to 0.4845, Move oxygen data to stout and chianti files
 ## >>chng 15 nov 16, from 0.4845 to 0.5594, update Si III, 1888 TP now 3x smaller
@@ -287,7 +292,8 @@ monitor itrzn 13.09
 monitor temperature "H+" volume 1.252e+04 0.02
 monitor temperature "He+2" volume 1.425e+04 0.02
 monitor temperature "He+2" radius 1.497e+04 error 0.02
-monitor temperature face 18333 error 0.02 
+## >>chng 22 jul 09, from 1.833e+04 to 1.886e+04, upgrade to Chianti v10
+monitor temperature face 1.886e+04 error 0.02 
 monitor radius 17.48
 monitor hheicf -0.0290 error 0.003
 ##
