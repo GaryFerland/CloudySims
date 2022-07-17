@@ -2493,7 +2493,12 @@ void SaveDo(
 				/* LONG keyword on save line labels command sets this to 1 */
 				if( save.punarg[ipPun][0]>0. )
 					lgPrintAll = true;
-				prt_LineLabels(save.params[ipPun].ipPnunit , lgPrintAll );
+
+				bool lgPrintIndex = true;
+				if( save.punarg[ipPun][1] < 1. )
+					lgPrintIndex = false;
+
+				prt_LineLabels(save.params[ipPun].ipPnunit, lgPrintAll, lgPrintIndex );
 			}
 
 			else if( strcmp(save.chSave[ipPun],"LINO") == 0 )
