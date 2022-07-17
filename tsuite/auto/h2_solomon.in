@@ -114,7 +114,8 @@ monitor "HNC " 1652.90m  line intensity -22.68
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 04, from -23.56 to -23.54, fix double-counting of big-H2 Solomon rate
 ## >>chng 21 sep 11, from -23.54 to -23.42, LAMDA update
-monitor "HCS+" 1755.88m  -23.42 line intensity
+## >>chng 21 nov 04, from -23.42 to -23.5, update mole co data
+monitor "HCS+" 1755.88m  -23.5 line intensity
 ## >>chng 13 jun 27, from -7.453 to -22.84, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 15 aug 03, from -22.84 to -22.87, update LAMDA to 2015

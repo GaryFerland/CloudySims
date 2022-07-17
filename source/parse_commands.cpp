@@ -196,7 +196,6 @@ void ParseCommands(void)
 		{"CONSTANT",ParseConstant},
 		/* constant temperature, pressure, density, or gas pressure
 		 * in readsun */
-		{"CONTINUE",NULL},
 		{"CORONAL",ParseCoronal},
 		/* coronal equilibrium; set constant temperature to number on line
 		 *  in readsun */
@@ -224,7 +223,6 @@ void ParseCommands(void)
 		 * scale or abundance options, to change abundance of specific element
 		 * read option to change order of elements
 		 * in reads2.f */
-		{"END",NULL},
 		{"ENERGY",ParseEnergy},			
 		{"EXTINGUISH",ParseExtinguish},
 		/* extinguish ionizing continuum by absorbing column AFTER

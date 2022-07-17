@@ -228,13 +228,6 @@ public:
 	long nBins;
 };
 
-class save_species_bands
-{
-public:
-	string filename;
-	string speciesLabel;
-};
-
 class save_img_matrix : public t_prt_matrix
 {
 public:
@@ -636,7 +629,6 @@ public:
 
 	/** Parameters for species bands */
 	string SpeciesBandFile[LIMPUN];
-	vector<save_species_bands> specBands;
 
 	save_img_matrix img_matrix;
 };

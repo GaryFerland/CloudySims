@@ -237,13 +237,15 @@ monitor column density H2O  12.14
 ## >>chng 12 apr 09, from 12.1 to 12.02, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 14 aug 28, from 12.02 to 12, EleyRideal H2 formation
 ## >>chng 21 sep 11, from 12 to 12.09, LAMDA update
-monitor column density C2   12.09
+## >>chng 21 nov 04, from 12.09 to 11.87, update mole co data
+monitor column density C2   11.87
 ## >>chng 11 jul 15, from 10 to 9.394, add column densities
 ## >>chng 12 apr 09, from 9.394 to 9.328, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 13 nov 03, from 9.328 to 9.351, update H2 - C II 158m collision rate
 ## >>chng 13 dec 23, from 9.351 to 9.277, C to external databases
 ## >>chng 16 apr 26, from 9.277 to 9.298, replace \"case B\" with \"Database H-like Lyman pumping off\"
-monitor column density C3   9.298
+## >>chng 21 nov 04, from 9.298 to 9.139, update mole co data
+monitor column density C3   9.139
 ## >>chng 11 jul 15, from 10 to 8.354, add column densities
 ## >>chng 12 apr 09, from 8.354 to 9.201, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 13 nov 03, from 9.201 to 9.246, update H2 - C II 158m collision rate
@@ -266,12 +268,14 @@ monitor column density OH   12.88
 ## >>chng 14 jan 05, from 5.968 to 5.814, N to external databases
 ## >>chng 17 feb 10, from 5.814 to 5.97, default size of N 1 model atom set to 50
 ## >>chng 21 sep 11, from 5.97 to 6.032, LAMDA update
-monitor column density CN   6.032
+## >>chng 21 nov 04, from 6.032 to 5.96, update mole co data
+monitor column density CN   5.96
 ## >>chng 11 jul 15, from 10 to 12.72, add column densities
 ## >>chng 12 apr 09, from 12.72 to 12.69, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 13 dec 23, from 12.69 to 12.66, C to external databases
 ## >>chng 21 sep 11, from 12.66 to 13.19, LAMDA update
-monitor column density CH   13.19
+## >>chng 21 nov 04, from 13.19 to 12.66, update mole co data
+monitor column density CH   12.66
 ## 
 ##
 ## >>chng 02 jun 19, from 12.298 to 180 better two photon
@@ -328,14 +332,16 @@ monitor "HNC " 1652.90m  line intensity -16.95
 ## >>chng 13 nov 03, from -12.83 to -12.79, update H2 - C II 158m collision rate
 ## >>chng 13 dec 23, from -12.79 to -13.05, C to external databases
 ## >>chng 21 sep 11, from -13.05 to -12.02, LAMDA update
-monitor "HCS+" 1755.88m  -12.02 line intensity
+## >>chng 21 nov 04, from -12.02 to -12.65, update mole co data
+monitor "HCS+" 1755.88m  -12.65 line intensity
 ## >>chng 13 jun 27, from -7.453 to -12.36, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -12.36 to -12.34, update H2 - C II 158m collision rate
 ## >>chng 13 dec 23, from -12.34 to -12.45, C to external databases
 ## >>chng 15 aug 03, from -12.45 to -12.51, update LAMDA to 2015
 ## >>chng 21 sep 11, from -12.51 to -11.75, LAMDA update
-monitor "CS  " 3058.86m  -11.75 line intensity
+## >>chng 21 nov 04, from -11.75 to -12.09, update mole co data
+monitor "CS  " 3058.86m  -12.09 line intensity
 ## >>chng 13 jun 27, from -7.288 to -9.165, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -9.165 to -9.116, update H2 - C II 158m collision rate
@@ -405,7 +411,8 @@ monitor "^13CO" 906.599m  -10.27 line intensity
 ## >>chng 17 feb 10, from -17.34 to -16.95, default size of N 1 model atom set to 50
 ## >>chng 21 sep 11, from -16.95 to -17.56, LAMDA update
 ## >>chng 21 sep 15, from -17.56 to -16.87, go back to unresolved model
-monitor "CN  " 880.858m  -16.87  line intensity
+## >>chng 21 nov 04, from -16.87 to -16.93, update mole co data
+monitor "CN  " 880.858m  -16.93  line intensity
 ##
 # pdr_HTT91.in
 # class pdr 

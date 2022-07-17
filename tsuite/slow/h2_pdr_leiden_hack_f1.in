@@ -74,18 +74,21 @@ monitor column density H2O  16.55 error 0.1
 ## >>chng 11 jul 16, from 10 to 14.97, add column density monitors
 ## >>chng 11 nov 16, from 14.97 to 14.93, adjust newmole monitors
 ## >>chng 21 sep 11, from 14.93 to 13.81, LAMDA update
-monitor column density C2   13.81 error 0.1
+## >>chng 21 nov 04, from 13.81 to 14.16, update co mole data
+monitor column density C2   14.16 error 0.1
 ## >>chng 11 jul 16, from 10 to 12.92, add column density monitors
 ## >>chng 20 aug 03, from 12.92 to 12.79, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from 12.79 to 11.82, LAMDA update
-monitor column density C3   11.82 error 0.1
+## >>chng 21 nov 04, from 11.82 to 12.12, update co mole data
+monitor column density C3   12.12 error 0.1
 ## >>chng 11 jul 16, from 10 to 16.01, add column density monitors
 ## >>chng 20 aug 03, from 16.01 to 16.19, update H3+ rates Indriola+ 2012
 monitor column density OH   16.19 error 0.1
 ## >>chng 11 jul 16, from 10 to 13.35, add column density monitors
 ## >>chng 20 aug 03, from 13.35 to 13.29, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from 13.29 to 13.74, LAMDA update
-monitor column density CH   13.74 error 0.1
+## >>chng 21 nov 04, from 13.74 to 14.17, update co mole data
+monitor column density CH   14.17 error 0.1
 ## 
 ## >>chng 05 jun 21, from 21.83 to 21.79, chng cr, grn deex
 ## >>chng 11 nov 16, from 21.79 to 21.74, adjust newmole monitors
@@ -230,7 +233,8 @@ monitor "CO  " 371.549m  -6.056 line intensity
 ## >>chng 13 jun 27, from -8.049 to -6.588, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -6.588 to -6.633, LAMDA update
-monitor "CO  " 325.137m  -6.633 line intensity
+## >>chng 21 nov 04, from -6.633 to -6.595, update co mole data
+monitor "CO  " 325.137m  -6.595 line intensity
 ## >>chng 13 jun 27, from -7.522 to -6.528, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 monitor "^13CO" 906.599m  -6.528 line intensity

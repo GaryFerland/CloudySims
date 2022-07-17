@@ -140,7 +140,8 @@ monitor column density C2   13.34 error 0.1
 ## >>chng 13 jun 27, from 12.47 to 12.4, BUGFIX use g-bar for H2-H2 collisions
 ## >>chng 13 dec 18, from 12.4 to 12.34, fixes to Federman shielding
 ## >>chng 21 sep 11, from 12.34 to 11.99, LAMDA update
-monitor column density C3   11.99 error 0.1
+## >>chng 21 nov 04, from 11.99 to 11.95, update co mole data
+monitor column density C3   11.95 error 0.1
 ## >>chng 11 jul 18, from 10 to 13.18, leiden_v3 missed initial update, do not monitor tiny N in hack
 ## >>chng 20 jul 21, from 13.18 to 13.08, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 21 sep 11, from 13.08 to 13.5, LAMDA update
@@ -150,7 +151,8 @@ monitor column density CN   13.5 error 0.1
 ## >>chng 13 mar 23, from 13.67 to 13.71, improve big h2/chemistry consistency
 ## >>chng 13 jun 27, from 13.71 to 13.66, BUGFIX use g-bar for H2-H2 collisions
 ## >>chng 13 dec 18, from 13.66 to 13.6, fixes to Federman shielding
-monitor column density CH   13.6 error 0.1
+## >>chng 21 nov 04, from 13.6 to 13.52, update co mole data
+monitor column density CH   13.52 error 0.1
 ## 
 ## >>chng 05 jun 26, from 13.41 to 18.32, make Federman chem the default
 ## >>chng 05 sep 08, from 18.32 to 44.73, first run in 2 mo
@@ -460,7 +462,8 @@ monitor "CO  " 371.549m  -6.828 line intensity
 ## >>chng 13 dec 18, from -7.22 to -7.277, fixes to Federman shielding
 ## >>chng 14 mar 26, from -7.277 to -7.308, move O to external databases
 ## >>chng 20 jul 21, from -7.308 to -7.332, update DR H2 diss as per  2020RNAAS...4...78S
-monitor "CO  " 325.137m  -7.332 line intensity
+## >>chng 21 nov 04, from -7.332 to -7.378, update co mole data
+monitor "CO  " 325.137m  -7.378 line intensity
 ## >>chng 13 jun 27, from -7.522 to -6.773, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 18, from -6.773 to -6.808, fixes to Federman shielding

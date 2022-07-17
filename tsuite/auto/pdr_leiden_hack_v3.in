@@ -104,13 +104,15 @@ monitor line luminosity "c  2" 157.636m -5.539
 ## >>chng 11 nov 16, from -6.718 to -6.686, adjust newmole monitors
 ## >>chng 13 feb 01, from -6.686 to -6.595, BUGFIX, largely undo r6703
 ## >>chng 14 mar 26, from -6.595 to -6.619, Move oxygen data to stout and chianti files
-monitor line luminosity "c  1" 370.269m -6.619
+## >>chng 21 nov 04, from -6.619 to -6.561, update mole co data
+monitor line luminosity "c  1" 370.269m -6.561
 ##
 ## >>chng 06 nov 29, from -7.215 to -7.044, Badnell DR turned on
 ## >>chng 11 jul 12, from -7.044 to -7.135, enable fit to Badnell DR suppression
 ## >>chng 11 nov 16, from -7.135 to -7.102, adjust newmole monitors
 ## >>chng 13 feb 01, from -7.102 to -7.021, BUGFIX, largely undo r6703
-monitor line luminosity "c  1" 609.590m -7.021
+## >>chng 21 nov 04, from -7.021 to -6.96, update mole co data
+monitor line luminosity "c  1" 609.590m -6.96
 ##
 ## >>chng 06 nov 29, from -5.700 to -5.641, Badnell DR turned on
 ## >>chng 10 mar 02, from -5.641 to -5.105, fix botches after CO model switch
@@ -123,7 +125,8 @@ monitor line luminosity "c  1" 609.590m -7.021
 ## >>chng 13 dec 23, from -5.795 to -5.822 C to external databases
 ## >>chng 14 mar 26, from -5.822 to -5.753, Move oxygen data to stout and chianti files
 ## >>chng 21 sep 11, from -5.753 to -5.805, LAMDA update
-monitor line luminosity "O  1" 63.1679m -5.805
+## >>chng 21 nov 04, from -5.805 to -5.763, update mole co data
+monitor line luminosity "O  1" 63.1679m -5.763
 ##
 ## >>chng 06 nov 29, from -7.981 to -7.884, Badnell DR turned on
 ## >>chng 10 mar 02, from -7.884 to -7.242, fix botches after CO model switch
@@ -136,7 +139,8 @@ monitor line luminosity "O  1" 63.1679m -5.805
 ## >>chng 13 dec 23, from -8.025 to -8.063, C to external databases
 ## >>chng 14 mar 26, from -8.063 to -8.153, Move oxygen data to stout and chianti files
 ## >>chng 21 sep 11, from -8.153 to -8.227, LAMDA update
-monitor line luminosity "O  1" 145.495m -8.227
+## >>chng 21 nov 04, from -8.227 to -8.171, update mole co data
+monitor line luminosity "O  1" 145.495m -8.171
 ## 
 ## >>chng 04 oct 02, from 10 to 12, improv conv criteria
 ## >>chng 08 dec 08, from 12 to 6.528, upper limit -> equals (r2515)

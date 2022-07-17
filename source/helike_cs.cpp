@@ -46,7 +46,7 @@ STATIC double collision_strength_VF01( long ipISO, double velOrEner,
 /* These are masses relative to the proton mass of the electron, proton, he+, and alpha particle. */
 static const double ColliderCharge[4] = {1.0, 1.0, 1.0, 2.0};
 
-inline double reduced_amu( long nelem, long Collider )
+double reduced_amu( long nelem, long Collider )
 {
 	return dense.AtomicWeight[nelem]*colliders.list[Collider].mass_amu/
 		(dense.AtomicWeight[nelem]+colliders.list[Collider].mass_amu)*ATOMIC_MASS_UNIT;	
@@ -375,7 +375,7 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 	realnum cs = -1.f; 
 
 	/* this may be used for splitting up the collision strength within 2^3P */
-	realnum factor1 = 1.f;
+	realnum j_resolve = 1.f;
 
 	/* Energy difference in eV */
 	double deltaE_eV = EnerErg/EN1EV;
@@ -383,13 +383,13 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 	/* lower level is within 2^3P */
 	if( nLo==2 && lLo==1 && sLo==3 )
 	{
-	        factor1 *= (2.f*jLo+1.f) / 9.f;
+		j_resolve *= (2.f*jLo+1.f) / 9.f;
 	}
 
 	/* upper level is within 2^3P */
 	if( nHi==2 && lHi==1 && sHi==3 )
 	{
-	        factor1 *= (2.f*jHi+1.f) / 9.f;
+		j_resolve *= (2.f*jHi+1.f) / 9.f;
 	}
 
 	/* for most of the helium iso sequence, the order of the J levels within 2 3P 
@@ -402,7 +402,7 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 		// These are already j-resolved, so return this to unity.
 		if( nLo==2 && lLo==1 && sLo==3 && nHi==2 && lHi==1 && sHi==3 ) 
 		{
-			factor1 = 1.f;
+			j_resolve = 1.f;
 		}
 
 		*where = "table";
@@ -418,9 +418,9 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 		*where = "Zhang ";
 		if( nelem == ipIRON )
 			*where = "Si+2017";
-		factor1 = 1.;
+		j_resolve = 1.;
 
-		/* Collisions from gound	*/
+		/* Collisions from ground	*/
 		if( nLo == 1 )
 		{
 			if( lHi==0 && sHi==3 ) // to 2tripS
@@ -858,11 +858,9 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 		{
 			/* >>refer He CS	Vriens, L., & Smeets, A.H.M. 1980, Phys Rev A 22, 940
 			 * statistical weight IS included in the routine */
-			cs = (realnum)CS_VS80( nHi, gHi, IP_Ryd_Hi, nLo, gLo, IP_Ryd_Lo, Aul, nelem, Collider, phycon.te );
+			cs = (realnum)CS_VS80( ipHE_LIKE, nHi, IP_Ryd_Hi, nLo, IP_Ryd_Lo, Aul, nelem, Collider, phycon.te );
 			*where = "Vriens";
-
 			lgResolvedData = false;
-
 		}
 		/* only electron impact collisions */
 		else if (Collider == ipELECTRON)
@@ -871,84 +869,25 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 			{
 				/* Lebedev and Beigman (1998) Phys. Highly excited atoms and ions p. 225 eq. 8.30
 				 */
-
-				cs = hydro_Lebedev_deexcit(nelem, ipHE_LIKE, nHi, nLo, gLo, IP_Ryd_Lo);
+				cs = hydro_Lebedev_deexcit(ipHE_LIKE, nelem, nHi, nLo, IP_Ryd_Lo);
 				*where = "lebed";
 				lgResolvedData = false;
-
 			}
-
 			else if(iso_ctrl.lgCS_Fujim[ipHE_LIKE])
 			{
 
-				cs = hydro_Fujimoto_deexcit(gHi, gLo, Aul, IP_Ryd_Hi, IP_Ryd_Lo);
+				cs = hydro_Fujimoto_deexcit(ipHE_LIKE, nHi, nLo, Aul, IP_Ryd_Hi, IP_Ryd_Lo);
 				*where = "Fuji ";
 				lgResolvedData = false;
-
 			}
 			else if( iso_ctrl.lgCS_vrgm[ipHE_LIKE])
 			{
-				/* Van regemorter formula for allowed transitions. Van Regemorter, ApJ 136 (1962) 906
-				 * The interval 0.005 < y < infty is interpolated from the results of Table 2
-				 * from Van Regemorter paper and adjusted at high energies to avoid discontinuities.
-				 */
-
-				/* ensure that the transition is allowed */
-				if ( lHi > 0 && lLo >0 && abs(lHi - lLo) !=1 )
-					cs =0.;
-				else
-				{
-					double Py = 1.;
-					double y = deltaE_eV*EVDEGK/phycon.te;
-					const double valy[11] ={log10(0.005),-2.,log10(0.02),log10(0.04),-1.,log10(0.2),log10(0.4),0.,log10(2.),log10(4.),1.} ;
-					double a1 = sqrt(3)/2/PI*e1(0.005);
-
-					if( nelem == ipHELIUM )
-					{
-						if (y <= 0.005)
-							Py = sqrt(3)/2/PI*e1(y);
-						else if (y <= 10.)
-						{
-							const double val[11]={log10(a1),log10(1.16), log10(0.956),log10(0.758),log10(0.493),log10(0.331),log10(0.209),-1.,log10(0.063),log10(0.040),log10(0.021)};
-							Py = linint(valy,val,11,log10(y));
-							Py=exp10(Py);
-							//Py = 0.128384/sqrt(y)- 0.019719;
-						}
-						else
-							Py = 0.066/sqrt(y);
-
-						/*if(nHi==nLo+1)
-							fprintf(ioQQQ,"vrgm nhi %li, nlo %li, y %g\n",nHi,nLo,y);*/
-
-					}
-					else
-					{
-						if (y <= 0.005)
-							Py = sqrt(3)/2/PI*e1(y);
-						else if (y <= 10.)
-						{
-							const double val[11]={log10(a1),log10(1.16),log10(0.977),log10(0.788),log10(0.554),log10(0.403),log10(0.290),log10(0.214),log10(0.201),log10(0.2),log10(0.2)};
-							Py = linint(valy,val,11,log10(y));
-							Py = exp10(Py);
-							//Py = 0.154023 + 0.1099165/sqrt(y);
-						}
-						else
-							Py = 0.200;
-					}
-					double massratio = reduced_amu(nelem,Collider)/ELECTRON_MASS;
-
-					cs = 20.6*Aul/pow3(EnerWN)/phycon.sqrte*Py;
-					double factor = ( COLL_CONST * powpq(massratio, -3, 2) ) / phycon.sqrte / (double)gHi;
-
-					/*convert to collision strength*/
-					cs /= factor;
-
-					lgResolvedData = false;
-
-					*where = "vrgm ";
-				}
+				cs = hydro_vanRegemorter_deexcit( ipHE_LIKE, nelem, nHi, lHi, lLo,
+									EnerWN, deltaE_eV, Aul,
+									Collider );
+				*where = "vrgm ";
+				lgResolvedData = false;
 			}
-
 			else if( iso_ctrl.nCS_new[ipHE_LIKE] && nelem==ipHELIUM )
 			{
 				/* Don't know if stat weights are included in this, but they're probably
@@ -1010,16 +949,15 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 				 * repulsion between ions will make these cross sections smaller only to be relevant at even higher energies.  */
 
 				/* Percival and Richards (1978) have got a Z dependence so their rates are preferred */
-				cs = CS_ThermAve_PR78( ipH_LIKE, nelem, nHi, nLo,
-						EnerErg / EN1RYD, phycon.te );
+				cs = CS_ThermAve_PR78( ipHE_LIKE, nelem, nHi, nLo,
+							EnerErg / EN1RYD, phycon.te );
 				*where = "PR78  ";
 
 				lgResolvedData = false;
 			}
 		}
 		else
-			cs =0.;
-
+			cs = 0.;
 	}
 	else if (sHi != sLo)
 	{
@@ -1035,18 +973,52 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 		TotalInsanity();
 
 
+	/*
+	 * Resolve collision strengths for n-changing collisions
+	 * from collapsed to resolved levels
+	 */
+	if (!lgResolvedData && nLo <= iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max)
+	{
+		realnum l_resolve = 
+				realnum( CSresolver(ipHE_LIKE, nHi, lHi, sHi, nLo, lLo, sLo,
+						iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max) );
+
+		enum {DEBUG_LOC = false};
+		if( DEBUG_LOC )
+		{ 
+			if( nelem == ipIRON &&
+				//(nHi == iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max + 15) &&
+				// nLo == iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max )
+				nLo == 1 && nHi == 3 ) 
+				// nHi == 3 && sHi == 1 && (nLo == 1 || nLo == 2) )
+				//	sLo == 1 )
+			{
+				fprintf( ioQQQ, "nelem: %ld"
+						"  (nHi, lHi, sHi): (%ld, %ld, %ld) ->"
+						"  (nLo, lLo, sLo): (%ld, %ld, %ld)"
+						"\t nn' CS: %.4e"
+						"\t l-reslv: %.4e"
+						"\t j-reslv: %.4e"
+						"\t lj-reslv: %.4e"
+						"\t final CS: %.4e"
+						"\t '%s'\n",
+						nelem,
+						nHi, lHi, sHi,
+						nLo, lLo, sLo,
+						cs, l_resolve, j_resolve,
+						l_resolve * j_resolve,
+						cs * l_resolve * j_resolve,
+						*where );
+			}
+		}
+
+		cs *= l_resolve;
+	}
+
 	/* take factor into account, usually 1, ratio of stat weights if within 2 3P 
 	 * and with collisions from collapsed to resolved levels */
-	cs *= factor1;
+	cs *= j_resolve;
 
-
-	/*
-	 * Resolved routines can also provide collapsed data
-	 */
-	if (!lgResolvedData  && nLo <= iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max)
-	{
-	cs *= CSresolver(ipHE_LIKE, nHi, lHi, sHi, nLo, lLo, sLo, iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max);
-	}
 
 	{
 		/*@-redef@*/
@@ -2519,42 +2491,45 @@ STATIC double collision_strength_VF01( long ipISO, double E_Proj_Ryd,
 
 	return coll_str;
 }
-/*resolved to resolved and collapsed to resolved modification */
-	 /***************************************************************
-	 * convert resolved to collapsed:
-	 * rates: q(n->n') = \sum_l' \sum_l (2l+1)(2s+1) q(nl->nl')/ 2n^2
-	 * upsilons: Y(nn') = \sum_l' \sum_l Y(nln'l')
-	 * example: q(n=3->n=2) = 1/18(6q(3p->2s) + 2q(3s->2p) + 10q(3d->2p) + ...
-	 *
-	 * convert collapsed to collapsed to resolved:
-	 * rates: q(nl-n'l') = (2s'+1)(2l'+1)q(n->n')*n2/[\sum\sum(2s+1)(2l+1)(2s'+1)(2l'+1)]
-	 * with the constrains [{|s-s'|=0}]
-	 * upsilons: Y(nln'l') =(2s+1)(2l+1)(2s'+1)(2l'+1)Y(nn')/S
-	 * with the constrains {|s-s'|=0}
-	 *
-	 *where: S=[\sum\sum(2s+1)(2l+1)(2s'+1)(2l'+1)] = (2s+1)^2 n^2n'^2
-	 *
-	 * If i want a collapsed to resolved coefficient:
-	 *
-	 * 1) If the routine returns a collapsed value:
-	 *
-	 * rates: q(n -> n'l') = (2s+1)^2\sum(2l+1)(2l'+1)q(n->n')*n^2/S
-	 * upsilon: Y(nn'l') = (2s+1)^2\sum(2l+1)(2l'+1)Y(nn')/S
-	 *
-	 *
-	 * 2) If it is a resolved value
-	 *
-	 * rates: q(n->n'l') = \sum_l (2l+1)(2s+1)q(nl->n'l')/2n^2
-	 * upsilons: Y(nn'l') = \sum_l Y(nln'l')
-	 *
-	 */
+
+/* resolved to resolved and collapsed to resolved modification 
+ *
+ * convert resolved to collapsed:
+ * rates: q(n->n') = \sum_l' \sum_l (2l+1)(2s+1) q(nl->nl')/ 2n^2
+ * upsilons: Y(nn') = \sum_l' \sum_l Y(nln'l')
+ * example: q(n=3->n=2) = 1/18(6q(3p->2s) + 2q(3s->2p) + 10q(3d->2p) + ...
+ *
+ * convert collapsed to collapsed to resolved:
+ * rates: q(nl-n'l') = (2s'+1)(2l'+1)q(n->n')*n2/[\sum\sum(2s+1)(2l+1)(2s'+1)(2l'+1)]
+ * with the constrains [{|s-s'|=0}]
+ * upsilons: Y(nln'l') =(2s+1)(2l+1)(2s'+1)(2l'+1)Y(nn')/S
+ * with the constrains {|s-s'|=0}
+ *
+ *where: S=[\sum\sum(2s+1)(2l+1)(2s'+1)(2l'+1)] = (2s+1)^2 n^2n'^2
+ *
+ * If i want a collapsed to resolved coefficient:
+ *
+ * 1) If the routine returns a collapsed value:
+ *
+ * rates: q(n -> n'l') = (2s+1)^2\sum(2l+1)(2l'+1)q(n->n')*n^2/S
+ * upsilon: Y(nn'l') = (2s+1)^2\sum(2l+1)(2l'+1)Y(nn')/S
+ *
+ *
+ * 2) If it is a resolved value
+ *
+ * rates: q(n->n'l') = \sum_l (2l+1)(2s+1)q(nl->n'l')/2n^2
+ * upsilons: Y(nn'l') = \sum_l Y(nln'l')
+ *
+ */
 double CSresolver(long ipISO, long nHi,long lHi,long sHi,long nLo,
 		long lLo, long sLo, long n_HighestResolved)
 {
-	double factor=1.;
+	DEBUG_ENTRY( "CSresolver()" );
 
 	if (sHi != sLo && nHi <= n_HighestResolved )
 		return 0.;
+
+	double factor=1.;
 
 	/* S= \sum\sum (2s+1)(2l+1)(2s'+1)(2l'+1)
 	 * with |s-s'|=0
@@ -2565,11 +2540,18 @@ double CSresolver(long ipISO, long nHi,long lHi,long sHi,long nLo,
 
 	if (ipISO==ipH_LIKE)
 	{
-		S *= 4;
+		ASSERT( sLo == ipDOUBLET );
+		S *= pow2( ipDOUBLET );
 	}
 	else if(ipISO==ipHE_LIKE)
 	{
-		S *= 10; //(1*1 + 3*3)
+		if( nLo == 1 )
+		{
+			ASSERT( sLo == ipSINGLET );
+			S *= pow2( ipSINGLET );
+		}
+		else
+			S *= pow2( ipSINGLET ) + pow2( ipTRIPLET );
 	}
 
 
@@ -2586,9 +2568,5 @@ double CSresolver(long ipISO, long nHi,long lHi,long sHi,long nLo,
 	else
 		TotalInsanity();
 
-
-
 	return factor;
-
 }
-

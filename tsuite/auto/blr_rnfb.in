@@ -96,7 +96,8 @@ monitor line luminosity "H  1" 1215.67A  9.049
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-monitor line "H  1" 4861.32A    3.143
+## >>chng 21 nov 02, from 3.143 to 2.674, fix bug with overresolving CS in isoseq
+monitor line "H  1" 4861.32A    2.674
 ##
 ## >>chng 01 mar 09, from 3.00 to 3.23 change in H redis function
 ## >>chng 01 mar 17, from 3.23 to 3.65 change in H coll strength
@@ -258,7 +259,8 @@ monitor line "Blnd" 5875.66A    1.732
 ## >>chng 18 mar 06, wl from 1.08331m to 1.08302m, adjust multiplet Blend WL for refraction index
 ## >>chng 19 jun 14, from 2.342 to 2.099, update to CODATA 2018
 ## >>chng 19 jun 28, from 2.099 to 2.358, reintegrate iso_collisions branch
-monitor line "Blnd" 1.08302m   2.358 error 0.1
+## >>chng 21 nov 02, from 2.358 to 2.127, fix bug with overresolving CS in isoseq
+monitor line "Blnd" 1.08302m   2.127 error 0.1
 ##
 ## >>chng 00 oct 03, from 2.86 to 2.68 rebin uv cont, H- opacity bug
 ## >>chng 01 mar 09, from 2.68 to 3.23 change in H redis function
