@@ -67,9 +67,6 @@ struct t_hyperfine : public module {
 	/** the isotope abundances relative to main species abundances, as read in from the hyperfine.dat file */
 	vector<realnum> HFLabundance;
 
-	/** spin temperatures for all HFS lines in the current zone */
-	vector<realnum> Tspin;
-
 	/** this is the computed 21cm spin temperature */
 	double Tspin21cm;
 

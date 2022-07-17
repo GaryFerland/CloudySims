@@ -254,7 +254,6 @@ void H21_cm_pops( void )
 	set_xIntensity(HFLines[0]);
 
 	/* finally save the spin temperature */
-	hyperfine.Tspin[0] =
 	hyperfine.Tspin21cm = HyperfineTspin( HFLines[0] );
 
 	return;
@@ -549,7 +548,6 @@ void HyperfineCreate(void)
 	}
 
 	hyperfine.HFLabundance.resize(HFLines.size());
-	hyperfine.Tspin.resize(HFLines.size());
 
 	/* now rewind the file so we can read it a second time*/
 	if( fseek( ioDATA , 0 , SEEK_SET ) != 0 )

@@ -1476,8 +1476,6 @@ STATIC void CoolHyperfine (void)
 		/* use the collision strength generated above and find pops and cooling */
 		atom_level2( HFLines[i], true );
 
-		hyperfine.Tspin[ i ] = HyperfineTspin( HFLines[i] );
-
 		/* put the correct gas-phase abundance back in the array */
 		dense.xIonDense[(*HFLines[i].Hi()).nelem()-1][(*HFLines[i].Hi()).IonStg()-1] = save;
 
