@@ -2104,6 +2104,57 @@ void SaveDo(
 					TotalInsanity();
 			}
 
+			/* save hyperfine populations */
+			else if( strcmp(save.chSave[ipPun],"HFSP") == 0 )
+			{
+				if( ! lgLastOnly )
+				{
+					if( save.punarg[ipPun][0] )
+					{
+						fprintf( save.params[ipPun].ipPnunit,
+							"%.5e", radius.depth_mid_zone );
+						for( auto &hfsline : save.LineList[ipPun] )
+						{
+							long ipobs = LineSave.findline(hfsline);
+							TransitionProxy tr = LineSave.lines[ipobs].getTransition();
+
+							fprintf( save.params[ipPun].ipPnunit,
+								"\t%.4e",
+								tr.Hi()->Pop() * tr.Lo()->g()
+								/( tr.Lo()->Pop() * tr.Hi()->g() ) );
+						}
+						fprintf( save.params[ipPun].ipPnunit, "\n" );
+					}
+					else
+					{
+						for( auto &hfsline : save.LineList[ipPun] )
+						{
+							fprintf( save.params[ipPun].ipPnunit,
+								"%.5e", radius.depth_mid_zone );
+
+							fprintf( save.params[ipPun].ipPnunit,
+								"\t%s ",
+								hfsline.chLabel.c_str() );
+							string chTemp;
+							sprt_wl( chTemp, hfsline.wave );
+							fprintf( save.params[ipPun].ipPnunit,
+								"%s", chTemp.c_str() );
+
+							long ipobs = LineSave.findline(hfsline);
+							TransitionProxy tr = LineSave.lines[ipobs].getTransition();
+
+							fprintf( save.params[ipPun].ipPnunit,
+								"\t%10.4e\t%10.4e\t%.4e\t%11.4e\n",
+								tr.Lo()->Pop(),
+								tr.Hi()->Pop(),
+								tr.Hi()->Pop() * tr.Lo()->g()
+								/( tr.Lo()->Pop() * tr.Hi()->g() ),
+								TexcLine( tr ) );
+						}
+					}
+				}
+			}
+
 			/* save hummer, results needed for Lya transport, to feed into David's routine */
 			else if( strcmp(save.chSave[ipPun],"HUMM") == 0 )
 			{
