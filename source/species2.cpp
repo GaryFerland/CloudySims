@@ -900,7 +900,8 @@ double CHIANTI_Upsilon(long ipSpecies, long ipCollider, long ipHi, long ipLo, do
 	else
 		TotalInsanity();
 
-	double xs[9];
+	double xs[9] = { 0 };
+
 	/*Creating spline points array*/
 	double* spl = AtmolCollSplines[ipSpecies][ipHi][ipLo][ipCollider].collspline.data();
 	for(intxs=0;intxs<intsplinepts;intxs++)
