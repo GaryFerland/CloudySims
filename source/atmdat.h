@@ -32,8 +32,8 @@ public:
 	vector<double> collspline;
 	vector<double> SplineSecDer;
 
-	long nSplinePts; 
-	long intTranType;
+	long nSplinePts = 0L;
+	long intTranType = 0L;
 	double EnergyDiff;
 	double ScalingParam;
 	CollSplinesArray() : EnergyDiff(0.), ScalingParam(0.) {}

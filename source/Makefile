@@ -9,7 +9,7 @@ ifeq ($(DEFCXX),)
 endif
 
 STD = -std=c++11
-OPT = -O3 -ftrapping-math -fno-math-errno -fasynchronous-unwind-tables
+OPT = -O3 -ftrapping-math -fno-math-errno -fasynchronous-unwind-tables -Wno-deprecated-declarations
 DEBUGOPT = -finline -fasynchronous-unwind-tables
 CXX = $(DEFCXX)
 # -W is the old name for -Wextra, g++ 3.3 only supports the former
