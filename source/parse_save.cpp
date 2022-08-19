@@ -1645,10 +1645,6 @@ void ParseSave(Parser& p)
 
 		else if( p.nMatch("LABE") )
 		{
-			/* save line labels */
-			strcpy( save.chSave[save.nsave], "LINL" );
-			sncatf( chHeader, 
-				"#index\tlabel\twavelength\tcomment\n" );
 			/* this controls whether we will print lots of redundant 
 			 * info labels for transferred lines - if keyword LONG appears
 			 * then do so, if does not appear then do not - this is default */
@@ -1656,6 +1652,29 @@ void ParseSave(Parser& p)
 				save.punarg[save.nsave][0] = 1;
 			else
 				save.punarg[save.nsave][0] = 0;
+
+			/* if 'no index' is given, the index in the line stack
+			 * is not reported
+			 * this is useful when comparing the line stack before
+			 * and after a significant change in the atomic data
+			 * -- added for switching from Chianti v7 to v10 */
+			if( p.nMatch( " NO " ) && p.nMatch( "INDE" ) )
+				save.punarg[save.nsave][1] = 0;
+			else
+				save.punarg[save.nsave][1] = 1;
+
+			/* save line labels */
+			strcpy( save.chSave[save.nsave], "LINL" );
+			if( save.punarg[save.nsave][1] > 0. )
+			{
+				sncatf( chHeader, 
+					"#index\tlabel\twavelength\tcomment\n" );
+			}
+			else
+			{
+				sncatf( chHeader, 
+					"#label\twavelength\tcomment\n" );
+			}
 		}
 
 		else if( p.nMatch("OPTI") && !p.nMatch("SPECIES") )

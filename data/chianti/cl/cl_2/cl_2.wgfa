@@ -1,12 +1,12 @@
-    1    2     143678.161      0.000e+00      7.566e-03   3s2.3p4 3P2 - 3s2.3p4 3P1
-    1    3     100354.253      0.000e+00      6.053e-07   3s2.3p4 3P2 - 3s2.3p4 3P0
-    2    3     332811.960      0.000e+00      1.462e-03   3s2.3p4 3P1 - 3s2.3p4 3P0
-    1    4       8581.054      0.000e+00      1.038e-01   3s2.3p4 3P2 - 3s2.3p4 1D2
-    2    4       9126.103      0.000e+00      2.872e-02   3s2.3p4 3P1 - 3s2.3p4 1D2
-    3    4       9383.407      0.000e+00      1.134e-05   3s2.3p4 3P0 - 3s2.3p4 1D2
-    1    5       3587.055      0.000e+00      1.976e-02   3s2.3p4 3P2 - 3s2.3p4 1S0
-    2    5       3678.903      0.000e+00      1.297e+00   3s2.3p4 3P1 - 3s2.3p4 1S0
-    4    5       6163.541      0.000e+00      2.416e+00   3s2.3p4 1D2 - 3s2.3p4 1S0
+    1    2     143678.160      0.000e+00      7.566e-03 
+    1    3     100354.250      0.000e+00      6.053e-07 
+    2    3     332811.930      0.000e+00      1.462e-03 
+    1    4       8581.054      0.000e+00      1.038e-01 
+    2    4       9126.103      0.000e+00      2.872e-02 
+    3    4       9383.407      0.000e+00      1.134e-05 
+    1    5       3587.055      0.000e+00      1.976e-02 
+    2    5       3678.902      0.000e+00      1.297e+00 
+    4    5       6163.541      0.000e+00      2.416e+00 
  -1
 %filename: cl_2.wgfa
 %observed energy levels: Fuhr, J.R., et al., "NIST Atomic Spectra Database" Ver. 2.0, March 1999, NIST Physical Reference Data
@@ -28,4 +28,8 @@
 % produced as part of the Arcetri/Cambridge/NRL 'CHIANTI' atomic data base collaboration
 %
 %  P.R. Young - 11-Jun-2002
+%File processed with wgfa_tidy by pryoung on  6-Mar-2019
+
+Reference:
+Chianti  2022-02-18
  -1

@@ -2455,7 +2455,7 @@ of results.  If the keyword \cdCommand{column} appears then a single column is p
 Lines with non-zero intensities are reported by default.  
 If the keyword \cdCommand{all} appears then all lines are reported.
 
-\subsection{Save line labels}
+\subsection{Save line labels [long] [no index]}
 \label{sec:SaveLineLabels}
 
 This creates a file listing all emission-line labels and wavelengths
@@ -2516,6 +2516,13 @@ the report would include
 The entries marked ``Inwd'', ``Coll'', ``Pump'', and ``Heat'' indicate
 the inward fraction, the collisional and radiative pumped contribution to
 the line, and the line heating.  
+
+The command also accepts the \cdCommand{no index} keywords,
+which can be used to suppress the line index in the output.
+This can be useful when comparing the line stacks for two versions of an
+atomic database (e.g., Chianti), as spectral lines whose wavelength remains
+unchanged may appear distinct to a differencing tool (e.g., \texttt{sdiff})
+on account of the indices.
 
 This output includes some transitions that are completely forbidden by
 radiative selection rules.  These transitions can still have collisional
