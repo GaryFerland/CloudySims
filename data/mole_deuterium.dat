@@ -1,26 +1,26 @@
 # Chemistry relevant to early universe.  Taken from Table 1 of Puy & Signore 1998
-H+,D=>D+,H:hmrate:1.00E-09:0:41   # Watson (1976) 
-H,D=>HD,PHOTON:hmrate:1.00E-25:0:0   # Lepp and Shull (1984) 
-D+,H2=>H+,HD:hmrate:1.70E-09:0:0   # Smith et al. (1982) 
-D+,H=>HD+,PHOTON:hmrate:1.80E-18:1.5:0   # Dalgamo and Lepp (1987) 
-H+,D=>HD+,PHOTON:hmrate:1.80E-18:1.5:0   # Dalgarno and Lepp (1987) 
-HD+,H=>H+,HD:hmrate:6.40E-10:0:0   # Karpas et al. (1979) 
-HD+,e-=>D,H:hmrate:1.39E-08:-0.29:0   # Nakashima et al. (1987) 
-D+,H=>H+,D:hmrate:1.00E-09:0:0   # Watson (1976) 
-H+,HD=>D+,H2:hmrate:1.70E-10:0:462   # Smith et al. (1982) 
-H2+,D=>D+,H2:hmrate:6.40E-10:0:0   # Karpas et al. (1979) 
-D,H2=>HD,H:hmrate:1.09E-18:0:0   # Zhang and Miller (1989) 
+#H+,D=>D+,H:hmrate:1.00E-09:0:41   # Watson (1976) #11Aug2022, Duplicate reaction, GS
+#H,D=>HD,PHOTON:hmrate:1.00E-25:0:0   # Lepp and Shull (1984) #11Aug2022, Duplicate reaction, GS
+#D+,H2=>H+,HD:hmrate:1.70E-09:0:0   # Smith et al. (1982) #11Aug2022, Duplicate reaction, GS
+#D+,H=>HD+,PHOTON:hmrate:1.80E-18:1.5:0   # Dalgamo and Lepp (1987) #11Aug2022, Duplicate reaction, GS
+#H+,D=>HD+,PHOTON:hmrate:1.80E-18:1.5:0   # Dalgarno and Lepp (1987) #11Aug2022, Duplicate reaction, GS
+#HD+,H=>H+,HD:hmrate:6.40E-10:0:0   # Karpas et al. (1979) #11Aug2022, Duplicate reaction, GS
+#HD+,e-=>D,H:hmrate:1.39E-08:-0.29:0   # Nakashima et al. (1987) #11Aug2022, Duplicate reaction, GS
+#D+,H=>H+,D:hmrate:1.00E-09:0:0   # Watson (1976) #11Aug2022, Duplicate reaction, GS
+#H+,HD=>D+,H2:hmrate:1.70E-10:0:462   # Smith et al. (1982) #11Aug2022, Duplicate reaction, GS  
+#H2+,D=>D+,H2:hmrate:6.40E-10:0:0   # Karpas et al. (1979) #11Aug2022, Duplicate reaction, GS 
+#D,H2=>HD,H:hmrate:1.09E-18:0:0   # Zhang and Miller (1989) #11Aug2022, Duplicate reaction, GS 
 HD,PHOTON=>H,D:hd_photodissoc:1.:0:0   # Latter and Black (1991) 
 HD+,PHOTON=>H+,D:th85rate:5.7e-10:0.:1.9 # Von Busch and Dunn (1972) 
 HD+,PHOTON=>D+,H:th85rate:5.7e-10:0.:1.9 # Von Busch and Dunn (1972) 
 #
-D+,e-=>D,PHOTON:hmrate:3.50E-12:-0.7:0   # Prasad and Huntress (1980) 
+#D+,e-=>D,PHOTON:hmrate:3.50E-12:-0.7:0   # Prasad and Huntress (1980) #11Aug2022, Duplicate reaction, GS
 D,PHOTON=>D+,e-:th85rate:1.0e-15:0:0   # value is a guess
 # 
 # Most of the below come from Gay et al. 2011
 #
 D+,e-=>D,PHOTON:hmrate:3.60e-12:-7.50e-01:0.00e+00  		# Gay et al. 2011, reaction 6 (a)
-H+,D=>H,D+:hmrate:1.00e-09:0.00e+00:4.10e+01  		# Gay et al. 2011, reaction 8 (a)
+H+,D=>H,D+:hmrate:1.00e-09:0.00e+00:4.10e+01  		# Gay et al. 2011, reaction 8 (a) 
 H,D+=>H+,D:hmrate:1.00e-09:0.00e+00:0.00e+00  		# Gay et al. 2011, reaction 9 (a)
 D,e-=>D-,PHOTON:hmrate_exo:3.00e-16:0.95e+00:9.32e+03  		# Gay et al. 2011, reaction 10 ()
 D+,D-=>D,D:hmrate_exo:1.96e-07:-4.87e-01:-2.93e+04  		# Gay et al. 2011, reaction 12 ()
@@ -46,7 +46,7 @@ HD,H=>H2,D:hmrate:7.50e-11:0.00e+00:4.24e+03  		# Gay et al. 2011, reaction 74 (
 D,H-=>HD,e-:hmrate:1.50e-09:-0.10e+00:0.00e+00  		# Gay et al. 2011, reaction 75 (a)
 D-,H=>HD,e-:hmrate:1.50e-09:-0.10e+00:0.00e+00  		# Gay et al. 2011, reaction 76 (a)
 He+,D=>HeD+,PHOTON:hmrate_exo:5.00e-16:-0.37e+00:8.76e+04  		# Gay et al. 2011, reaction 77 ()
-He,D+=>HeD+,PHOTON:hmrate_exo:1.00e-19:-0.24e+00:4.00e+03  		# Gay et al. 2011, reaction 78 ()
+He,D+=>HeD+,PHOTON:hmrate_exo:1.00e-19:-0.24e+00:4.00e+03  		# Gay et al. 2011, reaction 78 ()			
 He,D+=>HeD+,PHOTON:hmrate:1.50e-20:0.00e+00:2.00e+02  		# Gay et al. 2011, reaction 80 (a)
 HeH+,D=>HeD+,H:hmrate:1.00e-09:0.00e+00:0.00e+00  		# Gay et al. 2011, reaction 81 (a)
 HeD+,H=>HeH+,D:hmrate:8.00e-10:0.00e+00:4.68e+02  		# Gay et al. 2011, reaction 82 (a)
