@@ -588,8 +588,13 @@ void Atom_LevelN::operator()(
 		}
 		else
 		{
-			// Only use GTH solution to deal with problem in hand, look
-			// to extend the scope of this in due course.
+			// Only use GTH solution to deal with pathological cases,
+			// e.g., Ca 1, which involve no source terms.
+			// These cause the solver (solve_system) to compute
+			// negative populations.
+			// The problem is here solved with a protoype GTH
+			// algorithm; we look to extend the scope of this in due
+			// course.
 			if ( totsrc <= 0. /* && strcmp(chLabel,"Ca 1") == 0 */ )
 			{
 				gthsolve(amat2, bvec, nlev, abund);
