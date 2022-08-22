@@ -1350,7 +1350,22 @@ void ParseSave(Parser& p)
 		// by default give numbers in columns
 		// ROW keyword says to write the numbers across as one long row
 		if( p.nMatch(" ROW") )
+		{
 			save.punarg[save.nsave][0] = 1;
+
+			if( p.nMatch( " LOW" ) )
+				/* lower level population */
+				save.punarg[save.nsave][1] = 0;
+			else if( p.nMatch( " UPP" ) )
+				/* upper level population */
+				save.punarg[save.nsave][1] = 1;
+			else if( p.nMatch( " TSP" ) )
+				/* spin temperature */
+				save.punarg[save.nsave][1] = 3;
+			else
+				/* DEFAULT: population ratio: (nu/gu)/(nl/gl) */
+				save.punarg[save.nsave][1] = 2;
+		}
 		else
 			// the default, one line per row, multiple columns
 			save.punarg[save.nsave][0] = 0;

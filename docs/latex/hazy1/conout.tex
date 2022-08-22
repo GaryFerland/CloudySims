@@ -2255,7 +2255,8 @@ This gives the depth [cm], the densities of \hO\ and \hplus\ [cm$^{-3}$],
 followed by the level population densities [cm$^{-3}$]
 for the levels in the order $n = 1, 2s, 2p, 3, 4, 5,\dots$ for each zone.
 
-\section{Save hyperfine populations [row]}
+\section{Save hyperfine populations
+        [row [lower$\vert$upper$\vert$ratio$\vert$tspin]]}
 \label{sec:CommandSaveHyperfinePops}
 
 This saves the upper and lower level populations of the requested hyperfine lines.
@@ -2284,8 +2285,14 @@ An example is the following:
 \end{verbatim}
 %
 If the \cdCommand{row} keyword appears, the command will generate one output
-line for each zone, listing the depth, and the population ratio for each of
-the lines; e.g.,
+line for each zone, listing the depth, and for each spectral line, one of the
+columns above.
+By default, the population ratio is reported, but the lower level, upper level
+populations, or the spin temperature may be reported, instead, with the
+keywords \cdCommand{lower}, \cdCommand{upper}, and \cdCommand{tspin},
+respectively; by default, \cdCommand{ratio} is used is used.
+For example, using the \cdCommand{row} option with the previous command,
+modifies the output to
 %
 \begin{verbatim}
 #depth       Fe26 348.000m  Fe24 3068.00m

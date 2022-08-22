@@ -2118,10 +2118,24 @@ void SaveDo(
 							long ipobs = LineSave.findline(hfsline);
 							TransitionProxy tr = LineSave.lines[ipobs].getTransition();
 
-							fprintf( save.params[ipPun].ipPnunit,
-								"\t%.4e",
-								tr.Hi()->Pop() * tr.Lo()->g()
-								/( tr.Lo()->Pop() * tr.Hi()->g() ) );
+							double quant;
+							if( save.punarg[ipPun][1] == 0 )
+								quant = tr.Lo()->Pop();
+							else if( save.punarg[ipPun][1] == 1 )
+								quant = tr.Hi()->Pop();
+							else if( save.punarg[ipPun][1] == 2 )
+							{
+								quant =
+									tr.Hi()->Pop() * tr.Lo()->g()
+									/( tr.Lo()->Pop() * tr.Hi()->g() );
+							}
+							else if( save.punarg[ipPun][1] == 3 )
+								quant = TexcLine( tr );
+							else
+							{
+								TotalInsanity();
+							}
+							fprintf( save.params[ipPun].ipPnunit, "\t%.4e", quant );
 						}
 						fprintf( save.params[ipPun].ipPnunit, "\n" );
 					}
