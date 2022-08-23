@@ -2255,53 +2255,7 @@ This gives the depth [cm], the densities of \hO\ and \hplus\ [cm$^{-3}$],
 followed by the level population densities [cm$^{-3}$]
 for the levels in the order $n = 1, 2s, 2p, 3, 4, 5,\dots$ for each zone.
 
-\section{Save hyperfine populations
-        [row [lower$\vert$upper$\vert$ratio$\vert$tspin]]}
-\label{sec:CommandSaveHyperfinePops}
-
-This saves the upper and lower level populations of the requested hyperfine lines.
-The command expects two filenames to be given, each enclosed in double quotes.
-The first specifies the output file, while the second contains the hyperfine
-lines to be tracked.
-For example,
-%
-\begin{verbatim}
-save hyperfine populations "output.txt" "linelist.dat"
-\end{verbatim}
-%
-will read lines from \cdFilename{linelist.dat} and save the output in
-\cdFilename{output.txt}.
-
-By default, there is one line of output per hyperfine line per zone.
-Each output line lists the depth, the transition line label,
-the lower and upper level densities, the ratio $(n_u/g_u)/(n_l/g_l)$,
-and the corresponding excitation temperature.
-An example is the following:
-%
-\begin{verbatim}
-#depth       emline         nl          nu          (nu/gu)/(nl/gl)  Tspin
-5.00000e-01  Fe26 348.000m  9.3587e-11  9.0239e-15  3.2141e-05       3.9964e+00
-5.00000e-01  Fe24 3068.00m  1.2614e-08  1.0044e-08  2.6540e-01       3.5353e+00
-\end{verbatim}
-%
-If the \cdCommand{row} keyword appears, the command will generate one output
-line for each zone, listing the depth, and for each spectral line, one of the
-columns above.
-By default, the population ratio is reported, but the lower level, upper level
-populations, or the spin temperature may be reported, instead, with the
-keywords \cdCommand{lower}, \cdCommand{upper}, and \cdCommand{tspin},
-respectively; by default, \cdCommand{ratio} is used is used.
-For example, using the \cdCommand{row} option with the previous command,
-modifies the output to
-%
-\begin{verbatim}
-#depth       Fe26 348.000m  Fe24 3068.00m
-5.00000e-01  3.2141e-05     2.6540e-01
-\end{verbatim}
-%
-The population ratio, $(n_u/g_u)/(n_l/g_l)$, may be used by external programs
-to correct a given absorption coefficient for stimulated emission.
-
+%------------------------------------------------------------------------------
 \section{Save ionization means}
 \label{sec:CommandSaveIonizationMeans} 
 
@@ -2787,6 +2741,62 @@ end of lines
 
 This produces a list of the most important contributors to the line
 radiation pressure for each zone.
+
+%------------------------------------------------------------------------------
+\section{Save line populations
+        [row [lower$\vert$upper$\vert$ratio$\vert$tspin]]}
+\label{sec:CommandSaveHyperfinePops}
+
+This saves the upper and lower level populations of the requested spectral
+lines.\footnote{
+Until 2022, the command reported the level populations of (almost) all lines
+known to the code.
+This caused the output to be several MB even for a single zone model.
+The current output was chosen as more user-friendly.
+}
+The command expects two filenames to be given, each enclosed in double quotes.
+The first specifies the output file, while the second contains the spectral
+lines to be tracked.
+For example,
+%
+\begin{verbatim}
+save line populations "output.txt" "linelist.dat"
+\end{verbatim}
+%
+will read lines from \cdFilename{linelist.dat} and save the output in
+\cdFilename{output.txt}.
+
+By default, there is one line of output per spectral line per zone.
+Each output line lists the depth, the transition line label,
+the lower and upper level densities, the ratio $(n_u/g_u)/(n_l/g_l)$,
+and the corresponding excitation temperature.
+An example drawn from work on hyperfine lines in galaxy clusters is the
+following:
+%
+\begin{verbatim}
+#depth       emline         nl          nu          (nu/gu)/(nl/gl)  Tspin
+5.00000e-01  Fe26 348.000m  9.3587e-11  9.0239e-15  3.2141e-05       3.9964e+00
+5.00000e-01  Fe24 3068.00m  1.2614e-08  1.0044e-08  2.6540e-01       3.5353e+00
+\end{verbatim}
+
+If the \cdCommand{row} keyword appears, the command will generate one line of
+output for each zone, listing the depth, and for each spectral line, one of the
+columns above.
+By default, the population ratio is reported, but the lower level, upper level
+populations, or the spin temperature may be reported, instead; the relevant
+keywords are \cdCommand{ratio}, \cdCommand{lower}, \cdCommand{upper}, and
+\cdCommand{tspin}, respectively.
+For example, using the \cdCommand{row} option with the previous command,
+modifies the output to
+%
+\begin{verbatim}
+#depth       Fe26 348.000m  Fe24 3068.00m
+5.00000e-01  3.2141e-05     2.6540e-01
+\end{verbatim}
+
+These results may be used in post-processing.
+For instance, the population ratio, $(n_u/g_u)/(n_l/g_l)$, may be used by
+external programs to correct absorption coefficients for stimulated emission.
 
 \subsection{Save line populations, limit$=-$2}
 

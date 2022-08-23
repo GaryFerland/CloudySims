@@ -2104,71 +2104,6 @@ void SaveDo(
 					TotalInsanity();
 			}
 
-			/* save hyperfine populations */
-			else if( strcmp(save.chSave[ipPun],"HFSP") == 0 )
-			{
-				if( ! lgLastOnly )
-				{
-					if( save.punarg[ipPun][0] )
-					{
-						fprintf( save.params[ipPun].ipPnunit,
-							"%.5e", radius.depth_mid_zone );
-						for( auto &hfsline : save.LineList[ipPun] )
-						{
-							long ipobs = LineSave.findline(hfsline);
-							TransitionProxy tr = LineSave.lines[ipobs].getTransition();
-
-							double quant;
-							if( save.punarg[ipPun][1] == 0 )
-								quant = tr.Lo()->Pop();
-							else if( save.punarg[ipPun][1] == 1 )
-								quant = tr.Hi()->Pop();
-							else if( save.punarg[ipPun][1] == 2 )
-							{
-								quant =
-									tr.Hi()->Pop() * tr.Lo()->g()
-									/( tr.Lo()->Pop() * tr.Hi()->g() );
-							}
-							else if( save.punarg[ipPun][1] == 3 )
-								quant = TexcLine( tr );
-							else
-							{
-								TotalInsanity();
-							}
-							fprintf( save.params[ipPun].ipPnunit, "\t%.4e", quant );
-						}
-						fprintf( save.params[ipPun].ipPnunit, "\n" );
-					}
-					else
-					{
-						for( auto &hfsline : save.LineList[ipPun] )
-						{
-							fprintf( save.params[ipPun].ipPnunit,
-								"%.5e", radius.depth_mid_zone );
-
-							fprintf( save.params[ipPun].ipPnunit,
-								"\t%s ",
-								hfsline.chLabel.c_str() );
-							string chTemp;
-							sprt_wl( chTemp, hfsline.wave );
-							fprintf( save.params[ipPun].ipPnunit,
-								"%s", chTemp.c_str() );
-
-							long ipobs = LineSave.findline(hfsline);
-							TransitionProxy tr = LineSave.lines[ipobs].getTransition();
-
-							fprintf( save.params[ipPun].ipPnunit,
-								"\t%10.4e\t%10.4e\t%.4e\t%11.4e\n",
-								tr.Lo()->Pop(),
-								tr.Hi()->Pop(),
-								tr.Hi()->Pop() * tr.Lo()->g()
-								/( tr.Lo()->Pop() * tr.Hi()->g() ),
-								TexcLine( tr ) );
-						}
-					}
-				}
-			}
-
 			/* save hummer, results needed for Lya transport, to feed into David's routine */
 			else if( strcmp(save.chSave[ipPun],"HUMM") == 0 )
 			{
@@ -2579,15 +2514,62 @@ void SaveDo(
 			{
 				if( ! lgLastOnly )
 				{
-					static bool lgFirst=true;
-					/* save line populations, need to do this twice if very first
-					 * call since first call to SaveLineStuff generates atomic parameters
-					 * rather than level pops, routine is below, file static */
-					SaveLineStuff(save.params[ipPun].ipPnunit,"populat" , save.punarg[ipPun][0]);
-					if( lgFirst )
+					if( save.punarg[ipPun][0] )
 					{
-						lgFirst = false;
-						SaveLineStuff(save.params[ipPun].ipPnunit,"populat" , save.punarg[ipPun][0]);
+						fprintf( save.params[ipPun].ipPnunit,
+							"%.5e", radius.depth_mid_zone );
+						for( auto &specline : save.LineList[ipPun] )
+						{
+							long ipobs = LineSave.findline(specline);
+							TransitionProxy tr = LineSave.lines[ipobs].getTransition();
+
+							double quant;
+							if( save.punarg[ipPun][1] == 0 )
+								quant = tr.Lo()->Pop();
+							else if( save.punarg[ipPun][1] == 1 )
+								quant = tr.Hi()->Pop();
+							else if( save.punarg[ipPun][1] == 2 )
+							{
+								quant =
+									tr.Hi()->Pop() * tr.Lo()->g()
+									/( tr.Lo()->Pop() * tr.Hi()->g() );
+							}
+							else if( save.punarg[ipPun][1] == 3 )
+								quant = TexcLine( tr );
+							else
+							{
+								TotalInsanity();
+							}
+							fprintf( save.params[ipPun].ipPnunit, "\t%.4e", quant );
+						}
+						fprintf( save.params[ipPun].ipPnunit, "\n" );
+					}
+					else
+					{
+						for( auto &specline : save.LineList[ipPun] )
+						{
+							fprintf( save.params[ipPun].ipPnunit,
+								"%.5e", radius.depth_mid_zone );
+
+							fprintf( save.params[ipPun].ipPnunit,
+								"\t%s ",
+								specline.chLabel.c_str() );
+							string chTemp;
+							sprt_wl( chTemp, specline.wave );
+							fprintf( save.params[ipPun].ipPnunit,
+								"%s", chTemp.c_str() );
+
+							long ipobs = LineSave.findline(specline);
+							TransitionProxy tr = LineSave.lines[ipobs].getTransition();
+
+							fprintf( save.params[ipPun].ipPnunit,
+								"\t%10.4e\t%10.4e\t%.4e\t%11.4e\n",
+								tr.Lo()->Pop(),
+								tr.Hi()->Pop(),
+								tr.Hi()->Pop() * tr.Lo()->g()
+								/( tr.Lo()->Pop() * tr.Hi()->g() ),
+								TexcLine( tr ) );
+						}
 					}
 				}
 			}

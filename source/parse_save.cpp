@@ -1309,91 +1309,6 @@ void ParseSave(Parser& p)
 		}
 	}
 
-	else if( p.nMatch("HYPE") && p.nMatch("POPU") )
-	{
-		/* save hyperfine populations "output file" "Line List file" */
-		strcpy( save.chSave[save.nsave], "HFSP" );
-
-		/* we parsed off the second file name at start of this routine
-		 * check if file was found, use it if it was, else abort */
-		if( !lgSecondFilename )
-		{
-			fprintf(ioQQQ ,
-				"There must be a second file name between double"
-				" quotes on the SAVE HYPERFINE POPULATIONS"
-				" command\n."
-				"This second file contains the input list of"
-				" hyperfine lines.\n"
-				"I did not find it.\nSorry.\n");
-			cdEXIT(EXIT_FAILURE);
-		}
-
-		/* actually get the lines, and allocate the space in the arrays 
-		 * cdGetLineList will look on path, only do one time in grid */
-		if( save.params[save.nsave].ipPnunit == NULL )
-		{
-			/* make sure we free any allocated space from a previous call */
-			save.SaveLineListFree(save.nsave);
-
-			save.nLineList[save.nsave] = cdGetLineList(chSecondFilename, save.LineList[save.nsave]);
-
-			if( save.nLineList[save.nsave] < 0 )
-			{
-				fprintf(ioQQQ,
-					"DISASTER could not open"
-					" SAVE HYPERFINE POPULATIONS file %s \n",
-					chSecondFilename.c_str() );
-				cdEXIT(EXIT_FAILURE);
-			}
-		}
-
-		// by default give numbers in columns
-		// ROW keyword says to write the numbers across as one long row
-		if( p.nMatch(" ROW") )
-		{
-			save.punarg[save.nsave][0] = 1;
-
-			if( p.nMatch( " LOW" ) )
-				/* lower level population */
-				save.punarg[save.nsave][1] = 0;
-			else if( p.nMatch( " UPP" ) )
-				/* upper level population */
-				save.punarg[save.nsave][1] = 1;
-			else if( p.nMatch( " TSP" ) )
-				/* spin temperature */
-				save.punarg[save.nsave][1] = 3;
-			else
-				/* DEFAULT: population ratio: (nu/gu)/(nl/gl) */
-				save.punarg[save.nsave][1] = 2;
-		}
-		else
-			// the default, one line per row, multiple columns
-			save.punarg[save.nsave][0] = 0;
-
-		sncatf( chHeader, "#depth\t" );
-		if( save.punarg[save.nsave][0] )
-		{
-			for( long int j=0; j<save.nLineList[save.nsave]; ++j )
-			{
-				sncatf( chHeader, "%s ",
-					save.LineList[save.nsave][j].chLabel.c_str() );
-				string chTemp;
-				sprt_wl( chTemp, save.LineList[save.nsave][j].wave );
-				sncatf( chHeader, "%s", chTemp.c_str() );
-				if( j != save.nLineList[save.nsave] )
-				{
-					sncatf( chHeader, "\t" );
-				}
-			}
-			sncatf( chHeader, "\n" );
-		}
-		else
-		{	
-			sncatf( chHeader,
-				"emline\tnl\tnu\t(nu/gu)/(nl/gl)\tTspin\n" );
-		}
-	}
-
 	else if( p.nMatch("HUMM") )
 	{
 		strcpy( save.chSave[save.nsave], "HUMM" );
@@ -1804,24 +1719,86 @@ void ParseSave(Parser& p)
 
 		else if( p.nMatch("POPU") )
 		{
-			/* save line populations command - first give index and inforamtion
-			 * for all lines, then populations for lines as a function of
-			 * depth, using this index */
+			/* save line populations "output" "LineList" */
 			strcpy( save.chSave[save.nsave], "LINP" );
-			sncatf( chHeader, 
-				"#population information\n" );
-			/* this is optional limit to smallest population to save - always
-			 * interpreted as a log */
-			save.punarg[save.nsave][0] = (realnum)exp10(p.FFmtRead());
 
-			/* this is default - all positive populations */
-			if( p.lgEOL() )
-				save.punarg[save.nsave][0] = 0.f;
-
-			if( p.nMatch(" OFF") )
+			/* we parsed off the second file name at start of this routine
+			 * check if file was found, use it if it was, else abort */
+			if( !lgSecondFilename )
 			{
-				/* no lower limit - print all lines */
-				save.punarg[save.nsave][0] = -1.f;
+				fprintf(ioQQQ ,
+					"There must be a second file name between double"
+					" quotes on the SAVE LINE POPULATIONS command\n."
+					"This second file contains the input list of"
+					" spectral lines.\n"
+					"I did not find it.\nSorry.\n");
+				cdEXIT(EXIT_FAILURE);
+			}
+
+			/* actually get the lines, and allocate the space in the arrays 
+			 * cdGetLineList will look on path, only do one time in grid */
+			if( save.params[save.nsave].ipPnunit == NULL )
+			{
+				/* make sure we free any allocated space from a previous call */
+				save.SaveLineListFree(save.nsave);
+	
+				save.nLineList[save.nsave] = cdGetLineList(chSecondFilename, save.LineList[save.nsave]);
+	
+				if( save.nLineList[save.nsave] < 0 )
+				{
+					fprintf(ioQQQ,
+						"DISASTER could not open"
+						" SAVE LINE POPULATIONS file %s \n",
+						chSecondFilename.c_str() );
+					cdEXIT(EXIT_FAILURE);
+				}
+			}
+
+			// by default give numbers in columns
+			// ROW keyword says to write the numbers across as one long row
+			// subsequent keyword tells which column to write
+			if( p.nMatch(" ROW") )
+			{
+				save.punarg[save.nsave][0] = 1;
+	
+				if( p.nMatch( " LOW" ) )
+					/* lower level population */
+					save.punarg[save.nsave][1] = 0;
+				else if( p.nMatch( " UPP" ) )
+					/* upper level population */
+					save.punarg[save.nsave][1] = 1;
+				else if( p.nMatch( " TSP" ) )
+					/* spin temperature */
+					save.punarg[save.nsave][1] = 3;
+				else
+					/* DEFAULT: population ratio: (nu/gu)/(nl/gl) */
+					save.punarg[save.nsave][1] = 2;
+			}
+			else
+				// the default, one line per row, multiple columns
+				save.punarg[save.nsave][0] = 0;
+
+			sncatf( chHeader, "#depth\t" );
+			if( save.punarg[save.nsave][0] )
+			{
+				for( long int j=0; j<save.nLineList[save.nsave]; ++j )
+				{
+					sncatf( chHeader, "%s ",
+						save.LineList[save.nsave][j].chLabel.c_str() );
+					string chTemp;
+					sprt_wl( chTemp, save.LineList[save.nsave][j].wave );
+					sncatf( chHeader, "%s", chTemp.c_str() );
+					if( j != save.nLineList[save.nsave] )
+					{
+						sncatf( chHeader, "\t" );
+					}
+				}
+				sncatf( chHeader, "\n" );
+			}
+			else
+			{	
+				sncatf( chHeader,
+					"emline\tnl\tnu\t(nu/gu)/(nl/gl)\tTspin\n" );
 			}
 		}
 
