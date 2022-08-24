@@ -362,7 +362,7 @@ void atmdat_LAMDA_readin( long intNS, const string& chEFilename )
 		/*The line which displays the species and the collider starts with a number*/
 		/*This refers to the collider in the Leiden database*/
 		/*In the Leiden database 1 refers to H2,2 to para-H2,3 to ortho-H2
-		4 to electrons,5 to H and 6 to He*/
+		  4 to electrons,5 to H and 6 to He, 7 to H+. */
 		/*Leiden Collider Index*/
 		long i = 1;
 		bool lgEOL;
@@ -395,6 +395,10 @@ void atmdat_LAMDA_readin( long intNS, const string& chEFilename )
 		{
 			intCollIndex = ipATOM_HE;
 		}
+		else if(intLColliderIndex == 7)
+                {
+                        intCollIndex = ipPROTON; /*GShaw Added H+ collider on Aug20,2022*/
+                }
 		else
 		{
 			// this happens for some LAMDA files (as of Jan 20, 2009) because there is no integer

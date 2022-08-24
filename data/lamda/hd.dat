@@ -28,7 +28,7 @@ HD spectroscopy from CDMS version 2 of December 2011
 !NUMBER OF COLL PARTNERS
 5
 !COLLISIONS BETWEEN
-1 HD-pH2 rates from Table 2 of Flower (1999, J.Phys B), except the J = 2-0 data which are from Table 1.T>200K,https://basecol.vamdc.eu/ID241
+2 HD-pH2 rates from Table 2 of Flower (1999, J.Phys B), except the J = 2-0 data which are from Table 1.T>200K,https://basecol.vamdc.eu/ID241
 !NUMBER OF COLLISIONAL TRANSITIONS
 9
 !NUMBER OF TEMPERATURES
@@ -46,7 +46,7 @@ HD spectroscopy from CDMS version 2 of December 2011
 8	8	7	2.6e-12	 4.0e-12  9.2e-12  3.8e-11  9.2e-11  1.4e-10  1.7e-10
 9	9	8	1.4e-12	 2.0e-12  5.5e-12  2.8e-11  7.8e-11  1.2e-10  1.5e-10
 !COLLISIONS BETWEEN
-2 HD-oH2 rates from Table 2 of Flower (1999, J.Phys B), except the J = 2-0 data which are from Table 1.T>200K,https://basecol.vamdc.eu/ID240
+3 HD-oH2 rates from Table 2 of Flower (1999, J.Phys B), except the J = 2-0 data which are from Table 1.T>200K,https://basecol.vamdc.eu/ID240
 !NUMBER OF COLLISIONAL TRANSITIONS
 9
 !NUMBER OF TEMPERATURES
@@ -64,7 +64,7 @@ HD spectroscopy from CDMS version 2 of December 2011
 8	8	7	2.7e-12	 4.1e-12  9.5e-12  3.8e-11  9.2e-11  1.4e-10  1.5e-10
 9	9	8	1.5e-12	 2.1e-12  5.6e-12  2.8e-11  7.8e-11  1.2e-10  1.5e-10
 !COLLISIONS BETWEEN
-3 HD-He Roueff & Zippen 1999, A&A (data from BASECOL VAMDC, https://basecol.vamdc.eu/ID228)
+6 HD-He Roueff & Zippen 1999, A&A (data from BASECOL VAMDC, https://basecol.vamdc.eu/ID228)
 !NUMBER OF COLLISIONAL TRANSITIONS
 9
 !NUMBER OF TEMPERATURES
@@ -82,7 +82,7 @@ HD spectroscopy from CDMS version 2 of December 2011
 8	8	7	1.3e-12	 1.8e-12  5.6e-12  2.5e-11  6.2e-11  9.1e-11  1.1e-10
 9	9	8	8.1e-13	 1.1e-12  3.8e-12  2.0e-11  5.3e-11  8.3e-11  1.1e-10
 !COLLISIONS BETWEEN
-4 HD-H  Desrousseaux et al. JPhChA, 2018 (data from BASECOL VAMDC, ID335)
+5 HD-H  Desrousseaux et al. JPhChA, 2018 (data from BASECOL VAMDC, ID335)
 !NUMBER OF COLLISIONAL TRANSITIONS
 9
 !NUMBER OF TEMPERATURES
@@ -100,13 +100,13 @@ HD spectroscopy from CDMS version 2 of December 2011
 8	8	7	2.3e-12  2.6e-12  4.5e-12  9.9e-12  3.3e-11  7.4e-11
 9	9	8	1.5e-12  1.7e-12  3.0e-12  6.9e-12  2.5e-11  6.2e-11
 !COLLISIONS BETWEEN
-5 HD-Hp Desrousseaux et al. 2021, PCCP(doi:10.1039/D1CP02564C), figure 3
+7 HD-Hp Desrousseaux et al. 2021, PCCP(doi:10.1039/D1CP02564C), figure 3
 !NUMBER OF COLLISIONAL TRANSITIONS
 2
 !NUMBER OF TEMPERATURES
 4
 !TEMPERATURES
-   50.0   100.0  200.0  300.0K 
+   50.0   100.0  200.0  300.0 
 !TRANS + UP + LOW + RATES [cm3 s-1]
 1	2	1	4.0e-10	 4.0e-10  4.0e-10  4.0e-10
 2	3	1	8.7e-11	 1.9e-10  1.4e-10  2.9e-10  
