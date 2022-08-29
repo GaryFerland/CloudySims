@@ -2798,32 +2798,6 @@ These results may be used in post-processing.
 For instance, the population ratio, $(n_u/g_u)/(n_l/g_l)$, may be used by
 external programs to correct absorption coefficients for stimulated emission.
 
-\subsection{Save line populations, limit$=-$2}
-
-This will output some information concerning the atomic parameters and
-level populations for all lines that are transferred.
-
-By default all transitions with upper level densities greater than zero
-will be included.  The lower limit to the density threshold can be reset
-with the optional number than can appear on the line---this is the log of
-the smallest population density [cm$^{-3}$] to be printed.  This can be used
-to make the print out somewhat shorter.
-If the keyword \cdCommand{off} appears then
-the limit to the smallest population to print will be turned off.
-All
-populations will be reported.
-
-The first block of information gives an index to identify each line.
-This is followed by the line's label.  This will usually be the spectrum,
-as in ``H  1'' followed by the wavelength, as in ``1215A''.  The lower and
-upper statistical weights are next, followed by the energy of the line in
-wavenumbers and the $gf$ value for the transition.
-
-The population densities for each zone follow this block of information.
-Each line begins with the index used for that line in the atomic parameter
-list.  This is followed by the populations of the lower and upper level
-of the transition [cm$^{-3}$].
-
 \subsection{Save line RT}
 
 This produces a file containing information concerning line radiative
