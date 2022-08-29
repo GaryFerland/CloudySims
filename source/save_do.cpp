@@ -2523,23 +2523,31 @@ void SaveDo(
 							long ipobs = LineSave.findline(specline);
 							TransitionProxy tr = LineSave.lines[ipobs].getTransition();
 
-							double quant;
-							if( save.punarg[ipPun][1] == 0 )
-								quant = tr.Lo()->Pop();
-							else if( save.punarg[ipPun][1] == 1 )
-								quant = tr.Hi()->Pop();
-							else if( save.punarg[ipPun][1] == 2 )
+							double quant = 0.;
+
+							/* NB NB
+							 *
+							 * Recombination lines are not associated with an atomic
+							 * model.  Weed them out to avoid segfault.
+							 */
+							if( LineSave.lines[ipobs].isSpectralLine()
+								&& tr.associated() )
 							{
-								quant =
-									tr.Hi()->Pop() * tr.Lo()->g()
-									/( tr.Lo()->Pop() * tr.Hi()->g() );
+								if( save.punarg[ipPun][1] == 0 )
+									quant = tr.Lo()->Pop();
+								else if( save.punarg[ipPun][1] == 1 )
+									quant = tr.Hi()->Pop();
+								else if( save.punarg[ipPun][1] == 2 )
+									quant = safe_div( tr.Hi()->Pop() * tr.Lo()->g(),
+											tr.Lo()->Pop() * tr.Hi()->g(), 0. );
+								else if( save.punarg[ipPun][1] == 3 )
+									quant = TexcLine( tr );
+								else
+								{
+									TotalInsanity();
+								}
 							}
-							else if( save.punarg[ipPun][1] == 3 )
-								quant = TexcLine( tr );
-							else
-							{
-								TotalInsanity();
-							}
+
 							fprintf( save.params[ipPun].ipPnunit, "\t%.4e", quant );
 						}
 						fprintf( save.params[ipPun].ipPnunit, "\n" );
@@ -2559,16 +2567,32 @@ void SaveDo(
 							fprintf( save.params[ipPun].ipPnunit,
 								"%s", chTemp.c_str() );
 
+							double lower = 0.,
+							       upper = 0.,
+							       ratio = 0.,
+							       tspin = 0.;
+
 							long ipobs = LineSave.findline(specline);
 							TransitionProxy tr = LineSave.lines[ipobs].getTransition();
 
+							/* NB NB
+							 *
+							 * Recombination lines are not associated with an atomic
+							 * model.  Weed them out to avoid segfault.
+							 */
+							if( LineSave.lines[ipobs].isSpectralLine()
+								&& tr.associated() )
+							{
+								lower = tr.Lo()->Pop();
+								upper = tr.Hi()->Pop();
+								ratio = safe_div( tr.Hi()->Pop() * tr.Lo()->g(),
+											tr.Lo()->Pop() * tr.Hi()->g(), 0. );
+								tspin = TexcLine( tr );
+							}
+
 							fprintf( save.params[ipPun].ipPnunit,
 								"\t%10.4e\t%10.4e\t%.4e\t%11.4e\n",
-								tr.Lo()->Pop(),
-								tr.Hi()->Pop(),
-								tr.Hi()->Pop() * tr.Lo()->g()
-								/( tr.Lo()->Pop() * tr.Hi()->g() ),
-								TexcLine( tr ) );
+								lower, upper, ratio, tspin );
 						}
 					}
 				}
