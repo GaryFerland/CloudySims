@@ -400,37 +400,6 @@ public:
 		return m_type == QH;
 	}
 
-	/** isSpectralLine - tell if stack entry is genuine spectral line
-	 *
-	 * Note that this method reports both transferred (type 't') and
-	 * recombination (type 'r') lines as spectral lines.
-	 */
-	bool isSpectralLine() const
-	{
-		char type = chSumTyp();
-		if( isBlend()
-		    or isSeparator()
-		    or isUnit()
-		    or isUnitD()
-		    or isInward()
-		    or isInwardTotal()
-		    or isInwardContinuum()
-		    or isCollisional()
-		    or isPump()
-		    or isHeat()
-		    or isCaseA()
-		    or isCaseB()
-		    or isNInu()
-		    or isNFnu()
-		    or isPhoPlus()
-		    or isPcon()
-		    or isQH()
-		    or type == 'h'
-		    or type == 'c'
-		    or type == 'i' )
-			return false;
-		return true;
-	}
 #ifndef NDEBUG
 	void checkEmergent( const long ipEmType ) const
 	{

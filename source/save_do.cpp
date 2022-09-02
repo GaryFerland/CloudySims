@@ -2530,7 +2530,7 @@ void SaveDo(
 							 * Recombination lines are not associated with an atomic
 							 * model.  Weed them out to avoid segfault.
 							 */
-							if( LineSave.lines[ipobs].isSpectralLine()
+							if( LineSave.lines[ipobs].chSumTyp() == 't'
 								&& tr.associated() )
 							{
 								if( save.punarg[ipPun][1] == 0 )
@@ -2580,7 +2580,7 @@ void SaveDo(
 							 * Recombination lines are not associated with an atomic
 							 * model.  Weed them out to avoid segfault.
 							 */
-							if( LineSave.lines[ipobs].isSpectralLine()
+							if( LineSave.lines[ipobs].chSumTyp() == 't'
 								&& tr.associated() )
 							{
 								lower = tr.Lo()->Pop();
