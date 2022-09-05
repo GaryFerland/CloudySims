@@ -6328,6 +6328,11 @@ void dqc25c_(const D_fp& f, const double *a, const double *b, const double *c__,
 
 	/*           check the position of c. */
 
+	set_NaN( p2 );
+	set_NaN( p3 );
+	set_NaN( p4 );
+	kp = 0;
+
 	/* ***first executable statement  dqc25c */
 	cc = (2. * *c__ - *b - *a) / (*b - *a);
 	if (fabs(cc) < 1.1) {
@@ -6548,6 +6553,10 @@ void dqc25f_(const D_fp& f, const double *a, const double *b, const double
 	chebmo_dim1 = *maxp1;
 	chebmo_offset = 1 + chebmo_dim1;
 	chebmo -= chebmo_offset;
+
+	set_NaN( p2 );
+	set_NaN( p3 );
+	set_NaN( p4 );
 
 	/* Function Body */
 
@@ -16541,6 +16550,11 @@ void qc25c_(const E_fp& f, const sys_float *a, const sys_float *b,
 
 	/*           check the position of c. */
 
+	set_NaN( p2 );
+	set_NaN( p3 );
+	set_NaN( p4 );
+	kp = 0;
+
 	/* ***first executable statement  qc25c */
 	cc = (2.f * *c__ - *b - *a) / (*b - *a);
 	if (fabs(cc) < 1.1f) {
@@ -16754,6 +16768,10 @@ void qc25f_(const E_fp& f, const sys_float *a, const sys_float *b,
 	chebmo_dim1 = *maxp1;
 	chebmo_offset = 1 + chebmo_dim1;
 	chebmo -= chebmo_offset;
+
+	set_NaN( p2 );
+	set_NaN( p3 );
+	set_NaN( p4 );
 
 	/* Function Body */
 

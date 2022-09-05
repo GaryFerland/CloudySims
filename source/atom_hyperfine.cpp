@@ -253,17 +253,8 @@ void H21_cm_pops( void )
 	 * NB: continuum subtraction is performed within PutLine() */
 	set_xIntensity(HFLines[0]);
 
-
 	/* finally save the spin temperature */
-	hyperfine.Tspin21cm = phycon.te;
-	if( (*HFLines[0].Hi()).Pop() > SMALLFLOAT )
-	{
-		hyperfine.Tspin21cm = TexcLine( HFLines[0] );
-		/* this line must be non-zero - it does strongly mase in limit_compton_hi_t sim -
-		 * in that sim pop ratio goes to unity for a float and TexcLine ret zero */
-		if( hyperfine.Tspin21cm == 0. )
-			hyperfine.Tspin21cm = phycon.te;
-	}
+	hyperfine.Tspin21cm = HyperfineTspin( HFLines[0] );
 
 	return;
 }
@@ -555,6 +546,7 @@ void HyperfineCreate(void)
 		colstr[j].cs.resize(Ntemp);
 		colstr[j].cs2d.resize(Ntemp);
 	}
+
 	hyperfine.HFLabundance.resize(HFLines.size());
 
 	/* now rewind the file so we can read it a second time*/
@@ -632,7 +624,6 @@ void HyperfineCreate(void)
 		ASSERT(hyperfine.HFLabundance[j] >= 0.0 && hyperfine.HFLabundance[j] <= 1.0);
 
 		HFLines[j].Emis().Aul()	= (realnum) atof(data[4].c_str());
-		HFLines[j].Emis().damp() = 1e-20f;
 
 		(*HFLines[j].Hi()).g() = (realnum) (2*(abund.IsoAbn[nelem-1].getSpin( Aiso ) + .5) + 1);
 		(*HFLines[j].Lo()).g() = (realnum) (2*(abund.IsoAbn[nelem-1].getSpin( Aiso ) - .5) + 1);
@@ -648,6 +639,10 @@ void HyperfineCreate(void)
 		double fenergyWN = MAX2(ENERGY_MIN_WN, 1.0 / wavelength);
 		HFLines[j].WLAng() = (realnum)(wavelength * 1e8f);
 		HFLines[j].EnergyWN() = (realnum) fenergyWN;
+
+		HFLines[j].Emis().dampXvel() = (realnum)( HFLines[j].Emis().Aul()
+							/ HFLines[j].EnergyWN() / PI4 );
+		HFLines[j].Emis().damp() = 1e-20f;
 
 		HFLines[j].Emis().gf() = (realnum)(GetGF(HFLines[j].Emis().Aul(), fenergyWN, (*HFLines[j].Hi()).g()));
 		ASSERT(HFLines[j].Emis().gf() > 0.0);
@@ -756,4 +751,28 @@ double HyperfineCS( size_t i )
 	}
 
 	return upsilon;
+}
+
+double HyperfineTspin( const TransitionProxy &t )
+{
+	DEBUG_ENTRY( "HyperfineTspin()" );
+
+	double Tspin = phycon.te;
+
+	if( (*t.Hi()).Pop() > SMALLFLOAT )
+	{
+		Tspin = TexcLine( t );
+
+		/* this line MUST be non-zero
+		 *
+		 * H I 21cm does strongly mase in limit_compton_hi_t;
+		 * in that sim pop ratio goes to unity for a float and
+		 * TexcLine() returns zero */
+		if( Tspin == 0. )
+			Tspin = phycon.te;
+	}
+
+	ASSERT( Tspin > 0. or Tspin < 0. );
+
+	return Tspin;
 }

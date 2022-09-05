@@ -102,7 +102,9 @@ monitor line luminosity "Si 8"      49.9099A  1.866
 monitor line luminosity "Si 9"      55.2899A  2.127  
 monitor line luminosity "Si 9"      55.4401A  2.354  
 monitor line luminosity "Si 8"      60.8598A  2.149  
-monitor line luminosity "Mg 9"      62.7511A  1.838  
+## >>chng 22 jul 09, wl from 62.7511A to 62.7510A, upgrade to Chianti v10
+## >>chng 22 jul 09, from 1.838 to 1.885, upgrade to Chianti v10
+monitor line luminosity "Mg 9"      62.7510A  1.885  
 monitor line luminosity "Fe 9"      67.9902A  1.835  
 monitor line luminosity "Si 8"      69.4300A  1.773  
 monitor line luminosity "Mg 8"      69.7000A  1.757  
@@ -113,29 +115,46 @@ monitor line luminosity "Fe10"      77.4497A  1.934
 monitor line luminosity "Fe 9"      82.9401A  1.958  
 monitor line luminosity "Mg 7"      83.7500A  1.658  
 monitor line luminosity "Mg 7"      84.0598A  1.848  
-monitor line luminosity "Ne 8"      88.0817A  2.087  
-monitor line luminosity "Ne 8"      88.1196A  2.03  
+## >>chng 22 jul 09, wl from 88.0817A to 88.0790A, upgrade to Chianti v10
+monitor line luminosity "Ne 8"      88.0790A  2.087  
+## >>chng 22 jul 09, wl from 88.1196A to 88.1170A, upgrade to Chianti v10
+monitor line luminosity "Ne 8"      88.1170A  2.03  
 monitor line luminosity "Fe10"      93.4300A  1.854  
 monitor line luminosity "Fe10"      95.2200A  1.937  
-monitor line luminosity "Ne 7"      97.4960A  1.908  
+## >>chng 22 jul 09, wl from 97.4960A to 97.5020A, upgrade to Chianti v10
+## >>chng 22 jul 09, from 1.908 to 1.849, upgrade to Chianti v10
+monitor line luminosity "Ne 7"      97.5020A  1.849  
 monitor line luminosity "Fe 9"      103.020A  1.892  
 monitor line luminosity "Fe 8"      103.100A  1.605 
 monitor line luminosity "Fe 8"      109.460A  1.519 
 monitor line luminosity "Ne 6"      122.920A  1.765 
 monitor line luminosity "Fe 8"      123.920A  1.789 
-monitor line luminosity "Fe 8"      130.941A  1.611 
+## >>chng 22 jul 09, from 1.611 to 1.589, upgrade to Chianti v10
+monitor line luminosity "Fe 8"      130.941A  1.589 
 monitor line luminosity "Ni11"      148.377A  2.14 
-monitor line luminosity "O  6"      150.090A  2.022 
+## >>chng 22 jul 09, wl from 150.090A to 150.089A, upgrade to Chianti v10
+monitor line luminosity "O  6"      150.089A  2.022 
 monitor line luminosity "O  6"      150.125A  1.948 
-monitor line luminosity "Ni12"      152.154A  2.157 
-monitor line luminosity "Fe 8"      167.486A  1.703 
-monitor line luminosity "Fe 8"      168.003A  1.728 
-monitor line luminosity "Fe 8"      168.173A  1.796 
-monitor line luminosity "Fe 8"      168.545A  1.703 
-monitor line luminosity "Fe 8"      168.930A  1.863 
+## >>chng 22 jul 09, wl from 152.154A to 152.204A, upgrade to Chianti v10
+## >>chng 22 jul 09, from 2.157 to 2.191, upgrade to Chianti v10
+monitor line luminosity "Ni12"      152.204A  2.191 
+## >>chng 22 jul 09, from 1.703 to 1.76, upgrade to Chianti v10
+monitor line luminosity "Fe 8"      167.486A  1.76 
+## >>chng 22 jul 09, from 1.728 to 1.679, upgrade to Chianti v10
+monitor line luminosity "Fe 8"      168.003A  1.679 
+## >>chng 22 jul 09, wl from 168.173A to 168.172A, upgrade to Chianti v10
+## >>chng 22 jul 09, from 1.796 to 1.913, upgrade to Chianti v10
+monitor line luminosity "Fe 8"      168.172A  1.913 
+## >>chng 22 jul 09, wl from 168.545A to 168.544A, upgrade to Chianti v10
+## >>chng 22 jul 09, from 1.703 to 1.833, upgrade to Chianti v10
+monitor line luminosity "Fe 8"      168.544A  1.833 
+## >>chng 22 jul 09, wl from 168.930A to 168.929A, upgrade to Chianti v10
+monitor line luminosity "Fe 8"      168.929A  1.863 
 monitor line luminosity "Fe 9"      171.073A  2.718 
 monitor line luminosity "O  5"      172.169A  1.54 
-monitor line luminosity "Fe10"      174.531A  2.889 
+## >>chng 22 jul 09, wl from 174.531A to 174.250A, upgrade to Chianti v10
+## >>chng 22 jul 09, from 2.889 to 2.79, upgrade to Chianti v10
+monitor line luminosity "Fe10"      174.250A  2.79 
 ##
 ## >>chng 01 aug 08, from 5.122 to 5.099, additional coolants
 ## >>chng 03 nov 23, from 5.099 to 5.121, Kraemer et al. guess of dr
@@ -207,7 +226,8 @@ monitor oxygen 9 ionization -0.3266
 ## >>chng 12 oct 26, from -1.346 to -1.66, adjust montiors to this branch
 ## >>chng 13 feb 01, from -1.66 to -1.572, BUGFIX, largely undo r6703
 ## >>chng 13 nov 25, from -1.572 to -1.637, remove jump from Federman shielding fn
-monitor iron ionization 9 -1.637 error 0.1
+## >>chng 22 jul 09, from -1.637 to -1.591, upgrade to Chianti v10
+monitor iron ionization 9 -1.591 error 0.1
 ## 
 ## >>chng 05 mar 03, from -1.756 to -1.788, new romas uta
 ## >>chng 05 dec 19, from -1.788 to -1.790, update cs Fe10, 11, & 13
@@ -223,7 +243,8 @@ monitor iron ionization 9 -1.637 error 0.1
 ## >>chng 12 oct 26, from -0.8694 to -1.125, adjust montiors to this branch
 ## >>chng 13 jul 15, from -1.125 to -1.086, move to Stout/Chianti for Si, botches are due to improved atomic data
 ## >>chng 13 nov 25, from -1.086 to -1.149, remove jump from Federman shielding fn
-monitor iron ionization	10	-1.149 error 0.1
+## >>chng 22 jul 09, from -1.149 to -1.107, upgrade to Chianti v10
+monitor iron ionization	10	-1.107 error 0.1
 ## 
 ## >>chng 05 mar 03, from -1.381 to -1.409, new romas uta
 ## >>chng 06 feb 03, from -1.409 to -2.087, guess dr to Badnell mean
@@ -235,7 +256,8 @@ monitor iron ionization	10	-1.149 error 0.1
 ## >>chng 07 jan 23, from -0.887 to -0.700, update Gu UTA data file, inc err
 ## >>chng 12 oct 26, from -0.7 to -0.9047, adjust montiors to this branch
 ## >>chng 13 nov 25, from -0.9047 to -0.9535, remove jump from Federman shielding fn
-monitor iron ionization	11	-0.9535 error 0.1
+## >>chng 22 jul 09, from -0.9535 to -0.9154, upgrade to Chianti v10
+monitor iron ionization	11	-0.9154 error 0.1
 ## 
 ## >>chng 05 mar 03, from -0.763 to -0.787 new romas uta
 ## >>chng 06 feb 03, from -0.787 to -1.280, guess dr to Badnell mean
@@ -354,7 +376,8 @@ monitor iron ionization	19	-1.404 error 0.1
 ## >>chng 12 feb 27, from -2.84 to -2.891, Upgrade to Chianti 7
 ## >>chng 12 oct 26, from -2.891 to -2.568, adjust montiors to this branch
 ## >>chng 13 nov 25, from -2.568 to -2.523, remove jump from Federman shielding fn
-monitor iron ionization	20	-2.523 error 0.1
+## >>chng 22 jul 09, from -2.523 to -2.571, upgrade to Chianti v10
+monitor iron ionization	20	-2.571 error 0.1
 ## 
 ## >>chng 05 mar 03, from -5.473 to -5.421, new romas uta
 ## >>chng 06 feb 03, from -5.421 to -4.853, guess dr to Badnell mean
@@ -370,7 +393,8 @@ monitor iron ionization	20	-2.523 error 0.1
 ## >>chng 12 feb 27, from -4.28 to -4.344, Upgrade to Chianti 7
 ## >>chng 12 oct 26, from -4.344 to -4.025, adjust montiors to this branch
 ## >>chng 13 nov 25, from -4.025 to -3.978, remove jump from Federman shielding fn
-monitor iron ionization	21	-3.978 error 0.1
+## >>chng 22 jul 09, from -3.978 to -4.04, upgrade to Chianti v10
+monitor iron ionization	21	-4.04 error 0.1
 ##
 ## >>chng 07 jan 20, from 20 to 25 (21) e2 bug
 ## >>chng 08 dec 08, from 25 to 17, upper limit -> equals (r2515)

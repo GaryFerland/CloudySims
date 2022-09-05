@@ -34,30 +34,52 @@ save monitors ".asr" last
 #
 # commands giving the asserts    =========
 monitor line luminosity cumulative intrinsic "Fe24"      11.1710A   13.4384
-monitor line luminosity cumulative intrinsic "Fe17"      15.0130A   13.7835
-monitor line luminosity cumulative intrinsic "Fe17"      17.0960A   13.4339
-monitor line luminosity cumulative intrinsic "Fe17"      17.0510A   13.5768
+## >>chng 22 jul 09, from 13.78 to 13.76, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe17"      15.0130A   13.76
+## >>chng 22 jul 09, from 13.43 to 13.4, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe17"      17.0960A   13.4
+## >>chng 22 jul 09, from 13.58 to 13.55, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe17"      17.0510A   13.55
 monitor line luminosity cumulative intrinsic "O  6"      1031.91A   12.9633
-monitor line luminosity cumulative intrinsic "Fe24"      11.4271A   13.1375
-monitor line luminosity cumulative intrinsic "Fe23"      12.1612A   13.2285
+## >>chng 22 jul 09, wl from 11.4271A to 11.4260A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe24"      11.4260A   13.1375
+## >>chng 22 jul 09, wl from 12.1612A to 12.1610A, upgrade to Chianti v10
+## >>chng 22 jul 09, from 13.23 to 13.26, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe23"      12.1610A   13.26
 monitor line luminosity cumulative intrinsic "Fe20"      13.0520A   12.3823
-monitor line luminosity cumulative intrinsic "Fe17"      17.0510A   13.5768
-monitor line luminosity cumulative intrinsic "Fe17"      17.0960A   13.4339
-monitor line luminosity cumulative intrinsic "Fe14"      5303.01A   11.8365
-monitor line luminosity cumulative intrinsic "Fe13"      1.07462m   11.5958
-monitor line luminosity cumulative intrinsic "Fe13"      1.07978m   11.3730
-monitor line luminosity cumulative intrinsic "Fe12"      2405.69A   11.1307
-monitor line luminosity cumulative intrinsic "Fe12"      2169.09A   11.0401
-monitor line luminosity cumulative intrinsic "Fe12"      1349.40A   10.3467
-monitor line luminosity cumulative intrinsic "Fe12"      1242.01A   10.5776
-monitor line luminosity cumulative intrinsic "Fe11"      2648.71A   11.2537
-monitor line luminosity cumulative intrinsic "Fe10"      6374.54A   11.2911
+## >>chng 22 jul 09, from 13.58 to 13.55, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe17"      17.0510A   13.55
+## >>chng 22 jul 09, from 13.43 to 13.4, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe17"      17.0960A   13.4
+## >>chng 22 jul 09, wl from 5303.01A to 5303.00A, upgrade to Chianti v10
+## >>chng 22 jul 09, from 11.84 to 11.7, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe14"      5303.00A   11.7
+## >>chng 22 jul 09, from 11.6 to 11.49, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe13"      1.07462m   11.49
+## >>chng 22 jul 09, from 11.37 to 11.21, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe13"      1.07978m   11.21
+## >>chng 22 jul 09, wl from 2405.69A to 2405.68A, upgrade to Chianti v10
+## >>chng 22 jul 09, from 11.13 to 11.27, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe12"      2405.68A   11.27
+## >>chng 22 jul 09, wl from 2169.09A to 2169.08A, upgrade to Chianti v10
+## >>chng 22 jul 09, from 11.04 to 11.12, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe12"      2169.08A   11.12
+## >>chng 22 jul 09, from 10.35 to 10.5, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe12"      1349.40A   10.5
+## >>chng 22 jul 09, from 10.58 to 10.73, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe12"      1242.01A   10.73
+## >>chng 22 jul 09, from 11.25 to 11.27, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe11"      2648.71A   11.27
+## >>chng 22 jul 09, wl from 6374.54A to 6374.53A, upgrade to Chianti v10
+## >>chng 22 jul 09, from 11.29 to 11.24, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Fe10"      6374.53A   11.24
 monitor line luminosity cumulative intrinsic "Fe 9"      8234.56A   10.9000
 ## >>chng 17 may 25, wl from 18.9732A to 18.9709A, up Rydberg constant
 ## >>chng 19 aug 06, from 14 to 14.02, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 22, wl from 18.9709A to 18.9696A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 18.9696A to 18.9689A, update NIST energies
-monitor line luminosity cumulative intrinsic "O  8"      18.9689A   14.02
+## >>chng 22 jul 09, from 14.02 to 13.99, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "O  8"      18.9689A   13.99
 ## >>chng 21 mar 16, from O 7 16.7725A to 16.7699A, update to NIST
 monitor line luminosity cumulative intrinsic "O  7"      16.7699A   12.0396
 ## >>chng 16 aug 07, from 12.79 to 12.69, Marios bug fixes
@@ -75,14 +97,18 @@ monitor line luminosity cumulative intrinsic "O  7"      21.6020A   12.99
 ## >>chng 19 jul 24, from 12.54 to 12.51, fix bug on resolving ions excitation on He like
 monitor line luminosity cumulative intrinsic "O  7"      21.8070A   12.51
 ## >>chng 17 feb 25, from 13.03 to 13.05, increase number of collapsed levels
-monitor line luminosity cumulative intrinsic "O  7"      22.1012A   13.05
-monitor line luminosity cumulative intrinsic "O  6"      1037.62A   12.6609
+## >>chng 22 jul 09, from 13.05 to 13.02, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "O  7"      22.1012A   13.02
+## >>chng 22 jul 09, wl from 1037.62A to 1037.61A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "O  6"      1037.61A   12.6609
 monitor line luminosity cumulative intrinsic "O  5"      1213.81A   11.8703
 monitor line luminosity cumulative intrinsic "N  5"      1242.80A   11.5024
 monitor line luminosity cumulative intrinsic "Si 7"      2146.64A   10.9629
 monitor line luminosity cumulative intrinsic "Mg 6"      1806.00A   10.8444
-monitor line luminosity cumulative intrinsic "Mg 6"      1806.43A   10.9519
-monitor line luminosity cumulative intrinsic "O  4"      1404.78A   11.4948
+## >>chng 22 jul 09, wl from 1806.43A to 1806.42A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "Mg 6"      1806.42A   10.9519
+## >>chng 22 jul 09, wl from 1404.78A to 1404.81A, upgrade to Chianti v10
+monitor line luminosity cumulative intrinsic "O  4"      1404.81A   11.4948
 monitor line luminosity cumulative intrinsic "C  4"      1548.19A   12.0215
 ## >>chng 16 jul 24, from 11.59 to 11.54, update C III to 2014A&A...566A.104F
 monitor line luminosity cumulative intrinsic "C  3"      1906.68A   11.54

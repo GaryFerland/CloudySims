@@ -40,6 +40,14 @@ save continuum "limit_caseb_he_den2_temp4.con" last no title units microns
 save monitors "limit_caseb_he_den2_temp4.asr"
 save line list ratio column "limit_caseb_he_den2_temp4.rat" "linelist_he1.dat" last no hash
 #
+save line populations "limit_caseb_he_den2_temp4.lpop" "linelist_he1.dat" last no hash
+# default row option: ratio
+save line populations "limit_caseb_he_den2_temp4.row.lpop" "linelist_he1.dat" row last no hash
+save line populations "limit_caseb_he_den2_temp4.row_lower.lpop" "linelist_he1.dat" row lower last no hash
+save line populations "limit_caseb_he_den2_temp4.row_upper.lpop" "linelist_he1.dat" row upper last no hash
+save line populations "limit_caseb_he_den2_temp4.row_ratio.lpop" "linelist_he1.dat" row ratio last no hash
+save line populations "limit_caseb_he_den2_temp4.row_tspin.lpop" "linelist_he1.dat" row tspin last no hash
+#
 # commands giving the monitors    =========
 ##
 ## 15 may 22 add this monitor, which botches 10830

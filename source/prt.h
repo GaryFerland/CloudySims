@@ -63,13 +63,16 @@ void prt_line_inlist ( FILE *ioOUT, const char *label, realnum wvlng );
 void PrtHeader(void);
 
 /**prt_LineLabels save all labels and wavelengths for emission line array 
-\param io file handle to write output
-\param lgPrintAll print all if true, if false then do not print parts of 
- transferred lines
+ *
+ * \param io            file handle to write output
+ * \param lgPrintAll    print all if true, if false then do not print parts of 
+ *                      transferred lines
+ * \param lgPrintIndex  print the index of the line in the line stack
 */
 void prt_LineLabels(
 	FILE * io,
-	bool lgPrintAll
+	bool lgPrintAll,
+	bool lgPrintIndex
 	);
 
 /**prtmet print all line optical depths at end of iteration */

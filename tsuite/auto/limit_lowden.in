@@ -61,7 +61,8 @@ monitor ionization Carbon 6  -0.497
 ## >>chng 06 feb 03, from -1.600 to -1.571, guess dr to Badnell mean
 ## >>chng 06 nov 29, from -1.571 to -1.542, Badnell DR now default
 ## >>chng 09 feb 24, from -1.542 to -1.52, botches due to r2763
-monitor ionization Carbon 7  -1.52
+## >>chng 22 jul 09, from -1.52 to -1.544, upgrade to Chianti v10
+monitor ionization Carbon 7  -1.544
 ##
 ## >>chng 06 feb 03, from -1.394 to -1.420, guess dr to Badnell mean
 ## >>chng 08 oct 18, from -1.42 to -1.446, include Badnell UTA data

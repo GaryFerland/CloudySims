@@ -1338,7 +1338,7 @@ STATIC void conorm()
 		{
 			/* specify flux density
 			 * option to use arbitrary frequency or range */
-			f = ffun1(rfield.range[i][0]); 
+			f = ffun1(rfield.range[i][0]);
 
 			/* make sure this is positive, could be zero if out of range of table,
 			 * or for various forms of insanity */

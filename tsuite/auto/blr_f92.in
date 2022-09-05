@@ -548,7 +548,8 @@ monitor line "blnd"  1666      2.311 error 0.10
 ## >>chng 13 jan 10, from 3.111 to 3.263, fix in-zone continuum shielding
 ## >>chng 14 mar 26, from 3.263 to 4.163, Move oxygen data to stout and chianti files
 ## >>chng 16 aug 07, from 4.163 to 4.391, Fran bug fix
-monitor line "blnd"  1402      4.391
+## >>chng 22 jul 09, from 4.391 to 4.013, upgrade to Chianti v10
+monitor line "blnd"  1402      4.013
 ##
 ## >>chng 00 oct 03, from 3.66 to 3.407 cont rebin, H- opac bug
 ## >>chng 01 jul 04, from 3.41 to 3.02 diffuse fields
