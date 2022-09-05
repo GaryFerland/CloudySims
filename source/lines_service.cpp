@@ -981,21 +981,6 @@ void set_xIntensity( const TransitionProxy& t )
 	t.Emis().xObsIntensity() =
 	t.Emis().xIntensity() = nphot * t.EnergyErg();
 
-	if( 0 && t.chLabel() == "H  1      1215.67A" )
-	{
-		fprintf(ioQQQ,
-			"\"%s\"\t %.4e\t %.4e\t %.4e\t %.4e\t %.4e\t %.4e\t %.4e\t %.4e\n",
-			t.chLabel().c_str(),
-			t.Emis().Aul(),
-			(*t.Hi()).Pop(),
-			(*t.Lo()).Pop(),
-			rfield.flux_isotropic[j] * rfield.convoc[j],
-			Pesc,
-			nphot,
-			t.Emis().xIntensity(),
-			t.Emis().xObsIntensity() );
-	}
-
 	if( ! save.lgSubtrCont )
 		return;
 
@@ -1010,6 +995,22 @@ void set_xIntensity( const TransitionProxy& t )
 	nphot = MAX2(0., nphot);
 
 	t.Emis().xObsIntensity() = nphot * t.EnergyErg();
+
+	if( 0 && t.chLabel() == "Fe24                3068.00m" )
+	{
+		fprintf(ioQQQ,
+			"\"%s\"\t%.4e\t%.4e\t%.4e\t%.4e\t%.4e\t%.4e\t%.4e\t%.4e\t%.4e\n",
+			t.chLabel().c_str(),
+			t.Emis().Aul(),
+			(*t.Hi()).Pop(),
+			(*t.Lo()).Pop(),
+			rfield.flux_isotropic[j] * rfield.convoc[j],
+			Pesc,
+			nphot - dnphot,	// undo the correction
+			dnphot,
+			t.Emis().xIntensity(),
+			t.Emis().xObsIntensity() );
+	}
 
 	return;
 }

@@ -1433,7 +1433,7 @@ STATIC void CoolHyperfine (void)
 	double cs = (electron_rate_21cm * dense.eden + 
 		atomic_rate_21cm * dense.xIonDense[ipHYDROGEN][0] +
 		proton_rate_21cm * dense.xIonDense[ipHYDROGEN][1] ) *
-		3./	dense.cdsqte;
+		3. / dense.cdsqte;
 	PutCS(  cs , HFLines[0] );
 
 	/* do level pops for H 21 cm which is a special case since Lya pumping in included */

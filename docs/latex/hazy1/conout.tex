@@ -2255,6 +2255,7 @@ This gives the depth [cm], the densities of \hO\ and \hplus\ [cm$^{-3}$],
 followed by the level population densities [cm$^{-3}$]
 for the levels in the order $n = 1, 2s, 2p, 3, 4, 5,\dots$ for each zone.
 
+%------------------------------------------------------------------------------
 \section{Save ionization means}
 \label{sec:CommandSaveIonizationMeans} 
 
@@ -2741,32 +2742,66 @@ end of lines
 This produces a list of the most important contributors to the line
 radiation pressure for each zone.
 
-\subsection{Save line populations, limit$=-$2}
+%------------------------------------------------------------------------------
+\subsection{Save line populations
+        [row [lower$\vert$upper$\vert$ratio$\vert$tspin]]}
+\label{sec:CommandSaveHyperfinePops}
 
-This will output some information concerning the atomic parameters and
-level populations for all lines that are transferred.
+This saves the upper and lower level populations of the requested spectral
+lines.\footnote{
+Until 2022, the command reported the level populations of (almost) all lines
+known to the code.
+This caused the output to be several MB even for a single zone model.
+The current output was chosen as more user-friendly.
+}
+The command expects two filenames to be given, each enclosed in double quotes.
+The first specifies the output file, while the second contains the spectral
+lines to be tracked.
+For example,
+%
+\begin{verbatim}
+save line populations "output.txt" "linelist.dat"
+\end{verbatim}
+%
+will read lines from \cdFilename{linelist.dat} and save the output in
+\cdFilename{output.txt}.
 
-By default all transitions with upper level densities greater than zero
-will be included.  The lower limit to the density threshold can be reset
-with the optional number than can appear on the line---this is the log of
-the smallest population density [cm$^{-3}$] to be printed.  This can be used
-to make the print out somewhat shorter.
-If the keyword \cdCommand{off} appears then
-the limit to the smallest population to print will be turned off.
-All
-populations will be reported.
+By default, there is one line of output per spectral line per zone.
+Each output line lists the depth, the transition line label,
+the lower and upper level densities, the ratio $(n_u/g_u)/(n_l/g_l)$,
+and the corresponding excitation temperature.
+An example drawn from work on hyperfine lines in galaxy clusters is the
+following:
+%
+\begin{verbatim}
+#depth       emline         nl          nu          (nu/gu)/(nl/gl)  Tspin
+5.00000e-01  Fe26 348.000m  9.3587e-11  9.0239e-15  3.2141e-05       3.9964e+00
+5.00000e-01  Fe24 3068.00m  1.2614e-08  1.0044e-08  2.6540e-01       3.5353e+00
+\end{verbatim}
 
-The first block of information gives an index to identify each line.
-This is followed by the line's label.  This will usually be the spectrum,
-as in ``H  1'' followed by the wavelength, as in ``1215A''.  The lower and
-upper statistical weights are next, followed by the energy of the line in
-wavenumbers and the $gf$ value for the transition.
+If the \cdCommand{row} keyword appears, the command will generate one line of
+output for each zone, listing the depth, and for each spectral line, one of the
+columns above.
+By default, the population ratio is reported, but the lower level, upper level
+populations, or the spin temperature may be reported, instead; the relevant
+keywords are \cdCommand{ratio}, \cdCommand{lower}, \cdCommand{upper}, and
+\cdCommand{tspin}, respectively.
+For example, using the \cdCommand{row} option with the previous command,
+modifies the output to
+%
+\begin{verbatim}
+#depth       Fe26 348.000m  Fe24 3068.00m
+5.00000e-01  3.2141e-05     2.6540e-01
+\end{verbatim}
 
-The population densities for each zone follow this block of information.
-Each line begins with the index used for that line in the atomic parameter
-list.  This is followed by the populations of the lower and upper level
-of the transition [cm$^{-3}$].
+These results may be used in post-processing.
+For instance, the population ratio, $(n_u/g_u)/(n_l/g_l)$, may be used by
+external programs to correct absorption coefficients for stimulated emission.
 
+Note that results for lines that are not associated with an atomic model (e.g.,
+blends, recombinations lines) are always given as zeros.
+
+%------------------------------------------------------------------------------
 \subsection{Save line RT}
 
 This produces a file containing information concerning line radiative

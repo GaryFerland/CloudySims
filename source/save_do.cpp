@@ -2514,15 +2514,86 @@ void SaveDo(
 			{
 				if( ! lgLastOnly )
 				{
-					static bool lgFirst=true;
-					/* save line populations, need to do this twice if very first
-					 * call since first call to SaveLineStuff generates atomic parameters
-					 * rather than level pops, routine is below, file static */
-					SaveLineStuff(save.params[ipPun].ipPnunit,"populat" , save.punarg[ipPun][0]);
-					if( lgFirst )
+					if( save.punarg[ipPun][0] )
 					{
-						lgFirst = false;
-						SaveLineStuff(save.params[ipPun].ipPnunit,"populat" , save.punarg[ipPun][0]);
+						fprintf( save.params[ipPun].ipPnunit,
+							"%.5e", radius.depth_mid_zone );
+						for( auto &specline : save.LineList[ipPun] )
+						{
+							long ipobs = LineSave.findline(specline);
+							TransitionProxy tr = LineSave.lines[ipobs].getTransition();
+
+							double quant = 0.;
+
+							/* NB NB
+							 *
+							 * Recombination lines are not associated with an atomic
+							 * model.  Weed them out to avoid segfault.
+							 */
+							if( LineSave.lines[ipobs].chSumTyp() == 't'
+								&& tr.associated() )
+							{
+								if( save.punarg[ipPun][1] == 0 )
+									quant = tr.Lo()->Pop();
+								else if( save.punarg[ipPun][1] == 1 )
+									quant = tr.Hi()->Pop();
+								else if( save.punarg[ipPun][1] == 2 )
+									quant = safe_div( tr.Hi()->Pop() * tr.Lo()->g(),
+											tr.Lo()->Pop() * tr.Hi()->g(), 0. );
+								else if( save.punarg[ipPun][1] == 3 )
+									quant = TexcLine( tr );
+								else
+								{
+									TotalInsanity();
+								}
+							}
+
+							fprintf( save.params[ipPun].ipPnunit, "\t%.4e", quant );
+						}
+						fprintf( save.params[ipPun].ipPnunit, "\n" );
+					}
+					else
+					{
+						for( auto &specline : save.LineList[ipPun] )
+						{
+							fprintf( save.params[ipPun].ipPnunit,
+								"%.5e", radius.depth_mid_zone );
+
+							fprintf( save.params[ipPun].ipPnunit,
+								"\t%s ",
+								specline.chLabel.c_str() );
+							string chTemp;
+							sprt_wl( chTemp, specline.wave );
+							fprintf( save.params[ipPun].ipPnunit,
+								"%s", chTemp.c_str() );
+
+							double lower = 0.,
+							       upper = 0.,
+							       ratio = 0.,
+							       tspin = 0.;
+
+							long ipobs = LineSave.findline(specline);
+							TransitionProxy tr = LineSave.lines[ipobs].getTransition();
+
+							/* NB NB
+							 *
+							 * Recombination lines are not associated with an atomic
+							 * model.  Weed them out to avoid segfault.
+							 */
+							if( LineSave.lines[ipobs].chSumTyp() == 't'
+								&& tr.associated() )
+							{
+								lower = tr.Lo()->Pop();
+								upper = tr.Hi()->Pop();
+								ratio = safe_div( tr.Hi()->Pop() * tr.Lo()->g(),
+											tr.Lo()->Pop() * tr.Hi()->g(), 0. );
+								tspin = TexcLine( tr );
+							}
+
+							fprintf( save.params[ipPun].ipPnunit,
+								"\t%10.4e\t%10.4e\t%.4e\t%11.4e\n",
+								lower, upper, ratio, tspin );
+						}
 					}
 				}
 			}

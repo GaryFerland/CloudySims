@@ -1,5 +1,21 @@
 # Isotope data
+# 
+# List of astronomically relevant isotopes (see abundances/default-iso.abn).
+# Spins and magnetic moments are listed mainly for isotopes discussed by
+# Chatzikos et al. 2014, ApJ, 787, 96 (originally from Sunyaev & Churazov 1984,
+# SvAL, 10, 201).
 #
+################################################################################
+#
+# Created: Aug 16, 2013
+# @author: M. Chatzikos
+#
+# Updated: Jan 16, 2022
+# @author: M. Chatzikos
+# Comment: Added spins and magnetic moments for 3 stable isotopes: 61-Ni, 63-Cu,
+# 	   65-Cu, and 67-Zn.
+#
+################################################################################
 # Columns:
 #  (1)		Element Symbol
 #  (2)		Atomic Number
@@ -80,13 +96,13 @@ Fe	 26	 58	   -62148.800	 57.9333
 Co	 27	 59	   -62223.600	 58.9332	3.5	 4.627000
 Ni	 28	 58	   -60223.000	 57.9353
 Ni	 28	 60	   -64468.100	 59.9308
-Ni	 28	 61	   -64216.800	 60.9311
+Ni	 28	 61	   -64216.800	 60.9311	1.5	-0.75002
 Ni	 28	 62	   -66742.700	 61.9283
 Ni	 28	 64	   -67095.900	 63.9280
-Cu	 29	 63	   -65576.200	 62.9296
-Cu	 29	 65	   -67259.700	 64.9278
+Cu	 29	 63	   -65576.200	 62.9296	1.5	 2.227206
+Cu	 29	 65	   -67259.700	 64.9278	1.5	 2.3816
 Zn	 30	 64	   -65999.500	 63.9291
 Zn	 30	 66	   -68896.300	 65.9260
-Zn	 30	 67	   -67877.200	 66.9271
+Zn	 30	 67	   -67877.200	 66.9271	2.5	 0.875479
 Zn	 30	 68	   -70004.000	 67.9248
 Zn	 30	 70	   -69559.000	 69.9253
