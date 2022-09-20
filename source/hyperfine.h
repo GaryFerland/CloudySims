@@ -16,6 +16,21 @@ void HyperfineCreate(void);
 /*double HyperfineCS( long nelem , long ion );*/
 double HyperfineCS(  size_t i  );
 
+class TransitionProxy;
+
+/** HyperfineTspin
+ *
+ * Compute spin (excitation) temperature for HFS line.
+ * The spin temperature is always finite (> 0, or < 0 if masing).
+ * The kinetic temperature is used if the spin temperature evaluates to 0,
+ * or if the upper limit has a population that is too small (~< 2e-36 cm^-3)
+ * to reliably compute the spin temperature.
+ *
+ * \param t [in]   Transition
+ * \returns Tspin
+ */
+double HyperfineTspin( const TransitionProxy &t );
+
 /** H21_cm_pops - fine level populations for 21 cm with Lya pumping included*/
 void H21_cm_pops( void );
 

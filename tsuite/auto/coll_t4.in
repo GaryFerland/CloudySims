@@ -59,7 +59,8 @@ monitor ctot -6.207
 ##
 ## >>chng 12 nov 09, first run
 ## >>chng 13 feb 10, from 8.783 to 8.835, H2,e-=>H-,H update
-monitor CO column density 8.835 errr 0.1
+## >>chng 21 sep 11, from 8.835 to 8.456, LAMDA update
+monitor CO column density 8.456 errr 0.1
 ## >>chng 12 nov 09, first run
 ## >>chng 13 feb 10, from 7.696 to 7.545, H2,e-=>H-,H update
 ## >>chng 13 nov 19, from 7.545 to 7.459, fix CT bug in mole_eval_balance

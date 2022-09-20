@@ -22,8 +22,17 @@ N+2,H2=>H2+,N+:hmrate:3.38e-11:0:0
 N+2,N2=>N2+,N+:hmrate:2.1e-9:0:0  
 N+2,CO=>CO+,N+:hmrate:3.37e-9:0:0  
 # Argon Chemistry -- from database compiled by V. G. Anicich at http://ntrs.nasa.gov/search.jsp?R=781494&id=5&qs=N%3D4294878962 
-H2+,Ar=>ArH+,H:hmrate:2.3e-9:0:0 
-H3+,Ar=>ArH+,H2:hmrate:3.65e-10:0:0 
+#H2+,Ar=>ArH+,H:hmrate:2.3e-9:0:0 
+H2+,Ar=>ArH+,H:hmrate:1.e-9:0:0 #Schilke et al. (2014)# GargiShaw 15thJune,2021
+#H3+,Ar=>ArH+,H2:hmrate:3.65e-10:0:0 
+H3+,Ar=>ArH+,H2:hmrate:8.5e-10:0:6400 #Schilke et al. (2014)# GargiShaw 15thJune,2021
+H2,Ar+=>ArH+,H:hmrate:8.4e-10:0.16:0 #Schilke et al. (2014)# GargiShaw 15thJune,2021
+ArH+,H2=>Ar,H3+:hmrate:8.e-10:0:0 #Schilke et al. (2014)# GargiShaw 15thJune,2021
+ArH+,CO=>Ar,HCO+:hmrate:1.25e-9:0:0 #Schilke et al. (2014)# GargiShaw 15thJune,2021
+ArH+,C=>Ar,CH+:hmrate:8.e-10:0:0 #Schilke et al. (2014)# GargiShaw 15thJune,2021
+ArH+,O=>Ar,OH+:hmrate:8.e-10:0:0 #Schilke et al. (2014)# GargiShaw 15thJune,2021
+#ArH+,PHOTON=>Ar+,H:hmrate:4.2e-12:0:3.27 #Roueff et al. (2014)# GargiShaw 15thJune,2021
+ArH+,PHOTON=>Ar+,H:th85rate:4.2e-12:0:3.27 #Roueff et al. (2014)# updated by GS on 18thOct2021, rate corrected to th85rate
 #
 # test these!
 #"ArH+,H=>H2+,Ar:hmrate:2.3e-9 * SAHA * 3.635e-5 * pow(300.,-1.50),-1.50,0 
@@ -31,7 +40,7 @@ H3+,Ar=>ArH+,H2:hmrate:3.65e-10:0:0
 #
 N2+,Ar=>Ar+,N2:hmrate:3.65e-10:0:0  
 Ar+,H2=>Ar,H2+:hmrate:2.0e-12:0:0  
-Ar+,H2=>ArH+,H:hmrate:8.72e-10:0:0  
+#Ar+,H2=>ArH+,H:hmrate:8.72e-10:0:0  
 Ar+,CH4=>CH2+,Ar,H2:hmrate:1.4e-10:0:0  
 Ar+,CH4=>CH3+,Ar,H:hmrate:7.9e-10:0:0  
 Ar+,NH3=>Ar,NH3+:hmrate:1.6e-9:0:0  
@@ -41,7 +50,8 @@ Ar+,O2=>O2+,Ar:hmrate:3.5e-11:0:0
 Ar+,HCl=>HCl+,Ar:hmrate:2.9e-10:0:0  
 Ar+,HCl=>Cl,ArH+:hmrate:6.0e-11:0:0  
 Ar+,CO=>CO+,Ar:hmrate:2.8e-11:0:0  
-ArH+,e-=>H,Ar:hmrate:1.0e-10:-0.50:0   # Guess based on typical electron recombination rate coefficients 
+#ArH+,e-=>H,Ar:hmrate:1.0e-10:-0.50:0   # Guess based on typical electron recombination rate coefficients 
+ArH+,e-=>H,Ar:hmrate:1.0e-9:0:0 #Schilke et al. (2014)# GargiShaw 15thJune,2021
 # Neon Chemistry -- from database compiled by V. G. Anicich at 
 # http://ntrs.nasa.gov/search.jsp?R=781494&id=5&qs=N%3D4294878962 
 H2+,Ne=>NeH+,H:hmrate:2.3e-10:0:0  

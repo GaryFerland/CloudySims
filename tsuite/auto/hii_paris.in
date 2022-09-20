@@ -44,7 +44,9 @@ database h-like element hydrogen levels resolved 10
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-normalize to "Ca B" 4861.33A
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+normalize to "Ca B" 4861.32A
 # the normalizing line is not defined on the emergent line stack
 print lines emergent off
 print column densities 
@@ -58,7 +60,8 @@ print line sum
 Blnd 5875.66A
 blnd 2326
 blnd 1909
-n  2  121.767m
+## >>chng 22 jul 09, wl from 121.767m to 121.769m, upgrade to Chianti v10
+n  2  121.769m
 N  2  6583.45
 N  2 6548.05
 n  3  57.3238m
@@ -103,7 +106,9 @@ save lines emissivity "hii_paris.str" last
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-H  1  4861.33A
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+H  1  4861.32A
 end lines
 #
 # commands giving the monitors    =========
@@ -112,22 +117,30 @@ table lines "LineList_HII.dat"
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line luminosity "H  1" 4861.33A 37.309
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line luminosity "H  1" 4861.32A 37.309
 ## >>chng 13 jul 26, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "H  1" 4861.33A 1
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "H  1" 4861.32A 1
 ## >>chng 13 jul 26, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 17, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "Q(H)" 4861.33A > 1.
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "Q(H)" 4861.32A > 1.
 ## >>chng 13 jul 26, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 17, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "Q(H)" 4861.33A < 1.05
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "Q(H)" 4861.32A < 1.05
 ## 
 ## >>chng 01 sep 24, from 24.71 to 23.34 2s2p br chng
 ## >>chng 07 dec 06, from 23.34 to 24.63, changes in h-like collisions
@@ -155,12 +168,16 @@ monitor line "Ca B" 1.87510m 0.363
 ## >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 6562.80A to 6562.82A, update NIST energies
-monitor line "H  1" 6562.82A 2.96
+## >>chng 21 apr 08, wl from 6562.82A to 6562.83A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 6562.83A to 6562.80A, revert to PvH energies for H
+monitor line "H  1" 6562.80A 2.96
 ## >>chng 13 jul 26, wl from 6563 to 6562.85A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 6562.80A to 6562.82A, update NIST energies
-monitor line "Ca B" 6562.82A 2.92
+## >>chng 21 apr 08, wl from 6562.82A to 6562.83A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 6562.83A to 6562.80A, revert to PvH energies for H
+monitor line "Ca B" 6562.80A 2.92
 ##
 ## >>chng 04 sep 12, from 17.62 to 18.5, drift up
 monitor line "Bac " 3646 18.5
@@ -236,7 +253,9 @@ monitor line "blnd" 1909 0.0621 error 0.1
 ## >>chng 14 jan 05, from 0.0261 to 0.0286, N to external databases
 ## >>chng 14 dec 08, from 0.0286 to 0.0304, enable Chianti proton collisional data
 ## >>chng 16 dec 20, from 0.0304 to 0.0318, add secondary autoionization to DR suppression
-monitor line "n  2"  121.767m 0.0318
+## >>chng 22 jul 09, wl from 121.767m to 121.769m, upgrade to Chianti v10
+## >>chng 22 jul 09, from 0.0318 to 0.03, upgrade to Chianti v10
+monitor line "n  2"  121.769m 0.03
 ## 
 ## >>chng 00 dec 12, from 0.578 to 0.489, change in [NII] cs
 ## >>chng 02 nov 20, from 0.489 to 0.532, new he diff ots
@@ -256,11 +275,13 @@ monitor line "N  2"  6583.45 0.5029
 ## >>chng 14 jan 05, from 0.0062 to 0.0059, N to external databases
 ## >>chng 16 aug 07, from 0.0059 to 0.0062, Fran bug fix
 ## >>chng 19 mar 01, change "Blnd" 5755 -> "N  2" 5754.61
-monitor line "N  2" 5754.61 0.0062
+## >>chng 22 jul 09, wl from 5754.61 to 5754.59A, upgrade to Chianti v10
+monitor line "N  2" 5754.59A 0.0062
 ## 
 ## >>chng 06 aug 17, from 0.303 to  0.317, HN update fit to O3 cs
 ## >>chng 14 jan 05, from 0.317 to 0.3382, N to external databases
-monitor line "n  3"  57.3238m 0.3382
+## >>chng 22 jul 09, from 0.3382 to 0.2898, upgrade to Chianti v10
+monitor line "n  3"  57.3238m 0.2898
 ## 
 ## >>chng 06 oct 02, from 0.0082 to 0.0105, HM update OI cs to Barklem '06
 ## >>chng 14 jan 05, from 0.0105 to 0.011, N to external databases
@@ -335,7 +356,8 @@ monitor line "Ne 3"  36.0036m 0.0198
 ## >>chng 15 mar 07, from 0.0547 to 0.0506, merging newmesh branch
 ## >>chng 15 oct 14, from 0.0506 to 0.0421, update Ne 3 cs to McLaughlin+11
 ## >>chng 15 oct 15, wl from 3868.75A to 3868.76A, update Ne III energies
-monitor line "Ne 3" 3868.76A 0.0421 error 0.07
+## >>chng 22 jul 09, from 0.0421 to 0.045, upgrade to Chianti v10
+monitor line "Ne 3" 3868.76A 0.045 error 0.07
 ## 
 ## >>chng 00 sep 18 from 0.122 to 0.132 continuum energy mesh change 
 ## changed ionization balance of some third row elements

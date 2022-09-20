@@ -52,6 +52,12 @@
 #  	- Updated to report proposed wavelength for lines not encountered in
 #  	  a script and its datafiles.  These lines are typically hardcoded in
 #  	  Cloudy, e.g., lines involving the Halpha, or Hbeta wavelengths.
+#  Chatzikos, Marios			2021-Apr-09
+#  	- Enabled processing of 'set blend' command.
+#  Chatzikos, Marios			2022-Jun-08
+#  	- Enabled processing of data/blends.ini by default.
+#  	- Enabled processing of PROBLEMs reported by findline.
+#  	  (These are followed by an abort; files have to be updated piecemeal.)
 #
 
 use strict;
@@ -66,6 +72,7 @@ $| = 1;
 
 my $end_of_lines = qr/^end\s+(of\s+|)line/;
 my $datadir = "../../data";
+my $blends = "$datadir/blends.ini";
 
 #
 #  These are references to functions aimed to match certain commands.  The array
@@ -314,7 +321,7 @@ sub match_any_linelist_cmd
 	my ($script_line) = @_;
 	my $match = 0;
 	$match = 1
-		if( $script_line =~ m/^(opti|prin|save)/ );
+		if( $script_line =~ m/^(opti|prin|save|set blend)/ );
 	return	$match;
 }
 
@@ -579,15 +586,14 @@ sub show_array_of_fixes
 
 sub get_file_contents
 {
-       my ($filename) = @_;
+	my ($filename) = @_;
 
-       my @contents = &WL::get_file_contents( $filename );
+	my @contents = &WL::get_file_contents( $filename );
 
-       &set_current_filename( $filename );
+	&set_current_filename( $filename );
 
-       return  @contents;
+	return  @contents;
 }
-
 
 
 #
@@ -677,6 +683,117 @@ sub join_arrays
 #################################################################################
 
 #
+# Parse findline error message to extract the label and wavelength.
+#
+sub parse_findline_error
+{
+	my( $line ) = @_;
+
+	#
+	# Error message looks like:
+	#  'PROBLEM findline did not find line with label (between quotes) \
+	#   "O  4" and wavelength 1397.20A.'
+	#
+	my @words = split( /\"/, $line );
+	my $label = $words[1];
+	@words = split( /\s+/, $words[-1] );
+	my $wl = $words[-1];
+	$wl =~ s/\.$//;
+
+	return ( $label, $wl );
+}
+
+
+#
+# Parse findline warning message to extract the label and wavelength.
+#
+sub parse_findline_warning
+{
+	my( $line ) = @_;
+
+	#
+	# Warning message looks like:
+	#  'WARNING: no exact matching lines found for: "O  4  1397.20A"'
+	#
+	my @words = split( /\"/, $line );
+	my $label = $words[1];
+	my $wl = $words[-1];
+	$wl =~ s/\s+//g;
+
+	return ( $label, $wl );
+}
+
+
+#
+#  Process findline error messages.
+#
+sub process_findline_messages
+{
+	my( $script, $contents, $msg_Incorrect_Label, $msg_Suggestion,
+		$parse_message, $fix_list ) = @_;
+
+	my %fix;
+
+	my $line = shift( @$contents );
+
+	my( $label, $wl ) = &{ $parse_message } ( $line );
+	$fix{label} = $label;
+	$fix{oldwl} = $wl;
+
+	while( defined( $contents )
+		and @$contents
+		and $$contents[0] =~ "\Q$msg_Incorrect_Label\E" )
+	{
+		shift @$contents;
+	}
+	$line = shift @$contents;
+
+	if( $line !~ $msg_Suggestion )
+	{
+		print	"Script: $script\t WARNING!  No closest match found! "
+		  .	"Ignore line:\t" . $fix{label} ." @".$fix{oldwl} ."\n";
+		return;
+	}
+
+	my @words   = split(/\"/, $line);
+	@words	    = split(/\s+/, $words[1]);
+	$fix{newwl} = $words[-1];
+
+
+	# Needed for error checking...
+	$fix{found} = 0;
+	$fix{matches} = [];
+
+	#	print "label= ". $fix{label} ."\t oldwl = ". $fix{oldwl} ."\t ". $fix{newwl} ."\n";
+	
+	my $is_listed = 0;
+	for( my $i = 0; $i < scalar(@$fix_list); $i++ )
+	{
+		if( $$fix_list[$i]{label} eq $fix{label}  and
+		    &WL::do_wl_match($$fix_list[$i]{oldwl}, $fix{oldwl}) and
+		    &WL::do_wl_match($$fix_list[$i]{newwl}, $fix{newwl}) )
+		{
+			$is_listed++;
+			last;
+		}
+	}
+
+	if( not $is_listed )
+	{
+		my ($tol, $error) = &WL::wldiff_error( $fix{oldwl}, $fix{newwl} );
+		if( $error > $tol and $verbose )
+		{
+			print	"\tScript: $script\t WARNING!\t Large WL diff:\t";
+			printf	"\tlabel= %s\t oldwl= %s\t newwl= %s\t error= %.4f vs tol= %.4f\n",
+				$fix{label}, $fix{oldwl}, $fix{newwl}, $error, $tol;
+			#	print	"\tWARNING! Double check line this line.\n";
+		}
+		push( @$fix_list, { %fix } );
+	}
+}
+
+
+#
 #  Collect the unique findline failures from the main Cloudy output file.
 #
 sub get_findline_fails
@@ -686,82 +803,37 @@ sub get_findline_fails
 	my @contents = &get_file_contents( $output );
 	my @fix_list;
 
-	# Uncomment for old reporting scheme of 3 lines of test per mismatch.
-	#	my $FindLine_Fail_Mesg = "PROBLEM findline did not find line with label";
-	#	my $FindLine_Suggestion = "The closest with correct label was";
-	my $FindLine_Fail_Mesg = "WARNING: no exact matching lines found for";
-	my $FindLine_Incorrect_Label = "WARNING: Line with incorrect label found";
-	my $FindLine_Suggestion = "Taking best match as";
+	my $FindLine_Error_Mesg = "PROBLEM findline did not find line with label";
+	my $FindLine_Error_Incorrect_Label = "The closest line \(any label\) was";
+	my $FindLine_Error_Suggestion = "The closest with correct label was";
 
-	for( my $i = 0; $i < scalar(@contents); $i++ )
+	my $FindLine_Warn_Mesg = "WARNING: no exact matching lines found for";
+	my $FindLine_Warn_Incorrect_Label = "WARNING: Line with incorrect label found";
+	my $FindLine_Warn_Suggestion = "Taking best match as";
+
+	while( @contents )
 	{
-		my $line = $contents[$i];
-
-		if( $line =~ $FindLine_Fail_Mesg )
+		if( $contents[0] =~ $FindLine_Error_Mesg )
 		{
-			my %fix;
-
-			my @words = split(/\"/, $line);
-			$fix{label} = $words[1];
-			$fix{oldwl} = $words[2];
-			$fix{oldwl} =~ s/\s+//g;
-			#	@words      = split(/\s+/, $words[2]);
-			#	$fix{oldwl} = $words[3];
-			#	$fix{oldwl} =~ s/\.$//;
-
-
-			++$i;
-			while( $contents[$i] =~ $FindLine_Incorrect_Label )
-			{
-				++$i;
-			}
-			$line = $contents[$i];
-
-			if( $line !~ $FindLine_Suggestion )
-			{
-				print	"Script: $script\t WARNING!  No closest match found! "
-				  .	"Ignore line:\t" . $fix{label} ." @".$fix{oldwl} ."\n";
-				next;
-			}
-
-			@words	    = split(/\"/, $line);
-			@words	    = split(/\s+/, $words[1]);
-			$fix{newwl} = $words[$#words];
-
-
-			# Needed for error checking...
-			$fix{found} = 0;
-			$fix{matches} = [];
-
-
-			#	print "label= ". $fix{label} ."\t oldwl = ". $fix{oldwl} ."\t ". $fix{newwl} ."\n";
-			
-			my $is_listed = 0;
-			for( my $i = 0; $i < scalar(@fix_list); $i++ )
-			{
-				if( $fix_list[$i]{label} eq $fix{label}  and
-				    &WL::do_wl_match($fix_list[$i]{oldwl}, $fix{oldwl}) and
-				    &WL::do_wl_match($fix_list[$i]{newwl}, $fix{newwl}) )
-				{
-					$is_listed++;
-					last;
-				}
-			}
-
-
-
-			if( not $is_listed )
-			{
-				my ($tol, $error) = &WL::wldiff_error( $fix{oldwl}, $fix{newwl} );
-				if( $error > $tol and $verbose )
-				{
-					print	"\tScript: $script\t WARNING!\t Large WL diff:\t";
-					printf	"\tlabel= %s\t oldwl= %s\t newwl= %s\t error= %.4f vs tol= %.4f\n",
-						$fix{label}, $fix{oldwl}, $fix{newwl}, $error, $tol;
-					#	print	"\tWARNING! Double check line this line.\n";
-				}
-				push( @fix_list, { %fix } );
-			}
+			&process_findline_messages( $script,
+						\@contents,
+						$FindLine_Error_Incorrect_Label,
+						$FindLine_Error_Suggestion,
+						\&parse_findline_error,
+						\@fix_list );
+		}
+		elsif( $contents[0] =~ $FindLine_Warn_Mesg )
+		{
+			&process_findline_messages( $script,
+						\@contents,
+						$FindLine_Warn_Incorrect_Label,
+						$FindLine_Warn_Suggestion,
+						\&parse_findline_warning,
+						\@fix_list );
+		}
+		else
+		{
+			shift( @contents );
 		}
 	}
 
@@ -903,8 +975,7 @@ sub fix_script_linelist
 	my @newcontents;
 	for( my $i = 0; $i < scalar(@contents); $i++ )
 	{
-		my $script_line = $contents[ $i ];
-		if( $script_line =~ m/$end_of_lines/ )
+		if( &match_end_of_lines( $contents[ $i ] ) )
 		{
 			my $end = --$i;
 			do { $end--; } while( $end >= 0 and not &match_any_linelist_cmd( $contents[$end] ) );
@@ -972,8 +1043,7 @@ sub fix_script
 #  Apply a fix on a list of files.  The kind of fix is determined by the
 #  $file_fix_sub sub-ref.  This is useful for treating external files, such as
 #  those found in 'init' and 'save line' commands.  The parameter $is_llst
-#  determines whether the comment sentinel: '##' for scripts, and '#' for line
-#  lists.
+#  determines the comment sentinel: '##' for scripts, and '#' for line lists.
 #
 sub fix_filelist
 {
@@ -1011,35 +1081,40 @@ sub fix_filelist
 #
 sub check_fixed_wl
 {
-	my (@fix_list) = @_;
+	my ($fix_list, $silent) = @_;
+
+	return	if not defined $fix_list;
+
+	$silent = 0	if not defined( $silent );
 
 	my $all_found = 0;
-	for (my $i = 0; $i < @fix_list; $i++)
+	for (my $i = 0; $i < @$fix_list; $i++)
 	{
-		my $found = $fix_list[$i]{found};
-		my $newwl = $fix_list[$i]{newwl};
+		my $found = $$fix_list[$i]{found};
+		my $newwl = $$fix_list[$i]{newwl};
 
 		if( $found == 1 )
 		{
 			$all_found++;
-			splice(@fix_list, $i, 1);
+			splice(@$fix_list, $i, 1);
 			$i--;
 			next;
 		}
 		elsif( $found == 0 )
 		{
 			print	"\t No matches for line:\t"
-			  .	"\"". $fix_list[$i]{label} ."\" ". $fix_list[$i]{oldwl}
-			  .	"\t\t=> ". $fix_list[$i]{newwl} ."\n";
+			  .	"\"". $$fix_list[$i]{label} ."\" ". $$fix_list[$i]{oldwl}
+			  .	"\t\t=> ". $$fix_list[$i]{newwl} ."\n"
+			  if not $silent;
 		}
 		elsif( $found > 1 )
 		{
 			if( 0 )
 			{
 				print "\t WARNING:\t Multiple matches for line:\t"
-				  .	"\"". $fix_list[$i]{label} ."\" @". $fix_list[$i]{oldwl} ."\n";
+				  .	"\"". $$fix_list[$i]{label} ."\" @". $$fix_list[$i]{oldwl} ."\n";
 
-				my @matches = @{ $fix_list[$i]{matches} };
+				my @matches = @{ $$fix_list[$i]{matches} };
 				for (my $i = 0; $i < scalar(@matches); $i++)
 				{
 					print "\t\t =>\t ". $matches[$i]
@@ -1049,12 +1124,12 @@ sub check_fixed_wl
 			}
 
 			$all_found++;
-			splice(@fix_list, $i, 1);
+			splice(@$fix_list, $i, 1);
 			$i--;
 		}
 	}
 
-	return	@fix_list;
+	return;
 }
 
 
@@ -1161,7 +1236,7 @@ foreach my $script ( @scripts )
 	next
 		if( not -s $output );
 
-	my @fix_list = &get_findline_fails( $script, $output, $verbose );
+	my @fix_list = &get_findline_fails( $script, $output );
 	@fix_list = &process_H1_caseb( @fix_list );
 	&show_array_of_fixes( @fix_list )
 		if( $verbose );
@@ -1215,18 +1290,32 @@ foreach my $script ( @scripts )
 	($local_ref, $fix_list_ref) = &fix_filelist( 1, \@remdir_llist, $fix_list_ref, \&fix_lines_listed );
 	@remdir_llists = @{ $local_ref };
 
+	&check_fixed_wl( $fix_list_ref, 1 );
+
+	#
+	# data/blends.ini
+	#   This file is used by default -- no command is used to specify it.
+	#   Must check if there are still wavelengths to be fixed.
+	#
+	if( @{ $fix_list_ref } )
+	{
+		my @blends = ( $blends );
+		($local_ref, $fix_list_ref) =
+			&fix_filelist( 0, \@blends, $fix_list_ref, \&fix_lines_listed );
+		push( @remdir_llists, @{ $local_ref } );
+	}
 
 	#
 	#  Done
 	#
-	@fix_list = &check_fixed_wl( @{ $fix_list_ref } );
+	&check_fixed_wl( $fix_list_ref );
 
 	#
 	#  Warn of unmatched wavelengths, but don't prevent file updates.
 	#  These emission lines may be contained in an init or linelist file
 	#  that has been already updated through a different script.
 	#
-	&warn_unmatched_emlines( \@fix_list, $script, $newscript,
+	&warn_unmatched_emlines( $fix_list_ref, $script, $newscript,
 				 \@local_inits, \@remdir_inits, \@llists, \@remdir_llists );
 
 	&update_files( $script, $newscript,

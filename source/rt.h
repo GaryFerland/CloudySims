@@ -192,6 +192,9 @@ struct t_rt : public module {
 	/** include electron scattering escape for lines? */
 	bool lgElecScatEscape;
 
+	/** allow photon loss by absorption by background opacities */
+	bool lgAbsorLineEscape;
+
 	/** include electron scattering escape for line intensity? */
 	bool lgElecScatInten;
 

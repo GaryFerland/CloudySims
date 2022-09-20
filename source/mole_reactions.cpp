@@ -4411,10 +4411,13 @@ double t_mole_local::chem_heat(void) const
 			reaction_enthalpy -= rate.products[i]->form_enthalpy;
 		}
 
-		/* this is the chemical heating rate.  TODO.  Once the H chem is merged with the C chem, then 
-		 * we will have the chemical heating rate for all reactions.  This is only a subset and, thusfar,
-		 * not actually used in getting the total heating.  Tests with pdr_leiden_hack_f1.in show that this 
-		 * heating rate can be up to 10% of the total heating */
+		/* this is the chemical heating rate. */
+	       	/** \todo  Once the H chem is merged with the C chem, then
+		 * we will have the chemical heating rate for all reactions.
+		 * This is only a subset and, thusfar, not actually used in
+		 * getting the total heating.  Tests with pdr_leiden_hack_f1.in
+		 * show that this heating rate can be up to 10% of the total
+		 * heating */
 
 		double heat = reaction_enthalpy*rate_tot*(1e10/AVOGADRO); /* 1.66e-14f; */
 		heatMap[heat] = rate.label;

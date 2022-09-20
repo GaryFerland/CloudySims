@@ -15,4 +15,5 @@ void t_rt::zero()
 	lgFstOn = true;
 	lgElecScatEscape = true;
 	lgElecScatInten = true;
+	lgAbsorLineEscape = true;
 }

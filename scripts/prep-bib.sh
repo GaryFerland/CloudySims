@@ -5,6 +5,9 @@
 # known to Cloudy.
 #
 # Chatzikos, June 14, 2018
+# Chatzikos, April 14, 2022
+#	Use docs/SpeciesLabels.txt instead of tsuite/auto/func_lines.spclab
+#	Move PDFs to docs/ instead of copying them
 #
 
 echo "Gathering references..."
@@ -35,7 +38,7 @@ source mktable-stout-refs-list.sh
 echo; echo "Hit enter to continue..."
 read < /dev/stdin
 
-if [ ! -f ../tsuite/auto/func_lines.spclab ];
+if [ ! -f ../docs/SpeciesLabels.txt ];
 then
 	if [ ! -x ../source/cloudy.exe ];
 	then
@@ -56,15 +59,17 @@ then
 		cd -
 	fi
 	
-	echo "Running tsuite/auto/func_lines.in..."
-	cd ../tsuite/auto/; ../../source/cloudy.exe -r func_lines ; cd -
+	echo "Running docs/SpeciesLabels.in..."
+	cd ../docs
+	../source/cloudy.exe -r LineLabels
 	[ $? != 0 ] && exit "Something went wrong.  Exiting..."
+	cd -
 	echo; echo "Hit enter to continue..."
 	read < /dev/stdin
 fi
 
 echo "Preparing table of species' provenance..."
-./db-species-tex.pl -e -np=4 -nr=35 -f=s ../tsuite/auto/func_lines.spclab
+./db-species-tex.pl -e -np=4 -nr=35 -f=s ../docs/SpeciesLabels.txt
 [ $? != 0 ] && exit "Something went wrong.  Exiting..."
 echo; echo "Hit enter to continue..."
 read < /dev/stdin
@@ -80,8 +85,8 @@ source cleanup-stout-refs-list.sh
 source cleanup-species-db-list.sh
 echo "Done!"
 
-echo ; echo "Copying PDFs to ../docs ..."
-cp *.pdf ../docs
+echo ; echo "Moving PDFs to ../docs ..."
+mv *.pdf ../docs
 command="ls -trl ../docs | tail -n 2"
 echo "> $command"
 eval $command

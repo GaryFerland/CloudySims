@@ -188,7 +188,7 @@ void ParsePrint(
 			p.GetQuote( species );
 			if( species == "" )
 			{
-				fprintf( ioQQQ, "Invalid species label: ''\n" );
+				fprintf( ioQQQ, "Empty species label: ''\n" );
 				cdEXIT( EXIT_FAILURE );
 			}
 

@@ -52,7 +52,8 @@ monitor OH column density 13.9 error 0.1
 ## >>chng 11 nov 16, from -5.078 to -5.037, adjust newmole monitors
 ## >>chng 13 feb 01, from -5.037 to -5.057, BUGFIX, largely undo r6703
 ## >>chng 13 dec 23, from -5.057 to -5.029, C to external databases
-monitor line luminosity "c  2" 157.636m -5.029
+## >>chng 21 nov 04, from -5.029 to -4.99, update mole co data
+monitor line luminosity "c  2" 157.636m -4.99
 ## 
 ## >>chng 06 nov 29, from -6.569 to -6.415, Badnell DR turned on
 ## >>chng 11 jul 12, from -6.415 to -6.494, enable fit to Badnell DR suppression
@@ -64,7 +65,8 @@ monitor line luminosity "c  1" 370.269m -6.392
 ## >>chng 11 jul 12, from -7.04 to -7.12, enable fit to Badnell DR suppression
 ## >>chng 11 nov 16, from -7.12 to -7.096, adjust newmole monitors
 ## >>chng 13 feb 01, from -7.096 to -7.018, BUGFIX, largely undo r6703
-monitor line luminosity "c  1" 609.590m -7.018
+## >>chng 21 nov 04, from -7.018 to -6.978, update mole co data
+monitor line luminosity "c  1" 609.590m -6.978
 ## 
 ## >>chng 14 mar 26, from -3.651 to -3.462, Move oxygen data to stout and chianti files
 ## >>chng 20 aug 03, from -3.462 to -3.482, update H3+ rates Indriola+ 2012

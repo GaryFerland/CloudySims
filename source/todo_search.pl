@@ -48,22 +48,32 @@ while (defined ($sourcefile = glob ("$sourcedir*.h $sourcedir*.cpp"))){
     $countline ++;
     
     # If line has TODO
-    if($line =~/TODO/ && $flag == 0){
+    if($line =~/TODO/i && $flag == 0){
       # Retrieving the priority 
       $line_no = $countline;
       $priority = $line;
-      $priority =~s/(.*TODO\t)(\d*)(\t.*)/$2/; 
+      $priority =~s/(.*TODO\s*)(\d*)(\s.*)/$2/i;
       $priority =~s/\n$//;
+
       $comment = $line;
-      $comment =~s/(.*TODO\t$priority\t)(.*)/$2/;
+      if( $priority ne '' )
+      {
+      	$comment =~s/(.*TODO\s+$priority)(.*)/$2/i;
+      }
+      else
+      {
+      	$comment =~s/(.*TODO\s+)(.*)/$2/i;
+      }
+      $comment =~s/^\s*-\s+//;
       $comment =~s/\*\///;
+      $comment =~s/\/\*\*//;
       $comment =~s/\t*//gi;
       $prev = join '',$prev,$comment;  
       
       # Checks if TODO comments extend more than one line
-      if($line !~/\*\//){
+      if($line !~/\*\// and $line !~ m/\/\// ){
         $flag = 1;
-      }  	
+      }
       else{ # Print into output temporary file
         print TEMPFILE "$priority\t$sourcefile\t$line_no\t$prev";
 	$prev="";      
@@ -115,6 +125,7 @@ print FHTM "<HTML><BODY>
 # Copying the data from tabledtodo.txt to tabledtodo.html
 open(FINAL, "< $finalout");
 while(<FINAL>){
+	next if $_ =~ m/^#+$/;
 	$_=~s/\t/\<\/TD\>\<TD\>/g;  #formatting the data into rows and columns
 	print FHTM "<TR><TD>$_</TD></TR>"
 }
