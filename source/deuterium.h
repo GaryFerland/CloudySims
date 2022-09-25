@@ -11,7 +11,8 @@ class t_deuterium : public module
 public:
 	t_deuterium()
 	{
-		lgElmtOn = false;
+		// >>chng 22 09 25 turn on D
+		lgElmtOn = true;
 		gas_phase = 0.f;
 		xIonDense[0] = 0.;
 		xIonDense[1] = 0.;
