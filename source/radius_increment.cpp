@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*radius_increment do work associated with geometry increments of this zone, called before RT_tau_inc */
 #include "cddefines.h"

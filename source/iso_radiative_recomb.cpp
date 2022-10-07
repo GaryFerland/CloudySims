@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*iso_radiative_recomb find state specific creation and destruction rates for iso sequences */
 /*iso_RRCoef_Te - evaluate radiative recombination coef at some temperature */

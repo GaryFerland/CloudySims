@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*PrtFinal create PrtFinal pages of printout, emission line intensities, etc */
 /*StuffComment routine to stuff comments into the stack of comments, def in lines.h */
