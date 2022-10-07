@@ -10,7 +10,7 @@
 
 
 </head>
-<body><h4>  This HTML file was created by the program doc_tsuite.pl.  doc_tsuite.txt contains a tab delimited list of the files. </h4>
+<body><h4>  This HTML file was created by the program doc_tsuite.pl, doc_tsuite.txt contains a tab delimited list of the files. </h4>
 <hr><kbd><h2>agn_blr_albedo.in</h2>  </kbd><h2><I>measure Rayleigh scattering of Lya
 </I></h2><kbd><br>title measure Rayleigh scattering of Lya
 <br># model from Korista, K., & Ferland, G. 1998, ApJ, 495, 672
@@ -61,7 +61,7 @@ The asserts then check that these continua have the expected brightness.
 <br>stop column density 16
 <br>print line sort wavelength 
 <br>print lines column linear 
-<br>normalise to "H  1" 1215.67A
+<br>normalize to "H  1" 1215.67A
 <br>print line faint -1
 <br>hden 5
 <br>iterate
@@ -121,7 +121,7 @@ a process that was not included in the calculations presented in the paper.
 </I></h2><kbd><br>title high-ionization x-ray ionized cloud from Lexington 2000
 <br>stop column density 16
 <br>print lines column linear 
-<br>normalise to "H  1" 1215.67A
+<br>normalize to "H  1" 1215.67A
 <br>print line faint -1
 <br>hden 5
 <br>iterate
@@ -181,7 +181,7 @@ a process that was not included in the calculations presented in the paper.
 <br>stop column density 16
 <br>print lines column linear
 <br>print lines sort intensity 
-<br>normalise to "H  1" 1215.67A
+<br>normalize to "H  1" 1215.67A
 <br>print line faint -2
 <br>hden 5
 <br>iterate
@@ -323,6 +323,7 @@ is not really designed to simulate this situation.
 <br>save overview "agn_S_curve_grid.ovr" last no hash
 <br>save performance "agn_S_curve_grid.per"
 <br>save grid "agn_S_curve_grid.grd" last no hash
+<br>save species densities "agn_S_curve_grid.sden" "Si+12[10:11]" last no hash
 <br># save average H+ temperature
 <br>save average "agn_S_curve_grid.avr" last no hash
 <br>temperature hydrogen 1 
@@ -365,13 +366,15 @@ ISM stability.
 <br>#
 <br># commands controlling output    =========
 <br>print line faint 10 
-<br>plot continuum range 1 1000
 <br>save overview "agn_warm_absorber.ovr"
 <br>save performance "agn_warm_absorber.per"
 <br>save continuum "agn_warm_absorber.con" last units kev
 <br>save continuum "agn_warm_absorber.conA" last units Angstroms
 <br>save fine continuum "agn_warm_absorber.finA" last units Angstroms range 7.6A to 15A merge 3
 <br>save dr "agn_warm_absorber.dr" last
+<br>save lines, optical depth some, "agn_warm_absorber.opt" last
+<br>O  3 5006.84A
+<br>end of lines
 <br># this will be the default units, like the printout
 <br>save line optical depths last "agn_warm_absorber_lab.lin" 
 <br># this will be the same, in rygbergs
@@ -409,8 +412,7 @@ significant optical depths
 <br>#
 <br># commands controlling output    =========
 <br>print line column
-<br>normallize "Fe26"      1.78177A 
-<br>plot continuum range 1 1000
+<br>normalize "Fe26"      1.77982A 
 <br>save overview ".ovr"
 <br>save performance ".per"
 <br>save continuum ".con" last units kev
@@ -430,8 +432,7 @@ significant optical depths
 <p>
 This is simple warm absorber model with a high ionization parameter,
 chosen to yield about 50% ionization fractions for H-like Fe and Zn.
-It makes a plot of the transmitted continuum, and generates a list of
-lines with significant optical depths.
+It generates a list of lines with significant optical depths.
 </p><hr><kbd><h2>aperture_beam_int.in</h2>  </kbd><h2><I>test aperture beam command with intensity
 </I></h2><kbd><br>title test aperture beam command with intensity
 <br>#
@@ -579,7 +580,6 @@ is verified by asserting that the emission line has the correct "luminosity".
 <br>print h-like populations hydrogen 
 <br>print h-like departure helium
 <br>print h-like populations helium
-<br>plot continuum
 <br>normalize to "H  1" 1215.67A = 105.90
 <br>print line faint -2
 <br>save performance "blr_f92.per"
@@ -621,8 +621,7 @@ produce a spectrum that is on the same intensity scale as that paper.
 <br># commands controlling output    =========
 <br># set a relatively high faint level since lines relative to Lya=100
 <br>print line faint -1
-<br>print h-like departure coefficients
-<br>plot continuum
+<br>print h-like departure coefficients hydrogen
 <br>normalize to "H  1" 1215.67A = 85.60
 <br>save performance "blr_fp89.per"
 <br>save heating "blr_fp89.het"
@@ -711,8 +710,8 @@ at the He+ - He ionization front, where H+/H is 1e-5.
 <br># commands for density & abundances =========
 <br>hden 9.60206
 <br>init file="c84.ini"
-<br>abundances he-1 c-3.699 n-4 o-3.1549 ne-4 na=-8 mg-4.5229
-<br>continue al-10 si-4.4229 s-10 ar-10 ca-10 fe-4.5229 ni=-8
+<br>abundances he=-1 c=-3.699 n=-4 o=-3.1549 ne=-4 na=-8 mg=-4.5229
+<br>continue al=-10 si=-4.4229 s=-10 ar=-10 ca=-10 fe=-4.5229 ni=-8
 <br>#
 <br># commands controlling geometry  =========
 <br>stop column density 23
@@ -724,8 +723,7 @@ at the He+ - He ionization front, where H+/H is 1e-5.
 <br># commands controlling output    =========
 <br>print line faint -1
 <br>print ages 
-<br>normalise "H  1" 1215.67A 100
-<br>plot continuum range -3
+<br>normalize "H  1" 1215.67A 100
 <br>save performance "blr_kk81.per"
 <br>save overview last "blr_kk81.ovr"
 <br>save convergence reason last "blr_kk81.cvr"
@@ -981,7 +979,6 @@ This is one of the models that sample the LOC plane.
 <br># saving the emissivities should still work correctly though...
 <br>save line emissivity "blr_n09_p22_Z20.ems"
 <br>Fe21 142.281A
-<br>Fe 8 270.0898A
 <br>blnd  1666A
 <br>O  1  6300.30
 <br>He 1  6678.15A
@@ -1345,6 +1342,7 @@ This is one of the 5 models that sample the LOC plane.
 <br>#
 <br># commands controlling geometry  =========
 <br>stop column density 23
+<br>#stop efrac 0.1
 <br>#
 <br># other commands for details     =========
 <br>iterate to convergence 
@@ -1359,6 +1357,38 @@ This is one of the 5 models that sample the LOC plane.
 <br>save convergence reason "blr_n14_p18.cvr" 
 <br>#
 <br># blr_n14_p18.in 
+<br># class blr 
+<br># ========================================
+</kbd><p>
+</p><hr><kbd><h2>blr_n14_p20.in</h2>  </kbd><h2><I>BLR model, density 1e14 cm-3, flux of H-ion phots 1e20 cm2 s-1
+</I></h2><kbd><br>title BLR model, density 1e14 cm-3, flux of H-ion phots 1e20 cm2 s-1
+<br># 
+<br># commands controlling continuum =========
+<br>table agn
+<br>phi(h) 20
+<br>#
+<br># commands for density & abundances =========
+<br>hden 14
+<br>#
+<br># commands controlling geometry  =========
+<br>stop column density 23
+<br>#
+<br># other commands for details     =========
+<br>iterate convergence 
+<br># these are to try to speed things up
+<br>init "c84.ini"
+<br>no level2 lines
+<br>#
+<br># commands controlling output    =========
+<br>print h-like departure hydrogen 
+<br>print h-like departure helium 
+<br>normalize to "H  1" 1215.67A 100 
+<br>save performance "blr_n14_p20.per"
+<br>save convergence reason last "blr_n14_p20.cvr"
+<br>save overview "blr_n14_p20.ovr" last
+<br>save dr "blr_n14_p20.dr" last 
+<br>#
+<br># blr_n14_p20.in 
 <br># class blr 
 <br># ========================================
 </kbd><p>
@@ -1414,7 +1444,6 @@ This is one of the 5 models that sample the LOC plane.
 <br>iterate to convergence
 <br>#
 <br># commands controlling output    =========
-<br>plot continuum
 <br>save performance "blr_nf84.per"
 <br>save overview last "blr_nf84.ovr"
 <br>save convergence reason last "blr_nf84.cvr"
@@ -1454,7 +1483,6 @@ ratio of Lyalpha to Hbeta ratio is much larger than observed.
 <br>iterate to convergence
 <br>#
 <br># commands controlling output    =========
-<br>plot continuum
 <br>save performance "blr_nf84_45deg.per"
 <br>save overview "blr_nf84_45deg.ovr"
 <br>save convergence reason last "blr_nf84_45deg.cvr"
@@ -1482,9 +1510,9 @@ ratio of Lyalpha to Hbeta ratio is much larger than observed.
 <br># commands for density & abundances =========
 <br>hden 10
 <br>init file="c84.ini"
-<br>abundances he -1 c -3.328 n -4.0088 o -3.0809 ne -4 na -20
-<br>continue mg -4.3768 al -5.5686 si -4.36653 s -4.76955 
-<br>continue a -5.4202 ca -5.6383 fe -4.4815 ni -20
+<br>abundances he= -1 c= -3.328 n= -4.0088 o= -3.0809 ne= -4 na= -20
+<br>continue mg= -4.3768 al= -5.5686 si= -4.36653 s= -4.76955 
+<br>continue ar= -5.4202 ca= -5.6383 fe= -4.4815 ni= -20
 <br>#
 <br># commands controlling geometry  =========
 <br>stop column density 23
@@ -1493,7 +1521,7 @@ ratio of Lyalpha to Hbeta ratio is much larger than observed.
 <br>iterate to convergence
 <br>#
 <br># commands controlling output    =========
-<br>normalise "H  1" 1215.67A = 100
+<br>normalize "H  1" 1215.67A = 100
 <br>print line faint -1
 <br>save performance "blr_rnfa.per"
 <br>save overview last "blr_rnfa.ovr"
@@ -1527,9 +1555,9 @@ of that paper are reproduced quite well.
 <br># commands for density & abundances =========
 <br>hden 12
 <br>init file="c84.ini"
-<br>abundances he -1 c -3.328 n -4.0088 o -3.0809 ne -4 na -20
-<br>continue mg -4.3768 al -5.5686 si -4.36653 s -4.76955 
-<br>continue a -5.4202 ca -5.6383 fe -4.4815 ni -20
+<br>abundances he= -1 c= -3.328 n= -4.0088 o= -3.0809 ne= -4 na= -20
+<br>continue mg= -4.3768 al= -5.5686 si= -4.36653 s= -4.76955 
+<br>continue ar= -5.4202 ca= -5.6383 fe= -4.4815 ni= -20
 <br>#
 <br># commands controlling geometry  =========
 <br>stop column density 23
@@ -1547,11 +1575,11 @@ of that paper are reproduced quite well.
 <br>save dr last "blr_rnfb.dr"
 <br>save results last "blr_rnfb.rlt"
 <br>save line emissivity "blr_rnfb.ems"
-<br>H  1 4861.33A
+<br>H  1 4861.32A
 <br>blnd  8446
 <br>blnd  1304
 <br>end of lines
-<br>normalise "H  1" 1215.67A = 91.8
+<br>normalize "H  1" 1215.67A = 91.8
 <br>#
 <br># blr_rnfb.in
 <br># class blr 
@@ -1655,7 +1683,7 @@ Fe III, IV, and V added by Matt Lykins
 <br>iterate
 <br>#
 <br># commands controlling output    =========
-<br>normalize to "o  8" 18.9709A 
+<br>normalize to "o  8" 18.9689A 
 <br>save overview "coll_coronal.ovr"
 <br>save performance "coll_coronal.per"
 <br>save dr "coll_coronal.dr" last
@@ -1757,7 +1785,8 @@ The cosmic rays provide this source of ionization.
 <br>coronal 1e3K
 <br># add component of cosmic rays to drive chemistry 
 <br>cosmic ray background
-<br>abundances ISM
+<br># >>chng 20 sep 19 test updated ISM abundances
+<br>abundances "ISM-HD20.abn"
 <br>set H2 Jura rate
 <br>#
 <br># other commands for details     =========
@@ -1855,7 +1884,7 @@ This is the high Z mate to coll_t4.in
 <br># commands controlling geometry  =========
 <br>stop column density 15 
 <br># test the luminosity case
-<br>radious 13 
+<br>radius 13 
 <br>#
 <br># commands for density & abundances =========
 <br>hden 10
@@ -1920,7 +1949,7 @@ This test is an optically thin collisionally ionized gas.
 <br>#
 <br># other commands for details     =========
 <br>#
-<br>normalize to "o  8" 18.9709A 
+<br>normalize to "o  8" 18.9689A 
 <br># commands controlling output    =========
 <br>save performance "coll_t7.per"
 <br>save overview "coll_t7.ovr"
@@ -2098,7 +2127,7 @@ use when running extensive debug-enabled runtimes.
 <br>#
 <br># commands controlling continuum =========
 <br>table agn
-<br>luminosiy (total) 45
+<br>luminosity (total) 45
 <br># 
 <br># commands for density & abundances =========
 <br>hden 4
@@ -2429,7 +2458,7 @@ The model is optically thin, no RT.
 <br>save species bands ".fe2b" "FeII_bands.ini" "Fe+"
 <br>save line emissivity ".ems"
 <br>"Fe 2b" 2797
-<br>"Inwd" 2797 
+<br>"InwdBnd" 2797 
 <br>end of lines
 <br>#
 <br>#
@@ -2447,6 +2476,138 @@ in the wavelengths for each line.  This is needed to get the right
 FeII inward band.
 <p>
 This has a finite thickness and so tests the RT, line overlap.
+</p><hr><kbd><h2>feii_t4n8_Smyth19.in</h2>  </kbd><h2><I>FeII emission in typical intermediate density photoionzied cloud
+</I></h2><kbd><br>title FeII emission in typical intermediate density photoionzied cloud
+<br>species "Fe+" dataset="Smyth19"
+<br>database Stout print
+<br>#
+<br># commands controlling continuum =========
+<br>black 5e5K
+<br>ionization parameter -2
+<br>#
+<br># commands for density & abundances =========
+<br>hden 8
+<br>element iron abundance 2
+<br>element iron ionization -7 0 -7
+<br>#
+<br># commands controlling geometry  =========
+<br>stop zone 1
+<br>set dr 0
+<br>#
+<br># other commands for details     =========
+<br>constant temperature 4
+<br>species "Fe+" levels=all
+<br>#
+<br># commands controlling output    =========
+<br>print lines column 
+<br>print line inward
+<br>print line sort wavelength
+<br>print line faint 0.1
+<br>normalize "Fe 2b" 5270
+<br>set save prefix "feii_t4n8_Smyth19"
+<br>save overview ".ovr"
+<br>save performance ".per"
+<br>save species continuum last ".con" "Fe+" units angstroms
+<br>save species bands ".fe2b" "FeII_bands.ini" "Fe+" last no hash
+<br>#
+<br>#
+<br># feii_t4n8_Tayal18.in
+<br># class function 
+<br># ========================================
+<br># 
+</kbd><p>
+This model has a very high iron abundance, 100x H, and most Fe is
+in the form of Fe+. it has a low density and unit thickness
+<p>
+The model is optically thin, no RT.
+</p><hr><kbd><h2>feii_t4n8_Tayal18.in</h2>  </kbd><h2><I>FeII emission in typical intermediate density photoionzied cloud
+</I></h2><kbd><br>title FeII emission in typical intermediate density photoionzied cloud
+<br>species "Fe+" dataset="Tayal18"
+<br>database Stout print
+<br>#
+<br># commands controlling continuum =========
+<br>black 5e5K
+<br>ionization parameter -2
+<br>#
+<br># commands for density & abundances =========
+<br>hden 8
+<br>element iron abundance 2
+<br>element iron ionization -7 0 -7
+<br>#
+<br># commands controlling geometry  =========
+<br>stop zone 1
+<br>set dr 0
+<br>#
+<br># other commands for details     =========
+<br>constant temperature 4
+<br>species "Fe+" levels=all
+<br>#
+<br># commands controlling output    =========
+<br>print lines column 
+<br>print line inward
+<br>print line sort wavelength
+<br>print line faint 0.1
+<br>normalize "Fe 2b" 5270
+<br>set save prefix "feii_t4n8_Tayal18"
+<br>save overview ".ovr"
+<br>save performance ".per"
+<br>save species continuum last ".con" "Fe+" units angstroms
+<br>save species bands ".fe2b" "FeII_bands.ini" "Fe+" last no hash
+<br>#
+<br>#
+<br># feii_t4n8_Tayal18.in
+<br># class function 
+<br># ========================================
+<br># 
+</kbd><p>
+This model has a very high iron abundance, 100x H, and most Fe is
+in the form of Fe+. it has a low density and unit thickness
+<p>
+The model is optically thin, no RT.
+</p><hr><kbd><h2>feii_t4n8_Verner99.in</h2>  </kbd><h2><I>FeII emission in typical intermediate density photoionzied cloud
+</I></h2><kbd><br>title FeII emission in typical intermediate density photoionzied cloud
+<br>species "Fe+" dataset="Verner99"
+<br>database Stout print
+<br>#
+<br># commands controlling continuum =========
+<br>black 5e5K
+<br>ionization parameter -2
+<br>#
+<br># commands for density & abundances =========
+<br>hden 8
+<br>element iron abundance 2
+<br>element iron ionization -7 0 -7
+<br>#
+<br># commands controlling geometry  =========
+<br>stop zone 1
+<br>set dr 0
+<br>#
+<br># other commands for details     =========
+<br>constant temperature 4
+<br>species "Fe+" levels=all
+<br>#
+<br># commands controlling output    =========
+<br>print lines column 
+<br>print line inward
+<br>print line sort wavelength
+<br>print line faint 0.1
+<br>normalize "Fe 2b" 5270
+<br>set save prefix "feii_t4n8_Verner99"
+<br>save overview ".ovr"
+<br>save performance ".per"
+<br>save species continuum last ".con" "Fe+" units angstroms
+<br>save species bands ".fe2b" "FeII_bands.ini" "Fe+" last no hash
+<br>#
+<br>#
+<br># feii_t4n8_Tayal18.in
+<br># class function 
+<br># ========================================
+<br># 
+</kbd><p>
+This model has a very high iron abundance, 100x H, and most Fe is
+in the form of Fe+. it has a low density and unit thickness
+<p>
+The model is optically thin, no RT.
 </p><hr><kbd><h2>func_abund_fluc.in</h2>  </kbd><h2><I>check fluctuating heavy-element abundances 
 </I></h2><kbd><br>title check fluctuating heavy-element abundances 
 <br># commands controlling continuum =========
@@ -2457,7 +2618,7 @@ This has a finite thickness and so tests the RT, line overlap.
 <br>hden 3
 <br># this varies the abundnaces between default and 1e-4 times default,
 <br># over a 1e10 cm period - we will compute half a cycle
-<br>fluctuatsion abundances 10.3 0 -4
+<br>fluctuations abundances 10.3 0 -4
 <br># 
 <br># commands controlling geometry  =========
 <br># stop at half a cycle so pick off lowest abundances
@@ -2492,9 +2653,14 @@ This checks that the variable abundances option works
 <br>luminosity 40
 <br>laser 2
 <br>#
+<br># must test capabiliites somewhere
+<br># >>19 07 09, add abundances
+<br>abundances "palme14-Sol.abn"
+<br>#
 <br># commands for density & abundances =========
 <br>hden 4
-<br>init file "honly.ini"
+<br># >>19 07 09, add abundances
+<br># init file "honly.ini"
 <br>#
 <br># commands controlling geometry  =========
 <br>stop zone 1
@@ -2546,7 +2712,11 @@ end of the calculation.
 <br>continue 20 1
 <br>continue 21 -1
 <br>end of dlaw
-<br>init "honly.ini"
+<br>#
+<br># must test capabiliites somewhere
+<br># >>19 07 09, add abundances
+<br>abundances "palme14-Met.abn"
+<br>#init "honly.ini"
 <br>#
 <br># commands controlling geometry  =========
 <br>sphere
@@ -2598,40 +2768,7 @@ this model tests the dlaw density table command
 <br># ========================================
 </kbd><p>
 this checks that trace output functions correctly
-</p><hr><kbd><h2>func_gaunt.in</h2>  </kbd><h2><I>check the Gaunt free-free factor for discontinuities
-</I></h2><kbd><br>title check the Gaunt free-free factor for discontinuities
-<br>test
-<br>drive gaunt check 1
-<br>drive gaunt check 2
-<br>drive gaunt check 3
-<br>drive gaunt check 4
-<br>drive gaunt check 5
-<br>drive gaunt check 6
-<br>drive gaunt check 7
-<br>drive gaunt check 8
-<br>drive gaunt check 9
-<br>drive gaunt check 10
-<br>drive gaunt check 11
-<br>drive gaunt check 12
-<br>drive gaunt check 13
-<br>drive gaunt check 14
-<br>drive gaunt check 15
-<br>drive gaunt check 16
-<br>drive gaunt check 17
-<br>drive gaunt check 18
-<br>drive gaunt check 19
-<br>drive gaunt check 20
-<br>drive gaunt check 21
-<br>drive gaunt check 22
-<br>drive gaunt check 23
-<br>drive gaunt check 24
-<br>drive gaunt check 25
-<br>drive gaunt check 26
-<br>drive gaunt check 27
-<br>drive gaunt check 28
-<br>drive gaunt check 29
-<br>drive gaunt check 30
-</kbd></p><hr><kbd><h2>func_globule.in</h2>  </kbd><h2><I>test of globule command
+</p><hr><kbd><h2>func_globule.in</h2>  </kbd><h2><I>test of globule command
 </I></h2><kbd><br>title test of globule command
 <br>#
 <br># commands controlling continuum =========
@@ -2716,7 +2853,7 @@ Spitzer cooling flow filament paper (2007).
 </p><hr><kbd><h2>func_grid_list.in</h2>  </kbd><h2><I>test the 'list' keyword on the grid command
 </I></h2><kbd><br>title test the 'list' keyword on the grid command
 <br>blackbody 10000 STE vary
-<br>grid list "func_grid_list.dat" linear
+<br>grid list "func_grid_list.dat" linear sequential
 <br>hden 5
 <br>stop zone 1
 <br>iterate 2
@@ -2831,6 +2968,13 @@ with depth.  Most sims have decreasing rather than increasing ionization.
 <br>print line precision 6
 <br>table lines "LineList_PDR.dat"
 </kbd><p>
+</p><hr><kbd><h2>func_LineList_PDR_H2.in</h2>  </kbd><h2><I>check that wavelengths agree at high line precision
+</I></h2><kbd><br>title check that wavelengths agree at high line precision
+<br>test
+<br>database h2
+<br>print line precision 6
+<br>table lines "LineList_PDR_H2.dat"
+</kbd><p>
 </p><hr><kbd><h2>func_LineList_strong.in</h2>  <br>test
 <br>print line precision 6
 <br>table lines "LineList_strong.dat"
@@ -2850,7 +2994,7 @@ with depth.  Most sims have decreasing rather than increasing ionization.
 <br># other commands for details     =========
 <br>#
 <br># commands controlling output    =========
-<br># this creates the file "func_lines.lab that contains a list
+<br># this creates the file "func_lines.lab" that contains a list
 <br># of all emission labels
 <br>save overview "func_lines.ovr"
 <br>save performance "func_lines.per"
@@ -3020,6 +3164,44 @@ when SET DRMIN is used. Without the SET DRMIN command this sim would need
 # 
  
 this script exercies the option to specify the ionization of a species
+</p><hr><kbd><h2>func_stopcol.in</h2>  </kbd><h2><I>test stop column density "species" command
+</I></h2><kbd><br>title test stop column density "species" command
+<br>#
+<br># commands controlling continuum =========
+<br>ionization parameter -2
+<br>blackbody 50000
+<br>#
+<br># commands for density & abundances =========
+<br>hden 2
+<br>init file "ism.ini"
+<br># test option to turn off elements with small abundances
+<br>element limit off -5
+<br>#
+<br># commands controlling geometry  =========
+<br># stop calc at line ratio, the point of this test 
+<br>stop column density "N+2" 10.
+<br>#
+<br># other commands for details     =========
+<br>constant temperature 10000 K
+<br>#
+<br># commands controlling output    =========
+<br>set save prefix "func_stopcol"
+<br>save overview ".ovr"
+<br>save performance ".per"
+<br>save dr ".dr" last
+<br>#
+<br>#
+<br>#
+<br>#
+<br># func_stopcol.in
+<br># class function 
+<br># ========================================
+<br># 
+</kbd><p>
+This is an example of a simple calculation that stops when
+a column density of a species reaches a specific value.
+The tricky part is that the species label contains a number, so
+we need to ascertain that the column density is parsed correctly.
 </p><hr><kbd><h2>func_stopline1.in</h2>  </kbd><h2><I>test stop line command
 </I></h2><kbd><br>title test stop line command
 <br>#
@@ -3074,7 +3256,7 @@ The option to turn off elements with trivial abundances is used.
 <br>constant temperature 10000 K
 <br>#
 <br># commands controlling output    =========
-<br>normalise to "o  3"  5006.84 
+<br>normalize to "o  3"  5006.84 
 <br>save overview "func_stopline2.ovr"
 <br>save performance "func_stopline2.per"
 <br>save dr "func_stopline2.dr" last
@@ -3390,6 +3572,45 @@ this model tests the tlaw density table command
 <p>
 <p>
 <p>
+</p><hr><kbd><h2>func_trans_lumi.in</h2>  </kbd><h2><I>test transmitted continuum in luminosity mode
+</I></h2><kbd><br>title test transmitted continuum in luminosity mode
+<br>#
+<br># common commands 
+<br>init file "func_trans_lumi.dat"
+<br>#
+<br># commands controlling geometry  =========
+<br>radius 21
+<br>#
+<br># commands controlling output    =========
+<br>set save prefix "func_trans_lumi"
+<br>save overview ".ovr"
+<br>save performance ".per"
+<br>save ionization last ".ion"
+<br>save continuum last ".con"
+<br>#
+<br># this contains a large number of asserts that both tests use
+<br>init file "trans_lumi.dat"
+<br># 
+<br># func_trans_lumi.in 
+<br># class function 
+<br># ========================================
+<br># 
+</kbd><p>
+func_trans_lumi, func_trans_save_lumi, and func_trans_read_lumi_scale are a
+set of tests that check that the code can save a transmitted continuum in
+luminosity mode and then read it back in.
+<p>
+func_trans_lumi.in: this sim is directly illuminated by a BB at Rin = 1e21.
+  Its predictions should be identical to func_trans_read_lumi_scale.in.
+<p>
+func_trans_save_lumi.in: this sim is directly illuminated by a BB at Rin =
+  1e20. It saves the transmitted continuum and has no monitors.
+<p>
+func_trans_read_lumi_scale.in: this sim is illiminated by the transmitted
+  continuum at Rin = 1e21. Its predictions should be almost identical to
+  func_trans_lumi.in. This tests that the transmitted continuum works
+  correctly in luminosity mode and also that spherical dilution is handled
+  correctly.
 </p><hr><kbd><h2>func_trans_read.in</h2>  </kbd><h2><I>second of func_trans_save/func_trans_read pair, use transmitted continuum
 </I></h2><kbd><br>title second of func_trans_save/func_trans_read pair, use transmitted continuum
 <br># the transmitted continuum produced by func_trans_punch
@@ -3427,6 +3648,59 @@ func_trans_save.in and func_trans_read.in are a pair of
 tests that check that the code can save a transmitted
 continuum then read it.
 <p>
+</p><hr><kbd><h2>func_trans_read_lumi_scale.in</h2>  </kbd><h2><I>test read transmitted continuum in luminosity mode
+</I></h2><kbd><br>title test read transmitted continuum in luminosity mode
+<br>#
+<br># commands controlling continuum =========
+<br>table read "func_trans_save_lumi.trn" scale
+<br># second, very faint SED to force luminosity mode
+<br>blackbody 50
+<br>luminosity 1
+<br>#
+<br># commands for density & abundances =========
+<br>hden 3
+<br>#
+<br># commands controlling geometry  =========
+<br>radius 21
+<br>set dr 0
+<br>stop zone 1
+<br>#
+<br># other commands for details     =========
+<br>iterate
+<br>#
+<br># commands controlling output    =========
+<br>set save prefix "func_trans_read_lumi_scale"
+<br>save overview ".ovr"
+<br>save performance ".per"
+<br>save ionization last ".ion"
+<br>save continuum last ".con"
+<br>#
+<br># this contains a large number of asserts that both tests use
+<br>init file "trans_lumi.dat"
+<br># 
+<br># func_trans_read_lumi_scale.in 
+<br># class function 
+<br># ========================================
+<br># 
+</kbd><p>
+func_trans_lumi, func_trans_save_lumi, and func_trans_read_lumi_scale are a
+set of tests that check that the code can save a transmitted continuum in
+luminosity mode and then read it back in.
+<p>
+func_trans_lumi.in: this sim is directly illuminated by a BB at Rin = 1e21.
+  Its predictions should be identical to func_trans_read_lumi_scale.in.
+<p>
+func_trans_save_lumi.in: this sim is directly illuminated by a BB at Rin =
+  1e20. It saves the transmitted continuum and has no monitors.
+<p>
+func_trans_read_lumi_scale.in: this sim is illiminated by the transmitted
+  continuum at Rin = 1e21. Its predictions should be almost identical to
+  func_trans_lumi.in. This tests that the transmitted continuum works
+  correctly in luminosity mode and also that spherical dilution is handled
+  correctly.
+<p>
+This sim must come after func_trans_save_lumi since it needs the save file
+generated by func_trans_save_lumi.
 </p><hr><kbd><h2>func_trans_read_scale.in</h2>  </kbd><h2><I>second of func_trans_save/func_trans_readread pair
 </I></h2><kbd><br>title second of func_trans_save/func_trans_readread pair
 <br># use the transmitted continuum produced by func_trans_save
@@ -3513,6 +3787,47 @@ continuum then read it.
 This sim must come before func_trans_read since it
 generates the save file needed by func_trans_read.
 Alphabetical order insures this.
+</p><hr><kbd><h2>func_trans_save_lumi.in</h2>  </kbd><h2><I>test save transmitted continuum in luminosity mode
+</I></h2><kbd><br>title test save transmitted continuum in luminosity mode
+<br>#
+<br># common commands 
+<br>init file "func_trans_lumi.dat"
+<br>#
+<br># commands controlling geometry  =========
+<br>radius 20
+<br>#
+<br># commands controlling output    =========
+<br>set save prefix "func_trans_save_lumi"
+<br>save overview ".ovr"
+<br>save performance ".per"
+<br>save ionization last ".ion"
+<br>save continuum last ".con"
+<br>save transmitted continuum ".trn"
+<br>#
+<br># 
+<br># func_trans_save_lumi.in 
+<br># class function 
+<br># ========================================
+<br># 
+</kbd><p>
+func_trans_lumi, func_trans_save_lumi, and func_trans_read_lumi_scale are a
+set of tests that check that the code can save a transmitted continuum in
+luminosity mode and then read it back in.
+<p>
+func_trans_lumi.in: this sim is directly illuminated by a BB at Rin = 1e21.
+  Its predictions should be identical to func_trans_read_lumi_scale.in.
+<p>
+func_trans_save_lumi.in: this sim is directly illuminated by a BB at Rin =
+  1e20. It saves the transmitted continuum and has no monitors.
+<p>
+func_trans_read_lumi_scale.in: this sim is illiminated by the transmitted
+  continuum at Rin = 1e21. Its predictions should be almost identical to
+  func_trans_lumi.in. This tests that the transmitted continuum works
+  correctly in luminosity mode and also that spherical dilution is handled
+  correctly.
+<p>
+This sim must come before func_trans_read_lumi_scale since it generates the
+save file needed by func_trans_read_lumi_scale.
 </p><hr><kbd><h2>grains_hot.in</h2>  </kbd><h2><I>test temperature of gas and dust in high energy density environment
 </I></h2><kbd><br>title test temperature of gas and dust in high energy density environment
 <br>#
@@ -3534,7 +3849,7 @@ Alphabetical order insures this.
 <br># other commands for details     =========
 <br>#
 <br># commands controlling output    =========
-<br>normalize to "O  8" 18.9709A
+<br>normalize to "O  8" 18.9689A
 <br>save performance "grains_hot.per"
 <br>save overview "grains_hot.ovr" last 
 <br>#
@@ -3570,7 +3885,7 @@ predominantly heated by the grain electron photo-ejection.
 <br># other commands for details     =========
 <br>#
 <br># commands controlling output    =========
-<br>normalize to "O  8" 18.9709A
+<br>normalize to "O  8" 18.9689A
 <br>save performance "grains_hot_wd01.per"
 <br>save overview "grains_hot_wd01.ovr" last 
 <br>#
@@ -3774,6 +4089,7 @@ checked.
 <br>set dr 0
 <br>#
 <br># commands controlling output    =========
+<br>no blends
 <br>save grid "grid_coronal.grd" last no hash
 <br>save ages "grid_coronal.age" last no hash
 <br>save cooling "grid_coronal.col" last no hash
@@ -3807,6 +4123,7 @@ This is a coronal (collisional) ionization calculation.
 <br>set dr 0
 <br>#
 <br># commands controlling output    =========
+<br>no blends
 <br>save grid "grid_coronal_grains.grd" last no hash
 <br>save cooling "grid_coronal_grains.col" last no hash
 <br># 
@@ -3840,6 +4157,7 @@ This case uses ISM abundances, depleted heavy elements, with grains
 <br>set dr 0
 <br>#
 <br># commands controlling output    =========
+<br>no blends
 <br>save grid "grid_coronal_primal.grd" last no hash
 <br>save cooling "grid_coronal_primal.col" last no hash
 <br># 
@@ -3891,6 +4209,7 @@ chemistry is exercised, but with the trace amount of cosmic rays.
 <br>set dr 0
 <br>#
 <br># commands controlling output    =========
+<br>no blends
 <br>save grid "grid_h2coronal.grd" last no hash
 <br>save cooling "grid_h2coronal.col" last no hash
 <br># 
@@ -3930,6 +4249,7 @@ This also serves as a test of the full Stout database
 <br>set dr 0
 <br>#
 <br># commands controlling output    =========
+<br>no blends
 <br>save grid "grid_hcoronal_primal.grd" last no hash
 <br>save cooling "grid_h2coronal_primal.col" last no hash
 <br># 
@@ -4286,8 +4606,8 @@ This test H2 in case of grain formation and solomon destruction
 <br>hden 6
 <br>grains ism, abundance log 0.16 single
 <br>init file="ism.ini"
-<br>abundances he -1.01 c -3.52 n-8 o-3.30 ne-8 mg-5.89
-<br>continue si -6.10 s -5.10 cl=-7 ar-8 fe -6.60
+<br>abundances he= -1.01 c= -3.52 n=-8 o=-3.30 ne=-8 mg=-5.89
+<br>continue si= -6.10 s= -5.10 cl=-7 ar=-8 fe= -6.60
 <br>#
 <br># commands controlling geometry  =========
 <br>stop zone 10
@@ -4357,8 +4677,8 @@ so the populations should be close to LTE.
 <br>hden 6
 <br>grains ism, abundance log 0.16 single, no qheat 
 <br>init file="ism.ini"
-<br>abundances he -1.01 c -3.52 n-8 o-3.30 ne-8 mg-5.89
-<br>continue si -6.10 s -5.10 cl=-7 ar-8 fe -6.60
+<br>abundances he= -1.01 c= -3.52 n=-8 o=-3.30 ne=-8 mg=-5.89
+<br>continue si= -6.10 s= -5.10 cl=-7 ar=-8 fe= -6.60
 <br>turbulence 2.7 km/sec
 <br>#
 <br># commands controlling geometry  =========
@@ -4693,7 +5013,6 @@ of ionizing photons, and the emitted spectrum, are all checked.
 <br>save overview "h_t4_conemis.ovr"
 <br>save performance "h_t4_conemis.per"
 <br>save continuum "h_t4_conemis.con" last no title units microns 
-<br>save spectrum "h_t4_conemis.ncon" last no title units microns 
 <br>#
 <br># h_t4_conemis.in 
 <br># class limit 
@@ -4735,7 +5054,6 @@ from a pure hydrogen plasma with those of Ferland 1980.
 <br>save performance "h_t4_conemis_lon.per"
 <br>save continuum "h_t4_conemis_lon.con" last units microns 
 <br>save two photon continuum "h_t4_conemis_lon.2nu" last rydbergs
-<br>save spectrum "h_t4_conemis_lon.ncon" last units microns 
 <br>#
 <br># h_t4_conemis_lon.in 
 <br># class limit 
@@ -4830,7 +5148,6 @@ with exact results in the optically thin nebular limit.
 <br>print line column
 <br>save overview "heatomt10.ovr"
 <br>save performance "heatomt10.per"
-<br>save spectrum  "heatomt10.spc" last no title units microns 
 <br>save continuum "heatomt10.con" last no title units microns 
 <br>save diffuse continuum "heatomt10.dif" last no title units microns
 <br>#
@@ -4870,7 +5187,7 @@ is not included in the total emission.
 <br>constant temperature 4
 <br>#
 <br># commands controlling output    =========
-<br>normalize to "he 1" 4471.49A 
+<br>normalize to "Blnd" 4471.50A 
 <br>print lines column  
 <br>print lines column 
 <br>save overview "heatomt10lon.ovr"
@@ -4878,7 +5195,6 @@ is not included in the total emission.
 <br>save continuum "heatomt10lon.con" last units microns 
 <br>save diffuse continuum "heatomt10lon.dif" last units microns 
 <br>save two photon continuum "heatomt10lon.2nu" last
-<br>save spectrum "heatomt10lon.ncon" last units microns 
 <br>#
 <br># heatomt10lon.in 
 <br># class limit 
@@ -4915,7 +5231,6 @@ This is a mate to hatomt10.in except that everything is He at low density
 <br>save overview "heiont10.ovr"
 <br>save performance "heiont10.per"
 <br>save continuum "heiont10.con" last no title units microns 
-<br>save spectrum  "heiont10.spc" last no title units microns
 <br>#
 <br># heiont10.in
 <br># class limit 
@@ -4968,7 +5283,7 @@ a better representation of the continuous emission.
 <br>save overview "helike_ar.ovr"
 <br>save performance "helike_ar.per"
 <br># This is Lyman alpha
-<br>normalize to "Ar17" 3.94883A
+<br>normalize to "Ar17" 3.94907A
 <br>#
 <br># 3.994A is 2^3S to ground
 <br># Totl is 2^3P to ground
@@ -5721,8 +6036,8 @@ The asserts check that the ionizing radiation is conserved.
 <br>init file="ism.ini"
 <br># HII region abundance but no dust
 <br>abundances hii region no grains
-<br>abundances he1 c1 n1 o1 ne1 mg=.0001 si.01 s1 cl1 ar1
-<br>continue fe.001
+<br>abundances he=1 c=1 n=1 o=1 ne=1 mg=.0001 si=.01 s=1 cl=1 ar=1
+<br>continue fe=.001
 <br>#
 <br># commands controlling geometry  =========
 <br>sphere
@@ -5736,12 +6051,12 @@ The asserts check that the ionizing radiation is conserved.
 <br>iterate
 <br>#
 <br># commands controlling output    =========
-<br>normalize to "Ca B" 4861.33A
+<br>normalize to "Ca B" 4861.32A
 <br># the normalizing line is not defined on the emergent line stack
 <br>print lines emergent off
 <br>print line faint .01
 <br>print line sum
-<br>He 1 5875.64A
+<br>Blnd 5875.66A
 <br>blnd 2326
 <br>blnd 1335
 <br>blnd 1909
@@ -5761,6 +6076,10 @@ The asserts check that the ionizing radiation is conserved.
 <br>S  3  9530.62
 <br>S  3  9068.62
 <br>s  4  10.5076m
+<br>end of lines
+<br>set blend "HepsNe3" 3968
+<br>Ne 3  3967.47
+<br>H  1  3970.07
 <br>end of lines
 <br>save performance "hii_blister.per"
 <br>save overview last "hii_blister.ovr"
@@ -5813,8 +6132,8 @@ been specified with the STOP LOWEST TEMP command.
 <br># commands for density & abundances =========
 <br>hden = 2
 <br>init file="ism.ini"
-<br>abund He-1 C-3.6576 N-4.39794 O-3.481146 ne-4.30103 mg-8
-<br>continue si-8 s-5.04576 cl-7 ar-8 fe-8
+<br>abund He=-1 C=-3.6576 N=-4.39794 O=-3.481146 ne=-4.30103 mg=-8
+<br>continue si=-8 s=-5.04576 cl=-7 ar=-8 fe=-8
 <br>#
 <br># commands controlling geometry  =========
 <br>radius = 18.477121
@@ -5830,7 +6149,6 @@ been specified with the STOP LOWEST TEMP command.
 <br>double
 <br>#
 <br># commands controlling output    =========
-<br>plot continuum range .1
 <br>print line faint .01
 <br># this is the sum of lines in table 2 of the Lexington meeting
 <br>print line sum 
@@ -5850,7 +6168,7 @@ been specified with the STOP LOWEST TEMP command.
 <br>save results last "hii_coolstar.rlt"
 <br>save continuum last units microns "hii_coolstar.con"
 <br>save lines, zone cumulative, "hii_coolstar.cum"
-<br>H  1 4861.33A
+<br>H  1 4861.32A
 <br>o  3  5006.84
 <br>blnd  3727
 <br>O  1  6300.30
@@ -6571,8 +6889,19 @@ correction factor, as discussed in Ballantyne, Ferland & Martin (2000).
 <br># commands for density & abundances =========
 <br>hden = 2
 <br>init file="ism.ini"
-<br>abund he -1 C-3.6576 N-4.39794 O-3.481146 ne-4.30103 mg-8
-<br>continue si-8 s-5.04576 cl=-7 ar-8 fe-8
+<br>element aluminium on
+<br>element helium abundance -1
+<br>element carbon abundance -3.6576
+<br>element nitrogen abundance -4.39794
+<br>element oxygen abundance -3.481146
+<br>element neon abundance -4.30103
+<br>element magnesium abundance -8
+<br>element aluminium abundance -8
+<br>element silicon abundance -8
+<br>element sulphur abundance -5.04576
+<br>element chlorine abundance -7
+<br>element argon abundance -8
+<br>element iron abundance -8
 <br>#
 <br># commands controlling geometry  =========
 <br>radius = 18.477121
@@ -6584,23 +6913,22 @@ correction factor, as discussed in Ballantyne, Ferland & Martin (2000).
 <br>stop efrac -2 
 <br>#
 <br># other commands for details     =========
-<br># must iterate since fine structure lines are opticall thick
-<br>database h-like element hydrogen levels resolved 10
+<br># must iterate since fine structure lines are optically thick
 <br>iterate   
+<br>database h-like element hydrogen levels resolved 10
 <br>#
 <br># commands controlling output    =========
-<br>normalize to "Ca B" 4861.33A
+<br>normalize to "Ca B" 4861.32A
 <br># the normalizing line is not defined on the emergent line stack
 <br>print lines emergent off
 <br>print column densities 
 <br>print line optical depths 
-<br>plot continuum range .1
 <br>print line faint 0.01
 <br>print line sum
-<br>He 1 5875.64A
+<br>Blnd 5875.66A
 <br>blnd 2326
 <br>blnd 1909
-<br>n  2  121.767m
+<br>n  2  121.769m
 <br>N  2  6583.45
 <br>N  2 6548.05
 <br>n  3  57.3238m
@@ -6630,7 +6958,7 @@ correction factor, as discussed in Ballantyne, Ferland & Martin (2000).
 <br>save linelist "hii_paris.lin" "LineList_HII.dat" last no hash column
 <br># this is to confirm that this commnand works
 <br>save lines emissivity "hii_paris.str" last 
-<br>H  1  4861.33A
+<br>H  1  4861.32A
 <br>end lines
 <br>#
 <br>table lines "LineList_HII.dat"
@@ -6655,7 +6983,7 @@ in detected lines, a measure of the Stoy temperature.
 </I></h2><kbd><br>title H II region sim from Christophe Morriset's ionization paramter family
 <br>set save prefix "hii_Um3"
 <br>Blackbody 56000
-<br>ionisation parameter = -3.000
+<br>ionization parameter = -3.000
 <br>hden = 3
 <br>abundances HII region
 <br>cosmic ray background
@@ -6678,7 +7006,7 @@ the range of ionization parameter on a BPT diagram
 </I></h2><kbd><br>title H II region sim from Christophe Morriset's ionization paramter family
 <br>set save prefix "hii_Um35"
 <br>Blackbody 56000
-<br>ionisation parameter = -3.5
+<br>ionization parameter = -3.5
 <br>hden = 3
 <br>abundances HII region
 <br>cosmic ray background
@@ -6701,7 +7029,7 @@ the range of ionization parameter on a BPT diagram
 </I></h2><kbd><br>title H II region sim from Christophe Morriset's ionization paramter family
 <br>set save prefix "hii_Um385"
 <br>Blackbody 56000
-<br>ionisation parameter = -3.85
+<br>ionization parameter = -3.85
 <br>hden = 3
 <br>abundances HII region
 <br>cosmic ray background
@@ -6971,6 +7299,61 @@ computes intensities corrected for isotropic continua.
 This sim computes line intensities not corrected for isotropic continua
 (see the "no lines..." command above).  Its sister sim, igm_lalpha_hm12.in,
 computes intensities corrected for isotropic continua.
+</p><hr><kbd><h2>igm_perseus.in</h2>  </kbd><h2><I>Perseus cluster
+</I></h2><kbd><br>title Perseus cluster
+<br># model of IGM in Perseus galaxy cluster inspired by Hitommi spectroscopy
+<br>set save prefix "igm_perseus"
+<br>#
+<br># assume gas is in collisional equilibrium
+<br>coronal 4.6e7K
+<br>#
+<br># commands for density & abundances =========
+<br>hden -1.5
+<br>#
+<br># commands controlling geometry  =========
+<br>set dr 0
+<br>stop zone 1
+<br>#
+<br># adjust models to get higher accuracy
+<br>database H-like element iron resolved levels 10
+<br>database H-like element iron collapsed levels 50
+<br>database He-like element iron resolved levels 10
+<br>database He-like element iron collapsed levels 50
+<br>iterate to convergence
+<br>#
+<br># commands controlling output    =========
+<br>print line column
+<br>print line sort wavelength
+<br>print line faint -2
+<br>#print line sort intensity
+<br>normalize "Fe25" 1.85040A  1
+<br>save overview ".ovr" 
+<br>save performance ".per" 
+<br>save element oxygen ionization ".oxy" 
+<br>save element iron ionization ".fe" 
+<br>save performance ".per"
+<br>#
+<br>#
+<br>#
+<br>#
+<br>#
+<br>#
+<br>#
+<br>#
+<br>#
+<br>#
+<br>#
+<br>#
+<br>#
+<br>#
+<br>****************************
+<br># agn_erseus.in, hot gas in the Perseus galaxy cluster
+<br># class igm
+<br># ==================================
+<br>#
+</kbd><p>
+This is inspired by Hitomi observations of the Fe complex in Perseus
+and has been developed by Priyanka Chakraborty as part of her thesis.
 </p><hr><kbd><h2>igm_primal.in</h2>  </kbd><h2><I>cloud with primordial abundances exposed to background at Z=10
 </I></h2><kbd><br>title cloud with primordial abundances exposed to background at Z=10
 <br>#
@@ -7046,9 +7429,9 @@ computes intensities corrected for isotropic continua.
 <br>iterate
 <br>#
 <br># commands controlling output    =========
-<br>normalize lines to "Ca B" 4861.33A
+<br>normalize lines to "Ca B" 4861.32A
 <br>print ages
-<br>print departure coef
+<br>print departure coef element hydrogen
 <br>print line faint -5
 <br># the normalizing line is not defined on the emergent line stack
 <br>print lines emergent off
@@ -7088,9 +7471,9 @@ a redshift of a thousand.  The gas is exposed to a true blackbody at
 <br>iterate
 <br>#
 <br># commands controlling output    =========
-<br>normalize lines to "Ca B" 4861.33A
+<br>normalize lines to "Ca B" 4861.32A
 <br>print ages
-<br>print departure coef
+<br>print departure coef element hydrogen
 <br>print line faint -5
 <br># the normalizing line is not defined on the emergent line stack
 <br>print lines emergent off
@@ -7363,8 +7746,8 @@ the model takes far too many zones
 <br>hden 0
 <br>grains ism, abundance log 0.16 no qheat 
 <br>init file="ism.ini"
-<br>abundances he -1.01 c -3.52 n-8 o-3.30 ne-8 mg-5.89
-<br>continue si -6.10 s -5.10 cl=-7 ar-8 fe -6.60
+<br>abundances he= -1.01 c= -3.52 n=-8 o=-3.30 ne=-8 mg=-5.89
+<br>continue si= -6.10 s= -5.10 cl=-7 ar=-8 fe= -6.60
 <br>#
 <br># commands controlling geometry  =========
 <br>sphere
@@ -7511,7 +7894,7 @@ are disabled so that analytical estimates can be made.
 <br>#
 <br># commands controlling output    =========
 <br># this should make the predicted totl Hbeta near unity for case a
-<br>normalize to "H  1" 4861.33A = 1.417
+<br>normalize to "H  1" 4861.32A = 1.417
 <br>print populations h-like 
 <br>print departure coefficients
 <br>save overview "limit_casea_h_den13.ovr"
@@ -7584,6 +7967,43 @@ electron density is equal to the hydrogen density.
 this tests the predicted H I and He I spectra in the Case B limit.
 The grid is over both density and temperature.
 <p>
+</p><hr><kbd><h2>limit_caseb_h_den10_temp45.in</h2>  </kbd><h2><I>the best we can do to predict the H I emission spectrum 
+</I></h2><kbd><br>title the best we can do to predict the H I emission spectrum 
+<br>#
+<br>set save prefix "limit_caseb_h_den10_temp45"
+<br># commands controlling continuum =========
+<br>laser 1.4
+<br>ionization -1
+<br>#
+<br># commands for density & abundances =========
+<br>hden 10  
+<br>set eden 10
+<br>init file "honly.ini"
+<br>#
+<br># commands controlling geometry  =========
+<br>stop zone 1
+<br>set dr 0
+<br>#
+<br># other commands for details     =========
+<br>database h-like resolved levels 30
+<br>database h-like collapsed levels 70
+<br>constant temperature 3e4
+<br>case b no photoionzation no pdest 
+<br>no scattering escape
+<br>no induced processes
+<br>iterate
+<br>#
+<br># commands controlling output    =========
+<br>print departure h-like hydrogen
+<br>print line faint 0.01
+<br>print line column
+<br>save overview ".ovr"
+<br>save performance ".per"
+<br>save diffuse continuum ".dif" last no title units microns
+<br>save continuum ".con" last no title units microns
+<br>#
+</kbd><p>
+<p>
 </p><hr><kbd><h2>limit_caseb_h_den2_temp37.in</h2>  </kbd><h2><I>the best we can do to predict the H I emission spectrum 
 </I></h2><kbd><br>title the best we can do to predict the H I emission spectrum 
 <br>#
@@ -7603,6 +8023,7 @@ The grid is over both density and temperature.
 <br># other commands for details     =========
 <br>database h-like resolved levels 30
 <br>database h-like collapsed levels 70
+<br>database h-like keep fine structure
 <br>constant temper 3.7
 <br>case b no photoionzation no pdest 
 <br>no scattering escape
@@ -7611,7 +8032,7 @@ The grid is over both density and temperature.
 <br>#
 <br># commands controlling output    =========
 <br>print departure h-like hydrogen
-<br>print line faint 0.01
+<br>print line faint -4
 <br>print line column
 <br>save overview "limit_caseb_h_den2_temp37.ovr"
 <br>save performance "limit_caseb_h_den2_temp37.per"
@@ -7674,7 +8095,42 @@ that the code can do.  The predicted results still
 deviate from the tabulated "Ca B" results because of the
 principal quantum number specifications (30/70 here; 100/1 in table).
 <p>
-</p><hr><kbd><h2>limit_caseb_h_den2_temp5.in</h2>  </kbd><h2><I>the best we can do to predict the H I emission spectrum 
+</p><hr><kbd><h2>limit_caseb_h_den2_temp45.in</h2>  </kbd><h2><I>the best we can do to predict the H I emission spectrum 
+</I></h2><kbd><br>title the best we can do to predict the H I emission spectrum 
+<br>#
+<br>set save prefix "limit_caseb_h_den2_temp45"
+<br># commands controlling continuum =========
+<br>laser 1.4
+<br>ionization -1
+<br>#
+<br># commands for density & abundances =========
+<br>hden 100 linear 
+<br>set eden 2
+<br>init file "honly.ini"
+<br>#
+<br># commands controlling geometry  =========
+<br>stop zone 1
+<br>set dr 0
+<br>#
+<br># other commands for details     =========
+<br>database h-like resolved levels 30
+<br>database h-like collapsed levels 70
+<br>constant temperature 3e4
+<br>case b no photoionzation no pdest 
+<br>no scattering escape
+<br>no induced processes
+<br>iterate
+<br>#
+<br># commands controlling output    =========
+<br>print departure h-like hydrogen
+<br>print line faint 0.01
+<br>print line column
+<br>save overview ".ovr"
+<br>save performance ".per"
+<br>save diffuse continuum ".dif" last no title units microns
+<br>save continuum ".con" last no title units microns
+<br>#
+</kbd></p><hr><kbd><h2>limit_caseb_h_den2_temp5.in</h2>  </kbd><h2><I>the best we can do to predict the H I emission spectrum 
 </I></h2><kbd><br>title the best we can do to predict the H I emission spectrum 
 <br>#
 <br># commands controlling continuum =========
@@ -7751,8 +8207,103 @@ principal quantum number specifications (30/70 here; 100/1 in table).
 <br>save diffuse continuum "limit_caseb_h_den2_temp5_coronal.dif" last no title units microns
 <br>save continuum "limit_caseb_h_den2_temp5_coronal.con" last no title units microns
 </kbd></p><hr><kbd><h2>limit_caseb_h_den4_temp4.in</h2>  <br>set save prefix "limit_caseb_h_den4_temp4"
+<br>#
+<br># Gary tripped over a bug when this command is issued before
+<br># the 'init "honly.ini"' below.
+<br># Keep this command up here to always exercise the fix.
+<br>#
+<br>save species bands ".band" "FeII_bands.ini" "Fe+"
 <br>constant temperature 1e4
 <br>hden 4
+<br>set eden 4
+<br>init "honly.ini"
+<br>laser 5
+<br>ionization -2
+<br>stop zone 1
+<br>case B hummer
+<br>print departure hydrogen H-like
+<br>print departure helium H-like
+<br>print line faint -6
+<br>print lines column
+<br>print lines sort wavelength
+<br>atom H-like hydrogen levels resolved 30
+<br>atom H-like hydrogen levels collapsed 170
+<br>save performance ".per"
+</kbd></p><hr><kbd><h2>limit_caseb_h_den4_temp45.in</h2>  </kbd><h2><I>the best we can do to predict the H I emission spectrum 
+</I></h2><kbd><br>title the best we can do to predict the H I emission spectrum 
+<br>#
+<br>set save prefix "limit_caseb_h_den4_temp45"
+<br># commands controlling continuum =========
+<br>laser 1.4
+<br>ionization -1
+<br>#
+<br># commands for density & abundances =========
+<br>hden 10000 linear 
+<br>set eden 4
+<br>init file "honly.ini"
+<br>#
+<br># commands controlling geometry  =========
+<br>stop zone 1
+<br>set dr 0
+<br>#
+<br># other commands for details     =========
+<br>database h-like resolved levels 30
+<br>database h-like collapsed levels 70
+<br>constant temperature 3e4
+<br>case b no photoionzation no pdest 
+<br>no scattering escape
+<br>no induced processes
+<br>iterate
+<br>#
+<br># commands controlling output    =========
+<br>print departure h-like hydrogen
+<br>print line faint 0.01
+<br>print line column
+<br>save overview ".ovr"
+<br>save performance ".per"
+<br>save diffuse continuum ".dif" last no title units microns
+<br>save continuum ".con" last no title units microns
+<br>#
+</kbd></p><hr><kbd><h2>limit_caseb_h_den4_temp4_Fuji.in</h2>  <br>set save prefix "limit_caseb_h_den4_temp4_Fuji"
+<br>constant temperature 1e4
+<br>hden 4
+<br>database collisions h-like hydrogen Fujimoto
+<br>set eden 4
+<br>init "honly.ini"
+<br>laser 5
+<br>ionization -2
+<br>stop zone 1
+<br>case B hummer
+<br>print departure hydrogen H-like
+<br>print departure helium H-like
+<br>print line faint -6
+<br>print lines column
+<br>print lines sort wavelength
+<br>atom H-like hydrogen levels resolved 30
+<br>atom H-like hydrogen levels collapsed 170
+<br>save performance ".per"
+</kbd></p><hr><kbd><h2>limit_caseb_h_den4_temp4_VR62.in</h2>  <br>set save prefix "limit_caseb_h_den4_temp4_VR62"
+<br>constant temperature 1e4
+<br>hden 4
+<br>database collisions h-like hydrogen van regemorter
+<br>set eden 4
+<br>init "honly.ini"
+<br>laser 5
+<br>ionization -2
+<br>stop zone 1
+<br>case B hummer
+<br>print departure hydrogen H-like
+<br>print departure helium H-like
+<br>print line faint -6
+<br>print lines column
+<br>print lines sort wavelength
+<br>atom H-like hydrogen levels resolved 30
+<br>atom H-like hydrogen levels collapsed 170
+<br>save performance ".per"
+</kbd></p><hr><kbd><h2>limit_caseb_h_den4_temp4_VS80.in</h2>  <br>set save prefix "limit_caseb_h_den4_temp4_VS80"
+<br>constant temperature 1e4
+<br>hden 4
+<br>database collisions h-like hydrogen vriens
 <br>set eden 4
 <br>init "honly.ini"
 <br>laser 5
@@ -7783,7 +8334,7 @@ principal quantum number specifications (30/70 here; 100/1 in table).
 <br>hden 4  
 <br>stop zone 1
 <br>iterate
-<br>print populaions h-like
+<br>print populations h-like
 <br>print departure h-like
 <br>save overview "limit_caseb_h_hs87.ovr"
 <br>save performance "limit_caseb_h_hs87.per"
@@ -7939,7 +8490,7 @@ to very large values.
 <br>stop zone 1
 <br>#
 <br># other commands for details     =========
-<br>normalize to "He 2" 4685.64A
+<br>normalize to "He 2" 4685.68A
 <br>case b hummer no Pdest no photoionization
 <br>no scattering escape 
 <br># prevent H I excited levels from being predicted
@@ -7996,7 +8547,7 @@ percent except at the lowest temperature of 5000K.
 <br>iterate
 <br>#
 <br># commands controlling output    =========
-<br>normalise to "He 1" 4471.49A
+<br>normalize to "Blnd" 4471.50A
 <br>print departure he-like helium
 <br>print line faint 0.01
 <br># save fits last "limit_caseb_he_den2_temp4.fit"
@@ -8005,6 +8556,14 @@ percent except at the lowest temperature of 5000K.
 <br>save diffuse continuum "limit_caseb_he_den2_temp4.dif" last no title units microns
 <br>save continuum "limit_caseb_he_den2_temp4.con" last no title units microns
 <br>save line list ratio column "limit_caseb_he_den2_temp4.rat" "linelist_he1.dat" last no hash
+<br>#
+<br>save line populations "limit_caseb_he_den2_temp4.lpop" "linelist_he1.dat" last no hash
+<br># default row option: ratio
+<br>save line populations "limit_caseb_he_den2_temp4.row.lpop" "linelist_he1.dat" row last no hash
+<br>save line populations "limit_caseb_he_den2_temp4.row_lower.lpop" "linelist_he1.dat" row lower last no hash
+<br>save line populations "limit_caseb_he_den2_temp4.row_upper.lpop" "linelist_he1.dat" row upper last no hash
+<br>save line populations "limit_caseb_he_den2_temp4.row_ratio.lpop" "linelist_he1.dat" row ratio last no hash
+<br>save line populations "limit_caseb_he_den2_temp4.row_tspin.lpop" "linelist_he1.dat" row tspin last no hash
 <br>#
 <br>#
 <br># limit_caseb_he_den2_temp4.in
@@ -8045,7 +8604,7 @@ principal quantum number specifications (30/70 here; 100/1 in table).
 <br>iterate
 <br>#
 <br># commands controlling output    =========
-<br>normalise to "He 1" 4471.49A
+<br>normalize to "Blnd" 4471.50A
 <br>print departure he-like helium
 <br>print line faint 0.01
 <br># save fits last "limit_caseb_he_den4_temp4.fit"
@@ -8054,6 +8613,151 @@ principal quantum number specifications (30/70 here; 100/1 in table).
 <br>save diffuse continuum "limit_caseb_he_den4_temp4.dif" last no title units microns
 <br>save continuum "limit_caseb_he_den4_temp4.con" last no title units microns
 <br>save line list ratio column "limit_caseb_he_den4_temp4.rat" "linelist_he1.dat" last no hash
+<br>#
+<br>#
+<br># limit_caseb_he_den4_temp4.in
+<br># class limit 
+<br># ========================================
+<br># 
+</kbd><p>
+This is close to the best and most complete model of He I
+that the code can do.  The predicted results still
+deviate from the tabulated "Ca B" results because of the
+principal quantum number specifications (30/70 here; 100/1 in table).
+<p>
+</p><hr><kbd><h2>limit_caseb_he_den4_temp4_Fuji.in</h2>  </kbd><h2><I>the best we can do to predict the HeI emission spectrum 
+</I></h2><kbd><br>title the best we can do to predict the HeI emission spectrum 
+<br>#
+<br># commands controlling continuum =========
+<br>laser 2
+<br>ionization -1
+<br>#
+<br># commands for density & abundances =========
+<br>hden 9000 linear 
+<br>set eden 4
+<br>element helium abundance -1
+<br>init file "hheonly.ini"
+<br>#
+<br># commands controlling geometry  =========
+<br>stop zone 1
+<br>set dr -6.95424
+<br>#
+<br># other commands for details     =========
+<br>database he-like resolved levels 30
+<br>database he-like collapsed levels 70
+<br>database collisions he-like helium Fujimoto
+<br>constant temper 4
+<br>case b no photoionzation no pdest 
+<br>no scattering escape
+<br>no induced processes
+<br>iterate
+<br>#
+<br># commands controlling output    =========
+<br>normalize to "Blnd" 4471.50A
+<br>print departure he-like helium
+<br>print line faint 0.01
+<br>save overview "limit_caseb_he_den4_temp4_Fuji.ovr"
+<br>save performance "limit_caseb_he_den4_temp4_Fuji.per"
+<br>save diffuse continuum "limit_caseb_he_den4_temp4_Fuji.dif" last no title units microns
+<br>save continuum "limit_caseb_he_den4_temp4_Fuji.con" last no title units microns
+<br>save line list ratio column "limit_caseb_he_den4_temp4_Fuji.rat" "linelist_he1.dat" last no hash
+<br>#
+<br>#
+<br># limit_caseb_he_den4_temp4.in
+<br># class limit 
+<br># ========================================
+<br># 
+</kbd><p>
+This is close to the best and most complete model of He I
+that the code can do.  The predicted results still
+deviate from the tabulated "Ca B" results because of the
+principal quantum number specifications (30/70 here; 100/1 in table).
+<p>
+</p><hr><kbd><h2>limit_caseb_he_den4_temp4_VR62.in</h2>  </kbd><h2><I>the best we can do to predict the HeI emission spectrum 
+</I></h2><kbd><br>title the best we can do to predict the HeI emission spectrum 
+<br>#
+<br># commands controlling continuum =========
+<br>laser 2
+<br>ionization -1
+<br>#
+<br># commands for density & abundances =========
+<br>hden 9000 linear 
+<br>set eden 4
+<br>element helium abundance -1
+<br>init file "hheonly.ini"
+<br>#
+<br># commands controlling geometry  =========
+<br>stop zone 1
+<br>set dr -6.95424
+<br>#
+<br># other commands for details     =========
+<br>database he-like resolved levels 30
+<br>database he-like collapsed levels 70
+<br>database collisions he-like helium van regemorter
+<br>constant temper 4
+<br>case b no photoionzation no pdest 
+<br>no scattering escape
+<br>no induced processes
+<br>iterate
+<br>#
+<br># commands controlling output    =========
+<br>normalize to "Blnd" 4471.50A
+<br>print departure he-like helium
+<br>print line faint 0.01
+<br>save overview "limit_caseb_he_den4_temp4_VR62.ovr"
+<br>save performance "limit_caseb_he_den4_temp4_VR62.per"
+<br>save diffuse continuum "limit_caseb_he_den4_temp4_VR62.dif" last no title units microns
+<br>save continuum "limit_caseb_he_den4_temp4_VR62.con" last no title units microns
+<br>save line list ratio column "limit_caseb_he_den4_temp4_VR62.rat" "linelist_he1.dat" last no hash
+<br>#
+<br>#
+<br># limit_caseb_he_den4_temp4.in
+<br># class limit 
+<br># ========================================
+<br># 
+</kbd><p>
+This is close to the best and most complete model of He I
+that the code can do.  The predicted results still
+deviate from the tabulated "Ca B" results because of the
+principal quantum number specifications (30/70 here; 100/1 in table).
+<p>
+</p><hr><kbd><h2>limit_caseb_he_den4_temp4_VS80.in</h2>  </kbd><h2><I>the best we can do to predict the HeI emission spectrum 
+</I></h2><kbd><br>title the best we can do to predict the HeI emission spectrum 
+<br>#
+<br># commands controlling continuum =========
+<br>laser 2
+<br>ionization -1
+<br>#
+<br># commands for density & abundances =========
+<br>hden 9000 linear 
+<br>set eden 4
+<br>element helium abundance -1
+<br>init file "hheonly.ini"
+<br>#
+<br># commands controlling geometry  =========
+<br>stop zone 1
+<br>set dr -6.95424
+<br>#
+<br># other commands for details     =========
+<br>database he-like resolved levels 30
+<br>database he-like collapsed levels 70
+<br>database collisions he-like helium Vriens  
+<br>constant temper 4
+<br>case b no photoionzation no pdest 
+<br>no scattering escape
+<br>no induced processes
+<br>iterate
+<br>#
+<br># commands controlling output    =========
+<br>normalize to "Blnd" 4471.50A
+<br>print departure he-like helium
+<br>print line faint 0.01
+<br># save fits last "limit_caseb_he_den4_temp4.fit"
+<br>save overview "limit_caseb_he_den4_temp4_VS80.ovr"
+<br>save performance "limit_caseb_he_den4_temp4_VS80.per"
+<br>save diffuse continuum "limit_caseb_he_den4_temp4_VS80.dif" last no title units microns
+<br>save continuum "limit_caseb_he_den4_temp4_VS80.con" last no title units microns
+<br>save line list ratio column "limit_caseb_he_den4_temp4_VS80.rat" "linelist_he1.dat" last no hash
 <br>#
 <br>#
 <br># limit_caseb_he_den4_temp4.in
@@ -8083,7 +8787,7 @@ principal quantum number specifications (30/70 here; 100/1 in table).
 <br>stop zone 1
 <br>#
 <br># other commands for details     =========
-<br>normalize to "He 2" 4685.64A
+<br>normalize to "He 2" 4685.68A
 <br>case b hummer no Pdest no photoionization
 <br>no scattering escape 
 <br># prevent H I excited levels from being predicted
@@ -8258,9 +8962,9 @@ So this is an example of "Case C" emission
 <br>constant temperature = 10000 K
 <br>#
 <br># commands controlling output    =========
-<br>print h-like populations 
+<br>print h-like populations element hydrogen
 <br>print line pump 
-<br>print departure coefficients
+<br>print departure coefficients element hydrogen 
 <br>save overview "limit_casec_h_den5.ovr"
 <br>save performance "limit_casec_h_den5.per"
 <br>#
@@ -8385,7 +9089,7 @@ This is why eden was set to 1e-3 cm^-3 on 20141105.
 <br>#
 <br># commands controlling output    =========
 <br>print line faint .1
-<br>print departure coef
+<br>print departure coef element hydrogen
 <br>save overview "limit_compton_mid_t.ovr"
 <br>save performance "limit_compton_mid_t.per"
 <br>#
@@ -8415,7 +9119,7 @@ in the LTE limit. The set dr command sets the zone thickness to 1 cm.
 <br>black body, temp=5.5
 <br>intensity total -4
 <br># add cosmic background 
-<br>backbround
+<br>background
 <br>#
 <br># commands controlling geometry  =========
 <br># don't stop the calculation until all energy used up
@@ -8530,9 +9234,9 @@ with other heavy elements.
 <br>constant temper 50000
 <br>#
 <br># commands controlling output    =========
-<br>print populations h-like
+<br>print populations h-like element hydrogen
 <br>print heating
-<br>print departure coef
+<br>print departure coef element hydrogen
 <br>print line faint -1
 <br>save overview "limit_h_induc.ovr"
 <br>save performance "limit_h_induc.per"
@@ -8805,7 +9509,7 @@ answer is n(He+)/n(He2+)=1.69e-3
 <br>iterate
 <br>#
 <br># commands controlling output    =========
-<br>normalize to "H  1" 4861.33A 0.86
+<br>normalize to "H  1" 4861.32A 0.86
 <br>print line sort wavelength range 100 1m
 <br>save overview "limit_lowd0.ovr"
 <br>save performance "limit_lowd0.per"
@@ -8881,7 +9585,7 @@ That is not the purpose of this sim
 <br>iterate
 <br>#
 <br># commands controlling output    =========
-<br>normalize to "H  1" 4861.33A 0.86
+<br>normalize to "H  1" 4861.32A 0.86
 <br>print line sort wavelength range 100 1m
 <br>save overview "limit_lowdm6.ovr"
 <br>save performance "limit_lowdm6.per"
@@ -8959,10 +9663,9 @@ This model test very low ionization solution of hydrogen and helium.
 <br>iterate
 <br>#
 <br># commands controlling output    =========
-<br>print h-like departure coefficients
-<br>print he-like departure coefficients
-<br>print populations h-like 
-<br>print departure coefficients
+<br>print h-like departure coefficients hydrogen
+<br>print he-like departure coefficients helium
+<br>print populations h-like hydrogen 
 <br>save overview "limit_lte_h_t50_cion.ovr"
 <br>save performance "limit_lte_h_t50_cion.per"
 <br>#
@@ -9002,10 +9705,9 @@ works in detailed balance.
 <br>iterate
 <br>#
 <br># commands controlling output    =========
-<br>print h-like departure coefficients
-<br>print h-like populations
-<br>print he-like departure coefficients
-<br>print populations h-like 
+<br>print h-like departure coefficients hydrogen
+<br>print h-like populations hydrogen
+<br>print he-like departure coefficients helium
 <br>save overview "limit_lte_h_t50_coll.ovr"
 <br>save performance "limit_lte_h_t50_coll.per"
 <br>#
@@ -9053,7 +9755,7 @@ this test is done.
 <br>#
 <br># commands controlling output    =========
 <br>print he-like departure helium 
-<br>normalise to "He 1" 4471.49A
+<br>normalize to "Blnd" 4471.50A
 <br>print line faint -2
 <br>save overview "limit_lte_he1_coll.ovr"
 <br>save performance "limit_lte_he1_coll.per"
@@ -9096,7 +9798,7 @@ should be unity.
 <br>print h-like departure helium 
 <br>print h-like population helium 
 <br>print h-like departure hydrogen 
-<br>normalise to "He 1" 4471.49A
+<br>normalize to "Blnd" 4471.50A
 <br>print line faint -2
 <br>save overview "limit_lte_he1_nomole_iso_force.ovr"
 <br>save performance "limit_lte_he1_nomole_iso_force.per"
@@ -9140,7 +9842,7 @@ should be unity, and the temperature equal to the BB temp.
 <br>print h-like departure helium 
 <br>print h-like population helium 
 <br>print h-like departure hydrogen 
-<br>normalise to "He 1" 4471.49A
+<br>normalize to "Blnd" 4471.50A
 <br>print line faint -2
 <br>save overview "limit_lte_he1_nomole_ste.ovr"
 <br>save performance "limit_lte_he1_nomole_ste.per"
@@ -9183,7 +9885,7 @@ should be unity, and the temperature equal to the BB temp.
 <br>print h-like departure helium 
 <br>print h-like population helium 
 <br>print h-like departure hydrogen 
-<br>normalise to "He 1" 4471.49A
+<br>normalize to "Blnd" 4471.50A
 <br>print line faint -2
 <br>save overview "limit_lte_he1_nomole_ste_nocoll.ovr"
 <br>save performance "limit_lte_he1_nomole_ste_nocoll.per"
@@ -9231,7 +9933,7 @@ levels on LTE can be verified.
 <br>print he-like population helium 
 <br>print h-like departure helium 
 <br>print h-like population helium 
-<br>normalise to "Inci" 4860 
+<br>normalize to "Inci" 4860 
 <br>print line faint -2
 <br># the normalizing line is not defined on the emergent line stack
 <br>print lines emergent off
@@ -9282,7 +9984,7 @@ thermodynamic equilibrium limit of radiative coupling terms.
 <br>print h-like departure helium 
 <br>print h-like population helium 
 <br>print h-like departure hydrogen 
-<br>normalise to "He 1" 4471.49A
+<br>normalize to "Blnd" 4471.50A
 <br>print line faint -2
 <br>save overview "limit_lte_he1_ste.ovr"
 <br>save performance "limit_lte_he1_ste.per"
@@ -9325,11 +10027,11 @@ should be unity, and the temperature equal to the BB temp.
 <br>iterate
 <br>#
 <br># commands controlling output    =========
-<br>print departure coefficients h-like
-<br>print populations h-like 
+<br>print departure coefficients h-like hydrogen
+<br>print populations h-like hydrogen
 <br>print departure coefficients h-like helium
 <br>print populations h-like helium
-<br>print departure coefficients he-like
+<br>print departure coefficients he-like helium
 <br>print populations he-like 
 <br>save overview "limit_lte_hhe_coll_t50.ovr"
 <br>save performance "limit_lte_hhe_coll_t50.per"
@@ -9376,9 +10078,9 @@ The set dr command sets the zone thickness to 1 cm.
 <br>set temperature convergence 0.002
 <br>#
 <br># commands controlling output    =========
-<br>print populations h-like
+<br>print populations h-like hydrogen
 <br>print heating
-<br>print departure coef
+<br>print departure coef element hydrogen
 <br>print line faint -1
 <br>save overview "limit_lte_hhe_induc.ovr"
 <br>save performance "limit_lte_hhe_induc.per"
@@ -9415,9 +10117,9 @@ that the gas temperature equilibriates close to the black body temperature.
 <br>#
 <br># commands controlling output    =========
 <br>print heating
-<br>print populations h-like
-<br>print departure coef h-like
-<br>print departure coef he-like
+<br>print populations h-like hydrogen
+<br>print departure coef h-like hydrogen
+<br>print departure coef he-like helium
 <br>save overview "limit_ste_hhe_ste.ovr"
 <br>save performance "limit_ste_hhe_ste.per"
 <br>#
@@ -9461,7 +10163,7 @@ handled properly in this limit.
 <br>print populations h-like hydrogen
 <br>save overview "limit_lte_hminus.ovr"
 <br>save performance "limit_lte_hminus.per"
-<br>print departure coef
+<br>print departure coef element hydrogen
 <br>#
 <br># limit_lte_hminus.in
 <br># 
@@ -9496,8 +10198,8 @@ originally presented in
 <br>iterate
 <br>#
 <br># commands controlling output    =========
-<br>print departure coef
-<br>print populations h-like
+<br>print departure coef element hydrogen
+<br>print populations h-like hydrogen
 <br>save overview "limit_lte_metal.ovr"
 <br>save performance "limit_lte_metal.per"
 <br>save heating "limit_lte_metal.het" last
@@ -9656,7 +10358,7 @@ Charge transfer heating is VERY important in this simulation.
 <br>#
 <br># other commands for details     =========
 <br>constant temperature 1e4
-<br>iterate
+<br>iterate 3
 <br>set nFnu diffuse outward
 <br>set nFnu add 2e-8 ryd
 <br>set nFnu add 5e-8 ryd
@@ -9672,7 +10374,7 @@ Charge transfer heating is VERY important in this simulation.
 <br>#
 <br># commands controlling output    =========
 <br>print line faint -10
-<br>save continuum "limit_thick_brems.con" last
+<br>save continuum "limit_thick_brems.con" last units microns
 <br>save optical depth "limit_thick_brems.opd" last
 <br>save overview "limit_thick_brems.ovr"
 <br>save dr "limit_thick_brems.dr"
@@ -9785,6 +10487,147 @@ This is meant to be a very fast calculation to
 use when running extensive debug-enabled runtimes.
 <p>
 <p>
+</p><hr><kbd><h2>lya-21cm-constant.in</h2>  </kbd><h2><I>test effect of lya pump on spin temperature
+</I></h2><kbd><br>title test effect of lya pump on spin temperature
+<br>#
+<br># commands controlling continuum =========
+<br>#
+<br>table ism 
+<br>extinguish column 22
+<br>CMB, z=0
+<br># 
+<br># commands for density & abundances =========
+<br># set the density and composition, ism with grains
+<br>#
+<br>hden 2 
+<br>abundance ism 
+<br>#
+<br># other commands for details     =========
+<br>#
+<br># this is an important ionization source
+<br>cosmic rays background  
+<br># optical depth
+<br>double
+<br>iterate
+<br>turbulence 3 km/s
+<br># stopping criteria
+<br>stop temperature 3K linear
+<br>stop neutral hydrogen column density 18
+<br>#
+<br># command exercised =========
+<br>#
+<br>set lya 21cm constant
+<br>#
+<br># commands controlling output    =========
+<br>#
+<br>set save prefix "lya-21cm-constant"
+<br>save hydrogen 21cm ".21cm" last
+<br>save hydrogen lya ".lya" last
+<br>save overview ".ovr" last
+<br>#
+<br>#
+<br>#
+<br>#
+<br>#
+<br># # ========================================
+</kbd><p>
+This is one of the sims employed by Shaw, Ferland, & Hubeny 2017, ApJ, 843, 149.
+It exercises the Snu=constant case to column density of 1e18, while the original
+paper used a 1e20 stopping criterion.
+</p><hr><kbd><h2>lya-21cm-excitation.in</h2>  </kbd><h2><I>test effect of lya pump on spin temperature
+</I></h2><kbd><br>title test effect of lya pump on spin temperature
+<br>#
+<br># commands controlling continuum =========
+<br>#
+<br>table ism 
+<br>extinguish column 22
+<br>CMB, z=0
+<br># 
+<br># commands for density & abundances =========
+<br># set the density and composition, ism with grains
+<br>#
+<br>hden 2 
+<br>abundance ism 
+<br>#
+<br># other commands for details     =========
+<br>#
+<br># this is an important ionization source
+<br>cosmic rays background  
+<br># optical depth
+<br>double
+<br>iterate
+<br>turbulence 3 km/s
+<br># stopping criteria
+<br>stop temperature 3K linear
+<br>stop neutral hydrogen column density 18
+<br>#
+<br># command exercised =========
+<br>#
+<br>set lya 21cm excitation
+<br>#
+<br># commands controlling output    =========
+<br>#
+<br>set save prefix "lya-21cm-excitation"
+<br>save hydrogen 21cm ".21cm" last
+<br>save hydrogen lya ".lya" last
+<br>save overview ".ovr" last
+<br>#
+<br>#
+<br>#
+<br>#
+<br>#
+<br># # ========================================
+</kbd><p>
+This is one of the sims employed by Shaw, Ferland, & Hubeny 2017, ApJ, 843, 149.
+It exercises the Snu~B(Texc) case to column density of 1e18, while the original
+paper used a 1e20 stopping criterion.
+</p><hr><kbd><h2>lya-21cm-kinetic.in</h2>  </kbd><h2><I>test effect of lya pump on spin temperature
+</I></h2><kbd><br>title test effect of lya pump on spin temperature
+<br>#
+<br># commands controlling continuum =========
+<br>#
+<br>table ism 
+<br>extinguish column 22
+<br>CMB, z=0
+<br># 
+<br># commands for density & abundances =========
+<br># set the density and composition, ism with grains
+<br>#
+<br>hden 2 
+<br>abundance ism 
+<br>#
+<br># other commands for details     =========
+<br>#
+<br># this is an important ionization source
+<br>cosmic rays background  
+<br># optical depth
+<br>double
+<br>iterate
+<br>turbulence 3 km/s
+<br># stopping criteria
+<br>stop temperature 3K linear
+<br>stop neutral hydrogen column density 18
+<br>#
+<br># command exercised =========
+<br>#
+<br>set lya 21cm kinetic
+<br>#
+<br># commands controlling output    =========
+<br>#
+<br>set save prefix "lya-21cm-kinetic"
+<br>save hydrogen 21cm ".21cm" last
+<br>save hydrogen lya ".lya" last
+<br>save overview ".ovr" last
+<br>#
+<br>#
+<br>#
+<br>#
+<br>#
+<br># # ========================================
+</kbd><p>
+This is one of the sims employed by Shaw, Ferland, & Hubeny 2017, ApJ, 843, 149.
+It exercises the Snu~B(Tkin) case to column density of 1e18, while the original
+paper used a 1e20 stopping criterion.
 </p><hr><kbd><h2>nlr_lex00.in</h2>  </kbd><h2><I>NLR model for Lexington 2000 Meeting
 </I></h2><kbd><br>title NLR model for Lexington 2000 Meeting
 <br>#
@@ -9800,8 +10643,8 @@ use when running extensive debug-enabled runtimes.
 <br># commands for density & abundances =========
 <br>hden 4
 <br>init file="c84.ini"
-<br>abundances -1 c-3.52 n-4 o-3.097 ne-4 na-9
-<br>continue mg-4.523 al-8 si-4.523 s-4.824 a-9 ca-8 fe-8 ni-9
+<br>abundances He=-1 c=-3.52 n=-4 o=-3.097 ne=-4 na=-9
+<br>continue mg=-4.523 al=-8 si=-4.523 s=-4.824 ar=-9 ca=-8 fe=-8 ni=-9
 <br>#
 <br># other commands for details     =========
 <br>iterate
@@ -9811,7 +10654,7 @@ use when running extensive debug-enabled runtimes.
 <br># add sum of these lines to printout for Stoy ratio 
 <br>print line sum
 <br>H  1 1215.67A
-<br>He 1 5875.64A
+<br>Blnd 5875.66A
 <br>blnd 1909
 <br>blnd 1549
 <br>N  2  6583.45
@@ -9831,8 +10674,8 @@ use when running extensive debug-enabled runtimes.
 <br>Ne 3 3868.76A
 <br>Ne 3 3967.47A
 <br>Blnd 2424
-<br>Ne 5 3426.03A
-<br>Ne 5 3345.99A
+<br>Ne 5 3425.88A
+<br>Ne 5 3345.82A
 <br>blnd 2798
 <br>si 2 34.8046m
 <br>Blnd 6720
@@ -9948,8 +10791,8 @@ It includes grains and is so more realistic.
 <br># commands for density & abundances =========
 <br>hden 3
 <br>init file="c84.ini"
-<br>abund -1 C-3.5229 N-4. O-3.22185 ne-3.82391 na=-8 mg-4.5229 al=-8
-<br>continue si-4.5229 s-4.82391 ar-8 ca=-8 fe-7 ni-8
+<br>abund He=-1 C=-3.5229 N=-4. O=-3.22185 ne=-3.82391 na=-8 mg=-4.5229 al=-8
+<br>continue si=-4.5229 s=-4.82391 ar=-8 ca=-8 fe=-7 ni=-8
 <br>#
 <br># other commands for details     =========
 <br># this large group of lines are turned off so that the model runs
@@ -10008,7 +10851,7 @@ The init file is entered to make the code behave more like version 84.
 <br>database h-like element helium levels resolved 15
 <br>#
 <br># commands controlling output    =========
-<br>normalize to label="CaBo" 4861.33A intensity 1.169
+<br>normalize to label="CaBo" 4861.32A intensity 1.169
 <br>print line all
 <br># the normalizing line is not defined on the emergent line stack
 <br>print lines emergent off
@@ -10095,12 +10938,12 @@ from excited states.
 <br># resulting eden was 5.039 and T=4, which we shall assert that we find
 <br># >>chng 06 apr 03, backdate to old [OII] As and rederive spectrum
 <br>optimize lines
-<br>O  2  3728.81 0.1432
-<br>o  2  3726.03 0.4055
-<br>blnd  7323 0.5281
-<br>blnd  7332 0.4257
-<br>o  3  5006.84 3.6189
-<br>blnd  4363 0.0342
+<br>O  2  3728.81 0.1567
+<br>O  2  3726.03 0.4087
+<br>Blnd  7323 0.4344
+<br>Blnd  7332 0.3577
+<br>O  3  5006.84 3.8117
+<br>O  3  4363.21 0.0368
 <br>end of lines
 <br>#
 <br># commands controlling output    =========
@@ -10146,12 +10989,12 @@ density.  The model optimize_subplex.in is a copy of this file.
 <br># resulting eden was 5.039 and T=4, which we shall assert that we find
 <br># >>chng 06 apr 03, backdate to old [OII] As and rederive spectrum
 <br>optimize lines
-<br>O  2  3728.81 0.1432
-<br>O  2  3726.03 0.4055
-<br>blnd  7323 0.5281
-<br>blnd  7332 0.4257
-<br>o  3  5006.84 3.6189
-<br>blnd  4363 0.0342
+<br>O  2  3728.81 0.1567
+<br>O  2  3726.03 0.4087
+<br>Blnd  7323 0.4344
+<br>Blnd  7332 0.3577
+<br>O  3  5006.84 3.8117
+<br>O  3  4363.21 0.0368
 <br>end of lines
 <br>#
 <br># commands controlling output    =========
@@ -10214,8 +11057,11 @@ density.  The model optimize_phymir.in is a copy of this file.
 <br>save element nitrogen last no hash "orion_hii_open.nit"
 <br>save lines, array "orion_hii_open.lina" units microns last no hash
 <br>save line emissivity "orion_hii_open.ems" last no hash emergent
-<br>blnd  5199
-<br>O  1  6300.30 
+<br>H  1  4861.32A
+<br>O  3  5006.84A
+<br>Blnd  5199A
+<br>O  1  6300.30A
+<br>O  1  63.1679m 
 <br>end of lines
 <br>save linelist "orion_hii_open.lin" "LineList_HII.dat" last no hash emergent absolute
 <br>#
@@ -10323,6 +11169,7 @@ line spectrum is given in surface brightness units, as in the BFM paper.
 <br>save grain temperature last "orion_hii_pdr.grntem" 
 <br>#
 <br>#
+<br>#
 <br># orion_hii_pdr.in
 <br># class hii pdr  
 <br># ========================================
@@ -10385,7 +11232,7 @@ This is the correct way to do a PDR calcualtion.
 <br>aperture beam 
 <br>#
 <br># commands controlling output    =========
-<br>normalize to "CaBo" 4861.33A
+<br>normalize to "CaBo" 4861.32A
 <br>print line faint -4
 <br># the normalizing line is not defined on the emergent line stack
 <br>print lines emergent off
@@ -10449,6 +11296,7 @@ much faster because of fast.ini
 <br>save grain charge "pdr_co_fully.grnchr"
 <br>save grain drift "pdr_co_fully.grndft"
 <br>save grain temperature "pdr_co_fully.grntem"
+<br>save ionization means "pdr_co_fully.ion"
 <br>#
 <br># 
 <br># gas has more he++ than He+ due to fast charge transfer with co
@@ -10572,7 +11420,7 @@ this is a pair with pdr_co_fully.in, which does not include non-equil chem
 </kbd><p>
 This is a dense ISM exposed to a cool blackbody.  This tests the
 ability to converge onto a VERY molecular environment.  Nearly all
-# and H are in CO and H2.  Cosmic rays are the main source of
+C and H are in CO and H2.  Cosmic rays are the main source of
 heat and ionization.
 <p>
 Continuum pumping of CO followed by collisional deexcitation is a
@@ -10679,8 +11527,8 @@ assumed in their paper.
 <br># commands for density & abundances =========
 <br>hden 3
 <br>init file="ism.ini"
-<br>abundances he -1.01 c -3.52 n-8 o-3.30 ne-8 mg-5.89
-<br>continue si -6.10 s -5.10 cl-7 ar-8 fe -6.60
+<br>abundances he= -1.01 c= -3.52 n=-8 o=-3.30 ne=-8 mg=-5.89
+<br>continue si= -6.10 s= -5.10 cl=-7 ar=-8 fe= -6.60
 <br>grains orion, abundance log 0.16 no qheat 
 <br>#
 <br># commands controlling geometry  =========
@@ -11434,6 +12282,78 @@ This is one of the tests in Rollig et al. 2007, A&A, 467, 187
 <br># ========================================
 <br># 
 </kbd><p>
+</p><hr><kbd><h2>pdr_minimal.in</h2>  </kbd><h2><I>test physical conditions at the illuminated face of a PDR
+</I></h2><kbd><br>title test physical conditions at the illuminated face of a PDR
+<br>#
+<br># commands controlling continuum =========
+<br>table draine 50000
+<br>extinguish 24
+<br>#
+<br># commands for density & abundances =========
+<br>hden 5.5
+<br>element helium abundance -1.00  
+<br>element lithium     off  
+<br>element beryllium   off 
+<br>element boron       off
+<br>element carbon      off
+<br>element oxygen      off
+<br>element fluorine    off 
+<br>element neon        off  
+<br>element sodium      off  
+<br>element magnesium   off  
+<br>element aluminum    off  
+<br>element silicon     off
+<br>element phosphorus  off 
+<br>element sulphur     off
+<br>element chlorine    off  
+<br>element argon       off  
+<br>element potassium   off 
+<br>element calcium     off 
+<br>element scandium    off  
+<br>element titanium    off  
+<br>element vanadium    off  
+<br>element chromium    off  
+<br>element manganese   off  
+<br>element iron        off
+<br>element cobalt      off 
+<br>element nickel      off  
+<br>element copper      off  
+<br>element zinc        off
+<br>#
+<br># other commands for details     =========
+<br>constant temperature 50 linear
+<br>set dr 1
+<br>stop zone 2
+<br>stop temperature off
+<br>#
+<br># commands controlling output    =========
+<br>set save prefix "pdr_minimal"
+<br>save performance ".per" last
+<br>save overview ".ovr" last
+<br>save molecules ".mol" last
+<br>save leiden ".lei" last
+<br>save leiden lines ".lin" last
+<br>#
+<br>#
+<br># IF EITHER OF THESE MONITORS NEEDS TO BE ADJUSTED, CHECK THAT THE IONIZATION
+<br># CONDITIONS IN ZONE 1 AND 2 ARE IN VERY GOOD AGREEMENT!
+<br>#
+<br># pdr_minimal.in
+<br># class pdr
+<br># ========================================
+</kbd><p>
+This model is derived from the F4 model from the Leiden workshop (Roellig et
+al. 2007, A&A, 467, 187). It has been reduced to a two-zone model in order to
+test the ionization conditions at the face of the PDR. Older versions of the
+code had a bug where the ionization in zone 1 was many dex lower than in zone
+2. The conditions in zone 1 were wrong and should have been similar to the
+conditions in zone 2. Here we test that the code doesn't regress. See also
+ticket #358: https://wiki.nublado.org/ticket/358
+<p>
+The ionization in this sim is produced by continuum pumping of the metastable
+levels of N I, followed by photoionization out of the metastable levels of N I.
+See Ferland et al., 2012, ApJ, 757, 79. So this pumping and ionization mechanism
+is also tested by this sim.
 </p><hr><kbd><h2>pdr_orion_veil.in</h2>  </kbd><h2><I>Orion's veil
 </I></h2><kbd><br>title Orion's veil
 <br>#
@@ -11539,8 +12459,8 @@ of the Orion Nebula.
 <br># this turns off some elements, and processes we don't need
 <br># so needs to come before the elements 
 <br>init file="ism.ini"
-<br>abundances he -1.01 c -3.52 n-8 o-3.30 ne-8 mg-5.89
-<br>continue si -6.10 s -5.10 cl-7 ar-8 fe -6.60
+<br>abundances he= -1.01 c= -3.52 n=-8 o=-3.30 ne=-8 mg=-5.89
+<br>continue si= -6.10 s= -5.10 cl=-7 ar=-8 fe= -6.60
 <br># use ism abundances but turn of quantum heating 
 <br>grains ism, abundance log 0.16 no qheat 
 <br>#
@@ -11656,8 +12576,8 @@ which will result in fast fluorescent excitation of the
 <br>init file="ism.ini"
 <br># this is the TH85 mix except C is raised by 0.2 dex,
 <br># and O lowered byt his amount, so that C/O > 1
-<br>abundances he -1.01 c -3.4 n-8 o-3.50 ne-8 mg-5.89
-<br>continue si -6.10 s -5.10 cl-7 ar-8 fe -6.60
+<br>abundances he= -1.01 c= -3.4 n=-8 o=-3.50 ne=-8 mg=-5.89
+<br>continue si= -6.10 s= -5.10 cl=-7 ar=-8 fe= -6.60
 <br># use ism abundances but turn of quantum heating 
 <br>grains ism, abundance log 0.16 no qheat 
 <br>#
@@ -11736,8 +12656,8 @@ which will result in fast fluorescent excitation of the
 <br>hden 5.362
 <br>init file="ism.ini"
 <br>grains orion, abundance log 0.16 no qheat 
-<br>abundances he -1.01 c -3.52 n-8 o-3.30 ne-8 mg-5.89
-<br>continue si -6.10 s -5.10 cl-7 ar-8 fe -6.60
+<br>abundances he=-1.01 c=-3.52 n=-8 o=-3.30 ne=-8 mg=-5.89
+<br>continue si= -6.10 s= -5.10 cl=-7 ar=-8 fe= -6.60
 <br>#
 <br># commands controlling geometry  =========
 <br># simulate effects of gas we do not model 
@@ -11817,8 +12737,8 @@ which will result in fast fluorescent excitation of the
 <br># this sets up the code like version c84, with fewer chemical elements
 <br>init file="c84.ini"
 <br># this sets the abundances of the elements that we will use 
-<br>abund -1 C-3.523 N-4. O-3.222 ne-3.824 na=-10 mg-4.523 al=-10
-<br>continue si-4.523 s-4.824 ar-10 ca=-10 fe-10 ni=-10
+<br>abund He=-1 C=-3.523 N=-4. O=-3.222 ne=-3.824 na=-10 mg=-4.523 al=-10
+<br>continue si=-4.523 s=-4.824 ar=-10 ca=-10 fe=-10 ni=-10
 <br>#
 <br># commands controlling continuum =========
 <br>black body, T = 150000 K, radius = 10
@@ -11861,8 +12781,8 @@ for the nebulae with and without fluctuations.
 <br># commands for density & abundances =========
 <br>hden = 3.4771213
 <br>init file="c84.ini"
-<br>abund -1 C-3.523 N-4. O-3.222 ne-3.824 na=-10 mg-4.523 al=-10
-<br>continue si-4.523 s-4.824 ar-10 ca=-10 fe-10 ni=-10
+<br>abund He=-1 C=-3.523 N=-4. O=-3.222 ne=-3.824 na=-10 mg=-4.523 al=-10
+<br>continue si=-4.523 s=-4.824 ar=-10 ca=-10 fe=-10 ni=-10
 <br>#
 <br># commands controlling geometry  =========
 <br>radius = 17
@@ -11906,8 +12826,8 @@ This is the on-the-spot version of the Paris Planetary Nebula.
 <br>element chlorine off
 <br>element argon off
 <br>element iron off
-<br>abund he -1 C-3.523 N-4. O-3.222 ne-3.824 mg-4.523 
-<br>continue si-4.523 s-4.824 cl-7 ar-10 fe-10 
+<br>abund he=-1 C=-3.523 N=-4. O=-3.222 ne=-3.824 mg=-4.523 
+<br>continue si=-4.523 s=-4.824 cl=-7 ar=-10 fe=-10 
 <br>#
 <br># commands controlling geometry  =========
 <br>radius = 17
@@ -11918,7 +12838,7 @@ This is the on-the-spot version of the Paris Planetary Nebula.
 <br>#
 <br># commands controlling output    =========
 <br>print lines sort wavelength
-<br>normalize to "Ca b" 4861.33A 
+<br>normalize to "Ca b" 4861.32A 
 <br># the normalizing line is not defined on the emergent line stack
 <br>print lines emergent off
 <br>print line optical depths 
@@ -11934,7 +12854,7 @@ This is the on-the-spot version of the Paris Planetary Nebula.
 <br>save dr "pn_paris.dr"
 <br>save temperature "pn_paris.tem"
 <br>save lines emissivity "pn_paris.ems"
-<br>h  1 6562.81A
+<br>h  1 6562.80A
 <br>Blnd  6720
 <br>end of lines
 <br>save averages "pn_paris.avr" last
@@ -11973,8 +12893,8 @@ An age of 10000 years was set.  This tests logic in the age command.
 <br>element chlorine off
 <br>element argon off
 <br>element iron off
-<br>abund he -1 C-3.523 N-4. O-3.222 ne-3.824 mg-4.523 
-<br>continue si-4.523 s-4.824 cl-7 ar-10 fe-10 
+<br>abund he=-1 C=-3.523 N=-4. O=-3.222 ne=-3.824 mg=-4.523 
+<br>continue si=-4.523 s=-4.824 cl=-7 ar=-10 fe=-10 
 <br>#
 <br># commands controlling geometry  =========
 <br>radius = 17
@@ -11985,7 +12905,7 @@ An age of 10000 years was set.  This tests logic in the age command.
 <br>#
 <br># commands controlling output    =========
 <br>print lines sort wavelength
-<br>normalize to "Ca b" 4861.33A 
+<br>normalize to "Ca b" 4861.32A 
 <br># the normalizing line is not defined on the emergent line stack
 <br>print lines emergent off
 <br>print line optical depths 
@@ -12001,7 +12921,7 @@ An age of 10000 years was set.  This tests logic in the age command.
 <br>save dr "pn_paris_cpre.dr"
 <br>save temperature "pn_paris_cpre.tem"
 <br>save lines emissivity "pn_paris_cpre.ems"
-<br>h  1 6562.81A
+<br>h  1 6562.80A
 <br>Blnd  6720
 <br>end of lines
 <br>save averages "pn_paris_cpre.avr" last
@@ -12028,8 +12948,8 @@ pressure within the nebula.
 <br># commands for density & abundances =========
 <br>hden = 3.4771213
 <br>init file="fast.ini"
-<br>abund he -1 C-3.523 N-4. O-3.222 ne-3.824 mg-4.523 
-<br>continue si-4.523 s-4.824 ar-10
+<br>abund he=-1 C=-3.523 N=-4. O=-3.222 ne=-3.824 mg=-4.523 
+<br>continue si=-4.523 s=-4.824 ar=-10
 <br>#
 <br># commands controlling geometry  =========
 <br>sphere
@@ -12038,7 +12958,7 @@ pressure within the nebula.
 <br># other commands for details     =========
 <br>#
 <br># commands controlling output    =========
-<br>normalize to "Ca b" 4861.33A
+<br>normalize to "Ca b" 4861.32A
 <br># the normalizing line is not defined on the emergent line stack
 <br>print lines emergent off
 <br>save performance "pn_paris_fast.per"
@@ -12176,6 +13096,7 @@ state recombination emission.  This is an optically thin model.
 <br>#
 <br># other commands for details     =========
 <br>constant temperature 4
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>#
@@ -12224,6 +13145,7 @@ table star atlas command works.
 <br>#
 <br># other commands for details     =========
 <br>constant temperature 4
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>#
@@ -12300,6 +13222,7 @@ table star atlas 3dim command works.
 <br>#
 <br># other commands for details     =========
 <br>constant temperature 4
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>#
@@ -12354,6 +13277,7 @@ access to the various atlas grids
 <br>#
 <br># other commands for details     =========
 <br>constant temperature 4
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>#
@@ -12399,6 +13323,7 @@ access to the various atlas odfnew grids
 <br># disable this process to avoid critical dependence on the precise shape of the continuum.
 <br>no induced processes
 <br>constant temperature 4
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>#
@@ -12445,6 +13370,7 @@ table star tlusty bstar command works.
 <br># disable this process to avoid critical dependence on the precise shape of the continuum.
 <br>no induced processes
 <br>constant temperature 4
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>#
@@ -12497,6 +13423,7 @@ table star tlusty bstar 3-dim command works.
 <br>set dr 0
 <br>#
 <br># other commands for details     =========
+<br>no blends
 <br>#
 <br># in this model the Lyman lines are pumped significantly by the stellar continuum;
 <br># disable this process to avoid critical dependence on the precise shape of the continuum.
@@ -12541,6 +13468,7 @@ table star tlusty bstar metallicity option works.
 <br>#
 <br># other commands for details     =========
 <br>constant temperature 6000K
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>save overview "stars_costar1.ovr"
@@ -12584,6 +13512,7 @@ rather than thermal physics.
 <br>stop zone 1
 <br>#
 <br># other commands for details     =========
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>save overview "stars_costar2.ovr"
@@ -12624,6 +13553,7 @@ shape was ok.
 <br>stop zone 1
 <br>#
 <br># other commands for details     =========
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>save overview "stars_costar3.ovr"
@@ -12664,6 +13594,7 @@ shape was ok.
 <br>stop zone 1
 <br>#
 <br># other commands for details     =========
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>save overview "stars_costar4.ovr"
@@ -12697,6 +13628,7 @@ shape was ok.
 <br>#
 <br># other commands for details     =========
 <br>constant temperature 6900K
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>save overview "stars_costarhalo.ovr"
@@ -12739,6 +13671,7 @@ rather than thermal physics.
 <br>#
 <br># other commands for details     =========
 <br>constant temperature 4
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>#
@@ -12786,6 +13719,7 @@ table star kurucz command works.
 <br>#
 <br># other commands for details     =========
 <br>constant temperature 4
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>#
@@ -12829,6 +13763,7 @@ table star mihalas command works.
 <br>set dr 0
 <br>#
 <br># other commands for details     =========
+<br>no blends
 <br>#
 <br># in this model the Lyman lines are pumped significantly by the stellar continuum;
 <br># disable this process to avoid critical dependence on the precise shape of the continuum.
@@ -12880,6 +13815,7 @@ table star tlusty obstar command works.
 <br># disable this process to avoid critical dependence on the precise shape of the continuum.
 <br>no induced processes
 <br>constant temperature 4
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>#
@@ -12937,6 +13873,7 @@ table star tlusty obstar 3-dim command works.
 <br># disable this process to avoid critical dependence on the precise shape of the continuum.
 <br>no induced processes
 <br>constant temperature 4
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>#
@@ -12981,12 +13918,12 @@ table star tlusty obstar metallicity option works.
 <br># and T_star=51200
 <br># resulting eden was 5.040 and T=4, which we shall assert that we find
 <br>optimize lines
-<br>O  2  3728.81   0.0416
-<br>o  2  3726.03   0.1179
-<br>blnd  7323   0.1535
-<br>blnd  7332   0.1237
-<br>o  3  5006.84   9.5265
-<br>blnd  4363   0.0900
+<br>O  2  3728.81   0.0446
+<br>O  2  3726.03   0.1164
+<br>Blnd  7323   0.1237
+<br>Blnd  7332   0.1018
+<br>O  3  5006.84  10.0205
+<br>O  3  4363.21   0.0968
 <br>end of lines
 <br>#
 <br># commands controlling output    =========
@@ -13028,12 +13965,12 @@ spectrum was calculated at T = 1e4 K, n_H=1e5 cm^-3, T_star = 51200 K.
 <br># and T_star=51200
 <br># resulting eden was 5.041 and T=4, which we shall assert that we find
 <br>optimize lines
-<br>O  2  3728.81   0.0335
-<br>o  2  3726.03   0.0950
-<br>blnd  7323   0.1238
-<br>blnd  7332   0.0998
-<br>o  3  5006.84   9.9714
-<br>blnd  4363   0.0943
+<br>O  2  3728.81   0.0365
+<br>O  2  3726.03   0.0951
+<br>Blnd  7323   0.1012
+<br>Blnd  7332   0.0833
+<br>O  3  5006.84  10.4461
+<br>O  3  4363.21   0.1010
 <br>end of lines
 <br>#
 <br># commands controlling output    =========
@@ -13075,12 +14012,12 @@ spectrum was calculated at T = 1e4 K, n_H=1e5 cm^-3, T_star = 51200 K.
 <br># and log(age)=6.3
 <br># resulting eden was 5.040 and T=4, which we shall assert that we find
 <br>optimize lines
-<br>O  2  3728.81  0.0623
-<br>o  2  3726.03  0.1765
-<br>blnd  7323  0.2300
-<br>blnd  7332  0.1854
-<br>o  3  5006.84  8.2979
-<br>blnd  4363  0.0784
+<br>O  2  3728.81  0.0680
+<br>O  2  3726.03  0.1774
+<br>Blnd  7323  0.1887
+<br>Blnd  7332  0.1554
+<br>O  3  5006.84  8.7015
+<br>O  3  4363.21  0.0841
 <br>end of lines
 <br>#
 <br># commands controlling output    =========
@@ -13119,6 +14056,7 @@ spectrum was calculated at T = 1e4 K, n_H=1e5 cm^-3, log(age/yr) = 6.3.
 <br>set dr 0
 <br>#
 <br># other commands for details     =========
+<br>no blends
 <br>#
 <br># in this model the Lyman lines are pumped significantly by the stellar continuum;
 <br># disable this process to avoid critical dependence on the precise shape of the continuum.
@@ -13170,6 +14108,7 @@ table star tlusty ostar command works.
 <br># disable this process to avoid critical dependence on the precise shape of the continuum.
 <br>no induced processes
 <br>constant temperature 4
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>#
@@ -13241,6 +14180,7 @@ table star tlusty ostar 3-dim command works.
 <br># disable this process to avoid critical dependence on the precise shape of the continuum.
 <br>no induced processes
 <br>constant temperature 4
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>#
@@ -13281,9 +14221,9 @@ table star tlusty ostar metallicity option works, also test selection algorithm.
 <br>#
 <br># other commands for details     =========
 <br>no level2
+<br>no blends
 <br>#
 <br># commands controlling output    =========
-<br>plot continuum range .1
 <br>save performance "stars_rauch_3d.per"
 <br>save overview last "stars_rauch_3d.ovr"
 <br>save results last "stars_rauch_3d.rlt"
@@ -13317,13 +14257,13 @@ shape of ionizing continuum, not thermal physics.
 <br>#
 <br># other commands for details     =========
 <br>no level2
+<br>no blends
 <br># test adding continuum points
 <br>set nfnu add 10 cm
 <br>set nfnu add 350 micron
 <br>set nfnu add 200 angstrom
 <br>#
 <br># commands controlling output    =========
-<br>plot continuum range .1
 <br>save performance "stars_rauch_cowd.per"
 <br>save overview last "stars_rauch_cowd.ovr"
 <br>save results last "stars_rauch_cowd.rlt"
@@ -13371,9 +14311,9 @@ atmosphere models.
 <br>#
 <br># other commands for details     =========
 <br>no level2
+<br>no blends
 <br>#
 <br># commands controlling output    =========
-<br>plot continuum range .1
 <br>save performance "stars_rauch_h+he.per"
 <br>save overview last "stars_rauch_h+he.ovr"
 <br>save results last "stars_rauch_h+he.rlt"
@@ -13404,13 +14344,13 @@ atmosphere models.
 <br>#
 <br># other commands for details     =========
 <br>no level2
+<br>no blends
 <br>#
 <br># commands for density & abundances =========
 <br>hden 3.0
 <br>abundances planetary 
 <br>#
 <br># commands controlling output    =========
-<br>plot continuum range .1
 <br>save performance "stars_rauch_h-ca.per"
 <br>save overview last "stars_rauch_h-ca.ovr"
 <br>save results last "stars_rauch_h-ca.rlt"
@@ -13441,9 +14381,9 @@ is able to access the H-Ca Rauch grid of stellar atmosphere models.
 <br>#
 <br># other commands for details     =========
 <br>no level2
+<br>no blends
 <br>#
 <br># commands controlling output    =========
-<br>plot continuum range .1
 <br>save performance "stars_rauch_h-ni.per"
 <br>save overview last "stars_rauch_h-ni.ovr"
 <br>save results last "stars_rauch_h-ni.rlt"
@@ -13479,13 +14419,13 @@ shape of ionizing continuum, not thermal physics.
 <br>#
 <br># other commands for details     =========
 <br>no level2
+<br>no blends
 <br># test adding continuum points
 <br>set nfnu add 10 cm
 <br>set nfnu add 350 micron
 <br>set nfnu add 200 angstrom
 <br>#
 <br># commands controlling output    =========
-<br>plot continuum range .1
 <br>save performance "stars_rauch_helium.per"
 <br>save overview last "stars_rauch_helium.ovr"
 <br>save results last "stars_rauch_helium.rlt"
@@ -13518,9 +14458,9 @@ atmosphere models.
 <br>#
 <br># other commands for details     =========
 <br>no level2
+<br>no blends
 <br>#
 <br># commands controlling output    =========
-<br>plot continuum range .1
 <br>save performance "stars_rauch_hydr.per"
 <br>save overview last "stars_rauch_hydr.ovr"
 <br>save results last "stars_rauch_hydr.rlt"
@@ -13553,9 +14493,9 @@ atmosphere models.
 <br>#
 <br># other commands for details     =========
 <br>no level2
+<br>no blends
 <br>#
 <br># commands controlling output    =========
-<br>plot continuum range .1
 <br>save performance "stars_rauch_pg1159.per"
 <br>save overview last "stars_rauch_pg1159.ovr"
 <br>save results last "stars_rauch_pg1159.rlt"
@@ -13569,6 +14509,41 @@ This is a model of a very hot planetary nebula, and checks that the code
 is able to access the PG1159 version of the Rauch grid of stellar
 atmosphere models.
 <p>
+</p><hr><kbd><h2>stars_rauch_pg1159_ascii.in</h2>  </kbd><h2><I>Rauch cool [WR] PN
+</I></h2><kbd><br>title Rauch cool [WR] PN
+<br>#
+<br># commands controlling continuum =========
+<br>table star "rauch_pg1159.ascii" T=40000K g=7
+<br>luminosity 4.5 solar
+<br>#
+<br># commands controlling geometry  =========
+<br>sphere
+<br>radius 18
+<br>stop zone 1
+<br>set dr 0
+<br>#
+<br># commands for density & abundances =========
+<br>abundances planetary 
+<br>hden 3.0
+<br>#
+<br># other commands for details     =========
+<br>no level2
+<br>set nfnu add 9.5 angstrom
+<br>no blends
+<br>#
+<br># commands controlling output    =========
+<br>save performance "stars_rauch_pg1159_ascii.per"
+<br>save overview last "stars_rauch_pg1159_ascii.ovr"
+<br>save results last "stars_rauch_pg1159_ascii.rlt"
+<br>save continuum last "stars_rauch_pg1159_ascii.con" units angstrom
+<br>#
+<br># stars_rauch_pg1159_ascii.in
+<br># class stars 
+<br># ========================================
+</kbd><p>
+This is a model of a cool PNCS, and checks that the code
+can correctly rebin a model with zero fluxes embedded.
+It also exercises reading directly from an ascii file.
 </p><hr><kbd><h2>stars_starburst99.in</h2>  </kbd><h2><I>Starburst 99 SED
 </I></h2><kbd><br>title Starburst 99 SED
 <br>#
@@ -13590,6 +14565,7 @@ atmosphere models.
 <br>#
 <br># other commands for details     =========
 <br>constant temper 4
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>save overview "stars_starburst99.ovr"
@@ -13633,6 +14609,7 @@ mechanism is the same.
 <br>#
 <br># other commands for details     =========
 <br>constant temper 4
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>save overview "stars_starburst99_2d.ovr"
@@ -13675,6 +14652,7 @@ mechanism is the same.
 <br>#
 <br># other commands for details     =========
 <br>constant temperature 4.373
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>#
@@ -13736,6 +14714,7 @@ constant temperature is set to that this tests shape of stellar continuum
 <br># dependence on the precise shape of the continuum.
 <br>no induced processes
 <br>constant temperature 4
+<br>no blends
 <br>#
 <br># commands controlling output    =========
 <br>#
@@ -13796,6 +14775,7 @@ relevant lengthscale is modelled in a single zone
 <br>print ages
 <br>set save prefix "time_cool_cd"
 <br>save time dependent ".tim" no hash
+<br>save dt ".dt" no hash
 <br>save overview ".ovr" no hash
 <br>save cooling ".col" no hash
 <br>save heating ".het" no hash
@@ -13915,9 +14895,8 @@ full run to low temperatures is deemed unnecessary.
 <br>cosmic rays background
 <br>#
 <br># commands controlling output    =========
-<br>normalize to "O  8" 18.9709A
+<br>normalize to "O  8" 18.9689A
 <br>print line faint -3 log
-<br>print line cumulative
 <br>print ages
 <br>set cumulative off
 <br>set save prefix "time_cool_cd_noaccu"
