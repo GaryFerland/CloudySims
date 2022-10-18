@@ -166,7 +166,8 @@ monitor "H2O " 538.142m line intensity -17.54
 ## >>chng 13 jun 27, from -7.357 to -24.77, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 20 jul 21, from -24.77 to -24.73, update CR H2 dissoc as per  2020RNAAS...4...78S
-monitor "HNC " 1652.90m  line intensity -24.73
+## >>chng 21 sep 11, from -24.73 to -25.11, LAMDA update
+monitor "HNC " 1652.90m  line intensity -25.11
 ## >>chng 13 jun 27, from -8.563 to -26.07, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 monitor "HCS+" 1755.88m  -26.07 line intensity
@@ -205,7 +206,9 @@ monitor "^13CO" 906.599m  -20.91 line intensity
 ## >>chng 13 jun 27, from -8.247 to -21.49, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 20 jul 21, from -21.49 to -21.47, update CR H2 dissoc as per  2020RNAAS...4...78S
-monitor "CN  " 880.858m  -21.47  line intensity
+## >>chng 21 sep 11, from -21.47 to -22.46, LAMDA update
+## >>chng 21 sep 15, from -22.46 to -21.41, go back to unresolved model
+monitor "CN  " 880.858m  -21.41  line intensity
 # 
 # h2_cr.in
 # class limit  

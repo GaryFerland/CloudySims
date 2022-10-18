@@ -34,7 +34,6 @@ realnum HydroCSInterp( long int nelem, long int ipHi, long int ipLo, long int Co
 \param nLo
 \param lLo
 \param sLo
-\param gLo
 \param IP_Ryd_Lo
 \param Aul
 \param tauLo
@@ -44,7 +43,7 @@ realnum HydroCSInterp( long int nelem, long int ipHi, long int ipLo, long int Co
 */
 realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 					long nHi, long lHi, long sHi, long gHi, double IP_Ryd_Hi,
-					long nLo, long lLo, long sLo, long gLo, double IP_Ryd_Lo,
+					long nLo, long lLo, long sLo,/*long gLo,*/ double IP_Ryd_Lo,
 					double Aul, double tauLo, double EnerWN, double EnerErg, const char **where );
 
 /**HydroLevel calls iso_level to solve for ionization balance level populations of model hydrogen atom 

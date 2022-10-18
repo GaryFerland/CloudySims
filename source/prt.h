@@ -63,13 +63,16 @@ void prt_line_inlist ( FILE *ioOUT, const char *label, realnum wvlng );
 void PrtHeader(void);
 
 /**prt_LineLabels save all labels and wavelengths for emission line array 
-\param io file handle to write output
-\param lgPrintAll print all if true, if false then do not print parts of 
- transferred lines
+ *
+ * \param io            file handle to write output
+ * \param lgPrintAll    print all if true, if false then do not print parts of 
+ *                      transferred lines
+ * \param lgPrintIndex  print the index of the line in the line stack
 */
 void prt_LineLabels(
 	FILE * io,
-	bool lgPrintAll
+	bool lgPrintAll,
+	bool lgPrintIndex
 	);
 
 /**prtmet print all line optical depths at end of iteration */
@@ -111,18 +114,27 @@ void DatabasePrintReference();
  end of calculation */
 void PrtAllTau(void);
 
-class t_prt_matrix {
+class t_prt_matrix : public module {
 public:
 	/** species element and ionization stage set with print array command to print
 	  * matrixes input to solvers */
 	string species;
 	string speciesLevels;
 	vector<long> speciesLevelList;
+	bool lgLevelsResolved = false;
 
 	void zero();
+	void comment(t_warnings&) {}
+
+	const char *chName() const
+	{
+		return "prt_matrix";
+	}
+
 	void setSpecies( const string &sspec );
 	void resolveLevels();
-	void prtRates( const long nlevels_local, const multi_arr<double,2,C_TYPE> &a,
+	void prtRates( const long numLevels,
+			const multi_arr<double,2,C_TYPE> &matrix,
 			valarray<double> &b );
 };
 

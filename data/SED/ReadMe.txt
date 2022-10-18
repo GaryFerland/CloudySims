@@ -68,6 +68,21 @@ xdr.sed
 A very simple XDR SED.
 See Hazy1 for more details.
 
+NGC5548obscured.sed
+#NGC5548 SED taken from Mehdipour et al. 2015 [A&A 575, A22 (2015)], figure 7 (blue curve).  
+This curve shows the intrinsic SED produced by the AGN and then filtered by an obscurer. 
+The obscuration resulted in the X-ray absorption. specifies optional SEDs.  
+
+
+Mrk817.sed
+#Mrk 817 SED taken from Kara et al. 2021 [ ApJ 922, 151 (2021)], figure 8 (blue curve). 
+This is the intrinsic SED produced by the AGN.
+
+
+Mrk817obscured.sed
+#Mrk 817 obscured SED taken from Kara et al. 2021 [ ApJ 922, 151 (2021)], figure 8 (red curve). 
+This curve shows the intrinsic SED produced by the AGN and then filtered by an obscurer. 
+The obscuration resulted in the X-ray absorption.
 ==========================================================
 
 Original coding by Joshua Schlueter, NSF REU 2012 Summer

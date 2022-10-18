@@ -66,7 +66,8 @@ monitor line luminosity "blnd"  1397 5.854 ##total of sum of both Si IV comp
 ## >>chng 11 aug 06, from 5.629 to 5.59, effects of yesterday's changes, mostly r5341
 ## >>chng 12 nov 01, from 5.59 to 5.553, Chianti experimental levels, revised Badnell DR suppression
 ## >>chng 14 mar 26, from 5.553 to 5.599, move O to external databases
-monitor line luminosity "blnd"  1402 5.599 ##total O IV] 1402 
+## >>chng 22 jul 09, from 5.599 to 5.543, upgrade to Chianti v10
+monitor line luminosity "blnd"  1402 5.543 ##total O IV] 1402 
 ##
 ## >>chng 06 nov 29, from 6.908 to 6.884, Badnell DR
 ## >>chng 11 jul 12, from 6.884 to 6.917, enable fit to Badnell DR suppression
@@ -77,7 +78,8 @@ monitor line luminosity "blnd" 1549 6.925 ##total of sum of both C IV comp
 ## >>chng 08 mar 17, from 5.738 to 5.776, RP update line overlap
 ## >>chng 13 nov 22, from 5.776 to 5.795, collapsed branch merge r8609
 ## >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
-monitor line luminosity "he 2"  1640.40A 5.795 ##total He II Balmer-alpha 1640
+## >>chng 21 apr 08, wl from 1640.40A to 1640.41A, update 1-e energies to np
+monitor line luminosity "he 2"  1640.41A 5.795 ##total He II Balmer-alpha 1640
 ##
 ## >>chng 06 aub 06, update O+2 & N+2 CT, from 5.756 to 5.700
 ## >>chng 09 feb 23, from 5.7 to 5.727, remove otslin, otscon dampers (PR #84, r2758)
@@ -130,7 +132,8 @@ monitor line luminosity "blnd" 2326 5.28 err 0.1 ##total C II] 2324.69 + 2328.12
 ## >>chng 13 jan 10, from 6.195 to 6.218, fix in-zone continuum shielding
 ## >>chng 14 mar 26, from 6.218 to 6.127, move O to external databases
 ## >>chng 14 apr 08, from 6.127 to 6.203, O excit state photo back on
-monitor line luminosity "blnd" 2798 6.203
+## >>chng 22 jul 09, from 6.203 to 6.228, upgrade to Chianti v10
+monitor line luminosity "blnd" 2798 6.228
 ##
 ## >>chng 09 jun 15, add this monitor
 ## >>chng 11 nov 16, from 5.7 to 5.957, adjust newmole monitors

@@ -435,7 +435,7 @@ STATIC double iso_get_collision_strength( long ipISO, long nelem, long ipCollide
 	{
 		cs = GetHlikeCollisionStrength( nelem, ipCollider,
 				nHi, lHi, sHi, gHi, IP_Ryd_Hi,
-				nLo, lLo, sLo, gLo, IP_Ryd_Lo,
+				nLo, lLo, sLo,/*gLo,*/ IP_Ryd_Lo,
 				Aul, tauLo, EnerWN, EnerErg, &where );
 	}
 	else if( ipISO == ipHE_LIKE )

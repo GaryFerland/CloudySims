@@ -19,6 +19,7 @@
 #include "doppvel.h"
 #include "oxy.h"
 #include "hydrogenic.h"
+#include "continuum.h"
 #include "vectorize.h"
 #include "container_classes.h"
 
@@ -602,9 +603,10 @@ void dBase_solve()
 			/* total cooling and its derivative, set here but nothing done with it*/
 			&cooltl, 
 			&coolder, 
-			/* string used to identify calling program in case of error */
+			/* string used to identify species in case of error */
 			spName, 
 			dBaseSpecies[ipSpecies].lgPrtMatrix,
+			dBaseSpecies[ipSpecies].lgImgMatrix,
 			/* nNegPop flag indicating what we have done
 			 * positive if negative populations occurred
 			 * zero if normal calculation done
@@ -638,6 +640,8 @@ void dBase_solve()
 			else
 			{
 				fprintf(ioQQQ," PROBLEM in dBase_solve, atom_levelN returned negative population .\n");
+				ContNegative();
+				ShowMe();
 				cdEXIT( EXIT_FAILURE );
 			}
 		}
@@ -761,7 +765,7 @@ void dBase_solve()
 		}
 	}
 
-	// total heating for all dBase dBaseSpecies	
+	// total heating for all data base species
 	thermal.setHeating(0,27,totalHeating);
 
 	return;
@@ -896,7 +900,8 @@ double CHIANTI_Upsilon(long ipSpecies, long ipCollider, long ipHi, long ipLo, do
 	else
 		TotalInsanity();
 
-	double xs[9];
+	vector<double> xs( intsplinepts );
+
 	/*Creating spline points array*/
 	double* spl = AtmolCollSplines[ipSpecies][ipHi][ipLo][ipCollider].collspline.data();
 	for(intxs=0;intxs<intsplinepts;intxs++)
@@ -910,10 +915,12 @@ double CHIANTI_Upsilon(long ipSpecies, long ipCollider, long ipHi, long ipLo, do
 		}
 	}
 
+	double* xs2 = xs.data();
+
 	const bool SPLINE_INTERP=false;
 	if (! SPLINE_INTERP)
 	{
-		fsups = linint( xs, spl, intsplinepts, fxt);
+		fsups = linint( xs2, spl, intsplinepts, fxt);
 	}
 	else
 	{
@@ -930,7 +937,7 @@ double CHIANTI_Upsilon(long ipSpecies, long ipCollider, long ipHi, long ipLo, do
 		}
 		
 		/*Extracting out the value*/
-		splint(xs,spl,spl2,intsplinepts,fxt,&fsups);
+		splint(xs2,spl,spl2,intsplinepts,fxt,&fsups);
 	}
 
 	/*Finding upsilon*/

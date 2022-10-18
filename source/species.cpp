@@ -361,7 +361,7 @@ void database_readin( void )
 		d.open( chPath, ES_NONE );
 		d.getline();
 		/* magic numbers for this version of Chianti masterlist */
-		static const long int nYr = 11, nMon = 10, nDay = 3;
+		static const long int nYr = 22, nMon = 7, nDay = 9;
 		d.checkMagic( nYr, nMon, nDay );
 
 		while( d.getline() )
@@ -605,7 +605,7 @@ STATIC void trim_levels(long ipSpecies)
 		{
 			fprintf(ioQQQ,"PROBLEM: Spectrum %s (species: %s) has no transition probabilities out of the first %li levels.\n",
 				spectralLabel, speciesLabel.c_str(), totalNumLevels);
-			fprintf(ioQQQ,"Consider allowing Cloudy to use more levels (see Hazy 1 SPECIES STOUT/CHIANTI LEVELS MAX), add more low-level"
+			fprintf(ioQQQ,"Consider allowing Cloudy to use more levels (see Hazy 1 SPECIES \"NAME\" LEVELS=ALL), add more low-level"
 					" transition probabilities, or disable %s in the masterlist.\n\n", spectralLabel);
 			cdEXIT(EXIT_FAILURE);
 		}
@@ -772,7 +772,7 @@ void makeChemical(char* chLabelChemical, long nelem, long ion)
 	chLabelChemical[CHARS_SPECIES-1] = '\0';
 }
 
-STATIC void spectral_to_chemical( char *chLabelChemical, char* chLabel, long &nelem, long &IonStg )
+STATIC void spectral_to_chemical( char *chLabelChemical, const char* chLabel, long &nelem, long &IonStg )
 {
 	DEBUG_ENTRY( "spectral_to_chemical()" );
 
@@ -793,12 +793,21 @@ STATIC void spectral_to_chemical( char *chLabelChemical, char* chLabel, long &ne
 	return;
 }
 
-void spectral_to_chemical( char *chLabelChemical, char* chLabel )
+void spectral_to_chemical( char *chLabelChemical, const char* chLabel )
 {
 	DEBUG_ENTRY( "spectral_to_chemical()" );
 
 	long nelem, IonStg;
 	return spectral_to_chemical( chLabelChemical, chLabel, nelem, IonStg );
+}
+
+void spectral_to_chemical( string &chemicalLabel, const char *chLabel )
+{
+	DEBUG_ENTRY( "spectral_to_chemical()" );
+
+	char speciesLabel[NCHLAB] = "";
+	spectral_to_chemical( speciesLabel, chLabel );
+	chemicalLabel = speciesLabel;
 }
 
 bool parse_chemical( const string &chLabelChem,
@@ -907,6 +916,24 @@ void chemical_to_spectral( const string &chLabelChem, string &chLabelSpec )
 	}
 }
 
+/* Tell if the given species is enabled */
+bool isSpeciesActive( const string &chLabelChem )
+{
+	DEBUG_ENTRY( "isSpeciesActive()" );
+
+	for( size_t i=0; i<mole_global.list.size(); ++i )
+	{
+		if( mole.species[i].levels == NULL )
+			continue;
+		if( mole.species[i].dbase == NULL )
+			continue;
+		if( mole.species[i].levels->chLabel() == chLabelChem )
+			return mole.species[i].dbase->lgActive;
+	}
+
+	return false;
+}
+
 /*This function fills the nelem and IonStg fields */
 STATIC void states_nelemfill(void)
 {
@@ -925,6 +952,12 @@ STATIC void states_nelemfill(void)
 			nelem = -1;
 			IonStg = -1;
 			strcpy( chLabelChemical, dBaseSpecies[i].chLabel );
+
+			dBaseSpecies[i].lgImgMatrix = false;
+			if( save.img_matrix.species == dBaseStates[i].chLabel() )
+			{
+				dBaseSpecies[i].lgImgMatrix = true;
+			}
 		}
 		else
 		{
@@ -966,6 +999,12 @@ STATIC void states_nelemfill(void)
 			if( prt.matrix.species == dBaseStates[i].chLabel() )
 			{
 				dBaseSpecies[i].lgPrtMatrix = true;
+			}
+
+			dBaseSpecies[i].lgImgMatrix = false;
+			if( save.img_matrix.species == dBaseStates[i].chLabel() )
+			{
+				dBaseSpecies[i].lgImgMatrix = true;
 			}
 		}
 

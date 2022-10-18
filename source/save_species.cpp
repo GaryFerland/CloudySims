@@ -451,8 +451,7 @@ void SaveSpeciesOptDep( const long int ipPun, const string &speciesLabel )
 		save.SaveHeaderDone( ipPun );
 	}
 
-	genericState species;
-	getSpecies( speciesLabel, species );
+	genericState species = getSpeciesGeneric( speciesLabel );
 
 	if( species.sp->lines == NULL )
 	{
@@ -542,10 +541,9 @@ void mole_save(FILE *punit, const char speciesname[], const char args[], bool lg
 	else
 		doTask=doData;
 	
-	doTask(punit,Field("Depth","%.5e",depth));
+	doTask(punit,Field("#Depth","%.5e",depth));
 
-	for (mole_reaction_i p
-				 =mole_priv::reactab.begin(); p != mole_priv::reactab.end(); ++p) 
+	for (mole_reaction_i p = mole_priv::reactab.begin(); p != mole_priv::reactab.end(); ++p)
 	{
 		const mole_reaction &rate = *p->second;
 		bool ipthis = false;

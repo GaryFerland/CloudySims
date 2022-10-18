@@ -23,6 +23,7 @@ public:
 	bool associated() const;
 	string label() const;
 	string database() const;
+	bool isSpecies() const;
 };
 
 double column(const genericState&);
@@ -57,5 +58,14 @@ const molezone *getLevelsGeneric(const string &chLabel, bool lgValidate, vector<
  * \return               list of genericState species
  */
 vector<genericState> matchGeneric(const string &chLabel, bool lgValidate);
+
+/** getSpeciesGeneric - acquire the species matching the input string
+ *
+ * \param [in] speciesLabel  input species string
+ *
+ * \returns species     reference to requested species
+ */
+genericState getSpeciesGeneric( const string &speciesLabel );
+
 
 #endif // GENERIC_STATE_H_

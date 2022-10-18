@@ -43,7 +43,9 @@ save monitors last "nlr_paris.asr"
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "H  1" 4861.33A luminosity -0.852
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "H  1" 4861.32A luminosity -0.852
 ##
 ## >>chng 01 may 10, from 1.08 to 1.005, ct network rates change
 ## >>chng 01 dec 21, from 1.005 to 0.954, inner shell yields
@@ -52,7 +54,9 @@ monitor line "H  1" 4861.33A luminosity -0.852
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 17, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "Q(H)" 4861.33A 0.9986
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "Q(H)" 4861.32A 0.9986
 ##
 ## >>chng 01 jul 01, from 33.8 to 32.0 better diffuse fields, more lines
 ## >>chng 03 jul 14, from 32.0 to 33.6, slow drift up
@@ -68,7 +72,9 @@ monitor line "H  1" 1215.67A 34.16
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "Ca B" 4861.33A 0.921
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "Ca B" 4861.32A 0.921
 ##
 ## >>chng 01 may 10, from 0.34 to 0.318 ct network rates change
 ## >>chng 02 nov 20, from 0.318 to 0.341, new he ots diff
@@ -79,7 +85,8 @@ monitor line "Ca B" 4861.33A 0.921
 ## >>chng 13 jul 24, wl from 4686 to 4685.64A, increased wl precision to 6 sig. fig.
 ## >>chng 16 aug 07, from 0.3627 to 0.2829, Marios bug fixes
 ## >>chng 20 aug 25, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
-monitor line "He 2" 4685.70A 0.2829
+## >>chng 21 apr 08, wl from 4685.70A to 4685.68A, up 1-e energies to np
+monitor line "He 2" 4685.68A 0.2829
 ##
 ## >>chng 01 may 10, from 2.40 to 2.248 ct network rates change
 ## >>chng 02 nov 20, from 2.248 to 2.408, new he ots diff
@@ -87,7 +94,8 @@ monitor line "He 2" 4685.70A 0.2829
 ## >>chng 08 apr 30, from 2.29 to 2.53 H, He topoff change
 ## >>chng 16 aug 07, from 2.53 to 2.273, Marios bug fixes
 ## >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
-monitor line "He 2" 1640.40A 2.273
+## >>chng 21 apr 08, wl from 1640.40A to 1640.41A, up 1-e energies to np
+monitor line "He 2" 1640.41A 2.273
 ##
 ## >>chng 00 dec 01, from 0.100 to 0.107, chng He sec ioniz effic
 ## >>chng 02 dec 11, from 0.107 to 0.097, new hei
@@ -171,7 +179,8 @@ monitor line "N  2"  6583.45 1.915
 ## >>chng 09 feb 23, from 0.416 to 0.3717, remove otslin, otscon dampers (PR #84, r2758)
 ## >>chng 14 mar 26, from 0.3717 to 0.3549, Move oxygen data to stout and chianti files
 ## >>chng 16 jul 24, from 0.3549 to 0.3721, update C III to 2014A&A...566A.104F
-monitor line "blnd"  1750 0.3721
+## >>chng 22 jul 09, from 0.3721 to 0.3443, upgrade to Chianti v10
+monitor line "blnd"  1750 0.3443
 ##
 ## >>chng 01 mar 17, from 0.518 to 0.492 change in H coll str, increase error
 ## >>chng 06 jul 25, from 0.492 to 0.544 HN update OIII, OII collision data
@@ -192,7 +201,8 @@ monitor line "blnd" 1486 0.8154 error 0.1
 ## >>chng 13 feb 01, from 0.3134 to 0.2979, BUGFIX, largely undo r6703
 ## >>chng 14 mar 26, from 0.2979 to 0.2827, Move oxygen data to stout and chianti files
 ## >>chng 16 jul 24, from 0.2827 to 0.2996, update C III to 2014A&A...566A.104F
-monitor line "blnd"  1240 0.2996
+## >>chng 22 jul 09, from 0.2996 to 0.3155, upgrade to Chianti v10
+monitor line "blnd"  1240 0.3155
 ##
 ## >>chng 00 oct xx, from 1.08 to 1.177 H- opacity bug, rebin optical continuum
 ## >>chng 01 jul 01, from 1.177 to 1.068 better diffuse fields, more lines
@@ -272,7 +282,8 @@ monitor line "O  3"  4363.21 0.4268
 ## >>chng 11 aug 05, from 0.5938 to 0.5596, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 14 mar 26, from 0.5596 to 0.6027, Move oxygen data to stout and chianti files
 ## >>chng 16 jul 24, from 0.6027 to 0.6326, update C III to 2014A&A...566A.104F
-monitor line "blnd"  1402 0.6326
+## >>chng 22 jul 09, from 0.6326 to 0.5895, upgrade to Chianti v10
+monitor line "blnd"  1402 0.5895
 ##
 ## >>chng 01 may 10, from 5.787 to 5.404 ct network rates change
 ## >>chng 03 jun 09, from 5.404 to 5.70, finger zoning, bigger H atom
@@ -280,7 +291,9 @@ monitor line "blnd"  1402 0.6326
 ## >>chng 06 nov 12, from 6.61 to 6.07 NA update [OIV] cs to Tayal 06
 ## >>chng 12 oct 22, from 6.07 to 6.354, zone tau in rt_line_one
 ## >>chng 14 mar 26, from 6.354 to 5.609, Move oxygen data to stout and chianti files
-monitor line "o  4"  25.8832m  5.609
+## >>chng 22 jul 09, wl from 25.8832m to 25.8863m, upgrade to Chianti v10
+## >>chng 22 jul 09, from 5.609 to 7.074, upgrade to Chianti v10
+monitor line "o  4"  25.8863m  7.074
 ##
 ## >>chng 01 may 10, from 0.264 to 0.246 ct network rates change
 ## >>chng 01 dec 21, from 0.246 to 0.265, inner shell yields
@@ -295,7 +308,8 @@ monitor line "o  4"  25.8832m  5.609
 ## >>chng 16 jul 24, from 0.3132 to 0.3404, update C III to 2014A&A...566A.104F
 ## >>chng 16 aug 17, from 0.3404 to 0.1967, botches due to bugfix at r11237
 ## >>chng 16 aug 17, from 0.1967 to 0.3311, botches, in O 5, due to update to head of this branch
-monitor line "blnd"  1218  0.3311
+## >>chng 22 jul 09, from 0.3311 to 0.3504, upgrade to Chianti v10
+monitor line "blnd"  1218  0.3504
 ##
 ## >>chng 01 oct 08 from 0.120 to 0.114, very small change
 ## >>chng 01 dec 21, from 0.114 to 0.136, inner shell yields
@@ -309,7 +323,8 @@ monitor line "blnd"  1218  0.3311
 ## >>chng 11 aug 05, from 0.154 to 0.1329, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 13 jan 10, from 0.1329 to 0.1452, fix in-zone continuum shielding
 ## >>chng 14 mar 26, from 0.1452 to 0.1321, Move oxygen data to stout and chianti files
-monitor line "blnd"  1035  0.1321 error 0.1
+## >>chng 22 jul 09, from 0.1321 to 0.1494, upgrade to Chianti v10
+monitor line "blnd"  1035  0.1494 error 0.1
 ##
 ## >>chng 00 oct xx, from 0.172 to 0.225 H- opacity bug, rebin optical continuum
 ## >>chng 01 sep 12, from 0.225 to 0.212, NI cs change
@@ -369,7 +384,9 @@ monitor line "blnd" 2424 1.442
 ## >>chng 09 feb 23, from 1.22 to 1.163, remove otslin, otscon dampers (PR #84, r2758)
 ## >>chng 13 jul 24, from 1.163 to 1.096, Ne to external databases
 ## >>chng 13 jul 26, wl from 3426 to 3426.03A, increased wl precision to 6 sig. fig.
-monitor line "ne 5" 3426.03A 1.096
+## >>chng 22 jul 09, wl from 3426.03A to 3425.88A, upgrade to Chianti v10
+## >>chng 22 jul 09, from 1.096 to 1.15, upgrade to Chianti v10
+monitor line "ne 5" 3425.88A 1.15
 ##
 ## >>chng 01 may 10, from 2.688 to 2.508 ct network rates change
 ## >>chng 02 nov 20, from 2.508 to 2.701, new he ots diff
@@ -378,7 +395,9 @@ monitor line "ne 5" 3426.03A 1.096
 ## >>chng 12 dec 13, from 2.74 to 2.863, various convergence test tweaks
 ## >>chng 13 feb 01, from 2.863 to 2.716, BUGFIX, largely undo r6703
 ## >>chng 13 jul 24, from 2.716 to 2.956, Ne to external databases
-monitor line "Ne 5" 24.2065m  2.956
+## >>chng 22 jul 09, wl from 24.2065m to 24.3109m, upgrade to Chianti v10
+## >>chng 22 jul 09, from 2.956 to 2.146, upgrade to Chianti v10
+monitor line "Ne 5" 24.3109m  2.146
 ##
 ## >>chng 06 jul 06, add this line
 ## >>chng 06 aug 11, from 2.44 to 2.64 Meudon 06 compar, bowen CT cs update
@@ -386,7 +405,9 @@ monitor line "Ne 5" 24.2065m  2.956
 ## >>chng 13 feb 01, from 2.764 to 2.622, BUGFIX, largely undo r6703
 ## >>chng 13 jul 24, from 2.622 to 2.875, Ne to external databases
 ## >>chng 13 jul 26, wl from 14.32m to 14.3228m, increased wl precision to 6 sig. fig.
-monitor line "ne 5" 14.3228m 2.875
+## >>chng 22 jul 09, wl from 14.3228m to 14.3178m, upgrade to Chianti v10
+## >>chng 22 jul 09, from 2.875 to 1.747, upgrade to Chianti v10
+monitor line "ne 5" 14.3178m 1.747
 ##
 ## >>chng 00 oct xx, from 1.62 to 1.767 H- opacity bug, rebin optical continuum
 ## >>chng 03 may 22, from 1.77 to 1.57, chng in Lya dest prob, DEST0

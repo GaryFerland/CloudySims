@@ -14,6 +14,8 @@
 #include "conv.h"
 #include "vectorize.h"
 #include "prt.h"
+#include "save.h"
+#include "species.h"
 
 // Enable eigen-analysis of interaction matrix, also need to link with
 // -llapack (and have appropriate development package installed to
@@ -36,6 +38,59 @@ namespace {
 	{}
 }
 #endif
+
+void gthsolve(
+	multi_arr<double,2,C_TYPE>& amat,
+	std::valarray<double>& pi,
+	long nlev,
+	double abund
+	)
+{
+	// Solve balance system as equilibrium state of a Markov chain.
+	// This is a rearrangement of Gaussian Elimination guaranteed to
+	// result in a non-negative population distribution, if the rates
+	// themselves are positive.
+	//
+	// Grassmann, W.K., Taksar, M.I. and Heyman, D.P., 1985,
+	// Operations Research, 33, 1107–1116
+	// Zhao, Y.Q., 2021, arXiv:2101.11657
+	
+	for ( long n = nlev-1; n > 0; --n )
+	{
+		double sum = 0.;
+		for ( long k = 0; k < n; ++k )
+		{
+			sum += amat[n][k];
+		}
+		sum = 1./sum;
+		pi[n] = sum;
+		for ( long i = 0; i < n; ++i )
+		{
+			double factor = sum*amat[i][n];
+			for ( long j = 0; j < n; ++j )
+			{
+				amat[i][j] += factor*amat[n][j];
+			}
+		}
+	}
+	pi[0] = 1.;
+	double norm = pi[0];
+	for ( long j=1; j < nlev; ++j )
+	{
+		double sum = 0.;		
+		for ( long i = 0; i < j; ++i )
+		{
+			sum += pi[i]*amat[i][j];
+		}
+		pi[j] *= sum;
+		norm += pi[j];
+	}
+	norm = abund/norm;
+	for ( long j=0; j < nlev; ++j )
+	{
+		pi[j] *= norm;
+	}
+}
 
 // Set collision rate from collision strength
 void setCollRate::operator()(
@@ -151,6 +206,8 @@ void Atom_LevelN::operator()(
 	const char *chLabel, 
 	/* flag to print matrices input to solvers */
 	const bool lgPrtMatrix,
+	/* flag to create image for rate matrix input to solvers */
+	const bool lgImgMatrix,
 	/* nNegPop flag indicating what we have done
 	 * positive if negative populations occurred
 	 * zero if normal calculation done
@@ -345,6 +402,9 @@ void Atom_LevelN::operator()(
 	/* we will predict populations */
 	*lgZeroPop = false;
 
+	multi_arr<double,2,C_TYPE> Save_amat, amat2;
+	valarray<double> Save_bvec;
+
 	if( !lgLTE )
 	{
 		bvec.resize(nlev);
@@ -416,11 +476,12 @@ void Atom_LevelN::operator()(
 			}
 		}
 
-		double maxdiag = 0.;
+		double maxdiag = 0., totsrc = 0.;
 		for( level=0; level < nlev; level++ )
 		{
 			// source terms from elsewhere
 			bvec[level] = source[level];
+			totsrc += source[level];
 			if( amat[level][level] > maxdiag )
 				maxdiag = amat[level][level]; 
 			amat[level][level] += sink[level];
@@ -446,6 +507,12 @@ void Atom_LevelN::operator()(
 		// suggests that ~1e-14 might be appropriate for the solution of
 		// matrices in double precision.
 
+
+		bool DO_GTH = true, compareGTH = false;
+		if (DO_GTH || compareGTH )
+		{
+			amat2 = amat;
+		}
 		const double CONDITION_SCALE = 1e-10;
 		double conserve_scale = maxdiag*CONDITION_SCALE;
 		ASSERT( conserve_scale > 0.0 );
@@ -455,7 +522,11 @@ void Atom_LevelN::operator()(
 			amat[level][0] += conserve_scale;
 		}
 		bvec[0] += abund*conserve_scale;
-
+		if (compareGTH)
+		{
+			Save_amat = amat;
+			Save_bvec = bvec;
+		}
 		if( lgDeBug )
 		{
 			fprintf(ioQQQ," amat matrix follows:\n");
@@ -480,7 +551,68 @@ void Atom_LevelN::operator()(
 			prt.matrix.prtRates( nlev, amat, bvec );
 		}
 
-		ner = solve_system(amat.vals(), bvec, nlev, NULL);
+		if( lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
+				save.img_matrix.matchZone( nzone ) )
+		{
+			Save_amat = amat;
+			Save_bvec = bvec;
+
+			save.img_matrix.createImage( iteration, nzone, nlev,
+							Save_amat, Save_bvec );
+		}
+
+
+		if (!DO_GTH)
+		{
+			// Use old matrix solution infrastructure
+			ner = solve_system(amat.vals(), bvec, nlev, NULL);
+			
+			// Compare GTH solution for failing case, where
+			// applicable.  totsrc <= 0. avoids test for FP equality
+			if (compareGTH && totsrc <= 0. && strcmp(chLabel,"Ca 1") == 0)
+			{
+				std::valarray<double> bvec2(nlev);
+				gthsolve(amat2, bvec2, nlev, abund);
+				for (level = 0; level < nlev; ++level)
+				{
+					double sum1= -Save_bvec[level], sum2 = sum1;
+					for (ihi = 0; ihi < nlev; ++ihi) {
+						sum1 += Save_amat[ihi][level]*bvec[ihi];
+						sum2 += Save_amat[ihi][level]*bvec2[ihi];
+					}
+					double scale = 1./Save_amat[level][level];
+					fprintf(ioQQQ,"DEBUG %s: %3ld; old %15.8g e=%15.8g; new %15.8g e=%15.8g\n",
+							  chLabel,level,bvec[level],sum1*scale,bvec2[level],sum2*scale);
+				}
+			}
+		}
+		else
+		{
+			// Only use GTH solution to deal with pathological cases,
+			// e.g., Ca 1, which involve no source terms.
+			// These cause the solver (solve_system) to compute
+			// negative populations.
+			// The problem is here solved with a protoype GTH
+			// algorithm; we look to extend the scope of this in due
+			// course.
+			if ( totsrc <= 0. /* && strcmp(chLabel,"Ca 1") == 0 */ )
+			{
+				gthsolve(amat2, bvec, nlev, abund);
+				ner = 0;
+			}
+			else
+			{
+				ner = solve_system(amat.vals(), bvec, nlev, NULL);
+			}
+		}
+
+		if( lgImgMatrix && save.img_matrix.matchIteration( iteration ) &&
+				save.img_matrix.matchZone( nzone ) )
+		{
+			// bvec holds the populations by this point
+			//
+			save.img_matrix.addImagePop_FITS( iteration, nzone, nlev, bvec );
+		}
 
 		if( ner != 0 )
 		{
@@ -489,7 +621,6 @@ void Atom_LevelN::operator()(
 			fprintf( ioQQQ, " Old, new level pops follow\n" );
 			for( level=0; level < nlev; level++ )
 			{
-				/* save bvec into populations */
 				fprintf(ioQQQ, "%ld %.2e %.2e \n" , level, pops[level] , bvec[level] );
 			}
 			cdEXIT(EXIT_FAILURE);
@@ -729,6 +860,18 @@ void Atom_LevelN::operator()(
 		for( level=0; level < nlev; level++ )
 		{
 			pops[level] = (double)MAX2(0.,pops[level]);
+		}
+
+		if( !lgLTE )
+		{
+			string species;
+			spectral_to_chemical( species, chLabel );
+			save.img_matrix.createImage( species, iteration, nzone, nlev,
+							Save_amat, Save_bvec, true );
+
+			valarray<double> SavePops( get_ptr(pops), pops.size() );
+			save.img_matrix.addImagePop_FITS( species, iteration, nzone, nlev,
+								SavePops, true );
 		}
 	}
 

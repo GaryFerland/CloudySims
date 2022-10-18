@@ -6,6 +6,16 @@
 
 #include "iso.h"
 
+
+/**reduced_amu - Calculate reduced mass in AMU
+ *
+ * \param nelen   [in]   element index (0 for H)
+ * \param Collider[in]   collision partner
+ *
+ * \returns  reduced mass
+ */
+double reduced_amu( long nelem, long Collider );
+
 /**HeCollid evaluate collisional rates 
 \param nelem
 */

@@ -753,7 +753,7 @@ void lines()
 			"charge transfer" );
 
 		static TransitionProxy lineNII5755;
-		getTransition(LineID("N  2",5754.61), lineNII5755);
+		getTransition(LineID("N  2",5754.59), lineNII5755);
 
 		/* >>chng 01 jul 09, add recombination contribution to 5755 */
 		/* >>refer	n2	rec	Liu, X.W., Storey, P.J., Barlow, M.J., Danziger, I.J., Cohen, M.,

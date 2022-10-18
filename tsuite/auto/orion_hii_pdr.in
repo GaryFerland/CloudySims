@@ -79,6 +79,7 @@ grains PAH function 3
 normalize to "O  1" 63.1679m
 # print lots of faint CO lines
 print line faint -4
+save monitors "orion_hii_pdr.asr" last
 save performance "orion_hii_pdr.per"
 save overview last "orion_hii_pdr.ovr"
 save heating "orion_hii_pdr.het"
@@ -98,6 +99,9 @@ save grain potential last "orion_hii_pdr.grnpot"
 save grain temperature last "orion_hii_pdr.grntem" 
 #
 # commands giving the monitors    =========
+## >>chng 21 may 21, increase default error - this is more realistic
+monitor set error 0.1
+#
 #
 ## >>chng 03 sep 12, from plan par to spherical geometry,
 ## all lines changed, so removed history
@@ -112,7 +116,9 @@ save grain temperature last "orion_hii_pdr.grntem"
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line luminosity "h  1" 4861.33A 0.729
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line luminosity "h  1" 4861.32A 0.729
 ##
 ## >>chng 04 jan 23, from -1.272 to -1.229, rescale orion dust to gas
 ## >>chng 04 apr 23, from -1.229 to -1.247, slow drift
@@ -601,7 +607,9 @@ monitor line luminosity "CO  " 260.169m  -3.497 error 0.15
 ## >>chng 12 apr 09, from -3.984 to -4.07, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 13 jul 24, wl from 236.5m to 236.549m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -4.07 to -4.231, update H3+ rates Indriola+ 2012
-monitor line luminosity "CO  " 236.549m  -4.231 error 0.15
+## >>chng 21 sep 11, from -4.231 to -4.152, LAMDA update
+## >>chng 21 nov 04, from -4.152 to -4.234, update mole co data
+monitor line luminosity "CO  " 236.549m  -4.234 error 0.15
 ##
 ## >>chng 03 oct 03, from -2.310 to -2.285, integ co ion solvers
 ## >>chng 04 mar 04, from -2.285 to -2.508 improv conv, incr error
@@ -626,7 +634,9 @@ monitor line luminosity "CO  " 236.549m  -4.231 error 0.15
 ## >>chng 12 apr 18, from -4.67 to -4.737, stout merge
 ## >>chng 13 jul 24, wl from 216.9m to 216.868m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -4.737 to -4.825, Move oxygen data to stout and chianti files
-monitor line luminosity "CO  " 216.868m  -4.825 error 0.15
+## >>chng 21 sep 11, from -4.825 to -4.676, LAMDA update
+## >>chng 21 nov 04, from -4.676 to -4.861, update mole co data
+monitor line luminosity "CO  " 216.868m  -4.861 error 0.15
 ## 
 ## >>chng 05 sep 30, add these 5
 ## >>chng 05 nov 22, from 11.19 to 10.99 stop half thick to avoid grn freeze out
@@ -713,6 +723,192 @@ monitor temperature "H2" 30.24 error 0.1
 ## >>chng 12 aug 06, from 11.2 to 11.12, bugfix - include Pelec_esc in several places
 ## >>chng 14 jan 05, from 11.12 to 11.05, N to external databases
 monitor column density HeH+ 11.05 error 0.1
+## 
+## >>chng 21 apr 11 add all remaining molecules with N(x) > 1e10 cm-2
+## >>chng 21 apr 16, from 10.51 to 10.98, add molecular column densities
+## >>chng 21 sep 11, from 10.98 to 11.51, LAMDA update
+## >>chng 21 nov 04, from 11.51 to 10.98, update mole co data
+monitor column density "C2+"       10.98  
+## >>chng 21 apr 16, from 17.01 to 14.67, add molecular column densities
+## >>chng 21 sep 11, from 14.67 to 14.9, LAMDA update
+## >>chng 21 nov 04, from 14.9 to 14.68, update mole co data
+monitor column density "C2"        14.68  
+## >>chng 21 apr 16, from 10.68 to 10.37, add molecular column densities
+## >>chng 21 sep 11, from 10.37 to 10.82, LAMDA update
+## >>chng 21 nov 04, from 10.82 to 10.34, update mole co data
+monitor column density "C2H+"      10.34  
+## >>chng 21 apr 16, from 16.17 to 13.96, add molecular column densities
+## >>chng 21 sep 11, from 13.96 to 14.07, LAMDA update
+## >>chng 21 nov 04, from 14.07 to 13.9, update mole co data
+monitor column density "C2H"       13.9
+## >>chng 21 apr 16, from 12.9 to 13.25, add molecular column densities
+## >>chng 21 sep 11, from 13.25 to 10.75, LAMDA update
+## >>chng 21 nov 04, from 10.75 to 13.21, update mole co data
+monitor column density "C2H2"      13.21  
+## >>chng 21 apr 16, from 13.23 to 10.95, add molecular column densities
+## >>chng 21 sep 11, from 10.95 to 11.32, LAMDA update
+## >>chng 21 nov 04, from 11.32 to 10.93, update mole co data
+monitor column density "C2H2+"     10.93  
+## >>chng 21 apr 16, from 10.62 to 9.198, add molecular column densities
+## >>chng 21 sep 11, from 9.198 to 7.614, LAMDA update
+## >>chng 21 nov 04, from 7.614 to 9.232, update mole co data
+monitor column density "C2H3+"     9.232  
+## >>chng 21 apr 16, from 15.46 to 12.46, add molecular column densities
+## >>chng 21 sep 11, from 12.46 to 12.69, LAMDA update
+## >>chng 21 nov 04, from 12.69 to 12.35, update mole co data
+monitor column density "C3"        12.35  
+## >>chng 21 apr 16, from 12.28 to 10.62, add molecular column densities
+## >>chng 21 sep 11, from 10.62 to 10.92, LAMDA update
+## >>chng 21 nov 04, from 10.92 to 10.52, update mole co data
+monitor column density "C3H+"      10.52
+## >>chng 21 apr 16, from 13.94 to 13.49, add molecular column densities
+## >>chng 21 sep 11, from 13.49 to 11.13, LAMDA update
+## >>chng 21 nov 04, from 11.13 to 13.42, update mole co data
+monitor column density "C3H"       13.42  
+## >>chng 21 apr 16, from 10.42 to 10.47, new monitor added
+## >>chng 21 apr 16, from 10.47 to 10.59, add molecular column densities
+monitor column density "CCl+"      10.59  
+## >>chng 21 apr 16, from 11.96 to 11.46, new monitor added
+## >>chng 21 apr 16, from 11.46 to 6.858, add molecular column densities
+monitor column density "CCl"       6.858  
+## >>chng 21 apr 16, from 10.89 to 12.07, add molecular column densities
+monitor column density "CH+"       12.07  
+## >>chng 21 apr 16, from 16.11 to 14.55, add molecular column densities
+## >>chng 21 sep 11, from 14.55 to 14.91, LAMDA update
+## >>chng 21 nov 04, from 14.91 to 14.59, update mole co data
+monitor column density "CH"        14.59  
+## >>chng 21 apr 16, from 10.96 to 11.65, add molecular column densities
+## >>chng 21 sep 11, from 11.65 to 11.7, LAMDA update
+## >>chng 21 nov 04, from 11.7 to 11.65, update mole co data
+monitor column density "CH2+"      11.65  
+## >>chng 21 apr 16, from 15.55 to 14.11, add molecular column densities
+## >>chng 21 sep 11, from 14.11 to 14.06, LAMDA update
+monitor column density "CH2"       14.06  
+## >>chng 21 apr 16, from 13.41 to 12.08, add molecular column densities
+## >>chng 21 sep 11, from 12.08 to 11.95, LAMDA update
+monitor column density "CH3+"      11.95
+## >>chng 21 apr 16, from 15.2 to 12.41, add molecular column densities
+## >>chng 21 sep 11, from 12.41 to 12.53, LAMDA update
+## >>chng 21 nov 04, from 12.53 to 12.44, update mole co data
+monitor column density "CH3"       12.44  
+## >>chng 21 apr 16, from 10.12 to 6.262, add molecular column densities
+## >>chng 21 nov 04, from 6.262 to 6.161, update mole co data
+monitor column density "CH4+"      6.161  
+## >>chng 21 apr 16, from 15.14 to 14.84, add molecular column densities
+## >>chng 21 sep 11, from 14.84 to 12.82, LAMDA update
+## >>chng 21 nov 04, from 12.82 to 14.84, update mole co data
+monitor column density "CH4"       14.84  
+## >>chng 21 apr 16, from 11.76 to 9.322, add molecular column densities
+## >>chng 21 sep 11, from 9.322 to 9.255, LAMDA update
+## >>chng 21 nov 04, from 9.255 to 9.299, update mole co data
+monitor column density "CH5+"      9.299  
+## >>chng 21 apr 16, from 15.6 to 13.35, add molecular column densities
+monitor column density "CN"        13.35  
+## >>chng 21 apr 16, from 17.28 to 7.013, add molecular column densities
+monitor column density "COgrn"     7.013  
+## >>chng 21 apr 16, from 10.56 to 10.34, add molecular column densities
+## >>chng 21 sep 11, from 10.34 to 10.83, LAMDA update
+## >>chng 21 nov 04, from 10.83 to 10.51, update mole co data
+monitor column density "CS+"       10.51  
+## >>chng 21 apr 16, from 16.89 to 17.04, add molecular column densities
+## >>chng 21 sep 11, from 17.04 to 16.96, LAMDA update
+monitor column density "CS"        16.96  
+## >>chng 21 apr 16, from 12.001to 12.0392, new monitor added
+## >>chng 21 apr 16, from 12.04 to 12.32, add molecular column densities
+monitor column density "H2Cl+"     12.32  
+## >>chng 21 apr 16, from 10.42 to 10.85, add molecular column densities
+monitor column density "H2O+"      10.85  
+## >>chng 21 apr 16, from 14.05 to 16.46, add molecular column densities
+monitor column density "H2O"       16.46  
+## >>chng 21 apr 16, from 11.41 to 12.91, add molecular column densities
+## >>chng 21 sep 11, from 12.91 to 12.98, LAMDA update
+monitor column density "H3O+"      12.98  
+## >>chng 21 apr 16, from 11.29 to 12.21, add molecular column densities
+monitor column density "HCl+"      12.21  
+## >>chng 21 apr 16, from 13.8 to 13.42, new monitor added
+## >>chng 21 apr 16, from 13.42 to 14.61, add molecular column densities
+monitor column density "HCl"       14.61  
+## >>chng 21 apr 16, from 15.17 to 13.81, add molecular column densities
+## >>chng 21 sep 11, from 13.81 to 14.16, LAMDA update
+monitor column density "HCN"       14.16  
+## >>chng 21 apr 16, from 12.61 to 10.27, add molecular column densities
+## >>chng 21 sep 11, from 10.27 to 10.56, LAMDA update
+monitor column density "HCNH+"     10.56  
+## >>chng 21 apr 16, from 12.65 to 13.49, add molecular column densities
+## >>chng 21 sep 11, from 13.49 to 13.56, LAMDA update
+monitor column density "HCO+"      13.56  
+## >>chng 21 apr 16, from 13.96 to 13.16, add molecular column densities
+## >>chng 21 sep 11, from 13.16 to 13.24, LAMDA update
+monitor column density "HCS+"      13.24 
+## >>chng 21 apr 16, from 15.85 to 14.56, add molecular column densities
+## >>chng 21 sep 11, from 14.56 to 14.13, LAMDA update
+monitor column density "HNC"       14.13
+## >>chng 21 apr 16, from 12.26 to 7.232, add molecular column densities
+monitor column density "HNO"       7.232  
+## >>chng 21 apr 16, from 12.97 to 11.73, add molecular column densities
+## >>chng 21 sep 11, from 11.73 to 11.79, LAMDA update
+monitor column density "HS+"       11.79  
+## >>chng 21 apr 16, from 14.71 to 11.88, add molecular column densities
+monitor column density "HS"        11.88  
+## >>chng 21 apr 16, from 12.49 to 10.83, add molecular column densities
+monitor column density "N2+"       10.83  
+## >>chng 21 apr 16, from 17.44 to 18.31, add molecular column densities
+monitor column density "N2"        18.31  
+## >>chng 21 apr 16, from 13.95 to 13.03, add molecular column densities
+## >>chng 21 sep 11, from 13.03 to 13.11, LAMDA update
+monitor column density "N2H+"      13.11
+## >>chng 21 apr 16, from 11.03 to 8.465, add molecular column densities
+monitor column density "N2O"       8.465
+## >>chng 21 apr 16, from 15.58 to 12.58, add molecular column densities
+monitor column density "NH"        12.58  
+## >>chng 21 apr 16, from 10.34 to 9.975, add molecular column densities
+monitor column density "NH2+"      9.975  
+## >>chng 21 apr 16, from 14.96 to 12.63, add molecular column densities
+monitor column density "NH2"       12.63  
+## >>chng 21 apr 16, from 12.45 to 10.69, add molecular column densities
+monitor column density "NH3+"      10.69
+## >>chng 21 apr 16, from 14.86 to 15.56, add molecular column densities
+## >>chng 21 sep 11, from 15.56 to 15.52, LAMDA update
+monitor column density "NH3"       15.52  
+## >>chng 21 apr 16, from 11.03 to 11.11, add molecular column densities
+## >>chng 21 sep 11, from 11.11 to 11.21, LAMDA update
+monitor column density "NH4+"      11.21  
+## >>chng 21 apr 16, from 13.76 to 15.13, add molecular column densities
+monitor column density "NO"        15.13
+## >>chng 21 apr 16, from 11.47 to 11.02, add molecular column densities
+## >>chng 21 sep 11, from 11.02 to 11.07, LAMDA update
+monitor column density "NS+"       11.07  
+## >>chng 21 apr 16, from 14.72 to 10.97, add molecular column densities
+monitor column density "NS"        10.97
+## >>chng 21 apr 16, from 11.9 to 8.208, add molecular column densities
+## >>chng 21 sep 11, from 8.208 to 7.075, LAMDA update
+monitor column density "OCN"       7.075  
+## >>chng 21 apr 16, from 10.98 to 16.82, add molecular column densities
+monitor column density "OCS"       16.82  
+## >>chng 21 apr 16, from 10.33 to 11.39, add molecular column densities
+monitor column density "OH+"       11.39  
+## >>chng 21 apr 16, from 14.95 to 1.704, add molecular column densities
+monitor column density "OHgrn"     1.704  
+## >>chng 21 apr 16, from 12.92 to 11.98, add molecular column densities
+monitor column density "SiH"       11.98  
+## >>chng 21 apr 16, from 10.19 to 9.611, add molecular column densities
+monitor column density "SiH2+"     9.611  
+## >>chng 21 apr 16, from 12.83 to 7.393, add molecular column densities
+monitor column density "SiN+"      7.393  
+## >>chng 21 apr 16, from 13.61 to 11.89, add molecular column densities
+monitor column density "SiN"       11.89  
+## >>chng 21 apr 16, from 11.25 to 11.98, add molecular column densities
+## >>chng 21 sep 11, from 11.98 to 12.08, LAMDA update
+monitor column density "SiOH+"     12.08
+## >>chng 21 apr 16, from 10.1 to 12.34, add molecular column densities
+## >>chng 21 sep 11, from 12.34 to 12.46, LAMDA update
+monitor column density "SO+"       12.46  
+## >>chng 21 apr 16, from 13.18 to 17.38, add molecular column densities
+monitor column density "SO"        17.38  
+## >>chng 21 jun 17, from 1 to 14.39, first run
+## >>chng 21 sep 11, from 14.39 to 9.766, LAMDA update
+## >>chng 21 nov 04, from 9.766 to 9.716, update mole co data
+monitor column density "ArH+"        9.716
 ##
 ## >>chng 04 mar 04, from < 1200 to <900 improv conv
 ## >>chng 04 mar 31, from < 900 to <950 alter dr logic-test all chng hv mole
@@ -765,10 +961,12 @@ monitor "H2O " 538.142m line intensity -2.929
 ## >>chng 13 jun 27, from -7.357 to -4.581, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -4.581 to -4.651, update H3+ rates Indriola+ 2012
-monitor "HNC " 1652.90m  line intensity -4.651
+## >>chng 21 sep 11, from -4.651 to -4.88, LAMDA update
+monitor "HNC " 1652.90m  line intensity -4.88
 ## >>chng 13 jun 27, from -8.563 to -6.302, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
-monitor "HCS+" 1755.88m  -6.302 line intensity
+## >>chng 21 sep 11, from -6.302 to -6.227, LAMDA update
+monitor "HCS+" 1755.88m  -6.227 line intensity
 ## >>chng 13 jun 27, from -7.453 to -4.903, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -4.903 to -4.94, update H3+ rates Indriola+ 2012
@@ -805,7 +1003,10 @@ monitor "CO  " 325.137m  -2.623 line intensity
 monitor "^13CO" 906.599m  -3.645 line intensity
 ## >>chng 13 jun 27, from -8.247 to -5.301, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
-monitor "CN  " 880.858m  -5.301  line intensity
+## >>chng 21 sep 11, from -5.301 to -5.954, LAMDA update
+## >>chng 21 sep 15, from -5.954 to -5.288, go back to unresolved model
+## >>chng 21 nov 04, from -5.288 to -5.352, update mole co data
+monitor "CN  " 880.858m  -5.352  line intensity
 ##
 # orion_hii_pdr.in
 # class hii pdr  

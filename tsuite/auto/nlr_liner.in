@@ -41,7 +41,9 @@ monitor pressure error < 0.01 ## relative error in total pressure
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 17, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "Q(H)" 4861.33A 1.013
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "Q(H)" 4861.32A 1.013
 ##
 ## >>chng 02 apr 03, added this since thickness grew 50% shorter
 ##                   when bound compton improved
@@ -66,7 +68,9 @@ monitor line "H  1" 1215.67A 53
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-monitor line "Ca B" 4861.33A 0.95
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+monitor line "Ca B" 4861.32A 0.95
 ##
 ## >>chng 07 oct 22, from 0.189 to 0.141, resolve l-levels of h-like sequence
 ## >>chng 08 mar 17, from 0.141 to 0.152, r1844 - mostly iso PopOpc and rt_line_one_tauinc changes
@@ -76,10 +80,12 @@ monitor line "Ca B" 4861.33A 0.95
 ## >>chng 13 jul 24, wl from 4686 to 4685.64A, increased wl precision to 6 sig. fig.
 ## >>chng 16 aug 07, from 0.1846 to 0.1618, Marios bug fixes
 ## >>chng 20 aug 25, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
-monitor line "He 2" 4685.70A 0.1618
+## >>chng 21 apr 08, wl from 4685.70A to 4685.68A, up 1-e energies to np
+monitor line "He 2" 4685.68A 0.1618
 ## >>chng 13 jul 24, wl from 4686 to 4685.64A, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 25, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
-monitor line "Ca B" 4685.70A 0.186
+## >>chng 21 apr 08, wl from 4685.70A to 4685.68A, up 1-e energies to np
+monitor line "Ca B" 4685.68A 0.186
 ##
 ## >>chng 01 may 06, from 0.158 to 0.147, chng in He+ H ct rate
 ## >>chng 02 dec 11, from 0.147 to 0.143, new hei
@@ -112,10 +118,12 @@ monitor line "Ca B" 5875.64A 0.1668
 ## >>chng 08 apr 30, from 1.29 to 1.40, H, He topoff change
 ## >>chng 09 feb 23, from 1.4 to 1.303, remove otslin, otscon dampers (PR #84, r2758)
 ## >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
-monitor line "He 2" 1640.40A 1.303
+## >>chng 21 apr 08, wl from 1640.40A to 1640.41A, up 1-e energies to np
+monitor line "He 2" 1640.41A 1.303
 ## >>chng 08 nov 08, from 1.4 to 1.337, fix VS80 elec impact coll. str. (r2444)
 ## >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
-monitor line "Ca B" 1640.40A 1.337
+## >>chng 21 apr 08, wl from 1640.40A to 1640.41A, up 1-e energies to np
+monitor line "Ca B" 1640.41A 1.337
 ##
 ## >>chng 01 mar 17, from 2.419 to 2.286, change in H coll data
 ## >>chng 04 jul 07, from 2.286 to 2.178, oh ct integ
@@ -271,7 +279,8 @@ monitor line "ne 3" 3868.76A 0.6596
 ## >>chng 08 oct 18, from 2.171 to 1.718, include Badnell UTA data
 ## >>chng 13 nov 25, from 1.718 to 1.624, remove jump from Federman shielding fn
 ## >>chng 16 aug 07, from 1.624 to 1.705, Fran bug fix
-monitor line "blnd" 2798 1.705
+## >>chng 22 jul 09, from 1.705 to 1.841, upgrade to Chianti v10
+monitor line "blnd" 2798 1.841
 ##
 ## >>chng 00 oct 03, from 0.377 to 0.355, H- opacity bug
 ## >>chng 04 jun 01, from 0.364 to 0.334, unified calc of Lya line width 
