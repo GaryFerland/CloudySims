@@ -13,7 +13,15 @@
 # Author: M. Chatzikos
 # Comment: Added support for git tags.
 #
-
+# Updated: Oct 18, 2022
+# Author: M. Chatzikos
+# Comment: Added support for compilation sans git (e.g., release tarballs).
+#
+is_repo=`git rev-parse --is-inside-work-tree 2>&1 | grep true`
+if [[ $is_repo != 'true' ]]; then
+	echo
+	exit 1
+fi
 branch=`git branch | grep '^\*' | awk '{ print $2 }'`
 tag=`git describe --tags --abbrev=0 2> /dev/null`
 if [ -z "$tag" ]; then
