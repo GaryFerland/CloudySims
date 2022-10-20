@@ -27,7 +27,7 @@ t_version::t_version()
 	// followed by a tag, or by a git SHA1 commit string, and a modification
 	// identifier
 
-	if( strcmp( revision, "rev_not_set" ) != 0 )
+	if( strcmp( revision, "" ) != 0 && strcmp( revision, "rev_not_set" ) != 0 )
 	{
 		vector<string> Part;
 		string rev = revision;
