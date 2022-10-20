@@ -15,9 +15,15 @@
 #
 
 branch=`git branch | grep '^\*' | awk '{ print $2 }'`
+branch=`echo $branch | sed 's/(no//'`
 tag=`git describe --tags --abbrev=0 2> /dev/null`
 if [ -z "$tag" ]; then
 	tag=`git log --oneline | head -n 1 | awk '{print $1}'`
 fi
 [[ -z "`git status -s -uno`" ]] && modified="" || modified="-modified"
-echo $branch-$tag$modified
+if [ -z "$branch" ];
+then
+	echo $tag$modified
+else
+	echo $branch-$tag$modified
+fi
