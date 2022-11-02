@@ -686,10 +686,12 @@ the modified  \citet{PengellySeaton1964}, PS-M.
 \cdCommand{database H-like collisions l-mixing off}
 This turns off all \emph{l}-mixing collisions, including  $2s-2p$.
 
-\cdCommand{database H-like collisions l-mixing Pengelly [Classic]} 
+\cdCommand{database H-like collisions l-mixing Pengelly [Classic/PSM]} 
 The  modified \citet{PengellySeaton1964} formalism, PS-M, described by 
-\citep{Guzman.II.2017}, is used by default.
- If the key \cdCommand{Classic} is used then the original \citet{PengellySeaton1964} is used. 
+\citep{Badnell2021}, is used by default.
+If the key \cdCommand{Classic} is used, then the original \citet{PengellySeaton1964} is used.
+If the key \cdCommand{PSM} is used, then the slightly different modified theory from \citep{Guzman.II.2017}
+is used.
 
 The \cdCommand{Case B} command, described in Section \ref{sec:CaseBCommand},
 uses PS-M by default.
@@ -787,9 +789,9 @@ The \cdCommand{options} are either \cdCommand{Pengelly}, \cdCommand{Vrinceanu} o
 This sets up the criterion for degeneration on collisions. If \cdCommand{B72} is used, 
 criteria from equation 3.12 of \citet{1972MNRAS.157..211B} is adopted. 
 If \cdCommand{no degeneration}, Pengelly and Seaton \cite{PengellySeaton1964} smoothed 
-criteria is followed. If no command, standard calculations, with the criteria used in \citet{Guzman.II.2017}, 
+criteria is followed. If no command, standard calculations from \citep{Badnell2021}, with the criteria used in \citet{Guzman.II.2017}, 
 will be performed. The \cdCommand{options} are either \cdCommand{Pengelly}, 
-\cdCommand{Vrinceanu} or \cdCommand{VOS12}.
+\cdCommand{Vrinceanu}, \cdCommand{VOS12}, or \cdCommand{PSM} (see above).
 
 \cdCommand{database He-like collisions l-mixing S62 [off] [degeneration ops] [options]}  
 This enables/disables calculations based on \citet{Seaton1962} for $l\leq 2$ where electrons dominate. 

@@ -822,12 +822,10 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 			{
 				/* PS-M: Modified PS method
 				 * Refer to F. Guzman et al. MNRAS (2016) 464, 312
+				 *
+				 * 11/01/22 changed default to PS20 formulas from
+				 * N. Badnell et al. MNRAS (2021) 507, 2922
 				 */
-				bool lgPSM20 = true;
-				if(0 && nelem==1 && nHi==5 && nLo == 5 && lHi==1)
-				{
-					fprintf(ioQQQ,"checking %g %g %g %li %g\n",deltaE_eV,IP_Ryd_Hi,IP_Ryd_Lo, lLo,IP_Ryd_Hi-IP_Ryd_Lo);
-				}
 
 				cs = CS_l_mixing_PS64_expI(
 						nelem,
@@ -840,8 +838,13 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 						lLo,
 						deltaE_eV,
 						Collider,
-						lgPSM20);
-				*where = "PSM   ";
+						iso_ctrl.lgCS_PS20[ipHE_LIKE]);
+
+				if(iso_ctrl.lgCS_PS20[ipHE_LIKE])
+					*where = "PSM   ";
+				else
+					*where = "PS20  ";
+
 			}
 		}
 		else
@@ -1472,7 +1475,7 @@ double CS_l_mixing_PS64_expI(
 		//R1 = sqrt(R12);
 		//RC = R1;
 	//}
-	double Emin = R12/(RC*RC); //\bar{Um}
+	double Emin = R12/(RC*RC); //Um
 
 	if (RC == RD)
 			fb2=1.;
@@ -1497,53 +1500,15 @@ double CS_l_mixing_PS64_expI(
 	eEC = exp(-1.*EC);
 	eEmt1Em = eEm*(1.+Emin);
 
-	/* First exponential integral is used as the analitical solution of Maxwell averaged PS64 cross sections
-	 * Different cases are used depending on the cut-off
-	 */
-	if ( fb1 == 1 && fb2 == 1)
-		bracket = eEm + e1(Emin);
-	else
+	if(lgPSM20) 
+	/* N. Badnell et al. MNRAS (2021) 507, 2922 */
 	{
-		if (fb2 ==1 )
-			bracket = fb1*eEm+ fb2*e1(Emin); 
-		else
-		{
-			if (EC > Emin)
-				bracket = fb1*eEm + 2.*e1(Emin) - e1(EC);
-			else
-				bracket = fb1*eED + e1(ED);
-		}
-	}
+		double Um = ED;
 
-	//contribution 0<E<Emin, important for Emin/kt >>
-	contr = 0.;
-	if(fb1 != 1 )
-	{
-		if ( fb2 == 1 )
-			contr = (1.-eEmt1Em)/Emin;
-		else if (fb2 !=1 )
-		{
-			if (EC >= Emin)
-			{
-				contr = 2.*( 1. -eEmt1Em)/pow2(Emin);
-				contr -= eEm;
-			}
-			else
-			{
-				contr = ( 2. -eEC*(2.+EC))/pow2(Emin);
-				contr -= eEm*(1.+1./ED);
-			}
-		}
-
-		contr *= 2./3.;
-
-		bracket += contr;
-	}
-
-	if (lgPSM20)
-	{
-		double Um = Emin;
 		double Umc = sqrt(Um*EC);
+		//Dnl = 4. * pow2(ChargIncoming)*Sij/(3.*(2.*l+1.));
+
+
 		if(fb2 == 1)
 		{
 			/* this the asymptote of sqrt(pi/Um^3)*erf(Um)/2 - exp(-Um)/Um when Um->0*/
@@ -1557,7 +1522,7 @@ double CS_l_mixing_PS64_expI(
 		}
 		else
 		{
-			/* Use of the incomplete gamma function G(n,x)= (n-1)!e_(n-1)(x)e^-x for (n E Z) to 
+			/* Use of the incomplete gamma function P(n,x)= 1 - e_(n-1)(x)e^-x for (n E Z) to
 			 * avoid cancellation errors
 			 *
 			 * where
@@ -1584,21 +1549,68 @@ double CS_l_mixing_PS64_expI(
 				if (Um > 1e-6)
 					nf = sqrt(PI/pow3(Um))*(erf(sqrt(Um))/2.) - exp(-1.*Um)/Um;
 
-				bracket = 4.*(1.-0.5*(igam(3,EC)-exp(-1.*EC)*EC*EC))/pow3(Umc) -
+				bracket = 4.*(1.-igamc(3,EC)+0.25*exp(-1.*EC)*EC*EC)/pow3(Umc) -
 						sqrt(PI/pow3(Um))*erf(sqrt(EC))/2. + nf;
 				bracket += e1(Um);
 
 			}
 			else //eq 12 Badnell et al. 2021 MNRAS 507, 2922
 			{
-				bracket = 4.*(1-0.5*igam(3,Umc))/pow3(Umc);
+				bracket = 4.*(1.-igamc(3,Umc))/pow3(Umc);
 				bracket += 2.*e1(Umc)-e1(EC);
 			}
 
 
 		}
 	}
+	else /* Guzman et al. MNRAS (2016) 464, 312 */
+	{
+		/* First exponential integral is used as the analitical solution of Maxwell averaged PS64 cross sections
+		 * Different cases are used depending on the cut-off
+		 */
+		if ( fb1 == 1 && fb2 == 1)
+			bracket = eEm + e1(Emin);
+		else
+		{
+			if (fb2 ==1 )
+				bracket = fb1*eEm+ fb2*e1(Emin);
+			else
+			{
+				if (EC > Emin)
+					bracket = fb1*eEm + 2.*e1(Emin) - e1(EC);
+				else
+					bracket = fb1*eED + e1(ED);
+			}
+		}
+
+		//contribution 0<E<Emin, important for Emin/kt >>
+		contr = 0.;
+		if(fb1 != 1 )
+		{
+			if ( fb2 == 1 )
+				contr = (1.-eEmt1Em)/Emin;
+			else if (fb2 !=1 )
+			{
+				if (EC >= Emin)
+				{
+					contr = 2.*( 1. -eEmt1Em)/pow2(Emin);
+					contr -= eEm;
+				}
+				else
+				{
+					contr = ( 2. -eEC*(2.+EC))/pow2(Emin);
+					contr -= eEm*(1.+1./ED);
+				}
+			}
+
+			contr *= 2./3.;
+
+			bracket += contr;
+
+		}
+	}
 	ASSERT( bracket >= 0.);
+
 
 	if (bracket == 0. )
 		return SMALLFLOAT;
@@ -1606,6 +1618,7 @@ double CS_l_mixing_PS64_expI(
 	/* This is the rate coefficient.   Units: cm^3 s-1	*/
 
 	double units = 2.*pow(BOHR_RADIUS_CM,3)*sqrt(PI)/vred/tau_zero;
+
 
 	rate = units * Dnl* bracket;
 
