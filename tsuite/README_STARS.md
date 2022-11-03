@@ -1,3 +1,6 @@
+## Notes
+
+```
 # The test suites use the following TABLE SED commands to import stellar SEDs
 # without requiring the user to install the corresponding grid:
 #
@@ -28,3 +31,4 @@ init "honly.ini"
 ionization parameter -2
 stop zone 1
 constant temperature 4
+```

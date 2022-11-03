@@ -1,4 +1,6 @@
-Read me for collion.cpp - a gas in collisional ionization equilibrium
+# Read me for collion.cpp
+
+a gas in collisional ionization equilibrium
 
 This program varies the gas kinetic temperature in an environment where collisional 
 ionization will dominate.  This is very similar to conditions in the solar corona. 

@@ -1,3 +1,5 @@
+## Notes
+
 Read me file for the sample programs
 
 These are a series of programs that show how Cloudy can be
@@ -20,44 +22,48 @@ object files in source directory, and runs the programs.
 See the instructions at the top of that script to find out more.
 
 The shell script 
+```
 complink.sh directory [gcc/clang] 
+```
 will use gcc to build the cpp program within directory by default.
-If a compiler is provided uses the given compiler and assumes that cloudy was build in the sys subdirectory.
+If a compiler is provided uses the given compiler and assumes that
+cloudy was build in the sys subdirectory.
 
-template.cpp  -  This is a template you can use to write your own
+* template.cpp  -  This is a template you can use to write your own
 program that calls Cloudy as a subroutine.  This provides a
 template C++ main program that includes the needed exception handlers.
 
-collion  -  This is an example of a gas in collisional ionization
+* collion  -  This is an example of a gas in collisional ionization
 equilibrium.  There is no ionizing radiation.  This is something
 like the solar corona.
 
-collcool - cooling in collisional ionization
+* collcool - cooling in collisional ionization
 
-comp4, This checks that the code is properly initialized when
+* comp4 - This checks that the code is properly initialized when
 it sets up.  Two different models are computed twice and the
 output goes to file1.txt (the first pair) and file2.txt (the
 second).  These files should be exactly the same.
 
-hazy_coolingcurve  This is an example of a gas in collisional
+* hazy_coolingcurve - This is an example of a gas in collisional
 ionization equilibrium in which the temperature is varied and
 the heating and cooling derived. 
 
-hazy_kmt - This redoes the "S-curve" calculation originally
+* hazy_kmt - This redoes the "S-curve" calculation originally
 done by Krolick, McKee, & Tarter (1981; ApJ, 249, 422), 
 
-hizlte - a high metallicity gas in thermodynamic equilibrium.
+* hizlte - a high metallicity gas in thermodynamic equilibrium.
 
-mpi  This is my main routine for running large grids on our HP
+* mpi - This is my main routine for running large grids on our HP
 cluster.  It uses MPI to place a grid point on each processor.
 
-vary_nete  Both the electron density and temperature are varied
+* vary_nete - Both the electron density and temperature are varied
 over a broad range and several [O III] lines are predicted. 
 This shows how to make diagnostic diagrams where line ratios
 are used to deduce temperature and density.
 
-varyn  This is a series of calculations in which the density
+* varyn - This is a series of calculations in which the density
 is varied and the intensities of some [OII] lines relative to
 [OII] 3727 are printed. 
 
-Visit www.nublado.org  for details and latest updates. 
+Visit [https://nublado.org](https://nublado.org)  for details and
+latest updates. 

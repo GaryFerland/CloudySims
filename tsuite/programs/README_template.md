@@ -1,4 +1,5 @@
-Read me for template.cpp 
+# Read me for template.cpp 
+
 A template for writing your own program to call Cloudy as a subroutine
 
 OVERVIEW:
@@ -24,9 +25,12 @@ or even use multiple nested loops.
 COMPILATION:
 ------------
 To compile the template into an executable, run the script
-'./complink-template.sh'.  It points to ../../source for the necessary
-header files (*.h) and the static library (libcloudy.a).  This is all
-you need to do, if you compile Cloudy in source/ with g++.
+```
+./complink-template.sh
+```
+It points to ```../../source``` for the necessary
+header files (\*.h) and the static library (libcloudy.a).
+This is all you need to do, if you compile Cloudy in source/ with g++.
 
 If you want to build the template with a compiler other than g++,
 e.g., clang++, you must also build Cloudy with the same compiler.
@@ -36,18 +40,19 @@ If you build Cloudy from one of the compiler-specific subdirectories
 (path to library) option points to the appropriate directory, while
 the SYS_CONFIG macro points to the cloudyconfig.h file therein, for
 instance:
-
+```
  clang++ template.cpp \
 	-DSYS_CONFIG=\"/path/to/cloudy/source/sys_llvm/cloudyconfig.h\" \
 	-I ../../source \
 	-L ../../source/sys_llvm -lcloudy \
 	-o template.exe
+```
 
 This is VERY important.
 
 The header file cloudyconfig.h is produced prior to compilation
-of any source files, it holds information on the compiler's
-capabilities, and fine-tunes the building process.  Without the
+of any source files, it holds information on the capabilities of
+the compiler, and fine-tunes the building process.  Without the
 SYS_CONFIG macro, the compiler will pick up the, if any,
 cloudyconfig.h file found in source/ (as directed by -I option),
 which may have been produced for a different compiler.  This

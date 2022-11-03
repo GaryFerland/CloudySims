@@ -1,3 +1,5 @@
+## Notes
+
 This checks that the code is properly initialized when it sets up. 
 Three different models are computed twice.  The punch results
 output goes to file1.txt (the first set) and file2.txt (the second). 

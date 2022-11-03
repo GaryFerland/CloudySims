@@ -1,3 +1,5 @@
+## Notes
+
 These are plots of results from various sims in tsuite done
 using Jeremy Sanders' Veusz probram, http://home.gna.org/veusz/
 
