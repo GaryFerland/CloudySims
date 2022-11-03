@@ -1,9 +1,12 @@
+## Notes
+
 This is a collection of scripts that are useful to the Cloudy project.
 The scripts themselves have documentation.
 
 adf042stout - convert an ADF04 file to Stout format
 
 --------------
+
 The following scripts derive a publication quality table from the information embedded
 in the Stout data files (first two) and a table describing individual species models:
 
