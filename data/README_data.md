@@ -46,6 +46,18 @@ databases, namely:
 
 See the respective papers for details.
 
+The commands
+```
+database [chianti|stout|lamda]
+```
+are provided to manipulate each database en masse, while the command
+```
+species "Fe+" [dataset="Tayal18"]
+```
+is provided for refined control of individual model ions.
+Notice that the keyword ```dataset``` may be used to select between various
+datasets, as in the Fe+ example above.
+
 
 * * *
 
