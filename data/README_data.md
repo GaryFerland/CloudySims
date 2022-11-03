@@ -61,16 +61,18 @@ datasets, as in the Fe+ example above.
 
 * * *
 
-Compiling ancillary files with the \*.in input files
-----------------------------------------------------
+Compiling ancillary files
+-------------------------
 
 The download includes all the files you will need to get Cloudy running.
 The download does not include the stellar continua file that are needed for
 the table stars command to work.
 The web site describes how to set up these continua and this only needs to be
 done if you want to use the table stars command.
-Several input files (names like compile\*.in) are examples of compiling some
-of the stellar continua.
+
+The script ```make_data.sh``` may be used to construct ancillary files used
+by Cloudy.
+Some of them, relating to grains, are discussed below.
 
 ### (Possibly) compiling the size-distributed grains
 
@@ -96,6 +98,7 @@ These files specify the size distribution (\*.szd) and refractive indices
 The \*.opc files give the actual opacities used by the code.
 
 For details, see Appendix A in Hazy 1.
+
 
 * * *
 
