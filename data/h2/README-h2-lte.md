@@ -1,3 +1,5 @@
+## Notes
+
 The small H2 model computes the H2 line cooling according to the prescription
 of Glover & Abel 2008, MNRAS, 388, 1627.  The total cooling at intermediate
 densities is computed according to their eqn (39), which combines the cooling

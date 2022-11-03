@@ -1,3 +1,5 @@
+## Notes
+
 This directory contains a selection of molecular line lists that were
 calculated with the CALPGM program suite written by Herbert Pickett and which
 are hosted on the Cologne Database for Molecular Spectroscopy (CDMS) and the
@@ -7,30 +9,34 @@ permission.
 Files with names c???0??.cat come from JPL.
 Files with names c???5??.cat come from CDMS.
 
-------------------
+* * *
 
 Interfaces to the respective databases can be found here:
 
-http://www.astro.uni-koeln.de/cdms/entries
-http://spec.jpl.nasa.gov/ftp/pub/catalog/catdir.html
+* [CDMS](https://cdms.astro.uni-koeln.de)
+* [JPL](http://spec.jpl.nasa.gov/ftp/pub/catalog/catdir.html)
 
 ------------------
 
 Pages giving the partition function for each molecule can be found here:
 
-http://www.astro.uni-koeln.de/site/vorhersagen/catalog/partition_function.html
+https://cdms.astro.uni-koeln.de/classic/entries/partition_function.html
 http://spec.jpl.nasa.gov/ftp/pub/catalog/catdir.cat
+
+<!--
+N/A anymore
 
 These are needed to convert the line intensity given in the CALPGM files into
 Einstein-A coefficients. The conversion formulas are here:
 
 http://www.astro.uni-koeln.de/cdms/catalog#equations
+-->
 
 ------------------
 
 The CALPGM program suite written by Herbert Pickett can be found here:
 
-http://www.astro.uni-koeln.de/cdms/pickett
+https://cdms.astro.uni-koeln.de/classic/pickett
 
 ------------------
 

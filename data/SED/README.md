@@ -1,3 +1,5 @@
+## Notes
+
 This specifies optional SEDs.  One of these files will be used if the command
 table SED "filename.sed" 
 appears.
@@ -18,7 +20,7 @@ appears then the flux can be given in relative nu f_nu units.
 Comments begin with "#" and can occur anywhere in the file.
 
 The list of energies and fluxes are concluded with a field of stars, 
-for example, *****.
+for example, \*\*\*\*\*.
 Everything after the field of stars is ignored, so can be used to document the
 SED.
 
@@ -29,7 +31,7 @@ part of the SED to the low-energy limit of the code using a power law.
 
 The following SED files are now included;
 
-AGN_Jin*.sed
+AGN_Jin\*.sed
 These are the SEDs summarized in  2020MNRAS.494.5917F and derived by
 2012MNRAS.420.1825J  and  2017MNRAS.471..706J 
 

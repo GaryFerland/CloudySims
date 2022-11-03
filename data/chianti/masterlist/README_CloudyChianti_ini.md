@@ -1,5 +1,7 @@
-by default Cloudy uses the Chianti species in CloudyChianti.ini
-when Chianti is used.  There are other versions of the Chianiti
+## Notes
+
+By default Cloudy uses the Chianti species in CloudyChianti.ini
+when Chianti is used.  There are other versions of the Chianti
 list in this directory.
 
 ##--Use--##
@@ -18,21 +20,18 @@ CloudyChinatiFeKurucz.ini lists Fe 3, 4, and 5 data from Kurucz and others (see 
 	Fe 3:
 		model 		Blagrave, K.P.M., Martin, P.G. & Baldwin, J.A. 2006, ApJ, 644, 1006B
 		energies	NIST version 3 Atomic Spectra Database
-		Ein A's 	Quinet, P., 1996, A&AS, 116, 573
+		Ein A s 	Quinet, P., 1996, A&AS, 116, 573
 		CS 		Zhang, H.  1996, 119, 523
 	Fe 4:
 		energies	NIST version 3 Atomic Spectra Database
-		Ein A's 	Garstang, R.H., MNRAS 118, 572 (1958)
+		Ein A s 	Garstang, R.H., MNRAS 118, 572 (1958)
 		CS 		Berrington and Pelan  Ast Ap S 114, 367
 	Fe 5:
 		energies	NIST version 3 Atomic Spectra Database
-		Ein A's 	NIST
+		Ein A s 	NIST
 		CS		Shields ApJ 219, 559.
 
 CloudyChiantiAllKurucz.ini is CloudyChiantiAll.ini plus Fe 3, 4, and 5 from Kurucz
 
 CloudyChiantiKuruczOnly.ini is only Fe 3, 4, and 5 from Kurucz		
 master list.* are original files from Chianti distribution
-
-
-
