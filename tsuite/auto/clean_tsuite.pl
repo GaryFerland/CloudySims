@@ -8,7 +8,18 @@
 
 while( defined( $input = glob("*") ) ) {
 	@ll = split( /\./, "$input" );
-	if( $#ll != 1 || ( $ll[1] ne "in" && $ll[1] ne "pl" && $ll[1] ne "pm" && $ll[1] ne "htm" && $ll[1] ne "jpg" && $ll[1] ne "dat" && $ll[1] ne "txt" && $ll[1] ne "exe" && $ll[1] ne "pdf" && $ll[1] ne "vsz" ) ) {
+	if( $#ll != 1
+	    or ( $ll[1] ne "in"
+		 and $ll[1] ne "pl"
+		 and $ll[1] ne "pm"
+		 and $ll[1] ne "htm"
+		 and $ll[1] ne "md"
+		 and $ll[1] ne "jpg"
+		 and $ll[1] ne "dat"
+		 and $ll[1] ne "txt"
+		 and $ll[1] ne "exe"
+		 and $ll[1] ne "pdf"
+		 and $ll[1] ne "vsz" ) ) {
 		print "deleting $input...\n";
 		unlink "$input";
 	}
