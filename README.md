@@ -32,10 +32,45 @@ as well as tarballs on our
 [release folder](https://data.nublado.org/cloudy_releases).
 
 
+# Directory structure
+
+There are seven directories below this one containing the:
+1. atomic, molecular, grains data, as well as SEDs (```data/```);
+1. documentation (```docs/```);
+1. doxygen setup files (```doxygen/```);
+1. a unit test library (```library/```);
+1. some helpful scripts (```scripts/```);
+1. the source (```source/```);
+1. and test suite (```tsuite/```).
+The test suite directory, tsuite, has a number of directories below it,
+each exercising different aspects of Cloudy.
+
+These directories contain all files needed to build and execute Cloudy.
+Each directory has a readme file giving more information on its contents.
+It is important to maintain this directory structure when the download is
+opened on your computer.
+
+
+# Building Cloudy
+
+Instructions for building the code on various platforms are available on
+[the wiki](https://gitlab.nublado.org/cloudy/cloudy/-/wikis/CompileCode).
+Makefiles are provided for most popular compilers (see ```source/sys_*```).
+
+
+# Documentation
+
+The ```docs``` directory contains Hazy, Cloudy's documentation.
+
+
 # API
 
-Cloudy's API is described with [Doxygen](https://doxygen.nl), and is available
+Cloudy's API is described with [Doxygen](https://doxygen.nl).
+A precompiled version is available
 [online](https://data.nublado.org/doxygen/c22.00).
+
+If you wish to produce a local instance, please follow the instructions in
+the ```doxygen/``` directory.
 
 
 # Contact us
