@@ -335,7 +335,7 @@ void ContCreatePointers(void)
 
 	/* check that ionization potential of neutral carbon valence shell is
 	 * positive */
-	ASSERT( t_ADfA::Inst().ph1(2,5,5,0) > 0. );
+	ASSERT( atmdat.getIonPot(ipCARBON, 0) > 0. );
 
 	/* now fill in all sub-shell ionization array indices for elements heavier than He,
 	 * this must be done after previous loop on iso.ipIsoLevNIonCon[ipH_LIKE] since hydrogenic species use
@@ -348,13 +348,13 @@ void ContCreatePointers(void)
 	}
 
 	/* most of these are set in ipShells, but not h-like or he-like, so do these here */
-	Heavy.Valence_IP_Ryd[ipHYDROGEN][0] = t_ADfA::Inst().ph1(0,0,ipHYDROGEN,0)/EVRYD;
-	Heavy.Valence_IP_Ryd[ipHELIUM][0] = t_ADfA::Inst().ph1(0,1,ipHELIUM,0)/EVRYD;
-	Heavy.Valence_IP_Ryd[ipHELIUM][1] = t_ADfA::Inst().ph1(0,0,ipHELIUM,0)/EVRYD;
+	Heavy.Valence_IP_Ryd[ipHYDROGEN][0] = atmdat.getIonPot(ipHYDROGEN, 0);
+	Heavy.Valence_IP_Ryd[ipHELIUM][0] = atmdat.getIonPot(ipHELIUM, 0);
+	Heavy.Valence_IP_Ryd[ipHELIUM][1] = atmdat.getIonPot(ipHELIUM, 1);
 	for( long nelem=2; nelem<LIMELM; ++nelem )
 	{
-		Heavy.Valence_IP_Ryd[nelem][nelem-1] = t_ADfA::Inst().ph1(0,1,nelem,0)/EVRYD;
-		Heavy.Valence_IP_Ryd[nelem][nelem] = t_ADfA::Inst().ph1(0,0,nelem,0)/EVRYD;
+		Heavy.Valence_IP_Ryd[nelem][nelem-1] = atmdat.getIonPot(nelem, nelem-1);
+		Heavy.Valence_IP_Ryd[nelem][nelem] = atmdat.getIonPot(nelem, nelem);
 		if( dense.lgElmtOn[nelem])
 		{
 			/* now confirm that all are properly set */
