@@ -265,6 +265,26 @@ t_ADfA::t_ADfA()
 	}
 }
 
+inline long t_ADfA::set_vshell_index( long nelec, long Z ) const
+{
+	long nout = NTOT[nelec-1];
+	if( Z == nelec && Z > 18 )
+		nout = 7;
+	if( Z == (nelec + 1)
+	    && (Z == 20 || Z == 21 || Z == 22 || Z == 25 || Z == 26) )
+		nout = 7;
+	return nout;
+}
+
+double t_ADfA::getEthresh( long int nshell, long int nelec, long int Z ) const
+{
+	long nout = set_vshell_index( nelec, Z );
+	if( nshell == nout )
+		return atmdat.getIonPot(Z-1, Z-nelec) * EVRYD;
+	else
+		return double(PH1[nshell-1][nelec-1][Z-1][0]);
+}
+
 double t_ADfA::phfit(long int nz, 
 		     long int ne,
 		     long int is, 
@@ -322,12 +342,8 @@ double t_ADfA::phfit(long int nz,
 		return crs;
 	}
 
-	nout = NTOT[ne-1];
-	if( nz == ne && nz > 18 )
-		nout = 7;
-	if( nz == (ne + 1) && ((((nz == 20 || nz == 21) || nz == 22) || 
-	  nz == 25) || nz == 26) )
-		nout = 7;
+	nout = set_vshell_index( ne, nz );
+
 	if( is > nout )
 	{ 
 		return crs;
@@ -340,8 +356,10 @@ double t_ADfA::phfit(long int nz,
 
 	ASSERT( is >= 1 && is <= 7 );
 
-	if( e < PH1[is-1][ne-1][nz-1][0] )
-	{ 
+	double ethres = getEthresh( is, ne, nz );
+
+	if( e < ethres )
+	{
 		return crs;
 	}
 
@@ -358,7 +376,10 @@ double t_ADfA::phfit(long int nz,
 		}
 		else
 		{
-			einn = PH1[nint-1][ne-1][nz-1][0];
+			if( nint == nout )
+				einn = ethres;
+			else
+				einn = double(PH1[nint-1][ne-1][nz-1][0]);
 		}
 	}
 
@@ -451,7 +472,7 @@ double t_ADfA::hpfit(long int iz,
 		}
 	}
 
-	eth = ph1(0,0,iz-1,0)/POW2((double)m);
+	eth = getEthresh(1,1,iz)/POW2((double)m);
 	ex = MAX2(1. , e/eth );
 
 	/* Don't just force to be at least one...make sure e/eth is close to one or greater.	*/

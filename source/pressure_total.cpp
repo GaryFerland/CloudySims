@@ -143,7 +143,7 @@ void PresTotCurrent()
 				/* this is the sum of all the energy needed to bring the atom up
 				 * to the ion+1 level of ionization - at this point a positive number */
 				phycon.EnergyIonization += dense.xIonDense[nelem][ion] * 
-					t_ADfA::Inst().ph1(Heavy.nsShells[nelem][i-1]-1,nelec,nelem,0)/EVRYD*kadvec;
+					t_ADfA::Inst().getEthresh(Heavy.nsShells[nelem][i-1],nelec+1,nelem+1)/EVRYD*kadvec;
 			}
 		}
 	}

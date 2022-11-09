@@ -997,7 +997,7 @@ STATIC void ipShells(
 		for( nshell=0; nshell < imax; nshell++ )
 		{
 			/* ionization potential of this shell in rydbergs */
-			thresh = (double)(t_ADfA::Inst().ph1(nshell,nelec-1,nelem,0)/EVRYD);
+			thresh = t_ADfA::Inst().getEthresh(nshell+1,nelec,nelem+1)/EVRYD;
 			if( thresh <= 0.1 )
 			{
 				/* negative ip shell does not exist, set upper limit
@@ -1074,7 +1074,7 @@ STATIC void ipShells(
 	/* this statement is in ContCreatePointers but has not been done when this routine called */
 	/*iso_sp[ipH_LIKE][ipZ].fb[ipLo].ipIsoLevNIonCon = ipContEnergy(iso_sp[ipH_LIKE][ipZ].fb[ipLo].xIsoLevNIonRyd,chLab);*/
 	/*opac.ipElement[nelem][nelem][0][0] = iso_sp[ipH_LIKE][nelem].fb[ipH1s].ipIsoLevNIonCon;*/
-	opac.ipElement[nelem][nelem][0][0] = ipoint( t_ADfA::Inst().ph1(0,0,nelem,0)/EVRYD );
+	opac.ipElement[nelem][nelem][0][0] = ipoint( t_ADfA::Inst().getEthresh(1,1,nelem+1)/EVRYD );
 	ASSERT( opac.ipElement[nelem][nelem][0][0] > 0 );
 
 	/* this is the high-energy limit */
