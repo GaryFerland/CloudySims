@@ -1005,7 +1005,8 @@ realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 							gHi,
 							lLo,
 							deltaE_eV,
-							ipCollider);
+							ipCollider,
+							iso_ctrl.lgCS_PS20[ipH_LIKE]);
 				}
 			}
 		}
@@ -1113,6 +1114,7 @@ realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 					*where = "PS64  ";
 				}
 				else
+				{
 				// PS-M Refer F. Guzman MNRAS (2016)
 					CStemp = CS_l_mixing_PS64_expI(
 							nelem,
@@ -1125,8 +1127,13 @@ realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 							lLo,
 							//sHi,
 							deltaE_eV,
-							ipCollider);
-				*where = "PSM   ";
+							ipCollider,
+							iso_ctrl.lgCS_PS20[ipH_LIKE]);
+				if(iso_ctrl.lgCS_PS20[ipH_LIKE])
+					*where = "PSM   ";
+				else
+					*where = "PS20  ";
+				}
 			}
 			else
 				CStemp = 0.;
