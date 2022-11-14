@@ -268,10 +268,23 @@ t_ADfA::t_ADfA()
 inline long t_ADfA::set_vshell_index( long nelec, long Z ) const
 {
 	long nout = NTOT[nelec-1];
-	if( Z == nelec && Z > 18 )
+
+	// NB NB
+	// 4th row elements start filling 4s (shell 7) before completely
+	// filling 3d (shell 6) -- true for all neutrals, and some singly
+	// ionized elements, see below
+	//
+	// The indices below are on C scale, i.e., they start at 0 for H,
+	// hence the +1
+	//
+	if( Z == nelec && Z > ipARGON+1 )
 		nout = 7;
-	if( Z == (nelec + 1)
-	    && (Z == 20 || Z == 21 || Z == 22 || Z == 25 || Z == 26) )
+	else if( Z == (nelec + 1)
+		 && ( Z == ipCALCIUM+1
+			|| Z == ipSCANDIUM+1
+			|| Z == ipTITANIUM+1
+			|| Z == ipMANGANESE+1
+			|| Z == ipIRON+1 ) )
 		nout = 7;
 	return nout;
 }
