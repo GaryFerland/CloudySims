@@ -27,7 +27,7 @@ void OpacityAdd1Element(
 
 	/* this routine drives OpacityAdd1Subshell to put in total opacities for all shells*/
 
-	/*begin sanity check */
+	/* begin sanity check */
 	ASSERT( (nelem >=0 ) && (nelem < LIMELM) );
 
 	/* first do simple two-level systems -
