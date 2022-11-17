@@ -7,7 +7,7 @@
 #include "service.h"
 
 static const int CLD_MAJOR = 22;
-static const int CLD_MINOR = 0;
+static const int CLD_MINOR = 1;
 static const int CLD_PATCH = 0;
 
 #ifdef REVISION
