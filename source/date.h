@@ -9,10 +9,10 @@
  * minor releases, such as Cxx.01.
  *
  * This is the GMT year, 117 indicates 2017 */
-#define YEAR	113
+#define YEAR	122
 /* month, January is 0, December is 11 */
-#define	MONTH	5
+#define	MONTH	9
 /* day is correct */
-#define	DAY	1
+#define	DAY	14
 
 #endif /* DATE_H_ */
