@@ -198,16 +198,17 @@ HX      & 4.7e-4m  & 0.000123m -- 0.000826m  \\
 \end{tabular}
 \end{table}
 
-\subsubsection{PAH bands in \cdFilename{continuum\_bands.ini}}
+\subsubsection{PAH bands}
 
-A number of entries with labels ``PAH'' and ``PAHC'' appear in Table\ref{tab:continuum_bands}.
-The entries with the label ``PAH'' are centered on the PAH feature. 
-Those labeled `PAHC'' are regions near the PAH feature chosen to have the same bandwidth
-as the PAH feature. 
-The ``PAH'' entry is the total emission including the underlying continuum, and perhaps 
+Several entries with labels ``PAH'' and ``PAHC'' appear in Table \ref{tab:continuum_bands}.
+The entries with the label ``PAH'' are centered on the PAH feature and give
+the total emission, including the underlying continuum and perhaps atomic
 line emission. 
-The ``PAHC'' entries to either side of the ``PAH'' entry so that that net PAH feature could be
-approximated at the difference between the ```PAH'' feature minus the ``PAHC'' continuum.
+Those labeled ``PAHC'' are regions near the PAH feature chosen to have the same bandwidth
+as the PAH feature. 
+These are designed so that the net PAH emission could be
+approximated at the difference between the ```PAH'' feature and the ``PAHC'' continuum.
+This is not done automatically.
 
 \subsubsection{Other continua}
 
