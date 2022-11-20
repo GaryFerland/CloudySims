@@ -120,6 +120,7 @@ These give intensities of various continua.  These are either the total
 integrated continuum or the product $\nu F_\nu$ at certain energies.
 
 \subsubsection{Continuum bands}
+
 The file \cdFilename{continuum\_bands.ini} in the data directory
 specifies a set of wavelength bands.
 The code will integrate over these bands to find the
@@ -190,9 +191,23 @@ Label& Wavelength&Wavelength Range\\
  PAHC & 14.10m & 13.70m -- 14.50m\\ 
  Bcon &  3640A & 911.6A --  3646A\\ 
  Pcon &  5000A &  3646A --  8204A\\ 
+ O3bn &  5007A &  498A     -- 5100A \\
+SX      & 2.5e-3m  & 0.000826m -- 0.00413m \\
+HX      & 4.7e-4m  & 0.000123m -- 0.000826m  \\
 \hline
 \end{tabular}
 \end{table}
+
+\subsubsection{PAH bands in \cdFilename{continuum\_bands.ini}}
+
+A number of entries with labels ``PAH'' and ``PAHC'' appear in Table\ref{tab:continuum_bands}.
+The entries with the label ``PAH'' are centered on the PAH feature. 
+Those labeled `PAHC'' are regions near the PAH feature chosen to have the same bandwidth
+as the PAH feature. 
+The ``PAH'' entry is the total emission including the underlying continuum, and perhaps 
+line emission. 
+The ``PAHC'' entries to either side of the ``PAH'' entry so that that net PAH feature could be
+approximated at the difference between the ```PAH'' feature minus the ``PAHC'' continuum.
 
 \subsubsection{Other continua}
 
