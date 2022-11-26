@@ -12,7 +12,8 @@
 #Elm		Z	A	Fraction	Notes	
 #
 HYDROGEN	1	1	  1		Reprocudes Cloudy's default value for the RATIO D/H from
-HYDROGEN	1	2	  1.65e-5	Pettini, M., & Bowen, D.V., 2001, ApJ, 560, 41 (quoted error is +/- 0.35)
+#HYDROGEN	1	2	  1.65e-5	Pettini, M., & Bowen, D.V., 2001, ApJ, 560, 41 (quoted error is +/- 0.35)
+HYDROGEN	1	2	  2.61e-5	Planck 2015 Results:Planck collaboration, A&A, 594, A13(2016) (quoted error is +/- 0.05)
 #
 HELIUM		2	3	  0.0166
 HELIUM		2	4	 99.9834

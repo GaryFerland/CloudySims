@@ -180,6 +180,8 @@ void diatoms_init( void )
 	h2.coll_source[4].magic = 110416;
 	h2.coll_source[4].filename = "coll_rates_Hp.dat";
 
+#if 0
+	/*>> 22 nov 26, GShaw  HD is in LAMDA format, collisional data is inside hd.dat */
 	// HD
 	// H
 	hd.coll_source[0].magic = 110416;
@@ -197,6 +199,7 @@ void diatoms_init( void )
 	hd.coll_source[4].magic = 110416;
 	hd.coll_source[4].filename = "coll_rates_Hp.dat";
 
+#endif 
 	return;
 }
 

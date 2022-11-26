@@ -33,9 +33,12 @@ void lines_molecules(void)
 	/* remember largest fraction of H2 cooling for possible comment */
 	hmi.h2line_cool_frac = (realnum)MAX2( CoolHeavy.h2line/thermal.ctot , hmi.h2line_cool_frac );
 
+#if 0
+	/*>>chng 22 nov 26 GShaw,  HD molecule is in LAMDA format, heating and cooling is done automatically */
 	/* HD rotation cooling */
 	linadd(CoolHeavy.HD,0,"HDro",'c',
 		"HD rotation cooling");
+#endif
 
 	/* molecular hydrogen heating */
 	hmi.h2dtot += (realnum)(hmi.HeatH2Dish_used*radius.dVeffAper);
