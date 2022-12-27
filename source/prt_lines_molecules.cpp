@@ -34,7 +34,7 @@ void lines_molecules(void)
 	hmi.h2line_cool_frac = (realnum)MAX2( CoolHeavy.h2line/thermal.ctot , hmi.h2line_cool_frac );
 
 #if 0
-	/*>>chng 22 nov 26 GShaw,  HD molecule is in LAMDA format, heating and cooling is done automatically */
+	/*>>chng 22 nov 27  GShaw, 2022/11/25, HD molecule is in LAMDA format, heating and cooling is done automatically */
 	/* HD rotation cooling */
 	linadd(CoolHeavy.HD,0,"HDro",'c',
 		"HD rotation cooling");

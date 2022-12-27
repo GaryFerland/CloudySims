@@ -201,8 +201,8 @@ void t_mole_global::make_species(void)
 	}
 
 	if( deut.lgElmtOn )
-	{
-		read_species_file( "chem_species_deuterium.dat", false );
+	{	/*>>chng 2022 12 14, GShaw */
+		read_species_file( "chem_species_deuterium.dat", true );
 	}
 
 	/* Add species for all other elements and their first ions -- couple to network at least via H- */

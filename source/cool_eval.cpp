@@ -134,7 +134,6 @@ void CoolEvaluate(double *tot)
 		CoolHeavy.h2line = 0.;
 		/*  H + H+ => H2+ cooling */
 		CoolHeavy.H2PlsCool = 0.;
-		CoolHeavy.HD = 0.;
 
 		/* thermal.heating(0,8) is heating due to collisions within X of H2 */
 		thermal.setHeating(0,8,0.);
@@ -231,10 +230,12 @@ void CoolEvaluate(double *tot)
 
 		/* heating (usually cooling in big H2) due to collisions within X */
 		/* add to heating is net heating is positive */
-		thermal.setHeating(0,8, MAX2(0.,hmi.HeatH2Dexc_used) +
+		thermal.setHeating(0,8, MAX2(0.,hmi.HeatH2Dexc_used)); 
+#if 0
+				/* GShaw, 2022/11/27, HD is in LAMDA format */
 				// HD heating, cooling is CoolHeavy.HD
 				MAX2(0.,hd.HeatDexc) + MAX2(0.,hd.HeatDiss));
-
+#endif
 		/* add to cooling if net heating is negative */
 		CoolAdd("H2cX",0,MAX2(0.,-hmi.HeatH2Dexc_used));
 		/*fprintf(ioQQQ,"DEBUG coolh2\t%.2f\t%.4e\t%.4e\t%.4e\t%.4e\t%.4e\n",
@@ -276,6 +277,8 @@ void CoolEvaluate(double *tot)
 
 		}
 
+#if 0
+		/*>> 22 nov 27 GShaw, 2022/11/27, HD is in LAMDA format */		
 		if( hd.lgEnabled )
 		{
 			// heating was thermal.setHeating(0,8 above, with H2
@@ -286,7 +289,7 @@ void CoolEvaluate(double *tot)
 			/* >>chng 22 aug 13, use Flower et al. (2000, MNRAS, 314, 753)
 			 * HD cooling function
 			 * http://ccp7.dur.ac.uk/cooling_by_HD/node3.html */
-#if 0
+
 			factor = 0.25*pow2( log10(double(dense.gas_phase[ipHYDROGEN])))+
 					(0.283978*log10(double(dense.gas_phase[ipHYDROGEN]))-1.27333)*
 					(sin(2.03657*log10(phycon.te)+4.63258))-2.08189*
@@ -294,7 +297,6 @@ void CoolEvaluate(double *tot)
 
 			CoolHeavy.HD = hmi.HD_total*exp10((0.5*log10(double(dense.gas_phase[ipHYDROGEN]))) +
 					(-26.2982*pow(log10(phycon.te), -0.215807)) - sqrt(factor));
-#endif
 
 			double aa=-26.2982, bb=-0.215807, omeg=2.03657, phi=4.63258,
 					c1=0.283978, c2=-1.27333, d1=-2.08189, d2=4.66288;
@@ -308,10 +310,11 @@ void CoolEvaluate(double *tot)
 				+ (c1*y+c2) * sin(omeg*x+phi) + (d1*y+d2) );
 
 			CoolHeavy.HD = hmi.HD_total * exp10(w);
-
 		}
+#endif
 	}
 
+	
 	fixit("test and enable chemical heating by default");
 #if 0
 	double chemical_heating = mole.chem_heat();	
@@ -359,9 +362,6 @@ void CoolEvaluate(double *tot)
 			dense.eden);
 		}
 	}
-
-	CoolAdd("HDro",0,CoolHeavy.HD);
-	thermal.dCooldT += CoolHeavy.HD*phycon.teinv;
 
 	CoolAdd("H2+ ",0,CoolHeavy.H2PlsCool);
 	thermal.dCooldT += CoolHeavy.H2PlsCool*phycon.teinv;

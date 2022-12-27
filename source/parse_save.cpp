@@ -377,13 +377,15 @@ void ParseSave(Parser& p)
 		h2.H2_ParseSave( p, chHeader );
 	}
 
+#if 0
+	/*>>chng 22 nov 27 GShaw, 2022/11/27, HD is now in LAMDA format */
 	/* save HD has to come early since it has many suboptions */
 	else if( p.nMatchErase(" HD ") )
 	{
 		/* this is in mole_h2_io.c */
 		hd.H2_ParseSave( p, chHeader );
 	}
-
+#endif
 	/* save grain abundance will be handled later */
 	else if( p.nMatch("ABUN") && !p.nMatch("GRAI") )
 	{

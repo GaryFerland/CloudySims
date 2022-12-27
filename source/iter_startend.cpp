@@ -764,7 +764,8 @@ void IterRestart(void)
 	dense.updateXMolecules();
 	deut.updateXMolecules();
 	hmi.H2_total = findspecieslocal("H2")->den + findspecieslocal("H2*")->den;
-	hmi.HD_total = findspecieslocal("HD")->den + findspecieslocal("HD*")->den;
+	/*>>chng 2022 12 12, GShaw */
+	/*hmi.HD_total = findspecieslocal("HD")->den + findspecieslocal("HD*")->den;*/
 	/*fprintf(ioQQQ," IterRestar sets H2 total to %.2e\n",hmi.H2_total );*/
 	h2.ortho_density = ortho_save;
 	h2.para_density = para_save;

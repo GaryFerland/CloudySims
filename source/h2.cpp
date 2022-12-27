@@ -8,7 +8,8 @@
 vector<diatomics*> diatoms;
 
 diatomics h2("h2", 4100., &hmi.H2_total, Yan_H2_CS);
-diatomics hd("hd", 4100., &hmi.HD_total, Yan_H2_CS);
+/*>>chng 2022 12 10, GShaw */
+/*diatomics hd("hd", 4100., &hmi.HD_total, Yan_H2_CS);*/
 
 diatomics::diatomics( const string& a, const double& e_star, const double* const abund, double (*fun)(double) ):
 	trans(a, &states), ENERGY_H2_STAR (e_star), dense_total(abund)
@@ -160,7 +161,8 @@ void diatoms_init( void )
 
 	diatoms.clear();
 	diatoms.push_back( &h2 );
-	diatoms.push_back( &hd );
+	/*>>chng 2022 12 12, GShaw */
+	/*diatoms.push_back( &hd );*/
 
 	// molecular hydrogen, H2
 	// H

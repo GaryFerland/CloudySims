@@ -1637,7 +1637,11 @@ namespace {
 		virtual const char* name() {return "hd_photodissoc";}
 		double rk() const
 			{
-				return hd.photodissoc_BigH2_H2g + hd.Solomon_dissoc_rate_g;
+		
+#if 0	
+		/*>>chng 22 nov 27 GShaw, 2022/11/27, now HD is in LAMDA format */	
+		return hd.photodissoc_BigH2_H2g + hd.Solomon_dissoc_rate_g;
+#endif	
 			}
 	};
 }
@@ -4110,9 +4114,12 @@ STATIC void mole_h_reactions( void )
 					  h2.gs_rate() );
 		}
 	}
-
+	
+#if 0
+	/*>>chng 22 nov 27  GShaw, 2022/11/27, HD is now in LAMDA format */
 	if( !hd.lgEnabled )
 		hd.photodissoc_BigH2_H2g = hmi.H2_photodissoc_used_H2g;
+#endif 
 
 	return;
 }

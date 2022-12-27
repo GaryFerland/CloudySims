@@ -75,7 +75,8 @@ STATIC void mole_effects()
 
 	/* total H2 - all forms */
 	hmi.H2_total = findspecieslocal("H2")->den + findspecieslocal("H2*")->den;
-	hmi.HD_total = findspecieslocal("HD")->den + findspecieslocal("HD*")->den;
+	/*>>chng 2022 12 12, GShaw*/
+	/*hmi.HD_total = findspecieslocal("HD")->den + findspecieslocal("HD*")->den;*/
 	/* first guess at ortho and para densities */
 	h2.ortho_density = 0.75*hmi.H2_total;
 	h2.para_density = 0.25*hmi.H2_total;

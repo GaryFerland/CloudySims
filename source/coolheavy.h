@@ -20,7 +20,6 @@ struct t_CoolHeavy : public module {
 	  Fe221,
 	  eebrm, 
 	  h2line, 
-	  HD,
 	  colmet, 
 	  tccool, 
 	  expans, 

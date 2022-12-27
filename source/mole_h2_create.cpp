@@ -198,11 +198,15 @@ void diatomics::init(void)
 				H2_lgOrtho[(*st).n()][(*st).v()][(*st).J()] = false;
 			}
 		}
+
+#if 0
+		\*>>chng 22 nov 27 GShaw, 2022/11/27, HD is in LAMDA format */
 		else if( this==&hd )
 		{
 			// No ortho-para distinction, set all of these to false.
 			H2_lgOrtho[(*st).n()][(*st).v()][(*st).J()] = false;
 		}
+#endif 
 		else
 			// This will have to change for any additional molecules.
 			TotalInsanity();
