@@ -22,7 +22,7 @@ D,PHOTON=>D+,e-:th85rate:1.0e-15:0:0   # value is a guess
 #
 #
 D+,e-=>D,PHOTON:hmrate:3.60e-12:-7.50e-01:0.00e+00  		# Gay et al. 2011, reaction 6 (a)
-H+,D=>H,D+:hmrate:1.00e-09:0.00e+00:4.10e+01  		# Gay et al. 2011, reaction 8 (a) 
+#H+,D=>H,D+:hmrate:1.00e-09:0.00e+00:4.10e+01  		# Gay et al. 2011, reaction 8 (a) # big blotches, commented out 2022dec30
 #H,D+=>H+,D:hmrate:1.00e-09:0.00e+00:0.00e+00  		# Gay et al. 2011, reaction 9 (a)        #crash #commented out on 20thsept,2022
 D,e-=>D-,PHOTON:hmrate_exo:3.00e-16:0.95e+00:9.32e+03  		# Gay et al. 2011, reaction 10 ()
 D+,D-=>D,D:hmrate_exo:1.96e-07:-4.87e-01:-2.93e+04  		# Gay et al. 2011, reaction 12 ()
