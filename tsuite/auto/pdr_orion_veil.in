@@ -54,6 +54,7 @@ save dr "pdr_orion_veil.dr"
 save H2 rates "pdr_orion_veil.h2rat"
 save pressure "pdr_orion_veil.pre"
 save wind "pdr_orion_veil.wnd"
+save monitors "pdr_orion_veil.asr"
 save continuum units microns "pdr_orion_veil.con" last 
 #
 # commands giving the monitors    =========
