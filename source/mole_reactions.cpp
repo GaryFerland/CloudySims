@@ -1629,21 +1629,22 @@ namespace {
 			}
 	};
 
+#if 0
 	class mole_reaction_hd_photodissoc : public mole_reaction
 	{
-		typedef mole_reaction_hd_photodissoc T;
+	typedef mole_reaction_hd_photodissoc T;
 	public:
 		virtual T* Create() const {return new T;}
 		virtual const char* name() {return "hd_photodissoc";}
 		double rk() const
 			{
 		
-#if 0	
 		/*>>chng 22 nov 27 GShaw, 2022/11/27, now HD is in LAMDA format */	
 		return hd.photodissoc_BigH2_H2g + hd.Solomon_dissoc_rate_g;
-#endif	
-			}
+               }
 	};
+#endif
+
 }
 
 /*hmirat compute radiative association rate for H- */
@@ -1786,7 +1787,8 @@ void mole_create_react( void )
 	newfunc<mole_reaction_h_hnc_hcn_h>();
 	
 	newfunc<mole_reaction_gamheh>();
-	newfunc<mole_reaction_hd_photodissoc>();
+	/* >>chng 22 Jan 02, GShaw*/
+	/*newfunc<mole_reaction_hd_photodissoc>();*/
 	newfunc<mole_reaction_h2gdissoc>();
 	newfunc<mole_reaction_h2sdissoc>();
 	newfunc<mole_reaction_h2gexcit>();
