@@ -171,15 +171,15 @@ level_values = {'spectrum' : species,
                 'output' : '0',
                 'page_size' : '15',
                 'multiplet_ordered' : '1',
-                'average_out' : '0',
-                'conf_out' : '1',
-                'term_out' : '1',
-                'level_out' : '1',
-                'j_out' : '1',
-                'lande_out' : '0',
-                'perc_out' : '0',
-                'biblio' : '0',
-                'splitting' : '0',
+                #   'average_out' : '0',
+                'conf_out' : 'on',
+                'term_out' : 'on',
+                'level_out' : 'on',
+                'j_out' : 'on',
+                #   'lande_out' : '0',
+                #   'perc_out' : '0',
+                #   'biblio' : '0',
+                #   'splitting' : '0',
                 'temp' : '300' }
 
 
@@ -285,6 +285,7 @@ energy_output.close()
 
 
 
+
 #Get the transition data 
 line_values = {'spectra' : species,
                'limits_type' : '0',
@@ -316,8 +317,7 @@ line_values = {'spectra' : species,
                'conf_out' : 'on',
                'term_out' : 'on',
                'enrg_out' : 'on',
-               'g_out' : 'on',
-               'submit' : 'Retrieve+Data' }
+               'g_out' : 'on' }
 
 try:
     lineData = getNistData(NIST_LINE_SERVER,line_values)

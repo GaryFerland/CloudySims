@@ -7,6 +7,7 @@
 #include "freebound.h"
 #include "parser.h"
 #include "elementnames.h"
+#include "atmdat.h"
 
 t_isoCTRL iso_ctrl;
 
@@ -306,31 +307,19 @@ void iso_init_energies()
 				d.getToken(l);
 				d.getToken(s);
 				d.getToken(j);
-				if( n > 0 )
+				QNPack ind = QN2ind(n, l, s, 2*j+1);
+				d.getToken(iso_sp[ipISO][nelem].Energy[ind]);
+				if( ! d.lgEOL() )
 				{
-					QNPack ind = QN2ind(n, l, s, 2*j+1);
-					d.getToken(iso_sp[ipISO][nelem].Energy[ind]);
-					if( ! d.lgEOL() )
-					{
-						double error;
-						d.getToken( error );
-					}
-					d.checkEOL();
+					double error;
+					d.getToken( error );
 				}
-				else
-				{
-					d.getToken(iso_sp[ipISO][nelem].IonPot);
-					if( ! d.lgEOL() )
-					{
-						double error;
-						d.getToken( error );
-					}
-					d.checkEOL();
-					break;
-				}
+				d.checkEOL();
 			}
 			d.checkEOD();
+
+			double IP = atmdat.getIonPot(nelem, nelem-ipISO);
+			iso_sp[ipISO][nelem].IonPot = Energy(IP, "Ryd").WN();
 		}
 	}
 }
-

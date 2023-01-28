@@ -230,7 +230,8 @@ monitor line "Ne 3" 3868.76A  1.446
 ## >>chng 06 nov 29, from 0.760 to 0.838 Badnell DR turned on
 ## >>chng 07 nov 29, from 0.838 to 0.789 update DR rates
 ## >>chng 11 aug 05, from 0.789 to 0.7532, make PRD redis func for h-like ions; LY_A func is now for H only
-monitor line "blnd" 2424  0.7532
+## >>chng 22 nov 10, from 0.7532 to 0.7931,  use NIST ionization potentials
+monitor line "blnd" 2424  0.7931
 ## 
 ## >>chng 01 aug 23, from 0.53 to 0.475
 ## >>chng 07 nov 29, from 0.475 to 0.423 update DR rates

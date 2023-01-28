@@ -281,6 +281,17 @@ struct t_atmdat : public module {
 	/** accurate ionization potentials in Ryd */
 	double EIonPot[LIMELM][LIMELM];
 
+	/** getIonPot -- get ionization potential, in Ryd
+	 *
+	 * \param nelem [in]   element index (0 for H, 29 for Zn)
+	 * \param ion   [in]   ion charge (0 for neutral, nelem for H-like)
+	 * \return double      ionization potential, in Ry
+	 */
+	inline double getIonPot( long int nelem, long int ion )
+	{
+		return EIonPot[nelem][ion];
+	}
+
 	/** CharExcIon is ionization, */
 	/** [0] is Atom^0 + H+ => Atom+1 + H0
   	  * [n] is Atom^+n + H+ => Atom^+n-1 + H0 */
