@@ -1,14 +1,15 @@
-#
+# 
+#>>chng 2023 feb 1, https://atct.anl.gov/Thermochemical Data
 # columns are species label, formation enthalpy at OK in KJ/mol
 #
-D     	216
-D+    	1528
-D-    	143.2
+D     	219.804
+D+    	1532.210
+D-    	146.991
 D2	0.0
 D2+	1488.3
 D3+   	1107
-HD    	0
-HD+   	1488.3
+HD    	0.328
+HD+   	1490.498
 H2D+  	1107
 HD2+  	1107
 HeD+  	1352

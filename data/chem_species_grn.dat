@@ -13,7 +13,7 @@ Ogrn  	246.8
 Ngrn  	470.8
 Sgrn  	274.7
 Hgrn  	216
-Dgrn  	216
+Dgrn  	219.804 #23 01 04, GS updated
 Sigrn 	446
 SiHgrn	374.9
 SiOgrn	-101.6
@@ -43,4 +43,4 @@ C2Hgrn	560
 C3grn 	831
 C3Hgrn	602.5
 H2grn 	0
-HDgrn   0
+HDgrn   0.328 # 23 02 01 GS updates
