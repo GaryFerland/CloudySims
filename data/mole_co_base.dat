@@ -2018,7 +2018,6 @@ S+,SiS=>SiS+,S:hmrate:3.2e-9:-0.5:0 #UMIST2012, 18thJan2023
 C+,SiS=>SiC+,S:hmrate:2.3e-9:-0.5:0 #UMIST2012, 18thJan2023
 H3+,SiS=>HSiS+,H2:hmrate:8.7e-9:-0.5:0 #UMIST2012, 18thJan2023
 HCO+,SiS=>HSiS+,CO:hmrate:3.3e-9:-0.5:0 #UMIST2012, 18thJan2023
-HCO+,SiS=>HSiS+,CO:hmrate:3.3e-9:-0.5:0 #UMIST2012, 18thJan2023
 He+,SiS=>S+,Si,He:hmrate:3.8e-9:-0.5:0 #UMIST2012, 18thJan2023
 He+,SiS=>S,Si+,He:hmrate:3.8e-9:-0.5:0 #UMIST2012, 18thJan2023
 SiS,PHOTON=>S,Si:th85rate:1.e-10:0:2.3 #UMIST2012, 18thJan2023
