@@ -203,7 +203,7 @@ void save_opacity(FILE * ioPUN,
 
 						/* ionization potential of shell */
 						fprintf(ioPUN,"\t%.2f" ,
-							t_ADfA::Inst().ph1(nshell,nelec-1,nelem,0)/EVRYD);
+							t_ADfA::Inst().getEthresh(nshell+1,nelec,nelem+1)/EVRYD);
 
 						/* set lower and upper limits to this range */
 						long ipop = opac.ipElement[nelem][ion][nshell][2];

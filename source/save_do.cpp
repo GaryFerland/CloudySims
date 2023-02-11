@@ -2427,7 +2427,7 @@ void SaveDo(
 										break;
 
 									/* array elements are shell, numb of electrons, element, 0 */
-									energy = t_ADfA::Inst().ph1(ips,nelem-ion,nelem,0);
+									energy = t_ADfA::Inst().getEthresh(ips+1,nelem-ion+1,nelem+1);
 
 									/* now print threshold with correct format */
 									if( energy < 10. )

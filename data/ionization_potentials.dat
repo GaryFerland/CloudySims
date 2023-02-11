@@ -1,4 +1,4 @@
-  20200501 # magic number
+  20221015 # magic number
 ########################################################################
 #
 # Ionization potentials of all ions of all natural elements.
@@ -396,7 +396,7 @@
  28   1 146541.56       0.20            # L7185,L897           Ni II      	'Ni III (3d8 3F<4>)'
  28   2 283800          150             # L11049               Ni III     	'Ni IV (3d7 4F<9/2>)'
  28   3 443000          2000            # L7185,L241           Ni IV      	'Ni V (3d6 5D<4>)'
- 28   4 613500          500             # L7185                Ni V       	'Ni VI (3d5 6S<5/2>)'
+ 28   4 613500          500             # L7185                Ni V       	'Ni VI (3d6 6S<5/2>)'
  28   5 871000          8000            # L7185,L241c99        Ni VI      	'Ni VII (3d4 5D<0>)'
  28   6 1065000         16000           # L8672c99             Ni VII     	'Ni VIII (3d3 4F<3/2>)'
  28   7 1307000         17000           # L8672c99             Ni VIII    	'Ni IX (3d2 3F<2>)'
@@ -762,7 +762,7 @@
  39   4 607760          300             # L19755               Y  V       	'Y VI (4p4 3P<2>)'
  39   5 737110          200             # L6821                Y  VI      	'Y VII (4p3 4S*<3/2>)'
  39   6 887400          1200            # L5287                Y  VII     	'Y VIII (4p2 3P<0>)'
- 39   7 1024000         17000           # L8672c99             Y  VIII    	'Y IX (4p 2P*<1/2>)'
+ 39   7 1033340         500             # L20835               Y  VIII    	'Y IX (4p 2P*<1/2>)'
  39   8 1174700         300             # L6833                Y  IX      	'Y X (4s2 1S<0>)'
  39   9 1498000         3000            # L6976                Y  X       	'Y XI (4s 2S<1/2>)'
  39  10 1660000         200             # L4899                Y  XI      	'Y XII (3d10 1S<0>)'
@@ -1190,7 +1190,7 @@
  48  45 61362220        210             # L16264c99            Cd XLVI    	'Cd XLVII (1s2 1S<0>)'
  48  46 253669920       70              # L12128               Cd XLVII   	'Cd XLVIII (1s 2S<1/2>)'
  48  47 260851700       300             # L7188                Cd XLVIII  	''
- 49   0 46670.106       0.006           # L5566                In I       	'In II (5s2 1S<0>)'
+ 49   0 46670.107       0.004           # L21649               In I       	'In II (5s2 1S<0>)'
  49   1 152200.10       0.22            # L18318               In II      	'In III (5s 2S<1/2>)'
  49   2 226191.3        1.0             # L4327                In III     	'In IV (4d10 1S<0>)'
  49   3 447200          300             # L11384               In IV      	'In V (4d9 2D<5/2>)'
@@ -1905,7 +1905,7 @@
  61  58 103216900       600             # L16264c99            Pm LIX     	'Pm LX (1s2 1S<0>)'
  61  59 420572100       1000            # L12128               Pm LX      	'Pm LXI (1s 2S<1/2>)'
  61  60 430265300       1200            # L7188                Pm LXI     	''
- 62   0 45519.6         1.4             # L9734                Sm I       	'Sm II (4f6.5s2.5p6.6s 8F<1/2>)'
+ 62   0 45519.69        0.17            # L21624               Sm I       	'Sm II (4f6.5s2.5p6.6s 8F<1/2>)'
  62   1 89350           160             # L19870c180           Sm II      	'Sm III (4f6.5s2.5p6 7F<0>)'
  62   2 189940          650             # L19883c180           Sm III     	'Sm IV (4f5.5s2.5p6 6H*<5/2>)'
  62   3 335850          900             # L19883c180           Sm IV      	'Sm V (4f4.5s2.5p6 5I<4>)'
@@ -3419,7 +3419,7 @@
  82  81 817333000       3000            # L7188                Pb LXXXII  	''
  83   0 58761.65        0.05            # L10664,L6247         Bi I       	'Bi II (6p2 3P<0>)'
  83   1 134720          30              # L6771                Bi II      	'Bi III (6p 2P*<1/2>)'
- 83   2 206180          0.0             # L3466,L3331          Bi III     	'Bi IV (6s2 1S<0>)'
+ 83   2 206242.0        1.4             # L21488               Bi III     	'Bi IV (6s2 1S<0>)'
  83   3 365900          500             # L14078               Bi IV      	'Bi V (6s 2S<1/2>)'
  83   4 442440          200             # L9361                Bi V       	'Bi VI (5d10 1S<0>)'
  83   5 713000          6000            # L3577                Bi VI      	'Bi VII (5d9 2D<5/2>)'
@@ -4481,16 +4481,16 @@
  94  93 1118259000      26000           # L7188                Pu XCIV    	''
 ********************
 # Reference:
-# NIST  2020-05-01
+# NIST,  2022-10-15
 #
 #
-# References:
-# -----------
+# Bibliography:
+# -------------
 # PUB     Refcode: HDEL on NIST
 # PUBCON      URL: http://www.nist.gov/pml/data/hdel/index.cfm
 #
 # PUB     Refcode: L10032 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10032&comment_code=&amp;element=Ru&amp;spectr_charge=1&amp;ref=10032&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10032&comment_code=&amp;element=Rh&amp;spectr_charge=1&amp;ref=10032&amp;type=E
 # PUBCON    Title: First-Ionization Potential of Ruthenium, Rhodium, and Palladium by Double-Resonance Ionization Spectroscopy
 # PUBCON  Authors: C. L. Callender, P. A. Hackett, and D. M. Rayner
 # PUBCON  Journal: J. Opt. Soc. Am. B 5, 614–618 (1988)
@@ -4504,14 +4504,14 @@
 # PUBCON      DOI: https://doi.org/10.1364/JOSAB.5.001341
 #
 # PUB     Refcode: L10054 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10054&comment_code=&amp;element=Li&amp;spectr_charge=2&amp;ref=10054&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10054&comment_code=&amp;element=Fm&amp;spectr_charge=99&amp;ref=10054&amp;type=E
 # PUBCON    Title: Theoretical Energies for the n=1 and 2 States of the Helium Isoelectronic Sequence up to Z=100
 # PUBCON  Authors: G. W. F. Drake
 # PUBCON  Journal: Can. J. Phys. 66, 586–611 (1988)
 # PUBCON      DOI: https://doi.org/10.1139/p88-100
 #
 # PUB     Refcode: L10105 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10105&comment_code=&amp;element=I&amp;spectr_charge=5&amp;ref=10105&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10105&comment_code=&amp;element=I&amp;spectr_charge=6&amp;ref=10105&amp;type=E
 # PUBCON    Title: Wavelengths and Energy Levels of I V and I VI
 # PUBCON  Authors: V. Kaufman, J. Sugar, and Y. Joshi
 # PUBCON  Journal: J. Opt. Soc. Am. B 5, 619–622 (1988)
@@ -4525,7 +4525,7 @@
 # PUBCON      DOI: https://doi.org/10.1063/1.555815
 #
 # PUB     Refcode: L10107 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10107&comment_code=&element=xe&spectr_charge=26&ref=10107
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10107&comment_code=&amp;element=Xe&amp;spectr_charge=26&amp;ref=10107&amp;type=E
 # PUBCON    Title: Spectra of Copperlike and Zinclike Xenon: Xe XXV and Xe XXVI
 # PUBCON  Authors: V. Kaufman, J. Sugar, and W. L. Rowan
 # PUBCON  Journal: J. Opt. Soc. Am. B 5, 1273–1274 (1988)
@@ -4539,21 +4539,21 @@
 # PUBCON      DOI: https://doi.org/10.1016/0378-4363(88)90312-9
 #
 # PUB     Refcode: L10191 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10191&comment_code=&amp;element=Kr&amp;spectr_charge=9&amp;ref=10191&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10191&comment_code=&amp;element=Au&amp;spectr_charge=52&amp;ref=10191&amp;type=E
 # PUBCON    Title: Ionization Limits in Cu-like and Ni-like High-Z Ions from ab initio Calculations and Wavelength Measurements in Rydberg Series
 # PUBCON  Authors: N. Tragin, J.-P. Geindre, C. Chenais-Popovics, J.-C. Gauthier, J.-F. Wyart, and E. Luc-Koenig
 # PUBCON  Journal: Phys. Rev. A 39, 2085–2089 (1989)
 # PUBCON      DOI: https://doi.org/10.1103/PhysRevA.39.2085
 #
 # PUB     Refcode: L10257 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10257&comment_code=&element=w&spectr_charge=46&ref=10257
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10257&comment_code=&amp;element=Re&amp;spectr_charge=47&amp;ref=10257&amp;type=E
 # PUBCON    Title: Transitions in Fe-, Co-, Cu-, and Zn-like Ions of W and Re
 # PUBCON  Authors: J. F. Seely, C. M. Brown, and W. E. Behring
 # PUBCON  Journal: J. Opt. Soc. Am. B 6, 3–6 (1989)
 # PUBCON      DOI: https://doi.org/10.1364/JOSAB.6.000003
 #
 # PUB     Refcode: L10264c99 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10264&comment_code=c99&amp;element=Sb&amp;spectr_charge=41&amp;ref=10264&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10264&comment_code=c99&amp;element=Xe&amp;spectr_charge=44&amp;ref=10264&amp;type=E
 # PUBCON    Title: Accurate Calculations of 3p and 3d Lifetimes in the Na Sequence
 # PUBCON  Authors: C. E. Theodosiou, and L. J. Curtis
 # PUBCON  Journal: Phys. Rev. A 38, 4435–4445 (1988)
@@ -4561,20 +4561,20 @@
 # PUBCON  Comment: Uncertainty has been estimated by A. Kramida (unpublished, 2011) based on comparisons along the isoelectronic sequence.
 #
 # PUB     Refcode: L10278 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10278&comment_code=&amp;element=Br&amp;spectr_charge=7&amp;ref=10278&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10278&comment_code=&amp;element=U&amp;spectr_charge=64&amp;ref=10278&amp;type=E
 # PUBCON    Title: Comprehensive Calculations of 4p and 4d Lifetimes for the Cu Sequence
 # PUBCON  Authors: L. J. Curtis, and C. E. Theodosiou
 # PUBCON  Journal: Phys. Rev. A 39, 605–615 (1989)
 # PUBCON      DOI: https://doi.org/10.1103/PhysRevA.39.605
 #
 # PUB     Refcode: L10321 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10321&comment_code=&element=al&spectr_charge=1&ref=10321
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10321&comment_code=&amp;element=Al&amp;spectr_charge=1&amp;ref=10321&amp;type=E
 # PUBCON    Title: Energy Levels of Atomic Aluminum with Hyperfine Structure
 # PUBCON  Authors: E. S. Chang
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 19, 119–125 (1990)
 #
 # PUB     Refcode: L10359 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10359&comment_code=&element=mo&spectr_charge=7&ref=10359
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10359&comment_code=&amp;element=Mo&amp;spectr_charge=7&amp;ref=10359&amp;type=E
 # PUBCON    Title: Spectrum and Energy Levels of Six-Times-Ionized Molybdenum (Mo VII)
 # PUBCON  Authors: J. Reader, and U. Feldman
 # PUBCON  Journal: J. Opt. Soc. Am. B 7, 253–265 (1990)
@@ -4595,7 +4595,7 @@
 # PUBCON      DOI: https://doi.org/10.1088/0953-4075/22/18/002
 #
 # PUB     Refcode: L10502 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10502&comment_code=&amp;element=Mo&amp;spectr_charge=1&amp;ref=10502&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10502&comment_code=&amp;element=Mo&amp;spectr_charge=41&amp;ref=10502&amp;type=E
 # PUBCON    Title: Energy Levels of Molybdenum, Mo I through Mo XLII
 # PUBCON  Authors: J. Sugar, and A. Musgrove
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 17, 155–239 (1988)
@@ -4609,35 +4609,35 @@
 # PUBCON      DOI: https://doi.org/10.1364/JOSAB.7.001761
 #
 # PUB     Refcode: L10559 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10559&comment_code=&amp;element=Cu&amp;spectr_charge=1&amp;ref=10559&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10559&comment_code=&amp;element=Cu&amp;spectr_charge=26&amp;ref=10559&amp;type=E
 # PUBCON    Title: Energy Levels of Copper, Cu I through Cu XXIX
 # PUBCON  Authors: J. Sugar, and A. Musgrove
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 19, 527–616 (1990)
 # PUBCON      DOI: https://doi.org/10.1063/1.555855
 #
 # PUB     Refcode: L10579 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10579&comment_code=&element=xe&spectr_charge=3&ref=10579
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10579&comment_code=&amp;element=Xe&amp;spectr_charge=3&amp;ref=10579&amp;type=E
 # PUBCON    Title: Spectrum of Doubly Ionized Xenon (Xe III)
 # PUBCON  Authors: W. Persson, C.-G. Wahlström, G. Bertuccelli, H. O. Di Rocco, J. G. Reyna Almandos, and M. Gallardo
 # PUBCON  Journal: Phys. Scr. 38, 347–369 (1988)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/38/3/005
 #
 # PUB     Refcode: L10621 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10621&comment_code=&element=o&spectr_charge=2&ref=10621
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10621&comment_code=&amp;element=O&amp;spectr_charge=2&amp;ref=10621&amp;type=E
 # PUBCON    Title: The Spectrum of Singly Ionized Oxygen, O II
 # PUBCON  Authors: I. Wenåker
 # PUBCON  Journal: Phys. Scr. 42, 667–684 (1990)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/42/6/008
 #
 # PUB     Refcode: L10635 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10635&comment_code=&amp;element=Mg&amp;spectr_charge=1&amp;ref=10635&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10635&comment_code=&amp;element=Mg&amp;spectr_charge=6&amp;ref=10635&amp;type=E
 # PUBCON    Title: Wavelengths and Energy Level Classifications of Magnesium Spectra for All Stages of Ionization (Mg I through Mg XII)
 # PUBCON  Authors: V. Kaufman, and W. C. Martin
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 20, 83–152 (1991)
 # PUBCON      DOI: https://doi.org/10.1063/1.555879
 #
 # PUB     Refcode: L10636 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10636&comment_code=&element=kr&spectr_charge=8&ref=10636
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10636&comment_code=&amp;element=Kr&amp;spectr_charge=8&amp;ref=10636&amp;type=E
 # PUBCON    Title: Spectrum and Energy Levels of Seven-Times-Ionized Krypton (Kr VIII) and Resonance Lines of Eight-Times-Ionized Krypton (Kr IX)
 # PUBCON  Authors: J. Reader, N. Acquista, and V. Kaufman
 # PUBCON  Journal: J. Opt. Soc. Am. B 8, 538–547 (1991)
@@ -4671,21 +4671,21 @@
 # PUBCON      DOI: https://doi.org/10.1103/PhysRevA.45.4720
 #
 # PUB     Refcode: L10922 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10922&comment_code=&amp;element=Sb&amp;spectr_charge=23&amp;ref=10922&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10922&comment_code=&amp;element=Te&amp;spectr_charge=24&amp;ref=10922&amp;type=E
 # PUBCON    Title: Laser-Produced Spectra of Copperlike Antimony and Tellurium, Sb^{22+} and Te^{23+}
 # PUBCON  Authors: J. Reader, and N. Acquista
 # PUBCON  Journal: J. Opt. Soc. Am. B 9, 347–349 (1992)
 # PUBCON      DOI: https://doi.org/10.1364/JOSAB.9.000347
 #
 # PUB     Refcode: L10987 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10987&comment_code=&element=y&spectr_charge=2&ref=10987
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=10987&comment_code=&amp;element=Y&amp;spectr_charge=2&amp;ref=10987&amp;type=E
 # PUBCON    Title: The Spectrum of Singly Ionized Yttrium, Y II
 # PUBCON  Authors: A. E. Nilsson, S. Johansson, and R. L. Kurucz
 # PUBCON  Journal: Phys. Scr. 44, 226–257 (1991)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/44/3/003
 #
 # PUB     Refcode: L11023 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11023&comment_code=&element=ba&spectr_charge=4&ref=11023
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11023&comment_code=&amp;element=Ba&amp;spectr_charge=4&amp;ref=11023&amp;type=E
 # PUBCON    Title: Spectrum and Energy Levels of Triply Ionized Barium (Ba IV)
 # PUBCON  Authors: C. J. Sansonetti, J. Reader, A. Tauheed, and Y. N. Joshi
 # PUBCON  Journal: J. Opt. Soc. Am. B 10, 7–12 (1993)
@@ -4699,7 +4699,7 @@
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/45/3/004
 #
 # PUB     Refcode: L11121 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11121&comment_code=&element=xe&spectr_charge=5&ref=11121
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11121&comment_code=&amp;element=Xe&amp;spectr_charge=5&amp;ref=11121&amp;type=E
 # PUBCON    Title: Analysis of the 5s^{2}5p^{2}-(5s5p^{3}+5s^{2}5p5d+5s^{2}5p6s) Transitions of Four-Times Ionized Xenon (Xe V)
 # PUBCON  Authors: A. Tauheed, Y. N. Joshi, V. Kaufman, J. Sugar, and E. H. Pinnington
 # PUBCON  Journal: J. Opt. Soc. Am. B 10, 561–565 (1993)
@@ -4753,7 +4753,7 @@
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/48/2/002
 #
 # PUB     Refcode: L11384 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11384&comment_code=&amp;element=Cd&amp;spectr_charge=3&amp;ref=11384&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11384&comment_code=&amp;element=Cs&amp;spectr_charge=10&amp;ref=11384&amp;type=E
 # PUBCON    Title: The 4d^{10} ^{1}S_{0}-4d^{9}(np+n′f) Transitions in the Pd I Isoelectronic Sequence from Cd III to Cs X
 # PUBCON  Authors: S. S. Churilov, Y. N. Joshi, and A. N. Ryabtsev
 # PUBCON  Journal: J. Phys. B 27, 5485–5495 (1994)
@@ -4772,21 +4772,21 @@
 # PUBCON      DOI: https://doi.org/10.1103/PhysRevA.49.745
 #
 # PUB     Refcode: L11604 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11604&comment_code=&amp;element=W&amp;spectr_charge=1&amp;ref=11604&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11604&comment_code=&amp;element=Re&amp;spectr_charge=1&amp;ref=11604&amp;type=E
 # PUBCON    Title: First Ionization Potentials of Tungsten and Rhenium by Mass-Selected Double-Resonance Ionization Spectroscopy
 # PUBCON  Authors: M. D. Campbell-Miller, and B. Simard
 # PUBCON  Journal: J. Opt. Soc. Am. B 13, 2115–2120 (1996)
 # PUBCON      DOI: https://doi.org/10.1364/JOSAB.13.002115
 #
 # PUB     Refcode: L11642 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11642&comment_code=&element=xe&spectr_charge=6&ref=11642
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11642&comment_code=&amp;element=Xe&amp;spectr_charge=6&amp;ref=11642&amp;type=E
 # PUBCON    Title: Collision-Based Spectroscopy of Xe VI Rydberg States
 # PUBCON  Authors: M. Wang, M. O. Larsson, A. Arnesen, R. Hallin, F. Heijkenskjöld, C. Nordling, and A. Wännström
 # PUBCON  Journal: J. Opt. Soc. Am. B 13, 2715–2719 (1996); Erratum:  14, 1515 (1997)
 # PUBCON      DOI: https://doi.org/10.1364/JOSAB.13.002715
 #
 # PUB     Refcode: L11645 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11645&comment_code=&element=zr&spectr_charge=4&ref=11645
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11645&comment_code=&amp;element=Zr&amp;spectr_charge=4&amp;ref=11645&amp;type=E
 # PUBCON    Title: Long-Wavelength Transitions and Improved Energy Levels of Triply Ionized Zirconium (Zr IV)
 # PUBCON  Authors: J. Reader, and N. Acquista
 # PUBCON  Journal: J. Opt. Soc. Am. B 14, 1328–1330 (1997)
@@ -4821,20 +4821,20 @@
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/55/6/009
 #
 # PUB     Refcode: L1171 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1171&comment_code=&element=fe&spectr_charge=3&ref=1171
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1171&comment_code=&amp;element=Fe&amp;spectr_charge=3&amp;ref=1171&amp;type=E
 # PUBCON    Title: Extension of the Analysis of the Third Spectrum of Iron, Fe III
 # PUBCON  Authors: S. Glad
 # PUBCON  Journal: Ark. Fys. (Stockholm) 10(4), 291–340 (1956)
 #
 # PUB     Refcode: L11744 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11744&comment_code=&element=ne&spectr_charge=5&ref=11744
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11744&comment_code=&amp;element=Ne&amp;spectr_charge=5&amp;ref=11744&amp;type=E
 # PUBCON    Title: A Critical Compilation and Extended Analysis of the Ne V Spectrum
 # PUBCON  Authors: A. E. Kramida, T. Bastin, E. Biémont, P.-D. Dumont, and H.-P. Garnir
 # PUBCON  Journal: Eur. Phys. J. D 7, 547–565 (1999)
 # PUBCON      DOI: https://doi.org/10.1007/s100530050381
 #
 # PUB     Refcode: L11760 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11760&comment_code=&element=hg&spectr_charge=2&ref=11760
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11760&comment_code=&amp;element=Hg&amp;spectr_charge=2&amp;ref=11760&amp;type=E
 # PUBCON    Title: Spectrum and Energy Levels of Singly-Ionized Mercury (Hg II)
 # PUBCON  Authors: C. J. Sansonetti, and J. Reader
 # PUBCON  Journal: Phys. Scr. 63, 219–242 (2001)
@@ -4848,14 +4848,14 @@
 # PUBCON      DOI: https://doi.org/10.1238/physica.regular.063a00108
 #
 # PUB     Refcode: L11770 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11770&comment_code=&amp;element=N&amp;spectr_charge=2&amp;ref=11770&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11770&comment_code=&amp;element=Sn&amp;spectr_charge=47&amp;ref=11770&amp;type=E
 # PUBCON    Title: Ionization Potentials of Atoms and Ions from Lithium to Tin (Z = 50)
 # PUBCON  Authors: E. Biémont, Y. Frémat, and P. Quinet
 # PUBCON  Journal: At. Data Nucl. Data Tables 71, 117–146 (1999)
 # PUBCON      DOI: https://doi.org/10.1006/adnd.1998.0803
 #
 # PUB     Refcode: L11770c98 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11770&comment_code=c98&amp;element=Cr&amp;spectr_charge=17&amp;ref=11770&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11770&comment_code=c98&amp;element=Co&amp;spectr_charge=17&amp;ref=11770&amp;type=E
 # PUBCON Crossref: L11770
 # PUBCON  Comment: A misprint in the quoted paper has been corrected in ASD.
 #
@@ -4889,7 +4889,7 @@
 # PUBCON      DOI: https://doi.org/10.1103/PhysRevA.59.873
 #
 # PUB     Refcode: L11883 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11883&comment_code=&element=xe&spectr_charge=8&ref=11883
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11883&comment_code=&amp;element=Xe&amp;spectr_charge=10&amp;ref=11883&amp;type=E
 # PUBCON    Title: Analysis of the 4p^{6}4d^{8}4f and 4p^{5}4d^{10} Configurations of Xe X and Some Highly Excited Levels of Xe VIII and Xe IX Ions
 # PUBCON  Authors: S. S. Churilov, and Y. N. Joshi
 # PUBCON  Journal: Phys. Scr. 65, 40–45 (2002)
@@ -4903,7 +4903,7 @@
 # PUBCON      DOI: https://doi.org/10.1088/0953-4075/36/23/003
 #
 # PUB     Refcode: L11984 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11984&comment_code=&element=hg&spectr_charge=1&ref=11984
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=11984&comment_code=&amp;element=Hg&amp;spectr_charge=1&amp;ref=11984&amp;type=E
 # PUBCON    Title: Two-Step Laser Optogalvanic Spectroscopy of the Odd-Parity Rydberg States of Atomic Mercury
 # PUBCON  Authors: M. A. Zia, and M. A. Baig
 # PUBCON  Journal: Eur. Phys. J. D 28, 323–330 (2004)
@@ -4924,7 +4924,7 @@
 # PUBCON      DOI: https://doi.org/10.1238/Physica.Regular.069a00283
 #
 # PUB     Refcode: L12003 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12003&comment_code=&element=xe&spectr_charge=11&ref=12003
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12003&comment_code=&amp;element=Xe&amp;spectr_charge=11&amp;ref=12003&amp;type=E
 # PUBCON    Title: 4p^{6}4d^{8}-(4d^{7}5p+4d^{7}4f+4p^{5}4d^{9}) Transitions in Xe XI
 # PUBCON  Authors: S. S. Churilov, Y. N. Joshi, J. Reader, and R. R. Kildiyarova
 # PUBCON  Journal: Phys. Scr. 70, 126–138 (2004)
@@ -4938,7 +4938,7 @@
 # PUBCON      DOI: https://doi.org/10.1063/1.1649348
 #
 # PUB     Refcode: L1202 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1202&comment_code=&amp;element=Tl&amp;spectr_charge=4&amp;ref=1202&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1202&comment_code=&amp;element=Pb&amp;spectr_charge=5&amp;ref=1202&amp;type=E
 # PUBCON    Title: Spark Spectra of Thallium and Lead
 # PUBCON  Authors: F. Gutmann
 # PUBCON  Journal: Ph.D. Dissertation, University of British Columbia, Canada, 151 pp. (1969)
@@ -4951,56 +4951,56 @@
 # PUBCON      DOI: https://doi.org/10.1088/0953-4075/38/8/003
 #
 # PUB     Refcode: L12094 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12094&comment_code=&element=nb&spectr_charge=4&ref=12094
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12094&comment_code=&amp;element=Nb&amp;spectr_charge=4&amp;ref=12094&amp;type=E
 # PUBCON    Title: Spectrum and Energy Levels of Triply-Ionized Niobium (Nb IV)
 # PUBCON  Authors: A. Tauheed, and J. Reader
 # PUBCON  Journal: Phys. Scr. 72, 158–180 (2005)
 # PUBCON      DOI: https://doi.org/10.1238/Physica.Regular.072a00158
 #
 # PUB     Refcode: L12120 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12120&comment_code=&element=b&spectr_charge=2&ref=12120
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12120&comment_code=&amp;element=B&amp;spectr_charge=2&amp;ref=12120&amp;type=E
 # PUBCON    Title: Additions to the Spectrum and Energy Levels and a Critical Compilation of Singly-Ionized Boron, B II
 # PUBCON  Authors: A. N. Ryabtsev, I. Kink, Y. Awaya, J. O. Ekberg, S. Mannervik, A. Ölme, and I. Martinson
 # PUBCON  Journal: Phys. Scr. 71, 489–501 (2005)
 # PUBCON      DOI: https://doi.org/10.1238/Physica.Regular.071a00489
 #
 # PUB     Refcode: L12128 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12128&comment_code=&amp;element=Mg&amp;spectr_charge=11&amp;ref=12128&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12128&comment_code=&amp;element=Am&amp;spectr_charge=94&amp;ref=12128&amp;type=E
 # PUBCON    Title: QED Calculation of the n = 1 and n = 2 Energy Levels in He-like Ions
 # PUBCON  Authors: A. N. Artemyev, V. M. Shabaev, V. A. Yerokhin, G. Plunien, and G. Soff
 # PUBCON  Journal: Phys. Rev. A 71, 062104 (2005)
 # PUBCON      DOI: https://doi.org/10.1103/PhysRevA.71.062104
 #
 # PUB     Refcode: L12158 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12158&comment_code=&element=be&spectr_charge=2&ref=12158
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12158&comment_code=&amp;element=Be&amp;spectr_charge=2&amp;ref=12158&amp;type=E
 # PUBCON    Title: Critical Compilation of Wavelengths and Energy Levels of Singly Ionized Beryllium (Be II)
 # PUBCON  Authors: A. E. Kramida
 # PUBCON  Journal: Phys. Scr. 72, 309–319 (2005)
 # PUBCON      DOI: https://doi.org/10.1238/Physica.Regular.072a00309
 #
 # PUB     Refcode: L12177 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12177&comment_code=&amp;element=W&amp;spectr_charge=1&amp;ref=12177&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12177&comment_code=&amp;element=W&amp;spectr_charge=2&amp;ref=12177&amp;type=E
 # PUBCON    Title: Compilation of Wavelengths, Energy Levels, and Transition Probabilities for W I and W II
 # PUBCON  Authors: A. E. Kramida, and T. Shirai
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 35, 423–683 (2006)
 # PUBCON      DOI: https://doi.org/10.1063/1.1836763
 #
 # PUB     Refcode: L12180 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12180&comment_code=&element=ga&spectr_charge=1&ref=12180
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12180&comment_code=&amp;element=Ga&amp;spectr_charge=30&amp;ref=12180&amp;type=E
 # PUBCON    Title: Spectral Data for Gallium: Ga I through Ga XXXI
 # PUBCON  Authors: T. Shirai, J. Reader, A. E. Kramida, and J. Sugar
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 36, 509–615 (2007)
 # PUBCON      DOI: https://doi.org/10.1063/1.2207144
 #
 # PUB     Refcode: L12188 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12188&comment_code=&amp;element=K&amp;spectr_charge=1&amp;ref=12188&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12188&comment_code=&amp;element=K&amp;spectr_charge=2&amp;ref=12188&amp;type=E
 # PUBCON    Title: The Spectrum of Singly Ionized Potassium, K II
 # PUBCON  Authors: K. Pettersen, J. O. Ekberg, I. Martinson, and J. Reader
 # PUBCON  Journal: Phys. Scr. 75, 702–711 (2007)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/75/5/019
 #
 # PUB     Refcode: L12196 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12196&comment_code=&amp;element=Kr&amp;spectr_charge=1&amp;ref=12196&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12196&comment_code=&amp;element=Kr&amp;spectr_charge=35&amp;ref=12196&amp;type=E
 # PUBCON    Title: Energy Levels and Observed Spectral Lines of Krypton, Kr I through Kr XXXVI
 # PUBCON  Authors: E. B. Saloman
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 36, 215–386 (2007)
@@ -5028,7 +5028,7 @@
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/76/5/024
 #
 # PUB     Refcode: L12354c99 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12354&comment_code=c99&amp;element=Ac&amp;spectr_charge=3&amp;ref=12354&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12354&comment_code=c99&amp;element=Pa&amp;spectr_charge=5&amp;ref=12354&amp;type=E
 # PUBCON    Title: 'Dirac-Fock Plus Core-polarization' Calculations of E1 Transitions in the Francium Isoelectronic Sequence
 # PUBCON  Authors: J. Migdalek, and A. Glowacz-Proszkiewicz
 # PUBCON  Journal: J. Phys. B 40, 4143–4154 (2007)
@@ -5036,28 +5036,28 @@
 # PUBCON  Comment: Uncertainty has been estimated by A. Kramida (unpublished, 2011) based on comparisons along the isoelectronic sequence.
 #
 # PUB     Refcode: L12369 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12369&comment_code=&amp;element=Ni&amp;spectr_charge=1&amp;ref=12369&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12369&comment_code=&amp;element=Ge&amp;spectr_charge=1&amp;ref=12369&amp;type=E
 # PUBCON    Title: Three-Step Resonant Photoionization Spectroscopy of Ni and Ge: Ionization Potential and Odd-Parity Rydberg Levels
 # PUBCON  Authors: T. Kessler, K. Brück, C. Baktash, J. R. Beene, Ch. Geppert, C. C. Havener, H. F. Krause, Y. Liu, D. R. Schultz, D. W. Stracener, C. R. Vane, and K. Wendt
 # PUBCON  Journal: J. Phys. B 40, 4413–4432 (2007)
 # PUBCON      DOI: https://doi.org/10.1088/0953-4075/40/23/002
 #
 # PUB     Refcode: L12392 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12392&comment_code=&amp;element=K&amp;spectr_charge=2&amp;ref=12392&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12392&comment_code=&amp;element=K&amp;spectr_charge=17&amp;ref=12392&amp;type=E
 # PUBCON    Title: Wavelengths, Transition Probabilities, and Energy Levels for the Spectra of Potassium (K I through K XIX)
 # PUBCON  Authors: J. E. Sansonetti
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 37, 7–96 (2008)
 # PUBCON      DOI: https://doi.org/10.1063/1.2789451
 #
 # PUB     Refcode: L12547 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12547&comment_code=&element=b&spectr_charge=3&ref=12547
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12547&comment_code=&amp;element=B&amp;spectr_charge=3&amp;ref=12547&amp;type=E
 # PUBCON    Title: Additions to the Spectrum and Energy Levels and Critical Compilation of Doubly Ionized Boron, B III
 # PUBCON  Authors: A. E. Kramida, A. N. Ryabtsev, J. O. Ekberg, I. Kink, S. Mannervik, and I. Martinson
 # PUBCON  Journal: Phys. Scr. 78, 025301 (2008)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/78/02/025301
 #
 # PUB     Refcode: L12548 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12548&comment_code=&element=b&spectr_charge=4&ref=12548
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=12548&comment_code=&amp;element=B&amp;spectr_charge=5&amp;ref=12548&amp;type=E
 # PUBCON    Title: Additions to the Spectrum and Energy Levels and a Critical Compilation of Helium-like and Hydrogen-like Boron, B IV and B V
 # PUBCON  Authors: A. E. Kramida, A. N. Ryabtsev, J. O. Ekberg, I. Kink, S. Mannervik, and I. Martinson
 # PUBCON  Journal: Phys. Scr. 78, 025302 (2008)
@@ -5078,14 +5078,14 @@
 # PUBCON      DOI: https://doi.org/10.1103/PhysRevA.50.846
 #
 # PUB     Refcode: L13202 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=13202&comment_code=&amp;element=Kr&amp;spectr_charge=7&amp;ref=13202&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=13202&comment_code=&amp;element=Rh&amp;spectr_charge=16&amp;ref=13202&amp;type=E
 # PUBCON    Title: Ionization Energies and Fine Structure Splittings of Highly Correlated Systems: Zn, Zinc-like Ions and Copper-like Ions
 # PUBCON  Authors: M. J. Vilkas, Y. Ishikawa, and K. Hirao
 # PUBCON  Journal: Chem. Phys. Lett. 321, 243–252 (2000)
 # PUBCON      DOI: https://doi.org/10.1016/S0009-2614(00)00361-4
 #
 # PUB     Refcode: L13237 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=13237&comment_code=&amp;element=Na&amp;spectr_charge=1&amp;ref=13237&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=13237&comment_code=&amp;element=Na&amp;spectr_charge=10&amp;ref=13237&amp;type=E
 # PUBCON    Title: Wavelengths, Transition Probabilities, and Energy Levels for the Spectra of Sodium (Na I–Na XI)
 # PUBCON  Authors: J. E. Sansonetti
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 37, 1659–1763 (2008)
@@ -5106,19 +5106,19 @@
 # PUBCON      DOI: https://doi.org/10.1139/p71-211
 #
 # PUB     Refcode: L13741 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=13741&comment_code=&amp;element=Ac&amp;spectr_charge=4&amp;ref=13741&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=13741&comment_code=&amp;element=Lr&amp;spectr_charge=4&amp;ref=13741&amp;type=E
 # PUBCON    Title: Theoretical Prediction of the Second to Fourth Actinide Ionization Potentials
 # PUBCON  Authors: X. Y. Cao, and M. Dolg
 # PUBCON  Journal: Mol. Phys. 101, 961–969 (2003)
 # PUBCON      DOI: https://doi.org/10.1080/0026897021000046807
 #
 # PUB     Refcode: L13741c99 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=13741&comment_code=c99&amp;element=Pa&amp;spectr_charge=2&amp;ref=13741&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=13741&comment_code=c99&amp;element=Lr&amp;spectr_charge=4&amp;ref=13741&amp;type=E
 # PUBCON Crossref: L13741
 # PUBCON  Comment: Uncertainty has been estimated by A. Kramida (unpublished, 2011) based on comparisons along the isoelectronic sequence.
 #
 # PUB     Refcode: L13951 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=13951&comment_code=&element=zn&spectr_charge=1&ref=13951
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=13951&comment_code=&amp;element=Zn&amp;spectr_charge=1&amp;ref=13951&amp;type=E
 # PUBCON    Title: Multi-Step Laser Excitation of the Highly Excited States of Zinc
 # PUBCON  Authors: A. Nadeem, M. Nawaz, S. A. Bhatti, and M. A. Baig
 # PUBCON  Journal: Opt. Commun. 259, 834–839 (2006)
@@ -5132,13 +5132,13 @@
 # PUBCON      DOI: https://doi.org/10.1007/BF01426593
 #
 # PUB     Refcode: L13998 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=13998&comment_code=&element=i&spectr_charge=1&ref=13998
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=13998&comment_code=&amp;element=I&amp;spectr_charge=1&amp;ref=13998&amp;type=E
 # PUBCON    Title: The Energy Levels of Neutral Atomic Iodine
 # PUBCON  Authors: L. Minnhagen
 # PUBCON  Journal: Ark. Fys. (Stockholm) 21(26), 415–465 (1962)
 #
 # PUB     Refcode: L1402 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1402&comment_code=&element=lu&spectr_charge=3&ref=1402
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1402&comment_code=&amp;element=Lu&amp;spectr_charge=3&amp;ref=1402&amp;type=E
 # PUBCON    Title: One-Electron Spectrum of Doubly Ionized Lutetium (Lu III) and Nuclear Magnetic Dipole Moment of ^{175}Lu
 # PUBCON  Authors: V. Kaufman, and J. Sugar
 # PUBCON  Journal: J. Opt. Soc. Am. 61, 1693–1698 (1971)
@@ -5152,28 +5152,28 @@
 # PUBCON      DOI: https://doi.org/10.1103/PhysRevA.74.062515
 #
 # PUB     Refcode: L1405 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1405&comment_code=&element=ca&spectr_charge=3&ref=1405
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1405&comment_code=&amp;element=Ca&amp;spectr_charge=3&amp;ref=1405&amp;type=E
 # PUBCON    Title: Extended Analysis of Ca III
 # PUBCON  Authors: A. Borgström
 # PUBCON  Journal: Phys. Scr. 3, 157–163 (1971)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/3/3-4/009
 #
 # PUB     Refcode: L1406 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1406&comment_code=&element=ne&spectr_charge=2&ref=1406
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1406&comment_code=&amp;element=Ne&amp;spectr_charge=2&amp;ref=1406&amp;type=E
 # PUBCON    Title: The Spectrum of Singly Ionized Neon, Ne II
 # PUBCON  Authors: W. Persson
 # PUBCON  Journal: Phys. Scr. 3, 133–155 (1971)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/3/3-4/008
 #
 # PUB     Refcode: L1407 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1407&comment_code=&element=ne&spectr_charge=1&ref=1407
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1407&comment_code=&amp;element=Ne&amp;spectr_charge=1&amp;ref=1407&amp;type=E
 # PUBCON    Title: Accurate Ground-Term Combinations in Ne I
 # PUBCON  Authors: V. Kaufman, and L. Minnhagen
 # PUBCON  Journal: J. Opt. Soc. Am. 62, 92–95 (1972)
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.62.000092
 #
 # PUB     Refcode: L14078 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=14078&comment_code=&amp;element=Pb&amp;spectr_charge=3&amp;ref=14078&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=14078&comment_code=&amp;element=Bi&amp;spectr_charge=4&amp;ref=14078&amp;type=E
 # PUBCON    Title: The 5d Photoabsorption Spectra of Pb III and Bi IV
 # PUBCON  Authors: C. Banahan, C. McGuinness, J. T. Costello, D. Kilbane, J.-P. Mosnier, E. T. Kennedy, G. O'Sullivan, and P. van Kampen
 # PUBCON  Journal: J. Phys. B 41, 205001 (2008)
@@ -5187,27 +5187,27 @@
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/3/5/003
 #
 # PUB     Refcode: L1434 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1434&comment_code=&element=mg&spectr_charge=3&ref=1434
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1434&comment_code=&amp;element=Mg&amp;spectr_charge=3&amp;ref=1434&amp;type=E
 # PUBCON    Title: Extended Analysis of the Spectrum of Mg III
 # PUBCON  Authors: E. Andersson, and G.-A. Johannesson
 # PUBCON  Journal: Phys. Scr. 3, 203–210 (1971)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/3/5/002
 #
 # PUB     Refcode: L14620 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=14620&comment_code=&amp;element=Th&amp;spectr_charge=3&amp;ref=14620&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=14620&comment_code=&amp;element=U&amp;spectr_charge=6&amp;ref=14620&amp;type=E
 # PUBCON    Title: Energy Levels and Atomic Spectra of Actinides
 # PUBCON  Authors: J. Blaise, and J.-F. Wyart
 # PUBCON  Journal: in <i>International Tables of Selected Constants, Vol. 20</i>, 1 (Centre National de la Recherche Scientifique, Paris, France, 1992)
 #
 # PUB     Refcode: L14671 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=14671&comment_code=&amp;element=W&amp;spectr_charge=9&amp;ref=14671&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=14671&comment_code=&amp;element=W&amp;spectr_charge=73&amp;ref=14671&amp;type=E
 # PUBCON    Title: Energy Levels and Spectral Lines of Tungsten, W III through W LXXIV
 # PUBCON  Authors: A. E. Kramida, and T. Shirai
 # PUBCON  Journal: At. Data Nucl. Data Tables 95, 305–474 (2009); Erratum:  95, 1051 (2009)
 # PUBCON      DOI: https://doi.org/10.1016/j.adt.2008.12.002
 #
 # PUB     Refcode: L147 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=147&comment_code=&element=v&spectr_charge=4&ref=147
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=147&comment_code=&amp;element=V&amp;spectr_charge=4&amp;ref=147&amp;type=E
 # PUBCON    Title: The Fourth and Fifth Spectra of Vanadium (V IV and V V)
 # PUBCON  Authors: L. Iglesias
 # PUBCON  Journal: J. Res. Natl. Bur. Stand. (U.S.), Sect. A 72, 295–308 (1968)
@@ -5220,7 +5220,7 @@
 # PUBCON  Journal: Inst. Phys. Conf. Ser. 128, 71–74 (1992)
 #
 # PUB     Refcode: L14869 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=14869&comment_code=&element=cs&spectr_charge=3&ref=14869
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=14869&comment_code=&amp;element=Cs&amp;spectr_charge=3&amp;ref=14869&amp;type=E
 # PUBCON    Title: Spectrum and Energy Levels of Doubly Ionized Cesium (Cs III)
 # PUBCON  Authors: C. J. Sansonetti, K. L. Andrew, and R. D. Cowan
 # PUBCON  Journal: Phys. Scr. 80, 025303 (2009)
@@ -5248,7 +5248,7 @@
 # PUBCON      DOI: https://doi.org/10.1103/PhysRevA.80.042517
 #
 # PUB     Refcode: L15083 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=15083&comment_code=&element=mo&spectr_charge=6&ref=15083
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=15083&comment_code=&amp;element=Mo&amp;spectr_charge=6&amp;ref=15083&amp;type=E
 # PUBCON    Title: Spectrum and energy levels of five-times ionized molybdenum, Mo VI
 # PUBCON  Authors: J. Reader
 # PUBCON  Journal: J. Phys. B 43, 074024 (2010); Erratum:  44, 079801 (2011)
@@ -5262,7 +5262,7 @@
 # PUBCON      DOI: https://doi.org/10.1063/1.3253147
 #
 # PUB     Refcode: L15205 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=15205&comment_code=&amp;element=Pb&amp;spectr_charge=2&amp;ref=15205&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=15205&comment_code=&amp;element=Pb&amp;spectr_charge=4&amp;ref=15205&amp;type=E
 # PUBCON    Title: Polarizabilities of Pb^{2+} and Pb^{4+} and Ionization Energies of Pb^{+} and Pb^{3+} from Spectroscopy of High-L Rydberg States of Pb^{+} and Pb^{3+}
 # PUBCON  Authors: M. E. Hanni, J. A. Keele, S. R. Lundeen, C. W. Fehrenbach, and W. G. Sturrus
 # PUBCON  Journal: Phys. Rev. A 81, 042512 (2010)
@@ -5290,28 +5290,28 @@
 # PUBCON      DOI: https://doi.org/10.1103/PhysRevA.82.043419
 #
 # PUB     Refcode: L15918 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=15918&comment_code=&amp;element=At&amp;spectr_charge=2&amp;ref=15918&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=15918&comment_code=&amp;element=At&amp;spectr_charge=5&amp;ref=15918&amp;type=E
 # PUBCON    Title: Ionization Potentials, Electron Affinities, Resonance Excitation Energies, Oscillator Strengths, and Ionic Radii of Element Uus (Z = 117) and Astatine
 # PUBCON  Authors: Z.-W. Chang, J.-G. Li, and C.-Z. Dong
 # PUBCON  Journal: J. Phys. Chem. A 114, 13388–13394 (2010)
 # PUBCON      DOI: https://doi.org/10.1021/jp107411s
 #
 # PUB     Refcode: L15992 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=15992&comment_code=&amp;element=Th&amp;spectr_charge=1&amp;ref=15992&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=15992&comment_code=&amp;element=Cf&amp;spectr_charge=1&amp;ref=15992&amp;type=E
 # PUBCON    Title: Determination of the First Ionization Potential of Actinide Elements by Resonance Ionization Mass Spectroscopy
 # PUBCON  Authors: S. Köhler, R. Deißenberger, K. Eberhardt, N. Erdmann, G. Herrmann, G. Huber, J. V. Kratz, M. Nunnemann, G. Passler, P. M. Rao, J. Riegel, N. Trautmann, and K. Wendt
 # PUBCON  Journal: Spectrochim. Acta, Part B 52, 717–726 (1997)
 # PUBCON      DOI: https://doi.org/10.1016/S0584-8547(96)01670-9
 #
 # PUB     Refcode: L16139 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=16139&comment_code=&amp;element=Se&amp;spectr_charge=5&amp;ref=16139&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=16139&comment_code=&amp;element=Fr&amp;spectr_charge=3&amp;ref=16139&amp;type=E
 # PUBCON    Title: Ionisierungsenergien von Atomen und Atomionen
 # PUBCON  Authors: W. Finkelnburg, and W. Humbach
 # PUBCON  Journal: Naturwissenschaften 42, 35–37 (1955) (Ger.)
 # PUBCON      DOI: https://doi.org/10.1007/BF00621525
 #
 # PUB     Refcode: L1617 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1617&comment_code=&element=cl&spectr_charge=2&ref=1617
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1617&comment_code=&amp;element=Cl&amp;spectr_charge=2&amp;ref=1617&amp;type=E
 # PUBCON    Title: Wavelengths, Energy Levels, and Analysis of the Second Spectrum of Chlorine (Cl II)
 # PUBCON  Authors: L. J. Radziemski, Jr., and V. Kaufman
 # PUBCON  Journal: J. Opt. Soc. Am. 64, 366–389 (1974)
@@ -5338,7 +5338,7 @@
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.54.000553
 #
 # PUB     Refcode: L16264c99 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=16264&comment_code=c99&amp;element=Na&amp;spectr_charge=9&amp;ref=16264&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=16264&comment_code=c99&amp;element=Fm&amp;spectr_charge=98&amp;ref=16264&amp;type=E
 # PUBCON    Title: S-Matrix Calculations of Energy Levels of the Lithium Isoelectronic Sequence
 # PUBCON  Authors: J. Sapirstein, and K. T. Cheng
 # PUBCON  Journal: Phys. Rev. A 83, 012504 (2011)
@@ -5353,14 +5353,14 @@
 # PUBCON      DOI: https://doi.org/10.1016/j.optcom.2010.07.021
 #
 # PUB     Refcode: L16359 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=16359&comment_code=&amp;element=Pa&amp;spectr_charge=1&amp;ref=16359&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=16359&comment_code=&amp;element=No&amp;spectr_charge=1&amp;ref=16359&amp;type=E
 # PUBCON    Title: Revised Ionization Energies of the Neutral Actinides
 # PUBCON  Authors: J. Sugar
 # PUBCON  Journal: J. Chem. Phys. 60, 4103 (1974)
 # PUBCON      DOI: https://doi.org/10.1063/1.1680874
 #
 # PUB     Refcode: L16370 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=16370&comment_code=&element=sb&spectr_charge=1&ref=16370
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=16370&comment_code=&amp;element=Sb&amp;spectr_charge=2&amp;ref=16370&amp;type=E
 # PUBCON    Title: The Analyses of Antimony Spectra
 # PUBCON  Authors: C. K. Chan
 # PUBCON  Journal: Ph. D. Thesis, University of British Columbia, Canada, 259 pp. (1966)
@@ -5380,7 +5380,7 @@
 # PUBCON      DOI: https://doi.org/10.1051/jphys:01972003302-3019700
 #
 # PUB     Refcode: L17209 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=17209&comment_code=&amp;element=Fe&amp;spectr_charge=4&amp;ref=17209&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=17209&comment_code=&amp;element=Fe&amp;spectr_charge=6&amp;ref=17209&amp;type=E
 # PUBCON    Title: Photoionization Measurements for the Iron Isonuclear Sequence Fe^{3+}, Fe^{5+}, and Fe^{7+}
 # PUBCON  Authors: M. F. Gharaibeh, A. Aguilar, A. M. Covington, E. D. Emmons, S. W. J. Scully, R. A. Phaneuf, A. Müller, J. D. Bozek, A. L. D. Kilcoyne, A. S. Schlachter, I. Àlvarez, C. Cisneros, and G. Hinojosa
 # PUBCON  Journal: Phys. Rev. A 83, 043412 (2011)
@@ -5402,19 +5402,19 @@
 # PUBCON  Comment: The value of the ionization limit was obtained by averaging the experimental values derived from nine series of energy levels.
 #
 # PUB     Refcode: L17276 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=17276&comment_code=&amp;element=Nb&amp;spectr_charge=3&amp;ref=17276&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=17276&comment_code=&amp;element=Ag&amp;spectr_charge=3&amp;ref=17276&amp;type=E
 # PUBCON    Title: Series y potenciales de ionizacion en los espectros III de los elementos del grupo del paladio
 # PUBCON  Authors: M. A. Catalán, and F. R. Rico
 # PUBCON  Journal: An. Fis. Quim., Ser. A 53(3-4), 85–94 (1957) (Sp.)
 #
 # PUB     Refcode: L17500 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=17500&comment_code=&amp;element=Cr&amp;spectr_charge=3&amp;ref=17500&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=17500&comment_code=&amp;element=Co&amp;spectr_charge=3&amp;ref=17500&amp;type=E
 # PUBCON    Title: Series y potenciales de ionizacion en los espectros I, II y III de los elementos del grupo del hierro
 # PUBCON  Authors: M. A. Catalán, and R. Velasco
 # PUBCON  Journal: An. Fis. Quim., Ser. A 48(9-10), 247–266 (1952) (Sp.)
 #
 # PUB     Refcode: L17501 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=17501&comment_code=&amp;element=Mo&amp;spectr_charge=2&amp;ref=17501&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=17501&comment_code=&amp;element=Pd&amp;spectr_charge=2&amp;ref=17501&amp;type=E
 # PUBCON    Title: Series y potenciales de ionizacion en los espectros I y II de los elementos del grupo del paladio
 # PUBCON  Authors: M. A. Catalán, and F. R. Rico
 # PUBCON  Journal: An. Fis. Quim., Ser. A 48, 328–338 (1952) (Sp.)
@@ -5426,7 +5426,7 @@
 # PUBCON  Journal: Opt. Spektrosk. 20(4), 545 (1966) (Russ.)
 #
 # PUB     Refcode: L1771 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1771&comment_code=&element=sr&spectr_charge=3&ref=1771
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1771&comment_code=&amp;element=Sr&amp;spectr_charge=3&amp;ref=1771&amp;type=E
 # PUBCON    Title: The Spectrum of Doubly Ionized Strontium (Sr III)
 # PUBCON  Authors: W. Persson, and S. Valind
 # PUBCON  Journal: Phys. Scr. 5, 187–200 (1972)
@@ -5454,7 +5454,7 @@
 # PUBCON      DOI: https://doi.org/10.3938/jkps.59.2910
 #
 # PUB     Refcode: L17779 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=17779&comment_code=&amp;element=Ga&amp;spectr_charge=4&amp;ref=17779&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=17779&comment_code=&amp;element=Ge&amp;spectr_charge=5&amp;ref=17779&amp;type=E
 # PUBCON    Title: Spectral Data for Ions of Ni I Isoelectronic Sequence
 # PUBCON  Authors: A. N. Ryabtsev, and S. S. Churilov
 # PUBCON  Journal: in <i>Spectroscopy of Multicharged Ions in Hot Plasmas</i>, Ch. 4, 76–114 (Edited by U. I. Safronova, Nauka, Moscow, 1991) (Russ.)
@@ -5481,7 +5481,7 @@
 # PUBCON      DOI: https://doi.org/10.1103/PhysRevLett.105.183001
 #
 # PUB     Refcode: L1798 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1798&comment_code=&amp;element=Ru&amp;spectr_charge=9&amp;ref=1798&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1798&comment_code=&amp;element=Ag&amp;spectr_charge=12&amp;ref=1798&amp;type=E
 # PUBCON    Title: A Study of EUV Spectra in the Fifth Period
 # PUBCON  Authors: M. Even-Zohar, and B. S. Fraenkel
 # PUBCON  Journal: J. Phys. B 5, 1596–1613 (1972)
@@ -5495,7 +5495,7 @@
 # PUBCON      DOI: https://doi.org/10.1364/JOSAB.24.002562
 #
 # PUB     Refcode: L18161 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=18161&comment_code=&element=sn&spectr_charge=3&ref=18161
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=18161&comment_code=&amp;element=Sn&amp;spectr_charge=3&amp;ref=18161&amp;type=E
 # PUBCON    Title: Revised and Extended Analysis of Doubly Ionized Tin: Sn III
 # PUBCON  Authors: K. Haris, and A. Tauheed
 # PUBCON  Journal: Phys. Scr. 85, 055301 (2012)
@@ -5558,21 +5558,21 @@
 # PUBCON      DOI: https://doi.org/10.1140/epjd/e2014-50136-1
 #
 # PUB     Refcode: L18847 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=18847&comment_code=&element=cr&spectr_charge=2&ref=18847
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=18847&comment_code=&amp;element=Cr&amp;spectr_charge=2&amp;ref=18847&amp;type=E
 # PUBCON    Title: Extended Analysis of the Spectrum of Singly Ionized Chromium (Cr II)
 # PUBCON  Authors: C. J. Sansonetti, and G. Nave
 # PUBCON  Journal: Astrophys. J., Suppl. Ser. 213, 28 (2014)
 # PUBCON      DOI: https://doi.org/10.1088/0067-0049/213/2/28
 #
 # PUB     Refcode: L18891 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=18891&comment_code=&element=sn&spectr_charge=2&ref=18891
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=18891&comment_code=&amp;element=Sn&amp;spectr_charge=2&amp;ref=18891&amp;type=E
 # PUBCON    Title: Extended and Revised Analysis of Singly Ionized Tin: Sn II
 # PUBCON  Authors: K. Haris, A. Kramida, and A. Tauheed
 # PUBCON  Journal: Phys. Scr. 89, 115403 (2014)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/89/11/115403
 #
 # PUB     Refcode: L1891 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1891&comment_code=&element=sc&spectr_charge=3&ref=1891
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1891&comment_code=&amp;element=Sc&amp;spectr_charge=3&amp;ref=1891&amp;type=E
 # PUBCON    Title: Spectrum and Energy Levels of Doubly Ionized Scandium (Sc III)
 # PUBCON  Authors: C. H. H. Van Deurzen, J. G. Conway, and S. P. Davis
 # PUBCON  Journal: J. Opt. Soc. Am. 63, 158–163 (1973)
@@ -5600,7 +5600,7 @@
 # PUBCON      DOI: https://doi.org/10.1088/0953-4075/48/11/115006
 #
 # PUB     Refcode: L19131 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=19131&comment_code=&element=mo&spectr_charge=5&ref=19131
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=19131&comment_code=&amp;element=Mo&amp;spectr_charge=5&amp;ref=19131&amp;type=E
 # PUBCON    Title: Spectrum and Energy Levels of Quadruply-Ionized Molybdenum (Mo V)
 # PUBCON  Authors: J. Reader, and A. Tauheed
 # PUBCON  Journal: J. Phys. B 48, 144001 (2015)
@@ -5614,14 +5614,14 @@
 # PUBCON      DOI: https://doi.org/10.1088/0004-637X/810/2/132
 #
 # PUB     Refcode: L1933 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1933&comment_code=&element=cr&spectr_charge=5&ref=1933
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=1933&comment_code=&amp;element=Cr&amp;spectr_charge=5&amp;ref=1933&amp;type=E
 # PUBCON    Title: Extended Analysis of Cr V
 # PUBCON  Authors: J. O. Ekberg
 # PUBCON  Journal: Phys. Scr. 7, 59–61 (1973)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/7/1-2/006
 #
 # PUB     Refcode: L19460 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=19460&comment_code=&element=zr&spectr_charge=6&ref=19460
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=19460&comment_code=&amp;element=Zr&amp;spectr_charge=6&amp;ref=19460&amp;type=E
 # PUBCON    Title: Spectrum and Energy Levels of Five-Times Ionized Zirconium (Zr VI)
 # PUBCON  Authors: J. Reader, and M. D. Lindsay
 # PUBCON  Journal: Phys. Scr. 91, 025401 (2016); Erratum:  92, 039501 (2017)
@@ -5635,21 +5635,21 @@
 # PUBCON      DOI: https://doi.org/10.1103/PhysRevA.93.013424
 #
 # PUB     Refcode: L19486 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=19486&comment_code=&amp;element=Ra&amp;spectr_charge=1&amp;ref=19486&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=19486&comment_code=&amp;element=Ra&amp;spectr_charge=2&amp;ref=19486&amp;type=E
 # PUBCON    Title: Compilation of Spectroscopic Data of Radium (Ra I and Ra II)
 # PUBCON  Authors: U. Dammalapati, K. Jungmann, and L. Willmann
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 45, 013101 (2016)
 # PUBCON      DOI: https://doi.org/10.1063/1.4940416
 #
 # PUB     Refcode: L19691 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=19691&comment_code=&amp;element=Hf&amp;spectr_charge=2&amp;ref=19691&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=19691&comment_code=&amp;element=Rf&amp;spectr_charge=4&amp;ref=19691&amp;type=E
 # PUBCON    Title: Ionization Potentials of Superheavy Elements No, Lr, and Rf and Their Ions
 # PUBCON  Authors: V. A. Dzuba, M. S. Safronova, U. I. Safronova, and A. Kramida
 # PUBCON  Journal: Phys. Rev. A 94, 042503 (2016)
 # PUBCON      DOI: https://doi.org/10.1103/PhysRevA.94.042503
 #
 # PUB     Refcode: L19755 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=19755&comment_code=&element=y&spectr_charge=5&ref=19755
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=19755&comment_code=&amp;element=Y&amp;spectr_charge=5&amp;ref=19755&amp;type=E
 # PUBCON    Title: Spectrum and Energy Levels of Four-Times Ionized Yttrium (Y V)
 # PUBCON  Authors: J. Reader
 # PUBCON  Journal: Atoms 4, 31 (2016)
@@ -5670,12 +5670,12 @@
 # PUBCON      DOI: https://doi.org/10.1063/1.4977958
 #
 # PUB     Refcode: L19870c180 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=19870&comment_code=c180&amp;element=Ce&amp;spectr_charge=2&amp;ref=19870&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=19870&comment_code=c180&amp;element=Lu&amp;spectr_charge=2&amp;ref=19870&amp;type=E
 # PUBCON Crossref: L19870
 # PUBCON  Comment: The uncertainties originally reported by Johnson and Nelson were found to be on the level of two standard deviations (A. Kramida, unpublished, 2017). For consistency with all other uncertainties reported in ASD on the level of one standard deviation, those original values have been divided by two.
 #
 # PUB     Refcode: L19883c180 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=19883&comment_code=c180&amp;element=Nd&amp;spectr_charge=3&amp;ref=19883&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=19883&comment_code=c180&amp;element=Yb&amp;spectr_charge=4&amp;ref=19883&amp;type=E
 # PUBCON    Title: Lanthanide Ionization Energies and the Sub-Shell Break. Part 2. The Third and Fourth Ionization Energies
 # PUBCON  Authors: D. A. Johnson, and P. C. Nelson
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 46, 013109 (2017)
@@ -5710,6 +5710,13 @@
 # PUBCON  Journal: Jpn. J. Appl. Phys. 56, 010302 (2017)
 # PUBCON      DOI: https://doi.org/10.7567/JJAP.56.010302
 #
+# PUB     Refcode: L20835 on NIST
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=20835&comment_code=&amp;element=Y&amp;spectr_charge=8&amp;ref=20835&amp;type=E
+# PUBCON    Title: Extended Analysis of the Spectrum of Seven-Times Ionized Yttrium (Y VIII)
+# PUBCON  Authors: J. Reader
+# PUBCON  Journal: J. Quant. Spectrosc. Radiat. Transfer 224, 18–24 (2019)
+# PUBCON      DOI: https://doi.org/10.1016/j.jqsrt.2018.10.039
+#
 # PUB     Refcode: L20886 on NIST
 # PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=20886&comment_code=&amp;element=Po&amp;spectr_charge=1&amp;ref=20886&amp;type=E
 # PUBCON    Title: Determination of the First Ionization Energy of Polonium by Resonance Ionization Spectroscopy - Part I: Measurement of Even-Parity Rydberg States at TRIUMF-ISAC
@@ -5739,7 +5746,7 @@
 # PUBCON      DOI: https://doi.org/10.1016/j.jqsrt.2019.05.023
 #
 # PUB     Refcode: L2110 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2110&comment_code=&element=sc&spectr_charge=1&ref=2110
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2110&comment_code=&amp;element=Sc&amp;spectr_charge=1&amp;ref=2110&amp;type=E
 # PUBCON    Title: Rydberg Series and Autoionization Resonances in the Sc I Absorption Spectrum
 # PUBCON  Authors: W. R. S. Garton, E. M. Reeves, F. S. Tomkins, and B. Ercoli
 # PUBCON  Journal: Proc. R. Soc. London, Ser. A 333, 1–16 (1973)
@@ -5772,103 +5779,124 @@
 # PUBCON  Authors: L. Iglesias
 # PUBCON  Journal: Opt. Pura Apl. 5, 195–202 (1972) (Span.)
 #
+# PUB     Refcode: L21488 on NIST
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=21488&comment_code=&amp;element=Bi&amp;spectr_charge=3&amp;ref=21488&amp;type=E
+# PUBCON    Title: Revised and Extended Analysis of Doubly Ionized Bismuth: Bi III
+# PUBCON  Authors: N. K. Arya, and A. Tauheed
+# PUBCON  Journal: J. Quant. Spectrosc. Radiat. Transfer 255, 107253 (2020)
+# PUBCON      DOI: https://doi.org/10.1016/j.jqsrt.2020.107253
+#
+# PUB     Refcode: L21624 on NIST
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=21624&comment_code=&element=sm&spectr_charge=1&ref=21624
+# PUBCON    Title: Shift of the First Ionization Threshold of Sm Atom in Electric Field
+# PUBCON  Authors: Z.-J. Xu, X.-H. Zhang, W.-N. Zhang, C.-H. Huang, and L. Shen
+# PUBCON  Journal: Chinese Optics 13, 1385–1400 (2020)
+# PUBCON      DOI: https://doi.org/10.37188/CO.2020-0071
+#
+# PUB     Refcode: L21649 on NIST
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=21649&comment_code=&element=in&spectr_charge=1&ref=21649
+# PUBCON    Title: Laser Spectroscopy of Indium Rydberg Atom Bunches by Electric Field Ionization
+# PUBCON  Authors: A. R. Vernon, C. M. Ricketts, J. Billowes, T. E. Cocolios, B. S. Cooper, K. T. Flanagan, R. F. Garcia Ruiz, F. P. Gustafsson, G. Neyens, H. A. Perrett, B. K. Sahoo, Q. Wang, F. J. Waso, and X. F. Yang
+# PUBCON  Journal: Scientific Reports 10, 12306 (2020)
+# PUBCON      DOI: https://doi.org/10.1038/s41598-020-68218-5
+#
 # PUB     Refcode: L2229 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2229&comment_code=&element=cr&spectr_charge=6&ref=2229
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2229&comment_code=&amp;element=Cr&amp;spectr_charge=6&amp;ref=2229&amp;type=E
 # PUBCON    Title: The Spectrum of Five-Times-Ionized Chromium, Cr VI
 # PUBCON  Authors: J. O. Ekberg
 # PUBCON  Journal: Phys. Scr. 8, 35–39 (1973)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/8/1-2/005
 #
 # PUB     Refcode: L241 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=241&comment_code=&amp;element=K&amp;spectr_charge=5&amp;ref=241&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=241&comment_code=&amp;element=Zn&amp;spectr_charge=9&amp;ref=241&amp;type=E
 # PUBCON    Title: Ionization Potentials of Atoms and Ions from Hydrogen to Zinc
 # PUBCON  Authors: W. Lotz
 # PUBCON  Journal: J. Opt. Soc. Am. 57, 873–878 (1967)
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.57.000873
 #
 # PUB     Refcode: L241c99 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=241&comment_code=c99&amp;element=Mn&amp;spectr_charge=5&amp;ref=241&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=241&comment_code=c99&amp;element=Zn&amp;spectr_charge=11&amp;ref=241&amp;type=E
 # PUBCON Crossref: L241
 # PUBCON  Comment: Uncertainty has been estimated by A. Kramida (unpublished, 2011) based on comparisons along the isoelectronic sequence.
 #
 # PUB     Refcode: L2590 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2590&comment_code=&element=rb&spectr_charge=2&ref=2590
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2590&comment_code=&amp;element=Rb&amp;spectr_charge=2&amp;ref=2590&amp;type=E
 # PUBCON    Title: Spectrum and Energy Levels of Singly Ionized Rubidium (Rb II)
 # PUBCON  Authors: J. Reader
 # PUBCON  Journal: J. Opt. Soc. Am. 65, 286–301 (1975)
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.65.000286
 #
 # PUB     Refcode: L2592 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2592&comment_code=&element=y&spectr_charge=3&ref=2592
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2592&comment_code=&amp;element=Y&amp;spectr_charge=3&amp;ref=2592&amp;type=E
 # PUBCON    Title: Spectrum of Doubly Ionized Yttrium (Y III)
 # PUBCON  Authors: G. L. Epstein, and J. Reader
 # PUBCON  Journal: J. Opt. Soc. Am. 65, 310–314 (1975)
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.65.000310
 #
 # PUB     Refcode: L2613 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2613&comment_code=&element=p&spectr_charge=5&ref=2613
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2613&comment_code=&amp;element=P&amp;spectr_charge=5&amp;ref=2613&amp;type=E
 # PUBCON    Title: The Spectrum and Term System of P V
 # PUBCON  Authors: C. E. Magnusson, and P. O. Zetterberg
 # PUBCON  Journal: Phys. Scr. 10, 177–182 (1974)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/10/4/004
 #
 # PUB     Refcode: L2647 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2647&comment_code=&element=se&spectr_charge=1&ref=2647
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2647&comment_code=&amp;element=Se&amp;spectr_charge=1&amp;ref=2647&amp;type=E
 # PUBCON    Title: Classification du Spectre d'Arc du Sélénium (Se I) Entre 3900 et 11844 cm^{-1}
 # PUBCON  Authors: C. Morillon, and J. Vergès
 # PUBCON  Journal: Phys. Scr. 10, 227–235 (1974) (Fr.)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/10/5/007
 #
 # PUB     Refcode: L272 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=272&comment_code=&amp;element=Zr&amp;spectr_charge=2&amp;ref=272&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=272&comment_code=&amp;element=Rn&amp;spectr_charge=1&amp;ref=272&amp;type=E
 # PUBCON    Title: Ionization Potentials and Ionization Limits Derived from the Analysis of Optical Spectra
 # PUBCON  Authors: C. E. Moore
 # PUBCON  Journal: in <i>Nat. Stand. Ref. Data Ser., NSRDS-NBS 34</i>, 22 pp. (Nat. Bur. Stand., U.S., 1970)
 # PUBCON      DOI: https://doi.org/10.6028/NBS.NSRDS.34
 #
 # PUB     Refcode: L2720 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2720&comment_code=&amp;element=Na&amp;spectr_charge=3&amp;ref=2720&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2720&comment_code=&amp;element=Mg&amp;spectr_charge=4&amp;ref=2720&amp;type=E
 # PUBCON    Title: 4f, 5f and 5g Energy Levels of Mg IV
 # PUBCON  Authors: G. A. Johannesson, and T. Lundstrom
 # PUBCON  Journal: Phys. Scr. 8, 53–56 (1973)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/8/1-2/009
 #
 # PUB     Refcode: L2753 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2753&comment_code=&element=ti&spectr_charge=4&ref=2753
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2753&comment_code=&amp;element=Ti&amp;spectr_charge=4&amp;ref=2753&amp;type=E
 # PUBCON    Title: The Spectrum of Three Times Ionized Titanium, Ti IV
 # PUBCON  Authors: J. W. Swensson, and B. Edlén
 # PUBCON  Journal: Phys. Scr. 9, 335–337 (1974)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/9/6/006
 #
 # PUB     Refcode: L277 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=277&comment_code=&element=al&spectr_charge=3&ref=277
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=277&comment_code=&amp;element=Al&amp;spectr_charge=3&amp;ref=277&amp;type=E
 # PUBCON    Title: The Spectrum of Doubly Ionized Aluminium, Al III
 # PUBCON  Authors: B. Isberg
 # PUBCON  Journal: Ark. Fys. (Stockholm) 35(45), 551–562 (1968)
 #
 # PUB     Refcode: L2826 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2826&comment_code=&element=sc&spectr_charge=4&ref=2826
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2826&comment_code=&amp;element=Sc&amp;spectr_charge=4&amp;ref=2826&amp;type=E
 # PUBCON    Title: The Spectrum of Three Times Ionized Scandium, Sc IV
 # PUBCON  Authors: R. Smitt
 # PUBCON  Journal: Phys. Scr. 8, 292–300 (1973)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/8/6/012
 #
 # PUB     Refcode: L2829 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2829&comment_code=&element=al&spectr_charge=4&ref=2829
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2829&comment_code=&amp;element=Al&amp;spectr_charge=4&amp;ref=2829&amp;type=E
 # PUBCON    Title: Extension of the Analysis of Triply Ionized Aluminum (Al IV)
 # PUBCON  Authors: M.-C. Artru, and V. Kaufman
 # PUBCON  Journal: J. Opt. Soc. Am. 65, 594–599 (1975)
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.65.000594
 #
 # PUB     Refcode: L2832 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2832&comment_code=&element=cr&spectr_charge=1&ref=2832
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2832&comment_code=&amp;element=Cr&amp;spectr_charge=1&amp;ref=2832&amp;type=E
 # PUBCON    Title: The Spectrum of Cr I Between 179.8 and 200 nm – Wavelengths, Absorption Cross Sections, and Oscillator Strengths
 # PUBCON  Authors: M. C. E. Huber, R. J. Sandeman, and E. F. Tubbs
 # PUBCON  Journal: Proc. R. Soc. London, Ser. A 342, 431–438 (1975)
 # PUBCON      DOI: https://doi.org/10.1098/rspa.1975.0033
 #
 # PUB     Refcode: L289 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=289&comment_code=&amp;element=Hg&amp;spectr_charge=5&amp;ref=289&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=289&comment_code=&amp;element=Hg&amp;spectr_charge=7&amp;ref=289&amp;type=E
 # PUBCON    Title: Multiple Ionization of Mercury by Successive Electron Impacts
 # PUBCON  Authors: P. A. Redhead, and S. Feser
 # PUBCON  Journal: Can. J. Phys. 46, 1905–1914 (1968)
@@ -5882,42 +5910,35 @@
 # PUBCON      DOI: https://doi.org/10.1088/0022-3700/7/16/011
 #
 # PUB     Refcode: L2987 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2987&comment_code=&element=cu&spectr_charge=3&ref=2987
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=2987&comment_code=&amp;element=Cu&amp;spectr_charge=3&amp;ref=2987&amp;type=E
 # PUBCON    Title: The Third Spectrum of Copper (Cu III)
 # PUBCON  Authors: A. G. Shenstone
 # PUBCON  Journal: J. Res. Natl. Bur. Stand. (U.S.), Sect. A 79, 497–521 (1975)
 # PUBCON      DOI: https://doi.org/10.6028/jres.079A.014
 #
 # PUB     Refcode: L3138 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3138&comment_code=&amp;element=Tl&amp;spectr_charge=3&amp;ref=3138&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3138&comment_code=&amp;element=Pb&amp;spectr_charge=4&amp;ref=3138&amp;type=E
 # PUBCON    Title: Extensions in the Spark Spectra of Tl III and Pb IV
 # PUBCON  Authors: F. Gutmann, and A. M. Crooker
 # PUBCON  Journal: Can. J. Phys. 51, 1823–1830 (1973)
 # PUBCON      DOI: https://doi.org/10.1139/p73-242
 #
 # PUB     Refcode: L3272 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3272&comment_code=&element=tl&spectr_charge=2&ref=3272
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3272&comment_code=&amp;element=Tl&amp;spectr_charge=2&amp;ref=3272&amp;type=E
 # PUBCON    Title: An Extension of the Thallium II Spectrum
 # PUBCON  Authors: C. B. Ellis, and R. A. Sawyer
 # PUBCON  Journal: Phys. Rev. 49, 145–150 (1936)
 # PUBCON      DOI: https://doi.org/10.1103/PhysRev.49.145
 #
-# PUB     Refcode: L3331 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3331&comment_code=&element=bi&spectr_charge=2&ref=3331
-# PUBCON    Title: Spark Spectra of Bismuth, Bi III and Bi II
-# PUBCON  Authors: M. F. Crawford, and A. B. McLay
-# PUBCON  Journal: Proc. R. Soc. London, Ser. A 143, 540–557 (1934)
-# PUBCON      DOI: https://doi.org/10.1098/rspa.1934.0019
-#
 # PUB     Refcode: L3420 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3420&comment_code=&amp;element=La&amp;spectr_charge=3&amp;ref=3420&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3420&comment_code=&amp;element=Pm&amp;spectr_charge=3&amp;ref=3420&amp;type=E
 # PUBCON    Title: Ionization Energies of Doubly and Triply Ionized Rare Earths
 # PUBCON  Authors: J. Sugar, and J. Reader
 # PUBCON  Journal: J. Chem. Phys. 59, 2083–2089 (1973)
 # PUBCON      DOI: https://doi.org/10.1063/1.1680295
 #
 # PUB     Refcode: L3465c99 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3465&comment_code=c99&amp;element=Rb&amp;spectr_charge=10&amp;ref=3465&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3465&comment_code=c99&amp;element=Y&amp;spectr_charge=12&amp;ref=3465&amp;type=E
 # PUBCON    Title: Atomic Energy Levels as Derived from the Analysis of Optical Spectra – Chromium through Niobium
 # PUBCON  Authors: C. E. Moore
 # PUBCON  Journal: in <i>Nat. Stand. Ref. Data Ser., NSRDS-NBS 35, Vol. II (Reprint of NBS Circ. 467, Vol. II, 1952)</i>, 230 pp. (Nat. Bur. Stand., U.S., 1971)
@@ -5925,7 +5946,7 @@
 # PUBCON  Comment: Uncertainty has been estimated by A. Kramida (unpublished, 2011) based on comparisons along the isoelectronic sequence.
 #
 # PUB     Refcode: L3466 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3466&comment_code=&amp;element=Nb&amp;spectr_charge=2&amp;ref=3466&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3466&comment_code=&amp;element=Rn&amp;spectr_charge=2&amp;ref=3466&amp;type=E
 # PUBCON    Title: Atomic Energy Levels as Derived from the Analysis of Optical Spectra – Molybdenum through Lanthanum and Hafnium through Actinium
 # PUBCON  Authors: C. E. Moore
 # PUBCON  Journal: in <i>Nat. Stand. Ref. Data Ser. 35, Vol. III (Reprint of NBS Circ. 467, Vol. III, 1958)</i>, 245 pp. (Nat. Bur. Stand., U.S., 1971)
@@ -5937,14 +5958,14 @@
 # PUBCON  Comment: Uncertainty has been estimated by A. Kramida (unpublished, 2011) based on comparisons along the isoelectronic sequence.
 #
 # PUB     Refcode: L351 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=351&comment_code=&element=br&spectr_charge=1&ref=351
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=351&comment_code=&amp;element=Br&amp;spectr_charge=1&amp;ref=351&amp;type=E
 # PUBCON    Title: Analysis of the Spectrum of Neutral Atomic Bromine (Br I)
 # PUBCON  Authors: J. L. Tech
 # PUBCON  Journal: J. Res. Natl. Bur. Stand. (U.S.), Sect. A 67, 505–554 (1963)
 # PUBCON      DOI: https://doi.org/10.6028/jres.067A.051
 #
 # PUB     Refcode: L353 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=353&comment_code=&element=kr&spectr_charge=2&ref=353
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=353&comment_code=&amp;element=Kr&amp;spectr_charge=2&amp;ref=353&amp;type=E
 # PUBCON    Title: Revised and Extended Analysis of Singly Ionized Krypton, Kr II
 # PUBCON  Authors: L. Minnhagen, H. Strihed, and B. Petersson
 # PUBCON  Journal: Ark. Fys. (Stockholm) 39(34), 471–493 (1969)
@@ -5957,35 +5978,35 @@
 # PUBCON      DOI: https://doi.org/10.1098/rsta.1938.0013
 #
 # PUB     Refcode: L3540 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3540&comment_code=&element=cd&spectr_charge=2&ref=3540
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3540&comment_code=&amp;element=Cd&amp;spectr_charge=2&amp;ref=3540&amp;type=E
 # PUBCON    Title: Cadmium Spectra
 # PUBCON  Authors: A. G. Shenstone, and J. T. Pittenger
 # PUBCON  Journal: J. Opt. Soc. Am. 39, 219–225 (1949)
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.39.000219
 #
 # PUB     Refcode: L3546 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3546&comment_code=&element=te&spectr_charge=1&ref=3546
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3546&comment_code=&amp;element=Te&amp;spectr_charge=2&amp;ref=3546&amp;type=E
 # PUBCON    Title: On the Spectrum of Ionized Tellurium, Te II
 # PUBCON  Authors: M. B. Handrup, and J. E. Mack
 # PUBCON  Journal: Physica (Utrecht) 30, 1245–1275 (1964)
 # PUBCON      DOI: https://doi.org/10.1016/0031-8914(64)90081-3
 #
 # PUB     Refcode: L3565 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3565&comment_code=&element=al&spectr_charge=5&ref=3565
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3565&comment_code=&amp;element=Al&amp;spectr_charge=5&amp;ref=3565&amp;type=E
 # PUBCON    Title: The 2p^{4}, 4f, 5f, and 5g Configurations of Quadruply Ionized Aluminum Al V
 # PUBCON  Authors: W.-Ü L. Brillet, and M.-C. Artru
 # PUBCON  Journal: J. Opt. Soc. Am. 65, 1399–1403 (1975)
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.65.001399
 #
 # PUB     Refcode: L3577 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3577&comment_code=&element=tl&spectr_charge=4&ref=3577
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3577&comment_code=&amp;element=Bi&amp;spectr_charge=6&amp;ref=3577&amp;type=E
 # PUBCON    Title: New Energy Levels in Au II, Hg III, Tl IV, Pb V and Bi VI
 # PUBCON  Authors: J. E. Mack, and M. Fromer
 # PUBCON  Journal: Phys. Rev. 48, 357–366 (1935)
 # PUBCON      DOI: https://doi.org/10.1103/PhysRev.48.357
 #
 # PUB     Refcode: L3593 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3593&comment_code=&element=ti&spectr_charge=3&ref=3593
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3593&comment_code=&amp;element=Ti&amp;spectr_charge=3&amp;ref=3593&amp;type=E
 # PUBCON    Title: The Spectrum of Doubly Ionized Titanium, Ti III
 # PUBCON  Authors: B. Edlén, and J. W. Swensson
 # PUBCON  Journal: Phys. Scr. 12, 21–32 (1975)
@@ -6008,55 +6029,55 @@
 # PUBCON  Comment: The energy values reported in this paper for the isotope <sup>9</sup>Be have been adjusted by scaling to the CODATA 2006 values of fundamental constants as given by Kramida et al. 2008 .
 #
 # PUB     Refcode: L3646 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3646&comment_code=&element=mo&spectr_charge=8&ref=3646
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3646&comment_code=&amp;element=Mo&amp;spectr_charge=8&amp;ref=3646&amp;type=E
 # PUBCON    Title: Observation and Classifications of 4p-5d, 6d and 4p-6s, 7s Transitions in Mo VIII
 # PUBCON  Authors: M. S. Z. Chaghtai, S. P. Singh, and S. Khatoon
 # PUBCON  Journal: J. Phys. B 8, 1831–1837 (1975)
 # PUBCON      DOI: https://doi.org/10.1088/0022-3700/8/11/019
 #
 # PUB     Refcode: L3654 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3654&comment_code=&amp;element=Yb&amp;spectr_charge=3&amp;ref=3654&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3654&comment_code=&amp;element=Bi&amp;spectr_charge=16&amp;ref=3654&amp;type=E
 # PUBCON    Title: Wavelengths, Classifications, and Ionization Energies in the Isoelectronic Sequences from Yb II and Yb III through Bi XV and Bi XVI
 # PUBCON  Authors: V. Kaufman, and J. Sugar
 # PUBCON  Journal: J. Opt. Soc. Am. 66, 1019–1025 (1976)
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.66.001019
 #
 # PUB     Refcode: L3667 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3667&comment_code=&element=ba&spectr_charge=3&ref=3667
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3667&comment_code=&amp;element=Ba&amp;spectr_charge=3&amp;ref=3667&amp;type=E
 # PUBCON    Title: The Spectrum of Doubly Ionized Barium, Ba III
 # PUBCON  Authors: P. Hellentin
 # PUBCON  Journal: Phys. Scr. 13, 155–165 (1976)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/13/3/004
 #
 # PUB     Refcode: L369 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=369&comment_code=&element=f&spectr_charge=2&ref=369
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=369&comment_code=&amp;element=F&amp;spectr_charge=2&amp;ref=369&amp;type=E
 # PUBCON    Title: Spectrum and Term System of Singly Ionized Fluorine, F II
 # PUBCON  Authors: H. P. Palenius
 # PUBCON  Journal: Ark. Fys. (Stockholm) 39, 15–64 (1969)
 #
 # PUB     Refcode: L3694 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3694&comment_code=&element=w&spectr_charge=7&ref=3694
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3694&comment_code=&amp;element=W&amp;spectr_charge=7&amp;ref=3694&amp;type=E
 # PUBCON    Title: Seventh Spectrum of Tungsten W VII; Resonance Lines of Hf V
 # PUBCON  Authors: J. Sugar, and V. Kaufman
 # PUBCON  Journal: Phys. Rev. A 12, 994–1012 (1975)
 # PUBCON      DOI: https://doi.org/10.1103/PhysRevA.12.994
 #
 # PUB     Refcode: L3749 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3749&comment_code=&element=cs&spectr_charge=3&ref=3749
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3749&comment_code=&amp;element=Ce&amp;spectr_charge=6&amp;ref=3749&amp;type=E
 # PUBCON    Title: Resonance Lines and Energy Levels of Cs III, Ba IV, and La V
 # PUBCON  Authors: G. L. Epstein, and J. Reader
 # PUBCON  Journal: J. Opt. Soc. Am. 66, 590–598 (1976)
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.66.000590
 #
 # PUB     Refcode: L3760 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3760&comment_code=&element=o&spectr_charge=1&ref=3760
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3760&comment_code=&amp;element=O&amp;spectr_charge=1&amp;ref=3760&amp;type=E
 # PUBCON    Title: Selected Tables of Atomic Spectra, Atomic Energy Levels and Multiplet Tables – O I
 # PUBCON  Authors: C. E. Moore
 # PUBCON  Journal: in <i>Nat. Stand. Ref. Data Ser., NSRDS-NBS 3 (Sect. 7)</i>, 33 pp. (Nat. Bur. Stand., U.S., 1976)
 # PUBCON      DOI: https://doi.org/10.6028/NBS.NSRDS.3sec7
 #
 # PUB     Refcode: L3917 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3917&comment_code=&element=v&spectr_charge=5&ref=3917
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3917&comment_code=&amp;element=V&amp;spectr_charge=5&amp;ref=3917&amp;type=E
 # PUBCON    Title: Analysis of 4-Ionized Vanadium (V V)
 # PUBCON  Authors: C. H. H. Van Deurzen
 # PUBCON  Journal: J. Opt. Soc. Am. 67, 476–480 (1977); Erratum:  67, 1135 (1977)
@@ -6077,21 +6098,21 @@
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.67.000584
 #
 # PUB     Refcode: L3936 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3936&comment_code=&element=sn&spectr_charge=1&ref=3936
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3936&comment_code=&amp;element=Sn&amp;spectr_charge=1&amp;ref=3936&amp;type=E
 # PUBCON    Title: Absorption Spectrum of Sn I Between 1580 and 2040 Å
 # PUBCON  Authors: C. M. Brown, S. G. Tilford, and M. L. Ginter
 # PUBCON  Journal: J. Opt. Soc. Am. 67, 607–622 (1977)
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.67.000607
 #
 # PUB     Refcode: L3974 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3974&comment_code=&amp;element=La&amp;spectr_charge=1&amp;ref=3974&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3974&comment_code=&amp;element=Lu&amp;spectr_charge=6&amp;ref=3974&amp;type=E
 # PUBCON    Title: Atomic Energy Levels – The Rare-Earth Elements
 # PUBCON  Authors: W. C. Martin, R. Zalubas, and L. Hagan
 # PUBCON  Journal: in <i>Nat. Stand. Ref. Data Ser., NSRDS-NBS 60</i>, 422 pp. (Nat. Bur. Stand., U.S., 1978)
 # PUBCON      DOI: https://doi.org/10.6028/NBS.NSRDS.60
 #
 # PUB     Refcode: L4095 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4095&comment_code=&amp;element=Pr&amp;spectr_charge=5&amp;ref=4095&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4095&comment_code=&amp;element=Lu&amp;spectr_charge=5&amp;ref=4095&amp;type=E
 # PUBCON    Title: Ionization Energies of Quadruply Ionized Rare Earths
 # PUBCON  Authors: J. Sugar
 # PUBCON  Journal: J. Opt. Soc. Am. 65, 1366–1367 (1975)
@@ -6105,7 +6126,7 @@
 # PUBCON      DOI: https://doi.org/10.1007/BF00160277
 #
 # PUB     Refcode: L4277 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4277&comment_code=&amp;element=Ce&amp;spectr_charge=1&amp;ref=4277&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4277&comment_code=&amp;element=Er&amp;spectr_charge=1&amp;ref=4277&amp;type=E
 # PUBCON    Title: First Ionization Potentials of Lanthanides by Laser Spectroscopy
 # PUBCON  Authors: E. F. Worden, R. W. Solarz, J. A. Paisner, and J. G. Conway
 # PUBCON  Journal: J. Opt. Soc. Am. 68, 52–61 (1978)
@@ -6119,7 +6140,7 @@
 # PUBCON      DOI: https://doi.org/10.1016/0378-4363(78)90152-3
 #
 # PUB     Refcode: L4311 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4311&comment_code=&amp;element=Rb&amp;spectr_charge=3&amp;ref=4311&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4311&comment_code=&amp;element=Sr&amp;spectr_charge=4&amp;ref=4311&amp;type=E
 # PUBCON    Title: An Extended Analysis of the Spectrum of Trebly Ionized Strontium
 # PUBCON  Authors: W. Persson
 # PUBCON  Journal: Phys. Scr. 17, 387–410 (1978)
@@ -6141,41 +6162,41 @@
 # PUBCON      DOI: https://doi.org/10.1088/0022-3700/11/14/007
 #
 # PUB     Refcode: L4344 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4344&comment_code=&amp;element=Ar&amp;spectr_charge=8&amp;ref=4344&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4344&comment_code=&amp;element=K&amp;spectr_charge=9&amp;ref=4344&amp;type=E
 # PUBCON    Title: The Transitions 3s-3p and 3p-3d, and the Ionization Energy in the Na I Iso-Electronic Sequence
 # PUBCON  Authors: B. Edlén
 # PUBCON  Journal: Phys. Scr. 17, 565–574 (1978)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/17/6/005
 #
 # PUB     Refcode: L457 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=457&comment_code=&element=mn&spectr_charge=3&ref=457
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=457&comment_code=&amp;element=Mn&amp;spectr_charge=3&amp;ref=457&amp;type=E
 # PUBCON    Title: Analisis del Espectro de Manganeso Doblemente Ionizado (Mn III)
 # PUBCON  Authors: O. Garcia-Riquelme
 # PUBCON  Journal: Opt. Pura Apl. 1, 53–72 (1968) (Span.)
 #
 # PUB     Refcode: L4577 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4577&comment_code=&element=mo&spectr_charge=9&ref=4577
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4577&comment_code=&amp;element=Mo&amp;spectr_charge=9&amp;ref=4577&amp;type=E
 # PUBCON    Title: The 4p-5d, 6d and 4p-6s, 7s Transitions of Mo IX
 # PUBCON  Authors: S. Khatoon, M. S. Z. Chaghtai, and K. Rahimullah
 # PUBCON  Journal: Phys. Scr. 19, 22–24 (1979)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/19/1/005
 #
 # PUB     Refcode: L4593 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4593&comment_code=&element=mo&spectr_charge=14&ref=4593
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4593&comment_code=&amp;element=Mo&amp;spectr_charge=14&amp;ref=4593&amp;type=E
 # PUBCON    Title: Spectrum and Energy Levels of Thirteen-Times Ionized Molybdenum (Mo XIV)
 # PUBCON  Authors: J. Reader, G. Luther, and N. Acquista
 # PUBCON  Journal: J. Opt. Soc. Am. 69, 144–149 (1979)
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.69.000144
 #
 # PUB     Refcode: L4594 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4594&comment_code=&element=zr&spectr_charge=5&ref=4594
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4594&comment_code=&amp;element=Zr&amp;spectr_charge=5&amp;ref=4594&amp;type=E
 # PUBCON    Title: Spectrum and Energy Levels of Four-Times Ionized Zirconium (Zr V)
 # PUBCON  Authors: J. Reader, and N. Acquista
 # PUBCON  Journal: J. Opt. Soc. Am. 69, 239–253 (1979)
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.69.000239
 #
 # PUB     Refcode: L4597 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4597&comment_code=&element=w&spectr_charge=6&ref=4597
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4597&comment_code=&amp;element=Os&amp;spectr_charge=8&amp;ref=4597&amp;type=E
 # PUBCON    Title: Identification of 5g and 6g Terms and Revised Ionization Energies in the Yb II 4f^{14}nl Isoelectronic Sequence
 # PUBCON  Authors: J. Sugar, and V. Kaufman
 # PUBCON  Journal: J. Opt. Soc. Am. 69, 141–143 (1979)
@@ -6196,32 +6217,32 @@
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/19/3/007
 #
 # PUB     Refcode: L4714 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4714&comment_code=&amp;element=Al&amp;spectr_charge=1&amp;ref=4714&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4714&comment_code=&amp;element=Al&amp;spectr_charge=12&amp;ref=4714&amp;type=E
 # PUBCON    Title: Energy Levels of Aluminum, Al I through Al XIII
 # PUBCON  Authors: W. C. Martin, and R. Zalubas
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 8, 817–864 (1979)
 # PUBCON      DOI: https://doi.org/10.1063/1.555608
 #
 # PUB     Refcode: L4740 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4740&comment_code=&element=rb&spectr_charge=1&ref=4740
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4740&comment_code=&amp;element=Rb&amp;spectr_charge=1&amp;ref=4740&amp;type=E
 # PUBCON    Title: Spectra of the Alkali Metals in the Lead-Sulphide Region
 # PUBCON  Authors: I. Johansson
 # PUBCON  Journal: Ark. Fys. (Stockholm) 20, 135–145 (1961)
 #
 # PUB     Refcode: L4746 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4746&comment_code=&element=v&spectr_charge=3&ref=4746
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4746&comment_code=&amp;element=V&amp;spectr_charge=3&amp;ref=4746&amp;type=E
 # PUBCON    Title: Tercer Espectro del Vanadio (V III)
 # PUBCON  Authors: L. Iglesias
 # PUBCON  Journal: An. Fis. Quim., Ser. A 58, 191–222 (1962) (Sp.)
 #
 # PUB     Refcode: L4829 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4829&comment_code=&element=n&spectr_charge=5&ref=4829
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4829&comment_code=&amp;element=N&amp;spectr_charge=5&amp;ref=4829&amp;type=E
 # PUBCON    Title: The Spectrum of N V
 # PUBCON  Authors: R. Hallin
 # PUBCON  Journal: Ark. Fys. (Stockholm) 31(36), 511–526 (1966)
 #
 # PUB     Refcode: L4882 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4882&comment_code=&element=s&spectr_charge=6&ref=4882
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4882&comment_code=&amp;element=S&amp;spectr_charge=6&amp;ref=4882&amp;type=E
 # PUBCON    Title: The Spectrum and Term System of S VI
 # PUBCON  Authors: I. Joelsson, P. O. Zetterberg, and C. E. Magnusson
 # PUBCON  Journal: Phys. Scr. 20, 145–150 (1979)
@@ -6242,7 +6263,7 @@
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.69.001659
 #
 # PUB     Refcode: L4979 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4979&comment_code=&element=ra&spectr_charge=1&ref=4979
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4979&comment_code=&amp;element=Ra&amp;spectr_charge=1&amp;ref=4979&amp;type=E
 # PUBCON    Title: Bound, 7snp ^{1}P°_{1} Series in Ra I: Measurements and Predictions
 # PUBCON  Authors: J. A. Armstrong, J. J. Wynne, and F. S. Tomkins
 # PUBCON  Journal: J. Phys. B 13, L133–L137 (1980)
@@ -6256,7 +6277,7 @@
 # PUBCON      DOI: https://doi.org/10.1088/0022-3700/13/6/016
 #
 # PUB     Refcode: L4995 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4995&comment_code=&amp;element=Mg&amp;spectr_charge=1&amp;ref=4995&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=4995&comment_code=&amp;element=Mg&amp;spectr_charge=11&amp;ref=4995&amp;type=E
 # PUBCON    Title: Energy Levels of Magnesium, Mg I through Mg XII
 # PUBCON  Authors: W. C. Martin, and R. Zalubas
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 9, 1–58 (1980)
@@ -6270,7 +6291,7 @@
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.70.000317
 #
 # PUB     Refcode: L5141 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5141&comment_code=&element=sc&spectr_charge=2&ref=5141
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5141&comment_code=&amp;element=Sc&amp;spectr_charge=2&amp;ref=5141&amp;type=E
 # PUBCON    Title: The Spectrum of Singly Ionized Scandium, Sc II
 # PUBCON  Authors: S. Johansson, and U. Litzén
 # PUBCON  Journal: Phys. Scr. 22, 49–60 (1980)
@@ -6284,14 +6305,14 @@
 # PUBCON      DOI: https://doi.org/10.1016/0378-4363(80)90025-X
 #
 # PUB     Refcode: L5148 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5148&comment_code=&element=p&spectr_charge=1&ref=5148
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5148&comment_code=&amp;element=P&amp;spectr_charge=1&amp;ref=5148&amp;type=E
 # PUBCON    Title: The Spectrum and Term Analysis of Neutral Phosphorus, P I
 # PUBCON  Authors: N. Svendenius
 # PUBCON  Journal: Phys. Scr. 22, 240–287 (1980)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/22/3/010
 #
 # PUB     Refcode: L5223 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5223&comment_code=&element=mn&spectr_charge=7&ref=5223
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5223&comment_code=&amp;element=Mn&amp;spectr_charge=7&amp;ref=5223&amp;type=E
 # PUBCON    Title: Spectra of Mn VII–Cu XI Ions of the K I Isoelectronic Series
 # PUBCON  Authors: A. A. Ramonas, and A. N. Ryabtsev
 # PUBCON  Journal: Opt. Spektrosk. 48(4), 631–638 (1980) (Russ.)
@@ -6304,21 +6325,21 @@
 # PUBCON      DOI: https://doi.org/10.1007/BF02391668
 #
 # PUB     Refcode: L5267 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5267&comment_code=&element=fe&spectr_charge=7&ref=5267
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5267&comment_code=&amp;element=Fe&amp;spectr_charge=7&amp;ref=5267&amp;type=E
 # PUBCON    Title: Term Analysis of Fe VII
 # PUBCON  Authors: J. O. Ekberg
 # PUBCON  Journal: Phys. Scr. 23, 7–20 (1981)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/23/1/002
 #
 # PUB     Refcode: L5287 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5287&comment_code=&amp;element=Y&amp;spectr_charge=7&amp;ref=5287&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5287&comment_code=&amp;element=Mo&amp;spectr_charge=10&amp;ref=5287&amp;type=E
 # PUBCON    Title: 4s^{2}4p^{3}-4s4p^{4} and 4s^{2}4p^{3}-4s^{2}4p^{2}5s Transitions in Y VII, Zr VIII, Nb IX, and Mo X
 # PUBCON  Authors: J. Reader, and N. Acquista
 # PUBCON  Journal: J. Opt. Soc. Am. 71, 434–441 (1981)
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.71.000434
 #
 # PUB     Refcode: L5322 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5322&comment_code=&element=sr&spectr_charge=9&ref=5322
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5322&comment_code=&amp;element=Sr&amp;spectr_charge=10&amp;ref=5322&amp;type=E
 # PUBCON    Title: Spectrum and Energy Levels of Nine-Times Ionized Strontium (Sr X)
 # PUBCON  Authors: N. Acquista, and J. Reader
 # PUBCON  Journal: J. Opt. Soc. Am. 71, 569–573 (1981)
@@ -6332,7 +6353,7 @@
 # PUBCON      DOI: https://doi.org/10.1088/0022-3700/14/8/014
 #
 # PUB     Refcode: L5432 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5432&comment_code=&element=ti&spectr_charge=2&ref=5432
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5432&comment_code=&amp;element=Ti&amp;spectr_charge=2&amp;ref=5432&amp;type=E
 # PUBCON    Title: The Spectrum and Term System of Singly Ionized Titanium, Ti II
 # PUBCON  Authors: S. Huldt, S. Johansson, U. Litzén, and J. F. Wyart
 # PUBCON  Journal: Phys. Scr. 25, 401–412 (1982)
@@ -6346,7 +6367,7 @@
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.71.001193
 #
 # PUB     Refcode: L5438 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5438&comment_code=&amp;element=I&amp;spectr_charge=7&amp;ref=5438&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5438&comment_code=&amp;element=La&amp;spectr_charge=11&amp;ref=5438&amp;type=E
 # PUBCON    Title: Ag I Isoelectronic Sequence: Wavelengths and Energy Levels for I VII through La XI
 # PUBCON  Authors: V. Kaufman, and J. Sugar
 # PUBCON  Journal: Phys. Scr. 24, 738–741 (1981)
@@ -6360,7 +6381,7 @@
 # PUBCON      DOI: https://doi.org/10.1016/0030-4018(81)90225-X
 #
 # PUB     Refcode: L5473 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5473&comment_code=&element=ba&spectr_charge=28&ref=5473
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5473&comment_code=&amp;element=Ta&amp;spectr_charge=45&amp;ref=5473&amp;type=E
 # PUBCON    Title: The Copper Isoelectronic Sequence: Ba^{27+}–W^{45+}
 # PUBCON  Authors: J. Reader, and G. Luther
 # PUBCON  Journal: Phys. Scr. 24, 732–737 (1981)
@@ -6388,7 +6409,7 @@
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.72.000476
 #
 # PUB     Refcode: L5532 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5532&comment_code=&amp;element=Ce&amp;spectr_charge=12&amp;ref=5532&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5532&comment_code=&amp;element=W&amp;spectr_charge=28&amp;ref=5532&amp;type=E
 # PUBCON    Title: Ag I Isoelectronic Sequence: Wavelengths and Energy Levels for Ce XII Through Ho XXI and for W XXVIII
 # PUBCON  Authors: J. Sugar, and V. Kaufman
 # PUBCON  Journal: Phys. Scr. 24, 742–746 (1981)
@@ -6402,14 +6423,14 @@
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/24/6/006
 #
 # PUB     Refcode: L5566 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5566&comment_code=&amp;element=Ga&amp;spectr_charge=1&amp;ref=5566&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5566&comment_code=&amp;element=In&amp;spectr_charge=1&amp;ref=5566&amp;type=E
 # PUBCON    Title: Dye Laser Study of the np ^{2}P_{1/2,3/2} Rydberg Series in Neutral Gallium and Indium Atoms
 # PUBCON  Authors: J. H. M. Neijzen, and A. Dönszelmann
 # PUBCON  Journal: Physica B+C 114, 241–250 (1982)
 # PUBCON      DOI: https://doi.org/10.1016/0378-4363(82)90043-2
 #
 # PUB     Refcode: L562 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=562&comment_code=&element=mn&spectr_charge=2&ref=562
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=562&comment_code=&amp;element=Mn&amp;spectr_charge=2&amp;ref=562&amp;type=E
 # PUBCON    Title: Ion
 # PUBCON  Authors: L. Iglesias, and R. Velasco
 # PUBCON  Journal: Publ. Inst. Opt. Madrid (Daza de Valdés), No. 23, 1–228 (1964)
@@ -6429,54 +6450,54 @@
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/27/1/007
 #
 # PUB     Refcode: L5783 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5783&comment_code=&amp;element=K&amp;spectr_charge=1&amp;ref=5783&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5783&comment_code=&amp;element=Rb&amp;spectr_charge=1&amp;ref=5783&amp;type=E
 # PUBCON    Title: Quantum Defects of the n ^{2}P_{1/2,3/2} Levels in ^{39}K I and ^{85}Rb I
 # PUBCON  Authors: C.-J. Lorenzen, and K. Niemax
 # PUBCON  Journal: Phys. Scr. 27, 300–305 (1983)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/27/4/012
 #
 # PUB     Refcode: L5793 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5793&comment_code=&amp;element=Na&amp;spectr_charge=3&amp;ref=5793&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5793&comment_code=&amp;element=Na&amp;spectr_charge=9&amp;ref=5793&amp;type=E
 # PUBCON    Title: Energy Levels of Sodium, Na I through Na XI
 # PUBCON  Authors: W. C. Martin, and R. Zalubas
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 10, 153–196 (1981)
 # PUBCON      DOI: https://doi.org/10.1063/1.555637
 #
 # PUB     Refcode: L5815 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5815&comment_code=&amp;element=Si&amp;spectr_charge=1&amp;ref=5815&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5815&comment_code=&amp;element=Si&amp;spectr_charge=13&amp;ref=5815&amp;type=E
 # PUBCON    Title: Energy Levels of Silicon, Si I through Si XIV
 # PUBCON  Authors: W. C. Martin, and R. Zalubas
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 12, 323–380 (1983)
 # PUBCON      DOI: https://doi.org/10.1063/1.555685
 #
 # PUB     Refcode: L582 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=582&comment_code=&amp;element=Pr&amp;spectr_charge=6&amp;ref=582&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=582&comment_code=&amp;element=Lr&amp;spectr_charge=101&amp;ref=582&amp;type=E
 # PUBCON    Title: Calculated Ionization Potentials for Multiply Charged Ions
 # PUBCON  Authors: T. A. Carlson, C. W. Nestor, Jr., N. Wasserman, and J. D. McDowell
 # PUBCON  Journal: At. Data Nucl. Data Tables 2, 63–99 (1970)
 # PUBCON      DOI: https://doi.org/10.1016/S0092-640X(70)80005-5
 #
 # PUB     Refcode: L582c99 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=582&comment_code=c99&amp;element=Gd&amp;spectr_charge=18&amp;ref=582&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=582&comment_code=c99&amp;element=Os&amp;spectr_charge=30&amp;ref=582&amp;type=E
 # PUBCON Crossref: L582
 # PUBCON  Comment: Uncertainty has been estimated by A. Kramida (unpublished, 2011) based on comparisons along the isoelectronic sequence.
 #
 # PUB     Refcode: L5883 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5883&comment_code=&element=s&spectr_charge=2&ref=5883
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5883&comment_code=&amp;element=S&amp;spectr_charge=2&amp;ref=5883&amp;type=E
 # PUBCON    Title: The Spectrum of Singly Ionized Sulphur, S II
 # PUBCON  Authors: J. E. Pettersson
 # PUBCON  Journal: Phys. Scr. 28, 421–434 (1983)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/28/3/019
 #
 # PUB     Refcode: L5953 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5953&comment_code=&amp;element=Ru&amp;spectr_charge=16&amp;ref=5953&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5953&comment_code=&amp;element=Sn&amp;spectr_charge=22&amp;ref=5953&amp;type=E
 # PUBCON    Title: Spectra and Energy Levels of Ions in the Copper Isoelectronic Sequence from Ru^{15+} to Sn^{21+}
 # PUBCON  Authors: J. Reader, N. Acquista, and D. Cooper
 # PUBCON  Journal: J. Opt. Soc. Am. 73, 1765–1770 (1983)
 # PUBCON      DOI: https://doi.org/10.1364/JOSA.73.001765
 #
 # PUB     Refcode: L5964 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5964&comment_code=&element=be&spectr_charge=1&ref=5964
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=5964&comment_code=&amp;element=Be&amp;spectr_charge=1&amp;ref=5964&amp;type=E
 # PUBCON    Title: Laser Spectroscopy of High Rydberg States of Light Alkaline-Earth Elements: Be and Mg
 # PUBCON  Authors: R. Beigang, D. Schmidt, and P. J. West
 # PUBCON  Journal: J. Phys. (Paris) Colloques 44, C7-229–C7-237 (1983)
@@ -6490,13 +6511,13 @@
 # PUBCON      DOI: https://doi.org/10.1139/p82-178
 #
 # PUB     Refcode: L6098 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6098&comment_code=&element=si&spectr_charge=4&ref=6098
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6098&comment_code=&amp;element=Si&amp;spectr_charge=4&amp;ref=6098&amp;type=E
 # PUBCON    Title: Spectrum and Term System of Trebly Ionized Silicon, Si IV
 # PUBCON  Authors: Y. G. Toresson
 # PUBCON  Journal: Ark. Fys. (Stockholm) 17(12), 179–192 (1960)
 #
 # PUB     Refcode: L6168 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6168&comment_code=&amp;element=Se&amp;spectr_charge=7&amp;ref=6168&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6168&comment_code=&amp;element=Se&amp;spectr_charge=8&amp;ref=6168&amp;type=E
 # PUBCON    Title: Extended Analyses of Se VII and Se VIII
 # PUBCON  Authors: Th. A. M. van Kleef, and Y. N. Joshi
 # PUBCON  Journal: J. Opt. Soc. Am. B 1, 271–278 (1984)
@@ -6510,7 +6531,7 @@
 # PUBCON      DOI: https://doi.org/10.1007/BF01411927
 #
 # PUB     Refcode: L6264 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6264&comment_code=&element=rb&spectr_charge=9&ref=6264
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6264&comment_code=&amp;element=Rb&amp;spectr_charge=9&amp;ref=6264&amp;type=E
 # PUBCON    Title: Spectrum and Energy Levels of Eight-Times Ionized Rubidium (Rb IX)
 # PUBCON  Authors: S. Goldsmith, J. Reader, and N. Acquista
 # PUBCON  Journal: J. Opt. Soc. Am. B 1, 631–634 (1984)
@@ -6538,7 +6559,7 @@
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/30/4/008
 #
 # PUB     Refcode: L6378 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6378&comment_code=&element=sr&spectr_charge=5&ref=6378
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6378&comment_code=&amp;element=Sr&amp;spectr_charge=5&amp;ref=6378&amp;type=E
 # PUBCON    Title: Spectrum of Sr V
 # PUBCON  Authors: W. Persson, and C.-G. Wahlström
 # PUBCON  Journal: Phys. Scr. 30, 169–185 (1984)
@@ -6552,7 +6573,7 @@
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/29/3/006
 #
 # PUB     Refcode: L640 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=640&comment_code=&element=zn&spectr_charge=2&ref=640
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=640&comment_code=&amp;element=Zn&amp;spectr_charge=2&amp;ref=640&amp;type=E
 # PUBCON    Title: New Vacuum Ultraviolet Wavelengths and Revised Energy Levels in the Second Spectrum of Zinc (Zn II)
 # PUBCON  Authors: W. C. Martin, and V. Kaufman
 # PUBCON  Journal: J. Res. Natl. Bur. Stand. (U.S.), Sect. A 74, 11–22 (1970)
@@ -6566,7 +6587,7 @@
 # PUBCON      DOI: https://doi.org/10.1364/JOSAB.2.001084
 #
 # PUB     Refcode: L6470 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6470&comment_code=&element=rb&spectr_charge=4&ref=6470
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6470&comment_code=&amp;element=Rb&amp;spectr_charge=4&amp;ref=6470&amp;type=E
 # PUBCON    Title: Spectrum of Rb IV
 # PUBCON  Authors: W. Persson, and C.-G. Wahlström
 # PUBCON  Journal: Phys. Scr. 31, 487–505 (1985)
@@ -6580,7 +6601,7 @@
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/31/6/013
 #
 # PUB     Refcode: L648 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=648&comment_code=&element=o&spectr_charge=4&ref=648
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=648&comment_code=&amp;element=O&amp;spectr_charge=4&amp;ref=648&amp;type=E
 # PUBCON    Title: The Spectrum of Triply-Ionized Oxygen, O IV
 # PUBCON  Authors: J. Bromander
 # PUBCON  Journal: Ark. Fys. (Stockholm) 40(23), 257–274 (1969)
@@ -6593,7 +6614,7 @@
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/31/5/012
 #
 # PUB     Refcode: L65 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=65&comment_code=&element=zn&spectr_charge=3&ref=65
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=65&comment_code=&amp;element=Zn&amp;spectr_charge=3&amp;ref=65&amp;type=E
 # PUBCON    Title: The Spark Spectra of Zinc. II. Zinc III
 # PUBCON  Authors: K. A. Dick
 # PUBCON  Journal: Can. J. Phys. 46, 1291–1302 (1968)
@@ -6642,14 +6663,14 @@
 # PUBCON      DOI: https://doi.org/10.1364/JOSAB.3.000959
 #
 # PUB     Refcode: L6829 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6829&comment_code=&amp;element=Nb&amp;spectr_charge=1&amp;ref=6829&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6829&comment_code=&amp;element=Mo&amp;spectr_charge=1&amp;ref=6829&amp;type=E
 # PUBCON    Title: First-Ionization Potential of Niobium and Molybdenum by Double-Resonance, Field-Ionization Spectroscopy
 # PUBCON  Authors: D. M. Rayner, S. A. Mitchell, O. L. Bourne, and P. A. Hackett
 # PUBCON  Journal: J. Opt. Soc. Am. B 4, 900–905 (1987)
 # PUBCON      DOI: https://doi.org/10.1364/JOSAB.4.000900
 #
 # PUB     Refcode: L6833 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6833&comment_code=&element=rb&spectr_charge=7&ref=6833
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6833&comment_code=&amp;element=In&amp;spectr_charge=19&amp;ref=6833&amp;type=E
 # PUBCON    Title: 4s^{2}4p-4s4p^{2} and 4s^{2}4p-4s^{2}5s Transitions of Galliumlike Ions from Rb VII to In XIX
 # PUBCON  Authors: J. Reader, N. Acquista, and S. Goldsmith
 # PUBCON  Journal: J. Opt. Soc. Am. B 3, 874–878 (1986)
@@ -6670,14 +6691,14 @@
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/36/2/012
 #
 # PUB     Refcode: L6925 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6925&comment_code=&element=xe&spectr_charge=2&ref=6925
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6925&comment_code=&amp;element=Xe&amp;spectr_charge=2&amp;ref=6925&amp;type=E
 # PUBCON    Title: Revised Analysis of Singly Ionized Xenon, Xe II
 # PUBCON  Authors: J. E. Hansen, and W. Persson
 # PUBCON  Journal: Phys. Scr. 36, 602–643 (1987)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/36/4/005
 #
 # PUB     Refcode: L6969 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6969&comment_code=&element=mg&spectr_charge=1&ref=6969
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6969&comment_code=&amp;element=Mg&amp;spectr_charge=1&amp;ref=6969&amp;type=E
 # PUBCON    Title: Solar Emission Lines Revisited
 # PUBCON  Authors: E. S. Chang
 # PUBCON  Journal: Phys. Scr. 35, 792–797 (1987)
@@ -6691,14 +6712,14 @@
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/36/5/005
 #
 # PUB     Refcode: L6976 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6976&comment_code=&element=rb&spectr_charge=8&ref=6976
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6976&comment_code=&amp;element=Mo&amp;spectr_charge=13&amp;ref=6976&amp;type=E
 # PUBCON    Title: Spectra and Energy Levels of Ions in the Zinc Isoelectronic Sequence from Rb VIII to Mo XIII
 # PUBCON  Authors: U. Litzén, and J. Reader
 # PUBCON  Journal: Phys. Rev. A 36, 5159–5169 (1987)
 # PUBCON      DOI: https://doi.org/10.1103/PhysRevA.36.5159
 #
 # PUB     Refcode: L6980 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6980&comment_code=&amp;element=Xe&amp;spectr_charge=7&amp;ref=6980&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=6980&comment_code=&amp;element=La&amp;spectr_charge=10&amp;ref=6980&amp;type=E
 # PUBCON    Title: Cd I Isoelectronic Sequence: Wavelengths and Energy Levels for Xe VII through Eu XVI
 # PUBCON  Authors: V. Kaufman, and J. Sugar
 # PUBCON  Journal: J. Opt. Soc. Am. B 4, 1919–1923 (1987)
@@ -6711,20 +6732,20 @@
 # PUBCON  Journal: Opt. Pura Apl. 2, 132–145 (1969) (Sp.)
 #
 # PUB     Refcode: L7147 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7147&comment_code=&amp;element=P&amp;spectr_charge=1&amp;ref=7147&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7147&comment_code=&amp;element=P&amp;spectr_charge=14&amp;ref=7147&amp;type=E
 # PUBCON    Title: Energy Levels of Phosphorus, P I through P XV
 # PUBCON  Authors: W. C. Martin, R. Zalubas, and A. Musgrove
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 14, 751–802 (1985)
 # PUBCON      DOI: https://doi.org/10.1063/1.555736
 #
 # PUB     Refcode: L7185 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7185&comment_code=&amp;element=K&amp;spectr_charge=1&amp;ref=7185&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7185&comment_code=&amp;element=Ni&amp;spectr_charge=27&amp;ref=7185&amp;type=E
 # PUBCON    Title: Atomic Energy Levels of the Iron-Period Elements: Potassium through Nickel
 # PUBCON  Authors: J. Sugar, and C. Corliss
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 14, Suppl. 2, 1–664 (1985)
 #
 # PUB     Refcode: L7188 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7188&comment_code=&amp;element=C&amp;spectr_charge=6&amp;ref=7188&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7188&comment_code=&amp;element=Ds&amp;spectr_charge=110&amp;ref=7188&amp;type=E
 # PUBCON    Title: The Lamb Shift in Hydrogen-like Atoms, 1 ≤ Z ≤ 110
 # PUBCON  Authors: W. R. Johnson, and G. Soff
 # PUBCON  Journal: At. Data Nucl. Data Tables 33, 405–446 (1985)
@@ -6736,47 +6757,47 @@
 # PUBCON  Comment: The energy values reported in this paper have been scaled to the CODATA 2006 values of fundamental constants as given by Mohr et al. 2008 .
 #
 # PUB     Refcode: L7212 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7212&comment_code=&amp;element=Kr&amp;spectr_charge=2&amp;ref=7212&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7212&comment_code=&amp;element=Kr&amp;spectr_charge=13&amp;ref=7212&amp;type=E
 # PUBCON    Title: Energy Levels of Krypton, Kr I through Kr XXXVI
 # PUBCON  Authors: J. Sugar, and A. Musgrove
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 20, 859–915 (1991)
 # PUBCON      DOI: https://doi.org/10.1063/1.555896
 #
 # PUB     Refcode: L7213 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7213&comment_code=&amp;element=Ge&amp;spectr_charge=1&amp;ref=7213&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7213&comment_code=&amp;element=Ge&amp;spectr_charge=31&amp;ref=7213&amp;type=E
 # PUBCON    Title: Energy Levels of Germanium, Ge I through Ge XXXII
 # PUBCON  Authors: J. Sugar, and A. Musgrove
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 22, 1213–1278 (1993)
 # PUBCON      DOI: https://doi.org/10.1063/1.555929
 #
 # PUB     Refcode: L7215 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7215&comment_code=&amp;element=Al&amp;spectr_charge=1&amp;ref=7215&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7215&comment_code=&amp;element=Al&amp;spectr_charge=7&amp;ref=7215&amp;type=E
 # PUBCON    Title: Wavelength and Energy Level Classifications for the Spectra of Aluminum (Al I through Al XIII)
 # PUBCON  Authors: V. Kaufman, and W. C. Martin
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 20, 775–858 (1991)
 # PUBCON      DOI: https://doi.org/10.1063/1.555895
 #
 # PUB     Refcode: L7237 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7237&comment_code=&amp;element=S&amp;spectr_charge=1&amp;ref=7237&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7237&comment_code=&amp;element=S&amp;spectr_charge=15&amp;ref=7237&amp;type=E
 # PUBCON    Title: Energy Levels of Sulfur, S I through S XVI
 # PUBCON  Authors: W. C. Martin, R. Zalubas, and A. Musgrove
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 19, 821–880 (1990)
 # PUBCON      DOI: https://doi.org/10.1063/1.555862
 #
 # PUB     Refcode: L7288 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7288&comment_code=&amp;element=C&amp;spectr_charge=2&amp;ref=7288&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7288&comment_code=&amp;element=O&amp;spectr_charge=6&amp;ref=7288&amp;type=E
 # PUBCON    Title: Tables of Spectra of Hydrogen, Carbon, Nitrogen, and Oxygen Atoms and Ions
 # PUBCON  Authors: C. E. Moore
 # PUBCON  Journal: in <i>CRC Series in Evaluated Data in Atomic Physics</i>, 339 pp. (Edited by J. W. Gallagher, CRC Press, Boca Raton, FL, 1993)
 #
 # PUB     Refcode: L7323 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7323&comment_code=&element=ca&spectr_charge=2&ref=7323
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7323&comment_code=&amp;element=Ca&amp;spectr_charge=2&amp;ref=7323&amp;type=E
 # PUBCON    Title: The Spectrum of Singly-Ionized Calcium, Ca II
 # PUBCON  Authors: B. Edlén, and P. Risberg
 # PUBCON  Journal: Ark. Fys. (Stockholm) 10, 553–566 (1956)
 #
 # PUB     Refcode: L7360 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7360&comment_code=&element=i&spectr_charge=2&ref=7360
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7360&comment_code=&amp;element=I&amp;spectr_charge=2&amp;ref=7360&amp;type=E
 # PUBCON    Title: The Spectrum of Singly Ionized Atomic Iodine (I II)
 # PUBCON  Authors: W. C. Martin, and C. H. Corliss
 # PUBCON  Journal: J. Res. Natl. Bur. Stand. (U.S.), Sect. A 64(6), 443–479 (1960)
@@ -6789,20 +6810,20 @@
 # PUBCON  Journal: Ark. Fys. (Stockholm) 37, 221–230 (1968)
 #
 # PUB     Refcode: L7432 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7432&comment_code=&element=rn&spectr_charge=1&ref=7432
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7432&comment_code=&amp;element=Rn&amp;spectr_charge=1&amp;ref=7432&amp;type=E
 # PUBCON    Title: Über das Bogenspektrum der Radiumemanation
 # PUBCON  Authors: E. Rasmussen
 # PUBCON  Journal: Z. Phys. 80, 726–734 (1933) (Ger.)
 # PUBCON      DOI: https://doi.org/10.1007/BF01342588
 #
 # PUB     Refcode: L7481 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7481&comment_code=&element=f&spectr_charge=1&ref=7481
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7481&comment_code=&amp;element=F&amp;spectr_charge=1&amp;ref=7481&amp;type=E
 # PUBCON    Title: The Arc Spectrum of Fluorine
 # PUBCON  Authors: K. Lidén
 # PUBCON  Journal: Ark. Fys. (Stockholm) 1(9), 229–267 (1949); Erratum:  1(9), 268 (1949)
 #
 # PUB     Refcode: L7482 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7482&comment_code=&element=na&spectr_charge=5&ref=7482
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7482&comment_code=&amp;element=Na&amp;spectr_charge=5&amp;ref=7482&amp;type=E
 # PUBCON    Title: Spektren von Hochionisiertem Natrium und Magnesium
 # PUBCON  Authors: J. Söderqvist
 # PUBCON  Journal: Ark. Mat. Astron. Fys. 32A(19), 1–33 (1946) (Ger.)
@@ -6811,28 +6832,28 @@
 # PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7743&comment_code=c109&amp;element=Fe&amp;spectr_charge=1&amp;ref=7743&amp;type=E
 #
 # PUB     Refcode: L7765 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7765&comment_code=&amp;element=U&amp;spectr_charge=1&amp;ref=7765&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=7765&comment_code=&amp;element=Es&amp;spectr_charge=1&amp;ref=7765&amp;type=E
 # PUBCON    Title: RIMS Measurements for the Determination of the First Ionization Potential of the Actinides Actinium up to Einsteinium
 # PUBCON  Authors: A. Waldek, N. Erdmann, C. Grüning, G. Huber, P. Kunz, J. V. Kratz, J. Lassen, G. Passler, and N. Trautmann
 # PUBCON  Journal: AIP Conf. Proc. 584, 219–224 (2001)
 # PUBCON      DOI: https://doi.org/10.1063/1.1405607
 #
 # PUB     Refcode: L8105 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=8105&comment_code=&amp;element=Os&amp;spectr_charge=1&amp;ref=8105&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=8105&comment_code=&amp;element=Ir&amp;spectr_charge=1&amp;ref=8105&amp;type=E
 # PUBCON    Title: First Ionization Potentials of Osmium and Iridium Determined by Mass-Analyzed Double-Resonance Field-Ionization Spectroscopy
 # PUBCON  Authors: P. Colarusso, M.-A. Lebeault-Dorget, and B. Simard
 # PUBCON  Journal: Phys. Rev. A 55, 1526–1529 (1997)
 # PUBCON      DOI: https://doi.org/10.1103/PhysRevA.55.1526
 #
 # PUB     Refcode: L8114 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=8114&comment_code=&element=ar&spectr_charge=3&ref=8114
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=8114&comment_code=&amp;element=Ar&amp;spectr_charge=3&amp;ref=8114&amp;type=E
 # PUBCON    Title: Improved Wavelengths and Energy Levels of Doubly-Ionized Argon (Ar III)
 # PUBCON  Authors: V. Kaufman, and W. Whaling
 # PUBCON  Journal: J. Res. Natl. Inst. Stand. Technol. 101, 691–704 (1996)
 # PUBCON      DOI: https://doi.org/10.6028/jres.101.067
 #
 # PUB     Refcode: L820 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=820&comment_code=&element=as&spectr_charge=2&ref=820
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=820&comment_code=&amp;element=As&amp;spectr_charge=2&amp;ref=820&amp;type=E
 # PUBCON    Title: First Spark Spectrum of Arsenic
 # PUBCON  Authors: H. Li, and K. L. Andrew
 # PUBCON  Journal: J. Opt. Soc. Am. 61, 96–109 (1971)
@@ -6846,14 +6867,14 @@
 # PUBCON      DOI: https://doi.org/10.1364/JOSAB.16.000484
 #
 # PUB     Refcode: L8473 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=8473&comment_code=&amp;element=Cl&amp;spectr_charge=6&amp;ref=8473&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=8473&comment_code=&amp;element=W&amp;spectr_charge=73&amp;ref=8473&amp;type=E
 # PUBCON    Title: Relativistic All-Order Many-Body Calculations of the n = 1 and n = 2 States of Heliumlike Ions
 # PUBCON  Authors: D. R. Plante, W. R. Johnson, and J. Sapirstein
 # PUBCON  Journal: Phys. Rev. A 49, 3519–3530 (1994)
 # PUBCON      DOI: https://doi.org/10.1103/PhysRevA.49.3519
 #
 # PUB     Refcode: L8672c98 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=8672&comment_code=c98&amp;element=Yb&amp;spectr_charge=38&amp;ref=8672&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=8672&comment_code=c98&amp;element=Ds&amp;spectr_charge=37&amp;ref=8672&amp;type=E
 # PUBCON    Title: Systematic Calculation of Total Atomic Energies of Ground State Configurations
 # PUBCON  Authors: G. C. Rodrigues, P. Indelicato, J. P. Santos, P. Patté, and F. Parente
 # PUBCON  Journal: At. Data Nucl. Data Tables 86, 117–233 (2004)
@@ -6861,7 +6882,7 @@
 # PUBCON  Comment: A misprint in the quoted paper has been corrected in ASD.
 #
 # PUB     Refcode: L8672c99 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=8672&comment_code=c99&amp;element=Ni&amp;spectr_charge=7&amp;ref=8672&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=8672&comment_code=c99&amp;element=Ds&amp;spectr_charge=107&amp;ref=8672&amp;type=E
 # PUBCON    Title: Systematic Calculation of Total Atomic Energies of Ground State Configurations
 # PUBCON  Authors: G. C. Rodrigues, P. Indelicato, J. P. Santos, P. Patté, and F. Parente
 # PUBCON  Journal: At. Data Nucl. Data Tables 86, 117–233 (2004)
@@ -6869,7 +6890,7 @@
 # PUBCON  Comment: Uncertainty has been estimated by A. Kramida (unpublished, 2011) based on comparisons along the isoelectronic sequence.
 #
 # PUB     Refcode: L869 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=869&comment_code=&element=cu&spectr_charge=2&ref=869
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=869&comment_code=&amp;element=Cu&amp;spectr_charge=2&amp;ref=869&amp;type=E
 # PUBCON    Title: Vacuum Ultraviolet Standards in the Spectrum of Cu II
 # PUBCON  Authors: C. B. Ross, Jr.
 # PUBCON  Journal: Dissertation, Purdue Univ., Purdue, IN (1969)
@@ -6901,7 +6922,7 @@
 # PUBCON      DOI: https://doi.org/10.1063/1.1797771
 #
 # PUB     Refcode: L8844 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=8844&comment_code=&amp;element=Ar&amp;spectr_charge=2&amp;ref=8844&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=8844&comment_code=&amp;element=Tb&amp;spectr_charge=2&amp;ref=8844&amp;type=E
 # PUBCON    Title: Handbook of Basic Atomic Spectroscopic Data
 # PUBCON  Authors: J. E. Sansonetti, and W. C. Martin
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 34, 1559–2259 (2005)
@@ -6915,7 +6936,7 @@
 # PUBCON      DOI: https://doi.org/10.1143/JPSJ.75.034302
 #
 # PUB     Refcode: L897 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=897&comment_code=&element=ni&spectr_charge=2&ref=897
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=897&comment_code=&amp;element=Ni&amp;spectr_charge=2&amp;ref=897&amp;type=E
 # PUBCON    Title: The Second Spectrum of Nickel (Ni II)
 # PUBCON  Authors: A. G. Shenstone
 # PUBCON  Journal: J. Res. Natl. Bur. Stand. (U.S.), Sect. A 74, 801–855 (1970)
@@ -6930,7 +6951,7 @@
 # PUBCON  Comment: The ionization energy was determined as an average of the three values measured by Lu et al. weighted by reciprocal squared uncertainties. The uncertainty of this average value was estimated as the standard deviation of the three measured values from the average. This estimate exceeds the stated measurement uncertainties of Lu et. al. by an order of magnitude.
 #
 # PUB     Refcode: L9039 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9039&comment_code=&amp;element=Rb&amp;spectr_charge=1&amp;ref=9039&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9039&comment_code=&amp;element=Rb&amp;spectr_charge=36&amp;ref=9039&amp;type=E
 # PUBCON    Title: Wavelengths, Transition Probabilities, and Energy Levels for the Spectra of Rubidium (Rb I through Rb XXXVII)
 # PUBCON  Authors: J. E. Sansonetti
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 35, 301–421 (2006); Erratum:  37, 1183 (2008)
@@ -6949,41 +6970,41 @@
 # PUBCON      DOI: https://doi.org/10.1016/j.jqsrt.2004.11.004
 #
 # PUB     Refcode: L9087 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9087&comment_code=&amp;element=W&amp;spectr_charge=3&amp;ref=9087&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9087&comment_code=&amp;element=W&amp;spectr_charge=71&amp;ref=9087&amp;type=E
 # PUBCON    Title: Ionization Energies of Tungsten Ions: W^{2+} Through W^{71+}
 # PUBCON  Authors: A. E. Kramida, and J. Reader
 # PUBCON  Journal: At. Data Nucl. Data Tables 92, 457–479 (2006)
 # PUBCON      DOI: https://doi.org/10.1016/j.adt.2006.03.002
 #
 # PUB     Refcode: L9089 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9089&comment_code=&element=ne&spectr_charge=7&ref=9089
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9089&comment_code=&amp;element=Ne&amp;spectr_charge=7&amp;ref=9089&amp;type=E
 # PUBCON    Title: Energy Levels and Spectral Lines of Ne VII
 # PUBCON  Authors: A. E. Kramida, and M.-C. Buchet-Poulizac
 # PUBCON  Journal: Eur. Phys. J. D 38, 265–276 (2006)
 # PUBCON      DOI: https://doi.org/10.1140/epjd/e2006-00025-3
 #
 # PUB     Refcode: L9090 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9090&comment_code=&element=ne&spectr_charge=8&ref=9090
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9090&comment_code=&amp;element=Ne&amp;spectr_charge=8&amp;ref=9090&amp;type=E
 # PUBCON    Title: Energy Levels and Spectral Lines of Ne VIII
 # PUBCON  Authors: A. E. Kramida, and M.-C. Buchet-Poulizac
 # PUBCON  Journal: Eur. Phys. J. D 39, 173–188 (2006)
 # PUBCON      DOI: https://doi.org/10.1140/epjd/e2006-00122-3
 #
 # PUB     Refcode: L9091 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9091&comment_code=&element=ne&spectr_charge=3&ref=9091
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9091&comment_code=&amp;element=Ne&amp;spectr_charge=3&amp;ref=9091&amp;type=E
 # PUBCON    Title: New FTS Measurements, Optimized Energy Levels and Refined VUV Standards in the Ne III Spectrum
 # PUBCON  Authors: A. E. Kramida, and G. Nave
 # PUBCON  Journal: Eur. Phys. J. D 37, 1–21 (2006)
 # PUBCON      DOI: https://doi.org/10.1140/epjd/e2005-00249-7
 #
 # PUB     Refcode: L914 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=914&comment_code=&element=na&spectr_charge=2&ref=914
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=914&comment_code=&amp;element=Na&amp;spectr_charge=2&amp;ref=914&amp;type=E
 # PUBCON    Title: Studies in the Optical Spectrum of Singly Ionized Sodium, Na II
 # PUBCON  Authors: C. M. Wu
 # PUBCON  Journal: Ph.D. Thesis, University of British Columbia, Canada, 119 pp. (1971)
 #
 # PUB     Refcode: L9171 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9171&comment_code=&amp;element=Zn&amp;spectr_charge=1&amp;ref=9171&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9171&comment_code=&amp;element=Zn&amp;spectr_charge=29&amp;ref=9171&amp;type=E
 # PUBCON    Title: Energy Levels of Zinc, Zn I through Zn XXX
 # PUBCON  Authors: J. Sugar, and A. Musgrove
 # PUBCON  Journal: J. Phys. Chem. Ref. Data 24, 1803–1872 (1995)
@@ -6997,7 +7018,7 @@
 # PUBCON      DOI: https://doi.org/10.1088/0953-4075/32/17/105
 #
 # PUB     Refcode: L9224 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9224&comment_code=&element=ba&spectr_charge=1&ref=9224
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9224&comment_code=&amp;element=Ba&amp;spectr_charge=2&amp;ref=9224&amp;type=E
 # PUBCON    Title: Revised Ba I and Ba II Wavelengths and Energy Levels Derived by Fourier Transform Spectroscopy
 # PUBCON  Authors: H. Karlsson, and U. Litzén
 # PUBCON  Journal: Phys. Scr. 60, 321–328 (1999)
@@ -7010,21 +7031,21 @@
 # PUBCON  Journal: Sci. Light (Tokyo) 19, 43–47 (1970)
 #
 # PUB     Refcode: L9267 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9267&comment_code=&element=zr&spectr_charge=3&ref=9267
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9267&comment_code=&amp;element=Zr&amp;spectr_charge=3&amp;ref=9267&amp;type=E
 # PUBCON    Title: Spectrum and Energy Levels of Doubly-Ionized Zirconium (Zr III)
 # PUBCON  Authors: J. Reader, and N. Acquista
 # PUBCON  Journal: Phys. Scr. 55, 310–329 (1997)
 # PUBCON      DOI: https://doi.org/10.1088/0031-8949/55/3/009
 #
 # PUB     Refcode: L9340 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9340&comment_code=&element=ne&spectr_charge=6&ref=9340
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9340&comment_code=&amp;element=Ne&amp;spectr_charge=6&amp;ref=9340&amp;type=E
 # PUBCON    Title: Ne VI Spectrum
 # PUBCON  Authors: A. E. Kramida, T. Bastin, E. Biémont, P.-D. Dumont, and H.-P. Garnir
 # PUBCON  Journal: J. Opt. Soc. Am. B 16, 1966–1987 (1999)
 # PUBCON      DOI: https://doi.org/10.1364/JOSAB.16.001966
 #
 # PUB     Refcode: L9358 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9358&comment_code=&amp;element=As&amp;spectr_charge=3&amp;ref=9358&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9358&comment_code=&amp;element=As&amp;spectr_charge=4&amp;ref=9358&amp;type=E
 # PUBCON    Title: Revised and Extended Analyses of Doubly and Trebly Ionized Arsenic: As III, As IV
 # PUBCON  Authors: S. S. Churilov, and Y. N. Joshi
 # PUBCON  Journal: J. Opt. Soc. Am. B 13, 11–28 (1996)
@@ -7064,22 +7085,15 @@
 # PUBCON  Journal: Phys. Rev. A 58, 1585–1588 (1998)
 # PUBCON      DOI: https://doi.org/10.1103/PhysRevA.58.1585
 #
-# PUB     Refcode: L9734 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9734&comment_code=&amp;element=Sm&amp;spectr_charge=1&amp;ref=9734&amp;type=E
-# PUBCON    Title: Even-Parity Bound and Autoionizing Rydberg Series of the Samarium Atom
-# PUBCON  Authors: T. Jayasekharan, M. A. N. Razvi, and G. L. Bhale
-# PUBCON  Journal: J. Phys. B 33, 3123–3136 (2000)
-# PUBCON      DOI: https://doi.org/10.1088/0953-4075/33/16/314
-#
 # PUB     Refcode: L9735 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9735&comment_code=&amp;element=Y&amp;spectr_charge=1&amp;ref=9735&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9735&comment_code=&amp;element=Pt&amp;spectr_charge=1&amp;ref=9735&amp;type=E
 # PUBCON    Title: Rydberg Series and the First Ionization Potential of Platinum and Yttrium Atoms
 # PUBCON  Authors: Z. J. Jakubek, and B. Simard
 # PUBCON  Journal: J. Phys. B 33, 1827–1841 (2000)
 # PUBCON      DOI: https://doi.org/10.1088/0953-4075/33/10/301
 #
 # PUB     Refcode: L9794 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9794&comment_code=&element=xe&spectr_charge=1&ref=9794
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=9794&comment_code=&amp;element=Xe&amp;spectr_charge=1&amp;ref=9794&amp;type=E
 # PUBCON    Title: Vacuum-Ultraviolet Spectroscopy of Xe: Hyperfine Splittings, Isotope Shifts, and Isotope-Dependent Ionization Energies
 # PUBCON  Authors: F. Brandi, I. Velchev, W. Hogervorst, and W. Ubachs
 # PUBCON  Journal: Phys. Rev. A 64, 032505 (2001)
@@ -7098,16 +7112,16 @@
 # PUBCON  Comment: To be published (2018).
 #
 # PUB     Refcode: c192 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=&comment_code=c192&amp;element=Si&amp;spectr_charge=6&amp;ref=&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=&comment_code=c192&amp;element=Si&amp;spectr_charge=11&amp;ref=&amp;type=E
 # PUBCON  Authors: The value was derived by A.&nbsp;Kramida (to be published
 # PUBCON  Comment: 2018) from an isoelectronic interpolation of differences between theory and experiments.
 #
 # PUB     Refcode: c193 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=&comment_code=c193&amp;element=Si&amp;spectr_charge=7&amp;ref=&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=&comment_code=c193&amp;element=Si&amp;spectr_charge=9&amp;ref=&amp;type=E
 # PUBCON  Authors: The value was derived by A.&nbsp;Kramida (to be published
 # PUBCON  Comment: 2018) from interpolations involving a large body of experimental and theoretical data on many isoelectronic sequences.
 #
 # PUB     Refcode: c99 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=&comment_code=c99&amp;element=Yb&amp;spectr_charge=38&amp;ref=&amp;type=E
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=&comment_code=c99&amp;element=Ds&amp;spectr_charge=37&amp;ref=&amp;type=E
 # PUBCON  Authors: Uncertainty has been estimated by A. Kramida (unpublished
 # PUBCON  Comment: 2011) based on comparisons along the isoelectronic sequence.
