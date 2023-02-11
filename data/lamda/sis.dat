@@ -935,3 +935,25 @@ SiS
 4	4 	3	4.e-11 4.e-11 4.e-11 3.95e-11 3.9e-11 3.6e-11 3.6e-11 3.65e-11 3.65e-11 3.7e-11 3.7e-11
 !NOTES:
 !Energy levels, transition frequencies and Einstein A coefficients from CDMS
+!COLLISIONS BETWEEN
+5 SiS-H data from Bhargava Anusuri, https://doi.org/10.1016/j.heliyon.2019.e01647,downward rates are derived from upward rates
+!NUMBER OF COLLISIONAL TRANSITIONS
+11
+!NUMBER OF TEMPERATURES
+7
+!TEMPERATURES
+   10.0   50.0  100.0	150.0	200.0	250.0	300.0
+!TRANS + UP + LOW + RATES [cm3 s-1]
+1	2	1	6.91e-10 9.84e-10 1.28e-9 1.34e-9 1.47e-9 1.54e-9 1.6-9   
+2	3	2	1.71e-9	2.15e-9 2.46e-9 2.67e-9 2.91e-9 3.15e-9 3.27e-9     	 
+3	4	3	1.44e-9 2.7e-9 3.01e-9 3.33e-9 3.52e-9 3.64e-9 3.92e-9      	
+4	5 	4	1.49e-9 2.96e-9 3.14e-9 3.3e-9 3.49e-9 3.79e-9 3.92e-9   
+5	6	5	2.42e-9 2.98e-9 3.17e-9 3.21e-9 3.4e-9 3.62e-9 3.97e-9 	
+6	3	1	3.4e-10 9.43e-10 1.09e-9 1.15e-9 1.12e-9 1.07e-9 1.01e-9  
+7	4	2	8.44e-10 1.4e-9 1.67e-9 1.76e-9 1.87e-9 2.03e-9 2.16e-9 
+8	5	3	1.57e-9 1.76e-9 1.92e-9 2.07e-9 2.14e-9 2.35e-9 2.56e-9    	
+9	6	4	2.2e-9 2.26e-9 2.37e-9 2.43e-9 2.55e-9 2.78e-9 2.87e-9    	
+10	7	5	1.12e-9 2.59e-9 2.56e-9 2.56e-9 3e-9 2.98e-9 3.07e-9  
+11	8	6	2.62e-9 2.75e-9 2.81e-9 2.83e-9 3.e-9 3.12e-9 3.21e-9  
+!NOTES:
+!Energy levels, transition frequencies and Einstein A coefficients from CDMS
