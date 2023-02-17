@@ -20,58 +20,79 @@ t_ADfA::t_ADfA()
 	double help[9];
 	const long VERSION_MAGIC = 20061204L;
 
-	static const char chFile[] = "phfit.dat";
+	DataParser d;
 
-	FILE *io = open_data( chFile, "r" );
+	d.open( "phfit.dat", ES_NONE );
+	d.getline();
+	d.checkMagic(VERSION_MAGIC);
 
-	bool lgErr = false;
-	long i=-1, j=-1, k=-1, n;
+	d.getline();
+	for( long i = 0; i < NSHELLS; i++ ) d.getToken( L[i] );
 
-	lgErr = lgErr || ( fscanf( io, "%ld", &i ) != 1 );
-	if( lgErr || i != VERSION_MAGIC )
+	d.getline();
+	for( long i = 0; i < LIMELM; i++ ) d.getToken( NINN[i] );
+
+	d.getline();
+	for( long i = 0; i < LIMELM; i++ ) d.getToken( NTOT[i] );
+
+	/* 1995 table
+	 * >>refer	all	photo_cs	Verner and Yakovlev, 1995, A&AS, 109, 125
+	 */
+	while( d.getline() )
 	{
-		fprintf( ioQQQ, " File %s has incorrect version: %ld\n", chFile, i );
-		fprintf( ioQQQ, " I expected to find version: %ld\n", VERSION_MAGIC );
-		cdEXIT(EXIT_FAILURE);
-	}
+		long nshell, nelec, nelem;
+		d.getToken(nshell);
+		d.getToken(nelec);
+		d.getToken(nelem);
 
-	for( n=0; n < 7; n++ )
-		lgErr = lgErr || ( fscanf( io, "%ld", &L[n] ) != 1 );
-	for( n=0; n < 30; n++ )
-		lgErr = lgErr || ( fscanf( io, "%ld", &NINN[n] ) != 1 );
-	for( n=0; n < 30; n++ )
-		lgErr = lgErr || ( fscanf( io, "%ld", &NTOT[n] ) != 1 );
-	while( true )
-	{
-		lgErr = lgErr || ( fscanf( io, "%ld %ld %ld", &i, &j, &k ) != 3 );
-		//fprintf(ioQQQ,"DEBUGG phfit1 %ld %ld %ld\n", i, j, k );
-		if( i == -1 && j == -1 && k == -1 )
+		if( nshell < 0 && nelec < 0 && nelem < 0 )
+		{
+			d.checkEOL();
 			break;
-		lgErr = lgErr || ( fscanf( io, "%lf %le %le %le %le %le", &help[0], &help[1],
-					   &help[2], &help[3], &help[4], &help[5] ) != 6 );
-		/* ionization potential in eV */
-		ASSERT( help[0] > 0. );
-		//fprintf(ioQQQ,"DEBUGG phfit2 %le %le %le %le %le %le\n" , help[0] , help[1] , help[2] , help[3] , help[4] , help[5]);
-		for( int l=0; l < 6; ++l )
-			PH1[i][j][k][l] = (realnum)help[l];
-	}
-	while( true )
-	{
-		lgErr = lgErr || ( fscanf( io, "%ld %ld", &i, &j ) != 2 );
-		if( i == -1 && j == -1 )
-			break;
-		lgErr = lgErr || ( fscanf( io, "%le %le %le %le %le %le %le", &help[0], &help[1],
-					   &help[2], &help[3], &help[4], &help[5], &help[6] ) != 7 );
-		for( int l=0; l < 7; ++l )
-			PH2[i][j][l]  = (realnum)help[l];
-	}
-	fclose( io );
+		}
 
-	ASSERT( !lgErr );
+		ASSERT( 0 <= nshell && nshell < NSHELLS );
+		ASSERT( 0 <= nelem && nelem < LIMELM );
+		ASSERT( 0 <= nelec && nelec <= nelem );
+
+		for( long id = 0; id < NFIT_PH1; id++ )
+			d.getToken( PH1[nshell][nelec][nelem][id] );
+		d.checkEOL();
+	}
+
+	/* 1996 table
+	 * >>refer	all	photo_cs	Verner, D. A., Ferland, G. J., Korista, K. T., & Yakovlev, D. G. 1996, ApJ, 465, 487.
+	 */
+	while( d.getline() )
+	{
+		long nelec, nelem;
+		d.getToken(nelec);
+		d.getToken(nelem);
+
+		if( nelec < 0 && nelem < 0 )
+		{
+			d.checkEOL();
+			break;
+		}
+
+		ASSERT( 0 <= nelem && nelem < LIMELM );
+		ASSERT( 0 <= nelec && nelec <= nelem );
+
+		for( long id = 0; id < NFIT_PH2; id++ )
+			d.getToken( PH2[nelec][nelem][id] );
+		d.checkEOL();
+	}
+
+	d.checkEOD();
+
+	//--------------------------------------------
 
 	static const char chFile2[] = "hpfit.dat";
 
-	io = open_data( chFile2, "r" );
+	FILE *io = open_data( chFile2, "r" );
+
+	bool lgErr = false;
+	long i=-1, j=-1;
 
 	lgErr = lgErr || ( fscanf( io, "%ld", &i ) != 1 );
 	if( lgErr || i != VERSION_MAGIC )
@@ -244,7 +265,7 @@ t_ADfA::t_ADfA()
 
 	/*refer	HI	cs	Anderson, H., Ballance, C.P., Badnell, N.R., 
 	 *refercon	& Summers, H.P  2000, J Phys B, 33, 1255 */
-	DataParser d( "h_coll_str.dat", ES_NONE );
+	d.open( "h_coll_str.dat", ES_NONE );
 	d.getline();
 	d.checkMagic(VERSION_MAGIC);
 
