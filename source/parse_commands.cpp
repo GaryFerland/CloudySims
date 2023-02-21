@@ -977,9 +977,13 @@ void ParseDatabase(Parser &p)
 		if (p.nMatch("PRINT"))
 			atmdat.lgChiantiPrint = true;
 
-		// Use Experimental energies exclusively. Default use experimental.
+		// Use theoretical energies exclusively. Default use experimental.
 		if (p.nMatch("THEOR"))
 			atmdat.lgChiantiExp = false;
+
+		// User experimental energies where available, theory if only available
+		if( p.nMatch("MIXED"))
+			atmdat.lgChiantiMixed = true;
 
 		// Input the maximum number of Chianti levels to use
 		if (p.nMatch("LEVEL"))

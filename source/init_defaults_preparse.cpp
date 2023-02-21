@@ -63,6 +63,8 @@ void InitDefaultsPreparse( void )
 	atmdat.lgGbarOn = true;
 	//Tells Cloudy to exclusively use experimental energies in Chianti.
 	atmdat.lgChiantiExp = true;
+	//option to use experimental+theory, not used by default
+	atmdat.lgChiantiMixed = false;
 	// Set the default number of Chianti energy levels to use for Fe for photoionization case
 	atmdat.nChiantiMaxLevelsFe = atmdat.nDefaultPhotoLevelsFe;
 	// Set the default number of Chianti energy levels to use for all other elements
