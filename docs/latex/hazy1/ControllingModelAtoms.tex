@@ -1331,13 +1331,15 @@ If no numbers appear but the keyword \cdCommand{MAX} does, we use all
 of the available energy levels.
 See \citet{2013MNRAS.429.3133L} for more details.
 
-\subsection{Database Chianti [experimental theoretical]}
+\subsection{Database Chianti [experimental, theoretical, mixed]}
 \label{sec:AtomChiantiExperimental}
-By default we use experimental Chianti energies.
-The \cdCommand{theoretical} option causes \Cloudy\ to only use theoretical 
-energies.
+By default we use only experimental Chianti energies.
+The \cdCommand{theoretical} option causes \Cloudy\ to only use only theoretical 
+energies and not experimental.
 This provides significantly more levels and transitions, 
 however the error in wavelength is larger.
+The \cdCommand{mixed} option causes \Cloudy\ to use experimental where
+possible and theoretical if only those are available.
 
 \section{Database Stout [on , off, no hybrid][print][levels \{j, MAX\}]}
 \label{sec:SetStout}
