@@ -61,10 +61,21 @@ void InitDefaultsPreparse( void )
 	atmdat.lgChiantiPrint = false;
 	//Use gbar to fill in dBase transitions if they lack collision strengths
 	atmdat.lgGbarOn = true;
+
+	/** true if Cloudy will use only experimental energy levels from Chianti, this is the default */
+	bool lgChiantiExp;
+	/** true if Cloudy will use only theoretical energy levels from Chianti - set with DATABASE CHIANTI THEORETICAL */
+	bool lgChiantiTheo;
+	/** Mixed is experimental where possible, theoretical if none, set with DATABASE CHIANTI MIXED */
+	bool lgChiantiMixed;
+
 	//Tells Cloudy to exclusively use experimental energies in Chianti.
 	atmdat.lgChiantiExp = true;
+	//option to use +theory, not used by default
+	atmdat.lgChiantiTheo = false;
 	//option to use experimental+theory, not used by default
 	atmdat.lgChiantiMixed = false;
+
 	// Set the default number of Chianti energy levels to use for Fe for photoionization case
 	atmdat.nChiantiMaxLevelsFe = atmdat.nDefaultPhotoLevelsFe;
 	// Set the default number of Chianti energy levels to use for all other elements

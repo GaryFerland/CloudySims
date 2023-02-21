@@ -375,9 +375,11 @@ struct t_atmdat : public module {
 	bool lgChiantiHybrid;
 	/** true if Cloudy will print which Chianti species are being used as well as number of levels */
 	bool lgChiantiPrint;
-	/** true if Cloudy will use no theoretical energy levels from Chianti, only experimental. False means that only theoretical energy levels are used */
+	/** true if Cloudy will use only experimental energy levels from Chianti, this is the default */
 	bool lgChiantiExp;
-	/** Mixed is experimental where possible, theoretical if none */
+	/** true if Cloudy will use only theoretical energy levels from Chianti - set with DATABASE CHIANTI THEORETICAL */
+	bool lgChiantiTheo;
+	/** Mixed is experimental where possible, theoretical if none, set with DATABASE CHIANTI MIXED */
 	bool lgChiantiMixed;
 	/**CloudyChianti filename variable **/
 	char chCloudyChiantiFile[FILENAME_PATH_LENGTH];
