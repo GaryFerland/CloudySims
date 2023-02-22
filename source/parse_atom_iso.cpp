@@ -124,7 +124,7 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 				iso_ctrl.lgCS_Seaton[ipISO] = false;
 				iso_ctrl.lgCS_B72[ipISO] = false;
 				iso_ctrl.lgCS_PSdeg[ipISO]=false;
-				iso_ctrl.lgCS_PS20[ipISO]=false;
+				iso_ctrl.lgCS_PSM20[ipISO]=false;
 			}
 			else if (ipISO == ipHE_LIKE)
 			{
@@ -162,8 +162,15 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 					iso_ctrl.lgCS_B72[ipISO] = false;
 					iso_ctrl.lgCS_PSdeg[ipISO] = true;
 				}
-				else if(p.nMatch("PSM"))
-					iso_ctrl.lgCS_PS20[ipISO]=false;
+				else if(p.nMatch("PSM17"))
+					iso_ctrl.lgCS_PSM20[ipISO]=false;
+				else if(p.nMatch("PSM20"))
+					{
+					/*
+					 * Default option from Badnell 2021.
+					 */
+					iso_ctrl.lgCS_PSM20[ipISO]=true;
+					}
 			}
 
 			/* use l-mix from
@@ -213,8 +220,15 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 				if (p.nMatch("CLASS"))
 					iso_ctrl.lgCS_PSClassic[ipISO] = true;
 				/* PSM from Guzman+ 2016, 2017*/
-				else if(p.nMatch("PSM"))
-					iso_ctrl.lgCS_PS20[ipISO]=false;
+				else if(p.nMatch("PSM17"))
+					iso_ctrl.lgCS_PSM20[ipISO]=false;
+				else if(p.nMatch("PSM20"))
+				{
+					/*
+					 * Default option from Badnell 2021.
+					 */
+					iso_ctrl.lgCS_PSM20[ipISO]=true;
+				}
 			}
 			else if( p.nMatch(" OFF"  ) )
 			{
@@ -225,6 +239,7 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 				iso_ctrl.lgCS_Vrinceanu[ipISO] = false;
 				iso_ctrl.lgCS_VOS12[ipISO]=false;
 				iso_ctrl.lgCS_VOS12QM[ipISO]=false;
+				iso_ctrl.lgCS_PSM20[ipISO]=false;
 			}
 			else
 			{

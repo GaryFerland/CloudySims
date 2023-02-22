@@ -1006,7 +1006,7 @@ realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 							lLo,
 							deltaE_eV,
 							ipCollider,
-							iso_ctrl.lgCS_PS20[ipH_LIKE]);
+							iso_ctrl.lgCS_PSM20[ipH_LIKE]);
 				}
 			}
 		}
@@ -1128,11 +1128,11 @@ realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 							//sHi,
 							deltaE_eV,
 							ipCollider,
-							iso_ctrl.lgCS_PS20[ipH_LIKE]);
-				if(iso_ctrl.lgCS_PS20[ipH_LIKE])
+							iso_ctrl.lgCS_PSM20[ipH_LIKE]);
+				if(iso_ctrl.lgCS_PSM20[ipH_LIKE])
 					*where = "PSM   ";
 				else
-					*where = "PS20  ";
+					*where = "PSM20 ";
 				}
 			}
 			else

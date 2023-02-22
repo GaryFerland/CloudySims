@@ -35,7 +35,7 @@ void t_isoCTRL::zero()
 		lgCS_Vrinceanu[ipISO] = false;
 		lgCS_Fujim[ipISO] = false;
 		lgCS_vrgm[ipISO] = false;
-		lgCS_PS20[ipISO] = true;
+		lgCS_PSM20[ipISO] = true;
 		lgCS_PS64[ipISO] = true;
 		lgCS_PSClassic[ipISO] = false;
 		lgCS_VOS12[ipISO] = false; // lgCS_Vrinceanu[ipISO] == true overrides
