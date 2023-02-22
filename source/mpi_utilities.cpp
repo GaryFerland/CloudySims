@@ -188,7 +188,8 @@ void process_output()
 			// \todo	this test  would be safer using the return code of the cloudy() call
 			//      	but that may have been done on another rank, so is not known here
 			int jgood = -1;
-			for( int j=0; j < grid.totNumModels; ++j )
+			// skip grid point 0 since it may contain a header line (e.g. SAVE GRID output)
+			for( int j=1; j < grid.totNumModels; ++j )
 			{
 				if( st[j] == gfstate() )
 				{
