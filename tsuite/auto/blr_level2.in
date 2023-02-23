@@ -110,7 +110,8 @@ monitor line luminosity "P  2" 1301.87A  5.348 error 0.1
 ## >>chng 14 may 24, from 6.111 to 4.709, allow all NIST levels to be used
 ## >>chng 16 dec 20, from 4.709 to 4.474, add secondary autoionization to DR suppression
 ## >>chng 19 feb 20, wl from 628.481A to 628.404A, adjust photo edges (r12609).
-monitor line luminosity "P  2"  628.404A  4.474 error 0.1
+## >>chng 22 nov 09, wl from 628.404A to 627.149A, use NIST ionization potentials
+monitor line luminosity "P  2"  627.149A  4.474 error 0.1
 ##
 ## >>chng 02 jun 13, from 111 to 105, gridding
 ## >>chng 02 jul 23, from 105 to 71 better brems opacity
@@ -253,7 +254,8 @@ monitor line luminosity "P  4"  388.319A  3.86 error 0.08
 ## >>chng 14 may 27, from 6.557 to 6.497, update to number of levels
 ## >>chng 14 sep 20, from 6.497 to 6.419, NIST baseline data - botches due to replacing bad OP data with NIST lab data"
 ## >>chng 18 sep 11, from 6.419 to 6.096, update P II collision strengths
-monitor line luminosity "P  5" 1117.98A  6.096 
+## >>chng 22 jul 09, from 6.096 to 6.047, upgrade to Chianti v10
+monitor line luminosity "P  5" 1117.98A  6.047 
 ##
 ## >>chng 13 may 18, chianti P 5, add this
 ## >>chng 13 jul 24, wl from 1128 to 1128.01A, increased wl precision to 6 sig. fig.
@@ -261,7 +263,8 @@ monitor line luminosity "P  5" 1117.98A  6.096
 ## >>chng 14 may 27, from 6.317 to 6.257, update to number of levels
 ## >>chng 14 sep 20, from 6.257 to 6.18, NIST baseline data - botches due to replacing bad OP data with NIST lab data"
 ## >>chng 18 sep 11, from 6.18 to 5.857, update P II collision strengths
-monitor line luminosity "P  5" 1128.01A  5.857 
+## >>chng 22 jul 09, from 5.857 to 5.834, upgrade to Chianti v10
+monitor line luminosity "P  5" 1128.01A  5.834 
 ##
 ## >>chng 00 oct 03, from -2.773 to -2.676, cont rebin in opt, uv, H- opac bug
 ## >>chng 01 jul 04, from -2.676 to -2.905 chng in diffuse fields

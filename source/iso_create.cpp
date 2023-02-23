@@ -142,7 +142,7 @@ double hydro_energy(long nelem, long n, long /* l */, long /* s  */, long /* g *
 	else
 		/* Dima's data in phfit.dat have ionization potentials in eV
 		 * with four significant figures*/
-		HIonPoten = t_ADfA::Inst().ph1(0,0,nelem,0)/EVRYD;
+		HIonPoten = atmdat.getIonPot(nelem, nelem)/EVRYD;
 	ASSERT(HIonPoten > 0.);
 
 	return HIonPoten/POW2((double)n)*RYD_INF;

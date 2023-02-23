@@ -399,6 +399,7 @@ public:
 	{
 		return m_type == QH;
 	}
+
 #ifndef NDEBUG
 	void checkEmergent( const long ipEmType ) const
 	{

@@ -115,7 +115,9 @@ void prt_LineLabels(
 	FILE * ioOUT ,
 	/* print all if true, if false then do not print parts of 
 	 * transferred lines */
-	bool lgPrintAll )
+	bool lgPrintAll,
+       	/* print index of line in line stack */
+	bool lgPrintIndex )
 {
 	long int i;
 
@@ -139,10 +141,13 @@ void prt_LineLabels(
 				 * lgPrintAll is false by default set true with LONG option
 				 * on save line labels command */
 				continue;
+
 			/* this format chosen to be identical to that used by final */
-			fprintf( ioOUT, "%li\t%s\t", 
-						i,
-						LineSave.lines[i].label().c_str() );
+			if( lgPrintIndex )
+				fprintf( ioOUT, "%li\t", i );
+
+			fprintf( ioOUT, "%s\t", LineSave.lines[i].label().c_str() );
+
 			/* skip over leading spaces - a formatting problem */
 			long int j = 0;
 			string comment = LineSave.lines[i].chComment();

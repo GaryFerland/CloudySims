@@ -101,7 +101,7 @@ void OpacityAdd1SubshellInduc(
 
 	k = ipOpac - ipLowEnergy;
 
-	/* DepartCoef is dep coef, rfield.lgInducProcess is turned off with 'no indcued' command */
+	/* DepartCoef is dep coef, rfield.lgInducProcess is turned off with 'no induced' command */
 	if( (DepartCoef > 1e-35 && rfield.lgInducProcess) && hydro.lgHInducImp )
 	{
 		iup = MIN2(ipHiEnergy,rfield.nflux);

@@ -1362,7 +1362,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 
 			fenergyWN = (realnum)(1e+8/fWLAng);
 
-			// TODO::Check the wavelength in the file with the difference in energy levels
+			// \todo Check the wavelength in the file with the difference in energy levels
 
 			tr->EnergyWN() = fenergyWN;
 			if( rfield.isEnergyBound( Energy( fenergyWN, "cm^-1" ) ) )
@@ -1584,45 +1584,21 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 				ASSERT( ipLo >= 0 && ipLo < nMolLevs );
 				ASSERT( ipHi >= 0 && ipHi < nMolLevs );
 
-				const int CHIANTI_SPLINE_MAX=9, CHIANTI_SPLINE_MIN=5;
-				static_assert(CHIANTI_SPLINE_MAX > CHIANTI_SPLINE_MIN,
-					      "CHIANTI_SPLINE_MAX must be larger than CHIANTI_SPLINE_MIN");
-
-				/*We allocate the space here*/
-				AtmolCollSplines[intNS][ipHi][ipLo][ipCollider].collspline.resize(CHIANTI_SPLINE_MAX);
-				AtmolCollSplines[intNS][ipHi][ipLo][ipCollider].SplineSecDer.resize(CHIANTI_SPLINE_MAX);
-
-				/* always read at least CHIANTI_SPLINE_MIN */
-				for( intsplinepts=0; intsplinepts<=CHIANTI_SPLINE_MAX; intsplinepts++ )
+				while( splupsstream.peek() != '\n' )
 				{
-					//Look at the next character to see if it is the end of line.
-					char p = splupsstream.peek();
-					if( p == '\n' )
-					{
+					splupsstream.get(qtemp,cs_values_col);
+					if( qtemp[0] == ' ' && qtemp[1] == ' ' )
 						break;
-					}
-					else
+					double temp = atof(qtemp);
+					if( DEBUGSTATE )
 					{
-						if( intsplinepts >= CHIANTI_SPLINE_MAX )
-						{
-							fprintf( ioQQQ, " WARNING: More spline points than expected in %s, indices %3li %3li.  Ignoring extras.\n", chFilename.c_str(), ipHi, ipLo );
-							break;
-						}
-						ASSERT( intsplinepts < CHIANTI_SPLINE_MAX );
-						double temp;
-						//Store a single spline point then look for more
-						splupsstream.get(qtemp,cs_values_col);
-						temp = atof(qtemp);
-						if( DEBUGSTATE )
-						{
-							fprintf(ioQQQ,"\t%.3e",temp);
-						}
-						// intTranType == 6 means log10 of numbers have been fit => allow negative numbers
-						// intTranType < 6 means linear numbers have been fit => negative numbers are unphysical
-						if( intTranType < 6 )
-							temp = max( temp, 0. );
-						AtmolCollSplines[intNS][ipHi][ipLo][ipCollider].collspline[intsplinepts] = temp;
+						fprintf(ioQQQ,"\t%.3e",temp);
 					}
+					// intTranType == 6 means log10 of numbers have been fit => allow negative numbers
+					// intTranType < 6 means linear numbers have been fit => negative numbers are unphysical
+					if( intTranType < 6 )
+						temp = max( temp, 0. );
+					AtmolCollSplines[intNS][ipHi][ipLo][ipCollider].collspline.push_back( temp );
 				}
 
 				if( DEBUGSTATE )
@@ -1630,7 +1606,10 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 					fprintf(ioQQQ,"\n");
 				}
 
+				intsplinepts = int( AtmolCollSplines[intNS][ipHi][ipLo][ipCollider].collspline.size() );
 				ASSERT( intsplinepts > 2 );
+
+				AtmolCollSplines[intNS][ipHi][ipLo][ipCollider].SplineSecDer.resize( intsplinepts );
 
 				/*The zeroth element contains the number of spline points*/
 				AtmolCollSplines[intNS][ipHi][ipLo][ipCollider].nSplinePts = intsplinepts;
@@ -1647,9 +1626,9 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 					spl(intsplinepts),
 					spl2(intsplinepts);
 
+				double coeff = (double)1/(intsplinepts-1);
 				for(intxs=0;intxs<intsplinepts;intxs++)
 				{
-					double coeff = (double)1/(intsplinepts-1);
 					xs[intxs] = coeff*intxs;
 					spl[intxs] = AtmolCollSplines[intNS][ipHi][ipLo][ipCollider].collspline[intxs];
 				}

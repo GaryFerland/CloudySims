@@ -27,7 +27,8 @@ H  1	4861.32A
 nFnu	4885.36
 O  3	5006.84
 O  1	5577.34
-N  2  5754.61
+# >>chng 22 jul 09, wl from 5754.61 to 5754.59A, upgrade to Chianti v10
+N  2  5754.59A
 # >>chng 13 jul 30, wl from 5875.61 to 5875.64A, increased wl precision to 6 sig. fig.
 ## >>chng 18 feb 20, updated spectral label from "He 1" 5875.64A to "Blnd" 5877.29A, update He-like triplet labels and wl
 # >>chng 18 mar 06, wl from 5877.29A to 5875.66A, adjust multiplet Blend WL for refraction index

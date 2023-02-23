@@ -361,7 +361,7 @@ void database_readin( void )
 		d.open( chPath, ES_NONE );
 		d.getline();
 		/* magic numbers for this version of Chianti masterlist */
-		static const long int nYr = 11, nMon = 10, nDay = 3;
+		static const long int nYr = 22, nMon = 7, nDay = 9;
 		d.checkMagic( nYr, nMon, nDay );
 
 		while( d.getline() )
@@ -605,7 +605,7 @@ STATIC void trim_levels(long ipSpecies)
 		{
 			fprintf(ioQQQ,"PROBLEM: Spectrum %s (species: %s) has no transition probabilities out of the first %li levels.\n",
 				spectralLabel, speciesLabel.c_str(), totalNumLevels);
-			fprintf(ioQQQ,"Consider allowing Cloudy to use more levels (see Hazy 1 SPECIES STOUT/CHIANTI LEVELS MAX), add more low-level"
+			fprintf(ioQQQ,"Consider allowing Cloudy to use more levels (see Hazy 1 SPECIES \"NAME\" LEVELS=ALL), add more low-level"
 					" transition probabilities, or disable %s in the masterlist.\n\n", spectralLabel);
 			cdEXIT(EXIT_FAILURE);
 		}

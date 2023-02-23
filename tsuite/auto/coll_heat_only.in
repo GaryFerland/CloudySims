@@ -129,7 +129,8 @@ monitor ionization Helium 3 -0.1732
 ## >>chng 15 apr 28, from -1.561 to -1.508, CollisSuppres change suggested by Dragan Nikolic
 ## >>chng 16 jul 24, from -1.508 to -1.555, update C III to 2014A&A...566A.104F
 ## >>chng 16 aug 18, from -1.555 to -1.651, enhanced coll ion from highest n
-monitor ionization Carbon 2 -1.651
+## >>chng 22 jul 09, from -1.651 to -1.624, upgrade to Chianti v10
+monitor ionization Carbon 2 -1.624
 ## 
 ## >>chng 16 aug 18, from -0.06 to -0.0939, enhanced coll ion from highest n
 monitor ionization Carbon 3 -0.0939

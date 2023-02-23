@@ -792,35 +792,35 @@ void PrtComment(void)
 	if( !rfield.lgMMok )
 	{
 		sprintf( chLine, 
-			" C-Continuum not defined in extreme infrared - Compton scat, grain heating, not treated properly?" );
-		caunin(chLine);
+			"  !Continuum not defined in extreme infrared - Compton scat, grain heating, not treated properly?" );
+		bangin(chLine);
 	}
 
 	if( !rfield.lgHPhtOK )
 	{
 		sprintf( chLine, 
-			" C-Continuum not defined at photon energies which ionize excited states of H, important for H- and ff heating." );
-		caunin(chLine);
+			"  !Continuum not defined at photon energies which ionize excited states of H, important for H- and ff heating." );
+		bangin(chLine);
 	}
 
 	if( !rfield.lgXRayOK )
 	{
 		sprintf( chLine, 
-			" C-Continuum not defined at X-Ray energies - Compton scattering and Auger ionization wrong?" );
-		caunin(chLine);
+			"  !Continuum not defined at X-Ray energies - Compton scattering and Auger ionization wrong?" );
+		bangin(chLine);
 	}
 
 	if( !rfield.lgGamrOK )
 	{
 		sprintf( chLine, 
-			" C-Continuum not defined at gamma-ray energies - pair production and Compton scattering OK?" );
-		caunin(chLine);
+			"  !Continuum not defined at gamma-ray energies - pair production and Compton scattering OK?" );
+		bangin(chLine);
 	}
 
 	if( continuum.lgCon0 )
 	{
-		sprintf( chLine, " C-Continuum zero at some energies." );
-		caunin(chLine);
+		sprintf( chLine, "  !Continuum zero at some energies." );
+		bangin(chLine);
 	}
 
 	if( continuum.lgCoStarInterpolationCaution )

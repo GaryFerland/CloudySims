@@ -1257,7 +1257,7 @@ void mie_read_opc(/*@in@*/const char *chFile,
 			/* modify grain labels */
 			char *str = strstr_s(gv.bin[nd2].chDstLab,"xx");
 			if( str != NULL )
-				sprintf(str,"%02ld",i+1);
+				sprintf(str,"%02hu",(unsigned short)(i+1));
 		}
 	}
 
