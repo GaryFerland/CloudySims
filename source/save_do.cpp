@@ -3838,10 +3838,22 @@ STATIC void SaveLineStuff(
 					/* now output extra line lines, starting one above those already done above */
 					/*for( ipHi=iso_sp[ipISO][nelem].numLevels_max; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )*/
 					/* 06 aug 28, from numLevels_max to _local. */
+					/* for( long ipHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
+					{
+						++index;
+
+						Save1Line( ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]], ioPUN, xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
+					} */
+
 					for( long ipHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
 					{
 						++index;
-						Save1Line( ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]], ioPUN, xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
+						
+						Save1Line( ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]], ioPUN, xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
+
+						++index;
+						
+						Save1Line( ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]], ioPUN, xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
 					}
 				}
 			}

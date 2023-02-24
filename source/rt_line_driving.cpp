@@ -91,8 +91,29 @@ double RT_line_driving(void)
 
 				for( ipHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
 				{
-					/* do not include bogus lines */
+					/* do not include bogus lines
 					TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi];
+					if( (*tr).ipCont() > 0 )
+					{
+						OneLine = (*tr).Emis().pump()*
+							(*tr).EnergyErg()*
+							(*tr).Emis().PopOpc();
+
+						accel_iso[ipISO] += OneLine; 
+					} */
+					
+					/* do not include bogus lines */
+					TransitionList::iterator tr = ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][ipHi];
+					if( (*tr).ipCont() > 0 )
+					{
+						OneLine = (*tr).Emis().pump()*
+							(*tr).EnergyErg()*
+							(*tr).Emis().PopOpc();
+
+						accel_iso[ipISO] += OneLine;
+					}
+
+					tr = ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][ipHi];
 					if( (*tr).ipCont() > 0 )
 					{
 						OneLine = (*tr).Emis().pump()*

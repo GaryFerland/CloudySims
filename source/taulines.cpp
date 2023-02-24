@@ -21,8 +21,12 @@ vector< multi_arr<CollSplinesArray,3> > AtmolCollSplines;
 vector< StoutCollArray > StoutCollData;
 long int nSpecies;
 qList AnonStates("AnonStates",1);
-multi_arr<int,3> ipExtraLymanLines;
-vector<vector<TransitionList> > ExtraLymanLines;
+/* multi_arr<int,3> ipExtraLymanLines; */
+multi_arr<int,3> ipExtraLymanLinesJ05;
+multi_arr<int,3> ipExtraLymanLinesJ15;
+/* vector<vector<TransitionList> > ExtraLymanLines; */
+vector<vector<TransitionList> > ExtraLymanLinesJ05;
+vector<vector<TransitionList> > ExtraLymanLinesJ15;
 TransitionList UTALines("UTALines", &AnonStates);
 long int nLevel1;
 TransitionList HFLines("HFLines", &AnonStates);

@@ -298,7 +298,27 @@ void RT_line_all( linefunc line_one )
 					{
 						for( ipHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
 						{
-							TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi];
+							/* TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi];
+							we just want the population of the ground state
+							(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
+							(*(*tr).Lo()).Pop() =
+								iso_sp[ipISO][nelem].st[ipLo].Pop();
+							
+							actually do the work
+							line_one( *tr, true, 0.f, DopplerWidth[nelem]); */
+							
+
+							TransitionList::iterator tr = ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][ipHi];
+							/* we just want the population of the ground state */
+							(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
+							(*(*tr).Lo()).Pop() =
+								iso_sp[ipISO][nelem].st[ipLo].Pop();
+							
+							/* actually do the work */
+							line_one( *tr, true, 0.f, DopplerWidth[nelem]);
+
+
+							tr = ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][ipHi];
 							/* we just want the population of the ground state */
 							(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
 							(*(*tr).Lo()).Pop() =

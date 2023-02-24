@@ -110,7 +110,9 @@ void RT_tau_reset(void)
 				{
 					/* fully transfer all of the extra lines even though
 					 * have not solved for their upper level populations */
-					RT_line_one_tau_reset(ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]]);
+					/* RT_line_one_tau_reset(ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]]); */
+					RT_line_one_tau_reset(ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]]);
+					RT_line_one_tau_reset(ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]]);
 				}
 			}
 		}
