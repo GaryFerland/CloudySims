@@ -516,6 +516,10 @@ monitor itrzn 1.939
 ## >>chng 11 nov 16, from 618 to 754, adjust newmole monitors
 monitor nzone 754 
 #
+## >>chng 23 feb 25, GS add these lines to test new chemistry, SiS model
+monitor "SiS " 4127.09m -8.99 line intensity
+## >>chng 23 feb 25, GS add these lines to test new chemistry, SiS model
+monitor "SiS " 3301.90m -9.040 line intensity
 # pdr_leiden_f1.in
 # class pdr  
 # ========================================
