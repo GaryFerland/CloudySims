@@ -267,7 +267,6 @@ monitor itrzn 5.4
 ## >>chng 09 oct 05, from 3 to 4, [NI] pumping changes
 ## >>chng 09 oct 12, from 4 to 3, extend fine continuum to lower limit of code by default
 ## >>chng 09 dec 28, 3 with gcc & icc on cloud9, 4 with gcc on mac
-
 monitor niter > 2 
 monitor niter < 5 
 ##
@@ -277,65 +276,95 @@ monitor niter < 5
 ## >>chng 09 jun 11, from 351 to 373, better approach to outer edge of bounded model
 ## >>chng 09 jul 16, from 373 to 377, change autocv back to 0.2
 ## >>chng 09 aug 02 from 377 to 375, bcx vs08, rm small error
+## >>chng 23 feb 26, from 375 to 400, reenabled monitors
 monitor nzone 375
 ##
-mmonitor line intensity "Fe 2b" 1148 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 6.077, reenabled monitors
+monitor line intensity "Fe 2b" 1148 6.077 error 0.1
 ##
-monitor line intensity "Fe 2b" 1212 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 5.517, reenabled monitors
+monitor line intensity "Fe 2b" 1212 5.517 error 0.1
 ##
-monitor line intensity "Fe 2b" 1295 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 5.316, reenabled monitors
+monitor line intensity "Fe 2b" 1295 5.316 error 0.1
 ##
-monitor line intensity "Fe 2b" 1365 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 5.37, reenabled monitors
+monitor line intensity "Fe 2b" 1365 5.37 error 0.1
 ##
-monitor line intensity "Fe 2b" 1485 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 6.519, reenabled monitors
+monitor line intensity "Fe 2b" 1485 6.519 error 0.1
 ##
-monitor line intensity "Fe 2b" 1615 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 5.865, reenabled monitors
+monitor line intensity "Fe 2b" 1615 5.865 error 0.1
 ##
-monitor line intensity "Fe 2b" 1787 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 5.835, reenabled monitors
+monitor line intensity "Fe 2b" 1787 5.835 error 0.1
 ##
-monitor line intensity "Fe 2b" 1822 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 5.97, reenabled monitors
+monitor line intensity "Fe 2b" 1822 5.97 error 0.1
 ##
-monitor line intensity "Fe 2b" 2355 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 7.39, reenabled monitors
+monitor line intensity "Fe 2b" 2355 7.39 error 0.1
 ##
-monitor line intensity "Fe 2b" 2495 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 7.22, reenabled monitors
+monitor line intensity "Fe 2b" 2495 7.22 error 0.1
 ##
-monitor line intensity "Fe 2b" 2695 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 6.503, reenabled monitors
+monitor line intensity "Fe 2b" 2695 6.503 error 0.1
 ##
-monitor line intensity "Fe 2b" 2758 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 6.977, reenabled monitors
+monitor line intensity "Fe 2b" 2758 6.977 error 0.1
 ##
-monitor line intensity "Fe 2b" 2797 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 5.882, reenabled monitors
+monitor line intensity "Fe 2b" 2797 5.882 error 0.1
 ##
-monitor line intensity "Fe 2b" 2935 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 6.908, reenabled monitors
+monitor line intensity "Fe 2b" 2935 6.908 error 0.1
 ##
-monitor line intensity "Fe 2b" 4255 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 6.155, reenabled monitors
+monitor line intensity "Fe 2b" 4255 6.155 error 0.1
 ##
-monitor line intensity "Fe 2b" 4558 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 6.294, reenabled monitors
+monitor line intensity "Fe 2b" 4558 6.294 error 0.1
 ##
-monitor line intensity "Fe 2b" 4743 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 5.026, reenabled monitors
+monitor line intensity "Fe 2b" 4743 5.026 error 0.1
 ##
-monitor line intensity "Fe 2b" 4855 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 5.222, reenabled monitors
+monitor line intensity "Fe 2b" 4855 5.222 error 0.1
 ##
-monitor line intensity "Fe 2b" 4971 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 5.072, reenabled monitors
+monitor line intensity "Fe 2b" 4971 5.072 error 0.1
 ##
-monitor line intensity "Fe 2b" 4975 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 6.023, reenabled monitors
+monitor line intensity "Fe 2b" 4975 6.023 error 0.1
 ##
-monitor line intensity "Fe 2b" 5143 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 5.785, reenabled monitors
+monitor line intensity "Fe 2b" 5143 5.785 error 0.1
 ##
-monitor line intensity "Fe 2b" 5318 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 6.106, reenabled monitors
+monitor line intensity "Fe 2b" 5318 6.106 error 0.1
 ##
-monitor line intensity "Fe 2b" 5865 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 5.247, reenabled monitors
+monitor line intensity "Fe 2b" 5865 5.247 error 0.1
 ##
-monitor line intensity "Fe 2b" 6265 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 5.575, reenabled monitors
+monitor line intensity "Fe 2b" 6265 5.575 error 0.1
 ##
-monitor line intensity "Fe 2b" 6565 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 5.635, reenabled monitors
+monitor line intensity "Fe 2b" 6565 5.635 error 0.1
 ##
-monitor line intensity "Fe 2b" 7445 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 5.644, reenabled monitors
+monitor line intensity "Fe 2b" 7445 5.644 error 0.1
 ##
-monitor line intensity "Fe 2b" 7785 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 4.309, reenabled monitors
+monitor line intensity "Fe 2b" 7785 4.309 error 0.1
 ##
-monitor line intensity "Fe 2b" 1.88900m 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 5.077, reenabled monitors
+monitor line intensity "Fe 2b" 1.88900m 5.077 error 0.1
 ##
-monitor line intensity "Fe 2b" 2.20000m 1.01 error 0.1
+## >>chng 23 feb 26, from 1.01 to 3.727, reenabled monitors
+monitor line intensity "Fe 2b" 2.20000m 3.727 error 0.1
 ##
 
 This is one of the 5 models that sample the LOC plane.
