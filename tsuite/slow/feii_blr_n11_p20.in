@@ -257,7 +257,8 @@ monitor line luminosity "Fe 2b" 4558 6.293
 ## >>chng 13 nov 05, from 12.45 to 6.688, convergence branch changes
 ## >>chng 13 nov 25, from 6.688 to 5.439, convergence branch changes
 ## >>chng 14 apr 08, from 5.439 to 4.436, O excit state photo back on
-monitor itrzn 4.436
+## >>chng 23 feb 26, from 4.436 to 5.4, increased to accommodate alldouble run on radegund (ubuntu, gcc v7.5)
+monitor itrzn 5.4
 ##
 ## >>chng 09 feb 10, from 4 to 5, combined effect of r2655, r2669
 ## >>chng 09 feb 23, from 5 to 3, remove otslin, otscon dampers (PR #84, r2758)
