@@ -103,6 +103,7 @@ double CS_l_mixing_PS64(
 \param deltaE_eV
 \param lp,
 \param Collider
+\param lgPSM20
 */
 double CS_l_mixing_PS64_expI(
 	long nelem,
@@ -115,7 +116,8 @@ double CS_l_mixing_PS64_expI(
 	long int lp,
 	//double s,
 	double deltaE_eV,
-	long int Collider);
+	long int Collider,
+	bool lgPSM20);
 
 /**CS_l_mixing_VF01 Collision treatment based on Vrinceanu and Flannery 2001
 \param ipISO
