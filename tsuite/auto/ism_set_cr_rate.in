@@ -17,7 +17,7 @@ stop zone 1
 # other commands for details     =========
 constant temperature 1000 K
 # turn off molecules to test only ions 
-no molecules 
+no molecules heavy 
 # must turn off charge transfer and its heating, which would dominate,
 # since we want to test cr heating and ionization
 no charge transfer
