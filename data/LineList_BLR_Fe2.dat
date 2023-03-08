@@ -28,8 +28,10 @@ o  5   629.7A   #  total O V 630
 s  4   657.319A  #   total S IV 657
 o  3   702.337   #  total O III 703
 n  4   765.1    # total N IV 765
-ne 8  770.410   #  total Ne VIII 770
-ne 8  780.325   #  total Ne VIII 780
+# >>chng 22 jul 09, wl from 770.410 to 770.428A, upgrade to Chianti v10
+ne 8  770.428A   #  total Ne VIII 770
+# >>chng 22 jul 09, wl from 780.325 to 780.385A, upgrade to Chianti v10
+ne 8  780.385A   #  total Ne VIII 780
 blnd  774   #  total of sum of both Ne VIII component
 #inwd   774  #   inward flux of sum of both Ne VIII components
 # >>chng 18 jan 18, wl from 786.470 to 786.468A, use Stout data for S 5
@@ -39,8 +41,10 @@ o  4   789.4   #  total O IV 789
 O  2   833.330 #    total O II 834A
 o  3   834.5   #  total O III 834
 blnd  895   #  total Ne VII] 895
-s  6   933.380  #   total S VI 933
-s  6   944.524  #   total S VI 944
+# >>chng 22 jul 09, wl from 933.380 to 933.378A, upgrade to Chianti v10
+s  6   933.378A  #   total S VI 933
+# >>chng 22 jul 09, wl from 944.524 to 944.523A, upgrade to Chianti v10
+s  6   944.523A  #   total S VI 944
 p  4   950.657   #  total P IV 951
 # >>chng 17 may 25, wl from 972.543 to 972.537A, up Rydberg constant
 h  1   972.537A  #   total Lyman-gamma 973
@@ -53,7 +57,8 @@ n  3   991   #  total N III 990
 h  1  1025.72A  #   total Lyman-beta 1025
 #inwd  1025.73  #   inward flux of Lyman-beta 1025
 o  6  1031.91   #  total O VI 1032
-o  6  1037.62   #  total O VI 1037
+# >>chng 22 jul 09, wl from 1037.62 to 1037.61A, upgrade to Chianti v10
+o  6  1037.61A   #  total O VI 1037
 blnd  1035   #  total of sum of both O VI components
 #inwd  1035  #   inward flux of sum of both O VI components
 # >>chng 17 may 25, wl from 1085.03 to 1084.94A, up Rydberg constant
@@ -106,7 +111,8 @@ N  4  1486.50 #    most forbidden of the pair
 #inwd  1488  #   inward flux of N IV]
 si 2  1533.43 #    total Si II 1527 + 1533
 c  4  1548.19
-c  4  1550.78  #   total C IV 1550.77
+# >>chng 22 jul 09, wl from 1550.78 to 1550.77A, upgrade to Chianti v10
+c  4  1550.77A  #   total C IV 1550.77
 blnd 1549  #   total of sum of both C IV components
 # >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
 # >>chng 21 april 7, wl from 1640.40 to 1640.41A, replacing average energy with np energies
@@ -135,7 +141,8 @@ si 3  1882.71  #   the most forbidden of the doublet
 #inwd  1892   #  inward flux of Si III] 1892
 blnd 1909   #  total of sum of C III] 1908.73 + [C III]
 #inwd  1910  #   inward flux of C III] 1908.73
-n  2  2142.78 #    total sum of N II] 2139.01, 2142.77
+# >>chng 22 jul 09, wl from 2142.78 to 2142.77A, upgrade to Chianti v10
+n  2  2142.77A #    total sum of N II] 2139.01, 2142.77
 o  3  2320.95 #    single line from 5-level atom
 blnd 2326   #  total C II] 2324.69 + 2328.12
 BLND  2335  #   total Si II] 2335
@@ -344,17 +351,21 @@ h  1   1.87510m #   total H Paschen-alpha
 "InwdBnd" 22000A
 #
 # Some high critical density forbidden lines
-ne 5  3426.03  #   total [Ne V] 3426
+# >>chng 22 jul 09, wl from 3426.03 to 3425.88A, upgrade to Chianti v10
+ne 5  3425.88A  #   total [Ne V] 3426
 ne 3  3868.76  #   total [Ne III] 3869
 ## >>chng 19 mar 01, change "Blnd" 4363 -> "O  3" 4363.21
 O  3  4363.21  #   total [O III] 4363.21
 o  3  5006.84  #   total [O III] 5006.84
-Fe14  5303.01  #   total [Fe XIV] 5303
+# >>chng 22 jul 09, wl from 5303.01 to 5303.00A, upgrade to Chianti v10
+Fe14  5303.00A  #   total [Fe XIV] 5303
 o  1  5577.34  #   total [O I] 5577.34
 Fe 7  6086.97  #   total [Fe VII] 6087
 blnd  6300   #  total [O I] 6300.30
-Fe10  6374.54  #   total [Fe X] 6375
-Fe11  7891.87  #   total [Fe XI] 7892
+# >>chng 22 jul 09, wl from 6374.54 to 6374.53A, upgrade to Chianti v10
+Fe10  6374.53A  #   total [Fe X] 6375
+# >>chng 22 jul 09, wl from 7891.87 to 7891.86A, upgrade to Chianti v10
+Fe11  7891.86A  #   total [Fe XI] 7892
 #
 # an optical incident continuum bin in units of nuFnu
 Inci  4860   #  incident continuum at 4860 Angstroms in units of nuF(nu)

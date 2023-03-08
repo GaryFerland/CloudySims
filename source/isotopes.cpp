@@ -8,7 +8,7 @@
 /*LoadIsotopes	read in the nuclear isotope data and allocate space */
 void LoadIsotopes ( )
 {
-	DEBUG_ENTRY( "SetIsotopeFractions()" );
+	DEBUG_ENTRY( "LoadIsotopes()" );
 
 	string chFile = "isotopes.dat";
 	FILE* ioDATA = open_data( chFile, "r" );	// will abort if not found

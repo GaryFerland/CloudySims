@@ -82,7 +82,8 @@ monitor line luminosity "Blnd" 1397 7.734 ##total of sum of both Si IV comp
 ## >>chng 12 nov 01, from 7.351 to 7.311, Chianti experimental levels, revised Badnell DR suppression
 ## >>chng 14 mar 26, from 7.311 to 7.357, Move oxygen data to stout and chianti files
 ## >>chng 16 aug 07, from 7.357 to 7.39, Fran bug fix
-monitor line luminosity "blnd"  1402 7.39 ##total O IV] 1402 
+## >>chng 22 jul 09, from 7.39 to 7.343, upgrade to Chianti v10
+monitor line luminosity "blnd"  1402 7.343 ##total O IV] 1402 
 ##
 ## >>chng 06 aug 09, from 8.607 to 8.638 Meudon 06, Bowen change
 ## >>chng 07 jul 27, from 8.638 to 8.609, repair common error in several collision routines

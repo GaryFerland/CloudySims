@@ -900,7 +900,8 @@ double CHIANTI_Upsilon(long ipSpecies, long ipCollider, long ipHi, long ipLo, do
 	else
 		TotalInsanity();
 
-	double xs[9];
+	vector<double> xs( intsplinepts );
+
 	/*Creating spline points array*/
 	double* spl = AtmolCollSplines[ipSpecies][ipHi][ipLo][ipCollider].collspline.data();
 	for(intxs=0;intxs<intsplinepts;intxs++)
@@ -914,10 +915,12 @@ double CHIANTI_Upsilon(long ipSpecies, long ipCollider, long ipHi, long ipLo, do
 		}
 	}
 
+	double* xs2 = xs.data();
+
 	const bool SPLINE_INTERP=false;
 	if (! SPLINE_INTERP)
 	{
-		fsups = linint( xs, spl, intsplinepts, fxt);
+		fsups = linint( xs2, spl, intsplinepts, fxt);
 	}
 	else
 	{
@@ -934,7 +937,7 @@ double CHIANTI_Upsilon(long ipSpecies, long ipCollider, long ipHi, long ipLo, do
 		}
 		
 		/*Extracting out the value*/
-		splint(xs,spl,spl2,intsplinepts,fxt,&fsups);
+		splint(xs2,spl,spl2,intsplinepts,fxt,&fsups);
 	}
 
 	/*Finding upsilon*/

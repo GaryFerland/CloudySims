@@ -27,9 +27,9 @@ if( ! -d "$DirObject" )
 }
 
 # now determine the compiler and flags to use by polling make
-$cxx = `cd $DirObject; make echo-cxx | egrep -v '^make'`;
+$cxx = `cd $DirObject; make echo-cxx | egrep -v '^make' | tail -n 1`;
 chomp( $cxx );
-$cxxflags = `cd $DirObject; make echo-cxxflags | egrep -v '^make'`;
+$cxxflags = `cd $DirObject; make echo-cxxflags | egrep -v '^make' | tail -n 1`;
 chomp( $cxxflags );
 # escape double quotes
 $cxxflags =~ s/"/\\"/g;

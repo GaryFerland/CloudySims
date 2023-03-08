@@ -481,6 +481,7 @@ public:
 		lgCS_Vrinceanu[NISO],
 		lgCS_PS64[NISO],
 		lgCS_PSClassic[NISO],
+		lgCS_PSM20[NISO],
 		lgCS_VOS12[NISO],
 		lgCS_VOS12QM[NISO],
 		lgCS_therm_ave[NISO],
