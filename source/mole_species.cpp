@@ -563,7 +563,7 @@ STATIC molecule *newspecies(
 
 	if (mol->n_nuclei() > 1 && mole_global.lgNoHeavyMole)
 	{
-		for( nNucs_ri it=mol->nNuclide.rbegin(); it != mol->nNuclide.rend(); --it )
+		for( nNucs_ri it=mol->nNuclide.rbegin(); it != mol->nNuclide.rend(); ++it )
 		{
 			if( it->first->el()->Z-1 != ipHYDROGEN )
 			{

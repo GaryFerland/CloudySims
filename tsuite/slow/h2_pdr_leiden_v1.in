@@ -519,6 +519,8 @@ monitor "^13CO" 906.599m  -9.55 line intensity
 ## >>chng 21 nov 04, from -12.1 to -10.75, update co mole data
 monitor "CN  " 880.858m  -10.75  line intensity
 #
+## >>chng 23 feb 25,GS add to test new chemistry, SiS emission model
+monitor "SiS " 5503.08m -10.358 line intensity
 # h2_pdr_leiden_v1.in
 # class pdr 
 # ========================================
