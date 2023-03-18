@@ -42,7 +42,7 @@ void ParseElement( Parser &p)
 		}
 	}
 	/* say that abundances have been changed */
-	abund.lgAbnSolar = false;
+	abund.lgAbnReference = false;
 
 	/* find which element - will be used in remainder of routine to 
 	 * adjust aspects of this element */
@@ -125,9 +125,9 @@ void ParseElement( Parser &p)
 				}
 				param = exp10(param);
 			}
-			abund.solar[nelem] = (realnum)param;
+			abund.ReferenceAbun[nelem] = (realnum)param;
 
-			if( abund.solar[nelem] > 1. && called.lgTalk )
+			if( abund.ReferenceAbun[nelem] > 1. && called.lgTalk )
 			{
 				fprintf( ioQQQ, 
 					" Please check the abundance of this element.  It seems high to me.\n" );

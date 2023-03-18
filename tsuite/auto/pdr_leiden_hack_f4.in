@@ -38,7 +38,8 @@ save monitors "pdr_leiden_hack_f4.asr"
 monitor set error 0.1
 ##
 monitor H2 column density 21.845 error 0.1
-monitor CO column density 18.005 error 0.1
+## >>chng 21 sep 11, from 18 to 18.05, LAMDA update
+monitor CO column density 18.05 error 0.1
 ## >>chng 20 aug 03, from 16.18 to 16.27, update H3+ rates Indriola+ 2012
 monitor O2 column density 16.27 error 0.1
 ## >>chng 20 aug 03, from 13.35 to 13.47, update H3+ rates Indriola+ 2012
@@ -55,7 +56,9 @@ monitor line luminosity "c  2" 157.636m -3.813
 ## >>chng 15 may 14, from -5.758 to -5.723, CollisSuppres, final version from Dragan Nikolic
 ## >>chng 15 oct 14, from -5.723 to -5.744, update DR suppression in r10716
 ## >>chng 16 dec 20, from -5.744 to -5.723, add secondary autoionization to DR suppression
-monitor line luminosity "c  1" 370.269m -5.723
+## >>chng 21 sep 11, from -5.723 to -6.06, LAMDA update
+## >>chng 21 nov 04, from -6.06 to -5.676, update mole co data
+monitor line luminosity "c  1" 370.269m -5.676
 ##
 ## >>chng 06 nov 29, from -6.557 to -6.366, Badnell DR turned on
 ## >>chng 11 jul 12, from -6.366 to -6.461, enable fit to Badnell DR suppression
@@ -64,7 +67,9 @@ monitor line luminosity "c  1" 370.269m -5.723
 ## >>chng 15 may 14, from -6.381 to -6.343, CollisSuppres, final version from Dragan Nikolic
 ## >>chng 15 oct 14, from -6.343 to -6.365, update DR suppression in r10716
 ## >>chng 16 dec 20, from -6.365 to -6.343, add secondary autoionization to DR suppression
-monitor line luminosity "c  1" 609.590m -6.343
+## >>chng 21 sep 11, from -6.343 to -6.681, LAMDA update
+## >>chng 21 nov 04, from -6.681 to -6.296, update mole co data
+monitor line luminosity "c  1" 609.590m -6.296
 ##
 ## >>chng 14 mar 26, from -3.59 to -3.196, Move oxygen data to stout and chianti files
 monitor line luminosity "O  1" 63.1679m -3.196

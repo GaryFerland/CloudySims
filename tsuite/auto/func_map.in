@@ -30,13 +30,15 @@ monitor map heating     1173.3 -22.541
 ## >>chng 06 jul 25, from -23.070 to -23.097 HN update OIII collision data
 ## >>chng 06 nov 12, from -23.097 to -23.167, NA update [OIV] cs to Tayal 06
 ## >>chng 15 oct 14, from -23.17 to -23.19, update Ne 3 cs to McLaughlin+11
-monitor map cooling     1173.3 -23.19 
+## >>chng 22 jul 09, from -23.19 to -23.12, upgrade to Chianti v10
+monitor map cooling     1173.3 -23.12 
 ## 
 monitor map heating     9313.9 -23.038   
 ## 
 ## >>chng 06 nov 12, from -23.031 to -23.058, NA update [OIV] cs to Tayal 06
 ## >>chng 15 nov 03, from -23.06 to -23.08, update O III CS to Storey+14
-monitor map cooling     9313.9 -23.08 
+## >>chng 22 jul 09, from -23.08 to -23.01, upgrade to Chianti v10
+monitor map cooling     9313.9 -23.01 
 ## 
 ## >>chng 06 nov 29, from -23.823 to -23.850, Badnell DR turned on
 monitor map heating    90959. -23.850  
@@ -57,7 +59,8 @@ monitor map heating   888290. -26.049
 ## >>chng 11 oct 04, from -21.78 to -21.75, Chianti for line-less ions of P and heavier elements
 ## >>chng 12 oct 15, from -21.75 to -21.77, experimental Chianti levels
 ## >>chng 16 jul 04, from -21.77 to -21.8, upgrade Fe 9 and Ni 11 to Stout
-monitor map cooling   888290. -21.8 
+## >>chng 22 jul 09, from -21.8 to -21.75, upgrade to Chianti v10
+monitor map cooling   888290. -21.75 
 ##
 ## >>chng 02 jun 14, from -27.338 to 27.231
 ## >>chng 02 nov 20, from -27.231 to -27.269, noisy, increase error

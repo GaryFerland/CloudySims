@@ -232,6 +232,11 @@ void SaveHeat(FILE* io)
 			/* charge transfer heating, heating(0,24) */
 			chLabel[k] = "ChaT";
 		}
+		else if( i == 0 && j == 27 )
+		{
+			/* heating due all database species, heating(0,27) */
+			chLabel[k] = "DbLn";
+		}
 		else if( i == 1 && j == 3 )
 		{
 			/* helium triplet line heating, heating(1,3) */

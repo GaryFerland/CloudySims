@@ -1,22 +1,19 @@
 20190102 # magic number
-# Give level energies in cm^-1 for each ion.
+# Give level energies in cm^-1 for each H-like ion.
 # Each line gives n, l, S, J, energy.
 # The last entry for each ion is the ionization potential.
 # It is marked with negative quantum numbers. The ionization
 # potential MUST be the last entry for a given element!
+# It is used as a sentinel to switch to the next element.
 #
-# NIST data for n<=6 were downloaded using ADM.
+# These data were calculated using the ATLL r123.
 #
-# NB NB NB  n=2 energy ignores energy of 2s
-#
-# The remaining data were calculated using the ATLL r123
-#
- 1 -1 -1 -1 0 1e-09
- 2 -1 -1 -1 82259.1630387 2.848e-07
- 3 -1 -1 -1 97492.3086318889 5.36909e-06
- 4 -1 -1 -1 102823.900252119 9.97388e-06
- 5 -1 -1 -1 105291.658670006 9.50598e-06
- 6 -1 -1 -1 106632.167356992 1.05785e-07
+ 1 -1 -1 -1 0.0000000
+ 2 -1 -1 -1 82259.11
+ 3 -1 -1 -1 97492.31
+ 4 -1 -1 -1 102823.900
+ 5 -1 -1 -1 105291.659
+ 6 -1 -1 -1 106632.1674
  7 -1 -1 -1 107440.4510
  8 -1 -1 -1 107965.0579
  9 -1 -1 -1 108324.7265
@@ -61,17 +58,3 @@
 48 -1 -1 -1 109631.1686239
 49 -1 -1 -1 109633.0917821
 50 -1 -1 -1 109634.9007086
--1 -1 -1 -1 109678.77174307   1e-07           
-#
-# 
-# Bibliography:
-# -------------
-# PUB     Refcode: HDEL on NIST
-# PUBCON      URL: http://www.nist.gov/pml/data/hdel/index.cfm
-# 
-# PUB     Refcode: L15291 on NIST
-# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=15291&comment_code=&amp;element=H&amp;spectr_charge=1&amp;ref=15291&amp;type=E
-# PUBCON    Title: A Critical Compilation of Experimental Data on Spectral Lines and Energy Levels of Hydrogen, Deuterium, and Tritium
-# PUBCON  Authors: A. E. Kramida
-# PUBCON  Journal: At. Data Nucl. Data Tables 96, 586–644 (2010); Erratum:  126, 295–298 (2019)
-# PUBCON      DOI: https://doi.org/10.1016/j.adt.2010.05.001

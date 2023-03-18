@@ -99,7 +99,7 @@ void ParseTest(Parser &p)
 		ParseConstant(p);
 
 		/* create series of monitor commands */
-		StuffCommand( "MONITOR EDEN 0.625", p, lgPrintTest );
+		StuffCommand( "MONITOR EDEN 0.5597", p, lgPrintTest );
 		ParseMonitorResults(p);
 
 		/* create series of monitor commands */
@@ -117,12 +117,9 @@ void ParseTest(Parser &p)
 
 		/* create series of monitor commands */
 		/*>>chng 13 apr 13, 0.987 to 0.954 we are not monitoring this in test suite */
-		StuffCommand( "MONITOR COLUMN CO 0.954 error 0.1", p, lgPrintTest );
+		/*>>chng 21 nov 04, 0.954 to 0.9946 we are not monitoring this in test suite */
+		StuffCommand( "MONITOR COLUMN CO 0.9946 error 0.1", p, lgPrintTest );
 		ParseMonitorResults(p);			
-
-		/* create series of monitor commands */
-		StuffCommand( "MONITOR EDEN 0.625", p, lgPrintTest );
-		ParseMonitorResults(p);
 
 		/* create series of monitor commands */
 		StuffCommand( "MONITOR TEMPERATURE \"H\" 50K", p, lgPrintTest );

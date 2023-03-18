@@ -631,6 +631,20 @@ void SaveDo(
 				}
 			}
 
+			else if( strcmp(save.chSave[ipPun],"IMAG") == 0 )
+			{
+				// NB NB
+				//
+				// This command generates images for debugging purposes,
+				// and it is executed near the call to the linear algebra
+				// function that solves the rate equations for level
+				// populations
+				//
+				// Here we do nothing
+				//
+				continue;
+			}
+
 			else if( strcmp(save.chSave[ipPun],"MONI") == 0 )
 			{
 				if( lgLastOnly )
@@ -1152,7 +1166,7 @@ void SaveDo(
 
 					/* upper limit set with range option */
 					if( save.punarg[ipPun][1]> 0. )
-						nu_hi = ipFineCont( save.punarg[ipPun][1]);
+						nu_hi = ipFineCont( save.punarg[ipPun][1] );
 					else
 						nu_hi = rfield.nfine;
 
@@ -1162,18 +1176,69 @@ void SaveDo(
 
 					do
 					{
-						realnum sum1 = rfield.fine_opt_depth[j];
-						realnum xnu = rfield.fine_anu[j];
-						for( long jj=1; jj<nskip; ++jj )
+						vector<int> all_stack_lines;
+
+						// when winds are present, line center in opacity
+						// vector is offset from its original position
+						// -- rfield.fine_lstack works with original position
+						//
+						long fine_index_no_wind = j - rfield.ipFineConVelShift;
+
+						realnum sum1 = 0.,
+							xnu = 0.;
+
+						for( long jj=0; jj<nskip; ++jj, ++j, ++fine_index_no_wind )
 						{
-							xnu += rfield.fine_anu[j+jj];
-							sum1 += rfield.fine_opt_depth[j+jj];
+							xnu += rfield.fine_anu[j];
+							sum1 += rfield.fine_opt_depth[j];
+
+							if( fine_index_no_wind > 0 )
+							{
+								auto got = rfield.fine_lstack.find( fine_index_no_wind );
+								if( got != rfield.fine_lstack.end() )
+								{
+									for( auto &lst_ind : got->second )
+									{
+										all_stack_lines.emplace_back( lst_ind );
+									}
+								}
+							}
 						}
+
+						// sort lines in decreasing opacity
+						//
+						sort( all_stack_lines.begin(),
+							all_stack_lines.end(),
+							[](int i1, int i2)
+							{
+								return LineSave.lines[i1].getTransition().Emis().TauInSpecific()
+								     > LineSave.lines[i2].getTransition().Emis().TauInSpecific();
+							} );
+
+						double transm = sexp(sum1/nskip);
 						fprintf( save.params[ipPun].ipPnunit, 
-							"%.6e\t%.3e\n", 
-							AnuUnit(xnu/nskip), 
-							sexp(sum1/nskip) );
-						j += nskip;
+							"%.6e\t%.3e", 
+							AnuUnit(xnu/nskip),
+							transm );
+
+						static const realnum odep_limit = 0.01;
+
+						for( auto &ind: all_stack_lines )
+						{
+							TransitionProxy tr = LineSave.lines[ind].getTransition();
+
+							// Report mean optical depths, rather than line center
+							// Keeps optical depths consistent with main output
+							//
+							realnum odep = tr.Emis().TauInSpecific() * SQRTPI;
+							if( odep < odep_limit )
+								break;
+
+							fprintf( save.params[ipPun].ipPnunit,
+								"\t\"%s\"\t%.3e",
+								tr.chLabel().c_str(), odep );
+						}
+						fprintf( save.params[ipPun].ipPnunit, "\n" );
 					} while( j < nu_hi );
 				}
 			}
@@ -2256,34 +2321,20 @@ void SaveDo(
 				else if( strcmp(save.chSave[ipPun],"HYDr") == 0 )
 				{
 					/* save hydrogen recc - recombination cooling for AGN3 */
-					TempChange(2500.f, false);
-					while( phycon.te <= 20000. )
+					vector<double> Temps { 5000., 10000., 20000. };
+					for( auto &t: Temps )
 					{
-						double r1;
-						double ThinCoolingCaseB; 
+						TempChange( t, false );
 
-						r1 = HydroRecCool(1,0);
-						ThinCoolingCaseB = exp10(((-25.859117 + 
-						  0.16229407*phycon.telogn[0] + 
-						  0.34912863*phycon.telogn[1] - 
-						  0.10615964*phycon.telogn[2])/(1. + 
-						  0.050866793*phycon.telogn[0] - 
-						  0.014118924*phycon.telogn[1] + 
-						  0.0044980897*phycon.telogn[2] + 
-						  6.0969594e-5*phycon.telogn[3])))/phycon.te;
+						double rtot = iso_RRCoef_Te(0, 0, phycon.te,
+										iso_sp[ipH_LIKE][0].numLevels_max -
+										iso_sp[ipH_LIKE][0].nCollapsed_max);
+						double rgrd = iso_RRCoef_Te(0, 0, phycon.te, 0);
 
-						fprintf( save.params[ipPun].ipPnunit, " %10.2e\t", 
-							phycon.te);
-						fprintf( save.params[ipPun].ipPnunit, " %10.2e\t", 
-							(r1+ThinCoolingCaseB)/(BOLTZMANN*phycon.te) );
-
-						fprintf( save.params[ipPun].ipPnunit, " %10.2e\t", 
-							r1/(BOLTZMANN*phycon.te));
-
-						fprintf( save.params[ipPun].ipPnunit, " %10.2e\n", 
-							ThinCoolingCaseB/(BOLTZMANN*phycon.te));
-
-						TempChange(phycon.te *2.f , false);
+						fprintf( save.params[ipPun].ipPnunit, " %3.1f\t", phycon.te);
+						fprintf( save.params[ipPun].ipPnunit, " %10.3e\t", rtot );
+						fprintf( save.params[ipPun].ipPnunit, " %10.3e\t", rgrd);
+						fprintf( save.params[ipPun].ipPnunit, " %10.3e\n", rtot-rgrd);
 					}
 					/* must exit since we have disturbed the solution */
 					fprintf(ioQQQ , "save agn now exits since solution is disturbed.\n");
@@ -2376,7 +2427,7 @@ void SaveDo(
 										break;
 
 									/* array elements are shell, numb of electrons, element, 0 */
-									energy = t_ADfA::Inst().ph1(ips,nelem-ion,nelem,0);
+									energy = t_ADfA::Inst().getEthresh(ips+1,nelem-ion+1,nelem+1);
 
 									/* now print threshold with correct format */
 									if( energy < 10. )
@@ -2442,7 +2493,12 @@ void SaveDo(
 				/* LONG keyword on save line labels command sets this to 1 */
 				if( save.punarg[ipPun][0]>0. )
 					lgPrintAll = true;
-				prt_LineLabels(save.params[ipPun].ipPnunit , lgPrintAll );
+
+				bool lgPrintIndex = true;
+				if( save.punarg[ipPun][1] < 1. )
+					lgPrintIndex = false;
+
+				prt_LineLabels(save.params[ipPun].ipPnunit, lgPrintAll, lgPrintIndex );
 			}
 
 			else if( strcmp(save.chSave[ipPun],"LINO") == 0 )
@@ -2458,15 +2514,86 @@ void SaveDo(
 			{
 				if( ! lgLastOnly )
 				{
-					static bool lgFirst=true;
-					/* save line populations, need to do this twice if very first
-					 * call since first call to SaveLineStuff generates atomic parameters
-					 * rather than level pops, routine is below, file static */
-					SaveLineStuff(save.params[ipPun].ipPnunit,"populat" , save.punarg[ipPun][0]);
-					if( lgFirst )
+					if( save.punarg[ipPun][0] )
 					{
-						lgFirst = false;
-						SaveLineStuff(save.params[ipPun].ipPnunit,"populat" , save.punarg[ipPun][0]);
+						fprintf( save.params[ipPun].ipPnunit,
+							"%.5e", radius.depth_mid_zone );
+						for( auto &specline : save.LineList[ipPun] )
+						{
+							long ipobs = LineSave.findline(specline);
+							TransitionProxy tr = LineSave.lines[ipobs].getTransition();
+
+							double quant = 0.;
+
+							/* NB NB
+							 *
+							 * Recombination lines are not associated with an atomic
+							 * model.  Weed them out to avoid segfault.
+							 */
+							if( LineSave.lines[ipobs].chSumTyp() == 't'
+								&& tr.associated() )
+							{
+								if( save.punarg[ipPun][1] == 0 )
+									quant = tr.Lo()->Pop();
+								else if( save.punarg[ipPun][1] == 1 )
+									quant = tr.Hi()->Pop();
+								else if( save.punarg[ipPun][1] == 2 )
+									quant = safe_div( tr.Hi()->Pop() * tr.Lo()->g(),
+											tr.Lo()->Pop() * tr.Hi()->g(), 0. );
+								else if( save.punarg[ipPun][1] == 3 )
+									quant = TexcLine( tr );
+								else
+								{
+									TotalInsanity();
+								}
+							}
+
+							fprintf( save.params[ipPun].ipPnunit, "\t%.4e", quant );
+						}
+						fprintf( save.params[ipPun].ipPnunit, "\n" );
+					}
+					else
+					{
+						for( auto &specline : save.LineList[ipPun] )
+						{
+							fprintf( save.params[ipPun].ipPnunit,
+								"%.5e", radius.depth_mid_zone );
+
+							fprintf( save.params[ipPun].ipPnunit,
+								"\t%s ",
+								specline.chLabel.c_str() );
+							string chTemp;
+							sprt_wl( chTemp, specline.wave );
+							fprintf( save.params[ipPun].ipPnunit,
+								"%s", chTemp.c_str() );
+
+							double lower = 0.,
+							       upper = 0.,
+							       ratio = 0.,
+							       tspin = 0.;
+
+							long ipobs = LineSave.findline(specline);
+							TransitionProxy tr = LineSave.lines[ipobs].getTransition();
+
+							/* NB NB
+							 *
+							 * Recombination lines are not associated with an atomic
+							 * model.  Weed them out to avoid segfault.
+							 */
+							if( LineSave.lines[ipobs].chSumTyp() == 't'
+								&& tr.associated() )
+							{
+								lower = tr.Lo()->Pop();
+								upper = tr.Hi()->Pop();
+								ratio = safe_div( tr.Hi()->Pop() * tr.Lo()->g(),
+											tr.Lo()->Pop() * tr.Hi()->g(), 0. );
+								tspin = TexcLine( tr );
+							}
+
+							fprintf( save.params[ipPun].ipPnunit,
+								"\t%10.4e\t%10.4e\t%.4e\t%11.4e\n",
+								lower, upper, ratio, tspin );
+						}
 					}
 				}
 			}

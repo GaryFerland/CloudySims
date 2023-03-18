@@ -53,11 +53,10 @@ struct mpp
 	mpp() { memset(this, 0, sizeof(mpp)); }
 };
 
-/** \todo - check rebinning of Tlusty models
- ** \todo - why was it necessary to change stars_tlusty.in? (change from r43 to r50?)
- ** \todo - check all interpolation modes of CoStar
- ** \todo - compare models with original code, dump atmospheres!
- */
+// \todo - check rebinning of Tlusty models
+// \todo - why was it necessary to change stars_tlusty.in? (change from r43 to r50?)
+// \todo - check all interpolation modes of CoStar
+// \todo - compare models with original code, dump atmospheres!
 
 /** store all the relevant information on an atmosphere file */
 struct stellar_grid

@@ -6,6 +6,16 @@
 
 #include "iso.h"
 
+
+/**reduced_amu - Calculate reduced mass in AMU
+ *
+ * \param nelen   [in]   element index (0 for H)
+ * \param Collider[in]   collision partner
+ *
+ * \returns  reduced mass
+ */
+double reduced_amu( long nelem, long Collider );
+
 /**HeCollid evaluate collisional rates 
 \param nelem
 */
@@ -93,6 +103,7 @@ double CS_l_mixing_PS64(
 \param deltaE_eV
 \param lp,
 \param Collider
+\param lgPSM20
 */
 double CS_l_mixing_PS64_expI(
 	long nelem,
@@ -105,7 +116,8 @@ double CS_l_mixing_PS64_expI(
 	long int lp,
 	//double s,
 	double deltaE_eV,
-	long int Collider);
+	long int Collider,
+	bool lgPSM20);
 
 /**CS_l_mixing_VF01 Collision treatment based on Vrinceanu and Flannery 2001
 \param ipISO

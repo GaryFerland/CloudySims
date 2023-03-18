@@ -46,7 +46,7 @@ STATIC double collision_strength_VF01( long ipISO, double velOrEner,
 /* These are masses relative to the proton mass of the electron, proton, he+, and alpha particle. */
 static const double ColliderCharge[4] = {1.0, 1.0, 1.0, 2.0};
 
-inline double reduced_amu( long nelem, long Collider )
+double reduced_amu( long nelem, long Collider )
 {
 	return dense.AtomicWeight[nelem]*colliders.list[Collider].mass_amu/
 		(dense.AtomicWeight[nelem]+colliders.list[Collider].mass_amu)*ATOMIC_MASS_UNIT;	
@@ -375,7 +375,7 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 	realnum cs = -1.f; 
 
 	/* this may be used for splitting up the collision strength within 2^3P */
-	realnum factor1 = 1.f;
+	realnum j_resolve = 1.f;
 
 	/* Energy difference in eV */
 	double deltaE_eV = EnerErg/EN1EV;
@@ -383,13 +383,13 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 	/* lower level is within 2^3P */
 	if( nLo==2 && lLo==1 && sLo==3 )
 	{
-	        factor1 *= (2.f*jLo+1.f) / 9.f;
+		j_resolve *= (2.f*jLo+1.f) / 9.f;
 	}
 
 	/* upper level is within 2^3P */
 	if( nHi==2 && lHi==1 && sHi==3 )
 	{
-	        factor1 *= (2.f*jHi+1.f) / 9.f;
+		j_resolve *= (2.f*jHi+1.f) / 9.f;
 	}
 
 	/* for most of the helium iso sequence, the order of the J levels within 2 3P 
@@ -402,7 +402,7 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 		// These are already j-resolved, so return this to unity.
 		if( nLo==2 && lLo==1 && sLo==3 && nHi==2 && lHi==1 && sHi==3 ) 
 		{
-			factor1 = 1.f;
+			j_resolve = 1.f;
 		}
 
 		*where = "table";
@@ -418,9 +418,9 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 		*where = "Zhang ";
 		if( nelem == ipIRON )
 			*where = "Si+2017";
-		factor1 = 1.;
+		j_resolve = 1.;
 
-		/* Collisions from gound	*/
+		/* Collisions from ground	*/
 		if( nLo == 1 )
 		{
 			if( lHi==0 && sHi==3 ) // to 2tripS
@@ -822,7 +822,11 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 			{
 				/* PS-M: Modified PS method
 				 * Refer to F. Guzman et al. MNRAS (2016) 464, 312
+				 *
+				 * 11/01/22 changed default to PSM20 formulas from
+				 * N. Badnell et al. MNRAS (2021) 507, 2922
 				 */
+
 				cs = CS_l_mixing_PS64_expI(
 						nelem,
 						ipHE_LIKE,
@@ -833,8 +837,14 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 						gHi,
 						lLo,
 						deltaE_eV,
-						Collider);
-				*where = "PSM   ";
+						Collider,
+						iso_ctrl.lgCS_PSM20[ipHE_LIKE]);
+
+				if(iso_ctrl.lgCS_PSM20[ipHE_LIKE])
+					*where = "PSM   ";
+				else
+					*where = "PSM20 ";
+
 			}
 		}
 		else
@@ -858,11 +868,9 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 		{
 			/* >>refer He CS	Vriens, L., & Smeets, A.H.M. 1980, Phys Rev A 22, 940
 			 * statistical weight IS included in the routine */
-			cs = (realnum)CS_VS80( nHi, gHi, IP_Ryd_Hi, nLo, gLo, IP_Ryd_Lo, Aul, nelem, Collider, phycon.te );
+			cs = (realnum)CS_VS80( ipHE_LIKE, nHi, IP_Ryd_Hi, nLo, IP_Ryd_Lo, Aul, nelem, Collider, phycon.te );
 			*where = "Vriens";
-
 			lgResolvedData = false;
-
 		}
 		/* only electron impact collisions */
 		else if (Collider == ipELECTRON)
@@ -871,84 +879,25 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 			{
 				/* Lebedev and Beigman (1998) Phys. Highly excited atoms and ions p. 225 eq. 8.30
 				 */
-
-				cs = hydro_Lebedev_deexcit(nelem, ipHE_LIKE, nHi, nLo, gLo, IP_Ryd_Lo);
+				cs = hydro_Lebedev_deexcit(ipHE_LIKE, nelem, nHi, nLo, IP_Ryd_Lo);
 				*where = "lebed";
 				lgResolvedData = false;
-
 			}
-
 			else if(iso_ctrl.lgCS_Fujim[ipHE_LIKE])
 			{
 
-				cs = hydro_Fujimoto_deexcit(gHi, gLo, Aul, IP_Ryd_Hi, IP_Ryd_Lo);
+				cs = hydro_Fujimoto_deexcit(ipHE_LIKE, nHi, nLo, Aul, IP_Ryd_Hi, IP_Ryd_Lo);
 				*where = "Fuji ";
 				lgResolvedData = false;
-
 			}
 			else if( iso_ctrl.lgCS_vrgm[ipHE_LIKE])
 			{
-				/* Van regemorter formula for allowed transitions. Van Regemorter, ApJ 136 (1962) 906
-				 * The interval 0.005 < y < infty is interpolated from the results of Table 2
-				 * from Van Regemorter paper and adjusted at high energies to avoid discontinuities.
-				 */
-
-				/* ensure that the transition is allowed */
-				if ( lHi > 0 && lLo >0 && abs(lHi - lLo) !=1 )
-					cs =0.;
-				else
-				{
-					double Py = 1.;
-					double y = deltaE_eV*EVDEGK/phycon.te;
-					const double valy[11] ={log10(0.005),-2.,log10(0.02),log10(0.04),-1.,log10(0.2),log10(0.4),0.,log10(2.),log10(4.),1.} ;
-					double a1 = sqrt(3)/2/PI*e1(0.005);
-
-					if( nelem == ipHELIUM )
-					{
-						if (y <= 0.005)
-							Py = sqrt(3)/2/PI*e1(y);
-						else if (y <= 10.)
-						{
-							const double val[11]={log10(a1),log10(1.16), log10(0.956),log10(0.758),log10(0.493),log10(0.331),log10(0.209),-1.,log10(0.063),log10(0.040),log10(0.021)};
-							Py = linint(valy,val,11,log10(y));
-							Py=exp10(Py);
-							//Py = 0.128384/sqrt(y)- 0.019719;
-						}
-						else
-							Py = 0.066/sqrt(y);
-
-						/*if(nHi==nLo+1)
-							fprintf(ioQQQ,"vrgm nhi %li, nlo %li, y %g\n",nHi,nLo,y);*/
-
-					}
-					else
-					{
-						if (y <= 0.005)
-							Py = sqrt(3)/2/PI*e1(y);
-						else if (y <= 10.)
-						{
-							const double val[11]={log10(a1),log10(1.16),log10(0.977),log10(0.788),log10(0.554),log10(0.403),log10(0.290),log10(0.214),log10(0.201),log10(0.2),log10(0.2)};
-							Py = linint(valy,val,11,log10(y));
-							Py = exp10(Py);
-							//Py = 0.154023 + 0.1099165/sqrt(y);
-						}
-						else
-							Py = 0.200;
-					}
-					double massratio = reduced_amu(nelem,Collider)/ELECTRON_MASS;
-
-					cs = 20.6*Aul/pow3(EnerWN)/phycon.sqrte*Py;
-					double factor = ( COLL_CONST * powpq(massratio, -3, 2) ) / phycon.sqrte / (double)gHi;
-
-					/*convert to collision strength*/
-					cs /= factor;
-
-					lgResolvedData = false;
-
-					*where = "vrgm ";
-				}
+				cs = hydro_vanRegemorter_deexcit( ipHE_LIKE, nelem, nHi, lHi, lLo,
+									EnerWN, deltaE_eV, Aul,
+									Collider );
+				*where = "vrgm ";
+				lgResolvedData = false;
 			}
-
 			else if( iso_ctrl.nCS_new[ipHE_LIKE] && nelem==ipHELIUM )
 			{
 				/* Don't know if stat weights are included in this, but they're probably
@@ -1010,16 +959,15 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 				 * repulsion between ions will make these cross sections smaller only to be relevant at even higher energies.  */
 
 				/* Percival and Richards (1978) have got a Z dependence so their rates are preferred */
-				cs = CS_ThermAve_PR78( ipH_LIKE, nelem, nHi, nLo,
-						EnerErg / EN1RYD, phycon.te );
+				cs = CS_ThermAve_PR78( ipHE_LIKE, nelem, nHi, nLo,
+							EnerErg / EN1RYD, phycon.te );
 				*where = "PR78  ";
 
 				lgResolvedData = false;
 			}
 		}
 		else
-			cs =0.;
-
+			cs = 0.;
 	}
 	else if (sHi != sLo)
 	{
@@ -1035,18 +983,52 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 		TotalInsanity();
 
 
+	/*
+	 * Resolve collision strengths for n-changing collisions
+	 * from collapsed to resolved levels
+	 */
+	if (!lgResolvedData && nLo <= iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max)
+	{
+		realnum l_resolve = 
+				realnum( CSresolver(ipHE_LIKE, nHi, lHi, sHi, nLo, lLo, sLo,
+						iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max) );
+
+		enum {DEBUG_LOC = false};
+		if( DEBUG_LOC )
+		{ 
+			if( nelem == ipIRON &&
+				//(nHi == iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max + 15) &&
+				// nLo == iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max )
+				nLo == 1 && nHi == 3 ) 
+				// nHi == 3 && sHi == 1 && (nLo == 1 || nLo == 2) )
+				//	sLo == 1 )
+			{
+				fprintf( ioQQQ, "nelem: %ld"
+						"  (nHi, lHi, sHi): (%ld, %ld, %ld) ->"
+						"  (nLo, lLo, sLo): (%ld, %ld, %ld)"
+						"\t nn' CS: %.4e"
+						"\t l-reslv: %.4e"
+						"\t j-reslv: %.4e"
+						"\t lj-reslv: %.4e"
+						"\t final CS: %.4e"
+						"\t '%s'\n",
+						nelem,
+						nHi, lHi, sHi,
+						nLo, lLo, sLo,
+						cs, l_resolve, j_resolve,
+						l_resolve * j_resolve,
+						cs * l_resolve * j_resolve,
+						*where );
+			}
+		}
+
+		cs *= l_resolve;
+	}
+
 	/* take factor into account, usually 1, ratio of stat weights if within 2 3P 
 	 * and with collisions from collapsed to resolved levels */
-	cs *= factor1;
+	cs *= j_resolve;
 
-
-	/*
-	 * Resolved routines can also provide collapsed data
-	 */
-	if (!lgResolvedData  && nLo <= iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max)
-	{
-	cs *= CSresolver(ipHE_LIKE, nHi, lHi, sHi, nLo, lLo, sLo, iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max);
-	}
 
 	{
 		/*@-redef@*/
@@ -1383,6 +1365,7 @@ void my_Integrand_S62::operator() (const double proj_energy[], double res[], lon
 		res[i] = val[i] * (proj_energy[i]+deltaE)/EVRYD * cross_section;
 	}
 }
+
 /*CS_l_mixing_PS64 - find rate for l-mixing collisions by protons, for neutrals */
 /* This version does not assume that E_min/kt is small and works with the exponential integral */
 /* Pengelly, R.M., & Seaton, M.J., 1964, MNRAS, 127, 165
@@ -1399,7 +1382,8 @@ double CS_l_mixing_PS64_expI(
 		double g,
 		long lp,
 		double deltaE_eV,
-		long Collider)
+		long Collider,
+		bool lgPSM20)
 {
 	double cs;
 	double RD,R12,Sij,Plowb,RC,RC1,/*R1,*/EC,ED,
@@ -1491,7 +1475,7 @@ double CS_l_mixing_PS64_expI(
 		//R1 = sqrt(R12);
 		//RC = R1;
 	//}
-	double Emin = R12/(RC*RC);
+	double Emin = R12/(RC*RC); //Um
 
 	if (RC == RD)
 			fb2=1.;
@@ -1506,61 +1490,127 @@ double CS_l_mixing_PS64_expI(
 	/* Resolved Dnl depending on Sij */
 	double Dnl = 2. * pow2(ChargIncoming)*Sij/(3.*(2.*l+1.));
 
-	ASSERT( Dnl > 0. );
 	ASSERT( phycon.te  / Dnl / reduced_mass_2_emass > 0. );
+	ASSERT( Dnl > 0. );
 
-	EC = RD*RD/(RC1*RC1);
-	ED = R12/(RD*RD);
+	EC = RD*RD/(RC1*RC1); //Uc
+	ED = R12/(RD*RD); //Um
 	eEm = exp(-1.*Emin);
 	eED = exp(-1.*ED);
 	eEC = exp(-1.*EC);
 	eEmt1Em = eEm*(1.+Emin);
 
-	/* First exponential integral is used as the analitical solution of Maxwell averaged PS64 cross sections
-	 * Different cases are used depending on the cut-off
-	 */
-	if ( fb1 == 1 && fb2 == 1)
-		bracket = eEm + e1(Emin);
-	else
+	if(lgPSM20) 
+	/* N. Badnell et al. MNRAS (2021) 507, 2922 */
 	{
-		if (fb2 ==1 )
-			bracket = fb1*eEm+ fb2*e1(Emin); 
+		double Um = ED;
+
+		double Umc = sqrt(Um*EC);
+		//Dnl = 4. * pow2(ChargIncoming)*Sij/(3.*(2.*l+1.));
+
+
+		if(fb2 == 1)
+		{
+			/* this the asymptote of sqrt(pi/Um^3)*erf(Um)/2 - exp(-Um)/Um when Um->0*/
+			double nf = 2./3.;
+			/* we have looked for a value of Um low enough where the error is low
+			 * when x=1e-6 rel error = 5.99e-7 */
+			bracket = nf+e1(Um);		
+			if (Um > 1e-6)
+				bracket = sqrt(PI/pow3(Um))*erf(sqrt(Um))/2.-exp(-1.*Um)/Um + e1(Um);
+
+		}
 		else
 		{
-			if (EC > Emin)
-				bracket = fb1*eEm + 2.*e1(Emin) - e1(EC);
-			else
-				bracket = fb1*eED + e1(ED);
+			/* Use of the incomplete gamma function P(n,x)= 1 - e_(n-1)(x)e^-x for (n E Z) to
+			 * avoid cancellation errors
+			 *
+			 * where
+			 *
+			 *
+			 *            n        j
+			 *            -       x
+			 *  e_n       >      ----
+			 *            -       j!
+			 *    	      j=0
+			 *
+			 * Functions 6.5.3, 6.5.11, and 6.5.13 in
+			 * Abramowitz & Stegun Tenth Ed. 1972
+			 */
+			if (EC<Umc)
+			/* this is unlikely and correspond to contribution of eq (122) in Nigel's talk
+			 * it kicks on extreme high density cases
+			 */
+			{
+				/* this the asymptote of sqrt(pi/Um^3)*erf(Um)/2 - exp(-Um)/Um */
+				double nf = 2./3.;
+				/* we have looked for a value of Um low enough where the error is low
+                         	* when x=1e-6 rel error = 5.99e-7 */
+				if (Um > 1e-6)
+					nf = sqrt(PI/pow3(Um))*(erf(sqrt(Um))/2.) - exp(-1.*Um)/Um;
+
+				bracket = 4.*(1.-igamc(3,EC)+0.25*exp(-1.*EC)*EC*EC)/pow3(Umc) -
+						sqrt(PI/pow3(Um))*erf(sqrt(EC))/2. + nf;
+				bracket += e1(Um);
+
+			}
+			else //eq 12 Badnell et al. 2021 MNRAS 507, 2922
+			{
+				bracket = 4.*(1.-igamc(3,Umc))/pow3(Umc);
+				bracket += 2.*e1(Umc)-e1(EC);
+			}
+
+
 		}
 	}
-
-	//contribution 0<E<Emin, important for Emin/kt >>
-	contr = 0.;
-	if(fb1 != 1 )
+	else /* Guzman et al. MNRAS (2016) 464, 312 */
 	{
-		if ( fb2 == 1 )
-			contr = (1.-eEmt1Em)/Emin;
-		else if (fb2 !=1 )
+		/* First exponential integral is used as the analitical solution of Maxwell averaged PS64 cross sections
+		 * Different cases are used depending on the cut-off
+		 */
+		if ( fb1 == 1 && fb2 == 1)
+			bracket = eEm + e1(Emin);
+		else
 		{
-			if (EC >= Emin)
-			{
-				contr = 2.*( 1. -eEmt1Em)/pow2(Emin);
-				contr -= eEm;
-			}
+			if (fb2 ==1 )
+				bracket = fb1*eEm+ fb2*e1(Emin);
 			else
 			{
-				contr = ( 2. -eEC*(2.+EC))/pow2(Emin);
-				contr -= eEm*(1.+1./ED);
+				if (EC > Emin)
+					bracket = fb1*eEm + 2.*e1(Emin) - e1(EC);
+				else
+					bracket = fb1*eED + e1(ED);
 			}
 		}
 
-		contr *= 2./3.;
+		//contribution 0<E<Emin, important for Emin/kt >>
+		contr = 0.;
+		if(fb1 != 1 )
+		{
+			if ( fb2 == 1 )
+				contr = (1.-eEmt1Em)/Emin;
+			else if (fb2 !=1 )
+			{
+				if (EC >= Emin)
+				{
+					contr = 2.*( 1. -eEmt1Em)/pow2(Emin);
+					contr -= eEm;
+				}
+				else
+				{
+					contr = ( 2. -eEC*(2.+EC))/pow2(Emin);
+					contr -= eEm*(1.+1./ED);
+				}
+			}
 
-		bracket += contr;
+			contr *= 2./3.;
+
+			bracket += contr;
+
+		}
 	}
-
-
 	ASSERT( bracket >= 0.);
+
 
 	if (bracket == 0. )
 		return SMALLFLOAT;
@@ -1569,12 +1619,14 @@ double CS_l_mixing_PS64_expI(
 
 	double units = 2.*pow(BOHR_RADIUS_CM,3)*sqrt(PI)/vred/tau_zero;
 
+
 	rate = units * Dnl* bracket;
 
 	/* convert rate to collision strength */
 	/* NB - the term in parentheses corrects for the fact that COLL_CONST is only appropriate
 	 * for electron colliders and is off by reduced_mass_2_emass^-1.5 */
 	cs = rate / ( COLL_CONST * powpq(reduced_mass_2_emass, -3, 2) ) * phycon.sqrte * g;
+
 
 	ASSERT( cs > 0. );
 
@@ -2519,42 +2571,45 @@ STATIC double collision_strength_VF01( long ipISO, double E_Proj_Ryd,
 
 	return coll_str;
 }
-/*resolved to resolved and collapsed to resolved modification */
-	 /***************************************************************
-	 * convert resolved to collapsed:
-	 * rates: q(n->n') = \sum_l' \sum_l (2l+1)(2s+1) q(nl->nl')/ 2n^2
-	 * upsilons: Y(nn') = \sum_l' \sum_l Y(nln'l')
-	 * example: q(n=3->n=2) = 1/18(6q(3p->2s) + 2q(3s->2p) + 10q(3d->2p) + ...
-	 *
-	 * convert collapsed to collapsed to resolved:
-	 * rates: q(nl-n'l') = (2s'+1)(2l'+1)q(n->n')*n2/[\sum\sum(2s+1)(2l+1)(2s'+1)(2l'+1)]
-	 * with the constrains [{|s-s'|=0}]
-	 * upsilons: Y(nln'l') =(2s+1)(2l+1)(2s'+1)(2l'+1)Y(nn')/S
-	 * with the constrains {|s-s'|=0}
-	 *
-	 *where: S=[\sum\sum(2s+1)(2l+1)(2s'+1)(2l'+1)] = (2s+1)^2 n^2n'^2
-	 *
-	 * If i want a collapsed to resolved coefficient:
-	 *
-	 * 1) If the routine returns a collapsed value:
-	 *
-	 * rates: q(n -> n'l') = (2s+1)^2\sum(2l+1)(2l'+1)q(n->n')*n^2/S
-	 * upsilon: Y(nn'l') = (2s+1)^2\sum(2l+1)(2l'+1)Y(nn')/S
-	 *
-	 *
-	 * 2) If it is a resolved value
-	 *
-	 * rates: q(n->n'l') = \sum_l (2l+1)(2s+1)q(nl->n'l')/2n^2
-	 * upsilons: Y(nn'l') = \sum_l Y(nln'l')
-	 *
-	 */
+
+/* resolved to resolved and collapsed to resolved modification 
+ *
+ * convert resolved to collapsed:
+ * rates: q(n->n') = \sum_l' \sum_l (2l+1)(2s+1) q(nl->nl')/ 2n^2
+ * upsilons: Y(nn') = \sum_l' \sum_l Y(nln'l')
+ * example: q(n=3->n=2) = 1/18(6q(3p->2s) + 2q(3s->2p) + 10q(3d->2p) + ...
+ *
+ * convert collapsed to collapsed to resolved:
+ * rates: q(nl-n'l') = (2s'+1)(2l'+1)q(n->n')*n2/[\sum\sum(2s+1)(2l+1)(2s'+1)(2l'+1)]
+ * with the constrains [{|s-s'|=0}]
+ * upsilons: Y(nln'l') =(2s+1)(2l+1)(2s'+1)(2l'+1)Y(nn')/S
+ * with the constrains {|s-s'|=0}
+ *
+ *where: S=[\sum\sum(2s+1)(2l+1)(2s'+1)(2l'+1)] = (2s+1)^2 n^2n'^2
+ *
+ * If i want a collapsed to resolved coefficient:
+ *
+ * 1) If the routine returns a collapsed value:
+ *
+ * rates: q(n -> n'l') = (2s+1)^2\sum(2l+1)(2l'+1)q(n->n')*n^2/S
+ * upsilon: Y(nn'l') = (2s+1)^2\sum(2l+1)(2l'+1)Y(nn')/S
+ *
+ *
+ * 2) If it is a resolved value
+ *
+ * rates: q(n->n'l') = \sum_l (2l+1)(2s+1)q(nl->n'l')/2n^2
+ * upsilons: Y(nn'l') = \sum_l Y(nln'l')
+ *
+ */
 double CSresolver(long ipISO, long nHi,long lHi,long sHi,long nLo,
 		long lLo, long sLo, long n_HighestResolved)
 {
-	double factor=1.;
+	DEBUG_ENTRY( "CSresolver()" );
 
 	if (sHi != sLo && nHi <= n_HighestResolved )
 		return 0.;
+
+	double factor=1.;
 
 	/* S= \sum\sum (2s+1)(2l+1)(2s'+1)(2l'+1)
 	 * with |s-s'|=0
@@ -2565,11 +2620,18 @@ double CSresolver(long ipISO, long nHi,long lHi,long sHi,long nLo,
 
 	if (ipISO==ipH_LIKE)
 	{
-		S *= 4;
+		ASSERT( sLo == ipDOUBLET );
+		S *= pow2( ipDOUBLET );
 	}
 	else if(ipISO==ipHE_LIKE)
 	{
-		S *= 10; //(1*1 + 3*3)
+		if( nLo == 1 )
+		{
+			ASSERT( sLo == ipSINGLET );
+			S *= pow2( ipSINGLET );
+		}
+		else
+			S *= pow2( ipSINGLET ) + pow2( ipTRIPLET );
 	}
 
 
@@ -2586,9 +2648,5 @@ double CSresolver(long ipISO, long nHi,long lHi,long sHi,long nLo,
 	else
 		TotalInsanity();
 
-
-
 	return factor;
-
 }
-

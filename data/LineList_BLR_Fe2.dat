@@ -28,8 +28,10 @@ o  5   629.7A   #  total O V 630
 s  4   657.319A  #   total S IV 657
 o  3   702.337   #  total O III 703
 n  4   765.1    # total N IV 765
-ne 8  770.410   #  total Ne VIII 770
-ne 8  780.325   #  total Ne VIII 780
+# >>chng 22 jul 09, wl from 770.410 to 770.428A, upgrade to Chianti v10
+ne 8  770.428A   #  total Ne VIII 770
+# >>chng 22 jul 09, wl from 780.325 to 780.385A, upgrade to Chianti v10
+ne 8  780.385A   #  total Ne VIII 780
 blnd  774   #  total of sum of both Ne VIII component
 #inwd   774  #   inward flux of sum of both Ne VIII components
 # >>chng 18 jan 18, wl from 786.470 to 786.468A, use Stout data for S 5
@@ -39,8 +41,10 @@ o  4   789.4   #  total O IV 789
 O  2   833.330 #    total O II 834A
 o  3   834.5   #  total O III 834
 blnd  895   #  total Ne VII] 895
-s  6   933.380  #   total S VI 933
-s  6   944.524  #   total S VI 944
+# >>chng 22 jul 09, wl from 933.380 to 933.378A, upgrade to Chianti v10
+s  6   933.378A  #   total S VI 933
+# >>chng 22 jul 09, wl from 944.524 to 944.523A, upgrade to Chianti v10
+s  6   944.523A  #   total S VI 944
 p  4   950.657   #  total P IV 951
 # >>chng 17 may 25, wl from 972.543 to 972.537A, up Rydberg constant
 h  1   972.537A  #   total Lyman-gamma 973
@@ -53,12 +57,14 @@ n  3   991   #  total N III 990
 h  1  1025.72A  #   total Lyman-beta 1025
 #inwd  1025.73  #   inward flux of Lyman-beta 1025
 o  6  1031.91   #  total O VI 1032
-o  6  1037.62   #  total O VI 1037
+# >>chng 22 jul 09, wl from 1037.62 to 1037.61A, upgrade to Chianti v10
+o  6  1037.61A   #  total O VI 1037
 blnd  1035   #  total of sum of both O VI components
 #inwd  1035  #   inward flux of sum of both O VI components
 # >>chng 17 may 25, wl from 1085.03 to 1084.94A, up Rydberg constant
 # >>chng 20 aug 22, wl from 1084.94A to 1084.93A, switched from computed to tabulated energies for H and He isoseq
-he 2  1084.93A  #   total He II Balmer-gamma 1085
+# >>chng 21 apr 08, wl from 1084.93A to 1084.94A, up 1-e energies to np
+he 2  1084.94A  #   total He II Balmer-gamma 1085
 N  2  1085.10   #  total N II 1085
 p  5  1117.98   #  total P V 1118
 ne 5  1136.51   #  total Ne V 1141
@@ -75,7 +81,8 @@ H  1  1215.67A  #   total Hydrogen Lyman-alpha 1215.67
 inwd  1215.67A  #   inward flux of Lyman-alpha
 # >>chng 17 may 25, wl from 1215.23 to 1215.13A, up Rydberg constant
 # >>chng 20 aug 22, wl from 1215.13A to 1215.12A, switched from computed to tabulated energies for H and He isoseq
-he 2  1215.12A  #   total He II Balmer-beta 1216
+# >>chng 21 apr 08, wl from 1215.12A to 1215.13A, up 1-e energies to np
+he 2  1215.13A  #   total He II Balmer-beta 1216
 #inwd  1215.23  #   inward flux of He II Balmer-beta 1216
 blnd  1218   #  total of sum of O V] 1218 + [O V] 1218
 #inwd  1218   #  inward flux of O V]
@@ -92,6 +99,7 @@ si 4 1393.75  #   total Si IV 1394
 si 4  1402.77  #   total Si IV 1403
 BLND  1397   #  total of sum of both Si IV components
 #inwd  1397  #   inward flux of sum of both Si IV components
+Blnd  1400A # "Si 4"      1393.75A "Si 4"      1402.77A "O  4"     1397.20A "O  4"     1399.77A "O  4"     1401.16A "O  4"     1404.78A "O  4"     1407.38A
 blnd  1402   #  total O IV] 1402; 5 components to line: 
 #
 # 1397.2, 1399.77, 1401.16, 1404.81, 1407.39 --- not computed individually
@@ -103,12 +111,15 @@ N  4  1486.50 #    most forbidden of the pair
 #inwd  1488  #   inward flux of N IV]
 si 2  1533.43 #    total Si II 1527 + 1533
 c  4  1548.19
-c  4  1550.78  #   total C IV 1550.77
+# >>chng 22 jul 09, wl from 1550.78 to 1550.77A, upgrade to Chianti v10
+c  4  1550.77A  #   total C IV 1550.77
 blnd 1549  #   total of sum of both C IV components
 # >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
-he 2  1640.40A  #   total He II Balmer-alpha 1640
+# >>chng 21 april 7, wl from 1640.40 to 1640.41A, replacing average energy with np energies
+he 2  1640.41A  #   total He II Balmer-alpha 1640
 # >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
-inwd  1640.40A  #   inward flux of He II Balmer-alpha 1640
+# >>chng 21 april 7, wl from 1640.40 to 1640.41A, replacing average energy with np energies
+inwd  1640.41A  #   inward flux of He II Balmer-alpha 1640
 o  3  1660.81  #   total O III] 1660.81
 #inwd  1660.81 #    inward flux of O III] 1660.81
 o  3  1666.15  #   total O III] 1666.15
@@ -130,7 +141,8 @@ si 3  1882.71  #   the most forbidden of the doublet
 #inwd  1892   #  inward flux of Si III] 1892
 blnd 1909   #  total of sum of C III] 1908.73 + [C III]
 #inwd  1910  #   inward flux of C III] 1908.73
-n  2  2142.78 #    total sum of N II] 2139.01, 2142.77
+# >>chng 22 jul 09, wl from 2142.78 to 2142.77A, upgrade to Chianti v10
+n  2  2142.77A #    total sum of N II] 2139.01, 2142.77
 o  3  2320.95 #    single line from 5-level atom
 blnd 2326   #  total C II] 2324.69 + 2328.12
 BLND  2335  #   total Si II] 2335
@@ -144,7 +156,8 @@ inwd  2798   #  inward flux of sum of both Mg II components
 # optical emission lines and continua
 # >>chng 17 may 25, wl from 3203.30 to 3203.04A, up Rydberg constant
 # >>chng 20 aug 22, wl from 3203.04A to 3203.10A, switched from computed to tabulated energies for H and He isoseq
-he 2  3203.10A #    total He II Paschen-beta line
+# >>chng 21 apr 08, wl from 3203.10A to 3203.08A, up 1-e energies to np
+he 2  3203.08A #    total He II Paschen-beta line
 BA C     0   #  total of integrated H balmer continuum
 BaC   3646   #  total nuFnu of Balmer jump at 3646 (the head)
 #h  1  3835  #   total H-7 (H-Balmer)
@@ -155,25 +168,33 @@ Ca 2  3968.47 #    total Ca II 3969 emission
 #h  1  3970   #  total H-epsilon
 # >>chng 17 may 25, wl from 4101.76 to 4101.73A, up Rydberg constant
 # >>chng 21 mar 16, wl from 4101.73A to 4101.74A, update NIST energies
-h  1  4101.74A #    total H-delta
+# >>chng 21 aug 18, wl from 4101.74A to 4101.73A, revert to PvH energies for H
+h  1  4101.73A #    total H-delta
 #inwd  4101.76 #    inward flux of H-delta
 # >>chng 17 may 25, wl from 4340.49 to 4340.46A, up Rydberg constant
 # >>chng 21 mar 16, wl from 4340.46A to 4340.47A, update NIST energies
-h  1  4340.47A #    total H-gamma
+# >>chng 21 aug 18, wl from 4340.47A to 4340.46A, revert to PvH energies for H
+h  1  4340.46A #    total H-gamma
 #inwd  4340.49 #    inward flux of H-gamma
 ca b  4471.49  #   total He I 4471, case B approximation
 # >>chng 20 aug 22, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
-he 2  4685.70  #   total He II 4686 (Paschen-alpha)
+# >>chng 21 apr 08, wl from 4685.70 to 4685.68A, up 1-e energies to np
+he 2  4685.68A  #   total He II 4686 (Paschen-alpha)
 # >>chng 20 aug 22, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
-inwd  4685.70  #   inward flux of He II 4686
+# >>chng 21 apr 08, wl from 4685.70 to 4685.68A, up 1-e energies to np
+inwd  4685.68A  #   inward flux of He II 4686
 # >>chng 17 may 26, wl from 4861.36 to 4861.33A, update Rydberg constant
 # >>chng 20 aug 22, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 # >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-H  1  4861.33A #   total H-beta 4861
+# >>chng 21 april 7, H I wl from 4861.33 to 4861.34A, replacing average energy with np energies
+# >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+H  1  4861.32A #   total H-beta 4861
 # >>chng 17 may 26, wl from 4861.36 to 4861.33A, update Rydberg constant
 # >>chng 20 aug 22, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 # >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
-inwd  4861.33A #    inward flux of H-beta 4861
+# >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
+# >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+inwd  4861.32A #    inward flux of H-beta 4861
 # >>chng 13 aug 01, wl from 5875.61 to 5875.64A, now using middle multiplet wl
 ## >>chng 18 feb 20, updated spectral label from "He 1" 5875.64A to "Blnd" 5877.29A, update He-like triplet labels and wl
 # >>chng 18 mar 06, wl from 5877.29A to 5875.66A, adjust multiplet Blend WL for refraction index
@@ -183,7 +204,9 @@ Blnd  5892   #  total Na ID 5892
 # >>chng 17 may 26, wl from 6562.85 to 6562.81A, update Rydberg constant
 # >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
 # >>chng 21 mar 16, wl from 6562.80A to 6562.82A, update NIST energies
-h  1  6562.82A  #   total H-alpha 6563
+# >>chng 21 apr 08, wl from 6562.82A to 6562.83A, up 1-e energies to np
+# >>chng 21 aug 18, wl from 6562.83A to 6562.80A, revert to PvH energies for H
+h  1  6562.80A  #   total H-alpha 6563
 #inwd  6562.85  #   inward flux of H-alpha 6563
 #
 # near IR emission lines and continua
@@ -328,17 +351,21 @@ h  1   1.87510m #   total H Paschen-alpha
 "InwdBnd" 22000A
 #
 # Some high critical density forbidden lines
-ne 5  3426.03  #   total [Ne V] 3426
+# >>chng 22 jul 09, wl from 3426.03 to 3425.88A, upgrade to Chianti v10
+ne 5  3425.88A  #   total [Ne V] 3426
 ne 3  3868.76  #   total [Ne III] 3869
 ## >>chng 19 mar 01, change "Blnd" 4363 -> "O  3" 4363.21
 O  3  4363.21  #   total [O III] 4363.21
 o  3  5006.84  #   total [O III] 5006.84
-Fe14  5303.01  #   total [Fe XIV] 5303
+# >>chng 22 jul 09, wl from 5303.01 to 5303.00A, upgrade to Chianti v10
+Fe14  5303.00A  #   total [Fe XIV] 5303
 o  1  5577.34  #   total [O I] 5577.34
 Fe 7  6086.97  #   total [Fe VII] 6087
 blnd  6300   #  total [O I] 6300.30
-Fe10  6374.54  #   total [Fe X] 6375
-Fe11  7891.87  #   total [Fe XI] 7892
+# >>chng 22 jul 09, wl from 6374.54 to 6374.53A, upgrade to Chianti v10
+Fe10  6374.53A  #   total [Fe X] 6375
+# >>chng 22 jul 09, wl from 7891.87 to 7891.86A, upgrade to Chianti v10
+Fe11  7891.86A  #   total [Fe XI] 7892
 #
 # an optical incident continuum bin in units of nuFnu
 Inci  4860   #  incident continuum at 4860 Angstroms in units of nuF(nu)

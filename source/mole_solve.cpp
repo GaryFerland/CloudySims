@@ -140,10 +140,7 @@ double mole_solve()
 							newMolsTmp = abs(newmols[mol]);
 							iworst = mol;
 						}
-						if( newmols[mol] < -SMALLABUND) 
-						{
-							++nBad;
-						}
+						++nBad;
 						newmols[mol] = 0.;
 					}
 				}

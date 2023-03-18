@@ -63,7 +63,7 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 		{
 			/* >>chng 02 feb 07, change from 2s2p to l-mixing */
 			/* this is the atom h-like collision l-mixing command */
-			fprintf(ioQQQ,"This command changed to SPECIES H-LIKE COLLISIONS L-MIXING\n");
+			fprintf(ioQQQ,"This command changed to DATABASE H-LIKE COLLISIONS L-MIXING\n");
 			fprintf(ioQQQ,"I will parse it for now, but may not in the future.\n");
 			/* turn off 2s - 2p collisions */
 			iso_ctrl.lgColl_l_mixing[ipISO] = false;
@@ -124,6 +124,7 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 				iso_ctrl.lgCS_Seaton[ipISO] = false;
 				iso_ctrl.lgCS_B72[ipISO] = false;
 				iso_ctrl.lgCS_PSdeg[ipISO]=false;
+				iso_ctrl.lgCS_PSM20[ipISO]=false;
 			}
 			else if (ipISO == ipHE_LIKE)
 			{
@@ -161,6 +162,15 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 					iso_ctrl.lgCS_B72[ipISO] = false;
 					iso_ctrl.lgCS_PSdeg[ipISO] = true;
 				}
+				else if(p.nMatch("PSM17"))
+					iso_ctrl.lgCS_PSM20[ipISO]=false;
+				else if(p.nMatch("PSM20"))
+					{
+					/*
+					 * Default option from Badnell 2021.
+					 */
+					iso_ctrl.lgCS_PSM20[ipISO]=true;
+					}
 			}
 
 			/* use l-mix from
@@ -199,14 +209,26 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 			else if( p.nMatch("PENG") )
 			{
 				/* Pengelly & Seaton for l-mixing
+				 * N. Badnell et al. MNRAS (2021) 507, 2922
 				 * THAT'S IS THE DEFAULT
 				 */
 				iso_ctrl.lgCS_Vrinceanu[ipISO] = false;
 				iso_ctrl.lgCS_VOS12[ipISO]=false;
 				iso_ctrl.lgCS_VOS12QM[ipISO]=false;
 				iso_ctrl.lgCS_PS64[ipISO] = true;
+				/*classic Pengelly and Seaton 1964*/
 				if (p.nMatch("CLASS"))
 					iso_ctrl.lgCS_PSClassic[ipISO] = true;
+				/* PSM from Guzman+ 2016, 2017*/
+				else if(p.nMatch("PSM17"))
+					iso_ctrl.lgCS_PSM20[ipISO]=false;
+				else if(p.nMatch("PSM20"))
+				{
+					/*
+					 * Default option from Badnell 2021.
+					 */
+					iso_ctrl.lgCS_PSM20[ipISO]=true;
+				}
 			}
 			else if( p.nMatch(" OFF"  ) )
 			{
@@ -217,11 +239,12 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 				iso_ctrl.lgCS_Vrinceanu[ipISO] = false;
 				iso_ctrl.lgCS_VOS12[ipISO]=false;
 				iso_ctrl.lgCS_VOS12QM[ipISO]=false;
+				iso_ctrl.lgCS_PSM20[ipISO]=false;
 			}
 			else
 			{
 				fprintf( ioQQQ, "The database H-like l-mixing command needs a keyword\n"
-						" Options are OFF, PENGelly, VRINCeanu, VOS12 (SEMIClassical or Quantal).\n");
+						" Options are OFF, PENGelly, VRINCeanu, VOS12 (SEMIClassical or Quantal), PSM.\n");
 				cdEXIT(EXIT_FAILURE);
 			}
 		}
@@ -540,7 +563,7 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 				if( optimize.lgVarOn )
 				{
 					optimize.nvarxt[optimize.nparm] = 1;
-					strcpy( optimize.chVarFmt[optimize.nparm], "SPECIES H-LIKE LYMAN PUMPING SCALE %f LOG" );
+					strcpy( optimize.chVarFmt[optimize.nparm], "DATABASE H-LIKE LYMAN PUMPING SCALE %f LOG" );
 
 					/*  pointer to where to write */
 					optimize.nvfpnt[optimize.nparm] = input.nRead;
@@ -553,7 +576,7 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 			}
 			else
 			{
-				fprintf(ioQQQ," Sorry, I didn\'t recognize an option on this SPECIES H-LIKE LYMAN PUMP command.\n");
+				fprintf(ioQQQ," Sorry, I didn\'t recognize an option on this DATABASE H-LIKE LYMAN PUMP command.\n");
 				fprintf(ioQQQ," The options are \" OFF\", and \"SCALE\".\n");  
 				cdEXIT(EXIT_FAILURE);
 			}
@@ -569,13 +592,13 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 			if( iso_ctrl.nLyman[ipISO] < 2 )
 			{
 				// Code does not elsewhere protect against values less than 2.
-				fprintf(ioQQQ," Sorry, the value on this SPECIES xx-LIKE LYMAN command must be at least 2.\n");
+				fprintf(ioQQQ," Sorry, the value on this DATABASE xx-LIKE LYMAN command must be at least 2.\n");
 				cdEXIT(EXIT_FAILURE);
 			}
 		}
 		else
 		{
-			fprintf(ioQQQ," Sorry, I didn\'t recognize an option on this SPECIES xx-LIKE LYMAN command.\n");
+			fprintf(ioQQQ," Sorry, I didn\'t recognize an option on this DATABASE xx-LIKE LYMAN command.\n");
 			fprintf(ioQQQ," The options are \"PUMP\", and \"EXTRA\".\n");
 			cdEXIT(EXIT_FAILURE);
 		}
@@ -733,7 +756,7 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 
 	else
 	{
-		fprintf( ioQQQ, " There should have been a keyword on this SPECIES H-LIKE or HE-LIKE command.\n Sorry.\n" );
+		fprintf( ioQQQ, " There should have been a keyword on this DATABASE H-LIKE or HE-LIKE command.\n Sorry.\n" );
 		cdEXIT(EXIT_FAILURE);
 	}
 	return;

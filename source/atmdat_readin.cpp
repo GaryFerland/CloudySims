@@ -1715,7 +1715,7 @@ STATIC void read_UTA_lines()
 	}
 }
 
-static const long IP_MAGIC = 20200501;
+static const long IP_MAGIC = 20221115;
 
 STATIC void read_ionization_potentials()
 {

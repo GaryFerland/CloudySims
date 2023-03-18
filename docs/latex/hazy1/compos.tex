@@ -160,6 +160,7 @@ The chemical composition is printed at the start of the calculation.
 Be sure to confirm that the composition has been entered correctly.
 
 \section{Abundances he c\dots}
+\label{sec:CommandAbundances}
 
 The abundances of all elements can be entered with the command
 \cdCommand{abundances}
@@ -1668,21 +1669,115 @@ abundances ISM
 metals and grains 2
 \end{verbatim}
 
-\subsection{Metals deplete---gas-phase depletion factors}
+\section{Metals deplete commands}
 
-It is possible to alter an existing set of abundances by depletion onto
-grains.
-In the ISM the observed depletion is a function of the gas density
-(\citealp{Spitzer1985} models this), so there is not really a universal depletion
-pattern.  A set of scale factors that are roughly those appropriate for
-relatively dense ISM gas ($\sim 1 \pcc)$ is built into the code.
+These  specify depletion scale factors  $D_Z$ that account for elements that
+have condensed onto grains.  
+The standard approach is to define the gas-phase abundance of an element $Z$ as
+\begin{equation}
+A_Z( \textrm{gas phase}) = A_Z( \textrm{reference}) \times  D_Z
+\label{eqn:ISMdepletion}
+\end{equation}
+where the reference abundance $ A_Z( \textrm{reference})$ is the composition the user specifies with other commands
+and the depletion scale factor $D_Z$ is set with these commands.
+The final gas-phase abundance results.
+
+There are two versions of this command.
+The first uses a table of depletion factors that is based on older work and
+has been included in \Cloudy\ for some time.
+The second uses the empirical correlations given by
+\citet{2009ApJ...700.1299J} to relate depletions to a global variable he terms $F_*$.
+
+\subsection{The depletion factors, reference abundance, and grains}
+
+However specified, the depletion factors modify the reference abundances according
+to Equation \ref{eqn:ISMdepletion}.
+Other commands are used to specify the reference abundance.
+The most flexible are the \cdCommand{abundances} family of commands specified
+in Section \ref{sec:CommandAbundances}.
+
+The \cdCommand{metals deplete} commands can 
+be combined with the regular \cdCommand{metals} command to rescale the
+depletion factors. This works because both commands define multiplicative
+factors to modify the abundances. In the following example, the depletion
+will be applied to a composition with metallicity that is twice our default. 
+The two \cdCommand{metals} commands can be entered in any order.
+\begin{verbatim}
+metals deplete
+metals 2.
+\end{verbatim}
+
+
+The depleted elements form grains.  
+These commands do not create a set of grain species that is consistent
+with the depletion.
+The grain properties are set separately, usually with one of the
+\cdCommand{grains} commands described in Section \ref{sec:GrainsCommand}.
+Specifying grains by themselves (with the \cdCommand{grains} command)
+does not change the gas-phase abundances,
+which is not self-consistent.  The
+code will complain if you do this, but still perform the simulation.
+
+
+The number of depleted atoms that results from the \cdCommand{metals deplete} command are not directly
+related to the number of atoms in grains, as set with the \cdCommand{grains} commands.
+These commands do not attempt to conserve mass.
+\citet{Snow1996} argue that standard grains have more mass than the
+heavy elements depleted from a solar abundance.
+Interstellar grains are likely to be  porous with a  part of the
+volume a vacuum.
+You can judge the potential mismatch by looking at the reported number of
+atoms in grains and also the number of  atoms depleted from the gas phase.
+These are given in the chemical composition report at the top of the main output.
+
+
+\subsection{External data files}
+
+These \cdCommand{metals deplete} commands read data from 
+one of the \cdFilename{*.dpl} files located in the
+\cdFilename{cloudy/data/abundances} directory.
+Our default file will be used if no filename is specified but
+the user can specify other files by placing the filename within
+a pair of double quotes, as in
+\begin{verbatim}
+metals deplete "myfile.dpl"
+\end{verbatim}
+The default file that is read if no name as specified is documented in the \cdFilename{readme.md}
+file located in this directory.
+
+The \cdFilename{readme.md} file in the \cdFilename{abundances} directory also
+specifies the names of other available data files.  
+Another file, perhaps your own, will be read if a filename appears within double quotes
+on the command line.
+This new file must follow the format of the existing  files.
+If you create additional depletion files for your work please consider documenting what
+you have done by placing comments inside the file and offering it back to the \Cloudy\ project
+by posting on the user forum.
+
+
+\subsection{The print option}
+A report giving the depletion factors produced by these commands is produced with
+the \cdCommand{print} keyword.
+This is a useful way to check on consistency with expectations.  
+The following is an example.
+\begin{verbatim}
+metals deplete print
+\end{verbatim}
+
+\subsection{metals deplete - specify a table of depletion scale factors}
+
+This is the \cdCommand{metals deplete} command that has long been part of \Cloudy.
+It specifies a set of depletion scale factors that are roughly those appropriate for
+relatively dense ISM gas ($\sim 1 \pcc)$.
 Table \ref{tab:GrainGasDepletionFactors} lists
 the depletions that will be assumed if the keyword
 \cdCommand{deplete} occurs on the
 \cdCommand{metals} command but no numbers are on the line.
 These are loosely based
 on the depletions listed by \citet{Jenkins1987} and \citet{Cowie1986}.
-This table is obviously incomplete and I would appreciate learning of better references.
+A file specifying the depletions in the Table is included in the distribution
+and will be used by default.  To use your own file,
+specify its name within double quotes on the command line.
 
 \begin{table}
 \centering
@@ -1724,49 +1819,85 @@ Zn& 0.25& \citealp{Cardelli1991}\\
 \end{tabular}
 \end{table}
 
-This command can be combined with commands that specify abundances
-and the \cdCommand{grains} command to specify an arbitrary set of
-grain and gas-phase abundances.
-Specifying grains by themselves (with the \cdCommand{grains} command)
-does not change the gas-phase abundances,
-which is not self-consistent.  The
-code will complain if you do this, but still perform the simulation.
+\subsection{metals deplete Jenkins 2009 Fstar=0.5}
 
-The following is an example of using
-the nova abundance mixture, depleting it with this command,
-and then setting ISM grains.
+\citet{2009ApJ...700.1299J} presents a unified empirical relationship between depletion
+scale factors of different elements and other properties of the ISM.  
+The overall depletion is parameterized by his depletion strength $F_*$, which we refer to as Fstar,
+with the physical limits $0\leq F_* \leq 1$.
+In his model, each element is depleted by an empirically-determined depletion scale factor $D_z$ that
+is related to $F_*$ by his equation 10, the coefficients listed in his Table 4, 
+and the special case of S from Section 9 of his paper.
+\TODO{Gunasekera et al. 2021} give more details and apply
+these depletions to a model of the Orion Nebula.
+
+\subsubsection{Command syntax}
+
+The full command syntax is
+\begin{verbatim}
+metals deplete Jenkins2009 Fstar=0.5 [vary]  ["MyFile.dpl"]
+\end{verbatim}
+The year 2009 must be the first number on the command line and the next number, $F_*$,
+must be between 0 and 1.
+A space may or may not be placed between the name and year.
+A typical use case might be
 \begin{verbatim}
 abundances nova
-metals deplete
+metals deplete Jenkins 2009 Fstar=0.5
 grains
 \end{verbatim}
+which depletes the specified ``nova'' abundances by the \citet{2009ApJ...700.1299J}
+depletion scale factors with $F_* = 0.5$ and includes our default ISM grain mixture.
 
-It is worth noting that the \cdCommand{metals deplete} command can also
-be combined with the regular \cdCommand{metals} command to rescale the
-depletion factors. This works because both commands define multiplicative
-factors to modify the abundances. In the following example the depletion
-will be a factor 2 less effective than it would have been without the last
-command. The two \cdCommand{metals} commands can be entered in any order.
+The value of $F_*$ is linear by default but
+the \cdCommand{ log} and \cdCommand{linear} keywords allows
+$F_*$ to be specified either way.
+ The \cdCommand{print} option will vary $F_*$ between 0 and 1 and report the depletion factors.
+
+This command includes the \cdCommand{vary} option, described in Section \ref{sec:CommandsVaryOption}
+allowing the \cdCommand{grid} command
+ or the  optimizer to be used.
+ The  \cdCommand{grid} command requires log arguments so a grid of models
+ varying $F_*$ between $10^{-2}$ and 1 could be generated by
+ \begin{verbatim}
+metals deplete Jenkins2009 Fstar=-0.5 vary log
+grid -2 0 0.1 
+\end{verbatim}
+ 
+
+\subsubsection{Other details}
+
+ The Jenkins original work was limited to elements he studied with HST.  
+ Some very highly depleted elements were not included in his study.
+ Calcium is very highly depleted, was not studied by Jenkins, and would 
+ produce strong lines if left at solar abundances
+ \citep{KingdonFerlandFeibelman1995} .  Solar-abundance calcium has a significant
+effect on other lines because of energy balance.
+\TODO{Gunasekera et al. 2021} describe how we deplete elements not considered by Jenkins.
+Both their updated version of the Jenkins analysis, which includes  missing elements, and our
+version of Jenkins' original file, are available. 
+
+Some elements in  \citet{2009ApJ...700.1299J}  have depletion scale factors that are
+greater than unity for small $F_*$.  The physical meaning is that depletion onto grains
+has increased the abundance of those elements.
+Jenkins' values are used by default and a comment is produced 
+after the last zone if the depletion scale factor of any element is greater than unity.  
+We provide a \cdCommand{limit} option to specify an upper limit to the depletion scale factor.
+The following is an example in which $D_Z$ is not allowed to be greater than unity
 \begin{verbatim}
-abundances nova
-metals deplete
-metals 2.
+metals deplete Jenkins2009 Fstar=0.5 limit 1
 \end{verbatim}
 
-These commands do not attempt to conserve mass.
-In particular, the grain
-mass will be less than the mass of depleted heavy elements
-because the nova
-mixture has enhanced CNO, while the ISM grains have only
-a corresponding
-solar depletion of missing material
-(see, however, \citealp{Snow1996}, who
-show that even this is not true).
-
-
-
-
-
-
-
-
+The \citet{2009ApJ...700.1299J}   study actually worked with ISM gas-phase abundances scaled
+relative to the \citet{Lodders2003} solar abundances.
+We provide both the \citet{Lodders2003} and the more recent \citet{Lodders2009} versions of her solar abundances 
+in the \Cloudy\ distribution.  
+The \citet{Lodders2003} gas-phase ISM abundances could be specified by 
+\begin{verbatim}
+abundances "solar_Lodders03.abn"
+metals deplete Jenkins2009 Fstar=0.5
+grains
+\end{verbatim}
+using the composition stored in the \cdFilename{solar\_Lodders03.abn} file 
+in the \cdFilename{abundances} directory.
+This combination would reproduce the Jenkins work.

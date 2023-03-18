@@ -93,7 +93,7 @@ void ParseCommands(void)
 	DEBUG_ENTRY( "ParseCommands()" );
 
 	/* following says abundances are solar  */
-	abund.lgAbnSolar = true;
+	abund.lgAbnReference = true;
 
 	/* this flag remembers whether grains have ever been turned on.  It is passed
 	 * to routine ParseAbundances - there grains will be turned on with commands
@@ -196,7 +196,6 @@ void ParseCommands(void)
 		{"CONSTANT",ParseConstant},
 		/* constant temperature, pressure, density, or gas pressure
 		 * in readsun */
-		{"CONTINUE",NULL},
 		{"CORONAL",ParseCoronal},
 		/* coronal equilibrium; set constant temperature to number on line
 		 *  in readsun */
@@ -224,7 +223,6 @@ void ParseCommands(void)
 		 * scale or abundance options, to change abundance of specific element
 		 * read option to change order of elements
 		 * in reads2.f */
-		{"END",NULL},
 		{"ENERGY",ParseEnergy},			
 		{"EXTINGUISH",ParseExtinguish},
 		/* extinguish ionizing continuum by absorbing column AFTER
@@ -369,13 +367,15 @@ void ParseCommands(void)
 	p.m_lgDSet = false;
 	p.m_lgEOF = false;
 
-	// set default solar abundances
+	// set default reference abundances
 	p.setline("abundances \"default.abn\"");
 	ParseAbundances( p );
 
 	// set default isotopic abundances
 	p.setline("abundances isotopes \"default-iso.abn\"");
 	ParseAbundances( p );
+	/* abundances just set to default reference value */
+	abund.lgAbnReference = true;
 
 	input.lgVisibilityStatus = true;
 

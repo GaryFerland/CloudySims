@@ -107,16 +107,20 @@ monitor "H2O " 538.142m line intensity -18.99
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 04, from -22.46 to -22.24, fix double-counting of big-H2 Solomon rate
 ## >>chng 20 sep 06, from -22.24 to -22.22, further update to McCall CR-related rate
-monitor "HNC " 1652.90m  line intensity -22.22
+## >>chng 21 sep 11, from -22.22 to -22.68, LAMDA update
+monitor "HNC " 1652.90m  line intensity -22.68
 ## >>chng 13 jun 27, from -8.563 to -23.58, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 27, from -23.58 to -23.56, fix the error in mole_h2_coll.cpp
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 04, from -23.56 to -23.54, fix double-counting of big-H2 Solomon rate
-monitor "HCS+" 1755.88m  -23.54 line intensity
+## >>chng 21 sep 11, from -23.54 to -23.42, LAMDA update
+## >>chng 21 nov 04, from -23.42 to -23.5, update mole co data
+monitor "HCS+" 1755.88m  -23.5 line intensity
 ## >>chng 13 jun 27, from -7.453 to -22.84, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 15 aug 03, from -22.84 to -22.87, update LAMDA to 2015
-monitor "CS  " 3058.86m  -22.87 line intensity
+## >>chng 21 sep 11, from -22.87 to -22.32, LAMDA update
+monitor "CS  " 3058.86m  -22.32 line intensity
 ## >>chng 13 jun 27, from -7.288 to -21.64, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 monitor "CO  " 2600.05m  -21.64 line intensity
@@ -147,7 +151,9 @@ monitor "^13CO" 906.599m  -20.83 line intensity
 ## >>chng 13 jun 27, from -8.247 to -21.64, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 04, from -21.64 to -21.69, fix double-counting of big-H2 Solomon rate
-monitor "CN  " 880.858m  -21.69  line intensity
+## >>chng 21 sep 11, from -21.69 to -22.85, LAMDA update
+## >>chng 21 sep 15, from -22.85 to -21.63, go back to unresolved model
+monitor "CN  " 880.858m  -21.63  line intensity
 ##
 # h2_solomon.in
 # class limit  

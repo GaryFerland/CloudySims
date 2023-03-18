@@ -1967,7 +1967,7 @@ public:
 		return const_iterator(p_iterator(i));
 	}
 
-	// \todo: add: assign, swap?, ... (go over stl_vector.h)
+	// \todo add: assign, swap?, ... (go over stl_vector.h)
 
 	iterator begin()
 	{

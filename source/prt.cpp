@@ -10,6 +10,7 @@
 #include "lines.h"
 #include "prt.h"
 #include "generic_state.h"
+#include "save.h"
 
 t_prt prt;
 t_line_col prt_linecol;
@@ -114,7 +115,9 @@ void prt_LineLabels(
 	FILE * ioOUT ,
 	/* print all if true, if false then do not print parts of 
 	 * transferred lines */
-	bool lgPrintAll )
+	bool lgPrintAll,
+       	/* print index of line in line stack */
+	bool lgPrintIndex )
 {
 	long int i;
 
@@ -138,10 +141,13 @@ void prt_LineLabels(
 				 * lgPrintAll is false by default set true with LONG option
 				 * on save line labels command */
 				continue;
+
 			/* this format chosen to be identical to that used by final */
-			fprintf( ioOUT, "%li\t%s\t", 
-						i,
-						LineSave.lines[i].label().c_str() );
+			if( lgPrintIndex )
+				fprintf( ioOUT, "%li\t", i );
+
+			fprintf( ioOUT, "%s\t", LineSave.lines[i].label().c_str() );
+
 			/* skip over leading spaces - a formatting problem */
 			long int j = 0;
 			string comment = LineSave.lines[i].chComment();
@@ -199,8 +205,6 @@ void t_prt_matrix::setSpecies( const string &sspec )
 {
 	DEBUG_ENTRY( "t_prt_matrix::setSpecies()" );
 
-	zero();
-
 	size_t lbrac = sspec.find( "[" );
 	size_t rbrac = sspec.find( "]" );
 
@@ -221,18 +225,25 @@ void t_prt_matrix::setSpecies( const string &sspec )
 
 void t_prt_matrix::resolveLevels()
 {
-	DEBUG_ENTRY( "t_prt_matrix::`resolveSpecies()" );
+	DEBUG_ENTRY( "t_prt_matrix::`resolveLevels()" );
 
 	if( speciesLevels.length() == 0 )
 		return;
 
 	getLevelsGeneric( speciesLevels, true, speciesLevelList );
+	lgLevelsResolved = true;
 }
 
-void t_prt_matrix::prtRates( const long nlevels_local, const multi_arr<double,2,C_TYPE> &a,
+void t_prt_matrix::prtRates( const long numLevels,
+				const multi_arr<double,2,C_TYPE> &matrix,
 				valarray<double> &b )
 {
 	DEBUG_ENTRY( "t_prt_matrix::prtRates()" );
+
+	if( not lgLevelsResolved )
+	{
+		resolveLevels();
+	}
 
 	if( speciesLevelList.size() == 0 )
 		return;
@@ -241,7 +252,7 @@ void t_prt_matrix::prtRates( const long nlevels_local, const multi_arr<double,2,
 	for( vector<long>::iterator ipLo = speciesLevelList.begin();
 		 ipLo != speciesLevelList.end(); ++ipLo )
 	{
-		if( *ipLo >= nlevels_local )
+		if( *ipLo >= numLevels )
 			continue;
 		if( ipLo == speciesLevelList.begin() )
 			fprintf( ioQQQ, "\t%3ld", *ipLo+1 );
@@ -253,15 +264,15 @@ void t_prt_matrix::prtRates( const long nlevels_local, const multi_arr<double,2,
 	for( vector<long>::iterator ipLo = speciesLevelList.begin();
 		 ipLo != speciesLevelList.end(); ++ipLo )
 	{
-		if( *ipLo >= nlevels_local )
+		if( *ipLo >= numLevels )
 			continue;
 		fprintf( ioQQQ, "%3ld\t %.4e", *ipLo+1, b[ *ipLo ] );
 		for( vector<long>::iterator ipHi = speciesLevelList.begin();
 			 ipHi != speciesLevelList.end(); ++ipHi )
 		{
-			if( *ipHi >= nlevels_local )
+			if( *ipHi >= numLevels )
 				continue;
-			fprintf( ioQQQ, "\t%11.4e", a[ *ipLo ][ *ipHi ] );
+			fprintf( ioQQQ, "\t%11.4e", matrix[ *ipLo ][ *ipHi ] );
 		}
 		fprintf( ioQQQ, "\n" );
 	}

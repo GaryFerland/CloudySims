@@ -842,6 +842,7 @@ void diatomics::H2_Level_low_matrix(
 		&dCoolDT,
 		" H2 ",
 		lgPrtMatrix,
+		lgImgMatrix,
 		/* nNegPop positive if negative pops occurred, negative if too cold */
 		&nNegPop,
 		&lgZeroPop,

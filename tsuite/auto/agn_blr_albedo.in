@@ -35,10 +35,12 @@ save monitors last "agn_blr_albedo.asr"
 # must assert the luminosity since change in this 
 # line would appear to change the rest of the spectrum
 monitor line luminosity "FeKa" 1.78 10.070
-monitor line "nFnu" 1000 26.2
+## >>chng 21 sep 11, from 26.2 to 27.41, LAMDA update
+monitor line "nFnu" 1000 27.41
 monitor line "nInu" 1000 64.663
 ## >>chng 13 jul 24, wl from 925.1 to 925.144A, increased wl precision to 6 sig. fig.
-monitor line "nFnu" 925.144A 26.0
+## >>chng 21 sep 11, from 26 to 27.23, LAMDA update
+monitor line "nFnu" 925.144A 27.23
 ## >>chng 13 jul 24, wl from 925.1 to 925.144A, increased wl precision to 6 sig. fig.
 monitor line "nInu" 925.144A 64.05
 ## >>chng 11 sep 15, from 24.8 to 26.51, Chianti for Fe moderate to high ions

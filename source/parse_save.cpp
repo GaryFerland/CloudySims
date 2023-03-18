@@ -22,11 +22,10 @@
 #include "service.h"
 #include "species.h"
 #include "dense.h"
+#include "continuum.h"
 
 /* check for keyword UNITS on line, then scan wavelength or energy units if present */
 STATIC const char* ChkUnits(Parser &p);
-
-STATIC void addUniqueSpeciesBand( const string &filename, const string &speciesLabel );
 
 inline void saveXSPEC(unsigned int option)
 {
@@ -470,6 +469,50 @@ void ParseSave(Parser& p)
 		}
 	}
 
+	else if( p.nMatch("ARRA") && p.nMatch( "LEVE" ) )
+	{
+		strcpy( save.chSave[save.nsave], "IMAG" );
+
+		string species = chLabel;
+
+		if( species == "" )
+		{
+			fprintf( ioQQQ, "Empty species label: ''\n" );
+			cdEXIT( EXIT_FAILURE );
+		}
+
+		save.img_matrix.lgImgRates = true;
+		save.img_matrix.setSpecies( species );
+		if( p.nMatch( "FITS" ) )
+			save.img_matrix.lgFITS = true;
+		else if( p.nMatch( " PPM" ) )
+			save.img_matrix.lgFITS = false;
+		else
+		{
+			fprintf( ioQQQ, "Please use either the FITS or PPM keywords\n" );
+			cdEXIT( EXIT_FAILURE );
+		}
+
+		if( p.nMatch( "ITER" ) )
+			save.img_matrix.iteration = p.getNumberCheck( "iter" );
+		if( p.nMatch( "ZONE" ) )
+			save.img_matrix.zone = p.getNumberCheck( "zone" );
+
+		// NB NB
+		//
+		// This command generates images for debugging purposes,
+		// and it is executed near the call to the linear algebra
+		// function that solves the rate equations for level
+		// populations
+		//
+		// Because there is no output file for save_do.cpp to
+		// write in, we have to leave the function immediately,
+		// or a file will be created with the given species as
+		// its name
+		//
+		return;
+	}
+
 	else if( p.nMatch("AVER") )
 	{
 		/* save averages */
@@ -736,7 +779,7 @@ void ParseSave(Parser& p)
 			strcpy( save.chSave[save.nsave], "CONf" );
 
 			sncatf( chHeader, 
-				"#Energy/%s\tTransmitted\n",
+				"#Energy/%s\tTransmitted\tSpecLine\tSingle-Line Opt Depth\n",
 				save.chConSavEnr[save.nsave] );
 
 			/* range option - important since so much data */
@@ -1602,10 +1645,6 @@ void ParseSave(Parser& p)
 
 		else if( p.nMatch("LABE") )
 		{
-			/* save line labels */
-			strcpy( save.chSave[save.nsave], "LINL" );
-			sncatf( chHeader, 
-				"#index\tlabel\twavelength\tcomment\n" );
 			/* this controls whether we will print lots of redundant 
 			 * info labels for transferred lines - if keyword LONG appears
 			 * then do so, if does not appear then do not - this is default */
@@ -1613,6 +1652,29 @@ void ParseSave(Parser& p)
 				save.punarg[save.nsave][0] = 1;
 			else
 				save.punarg[save.nsave][0] = 0;
+
+			/* if 'no index' is given, the index in the line stack
+			 * is not reported
+			 * this is useful when comparing the line stack before
+			 * and after a significant change in the atomic data
+			 * -- added for switching from Chianti v7 to v10 */
+			if( p.nMatch( " NO " ) && p.nMatch( "INDE" ) )
+				save.punarg[save.nsave][1] = 0;
+			else
+				save.punarg[save.nsave][1] = 1;
+
+			/* save line labels */
+			strcpy( save.chSave[save.nsave], "LINL" );
+			if( save.punarg[save.nsave][1] > 0. )
+			{
+				sncatf( chHeader, 
+					"#index\tlabel\twavelength\tcomment\n" );
+			}
+			else
+			{
+				sncatf( chHeader, 
+					"#label\twavelength\tcomment\n" );
+			}
 		}
 
 		else if( p.nMatch("OPTI") && !p.nMatch("SPECIES") )
@@ -1657,24 +1719,86 @@ void ParseSave(Parser& p)
 
 		else if( p.nMatch("POPU") )
 		{
-			/* save line populations command - first give index and inforamtion
-			 * for all lines, then populations for lines as a function of
-			 * depth, using this index */
+			/* save line populations "output" "LineList" */
 			strcpy( save.chSave[save.nsave], "LINP" );
-			sncatf( chHeader, 
-				"#population information\n" );
-			/* this is optional limit to smallest population to save - always
-			 * interpreted as a log */
-			save.punarg[save.nsave][0] = (realnum)exp10(p.FFmtRead());
 
-			/* this is default - all positive populations */
-			if( p.lgEOL() )
-				save.punarg[save.nsave][0] = 0.f;
-
-			if( p.nMatch(" OFF") )
+			/* we parsed off the second file name at start of this routine
+			 * check if file was found, use it if it was, else abort */
+			if( !lgSecondFilename )
 			{
-				/* no lower limit - print all lines */
-				save.punarg[save.nsave][0] = -1.f;
+				fprintf(ioQQQ ,
+					"There must be a second file name between double"
+					" quotes on the SAVE LINE POPULATIONS command\n."
+					"This second file contains the input list of"
+					" spectral lines.\n"
+					"I did not find it.\nSorry.\n");
+				cdEXIT(EXIT_FAILURE);
+			}
+
+			/* actually get the lines, and allocate the space in the arrays 
+			 * cdGetLineList will look on path, only do one time in grid */
+			if( save.params[save.nsave].ipPnunit == NULL )
+			{
+				/* make sure we free any allocated space from a previous call */
+				save.SaveLineListFree(save.nsave);
+	
+				save.nLineList[save.nsave] = cdGetLineList(chSecondFilename, save.LineList[save.nsave]);
+	
+				if( save.nLineList[save.nsave] < 0 )
+				{
+					fprintf(ioQQQ,
+						"DISASTER could not open"
+						" SAVE LINE POPULATIONS file %s \n",
+						chSecondFilename.c_str() );
+					cdEXIT(EXIT_FAILURE);
+				}
+			}
+
+			// by default give numbers in columns
+			// ROW keyword says to write the numbers across as one long row
+			// subsequent keyword tells which column to write
+			if( p.nMatch(" ROW") )
+			{
+				save.punarg[save.nsave][0] = 1;
+	
+				if( p.nMatch( " LOW" ) )
+					/* lower level population */
+					save.punarg[save.nsave][1] = 0;
+				else if( p.nMatch( " UPP" ) )
+					/* upper level population */
+					save.punarg[save.nsave][1] = 1;
+				else if( p.nMatch( " TSP" ) )
+					/* spin temperature */
+					save.punarg[save.nsave][1] = 3;
+				else
+					/* DEFAULT: population ratio: (nu/gu)/(nl/gl) */
+					save.punarg[save.nsave][1] = 2;
+			}
+			else
+				// the default, one line per row, multiple columns
+				save.punarg[save.nsave][0] = 0;
+
+			sncatf( chHeader, "#depth\t" );
+			if( save.punarg[save.nsave][0] )
+			{
+				for( long int j=0; j<save.nLineList[save.nsave]; ++j )
+				{
+					sncatf( chHeader, "%s ",
+						save.LineList[save.nsave][j].chLabel.c_str() );
+					string chTemp;
+					sprt_wl( chTemp, save.LineList[save.nsave][j].wave );
+					sncatf( chHeader, "%s", chTemp.c_str() );
+					if( j != save.nLineList[save.nsave] )
+					{
+						sncatf( chHeader, "\t" );
+					}
+				}
+				sncatf( chHeader, "\n" );
+			}
+			else
+			{	
+				sncatf( chHeader,
+					"emline\tnl\tnu\t(nu/gu)/(nl/gl)\tTspin\n" );
 			}
 		}
 
@@ -2571,13 +2695,6 @@ void ParseSave(Parser& p)
 		ioMAP = save.params[save.nsave].ipPnunit;
 	}
 
-	/* make sure FeII bands are always processed
-	 * if a 'save species bands' command has not been issued
-	 * the bands will be computed, and printed on main output,
-	 * but no 'save' output file will be created */
-	if( dense.lgElmtOn[ipIRON] )
-		addUniqueSpeciesBand( "FeII_bands.ini", "Fe+" );
-
 	/* if not done already and chTitle has been set to a string then print title
 	 * logic to prevent more than one title in grid calculation */
 	if( save.lgSaveTitle(save.nsave) && chTitle.length() > 0 )
@@ -2778,39 +2895,4 @@ STATIC const char* ChkUnits( Parser &p )
 		val = StandardEnergyUnit(" RYD ");
 	}
 	return val;
-}
-
-STATIC bool specBandsExists( const string &filename, const string &speciesLabel )
-{
-	DEBUG_ENTRY( "specBandsExists()" );
-
-	bool exists = false;
-
-	for( vector<save_species_bands>::iterator it = save.specBands.begin();
-		it != save.specBands.end(); ++it )
-	{
-		if( (*it).filename == filename &&
-			(*it).speciesLabel == speciesLabel )
-		{
-			exists = true;
-			break;
-		}
-	}
-
-	return exists;
-}
-
-STATIC void addUniqueSpeciesBand( const string &filename, const string &speciesLabel )
-{
-	DEBUG_ENTRY( "addUniqueSpeciesBand()" );
-
-	if( specBandsExists( filename, speciesLabel ) )
-		return;
-
-	save_species_bands thisSpBand;
-	thisSpBand.filename = filename;
-	thisSpBand.speciesLabel = speciesLabel;
-	save.specBands.push_back( thisSpBand );
-
-	return;
 }
