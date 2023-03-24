@@ -1304,11 +1304,24 @@ of Chianti.
 \subsection{Database Chianti off} 
 will disable all of Chianti.
 
-\subsection{Database Chianti hybrid} 
-Hybrid, the merging of the Chianti data with the Opacity Project data, 
-is on by default if Chianti is on.
+\subsection{Database Chianti [hybrid, no hybrid]} 
+Hybrid, the merging of the Chianti and Opacity Project data, 
+is done by default if Chianti is included.
 The \cdCommand{no hybrid} option disables the Opacity Project data and only uses Chianti.
 See \citet{2013MNRAS.429.3133L} for more details.
+
+Our Opacity Project line set is contained in the file \cdFilename{level2.dat} and
+includes a large number of permitted electronic transitions. These often
+extend to higher excitation energies and shorter wavelengths than Chianti,
+so can add important lines. However, the Opacity Project data have greater
+uncertainties than Chianti. The OP energies are entirely theoretical and
+there are no matching collision strengths.
+The line wavelengths have an uncertainty of roughly 10\% and we use
+various forms of the g-bar approximation to produce collision rates.
+
+You can judge the various sources of atomic data by running the model
+\cdFilename{docs/LineList.in} and examining the resulting file \cdFilename{docs/LineList.txt}.
+It lists all lines with their sources.
 
 \subsection{Database Chianti print} 
 will print which Chianti ions are being used
