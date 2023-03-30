@@ -371,8 +371,8 @@ struct t_atmdat : public module {
 
 	/** true if CHIANTI database is enabled **/
 	bool lgChiantiOn;
-	/** true if CHIANTI database supplements opacity project lines */
-	bool lgChiantiHybrid;
+	/** true if CHIANTI database is supplemented by opacity project lines */
+	bool lgChiantiLvl2Hybrid;
 	/** true if Cloudy will print which Chianti species are being used as well as number of levels */
 	bool lgChiantiPrint;
 	/** true if Cloudy will use no theoretical energy levels from Chianti, only experimental. False means that only theoretical energy levels are used */
@@ -399,8 +399,8 @@ struct t_atmdat : public module {
 
 	/** true if Stout database is enabled **/
 	bool lgStoutOn;
-	/** true if Stout database supplements opacity project lines */
-	bool lgStoutHybrid;
+	/** true if Stout database supplements opacity project (Level 2) lines */
+	bool lgStoutLvl2Hybrid;
 	/** true if Cloudy will print which Stout species are being used as well as number of levels */
 	bool lgStoutPrint;
 	/**Stout filename variable **/
