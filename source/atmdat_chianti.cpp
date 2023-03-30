@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/*This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cddefines.h"
 #include "taulines.h"
@@ -679,7 +679,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 	  // number of theoretical energy levels
 	  nTheoreticalLevels;
 	FILE *ioElecCollData=NULL, *ioProtCollData=NULL;
-	realnum  fstatwt,fenergyWN,fWLAng,fenergy,feinsteina;
+	realnum  fstatwt,fenergyWN,fWLAng,fenergy,feinsteina,theoenergy;
 	double fScalingParam,fEnergyDiff;
 	const char chCommentChianti = '#';
 
@@ -814,7 +814,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 	/* The total number of levels depends on the experimental Chianti switch */
 	if( atmdat.lgChiantiExp )
 	{
-		HighestIndexInFile = nExperimentalLevels;
+		HighestIndexInFile = nTotalLevels; // AS: Changed to take whole nrg column
 	}
 	else if( atmdat.lgChiantiTheo  )
 	{
@@ -883,7 +883,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 			char chLabelChemical[CHARS_SPECIES] = "";
 			spectral_to_chemical( chLabelChemical, dBaseSpecies[intNS].chLabel ),
 			fprintf( ioQQQ,"Using CHIANTI spectrum %s (species: %s) with %li experimental energy levels of %li available.\n",
-				dBaseSpecies[intNS].chLabel, chLabelChemical, nLevelsUsed , nExperimentalLevels );
+				dBaseSpecies[intNS].chLabel, chLabelChemical, nLevelsUsed , nTheoreticalLevels );
 		}
 		else
 		{
@@ -941,18 +941,38 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 	const int lvl_statwt_col = 4;
 	//Read in stat weight and energy
 
+	//lvl_skip_to_exp_nrg is the # of columns to skip to experimental value from lvl_skipto_statwt + lvl_statwt_col
+	const int lvl_skip_to_exp_nrg = 4;
+	//lvl_skip_to_exp_nrg is the # of columns to skip to experimental value from lvl_skip_to_exp_nrg + lvl_nrg_col
+	const int lvl_skip_to_theo_nrg = 13;
+
+
+
 	//Read in nrg levels to see if they are in order
 	for( long ipLev=0; ipLev<nTotalLevels; ipLev++ )
 	{
 		if(elvlcstream.is_open())
 		{
-			char gtemp[lvl_statwt_col],thtemp[lvl_nrg_col],obtemp[lvl_nrg_col];
+			char gtemp[lvl_statwt_col],theotemp[lvl_nrg_col],exptemp[lvl_nrg_col];
+			//char gtemp[lvl_statwt_col],thtemp[lvl_nrg_col],obtemp[lvl_nrg_col],theotemp[lvl_nrg_col],exptemp[lvl_nrg_col];
 			elvlcstream.seekg(lvl_skipto_statwt,ios::cur);
 			elvlcstream.get(gtemp,lvl_statwt_col);
-			fstatwt = (realnum)atof(gtemp);
-			elvlcstream.get(thtemp,lvl_nrg_col);
-			fenergy = (double) atof(thtemp);
+			fstatwt = (realnum) atof(gtemp)	;
+			
+			//elvlcstream.get(thtemp,lvl_nrg_col);
+			//fenergy = (double) atof(thtemp);
+			
+			
+			//Reading experimental column  
+			elvlcstream.seekg(lvl_skip_to_exp_nrg,ios::cur);
+			elvlcstream.get(exptemp,lvl_nrg_col);
+			fenergy = (double) atof(exptemp);
 
+			// Reading Theoretical Column
+			elvlcstream.seekg(lvl_skip_to_theo_nrg,ios::cur);
+			elvlcstream.get(theotemp,lvl_nrg_col);
+			theoenergy = (double) atof(theotemp);
+			
 			if(fstatwt <= 0.)
 			{
 				fprintf( ioQQQ, " WARNING: A positive non zero value is expected for the "
@@ -960,6 +980,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 						" level %li\n", chEnFilename.c_str(),ipLev);
 				cdEXIT(EXIT_FAILURE);
 			}
+
 
 			if( atmdat.lgChiantiExp )
 			{
@@ -972,6 +993,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 				if( fenergy != 0. || ipLev == 0 )
 				{
 					dBaseStatesEnergy.at(ncounter).first = fenergy;
+					fprintf(ioQQQ, " The first exp column energies are %f\n",fenergy);
 					dBaseStatesEnergy.at(ncounter).second = ncounter;
 					dBaseStatesStwt.at(ncounter) = fstatwt;
 					intExperIndex.at(ipLev) = ncounter;
@@ -979,10 +1001,19 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 				}
 				else
 				{
-					intExperIndex.at(ipLev) = -1;
+					//intExperIndex.at(ipLev) = -1;
+					
+					// Reading only theory because fenergy = 0
+					dBaseStatesEnergy.at(ncounter).first = theoenergy;
+					fprintf(ioQQQ, " The first theo column energies are %f\n",theoenergy);
+					dBaseStatesEnergy.at(ncounter).second = ncounter;
+					dBaseStatesStwt.at(ncounter) = fstatwt;
+					intExperIndex.at(ipLev) = ncounter;
+					ncounter++;
+					
 				}
 			}
-			else
+			/*else
 			{
 				elvlcstream.seekg(lvl_skip_ryd,ios::cur);
 				elvlcstream.get(obtemp,lvl_nrg_col);
@@ -990,6 +1021,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 				if(fenergy != 0. || ipLev == 0)
 				{
 					dBaseStatesEnergy.at(ipLev).first = fenergy;
+					fprintf(ioQQQ, " The first column energies are .\n",fenergy);
 					dBaseStatesEnergy.at(ipLev).second = ipLev;
 					dBaseStatesStwt.at(ipLev) = fstatwt;
 				}
@@ -999,7 +1031,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 					dBaseStatesEnergy.at(ipLev).second = ipLev;
 					dBaseStatesStwt.at(ipLev) = -1.;
 				}
-			}
+			}*/
 
 			elvlcstream.ignore(INT_MAX,'\n');
 		}
@@ -1680,3 +1712,4 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 
 	return;
 }
+
