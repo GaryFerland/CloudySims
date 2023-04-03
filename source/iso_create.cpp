@@ -316,6 +316,92 @@ void iso_create()
 					/* FillExtraLymanLine( ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi], ipISO, nelem, ipHi ); */
 					FillExtraLymanLine( ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][ipHi], ipISO, nelem, ipHi );
 					FillExtraLymanLine( ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][ipHi], ipISO, nelem, ipHi );
+
+					/* Chamani added: Adding Fine Structure Corrections to nP energy levels */
+					if( ipISO == ipH_LIKE )
+					{
+						double reduced_mass = (nelem+1)*PROTON_MASS*ELECTRON_MASS/(((nelem+1)*PROTON_MASS)+ELECTRON_MASS);
+            			double ELECTRON_REST_ENGY_cm = 4.1214844832e9;
+						double mc2 = ELECTRON_REST_ENGY_cm*reduced_mass/ELECTRON_MASS;
+						double Eo = -iso_sp[ipISO][nelem].IonPot;
+						double Za = FINE_STRUCTURE*(nelem+1.);
+
+						/*double En1 = ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].EnergyWN();*/
+						//double En2 = Eo/pow2(ipHi);
+
+						/*Resolving j levels OPTION 1: Dirac equation*/
+						double DiracNJ05 = ipHi - 1. + pow( 1. - pow2(Za), 0.5);
+            			double EnergyJ05 = ELECTRON_REST_ENGY_cm*(pow(1 + pow2(Za/DiracNJ05), -0.5)  - 1.) - Eo;
+            			double DiracNJ15 = ipHi - 2. + pow( 4. - pow2(Za), 0.5);
+            			double EnergyJ15 = ELECTRON_REST_ENGY_cm*(pow(1 + pow2(Za/DiracNJ15), -0.5)  - 1.) - Eo;
+						
+						/*Resolving j levels OPTION 2: Lowest order of Dirac equation*/
+						//double EnergyJ05_correction = En2*(1. + (pow2(Za)/ipHi)*( 1. -(3./(4.*ipHi)) )) - Eo;
+						//double EnergyJ15_correction = En2*(1. + (pow2(Za)/ipHi)*( 0.5-(3./(4.*ipHi)) )) - Eo;
+
+						/* Resolving l energy levels (Lamb-Shift) */
+						double Kn_ratio = 0.09810200045840249*exp(-ipHi) + 0.957168871530392;
+            			double Lamb_correction_factor = 8.*pow(nelem+1.,4.)*pow(FINE_STRUCTURE,3.)*RYD_INF/(3.*M_PI*pow(ipHi,3.));
+            			double Lamb_correctionJ05 = Lamb_correction_factor*( log(1./Kn_ratio) + (-1./3.)*(3./8.) );
+            			double Lamb_correctionJ15 = Lamb_correction_factor*( log(1./Kn_ratio) + ( 1./6.)*(3./8.) );
+
+						/* Mass Recoil Correction */
+						double NJ05 = sqrt( pow2( ipHi - 1. + sqrt(1. - pow2(Za)) ) + pow2(Za) );
+            			double mass_recoil_correction_term1J05 = ELECTRON_REST_ENGY_cm*(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(NJ05));
+            			double mass_recoil_correctionJ05 = mass_recoil_correction_term1J05 + mc2*pow2(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(ipHi));
+
+						double NJ15 = sqrt( pow2( ipHi - 2. + sqrt(4. - pow2(Za)) ) + pow2(Za) );
+            			double mass_recoil_correction_term1J15 = ELECTRON_REST_ENGY_cm*(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(NJ15));
+            			double mass_recoil_correctionJ15 = mass_recoil_correction_term1J15 + mc2*pow2(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(ipHi));
+
+						/* Total corrected energy levels */
+						if(nelem > 0)
+						{
+							ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].EnergyWN() = EnergyJ05+Lamb_correctionJ05+(mass_recoil_correctionJ05*0.5);
+							ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].EnergyWN() = EnergyJ15+Lamb_correctionJ15+(mass_recoil_correctionJ15*0.5);
+						}
+						else
+						{
+							ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].EnergyWN() = EnergyJ05+Lamb_correctionJ05+mass_recoil_correctionJ05;
+							ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].EnergyWN() = EnergyJ15+Lamb_correctionJ15+mass_recoil_correctionJ15;
+						}
+						
+						
+						/*if(nelem == ipIRON)
+						{
+							fprintf( ioQQQ, "%li\t%li\t%f\t%f\t%f\t%f\t%f\t%f\n",
+							nelem,
+							ipHi,
+							(EnergyJ05+Lamb_correctionJ05+mass_recoil_correctionJ05 - 56071399.8)/56071399.8,
+							(EnergyJ15+Lamb_correctionJ15+mass_recoil_correctionJ15 - 56242504.33)/56242504.33,
+							(EnergyJ05+Lamb_correctionJ05+(mass_recoil_correctionJ05*0.5) - 56071399.8)/56071399.8,
+							(EnergyJ15+Lamb_correctionJ15+(mass_recoil_correctionJ15*0.5) - 56242504.33)/56242504.33,
+							(ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].EnergyWN() - 56071399.8)/56071399.8,
+							(ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].EnergyWN() - 56242504.33)/56242504.33
+							);
+
+							cdEXIT(EXIT_FAILURE);
+						}*/
+
+						/*fprintf( ioQQQ, "%li\t%li\t%f\t%f\t%f\t%f\t%f\t%f\n",
+							nelem,
+							ipHi,
+							EnergyJ05+Lamb_correctionJ05,
+							EnergyJ15+Lamb_correctionJ15,
+							En2*EnergyJ05_correction - Eo + Lamb_correctionJ05,
+							En2*EnergyJ15_correction - Eo + Lamb_correctionJ05,
+							ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].EnergyWN()*EnergyJ05_correction + Lamb_correctionJ05,
+							ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].EnergyWN()*EnergyJ15_correction + Lamb_correctionJ05
+						);
+						cdEXIT(EXIT_FAILURE);*/
+							
+						/*if(nelem > ipIRON)
+						{
+							cdEXIT(EXIT_FAILURE);
+						}*/
+						
+					}
+
 				}
 			}
 		}

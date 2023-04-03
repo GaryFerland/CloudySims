@@ -172,9 +172,10 @@ void lines()
 	linadd( 0., (realnum)i , "####", 'i' ,
 			  "extra Lyman lines");
 	
+	/* loop over all iso-electronic sequences */
 	for( long ipISO=ipH_LIKE; ipISO < NISO; ++ipISO )
 	{
-		/* loop over all iso-electronic sequences */
+		/* loop over all elements on this iso-sequence */
 		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
 		{
 			if( ! dense.lgElmtOn[nelem] )
