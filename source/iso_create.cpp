@@ -366,39 +366,18 @@ void iso_create()
 							ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].EnergyWN() = EnergyJ15+Lamb_correctionJ15+mass_recoil_correctionJ15;
 						}
 						
-						
-						/*if(nelem == ipIRON)
+						enum {DEBUG_LOC=false};
+						if(DEBUG_LOC && nelem == ipIRON)
 						{
-							fprintf( ioQQQ, "%li\t%li\t%f\t%f\t%f\t%f\t%f\t%f\n",
+							fprintf( ioQQQ, "%li\t%li\t%f\t%f\n",
 							nelem,
 							ipHi,
-							(EnergyJ05+Lamb_correctionJ05+mass_recoil_correctionJ05 - 56071399.8)/56071399.8,
-							(EnergyJ15+Lamb_correctionJ15+mass_recoil_correctionJ15 - 56242504.33)/56242504.33,
-							(EnergyJ05+Lamb_correctionJ05+(mass_recoil_correctionJ05*0.5) - 56071399.8)/56071399.8,
-							(EnergyJ15+Lamb_correctionJ15+(mass_recoil_correctionJ15*0.5) - 56242504.33)/56242504.33,
 							(ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].EnergyWN() - 56071399.8)/56071399.8,
 							(ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].EnergyWN() - 56242504.33)/56242504.33
 							);
 
 							cdEXIT(EXIT_FAILURE);
-						}*/
-
-						/*fprintf( ioQQQ, "%li\t%li\t%f\t%f\t%f\t%f\t%f\t%f\n",
-							nelem,
-							ipHi,
-							EnergyJ05+Lamb_correctionJ05,
-							EnergyJ15+Lamb_correctionJ15,
-							En2*EnergyJ05_correction - Eo + Lamb_correctionJ05,
-							En2*EnergyJ15_correction - Eo + Lamb_correctionJ05,
-							ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].EnergyWN()*EnergyJ05_correction + Lamb_correctionJ05,
-							ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].EnergyWN()*EnergyJ15_correction + Lamb_correctionJ05
-						);
-						cdEXIT(EXIT_FAILURE);*/
-							
-						/*if(nelem > ipIRON)
-						{
-							cdEXIT(EXIT_FAILURE);
-						}*/
+						}
 						
 					}
 
