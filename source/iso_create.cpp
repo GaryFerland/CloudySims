@@ -326,24 +326,11 @@ void iso_create()
 						double Eo = -iso_sp[ipISO][nelem].IonPot;
 						double Za = FINE_STRUCTURE*(nelem+1.);
 
-						/*double En1 = ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].EnergyWN();*/
-						//double En2 = Eo/pow2(ipHi);
-
 						/*Resolving j levels OPTION 1: Dirac equation*/
 						double DiracNJ05 = ipHi - 1. + pow( 1. - pow2(Za), 0.5);
             			double EnergyJ05 = ELECTRON_REST_ENGY_cm*(pow(1 + pow2(Za/DiracNJ05), -0.5)  - 1.) - Eo;
             			double DiracNJ15 = ipHi - 2. + pow( 4. - pow2(Za), 0.5);
             			double EnergyJ15 = ELECTRON_REST_ENGY_cm*(pow(1 + pow2(Za/DiracNJ15), -0.5)  - 1.) - Eo;
-						
-						/*Resolving j levels OPTION 2: Lowest order of Dirac equation*/
-						//double EnergyJ05_correction = En2*(1. + (pow2(Za)/ipHi)*( 1. -(3./(4.*ipHi)) )) - Eo;
-						//double EnergyJ15_correction = En2*(1. + (pow2(Za)/ipHi)*( 0.5-(3./(4.*ipHi)) )) - Eo;
-
-						/* Resolving l energy levels (Lamb-Shift) */
-						double Kn_ratio = 0.09810200045840249*exp(-ipHi) + 0.957168871530392;
-            			double Lamb_correction_factor = 8.*pow(nelem+1.,4.)*pow(FINE_STRUCTURE,3.)*RYD_INF/(3.*M_PI*pow(ipHi,3.));
-            			double Lamb_correctionJ05 = Lamb_correction_factor*( log(1./Kn_ratio) + (-1./3.)*(3./8.) );
-            			double Lamb_correctionJ15 = Lamb_correction_factor*( log(1./Kn_ratio) + ( 1./6.)*(3./8.) );
 
 						/* Mass Recoil Correction */
 						double NJ05 = sqrt( pow2( ipHi - 1. + sqrt(1. - pow2(Za)) ) + pow2(Za) );
@@ -357,13 +344,13 @@ void iso_create()
 						/* Total corrected energy levels */
 						if(nelem > 0)
 						{
-							ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].EnergyWN() = EnergyJ05+Lamb_correctionJ05+(mass_recoil_correctionJ05*0.5);
-							ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].EnergyWN() = EnergyJ15+Lamb_correctionJ15+(mass_recoil_correctionJ15*0.5);
+							ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].EnergyWN() = EnergyJ05+(mass_recoil_correctionJ05*0.5);
+							ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].EnergyWN() = EnergyJ15+(mass_recoil_correctionJ15*0.5);
 						}
 						else
 						{
-							ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].EnergyWN() = EnergyJ05+Lamb_correctionJ05+mass_recoil_correctionJ05;
-							ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].EnergyWN() = EnergyJ15+Lamb_correctionJ15+mass_recoil_correctionJ15;
+							ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].EnergyWN() = EnergyJ05+mass_recoil_correctionJ05;
+							ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].EnergyWN() = EnergyJ15+mass_recoil_correctionJ15;
 						}
 						
 						enum {DEBUG_LOC=false};
