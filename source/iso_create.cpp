@@ -321,25 +321,25 @@ void iso_create()
 					if( ipISO == ipH_LIKE )
 					{
 						double reduced_mass = (nelem+1)*PROTON_MASS*ELECTRON_MASS/(((nelem+1)*PROTON_MASS)+ELECTRON_MASS);
-            			double ELECTRON_REST_ENGY_cm = 4.1214844832e9;
+						double ELECTRON_REST_ENGY_cm = 4.1214844832e9;
 						double mc2 = ELECTRON_REST_ENGY_cm*reduced_mass/ELECTRON_MASS;
 						double Eo = -iso_sp[ipISO][nelem].IonPot;
 						double Za = FINE_STRUCTURE*(nelem+1.);
 
 						/*Resolving j levels OPTION 1: Dirac equation*/
 						double DiracNJ05 = ipHi - 1. + pow( 1. - pow2(Za), 0.5);
-            			double EnergyJ05 = ELECTRON_REST_ENGY_cm*(pow(1 + pow2(Za/DiracNJ05), -0.5)  - 1.) - Eo;
-            			double DiracNJ15 = ipHi - 2. + pow( 4. - pow2(Za), 0.5);
-            			double EnergyJ15 = ELECTRON_REST_ENGY_cm*(pow(1 + pow2(Za/DiracNJ15), -0.5)  - 1.) - Eo;
+						double EnergyJ05 = ELECTRON_REST_ENGY_cm*(pow(1 + pow2(Za/DiracNJ05), -0.5)  - 1.) - Eo;
+						double DiracNJ15 = ipHi - 2. + pow( 4. - pow2(Za), 0.5);
+						double EnergyJ15 = ELECTRON_REST_ENGY_cm*(pow(1 + pow2(Za/DiracNJ15), -0.5)  - 1.) - Eo;
 
 						/* Mass Recoil Correction */
 						double NJ05 = sqrt( pow2( ipHi - 1. + sqrt(1. - pow2(Za)) ) + pow2(Za) );
-            			double mass_recoil_correction_term1J05 = ELECTRON_REST_ENGY_cm*(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(NJ05));
-            			double mass_recoil_correctionJ05 = mass_recoil_correction_term1J05 + mc2*pow2(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(ipHi));
+						double mass_recoil_correction_term1J05 = ELECTRON_REST_ENGY_cm*(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(NJ05));
+						double mass_recoil_correctionJ05 = mass_recoil_correction_term1J05 + mc2*pow2(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(ipHi));
 
 						double NJ15 = sqrt( pow2( ipHi - 2. + sqrt(4. - pow2(Za)) ) + pow2(Za) );
-            			double mass_recoil_correction_term1J15 = ELECTRON_REST_ENGY_cm*(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(NJ15));
-            			double mass_recoil_correctionJ15 = mass_recoil_correction_term1J15 + mc2*pow2(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(ipHi));
+						double mass_recoil_correction_term1J15 = ELECTRON_REST_ENGY_cm*(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(NJ15));
+						double mass_recoil_correctionJ15 = mass_recoil_correction_term1J15 + mc2*pow2(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(ipHi));
 
 						/* Total corrected energy levels */
 						if(nelem > 0)
