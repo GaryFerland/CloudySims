@@ -335,11 +335,11 @@ void iso_create()
 						/* Mass Recoil Correction */
 						double NJ05 = sqrt( pow2( ipHi - 1. + sqrt(1. - pow2(Za)) ) + pow2(Za) );
 						double mass_recoil_correction_term1J05 = ELECTRON_REST_ENGY_cm*(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(NJ05));
-						double mass_recoil_correctionJ05 = mass_recoil_correction_term1J05 + mc2*pow2(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(ipHi));
+						double mass_recoil_correctionJ05 = mass_recoil_correction_term1J05 - mc2*pow2(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(ipHi));
 
 						double NJ15 = sqrt( pow2( ipHi - 2. + sqrt(4. - pow2(Za)) ) + pow2(Za) );
 						double mass_recoil_correction_term1J15 = ELECTRON_REST_ENGY_cm*(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(NJ15));
-						double mass_recoil_correctionJ15 = mass_recoil_correction_term1J15 + mc2*pow2(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(ipHi));
+						double mass_recoil_correctionJ15 = mass_recoil_correction_term1J15 - mc2*pow2(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(ipHi));
 
 						/* Total corrected energy levels */
 						if(nelem > 0)
