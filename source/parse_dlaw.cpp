@@ -72,7 +72,7 @@ void ParseDLaw(Parser &p)
 		if( optimize.lgVarOn )
 		{
 			ostringstream oss;
-			oss << "DLW %f" << setprecision(7);
+			oss << "DLAW %f" << setprecision(7);
 			for( j=1; j < 10; j++ )
 				oss << " " << dense.DensityLaw[j];
 			strcpy( optimize.chVarFmt[optimize.nparm], oss.str().c_str() );
