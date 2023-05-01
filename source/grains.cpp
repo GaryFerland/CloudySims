@@ -3665,7 +3665,6 @@ STATIC void GrainIonColl(size_t nd,
 		/* ion will get electron(s) */
 		*ChEn = 0.f;
 		*ChemEn = 0.f;
-		long Zg = gv.bin[nd].chrg(nz).DustZ;
 		double phi_s = phi_s_up[0];
 		do 
 		{
@@ -3676,7 +3675,6 @@ STATIC void GrainIonColl(size_t nd,
 			 * n-electron transfer, a correction for the difference in binding energy is needed */
 			*ChemEn -= (realnum)(phi_s - phi_s_up[0]);
 			--ion;
-			++Zg;
 			phi_s = phi_s_up[save-ion];
 		} while( ion > 0 && rfield.anu(Heavy.ipHeavy[nelem][ion-1]-1) > (realnum)phi_s );
 
