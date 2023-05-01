@@ -373,7 +373,8 @@ monitor column density "HNO"       12.07
 monitor column density "HS+"       12.86  
 ## >>chng 21 sep 11, from 14.71 to 14.34, LAMDA update
 ## >>chng 21 nov 04, from 14.34 to 14.6, update mole co data
-monitor column density "HS"        14.6  
+## >>chng 23 mar 17, from 14.6 to 14.48, add SiS and Lamda model"
+monitor column density "HS"        14.48  
 ## >>chng 21 sep 11, from 12.49 to 12.11, LAMDA update
 ## >>chng 21 nov 04, from 12.11 to 12.47, update mole co data
 monitor column density "N2+"       12.47  
@@ -418,19 +419,22 @@ monitor column density "NS"        13.41
 monitor column density "OCN"       9.699  
 ## >>chng 21 sep 11, from 10.98 to 10.62, LAMDA update
 ## >>chng 21 nov 04, from 10.62 to 11.95, update mole co data
-monitor column density "OCS"       11.95  
+## >>chng 23 mar 17, from 11.95 to 11.88, add SiS and Lamda model"
+monitor column density "OCS"       11.88  
 monitor column density "OH+"       10.331  
 monitor column density "OHgrn"     14.953  
 ## >>chng 21 sep 11, from 12.92 to 12.76, LAMDA update
 ## >>chng 21 nov 04, from 12.76 to 12.91, update mole co data
-monitor column density "SiH"       12.91  
+## >>chng 23 mar 17, from 12.91 to 12.66, add SiS and Lamda model"
+monitor column density "SiH"       12.66  
 monitor column density "SiH2+"     10.187  
 ## >>chng 21 sep 11, from 12.83 to 11.76, LAMDA update
 ## >>chng 21 nov 04, from 11.76 to 12.68, update mole co data
 monitor column density "SiN+"      12.68  
 ## >>chng 21 sep 11, from 13.61 to 13.72, LAMDA update
 ## >>chng 21 nov 04, from 13.72 to 13.62, update mole co data
-monitor column density "SiN"       13.62  
+## >>chng 23 mar 17, from 13.62 to 13.07, add SiS and Lamda model"
+monitor column density "SiN"       13.07  
 ## >>chng 21 sep 11, from 11.25 to 11.16, LAMDA update
 ## >>chng 21 nov 04, from 11.16 to 11.25, update mole co data
 monitor column density "SiOH+"     11.25
@@ -438,7 +442,8 @@ monitor column density "SiOH+"     11.25
 monitor column density "SO+"       10.05  
 ## >>chng 21 sep 11, from 13.18 to 12.87, LAMDA update
 ## >>chng 21 nov 04, from 12.87 to 13.07, update mole co data
-monitor column density "SO"        13.07  
+## >>chng 23 mar 17, from 13.07 to 13.02, add SiS and Lamda model"
+monitor column density "SO"        13.02  
 ## 
 ## >>chng 06 nov 28, add these lines
 ## >>chng 06 nov 29, from -4.611 to -4.644, Badnell DR turned on
@@ -516,6 +521,10 @@ monitor itrzn 1.939
 ## >>chng 11 nov 16, from 618 to 754, adjust newmole monitors
 monitor nzone 754 
 #
+## >>chng 23 feb 25, GS add these lines to test new chemistry, SiS model
+monitor "SiS " 4127.09m -8.99 line intensity
+## >>chng 23 feb 25, GS add these lines to test new chemistry, SiS model
+monitor "SiS " 3301.90m -9.040 line intensity
 # pdr_leiden_f1.in
 # class pdr  
 # ========================================

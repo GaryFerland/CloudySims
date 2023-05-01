@@ -865,8 +865,6 @@ void RT_DestProb(
 			}
 			if (0 && t.chLabel() == "He 1 3888.63A")
 			{
-				static int i;
-				++i;
 				fprintf(ioQQQ,"Found it %g %g %g %g %ld\n",
 						  eovrlp_v,abund,conopc,escp,ipanu);
 			}
