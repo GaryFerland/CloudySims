@@ -496,7 +496,7 @@ void lines_hydro(void)
 						index_of_nHi_P = iso_sp[ipH_LIKE][nelem].QN2Index(N_(ipHi), 1, 2);
 
 					bool lgSkip;
-					if( N_(ipLo) > iso_sp[ipH_LIKE][nelem].n_HighestResolved_local || N_(ipLo) == N_(ipHi) )
+					if( N_(ipLo) > iso_sp[ipH_LIKE][nelem].n_HighestResolved_max || N_(ipLo) == N_(ipHi) )
 						lgSkip = false;
 					else
 						lgSkip = !( ipHi == index_of_nHi_P && ipLo == index_of_nLo_S );

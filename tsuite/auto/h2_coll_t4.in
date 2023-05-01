@@ -46,7 +46,8 @@ monitor ionization Helium    2 -11.09 error 0.30
 ##
 ## >>chng 13 feb 10, from -2.775 to -2.878, H2,e-=>H-,H update
 ## >>chng 13 nov 19, from -2.878 to -3.037, fix CT bug in mole_eval_balance
-monitor ionization Carbon    2 -3.037 error 0.20
+## >>chng 23 mar 17, from -3.037 to -2.255, add SiS and Lamda model"
+monitor ionization Carbon    2 -2.255 error 0.20
 ##
 ## >>chng 13 feb 01, from -2.956 to -3.044, BUGFIX, largely undo r6703
 ## >>chng 13 nov 19, from -3.044 to -3.51, fix CT bug in mole_eval_balance
@@ -68,11 +69,13 @@ monitor ionization Aluminium 1 -2.796 error 0.1
 ## >>chng 13 feb 01, from -0.7942 to -0.7013, BUGFIX, largely undo r6703
 ## >>chng 13 feb 10, from -0.7013 to -0.6345, H2,e-=>H-,H update
 ## >>chng 18 jan 17, from -0.6345 to -0.7128, update Badnell RR, DR to http://dx.doi.org/10.1051/0004-6361/201731243
-monitor ionization Silicon   1 -0.7128 error 0.15
+## >>chng 23 mar 17, from -0.7128 to -0.8435, add SiS and Lamda model"
+monitor ionization Silicon   1 -0.8435 error 0.15
 ##
 ## >>chng 13 feb 10, from -0.8323 to -1.144, H2,e-=>H-,H update
 ## >>chng 13 nov 19, from -1.144 to -0.9445, fix CT bug in mole_eval_balance
-monitor ionization Sulphur   2 -0.9445 error 0.15
+## >>chng 23 mar 17, from -0.9445 to -2.565, add SiS and Lamda model"
+monitor ionization Sulphur   2 -2.565 error 0.15
 ##
 ## >>chng 13 feb 01, from -3.838 to -3.927, BUGFIX, largely undo r6703
 ## >>chng 13 feb 10, from -3.927 to -3.773, H2,e-=>H-,H update
@@ -100,13 +103,15 @@ monitor "H2O " 538.142m line intensity -19.81
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 19, from -20.68 to -18.87, fix CT bug in mole_eval_balance
 ##
-monitor "HCS+" 1755.88m  -18.87 line intensity
+## >>chng 23 mar 17, from -18.87 to -20.75, add SiS and Lamda model"
+monitor "HCS+" 1755.88m  -20.75 line intensity
 ## >>chng 13 jun 27, from -7.453 to -16.48, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 19, from -16.48 to -15.26, fix CT bug in mole_eval_balance
 ## >>chng 15 aug 03, from -15.26 to -15.3, update LAMDA to 2015
 ##
-monitor "CS  " 3058.86m  -15.3 line intensity
+## >>chng 23 mar 17, from -15.3 to -17.3, add SiS and Lamda model"
+monitor "CS  " 3058.86m  -17.3 line intensity
 ## >>chng 13 jun 27, from -7.288 to -14.2, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 19, from -14.2 to -13.52, fix CT bug in mole_eval_balance

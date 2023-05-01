@@ -143,12 +143,12 @@ void atmdat_readin(void)
 	 * space for the transition HFLines[nHFLines] structure */
 	HyperfineCreate();
 
-	/* Make sure that if hybrid is on, then Stout/Chianti are on */
-	if( atmdat.lgChiantiHybrid && !atmdat.lgChiantiOn)
+	/* Make sure that if hybrid/chianti is on, then Chianti is also on */
+	if( atmdat.lgChiantiLvl2Hybrid && !atmdat.lgChiantiOn)
 	{
 		TotalInsanity();
 	}
-	if( atmdat.lgStoutHybrid && !atmdat.lgStoutOn )
+	if( atmdat.lgStoutLvl2Hybrid && !atmdat.lgStoutOn )
 	{
 		TotalInsanity();
 	}
@@ -1715,7 +1715,7 @@ STATIC void read_UTA_lines()
 	}
 }
 
-static const long IP_MAGIC = 20221015;
+static const long IP_MAGIC = 20221115;
 
 STATIC void read_ionization_potentials()
 {
