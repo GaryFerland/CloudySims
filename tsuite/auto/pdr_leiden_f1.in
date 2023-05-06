@@ -522,9 +522,11 @@ monitor itrzn 1.939
 monitor nzone 754 
 #
 ## >>chng 23 feb 25, GS add these lines to test new chemistry, SiS model
-monitor "SiS " 4127.09m -8.99 line intensity
+## >>chng 23 may 04, from -8.99 to -8.7127, change caused by vib-rotational levels
+monitor "SiS" 4127.09m -8.7127 line intensity
 ## >>chng 23 feb 25, GS add these lines to test new chemistry, SiS model
-monitor "SiS " 3301.90m -9.040 line intensity
+## >>chng 23 may 04, from -9.040 to -8.6562, change caused by vib-rotational levels
+monitor "SiS" 3301.90m -8.6562 line intensity
 # pdr_leiden_f1.in
 # class pdr  
 # ========================================

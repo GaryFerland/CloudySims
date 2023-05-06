@@ -520,7 +520,9 @@ monitor "^13CO" 906.599m  -9.55 line intensity
 monitor "CN  " 880.858m  -10.75  line intensity
 #
 ## >>chng 23 feb 25,GS add to test new chemistry, SiS emission model
-monitor "SiS " 5503.08m -10.358 line intensity
+## >>chng 23 may 04, from -10.358 to -10.0371, change caused by vib-rotational levels
+## >>chng 23 may 04, from 5503.08m to 5502.90m, change caused by vib-rotational levels
+monitor "SiS" 5502.90m -10.0371 line intensity
 # h2_pdr_leiden_v1.in
 # class pdr 
 # ========================================
