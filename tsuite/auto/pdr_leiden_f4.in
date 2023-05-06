@@ -281,7 +281,7 @@ monitor nzone 988
 ##
 ## >>chng 23 feb 25 GS add to test new SiS chemistry, model of internal structure#
 ## >>chng 23 may 04, from -6.101 to -5.9575, change caused by vib-rotational levels
-monitor "SiS" 1179.49m -5.9575 line intensity
+monitor "SiS" 1179.48m -5.9575 line intensity
 ## >>chng 23 feb 25 GS add to test new SiS chemistry, model of internal structure#
 ## >>chng 23 may 04, from -6.117 to -5.9968, change caused by vib-rotational levels
 monitor "SiS" 1270.17m -5.9968 line intensity
