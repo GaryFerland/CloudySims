@@ -252,8 +252,8 @@ monitor itrzn 4.878 error 0.10
 monitor niter < 7
 ## >>chng 12 jul 02, from 4 to 3, change H,H=>H2,hv rate
 ## >>chng 14 nov 26, from 3 to 4, hop is between 5 and 6
-## >>chng 23 may 05, from >3 to >2
-monitor niter  >2, , change caused by vib-rotational levels of SiS
+## >>chng 23 may 05, from >3 to >2, change caused by vib-rotational levels of SiS
+monitor niter  >2
 ## >>chng 14 may 31, see if monitoring exact value is helpful
 ## >>chng 14 jul 10, from 6 to 5, Add monitors for WillsNetzerWills FeII Lines
 ## >>chng 14 oct 28, from 6 to 5, relativistic Gaunt factors
