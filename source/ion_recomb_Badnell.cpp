@@ -1014,7 +1014,7 @@ void Badnell_rec_init( void )
 	++chs;
 	sscanf(chLine.c_str()+chs, "%4i%2i%2i",&yr, &mo, &dy);
 	/* check magic number - the date on the line */
-	int dr_yr = 2023, dr_mo = 5, dr_dy = 11;
+	int dr_yr = 2023, dr_mo = 5, dr_dy = 12;
 	if((yr != dr_yr) || (mo != dr_mo) || (dy != dr_dy))
 	{
 		fprintf(ioQQQ,
