@@ -32,7 +32,7 @@ STATIC void iso_allocate(void);
 /* define levels of iso sequences and assign quantum numbers to those levels */
 STATIC void iso_assign_quantum_numbers(void);
 
-STATIC void FillExtraLymanLine( const TransitionList::iterator& t, long ipISO, long nelem, long nHi );
+STATIC void FillExtraLymanLine( const TransitionList::iterator& t, long ipISO, long nelem, long nHi, double j );
 
 STATIC void iso_satellite( void );
 
@@ -314,58 +314,19 @@ void iso_create()
 				for( ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
 				{
 					/* FillExtraLymanLine( ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi], ipISO, nelem, ipHi ); */
-					FillExtraLymanLine( ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][ipHi], ipISO, nelem, ipHi );
-					FillExtraLymanLine( ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][ipHi], ipISO, nelem, ipHi );
-
-					/* Chamani added: Adding Fine Structure Corrections to nP energy levels */
-					if( ipISO == ipH_LIKE )
+					FillExtraLymanLine( ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][ipHi], ipISO, nelem, ipHi, 0.5 );
+					FillExtraLymanLine( ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][ipHi], ipISO, nelem, ipHi, 1.5 );
+					
+					enum {DEBUG_LOC=false};
+					if(DEBUG_LOC && ipISO == ipH_LIKE && nelem == ipIRON)
 					{
-						double reduced_mass = (nelem+1)*PROTON_MASS*ELECTRON_MASS/(((nelem+1)*PROTON_MASS)+ELECTRON_MASS);
-						double ELECTRON_REST_ENGY_cm = 4.1214844832e9;
-						double mc2 = ELECTRON_REST_ENGY_cm*reduced_mass/ELECTRON_MASS;
-						double Eo = -iso_sp[ipISO][nelem].IonPot;
-						double Za = FINE_STRUCTURE*(nelem+1.);
+						fprintf( ioQQQ, "%li\t%li\t%f\n",
+									nelem,
+									ipHi,
+									ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].EnergyWN()
+									);
 
-						/*Resolving j levels OPTION 1: Dirac equation*/
-						double DiracNJ05 = ipHi - 1. + pow( 1. - pow2(Za), 0.5);
-						double EnergyJ05 = ELECTRON_REST_ENGY_cm*(pow(1 + pow2(Za/DiracNJ05), -0.5)  - 1.) - Eo;
-						double DiracNJ15 = ipHi - 2. + pow( 4. - pow2(Za), 0.5);
-						double EnergyJ15 = ELECTRON_REST_ENGY_cm*(pow(1 + pow2(Za/DiracNJ15), -0.5)  - 1.) - Eo;
-
-						/* Mass Recoil Correction */
-						double NJ05 = sqrt( pow2( ipHi - 1. + sqrt(1. - pow2(Za)) ) + pow2(Za) );
-						double mass_recoil_correction_term1J05 = ELECTRON_REST_ENGY_cm*(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(NJ05));
-						double mass_recoil_correctionJ05 = mass_recoil_correction_term1J05 - mc2*pow2(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(ipHi));
-
-						double NJ15 = sqrt( pow2( ipHi - 2. + sqrt(4. - pow2(Za)) ) + pow2(Za) );
-						double mass_recoil_correction_term1J15 = ELECTRON_REST_ENGY_cm*(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(NJ15));
-						double mass_recoil_correctionJ15 = mass_recoil_correction_term1J15 - mc2*pow2(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(ipHi));
-
-						/* Total corrected energy levels */
-						if(nelem > 0)
-						{
-							ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].EnergyWN() = EnergyJ05+(mass_recoil_correctionJ05*0.5);
-							ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].EnergyWN() = EnergyJ15+(mass_recoil_correctionJ15*0.5);
-						}
-						else
-						{
-							ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].EnergyWN() = EnergyJ05+mass_recoil_correctionJ05;
-							ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].EnergyWN() = EnergyJ15+mass_recoil_correctionJ15;
-						}
-						
-						enum {DEBUG_LOC=false};
-						if(DEBUG_LOC && nelem == ipIRON)
-						{
-							fprintf( ioQQQ, "%li\t%li\t%f\t%f\n",
-							nelem,
-							ipHi,
-							(ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].EnergyWN() - 56071399.8)/56071399.8,
-							(ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].EnergyWN() - 56242504.33)/56242504.33
-							);
-
-							cdEXIT(EXIT_FAILURE);
-						}
-						
+						cdEXIT(EXIT_FAILURE);
 					}
 
 				}
@@ -1108,12 +1069,15 @@ STATIC void iso_assign_quantum_numbers(void)
 #if defined(__ICC) && defined(__i386)
 #pragma optimization_level 1
 #endif
-STATIC void FillExtraLymanLine( const TransitionList::iterator& t, long ipISO, long nelem, long nHi )
+STATIC void FillExtraLymanLine( const TransitionList::iterator& t, long ipISO, long nelem, long nHi, double j )
 {
 	double Enerwn, Aul;
 
 	DEBUG_ENTRY( "FillExtraLymanLine()" );
 
+	/* principle quantum number for nP levels can only be >= 2 */
+	//ASSERT (nHi >= 2);
+	
 	(*(*t).Hi()).status() = LEVEL_INACTIVE;
 
 	/* atomic number or charge and stage: */
@@ -1124,16 +1088,63 @@ STATIC void FillExtraLymanLine( const TransitionList::iterator& t, long ipISO, l
 
 	/* statistical weight is same as statistical weight of corresponding LyA. */
 	(*(*t).Hi()).g() = iso_sp[ipISO][nelem].st[iso_ctrl.nLyaLevel[ipISO]].g();
+	//(*(*t).Hi()).g() = 2.*j+1.;
 
 	/* \todo add correct configuration, or better still link to standard level */
 	(*(*t).Hi()).chConfig() = "ExtraLyman level (probably duplicate)";
 
 	/* energies */
-	Enerwn = iso_sp[ipISO][nelem].fb[0].xIsoLevNIonRyd * RYD_INF * (  1. - 1./POW2((double)nHi) );
+	/* Chamani added: Adding Fine Structure Corrections to nP energy levels */
+	if( ipISO == ipH_LIKE )
+	{
+		double reduced_mass = (nelem+1)*PROTON_MASS*ELECTRON_MASS/(((nelem+1)*PROTON_MASS)+ELECTRON_MASS);
+		double ELECTRON_REST_ENGY_cm = 4.1214844832e9;
+		double mc2 = ELECTRON_REST_ENGY_cm*reduced_mass/ELECTRON_MASS;
+		double Eo = -iso_sp[ipISO][nelem].IonPot;
+		double Za = FINE_STRUCTURE*(nelem+1.);
+
+		/*Resolving j levels: Dirac equation*/
+		double DiracN = nHi - (j + 0.5) + pow( pow2(j + 0.5) - pow2(Za), 0.5);
+		double DiracEnergy = ELECTRON_REST_ENGY_cm*(pow(1 + pow2(Za/DiracN), -0.5)  - 1.) - Eo;
+
+		/* Mass Recoil Correction */
+		double N = sqrt( pow2( nHi - (j + 0.5) + sqrt( pow2(j + 0.5) - pow2(Za)) ) + pow2(Za) );
+		double mass_recoil_correction_term1 = ELECTRON_REST_ENGY_cm*(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(N));
+		double mass_recoil_correction = mass_recoil_correction_term1 - mc2*pow2(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(nHi));
+
+		/* Resolving l levels: Lamb Shift */
+		double m=0.04950538, t=0.54290526, b=0.95342613;
+		double Bethe_Log = ( m*exp(-nHi*t) + b );
+		Bethe_Log = Bethe_Log * exp( pow(1./nHi,3.) * pow((nelem)/(nelem+1.),4.) * log(Bethe_Log) );
+		double Lamb_correction_factor = 8.*pow(nelem+1.,4.)*pow(FINE_STRUCTURE,3.)*RYD_INF/(3.*M_PI*pow(nHi,3.));
+		double Lamb_correction = Lamb_correction_factor*log(1./Bethe_Log);
+		if ( j==0.5 )
+		{
+			Lamb_correction += Lamb_correction_factor*(-1./3.)*(3./8.);
+		}
+		else if ( j==1.5 )
+		{
+			Lamb_correction += Lamb_correction_factor*(-1./6.)*(3./8.);
+		}
+
+		if (nelem > 0)
+		{
+			Enerwn = DiracEnergy + (mass_recoil_correction*0.5) + Lamb_correction;
+		}
+		else
+		{
+			Enerwn = DiracEnergy + mass_recoil_correction + Lamb_correction;
+		}
+	}
+	else
+	{
+		Enerwn = iso_sp[ipISO][nelem].fb[0].xIsoLevNIonRyd * RYD_INF * (  1. - 1./POW2((double)nHi) );
+	}
 
 	/* transition energy in various units:*/
 	(*t).EnergyWN() = (realnum)(Enerwn);
 	(*t).WLAng() = (realnum) wn2ang( Enerwn );
+
 	(*(*t).Hi()).energy().set( Enerwn, "cm^-1" );
 
 	if( ipISO == ipH_LIKE )
