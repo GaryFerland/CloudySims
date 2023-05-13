@@ -575,7 +575,6 @@ inline double hmrate4( double a, double b, double c, double te )
 	/* UMIST rates are simple temperatuer power laws that
 	 * can become large at the high temperatures Cloudy
 	 * may encounter. Do not extrapolate to above T>1e3K */ 	
-	te = min(1000.,te); 
 	if( b == 0. && c == 0. )
 		return a;
 	else if( c == 0. )
