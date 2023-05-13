@@ -54,7 +54,8 @@ monitor set error 0.1
 ## >>chng 12 jul 01, from 0.5961 to 0.5493, update Badnell DR to 13-electron iso sequence
 ## >>chng 13 feb 01, from 0.5493 to 0.5159, BUGFIX, largely undo r6703
 ## >>chng 14 dec 04, from 0.5159 to 0.4738, fix double-counting of big-H2 Solomon rate
-monitor eden 0.4738
+## >>chng 23 may 11, from 0.4738 to 0.4076, update RR DR to 2022 Badnell wor
+monitor eden 0.4076
 ## 
 ## >>chng 05 feb 12, reset abundances to ism with no grains, to be
 ## matched pair with h2_solomon, much changed
@@ -66,7 +67,8 @@ monitor eden 0.4738
 ## >>chng 11 nov 16, from 3.21 to 2.954, adjust newmole monitors
 ## >>chng 12 jul 01, from 2.954 to 2.872, update Badnell DR to 13-electron iso sequence
 ## >>chng 14 dec 04, from 2.872 to 3.094, fix double-counting of big-H2 Solomon rate
-monitor H2 column 3.094 error 0.1
+## >>chng 23 may 11, from 3.094 to 3.031, update RR DR to 2022 Badnell wor
+monitor H2 column 3.031 error 0.1
 ##
 ## >>chng 05 aug 03, from 1.85 to 1.71, NA update CO, H chem net
 ## >>chng 05 aug 09, from 1.71 to 1.75, NA update CO, H chem net
@@ -88,7 +90,8 @@ monitor H2 ortho 3.0
 ## >>chng 11 nov 16, from 2.11 to 1.859, adjust newmole monitors
 ## >>chng 12 jul 01, from 1.859 to 1.777, update Badnell DR to 13-electron iso sequence
 ## >>chng 14 dec 04, from 1.777 to 1.999, fix double-counting of big-H2 Solomon rate
-monitor H2 column density level v=0 J=0 N=1.999 error 0.1
+## >>chng 23 may 11, from 1.999 to 1.935, update RR DR to 2022 Badnell wor
+monitor H2 column density level v=0 J=0 N=1.935 error 0.1
 ## 
 ## >>chng 05 aug 03, from 2.87 to 2.83, NA update CO, H chem net
 ## >>chng 05 aug 09, from 2.83 to 2.90, NA update CO, H chem net
@@ -98,7 +101,8 @@ monitor H2 column density level v=0 J=0 N=1.999 error 0.1
 ## >>chng 11 nov 16, from 2.92 to 2.665, adjust newmole monitors
 ## >>chng 12 jul 01, from 2.665 to 2.583, update Badnell DR to 13-electron iso sequence
 ## >>chng 14 dec 04, from 2.583 to 2.805, fix double-counting of big-H2 Solomon rate
-monitor H2 column density level v=0 J=1 N=2.805 error 0.1
+## >>chng 23 may 11, from 2.805 to 2.741, update RR DR to 2022 Badnell wor
+monitor H2 column density level v=0 J=1 N=2.741 error 0.1
 ## 
 ## >>chng 05 aug 03, from 2.32 to 2.28, NA update CO, H chem net
 ## >>chng 05 aug 09, from 2.28 to 2.34, NA update CO, H chem net
@@ -108,7 +112,8 @@ monitor H2 column density level v=0 J=1 N=2.805 error 0.1
 ## >>chng 11 nov 16, from 2.37 to 2.115, adjust newmole monitors
 ## >>chng 12 jul 01, from 2.115 to 2.033, update Badnell DR to 13-electron iso sequence
 ## >>chng 14 dec 04, from 2.033 to 2.255, fix double-counting of big-H2 Solomon rate
-monitor H2 column density level v=0 J=2 N=2.255 error 0.1
+## >>chng 23 may 11, from 2.255 to 2.192, update RR DR to 2022 Badnell wor
+monitor H2 column density level v=0 J=2 N=2.192 error 0.1
 ## 
 ## >>chng 05 aug 03, from 2.50 to 2.46, NA update CO, H chem net
 ## >>chng 05 aug 09, from 2.46 to 2.53, NA update CO, H chem net
@@ -118,7 +123,8 @@ monitor H2 column density level v=0 J=2 N=2.255 error 0.1
 ## >>chng 11 nov 16, from 2.55 to 2.297, adjust newmole monitors
 ## >>chng 12 jul 01, from 2.297 to 2.215, update Badnell DR to 13-electron iso sequence
 ## >>chng 14 dec 04, from 2.215 to 2.438, fix double-counting of big-H2 Solomon rate
-monitor H2 column density level v=0 J=3 N=2.438 error 0.1
+## >>chng 23 may 11, from 2.438 to 2.374, update RR DR to 2022 Badnell wor
+monitor H2 column density level v=0 J=3 N=2.374 error 0.1
 ## 
 ## >>chng 05 aug 03, from 1.54 to 1.50, NA update CO, H chem net
 ## >>chng 05 aug 09, from 1.50 to 1.56, NA update CO, H chem net
@@ -128,7 +134,8 @@ monitor H2 column density level v=0 J=3 N=2.438 error 0.1
 ## >>chng 11 nov 16, from 1.59 to 1.333, adjust newmole monitors
 ## >>chng 12 jul 01, from 1.333 to 1.251, update Badnell DR to 13-electron iso sequence
 ## >>chng 14 dec 04, from 1.251 to 1.474, fix double-counting of big-H2 Solomon rate
-monitor H2 column density level v=0 J=4 N=1.474 error 0.1
+## >>chng 23 may 11, from 1.474 to 1.414, update RR DR to 2022 Badnell wor
+monitor H2 column density level v=0 J=4 N=1.414 error 0.1
 ## 
 ## >>chng 05 aug 03, from 1.31 to 1.27, NA update CO, H chem net
 ## >>chng 05 aug 09, from 1.27 to 1.34, NA update CO, H chem net
@@ -144,29 +151,34 @@ monitor H2 column density level v=0 J=5 N=1.269 error 0.1
 ## >>chng 13 jul 24, wl from 2.1215m to 2.12125m, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 04, from -21.91 to -21.67, fix double-counting of big-H2 Solomon rate
 ## >>chng 16 dec 29, from -21.67 to -21.59, uupdate H-H2 coll to Lique 15
-monitor line luminosity "H2  " 2.12125m  -21.59 error 0.1
+## >>chng 23 may 11, from -21.59 to -21.65, update RR DR to 2022 Badnell wor
+monitor line luminosity "H2  " 2.12125m  -21.65 error 0.1
 ##
 ## >>chng 13 jun 27, from -8.869 to -22.64, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 04, from -22.64 to -22.12, fix double-counting of big-H2 Solomon rate
 ## >>chng 15 aug 03, from -22.12 to -21.8, update LAMDA to 2015
-monitor "H2O " 538.142m line intensity -21.8
+## >>chng 23 may 11, from -21.8 to -21.86, update RR DR to 2022 Badnell wor
+monitor "H2O " 538.142m line intensity -21.86
 ## >>chng 13 jun 27, from -7.357 to -26.87, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 04, from -26.87 to -26.35, fix double-counting of big-H2 Solomon rate
 ## >>chng 21 sep 11, from -26.35 to -26.8, LAMDA update
-monitor "HNC " 1652.90m  line intensity -26.8
+## >>chng 23 may 11, from -26.8 to -26.87, update RR DR to 2022 Badnell wor
+monitor "HNC " 1652.90m  line intensity -26.87
 ## >>chng 13 jun 27, from -8.563 to -25.51, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 04, from -25.51 to -25.24, fix double-counting of big-H2 Solomon rate
 ## >>chng 21 sep 11, from -25.24 to -25.29, LAMDA update
-monitor "HCS+" 1755.88m  -25.29 line intensity
+## >>chng 23 may 11, from -25.29 to -25.39, update RR DR to 2022 Badnell wor
+monitor "HCS+" 1755.88m  -25.39 line intensity
 ## >>chng 13 jun 27, from -7.453 to -24.26, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 04, from -24.26 to -23.99, fix double-counting of big-H2 Solomon rate
 ## >>chng 15 aug 03, from -23.99 to -24.05, update LAMDA to 2015
 ## >>chng 21 sep 11, from -24.05 to -23.94, LAMDA update
-monitor "CS  " 3058.86m  -23.94 line intensity
+## >>chng 23 may 11, from -23.94 to -24.02, update RR DR to 2022 Badnell wor
+monitor "CS  " 3058.86m  -24.02 line intensity
 ## >>chng 13 jun 27, from -7.288 to -22.2, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 04, from -22.2 to -22.06, fix double-counting of big-H2 Solomon rate
