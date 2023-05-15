@@ -24,10 +24,12 @@ save continuum "coll_t4_Z30.con"  units angstroms
 ## >>chng 12 dec 12, from 8.783 to 10.6, first run
 ## >>chng 21 sep 11, from 10.6 to 10.53, LAMDA update
 ## >>chng 23 mar 17, from 10.53 to 10.42, add SiS and Lamda model"
-monitor CO column density 10.42 errr 0.1
+## >>chng 23 may 15, from 10.42 to 10.35, GS updates 21 reactions to UMIST 2012
+monitor CO column density 10.35 errr 0.1
 ## >>chng 12 dec 12, from 7.696 to 7.935, first run
 ## >>chng 13 feb 10, from 7.935 to 7.829, H2,e-=>H-,H update
-monitor H2 column density 7.829 errr 0.1
+## >>chng 23 may 15, from 7.829 to 7.908, GS updates 21 reactions to UMIST 2012
+monitor H2 column density 7.908 errr 0.1
 ##
 ## >>chng 12 dec 12, from -2.861 to -4.362, first run
 ## >>chng 13 feb 01, from -4.362 to -4.479, BUGFIX, largely undo r6703
@@ -84,7 +86,8 @@ monitor ionization Silicon   1 -0.3962 error 0.15
 ## >>chng 12 dec 12, from -1.017 to -2.826, first run
 ## >>chng 13 feb 01, from -2.826 to -2.893, BUGFIX, largely undo r6703
 ## >>chng 23 mar 17, from -2.893 to -3.838, add SiS and Lamda model"
-monitor ionization Sulphur   2 -3.838 error 0.15
+## >>chng 23 may 15, from -3.838 to -3.908, GS updates 21 reactions to UMIST 2012
+monitor ionization Sulphur   2 -3.908 error 0.15
 ##
 ## >>chng 12 dec 12, from -3.391 to -3.51, first run
 ## >>chng 13 feb 01, from -3.51 to -3.564, BUGFIX, largely undo r6703
@@ -96,7 +99,8 @@ monitor ionization Argon     2 -3.564 error 0.1
 ## >>chng 13 nov 22, from -2.116 to -2.193, collapsed branch merge r8609
 ## >>chng 16 aug 07, from -2.193 to -2.082, Fran bug fix
 ## >>chng 23 mar 17, from -2.082 to -1.863, add SiS and Lamda model"
-monitor ionization Iron      1 -1.863 error 0.15
+## >>chng 23 may 15, from -1.863 to -1.796, GS updates 21 reactions to UMIST 2012
+monitor ionization Iron      1 -1.796 error 0.15
 ##
 ## >>chng 12 dec 12, from 7.174 to 7.416, first run
 ## >>chng 23 mar 17, from 7.416 to 7.329, add SiS and Lamda model"

@@ -150,12 +150,14 @@ monitor line luminosity "H2  " 2.12125m  -21.59 error 0.1
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 04, from -22.64 to -22.12, fix double-counting of big-H2 Solomon rate
 ## >>chng 15 aug 03, from -22.12 to -21.8, update LAMDA to 2015
-monitor "H2O " 538.142m line intensity -21.8
+## >>chng 23 may 15, from -21.8 to -21.75, GS updates 21 reactions to UMIST 2012
+monitor "H2O " 538.142m line intensity -21.75
 ## >>chng 13 jun 27, from -7.357 to -26.87, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 04, from -26.87 to -26.35, fix double-counting of big-H2 Solomon rate
 ## >>chng 21 sep 11, from -26.35 to -26.8, LAMDA update
-monitor "HNC " 1652.90m  line intensity -26.8
+## >>chng 23 may 15, from -26.8 to -26.75, GS updates 21 reactions to UMIST 2012
+monitor "HNC " 1652.90m  line intensity -26.75
 ## >>chng 13 jun 27, from -8.563 to -25.51, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 04, from -25.51 to -25.24, fix double-counting of big-H2 Solomon rate
@@ -208,7 +210,8 @@ monitor "^13CO" 906.599m  -21.27 line intensity
 ## >>chng 14 dec 04, from -22.58 to -22.41, fix double-counting of big-H2 Solomon rate
 ## >>chng 21 sep 11, from -22.41 to -23.42, LAMDA update
 ## >>chng 21 sep 15, from -23.42 to -22.38, go back to unresolved model
-monitor "CN  " 880.858m  -22.38  line intensity
+## >>chng 23 may 15, from -22.38 to -22.34, GS updates 21 reactions to UMIST 2012
+monitor "CN  " 880.858m  -22.34  line intensity
 ## 
 # h2_hminus.in
 # class limit  

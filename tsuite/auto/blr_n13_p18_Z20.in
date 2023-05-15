@@ -267,7 +267,8 @@ monitor niter > 3
 ## >>chng 09 jan 08, from 182 to 192, minor changes in iter/zn, iterations, and zone that crept in over last month
 ## >>chng 09 jan 16, disable this assert because the values show a bimodal distribution over various platforms
 ## >>chng 14 may 31, re-enable as things should be more stable
-monitor nzone 737
+## >>chng 23 may 15, from 737 to 773, GS updates 21 reactions to UMIST 2012
+monitor nzone 773
 ##
 ## >>chng 14 jul 10, from 1.01 to 2.949, Add monitors for WillsNetzerWills FeII Lines
 ## >>chng 16 mar 23, drop WillsNetzerWills FeII Lines

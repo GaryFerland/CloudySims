@@ -68,7 +68,8 @@ monitor "HNC " 1652.90m  line intensity -6.731
 ## >>chng 13 feb 01, from -7.559 to -7.534, BUGFIX, largely undo r6703
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -7.534 to -7.469, update H3+ rates Indriola+ 2012
-monitor "HCS+" 1755.88m  -7.469 line intensity
+## >>chng 23 may 15, from -7.469 to -7.404, GS updates 21 reactions to UMIST 2012
+monitor "HCS+" 1755.88m  -7.404 line intensity
 ## >>chng 10 aug 21, from -8.288 to -6.805, add these lines
 ## >>chng 11 nov 16, from -6.805 to -6.889, adjust newmole monitors
 ## >>chng 12 jun 07, from -6.889 to -6.966, vib_evap fix
@@ -160,7 +161,8 @@ monitor "CO  " 325.137m  -7.026 line intensity
 ## >>chng 21 sep 11, from -6.916 to -8.127, LAMDA update
 ## >>chng 21 sep 15, from -8.127 to -7.436, go back to unresolved model
 ## >>chng 21 nov 04, from -7.436 to -7.396, update mole co data
-monitor "CN  " 880.858m  -7.396  line intensity
+## >>chng 23 may 15, from -7.396 to -7.572, GS updates 21 reactions to UMIST 2012
+monitor "CN  " 880.858m  -7.572  line intensity
 monitor H2 column density 21.840 error 0.1
 ##
 ## >>chng 05 oct 01, from 17.79 to 17.75, drift down
@@ -210,7 +212,8 @@ monitor OH column density 11.82 error 0.1
 ## >>chng 12 aug 24, from 12.98 to 12.94, BUGFIX r6603 DR rates not updated in const temp sim
 ## >>chng 13 feb 01, from 12.94 to 12.84, BUGFIX, largely undo r6703
 ## >>chng 20 sep 06, from 12.84 to 12.88, further update to McCall CR-related rate
-monitor SiO column density 12.88 error 0.1
+## >>chng 23 may 15, from 12.88 to 13.06, GS updates 21 reactions to UMIST 2012
+monitor SiO column density 13.06 error 0.1
 ## 
 ## >>chng 05 sep 30, add these 5
 monitor column density H2+  9.16 error 0.1
@@ -280,9 +283,11 @@ monitor itrzn 2.076
 monitor nzone 988
 ##
 ## >>chng 23 feb 25 GS add to test new SiS chemistry, model of internal structure#
-monitor "SiS " 1179.49m -6.101 line intensity
+## >>chng 23 may 15, from -6.101 to -6.794, GS updates 21 reactions to UMIST 2012
+monitor "SiS " 1179.49m -6.794 line intensity
 ## >>chng 23 feb 25 GS add to test new SiS chemistry, model of internal structure#
-monitor "SiS " 1270.17m -6.117 line intensity
+## >>chng 23 may 15, from -6.117 to -6.705, GS updates 21 reactions to UMIST 2012
+monitor "SiS " 1270.17m -6.705 line intensity
 # 
 # pdr_leiden_f4.in
 # class pdr 
