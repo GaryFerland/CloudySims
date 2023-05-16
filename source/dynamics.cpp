@@ -2328,6 +2328,9 @@ void DynaIterStart(void)
 		if( rfield.lgTimeVary[i] )
 			++nTimeVary;
 	}
+	if( nTimeVary==0 )
+		fprintf(ioQQQ," !No continuum sources vary with time. Was this intended?");
+	
 	
 	if( hextra.lgTurbHeatVaryTime )
 	{

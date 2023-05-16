@@ -59,8 +59,10 @@ monitor line "Ne 2"  12.8101m  0.3388
 monitor line "Ne 3"  15.5509m  0.2273
 monitor line "Ne 3"  36.0036m  0.02
 monitor line "Ne 3" 3868.76A  0.1096 error 0.08
-monitor line "S  3"  18.7078m  0.4219
-monitor line "S  3"   9530.62A  0.7121
+## >>chng 23 may 11, from 0.4219 to 0.3944, update RR DR to 2022 Badnell wor
+monitor line "S  3"  18.7078m  0.3944
+## >>chng 23 may 11, from 0.7121 to 0.6686, update RR DR to 2022 Badnell wor
+monitor line "S  3"   9530.62A  0.6686
 ## >>chng 19 jul 18, from 0.0056 to 0.0053, update SII A to Podobedova, Kelleher,&Wiese 2009, JPCRD, Vol. 3 
 monitor line "S  4"  10.5076m  0.0053
 monitor line "Ar 2" 6.98337m  0.0617

@@ -380,8 +380,8 @@ void RT_line_all( linefunc line_one )
 		ion = (*TauLine2[i].Hi()).IonStg();
 		nelem = (*TauLine2[i].Hi()).nelem();
 
-		if( (dense.lgIonChiantiOn[nelem-1][ion-1] && !atmdat.lgChiantiHybrid) ||
-				(dense.lgIonStoutOn[nelem-1][ion-1] && !atmdat.lgStoutHybrid) )
+		if( (dense.lgIonChiantiOn[nelem-1][ion-1] && !atmdat.lgChiantiLvl2Hybrid) ||
+				(dense.lgIonStoutOn[nelem-1][ion-1] && !atmdat.lgStoutLvl2Hybrid) )
 		{
 			/* If a species uses Chianti or Stout and hybrid is off, skip the level 2 lines */
 			continue;
