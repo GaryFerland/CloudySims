@@ -282,7 +282,7 @@ void RT_line_all( linefunc line_one )
 				/* parent ion stage, for H is 1, for He is 1 for He-like and 
 				 * 2 for H-like */
 				ion = nelem+1-ipISO;
-				
+
 				/* element turned off */
 				if( !dense.lgElmtOn[nelem] )
 					continue;
@@ -290,42 +290,73 @@ void RT_line_all( linefunc line_one )
 				if( ion <= dense.IonHigh[nelem] )
 				{
 					/* loop over all lines */
-					ipLo = 0;
+					ipLo = ipH1s;
 					/* these are the extra Lyman lines for the iso sequences */
 					/*for( ipHi=2; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )*/
 					/* only update if significant abundance and need to update fine opac */
 					if( dense.xIonDense[nelem][ion] > 1e-30 )
 					{
-						for( ipHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
+						for( long nLymanNP=2; nLymanNP < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; nLymanNP++ ) // give this loop variable a different name
 						{
-							/* TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi];
-							we just want the population of the ground state
-							(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
-							(*(*tr).Lo()).Pop() =
-								iso_sp[ipISO][nelem].st[ipLo].Pop();
-							
-							actually do the work
-							line_one( *tr, true, 0.f, DopplerWidth[nelem]); */
-							
+							if( nLymanNP > iso_sp[ipH_LIKE][nelem].n_HighestResolved_local ) /* looping over collapsed levels: n = 11 to 99 for Z < 3 & n = 6 to 99 for Z > 2 */
+							{
+								long ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nLymanNP,-1,-1);
 
-							TransitionList::iterator tr = ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][ipHi];
-							/* we just want the population of the ground state */
-							(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
-							(*(*tr).Lo()).Pop() =
-								iso_sp[ipISO][nelem].st[ipLo].Pop();
-							
-							/* actually do the work */
-							line_one( *tr, true, 0.f, DopplerWidth[nelem]);
+								ASSERT(ipHi > 0);
 
+								TransitionList::iterator tr = ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][nLymanNP];
+								/* we just want the population of the ground state */
+								(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
+								(*(*tr).Lo()).Pop() =
+									iso_sp[ipISO][nelem].st[ipLo].Pop();
 
-							tr = ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][ipHi];
-							/* we just want the population of the ground state */
-							(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
-							(*(*tr).Lo()).Pop() =
-								iso_sp[ipISO][nelem].st[ipLo].Pop();
+								(*(*tr).Hi()).Pop() =
+									iso_sp[ipISO][nelem].st[ipHi].Pop()*(3./pow2(nLymanNP))*(1./3.); /* 2l+1/n^2 for nP, and 1/3 is the ration of statistical weights for j=1/2 */
+
+								/* actually do the work */
+								line_one( *tr, true, 0.f, DopplerWidth[nelem]); 
+
+								tr = ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][nLymanNP];
+								/* we just want the population of the ground state */
+								(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
+								(*(*tr).Lo()).Pop() =
+									iso_sp[ipISO][nelem].st[ipLo].Pop();
+
+								(*(*tr).Hi()).Pop() =
+									iso_sp[ipISO][nelem].st[ipHi].Pop()*(3./pow2(nLymanNP))*(2./3.); /* 2l+1/n^3 for nP, and 1/3 is the ration of statistical weights for j=3/2 */
+
+								/* actually do the work */
+								line_one( *tr, true, 0.f, DopplerWidth[nelem]); 
+							}
 							
-							/* actually do the work */
-							line_one( *tr, true, 0.f, DopplerWidth[nelem]);
+							else /* looping over resolved levels: n = 2 to 10 for Z < 3 & n = 2 to 5 for Z > 2 */
+							{
+							   long ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nLymanNP,1,2);
+
+								TransitionList::iterator tr = ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][nLymanNP];
+								/* we just want the population of the ground state */
+								(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
+								(*(*tr).Lo()).Pop() =
+									iso_sp[ipISO][nelem].st[ipLo].Pop();
+
+								(*(*tr).Hi()).Pop() =
+									iso_sp[ipISO][nelem].st[ipHi].Pop()*(1./3.); /* 1/3 is ratio of statistical weights for j=1/2 */
+
+								/* actually do the work */
+								line_one( *tr, true, 0.f, DopplerWidth[nelem]);
+
+								tr = ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][nLymanNP];
+								/* we just want the population of the ground state */
+								(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
+								(*(*tr).Lo()).Pop() =
+									iso_sp[ipISO][nelem].st[ipLo].Pop();
+
+								(*(*tr).Hi()).Pop() =
+									iso_sp[ipISO][nelem].st[ipHi].Pop()*(2./3.); /* 2/3 is ratio of statistical weights for j=3/2 */
+
+								/* actually do the work */
+								line_one( *tr, true, 0.f, DopplerWidth[nelem]);
+							}
 						}
 					}					
 				}/* if nelem if ion <=dense.IonHigh */

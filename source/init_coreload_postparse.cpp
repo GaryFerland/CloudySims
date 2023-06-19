@@ -45,6 +45,8 @@ void InitCoreloadPostparse( void )
 				if( iso_ctrl.lgDielRecom[ipISO] )
 					numLevels += 1;
 				iso_sp[ipISO][nelem].st.init( makeChemical( nelem, nelem-ipISO ).c_str(), numLevels );
+				iso_sp[ipISO][nelem].stJ05.init( makeChemical( nelem, nelem-ipISO ).c_str(), numLevels );
+				iso_sp[ipISO][nelem].stJ15.init( makeChemical( nelem, nelem-ipISO ).c_str(), numLevels );
 			}
 		}
 	}

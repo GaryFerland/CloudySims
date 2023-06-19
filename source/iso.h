@@ -552,6 +552,8 @@ public:
 	multi_arr<double,2> BranchRatio;
 	vector<freeBound> fb;
 	qList st;
+	qList stJ05; /* stJ05 should only be used for H iso-sequence, otherwise need to change iso_assign_quantum_numbers() routine in is_create.cpp */
+	qList stJ15;
 	TransitionList* tr;
 
 	/** Find index given quantum numbers */

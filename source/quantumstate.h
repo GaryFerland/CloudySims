@@ -40,7 +40,7 @@ class qList
 	vector_avx<double> m_Boltzmann;
 	vector<Energy> m_energy;
 	vector<realnum> m_g;
-	vector<long> m_j;
+	vector<realnum> m_j;
 	vector<long> m_J;
 	vector<int> m_IonStg;
 	vector<int> m_nelem;
@@ -263,7 +263,7 @@ public:
 	{
 		return m_list->m_v[m_index];
 	}
-	long &j() const
+	realnum &j() const
 	{
 		return m_list->m_j[m_index];
 	}
@@ -361,7 +361,7 @@ public:
 	{
 		return m_list->m_v[m_index];
 	}
-	long j() const
+	realnum j() const
 	{
 		return m_list->m_j[m_index];
 	}
