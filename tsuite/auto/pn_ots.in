@@ -349,7 +349,8 @@ monitor temperature volume "O+2" 4.059
 monitor temperature volume "O+3" 4.146
 monitor temperature volume "O+4" 4.157
 monitor temperature volume "O+5" 4.164
-monitor temperature volume "O+6" 4.167
+## >>chng 23 jun 27, from 4.167 to 4.186, update Fe+ model to Smyth+19
+monitor temperature volume "O+6" 4.186
 monitor temperature radius "O" 3.953
 monitor temperature radius "O+" 4.052
 monitor temperature radius "O+2" 4.065

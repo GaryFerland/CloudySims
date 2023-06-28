@@ -88,7 +88,8 @@ monitor line luminosity "he 2"  1640.41A 5.795 ##total He II Balmer-alpha 1640
 ## >>chng 13 feb 01, from 5.654 to 5.69, BUGFIX, largely undo r6703
 ## >>chng 13 apr 14, from 5.69 to 5.667, update DR suppression
 ## >>chng 15 may 14, from 5.667 to 5.693, CollisSuppres, final version from Dragan Nikolic
-monitor line luminosity "o  3"  1666.15 5.693 ##total O III] 1666
+## >>chng 23 jun 27, from 5.693 to 5.747, update Fe+ model to Smyth+19
+monitor line luminosity "o  3"  1666.15 5.747 ##total O III] 1666
 ##
 ## >>chng 06 nov 29, from 6.178 to 6.314, Badnell DR
 ## >>chng 11 jul 12, from 6.314 to 6.279, enable fit to Badnell DR suppression
@@ -143,7 +144,8 @@ monitor line luminosity "blnd" 2798 6.228
 ## >>chng 14 apr 08, from 5.783 to 5.921, O excit state photo back on
 ## >>chng 14 jul 02, from 5.921 to 5.947, Add monitors for Fe II Bands
 ## >>chng 16 mar 20, from 5.947 to 5.816, change from Werner model to Stout model for Fe+
-monitor line luminosity "Fe 2c" 0 5.816
+## >>chng 23 jun 27, from 5.816 to 5.901, update Fe+ model to Smyth+19
+monitor line luminosity "Fe 2c" 0 5.901
 ##
 ## >>chng 09 jun 15, add this monitor
 ## >>chng 09 jun 16, from 1 to 5.872, add FeII bands
@@ -155,7 +157,8 @@ monitor line luminosity "Fe 2c" 0 5.816
 ## >>chng 14 apr 08, from 6.036 to 6.212, O excit state photo back on
 ## >>chng 14 jul 02, from 6.212 to 6.173, Add monitors for Fe II Bands
 ## >>chng 16 mar 20, from 6.173 to 6.235, change from Werner model to Stout model for Fe+
-monitor line luminosity "Fe 2b" 2445 6.235
+## >>chng 23 jun 27, from 6.235 to 6.139, update Fe+ model to Smyth+19
+monitor line luminosity "Fe 2b" 2445 6.139
 ##
 ## >>chng 09 jun 15, add this monitor
 ## >>chng 09 jun 16, from 1 to 4.782, add FeII bands
@@ -167,7 +170,8 @@ monitor line luminosity "Fe 2b" 2445 6.235
 ## >>chng 14 apr 08, from 4.861 to 5.039, O excit state photo back on
 ## >>chng 14 jul 02, from 5.039 to 5.111, Add monitors for Fe II Bands
 ## >>chng 16 mar 20, from 5.111 to 5.055, change from Werner model to Stout model for Fe+
-monitor line luminosity "Fe 2b" 4558 5.055
+## >>chng 23 jun 27, from 5.055 to 5.216, update Fe+ model to Smyth+19
+monitor line luminosity "Fe 2b" 4558 5.216
 ##
 ## >>chng 08 dec 08, from 9 to 6.691, upper limit -> equals (r2515)
 ## >>chng 08 dec 13, from 6.691 to 15.33, merging newsolvers branch
@@ -189,7 +193,8 @@ monitor itrzn 5.62
 ## >>chng 14 jul 02, from 3 to 4, Add monitors for Fe II Bands
 ## >>chng 16 mar 20, from 4 to 3, change from Werner model to Stout model for Fe+
 ## >>chng 17 may 26, from 3 to 4, update Rydberg constant, slight shift in Lya energy chng pump
-monitor niter 4 error 0.01
+## >>chng 23 jun 27, from 4 to 3, update Fe+ model to Smyth+19
+monitor niter 3 error 0.01
 ## 
 ## >>chng 08 apr 30, from <280 to 297, H, He topoff change
 ## >>chng 08 dec 13, from 297 to 293, merging newsolvers branch
@@ -201,102 +206,128 @@ monitor niter 4 error 0.01
 monitor nzone 317 
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.194, Move FeII to Stout
-monitor line intensity "Fe 2b" 1148 4.194 error 0.1
+## >>chng 23 jun 27, from 4.194 to 4.575, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 1148 4.575 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.551, Move FeII to Stout
-monitor line intensity "Fe 2b" 1212 3.551 error 0.1
+## >>chng 23 jun 27, from 3.551 to 5.245, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 1212 5.245 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.237, Move FeII to Stout
-monitor line intensity "Fe 2b" 1295 4.237 error 0.1
+## >>chng 23 jun 27, from 4.237 to 4.897, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 1295 4.897 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.563, Move FeII to Stout
-monitor line intensity "Fe 2b" 1365 3.563 error 0.1
+## >>chng 23 jun 27, from 3.563 to 4.674, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 1365 4.674 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.993, Move FeII to Stout
-monitor line intensity "Fe 2b" 1485 4.993 error 0.1
+## >>chng 23 jun 27, from 4.993 to 5.467, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 1485 5.467 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.936, Move FeII to Stout
 ## >>chng 16 mar 20, from 3.936 to 3.986, change from Werner model to Stout model for Fe+
-monitor line intensity "Fe 2b" 1615 3.986 error 0.1
+## >>chng 23 jun 27, from 3.986 to 4.642, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 1615 4.642 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.753, Move FeII to Stout
 ## >>chng 16 mar 20, from 3.753 to 3.901, change from Werner model to Stout model for Fe+
-monitor line intensity "Fe 2b" 1787 3.901 error 0.1
+## >>chng 23 jun 27, from 3.901 to 4.123, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 1787 4.123 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.015, Move FeII to Stout
 ## >>chng 16 mar 20, from 4.015 to 4.056 change from Werner model to Stout model for Fe+
-monitor line intensity "Fe 2b" 1822 4.056 error 0.1
+## >>chng 23 jun 27, from 4.056 to 4.549, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 1822 4.549 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 5.702, Move FeII to Stout
 ## >>chng 16 mar 20, from 5.702 to 5.798, change from Werner model to Stout model for Fe+
-monitor line intensity "Fe 2b" 2355 5.798 error 0.1
+## >>chng 23 jun 27, from 5.798 to 5.741, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 2355 5.741 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 5.745, Move FeII to Stout
-monitor line intensity "Fe 2b" 2495 5.745 error 0.1
+## >>chng 23 jun 27, from 5.745 to 5.59, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 2495 5.59 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.837, Move FeII to Stout
 ## >>chng 16 mar 20, from 4.837 to 4.918, change from Werner model to Stout model for Fe+
-monitor line intensity "Fe 2b" 2695 4.918 error 0.1
+## >>chng 23 jun 27, from 4.918 to 5.189, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 2695 5.189 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 5.653, Move FeII to Stout
 monitor line intensity "Fe 2b" 2758 5.653 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.199, Move FeII to Stout
-monitor line intensity "Fe 2b" 2797 4.199 error 0.1
+## >>chng 23 jun 27, from 4.199 to 4.803, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 2797 4.803 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 5.7, Move FeII to Stout
-monitor line intensity "Fe 2b" 2935 5.7 error 0.1
+## >>chng 23 jun 27, from 5.7 to 5.401, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 2935 5.401 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 5.265, Move FeII to Stout
 ## >>chng 16 mar 20, from 5.265 to 5.224, change from Werner model to Stout model for Fe+
-monitor line intensity "Fe 2b" 4255 5.224 error 0.1
+## >>chng 23 jun 27, from 5.224 to 5.55, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 4255 5.55 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 5.111, Move FeII to Stout
 ## >>chng 16 mar 20, from 5.111 to 5.055, change from Werner model to Stout model for Fe+
-monitor line intensity "Fe 2b" 4558 5.055 error 0.1
+## >>chng 23 jun 27, from 5.055 to 5.216, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 4558 5.216 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.176, Move FeII to Stout
 ## >>chng 16 mar 20, from 4.176 to 4.134, change from Werner model to Stout model for Fe+
-monitor line intensity "Fe 2b" 4743 4.134 error 0.1
+## >>chng 23 jun 27, from 4.134 to 4.189, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 4743 4.189 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.521, Move FeII to Stout
-monitor line intensity "Fe 2b" 4855 4.521 error 0.1
+## >>chng 23 jun 27, from 4.521 to 4.622, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 4855 4.622 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.016, Move FeII to Stout
 ## >>chng 16 mar 20, from 4.016 to 3.968, change from Werner model to Stout model for Fe+
-monitor line intensity "Fe 2b" 4971 3.968 error 0.1
+## >>chng 23 jun 27, from 3.968 to 4.499, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 4971 4.499 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.455, Move FeII to Stout
 ## >>chng 16 mar 20, from 4.455 to 4.409, change from Werner model to Stout model for Fe+
-monitor line intensity "Fe 2b" 4975 4.409 error 0.1
+## >>chng 23 jun 27, from 4.409 to 4.64, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 4975 4.64 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.67, Move FeII to Stout
-monitor line intensity "Fe 2b" 5143 4.67 error 0.1
+## >>chng 23 jun 27, from 4.67 to 5.021, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 5143 5.021 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 5.069, Move FeII to Stout
-monitor line intensity "Fe 2b" 5318 5.069 error 0.1
+## >>chng 23 jun 27, from 5.069 to 5.291, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 5318 5.291 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.17, Move FeII to Stout
-monitor line intensity "Fe 2b" 5865 4.17 error 0.1
+## >>chng 23 jun 27, from 4.17 to 4.484, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 5865 4.484 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.474, Move FeII to Stout
 ## >>chng 16 mar 20, from 4.474 to 4.383, change from Werner model to Stout model for Fe+
-monitor line intensity "Fe 2b" 6265 4.383 error 0.1
+## >>chng 23 jun 27, from 4.383 to 4.486, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 6265 4.486 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.299, Move FeII to Stout
 ## >>chng 16 mar 20, from 4.299 to 4.2, change from Werner model to Stout model for Fe+
-monitor line intensity "Fe 2b" 6565 4.2 error 0.1
+## >>chng 23 jun 27, from 4.2 to 4.282, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 6565 4.282 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.605, Move FeII to Stout
 monitor line intensity "Fe 2b" 7445 4.605 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 2.538, Move FeII to Stout
-monitor line intensity "Fe 2b" 7785 2.538 error 0.1
+## >>chng 23 jun 27, from 2.538 to 1.851, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 7785 1.851 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.539, Move FeII to Stout
 monitor line intensity "Fe 2b" 1.88900m 4.539 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.254, Move FeII to Stout
-monitor line intensity "Fe 2b" 2.20000m 3.254 error 0.1
+## >>chng 23 jun 27, from 3.254 to 2.907, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 2.20000m 2.907 error 0.1
 ##
 # This is one of the 5 models that sample the LOC plane.

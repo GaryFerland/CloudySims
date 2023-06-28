@@ -55,7 +55,8 @@ save continuum "coll_t4.con"  units angstroms
 ## >>chng 16 mar 20, from -6.146 to -6.106, change from Werner model to Stout model for Fe+
 ## >>chng 16 mar 24, from -6.106 to -6.171, FeII cooling using Stout 80 levels
 ## >>chng 16 aug 07, from -6.171 to -6.207, Fran bug fix
-monitor ctot -6.207
+## >>chng 23 jun 27, from -6.207 to -6.183, update Fe+ model to Smyth+19
+monitor ctot -6.183
 ##
 ## >>chng 12 nov 09, first run
 ## >>chng 13 feb 10, from 8.783 to 8.835, H2,e-=>H-,H update

@@ -817,7 +817,8 @@ monitor column density "CS"        16.96
 ## >>chng 21 apr 16, from 12.04 to 12.32, add molecular column densities
 monitor column density "H2Cl+"     12.32  
 ## >>chng 21 apr 16, from 10.42 to 10.85, add molecular column densities
-monitor column density "H2O+"      10.85  
+## >>chng 23 jun 27, from 10.85 to 10.89, update Fe+ model to Smyth+19
+monitor column density "H2O+"      10.89  
 ## >>chng 21 apr 16, from 14.05 to 16.46, add molecular column densities
 monitor column density "H2O"       16.46  
 ## >>chng 21 apr 16, from 11.41 to 12.91, add molecular column densities
