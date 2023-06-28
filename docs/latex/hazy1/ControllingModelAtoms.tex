@@ -680,19 +680,23 @@ collisions.
 \subsubsection{Selecting $l$-changing collision theories}
 
 This selects the $l$-changing collision theory.  
-As described in \citet{Guzman.I.2016} and \citet{Guzman.II.2017}, we recommend our default option,
-the modified  \citet{PengellySeaton1964}, PS-M.
+As described in \cite{Badnell2021} we recommend our default option,
+the modified  \citet{PengellySeaton1964}, PSM20.
 
 \cdCommand{database H-like collisions l-mixing off}
 This turns off all \emph{l}-mixing collisions, including  $2s-2p$.
 
-\cdCommand{database H-like collisions l-mixing Pengelly [Classic]} 
+\cdCommand{database H-like collisions l-mixing Pengelly PSM20} 
 The  modified \citet{PengellySeaton1964} formalism, PS-M, described by 
-\citep{Guzman.II.2017}, is used by default.
- If the key \cdCommand{Classic} is used then the original \citet{PengellySeaton1964} is used. 
+\citep{Badnell2021}, is used. This is the default option when no command is included.
+
+\cdCommand{database H-like collisions l-mixing Pengelly [Classic/PSM17]} 
+If the key \cdCommand{Classic} is used, then the original \citet{PengellySeaton1964} is used.
+If the key \cdCommand{PSM17} is used, then the slightly different modified theory from \citep{Guzman.II.2017}
+is used.
 
 The \cdCommand{Case B} command, described in Section \ref{sec:CaseBCommand},
-uses PS-M by default.
+uses PSM20 by default.
 That command has a key \cdCommand{Hummer} to allow comparison with \citet{Hummer1987}, 
 that switches to the original \citet{PengellySeaton1964} formalism. This formalism is providing Maxwell averaged rate coefficients so \cdCommand{thermal} option does not apply.
 
@@ -783,13 +787,15 @@ and all $l-l^\prime$ (also $l\leq2$) collisions are calculated with the model ch
 assuming all the levels are degenerate. This is mainly a testing command. 
 The \cdCommand{options} are either \cdCommand{Pengelly}, \cdCommand{Vrinceanu} or \cdCommand{VOS12}.
 
+\cdCommand{database He-like collisions l-mixing PSM20} Standard calculations from \citep{Badnell2021}, with the criteria used in \citet{Guzman.II.2017}, 
+ will be performed. This option will be performed as default if no command is included.
+ 
 \cdCommand{database He-like collisions l-mixing [B72|no degeneration] [options]}  
 This sets up the criterion for degeneration on collisions. If \cdCommand{B72} is used, 
 criteria from equation 3.12 of \citet{1972MNRAS.157..211B} is adopted. 
 If \cdCommand{no degeneration}, Pengelly and Seaton \cite{PengellySeaton1964} smoothed 
-criteria is followed. If no command, standard calculations, with the criteria used in \citet{Guzman.II.2017}, 
-will be performed. The \cdCommand{options} are either \cdCommand{Pengelly}, 
-\cdCommand{Vrinceanu} or \cdCommand{VOS12}.
+criteria is followed. The \cdCommand{options} are either \cdCommand{Pengelly}, 
+\cdCommand{Vrinceanu}, \cdCommand{VOS12}, or \cdCommand{PSM17} (see above).
 
 \cdCommand{database He-like collisions l-mixing S62 [off] [degeneration ops] [options]}  
 This enables/disables calculations based on \citet{Seaton1962} for $l\leq 2$ where electrons dominate. 
@@ -1298,11 +1304,24 @@ of Chianti.
 \subsection{Database Chianti off} 
 will disable all of Chianti.
 
-\subsection{Database Chianti hybrid} 
-Hybrid, the merging of the Chianti data with the Opacity Project data, 
-is on by default if Chianti is on.
+\subsection{Database Chianti [hybrid, no hybrid]} 
+Hybrid, the merging of the Chianti and Opacity Project data, 
+is done by default if Chianti is included.
 The \cdCommand{no hybrid} option disables the Opacity Project data and only uses Chianti.
 See \citet{2013MNRAS.429.3133L} for more details.
+
+Our Opacity Project line set is contained in the file \cdFilename{data/level2.dat} and
+includes a large number of permitted electronic transitions. These often
+extend to higher excitation energies and shorter wavelengths than Chianti,
+so can add important lines. However, the Opacity Project data have greater
+uncertainties than Chianti. The OP energies are entirely theoretical and
+there are no matching collision strengths.
+The line wavelengths have an uncertainty of roughly 10\% and we use
+various forms of the g-bar approximation to produce collision rates.
+
+You can judge the various sources of atomic data by running the model
+\cdFilename{docs/LineList.in} and examining the resulting file \cdFilename{docs/LineList.txt}.
+It lists all lines with their sources.
 
 \subsection{Database Chianti print} 
 will print which Chianti ions are being used

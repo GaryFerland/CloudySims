@@ -256,7 +256,8 @@ monitor itrzn 4.878 error 0.10
 monitor niter < 7
 ## >>chng 12 jul 02, from 4 to 3, change H,H=>H2,hv rate
 ## >>chng 14 nov 26, from 3 to 4, hop is between 5 and 6
-monitor niter > 3
+## >>chng 23 may 05, from >3 to >2, change caused by vib-rotational levels of SiS
+monitor niter  >2
 ## >>chng 14 may 31, see if monitoring exact value is helpful
 ## >>chng 14 jul 10, from 6 to 5, Add monitors for WillsNetzerWills FeII Lines
 ## >>chng 14 oct 28, from 6 to 5, relativistic Gaunt factors
@@ -271,7 +272,8 @@ monitor niter > 3
 ## >>chng 09 jan 08, from 182 to 192, minor changes in iter/zn, iterations, and zone that crept in over last month
 ## >>chng 09 jan 16, disable this assert because the values show a bimodal distribution over various platforms
 ## >>chng 14 may 31, re-enable as things should be more stable
-monitor nzone 737
+## >>chng 23 may 04, from 737 to 821, change caused by vib-rotational levels of SiS
+monitor nzone 821
 ##
 ## >>chng 14 jul 10, from 1.01 to 2.949, Add monitors for WillsNetzerWills FeII Lines
 ## >>chng 16 mar 23, drop WillsNetzerWills FeII Lines

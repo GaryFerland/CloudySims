@@ -980,7 +980,7 @@ STATIC void states_nelemfill(void)
 				TotalInsanity();
 			}
 
-			if( atmdat.lgChiantiHybrid || atmdat.lgStoutHybrid )
+			if( atmdat.lgChiantiLvl2Hybrid || atmdat.lgStoutLvl2Hybrid )
 			{
 				// used in cool_dima to indicate whether to include line
 				// with shorter wl than these databases

@@ -18,11 +18,14 @@ protected:
 private:
 	phfit_version version;
 	/* phfit.dat */
-	long int L[7];
+	static const int NSHELLS = 7;
+	long int L[NSHELLS];
 	long int NINN[LIMELM];
 	long int NTOT[LIMELM];
-	realnum PH1[7][LIMELM][LIMELM][6];
-	realnum PH2[LIMELM][LIMELM][7];
+	static const int NFIT_PH1 = 6,
+			NFIT_PH2 = 7;
+	realnum PH1[NSHELLS][LIMELM][LIMELM][NFIT_PH1];
+	realnum PH2[LIMELM][LIMELM][NFIT_PH2];
 
 	/** set_vshell_index -- Set valence shell index for given ion
 	 * The index is used to access the photoionization cross-section
