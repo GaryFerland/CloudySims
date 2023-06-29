@@ -121,7 +121,7 @@ void RT_diffuse(void)
 							sp->st[ipHi].Pop()*
 							sp->trans(ipHi,ipLo).Emis().Pesc() *
 							sp->trans(ipHi,ipLo).EnergyErg();
-						
+
 						// Would be better to enable checks (and remove argument) --
 						// present state is to ensure backwards compatibility with previous
 						// unchecked code.
@@ -165,6 +165,27 @@ void RT_diffuse(void)
 				}
 			}
 		}
+	}
+
+	/* Only for H isoseq: Add j-resolved ExtraLymanLinesJ*5 */
+	for( long nelem = ipHYDROGEN; nelem < LIMELM; nelem++ )
+	{
+		const bool lgDoChecks = false;
+		const long ipISO = ipH_LIKE;
+
+		for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
+		{
+			if( ExtraLymanLinesJ05[ipH_LIKE][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].ipCont() > 0 )
+			{
+				ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].outline( 1.0, lgDoChecks );
+			}
+
+			if( ExtraLymanLinesJ15[ipH_LIKE][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].ipCont() > 0 )
+			{
+				ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].outline( 1.0, lgDoChecks );
+			}
+		}
+
 	}
 
 	/* add recombination continua for elements heavier than those done with iso seq */

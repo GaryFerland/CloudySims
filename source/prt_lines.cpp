@@ -188,12 +188,18 @@ void lines()
 					PutLine(ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]],
 							  "extra Lyman line"); */
 				if (ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].ipCont() > 0)
+				{
+					set_xIntensity( ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]] );
 					PutLine(ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]],
 							  "extra Lyman line");
+				}
 				
 				if (ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].ipCont() > 0)
+				{
+					set_xIntensity(ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]] );
 					PutLine(ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]],
 							  "extra Lyman line");
+				}
 			}
 		}
 	}
