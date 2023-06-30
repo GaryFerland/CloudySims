@@ -292,7 +292,6 @@ void RT_line_all( linefunc line_one )
 					/* loop over all lines */
 					ipLo = ipH1s;
 					/* these are the extra Lyman lines for the iso sequences */
-					/*for( ipHi=2; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )*/
 					/* only update if significant abundance and need to update fine opac */
 					if( dense.xIonDense[nelem][ion] > 1e-30 )
 					{

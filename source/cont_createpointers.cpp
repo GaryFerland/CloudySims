@@ -586,7 +586,6 @@ void ContCreatePointers(void)
 					char chLab[NCHLAB];
 					strncpy(chLab,sLab.c_str(),NCHLAB-1);
 					chLab[NCHLAB-1]='\0';
-					/* TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi]; */
 					TransitionList::iterator tr = ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][ipHi];
 					(*tr).ipCont() = 
 						ipLineEnergy((*tr).EnergyRyd() , chLab,

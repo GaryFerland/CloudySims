@@ -180,13 +180,8 @@ void lines()
 		{
 			if( ! dense.lgElmtOn[nelem] )
 				continue;
-			//for( long ipHi=iso_sp[ipISO][nelem].numLevels_max; ipHi < iso_ctrl.nLyman_max[ipISO]; ipHi++ )
 			for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
-			//for( long ipHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
 			{
-				/* if (ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]].ipCont() > 0)
-					PutLine(ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]],
-							  "extra Lyman line"); */
 				if (ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].ipCont() > 0)
 				{
 					set_xIntensity( ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]] );

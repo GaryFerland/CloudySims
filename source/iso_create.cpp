@@ -313,7 +313,6 @@ void iso_create()
 				/* fill the extra Lyman lines */
 				for( ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
 				{
-					/* FillExtraLymanLine( ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi], ipISO, nelem, ipHi ); */
 					FillExtraLymanLine( ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][ipHi], ipISO, nelem, ipHi, 0.5 );
 					FillExtraLymanLine( ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][ipHi], ipISO, nelem, ipHi, 1.5 );
 
@@ -627,14 +626,12 @@ STATIC void iso_allocate(void)
 	}
 
 	ipSatelliteLines.reserve( NISO );
-	/* ipExtraLymanLines.reserve( NISO ); */
 	ipExtraLymanLinesJ05.reserve( NISO );
 	ipExtraLymanLinesJ15.reserve( NISO );
 
 	for( long ipISO=ipH_LIKE; ipISO<NISO; ++ipISO )
 	{
 		ipSatelliteLines.reserve( ipISO, LIMELM );
-		/* ipExtraLymanLines.reserve( ipISO, LIMELM ); */
 		ipExtraLymanLinesJ05.reserve( ipISO, LIMELM );
 		ipExtraLymanLinesJ15.reserve( ipISO, LIMELM );
 
@@ -646,7 +643,6 @@ STATIC void iso_allocate(void)
 				ASSERT( iso_sp[ipISO][nelem].numLevels_max > 0 );
 
 				ipSatelliteLines.reserve( ipISO, nelem, iso_sp[ipISO][nelem].numLevels_max );
-				/* ipExtraLymanLines.reserve( ipISO, nelem, iso_ctrl.nLyman_alloc[ipISO] ); */
 				ipExtraLymanLinesJ05.reserve( ipISO, nelem, iso_ctrl.nLyman_alloc[ipISO] );
 				ipExtraLymanLinesJ15.reserve( ipISO, nelem, iso_ctrl.nLyman_alloc[ipISO] );
 			}
@@ -654,20 +650,17 @@ STATIC void iso_allocate(void)
 	}
 
 	ipSatelliteLines.alloc();
-	/* ipExtraLymanLines.alloc(); */
 	ipExtraLymanLinesJ05.alloc();
 	ipExtraLymanLinesJ15.alloc();
 
 	Transitions.resize(NISO);
 	SatelliteLines.resize(NISO);
-	/* ExtraLymanLines.resize(NISO); */
 	ExtraLymanLinesJ05.resize(NISO);
 	ExtraLymanLinesJ15.resize(NISO);
 	for( long ipISO=ipH_LIKE; ipISO<NISO; ++ipISO )
 	{
 		Transitions[ipISO].reserve(LIMELM);
 		SatelliteLines[ipISO].reserve(LIMELM);
-		/* ExtraLymanLines[ipISO].reserve(LIMELM); */
 		ExtraLymanLinesJ05[ipISO].reserve(LIMELM);
 		ExtraLymanLinesJ15[ipISO].reserve(LIMELM);
 		for( long nelem=0; nelem < ipISO; ++nelem )
@@ -676,8 +669,6 @@ STATIC void iso_allocate(void)
 				TransitionList("Insanity",&AnonStates));
 			SatelliteLines[ipISO].push_back(
 				TransitionList("Insanity",&AnonStates));
-			/* ExtraLymanLines[ipISO].push_back(
-				TransitionList("Insanity",&AnonStates)); */
 			ExtraLymanLinesJ05[ipISO].push_back(
 				TransitionList("Insanity",&AnonStates));
 			ExtraLymanLinesJ15[ipISO].push_back(
@@ -691,8 +682,6 @@ STATIC void iso_allocate(void)
 					TransitionList("Isosequence",&iso_sp[ipISO][nelem].st));
 				SatelliteLines[ipISO].push_back(
 					TransitionList("SatelliteLines",&iso_sp[ipISO][nelem].st));
-				/* ExtraLymanLines[ipISO].push_back(
-					TransitionList("ExtraLymanLines",&iso_sp[ipISO][nelem].st)); */
 				ExtraLymanLinesJ05[ipISO].push_back(
 					TransitionList("ExtraLymanLines",&iso_sp[ipISO][nelem].stJ05));
 				ExtraLymanLinesJ15[ipISO].push_back(
@@ -704,8 +693,6 @@ STATIC void iso_allocate(void)
 					TransitionList("Insanity",&AnonStates));
 				SatelliteLines[ipISO].push_back(
 					TransitionList("Insanity",&AnonStates));
-				/* ExtraLymanLines[ipISO].push_back(
-					TransitionList("Insanity",&AnonStates)); */
 				ExtraLymanLinesJ05[ipISO].push_back(
 					TransitionList("Insanity",&AnonStates));
 				ExtraLymanLinesJ15[ipISO].push_back(
@@ -756,26 +743,6 @@ STATIC void iso_allocate(void)
 				}
 				ASSERT(Transitions[ipISO][nelem].size() == nTransition);
 				iso_sp[ipISO][nelem].tr = &Transitions[ipISO][nelem];
-
-				/* junk the extra Lyman lines */
-				/* AllTransitions.push_back(ExtraLymanLines[ipISO][nelem]);
-				ExtraLymanLines[ipISO][nelem].resize(iso_ctrl.nLyman_alloc[ipISO]-2);
-				ExtraLymanLines[ipISO][nelem].states() = &iso_sp[ipISO][nelem].st;
-				unsigned int nExtraLyman = 0;
-				for( long ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
-				{
-					ipExtraLymanLines[ipISO][nelem][ipHi] = nExtraLyman;
-					ExtraLymanLines[ipISO][nelem][nExtraLyman].Junk(); 
-					long ipHi_offset = iso_sp[ipISO][nelem].numLevels_max + ipHi - 2;
-					if( iso_ctrl.lgDielRecom[ipISO] )
-						ipHi_offset += 1;
-					ExtraLymanLines[ipISO][nelem][nExtraLyman].setHi(ipHi_offset);
-					
-					ExtraLymanLines[ipISO][nelem][nExtraLyman].setLo(0);
-					ExtraLymanLines[ipISO][nelem][nExtraLyman].AddLine2Stack();
-					++nExtraLyman;
-				}
-				ASSERT(ExtraLymanLines[ipISO][nelem].size() == nExtraLyman); */
 
 				/* junk the extra Lyman lines */
 				AllTransitions.push_back(ExtraLymanLinesJ05[ipISO][nelem]);
