@@ -137,6 +137,13 @@ void RT_tau_inc(void)
 				 * totals are correct as attribution may change */
 				for( long ipHi=2; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
 				{
+					/* TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi];
+					(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
+
+					 actually do the work 
+					RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, ipHi,
+						DopplerWidth[nelem] ); */
+
 					TransitionList::iterator tr = ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][ipHi];
 					(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
 					/* actually do the work */

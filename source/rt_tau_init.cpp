@@ -64,6 +64,7 @@ void RT_tau_init(void)
 				}
 				for( ipHi=2; ipHi <iso_ctrl.nLyman[ipISO]; ipHi++ )
 				{
+					/* ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]].Zero(); */
 					ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].Zero();
 					ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].Zero();
 				}
