@@ -106,7 +106,7 @@ void RT_tau_reset(void)
 				}
 				/* the extra Lyman lines */
 				/* Need all levels, as may have been raised/lowered throughout layer */
-				for( ipHi=2; ipHi < iso_ctrl.nLyman_max[ipISO]; ipHi++ )
+				for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
 				{
 					/* fully transfer all of the extra lines even though
 					 * have not solved for their upper level populations */

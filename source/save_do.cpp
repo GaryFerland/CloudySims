@@ -3845,7 +3845,7 @@ STATIC void SaveLineStuff(
 						Save1Line( ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]], ioPUN, xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
 					} */
 
-					for( long ipHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
+					for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
 					{
 						++index;
 						

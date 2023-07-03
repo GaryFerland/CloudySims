@@ -135,7 +135,7 @@ void RT_tau_inc(void)
 				}
 				/* these are the extra Lyman lines, use all lines so
 				 * totals are correct as attribution may change */
-				for( long ipHi=2; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
+				for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
 				{
 					/* TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi];
 					(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();

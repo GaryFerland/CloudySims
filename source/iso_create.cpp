@@ -311,7 +311,7 @@ void iso_create()
 				}
 
 				/* fill the extra Lyman lines */
-				for( ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
+				for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
 				{
 					/* FillExtraLymanLine( ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi], ipISO, nelem, ipHi ); */
 					FillExtraLymanLine( ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][ipHi], ipISO, nelem, ipHi, 0.5 );
