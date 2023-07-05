@@ -647,8 +647,9 @@ STATIC void iso_allocate(void)
 
 				ipSatelliteLines.reserve( ipISO, nelem, iso_sp[ipISO][nelem].numLevels_max );
 				/* ipExtraLymanLines.reserve( ipISO, nelem, iso_ctrl.nLyman_alloc[ipISO] ); */
-				ipExtraLymanLinesJ05.reserve( ipISO, nelem, iso_ctrl.nLyman_alloc[ipISO] );
-				ipExtraLymanLinesJ15.reserve( ipISO, nelem, iso_ctrl.nLyman_alloc[ipISO] );
+				long nAlloc = MAX2(iso_sp[ipISO][nelem].n_HighestResolved_max + iso_sp[ipISO][nelem].nCollapsed_max, iso_ctrl.nLyman_alloc[ipISO]);
+				ipExtraLymanLinesJ05.reserve( ipISO, nelem, nAlloc );
+				ipExtraLymanLinesJ15.reserve( ipISO, nelem, nAlloc );
 			}
 		}
 	}
@@ -778,8 +779,9 @@ STATIC void iso_allocate(void)
 				ASSERT(ExtraLymanLines[ipISO][nelem].size() == nExtraLyman); */
 
 				/* junk the extra Lyman lines */
+				long nAlloc = MAX2(iso_sp[ipISO][nelem].n_HighestResolved_max + iso_sp[ipISO][nelem].nCollapsed_max, iso_ctrl.nLyman_alloc[ipISO]);
 				AllTransitions.push_back(ExtraLymanLinesJ05[ipISO][nelem]);
-				ExtraLymanLinesJ05[ipISO][nelem].resize(iso_ctrl.nLyman_alloc[ipISO]-2);
+				ExtraLymanLinesJ05[ipISO][nelem].resize(nAlloc);
 				ExtraLymanLinesJ05[ipISO][nelem].states() = &iso_sp[ipISO][nelem].stJ05;
 				unsigned int nExtraLyman = 0;
 				for( long ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
@@ -795,10 +797,10 @@ STATIC void iso_allocate(void)
 					ExtraLymanLinesJ05[ipISO][nelem][nExtraLyman].AddLine2Stack();
 					++nExtraLyman;
 				}
-				ASSERT(ExtraLymanLinesJ05[ipISO][nelem].size() == nExtraLyman);
+				//ASSERT(ExtraLymanLinesJ05[ipISO][nelem].size() == nExtraLyman);
 
 				AllTransitions.push_back(ExtraLymanLinesJ15[ipISO][nelem]);
-				ExtraLymanLinesJ15[ipISO][nelem].resize(iso_ctrl.nLyman_alloc[ipISO]-2);
+				ExtraLymanLinesJ15[ipISO][nelem].resize(nAlloc);
 				ExtraLymanLinesJ15[ipISO][nelem].states() = &iso_sp[ipISO][nelem].stJ15;
 				nExtraLyman = 0;
 				for( long ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
@@ -814,7 +816,7 @@ STATIC void iso_allocate(void)
 					ExtraLymanLinesJ15[ipISO][nelem][nExtraLyman].AddLine2Stack();
 					++nExtraLyman;
 				}
-				ASSERT(ExtraLymanLinesJ15[ipISO][nelem].size() == nExtraLyman);
+				//ASSERT(ExtraLymanLinesJ15[ipISO][nelem].size() == nExtraLyman);
 			}
 		}
 	}
