@@ -350,7 +350,7 @@ monitor temperature volume "O+2" 4.059
 monitor temperature volume "O+3" 4.146
 monitor temperature volume "O+4" 4.157
 monitor temperature volume "O+5" 4.164
-## >>chng 23 mar 17, from 4.167 to 4.186, add SiS and Lamda model"
+## >>chng 23 mar 17, from 4.167 to 4.186, add SiS and Lamda model
 monitor temperature volume "O+6" 4.186
 monitor temperature radius "O" 3.953
 monitor temperature radius "O+" 4.052
