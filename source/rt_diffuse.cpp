@@ -177,11 +177,13 @@ void RT_diffuse(void)
 		{
 			if( ExtraLymanLinesJ05[ipH_LIKE][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].ipCont() > 0 )
 			{
+				set_xIntensity( ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]] );
 				ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].outline( 1.0, lgDoChecks );
 			}
 
 			if( ExtraLymanLinesJ15[ipH_LIKE][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].ipCont() > 0 )
 			{
+				set_xIntensity( ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]] );
 				ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].outline( 1.0, lgDoChecks );
 			}
 		}
