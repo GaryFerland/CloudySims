@@ -143,15 +143,15 @@ void RT_tau_inc(void)
 					 actually do the work 
 					RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, ipHi,
 						DopplerWidth[nelem] ); */
-
+					
 					TransitionList::iterator tr = ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][ipHi];
-					(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
+					(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
 					/* actually do the work */
 					RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, ipHi,
 						DopplerWidth[nelem] );
 					
 					tr = ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][ipHi];
-					(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
+					(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
 					/* actually do the work */
 					RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, ipHi,
 						DopplerWidth[nelem] );

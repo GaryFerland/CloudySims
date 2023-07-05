@@ -305,25 +305,25 @@ void RT_line_all( linefunc line_one )
 								ASSERT(ipHi > 0);
 
 								TransitionList::iterator tr = ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][nLymanNP];
-								/* we just want the population of the ground state */
-								(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
 								(*(*tr).Lo()).Pop() =
 									iso_sp[ipISO][nelem].st[ipLo].Pop();
 
 								(*(*tr).Hi()).Pop() =
 									iso_sp[ipISO][nelem].st[ipHi].Pop()*(3./pow2(nLymanNP))*(1./3.); /* 2l+1/n^2 for nP, and 1/3 is the ration of statistical weights for j=1/2 */
 
+								(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
+
 								/* actually do the work */
 								line_one( *tr, true, 0.f, DopplerWidth[nelem]); 
 
 								tr = ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][nLymanNP];
-								/* we just want the population of the ground state */
-								(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
 								(*(*tr).Lo()).Pop() =
 									iso_sp[ipISO][nelem].st[ipLo].Pop();
 
 								(*(*tr).Hi()).Pop() =
 									iso_sp[ipISO][nelem].st[ipHi].Pop()*(3./pow2(nLymanNP))*(2./3.); /* 2l+1/n^3 for nP, and 1/3 is the ration of statistical weights for j=3/2 */
+
+								(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
 
 								/* actually do the work */
 								line_one( *tr, true, 0.f, DopplerWidth[nelem]); 
@@ -334,25 +334,25 @@ void RT_line_all( linefunc line_one )
 							   long ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nLymanNP,1,2);
 
 								TransitionList::iterator tr = ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][nLymanNP];
-								/* we just want the population of the ground state */
-								(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
 								(*(*tr).Lo()).Pop() =
 									iso_sp[ipISO][nelem].st[ipLo].Pop();
 
 								(*(*tr).Hi()).Pop() =
 									iso_sp[ipISO][nelem].st[ipHi].Pop()*(1./3.); /* 1/3 is ratio of statistical weights for j=1/2 */
 
+								(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
+
 								/* actually do the work */
 								line_one( *tr, true, 0.f, DopplerWidth[nelem]);
 
 								tr = ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][nLymanNP];
-								/* we just want the population of the ground state */
-								(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
 								(*(*tr).Lo()).Pop() =
 									iso_sp[ipISO][nelem].st[ipLo].Pop();
 
 								(*(*tr).Hi()).Pop() =
 									iso_sp[ipISO][nelem].st[ipHi].Pop()*(2./3.); /* 2/3 is ratio of statistical weights for j=3/2 */
+
+								(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
 
 								/* actually do the work */
 								line_one( *tr, true, 0.f, DopplerWidth[nelem]);
