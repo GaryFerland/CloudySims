@@ -70,8 +70,8 @@ void RT_tau_init(void)
 				for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
 				{
 					/* ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]].Zero(); */
-					ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].Zero();
-					ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].Zero();
+					ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][ipHi]].Zero();
+					ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][ipHi]].Zero();
 				}
 			}
 		}

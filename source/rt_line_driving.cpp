@@ -107,7 +107,7 @@ double RT_line_driving(void)
 					} */
 					
 					/* do not include bogus lines */
-					TransitionList::iterator tr = ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][ipHi];
+					TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][ipHi];
 					if( (*tr).ipCont() > 0 )
 					{
 						OneLine = (*tr).Emis().pump()*
@@ -117,7 +117,7 @@ double RT_line_driving(void)
 						accel_iso[ipISO] += OneLine;
 					}
 
-					tr = ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][ipHi];
+					tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][ipHi];
 					if( (*tr).ipCont() > 0 )
 					{
 						OneLine = (*tr).Emis().pump()*

@@ -589,7 +589,7 @@ void ContCreatePointers(void)
 						strncpy(chLab,sLab.c_str(),NCHLAB-1);
 						chLab[NCHLAB-1]='\0';
 						/* TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi]; */
-						TransitionList::iterator tr = ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][ipHi];
+						TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][ipHi];
 						(*tr).ipCont() = 
 							ipLineEnergy((*tr).EnergyRyd() , chLab,
 							iso_sp[ipISO][nelem].fb[ipLo].ipIsoLevNIonCon);
@@ -597,7 +597,7 @@ void ContCreatePointers(void)
 						(*tr).Emis().ipFine() = 
 							ipFineCont((*tr).EnergyRyd() );
 
-						tr = ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][ipHi];
+						tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][ipHi];
 						(*tr).ipCont() = 
 							ipLineEnergy((*tr).EnergyRyd() , chLab,
 							iso_sp[ipISO][nelem].fb[ipLo].ipIsoLevNIonCon);

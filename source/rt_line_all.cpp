@@ -303,7 +303,7 @@ void RT_line_all( linefunc line_one )
 
 							ASSERT(ipHi > 0);
 
-							TransitionList::iterator tr = ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][nLymanNP];
+							TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][nLymanNP];
 							(*(*tr).Lo()).Pop() =
 								iso_sp[ipISO][nelem].st[ipLo].Pop();
 
@@ -315,7 +315,7 @@ void RT_line_all( linefunc line_one )
 							/* actually do the work */
 							line_one( *tr, true, 0.f, DopplerWidth[nelem]); 
 
-							tr = ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][nLymanNP];
+							tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][nLymanNP];
 							(*(*tr).Lo()).Pop() =
 								iso_sp[ipISO][nelem].st[ipLo].Pop();
 
@@ -332,7 +332,7 @@ void RT_line_all( linefunc line_one )
 						{
 						   long ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nLymanNP,1,2);
 
-							TransitionList::iterator tr = ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][nLymanNP];
+							TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][nLymanNP];
 							(*(*tr).Lo()).Pop() =
 								iso_sp[ipISO][nelem].st[ipLo].Pop();
 
@@ -344,7 +344,7 @@ void RT_line_all( linefunc line_one )
 							/* actually do the work */
 							line_one( *tr, true, 0.f, DopplerWidth[nelem]);
 
-							tr = ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][nLymanNP];
+							tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][nLymanNP];
 							(*(*tr).Lo()).Pop() =
 								iso_sp[ipISO][nelem].st[ipLo].Pop();
 

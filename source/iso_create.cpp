@@ -318,8 +318,8 @@ void iso_create()
 				for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
 				{
 					/* FillExtraLymanLine( ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi], ipISO, nelem, ipHi ); */
-					FillExtraLymanLine( ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][ipHi], ipISO, nelem, ipHi, 0.5 );
-					FillExtraLymanLine( ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][ipHi], ipISO, nelem, ipHi, 1.5 );
+					FillExtraLymanLine( ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][ipHi], ipISO, nelem, ipHi, 0.5 );
+					FillExtraLymanLine( ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][ipHi], ipISO, nelem, ipHi, 1.5 );
 
 					enum {DEBUG_LOC=false};
 					if(DEBUG_LOC && ipISO == ipH_LIKE && nelem == ipIRON && ipHi == 2)
@@ -327,7 +327,7 @@ void iso_create()
 						fprintf( ioQQQ, "%li\t%li\t%f\n",
 									nelem,
 									ipHi,
-									ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].EnergyWN()
+									ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][ipHi]].EnergyWN()
 									);
 
 						cdEXIT(EXIT_FAILURE);
@@ -631,15 +631,111 @@ STATIC void iso_allocate(void)
 
 	ipSatelliteLines.reserve( NISO );
 	/* ipExtraLymanLines.reserve( NISO ); */
-	ipExtraLymanLinesJ05.reserve( NISO );
-	ipExtraLymanLinesJ15.reserve( NISO );
+	/* ipExtraLymanLines.reserve( ipISO, nelem, iso_ctrl.nLyman_alloc[ipISO] ); */
+
+	/* Set up H-like extra lyman lines */
+	{
+		long ipISO = ipH_LIKE;
+
+		ipExtraLymanLinesJ05.reserve( LIMELM );
+		ipExtraLymanLinesJ15.reserve( LIMELM );
+
+		ExtraLymanLinesJ05.reserve(LIMELM);
+		ExtraLymanLinesJ15.reserve(LIMELM);
+	
+		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+		{
+			if( dense.lgElmtOn[nelem] )
+			{
+				ASSERT( iso_sp[ipISO][nelem].numLevels_max > 0 );
+
+				long nAlloc = MAX2(iso_sp[ipISO][nelem].n_HighestResolved_max + iso_sp[ipISO][nelem].nCollapsed_max, iso_ctrl.nLyman_alloc[ipISO]);
+				ipExtraLymanLinesJ05.reserve( nelem, nAlloc );
+				ipExtraLymanLinesJ15.reserve( nelem, nAlloc );
+			}
+		}
+
+		ipExtraLymanLinesJ05.alloc();
+		ipExtraLymanLinesJ15.alloc();
+
+		for( long nelem=0; nelem < ipISO; ++nelem )
+		{
+			ExtraLymanLinesJ05.push_back(
+				TransitionList("Insanity",&AnonStates));
+			ExtraLymanLinesJ15.push_back(
+				TransitionList("Insanity",&AnonStates));
+		}
+
+		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+		{
+			if( dense.lgElmtOn[nelem] )
+			{
+				ExtraLymanLinesJ05.push_back(
+					TransitionList("ExtraLymanLines",&iso_sp[ipISO][nelem].stJ05));
+				ExtraLymanLinesJ15.push_back(
+					TransitionList("ExtraLymanLines",&iso_sp[ipISO][nelem].stJ15));
+			}
+			else
+			{
+				ExtraLymanLinesJ05.push_back(
+					TransitionList("Insanity",&AnonStates));
+				ExtraLymanLinesJ15.push_back(
+					TransitionList("Insanity",&AnonStates));
+			}
+		}
+
+		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+		{
+			/* only grab core for elements that are turned on */
+			if( dense.lgElmtOn[nelem] )
+			{
+				/* junk the extra Lyman lines */
+				long nAlloc = MAX2(iso_sp[ipISO][nelem].n_HighestResolved_max + iso_sp[ipISO][nelem].nCollapsed_max, iso_ctrl.nLyman_alloc[ipISO]);
+				AllTransitions.push_back(ExtraLymanLinesJ05[nelem]);
+				ExtraLymanLinesJ05[nelem].resize(nAlloc);
+				ExtraLymanLinesJ05[nelem].states() = &iso_sp[ipISO][nelem].stJ05;
+				unsigned int nExtraLyman = 0;
+				for( long ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
+				{
+					ipExtraLymanLinesJ05[nelem][ipHi] = nExtraLyman;
+					ExtraLymanLinesJ05[nelem][nExtraLyman].Junk(); 
+					long ipHi_offset = iso_sp[ipISO][nelem].numLevels_max + ipHi - 2;
+					if( iso_ctrl.lgDielRecom[ipISO] )
+						ipHi_offset += 1;
+					ExtraLymanLinesJ05[nelem][nExtraLyman].setHi(ipHi_offset);
+					/* lower level is just ground state of the ion */
+					ExtraLymanLinesJ05[nelem][nExtraLyman].setLo(0);
+					ExtraLymanLinesJ05[nelem][nExtraLyman].AddLine2Stack();
+					++nExtraLyman;
+				}
+				//ASSERT(ExtraLymanLinesJ05[nelem].size() == nExtraLyman);
+
+				AllTransitions.push_back(ExtraLymanLinesJ15[nelem]);
+				ExtraLymanLinesJ15[nelem].resize(nAlloc);
+				ExtraLymanLinesJ15[nelem].states() = &iso_sp[ipISO][nelem].stJ15;
+				nExtraLyman = 0;
+				for( long ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
+				{
+					ipExtraLymanLinesJ15[nelem][ipHi] = nExtraLyman;
+					ExtraLymanLinesJ15[nelem][nExtraLyman].Junk(); 
+					long ipHi_offset = iso_sp[ipISO][nelem].numLevels_max + ipHi - 2;
+					if( iso_ctrl.lgDielRecom[ipISO] )
+						ipHi_offset += 1;
+					ExtraLymanLinesJ15[nelem][nExtraLyman].setHi(ipHi_offset);
+					/* lower level is just ground state of the ion */
+					ExtraLymanLinesJ15[nelem][nExtraLyman].setLo(0);
+					ExtraLymanLinesJ15[nelem][nExtraLyman].AddLine2Stack();
+					++nExtraLyman;
+				}
+				//ASSERT(ExtraLymanLinesJ15[nelem].size() == nExtraLyman);
+			}
+		}
+	}
 
 	for( long ipISO=ipH_LIKE; ipISO<NISO; ++ipISO )
 	{
 		ipSatelliteLines.reserve( ipISO, LIMELM );
 		/* ipExtraLymanLines.reserve( ipISO, LIMELM ); */
-		ipExtraLymanLinesJ05.reserve( ipISO, LIMELM );
-		ipExtraLymanLinesJ15.reserve( ipISO, LIMELM );
 
 		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
 		{
@@ -649,31 +745,23 @@ STATIC void iso_allocate(void)
 				ASSERT( iso_sp[ipISO][nelem].numLevels_max > 0 );
 
 				ipSatelliteLines.reserve( ipISO, nelem, iso_sp[ipISO][nelem].numLevels_max );
-				/* ipExtraLymanLines.reserve( ipISO, nelem, iso_ctrl.nLyman_alloc[ipISO] ); */
-				long nAlloc = MAX2(iso_sp[ipISO][nelem].n_HighestResolved_max + iso_sp[ipISO][nelem].nCollapsed_max, iso_ctrl.nLyman_alloc[ipISO]);
-				ipExtraLymanLinesJ05.reserve( ipISO, nelem, nAlloc );
-				ipExtraLymanLinesJ15.reserve( ipISO, nelem, nAlloc );
 			}
 		}
 	}
 
 	ipSatelliteLines.alloc();
 	/* ipExtraLymanLines.alloc(); */
-	ipExtraLymanLinesJ05.alloc();
-	ipExtraLymanLinesJ15.alloc();
 
 	Transitions.resize(NISO);
 	SatelliteLines.resize(NISO);
 	/* ExtraLymanLines.resize(NISO); */
-	ExtraLymanLinesJ05.resize(NISO);
-	ExtraLymanLinesJ15.resize(NISO);
+
 	for( long ipISO=ipH_LIKE; ipISO<NISO; ++ipISO )
 	{
 		Transitions[ipISO].reserve(LIMELM);
 		SatelliteLines[ipISO].reserve(LIMELM);
 		/* ExtraLymanLines[ipISO].reserve(LIMELM); */
-		ExtraLymanLinesJ05[ipISO].reserve(LIMELM);
-		ExtraLymanLinesJ15[ipISO].reserve(LIMELM);
+		
 		for( long nelem=0; nelem < ipISO; ++nelem )
 		{
 			Transitions[ipISO].push_back(
@@ -682,10 +770,6 @@ STATIC void iso_allocate(void)
 				TransitionList("Insanity",&AnonStates));
 			/* ExtraLymanLines[ipISO].push_back(
 				TransitionList("Insanity",&AnonStates)); */
-			ExtraLymanLinesJ05[ipISO].push_back(
-				TransitionList("Insanity",&AnonStates));
-			ExtraLymanLinesJ15[ipISO].push_back(
-				TransitionList("Insanity",&AnonStates));
 		}
 		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
 		{
@@ -697,10 +781,6 @@ STATIC void iso_allocate(void)
 					TransitionList("SatelliteLines",&iso_sp[ipISO][nelem].st));
 				/* ExtraLymanLines[ipISO].push_back(
 					TransitionList("ExtraLymanLines",&iso_sp[ipISO][nelem].st)); */
-				ExtraLymanLinesJ05[ipISO].push_back(
-					TransitionList("ExtraLymanLines",&iso_sp[ipISO][nelem].stJ05));
-				ExtraLymanLinesJ15[ipISO].push_back(
-					TransitionList("ExtraLymanLines",&iso_sp[ipISO][nelem].stJ15));
 			}
 			else
 			{
@@ -710,12 +790,9 @@ STATIC void iso_allocate(void)
 					TransitionList("Insanity",&AnonStates));
 				/* ExtraLymanLines[ipISO].push_back(
 					TransitionList("Insanity",&AnonStates)); */
-				ExtraLymanLinesJ05[ipISO].push_back(
-					TransitionList("Insanity",&AnonStates));
-				ExtraLymanLinesJ15[ipISO].push_back(
-					TransitionList("Insanity",&AnonStates));
 			}
 		}
+
 		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
 		{
 			/* only grab core for elements that are turned on */
@@ -780,46 +857,6 @@ STATIC void iso_allocate(void)
 					++nExtraLyman;
 				}
 				ASSERT(ExtraLymanLines[ipISO][nelem].size() == nExtraLyman); */
-
-				/* junk the extra Lyman lines */
-				long nAlloc = MAX2(iso_sp[ipISO][nelem].n_HighestResolved_max + iso_sp[ipISO][nelem].nCollapsed_max, iso_ctrl.nLyman_alloc[ipISO]);
-				AllTransitions.push_back(ExtraLymanLinesJ05[ipISO][nelem]);
-				ExtraLymanLinesJ05[ipISO][nelem].resize(nAlloc);
-				ExtraLymanLinesJ05[ipISO][nelem].states() = &iso_sp[ipISO][nelem].stJ05;
-				unsigned int nExtraLyman = 0;
-				for( long ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
-				{
-					ipExtraLymanLinesJ05[ipISO][nelem][ipHi] = nExtraLyman;
-					ExtraLymanLinesJ05[ipISO][nelem][nExtraLyman].Junk(); 
-					long ipHi_offset = iso_sp[ipISO][nelem].numLevels_max + ipHi - 2;
-					if( iso_ctrl.lgDielRecom[ipISO] )
-						ipHi_offset += 1;
-					ExtraLymanLinesJ05[ipISO][nelem][nExtraLyman].setHi(ipHi_offset);
-					/* lower level is just ground state of the ion */
-					ExtraLymanLinesJ05[ipISO][nelem][nExtraLyman].setLo(0);
-					ExtraLymanLinesJ05[ipISO][nelem][nExtraLyman].AddLine2Stack();
-					++nExtraLyman;
-				}
-				//ASSERT(ExtraLymanLinesJ05[ipISO][nelem].size() == nExtraLyman);
-
-				AllTransitions.push_back(ExtraLymanLinesJ15[ipISO][nelem]);
-				ExtraLymanLinesJ15[ipISO][nelem].resize(nAlloc);
-				ExtraLymanLinesJ15[ipISO][nelem].states() = &iso_sp[ipISO][nelem].stJ15;
-				nExtraLyman = 0;
-				for( long ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
-				{
-					ipExtraLymanLinesJ15[ipISO][nelem][ipHi] = nExtraLyman;
-					ExtraLymanLinesJ15[ipISO][nelem][nExtraLyman].Junk(); 
-					long ipHi_offset = iso_sp[ipISO][nelem].numLevels_max + ipHi - 2;
-					if( iso_ctrl.lgDielRecom[ipISO] )
-						ipHi_offset += 1;
-					ExtraLymanLinesJ15[ipISO][nelem][nExtraLyman].setHi(ipHi_offset);
-					/* lower level is just ground state of the ion */
-					ExtraLymanLinesJ15[ipISO][nelem][nExtraLyman].setLo(0);
-					ExtraLymanLinesJ15[ipISO][nelem][nExtraLyman].AddLine2Stack();
-					++nExtraLyman;
-				}
-				//ASSERT(ExtraLymanLinesJ15[ipISO][nelem].size() == nExtraLyman);
 			}
 		}
 	}

@@ -3851,11 +3851,11 @@ STATIC void SaveLineStuff(
 						{
 							++index;
 
-							Save1Line( ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]], ioPUN, xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
+							Save1Line( ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][ipHi]], ioPUN, xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
 
 							++index;
 
-							Save1Line( ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]], ioPUN, xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
+							Save1Line( ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][ipHi]], ioPUN, xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
 						}
 					}
 				}

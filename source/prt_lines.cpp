@@ -183,15 +183,15 @@ void lines()
 			/* if (ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]].ipCont() > 0)
 				PutLine(ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]],
 						  "extra Lyman line"); */
-			if (ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].ipCont() > 0)
+			if (ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][ipHi]].ipCont() > 0)
 			{
-				PutLine(ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]],
+				PutLine(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][ipHi]],
 						  "extra Lyman line");
 			}
 			
-			if (ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].ipCont() > 0)
+			if (ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][ipHi]].ipCont() > 0)
 			{
-				PutLine(ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]],
+				PutLine(ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][ipHi]],
 						  "extra Lyman line");
 			}
 		}

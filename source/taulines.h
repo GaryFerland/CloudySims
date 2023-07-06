@@ -40,11 +40,11 @@ extern TransitionProxy::iterator TauDummy;
 /** this is the set of extra lines,
  * ExtraLymanLines[ipISO][ipZ][n]*/
 /* extern multi_arr<int,3> ipExtraLymanLines; */
-extern multi_arr<int,3> ipExtraLymanLinesJ05;
-extern multi_arr<int,3> ipExtraLymanLinesJ15;
+extern multi_arr<int,2> ipExtraLymanLinesJ05;
+extern multi_arr<int,2> ipExtraLymanLinesJ15;
 /* extern vector<vector<TransitionList> > ExtraLymanLines; */
-extern vector<vector<TransitionList> > ExtraLymanLinesJ05;
-extern vector<vector<TransitionList> > ExtraLymanLinesJ15;
+extern vector<TransitionList> ExtraLymanLinesJ05;
+extern vector<TransitionList> ExtraLymanLinesJ15;
 
 /** the set of inner shell lines */
 extern TransitionList UTALines;
