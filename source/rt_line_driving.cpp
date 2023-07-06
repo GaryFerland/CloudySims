@@ -89,6 +89,10 @@ double RT_line_driving(void)
 					}
 				}
 
+				if( ipISO!=ipH_LIKE )
+				{
+					continue;
+				}
 				for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
 				{
 					/* do not include bogus lines

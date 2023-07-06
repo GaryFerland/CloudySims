@@ -273,95 +273,93 @@ void RT_line_all( linefunc line_one )
 	}
 
 	if (conv.lgFirstSweepThisZone || conv.lgLastSweepThisZone ) 
-	{
-		for( ipISO=ipH_LIKE; ipISO < NISO; ++ipISO )
+	{		
+		ipISO = ipH_LIKE;
+	
+		/* loop over all iso-electronic sequences */
+		for( nelem=ipISO; nelem < LIMELM; ++nelem )
 		{
-			/* loop over all iso-electronic sequences */
-			for( nelem=ipISO; nelem < LIMELM; ++nelem )
+			/* parent ion stage, for H is 1, for He is 1 for He-like and 
+			 * 2 for H-like */
+			ion = nelem+1-ipISO;
+
+			/* element turned off */
+			if( !dense.lgElmtOn[nelem] )
+				continue;
+			/* need we consider this ion? */
+			if( ion <= dense.IonHigh[nelem] )
 			{
-				/* parent ion stage, for H is 1, for He is 1 for He-like and 
-				 * 2 for H-like */
-				ion = nelem+1-ipISO;
-
-				/* element turned off */
-				if( !dense.lgElmtOn[nelem] )
-					continue;
-				/* need we consider this ion? */
-				if( ion <= dense.IonHigh[nelem] )
+				/* loop over all lines */
+				ipLo = ipH1s;
+				/* these are the extra Lyman lines for the H iso sequence */
+				/* only update if significant abundance and need to update fine opac */
+				if( dense.xIonDense[nelem][ion] > 1e-30 )
 				{
-					/* loop over all lines */
-					ipLo = ipH1s;
-					/* these are the extra Lyman lines for the iso sequences */
-					/*for( ipHi=2; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )*/
-					/* only update if significant abundance and need to update fine opac */
-					if( dense.xIonDense[nelem][ion] > 1e-30 )
+					for( long nLymanNP=2; nLymanNP < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; nLymanNP++ )
 					{
-						for( long nLymanNP=2; nLymanNP < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; nLymanNP++ ) // give this loop variable a different name
+						if( nLymanNP > iso_sp[ipH_LIKE][nelem].n_HighestResolved_local ) /* looping over collapsed levels */
 						{
-							if( nLymanNP > iso_sp[ipH_LIKE][nelem].n_HighestResolved_local ) /* looping over collapsed levels: n = 11 to 99 for Z < 3 & n = 6 to 99 for Z > 2 */
-							{
-								long ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nLymanNP,-1,-1);
+							long ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nLymanNP,-1,-1);
 
-								ASSERT(ipHi > 0);
+							ASSERT(ipHi > 0);
 
-								TransitionList::iterator tr = ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][nLymanNP];
-								(*(*tr).Lo()).Pop() =
-									iso_sp[ipISO][nelem].st[ipLo].Pop();
+							TransitionList::iterator tr = ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][nLymanNP];
+							(*(*tr).Lo()).Pop() =
+								iso_sp[ipISO][nelem].st[ipLo].Pop();
 
-								(*(*tr).Hi()).Pop() =
-									iso_sp[ipISO][nelem].st[ipHi].Pop()*(3./pow2(nLymanNP))*(1./3.); /* 2l+1/n^2 for nP, and 1/3 is the ration of statistical weights for j=1/2 */
+							(*(*tr).Hi()).Pop() =
+								iso_sp[ipISO][nelem].st[ipHi].Pop()*(3./pow2(nLymanNP))*(1./3.); /* (2l+1)/n^2 for nP, and 1/3 is the ratio of statistical weights for j=1/2 */
 
-								(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
+							(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
 
-								/* actually do the work */
-								line_one( *tr, true, 0.f, DopplerWidth[nelem]); 
+							/* actually do the work */
+							line_one( *tr, true, 0.f, DopplerWidth[nelem]); 
 
-								tr = ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][nLymanNP];
-								(*(*tr).Lo()).Pop() =
-									iso_sp[ipISO][nelem].st[ipLo].Pop();
+							tr = ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][nLymanNP];
+							(*(*tr).Lo()).Pop() =
+								iso_sp[ipISO][nelem].st[ipLo].Pop();
 
-								(*(*tr).Hi()).Pop() =
-									iso_sp[ipISO][nelem].st[ipHi].Pop()*(3./pow2(nLymanNP))*(2./3.); /* 2l+1/n^3 for nP, and 1/3 is the ration of statistical weights for j=3/2 */
+							(*(*tr).Hi()).Pop() =
+								iso_sp[ipISO][nelem].st[ipHi].Pop()*(3./pow2(nLymanNP))*(2./3.); /* (2l+1)/n^3 for nP, and 1/3 is the ratio of statistical weights for j=3/2 */
 
-								(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
+							(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
 
-								/* actually do the work */
-								line_one( *tr, true, 0.f, DopplerWidth[nelem]); 
-							}
-							
-							else /* looping over resolved levels: n = 2 to 10 for Z < 3 & n = 2 to 5 for Z > 2 */
-							{
-							   long ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nLymanNP,1,2);
-
-								TransitionList::iterator tr = ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][nLymanNP];
-								(*(*tr).Lo()).Pop() =
-									iso_sp[ipISO][nelem].st[ipLo].Pop();
-
-								(*(*tr).Hi()).Pop() =
-									iso_sp[ipISO][nelem].st[ipHi].Pop()*(1./3.); /* 1/3 is ratio of statistical weights for j=1/2 */
-
-								(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
-
-								/* actually do the work */
-								line_one( *tr, true, 0.f, DopplerWidth[nelem]);
-
-								tr = ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][nLymanNP];
-								(*(*tr).Lo()).Pop() =
-									iso_sp[ipISO][nelem].st[ipLo].Pop();
-
-								(*(*tr).Hi()).Pop() =
-									iso_sp[ipISO][nelem].st[ipHi].Pop()*(2./3.); /* 2/3 is ratio of statistical weights for j=3/2 */
-
-								(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
-
-								/* actually do the work */
-								line_one( *tr, true, 0.f, DopplerWidth[nelem]);
-							}
+							/* actually do the work */
+							line_one( *tr, true, 0.f, DopplerWidth[nelem]); 
 						}
-					}					
-				}/* if nelem if ion <=dense.IonHigh */
-			}/* loop over nelem */
-		}/* loop over ipISO */
+			
+						else /* looping over resolved levels */
+						{
+						   long ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nLymanNP,1,2);
+
+							TransitionList::iterator tr = ExtraLymanLinesJ05[ipISO][nelem].begin()+ipExtraLymanLinesJ05[ipISO][nelem][nLymanNP];
+							(*(*tr).Lo()).Pop() =
+								iso_sp[ipISO][nelem].st[ipLo].Pop();
+
+							(*(*tr).Hi()).Pop() =
+								iso_sp[ipISO][nelem].st[ipHi].Pop()*(1./3.); /* 1/3 is ratio of statistical weights for j=1/2 */
+
+							(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
+
+							/* actually do the work */
+							line_one( *tr, true, 0.f, DopplerWidth[nelem]);
+
+							tr = ExtraLymanLinesJ15[ipISO][nelem].begin()+ipExtraLymanLinesJ15[ipISO][nelem][nLymanNP];
+							(*(*tr).Lo()).Pop() =
+								iso_sp[ipISO][nelem].st[ipLo].Pop();
+
+							(*(*tr).Hi()).Pop() =
+								iso_sp[ipISO][nelem].st[ipHi].Pop()*(2./3.); /* 2/3 is ratio of statistical weights for j=3/2 */
+
+							(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
+
+							/* actually do the work */
+							line_one( *tr, true, 0.f, DopplerWidth[nelem]);
+						}
+					}/* loop over nLymanNP */
+				}
+			}/* if nelem if ion <= dense.IonHigh */
+		}/* loop over nelem */
 
 		/* this is a major time sink for this routine - only evaluate on last
 		 * sweep when fine opacities are updated since only effect of UTAs is

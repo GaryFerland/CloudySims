@@ -172,35 +172,31 @@ void lines()
 	linadd( 0., (realnum)i , "####", 'i' ,
 			  "extra Lyman lines");
 	
-	/* loop over all iso-electronic sequences */
-	for( long ipISO=ipH_LIKE; ipISO < NISO; ++ipISO )
+	long ipISO = ipH_LIKE;
+	/* loop over all elements on this iso-sequence */
+	for( long nelem=ipISO; nelem < LIMELM; ++nelem )
 	{
-		/* loop over all elements on this iso-sequence */
-		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+		if( ! dense.lgElmtOn[nelem] )
+			continue;
+		for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
 		{
-			if( ! dense.lgElmtOn[nelem] )
-				continue;
-			for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
+			/* if (ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]].ipCont() > 0)
+				PutLine(ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]],
+						  "extra Lyman line"); */
+			if (ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].ipCont() > 0)
 			{
-				/* if (ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]].ipCont() > 0)
-					PutLine(ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]],
-							  "extra Lyman line"); */
-				if (ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]].ipCont() > 0)
-				{
-					set_xIntensity( ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]] );
-					PutLine(ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]],
-							  "extra Lyman line");
-				}
-				
-				if (ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].ipCont() > 0)
-				{
-					set_xIntensity(ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]] );
-					PutLine(ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]],
-							  "extra Lyman line");
-				}
+				PutLine(ExtraLymanLinesJ05[ipISO][nelem][ipExtraLymanLinesJ05[ipISO][nelem][ipHi]],
+						  "extra Lyman line");
+			}
+			
+			if (ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]].ipCont() > 0)
+			{
+				PutLine(ExtraLymanLinesJ15[ipISO][nelem][ipExtraLymanLinesJ15[ipISO][nelem][ipHi]],
+						  "extra Lyman line");
 			}
 		}
 	}
+	
 
 #if	0
 	/* This is Ryan's code for dumping lots of Helium lines according to

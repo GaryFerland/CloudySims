@@ -310,6 +310,10 @@ void iso_create()
 					}
 				}
 
+				if( ipISO != ipH_LIKE)
+				{
+					continue;
+				}
 				/* fill the extra Lyman lines */
 				for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
 				{
@@ -328,7 +332,6 @@ void iso_create()
 
 						cdEXIT(EXIT_FAILURE);
 					}
-
 				}
 			}
 		}

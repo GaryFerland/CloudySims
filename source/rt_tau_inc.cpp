@@ -133,6 +133,11 @@ void RT_tau_inc(void)
 							DopplerWidth[nelem] );
 					}
 				}
+
+				if( ipISO!=ipH_LIKE )
+				{
+					continue;
+				}
 				/* these are the extra Lyman lines, use all lines so
 				 * totals are correct as attribution may change */
 				for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
