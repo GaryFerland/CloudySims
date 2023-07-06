@@ -43,7 +43,13 @@ extern TransitionProxy::iterator TauDummy;
 extern multi_arr<int,2> ipExtraLymanLinesJ05;
 extern multi_arr<int,2> ipExtraLymanLinesJ15;
 /* extern vector<vector<TransitionList> > ExtraLymanLines; */
+
+/* vector of extra lyman lines for H iso-sequence transitions involving nP j=1/2 levels */
+/* ExtraLymanLinesJ05[ipZ][n] */
 extern vector<TransitionList> ExtraLymanLinesJ05;
+
+/* vector of extra lyman lines for H iso-sequence transitions involving nP j=3/2 levels */
+/* ExtraLymanLinesJ15[ipZ][n] */
 extern vector<TransitionList> ExtraLymanLinesJ15;
 
 /** the set of inner shell lines */
