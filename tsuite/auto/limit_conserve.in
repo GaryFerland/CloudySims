@@ -149,7 +149,8 @@ monitor line "H  1" luminosity 1215.67A -4.628
 ## >>chng 15 may 30, from -5.222 to -5.25, updates after merge from mainline, r10248
 ## >>chng 15 jun 03, from -5.25 to -5.122, exact LTE H2 cooling (not big model)
 ## >>chng 16 mar 26, from -5.122 to -5.145, merge branch feii, new bands logic
-monitor line "Si 2" luminosity 34.8046m -5.145
+## >>chng 23 jul 06, from -5.145 to -5.168, update Fe+ model to Smyth+19
+monitor line "Si 2" luminosity 34.8046m -5.168
 ##
 ## >>chng 01 jun 15, from 18.2 to 19.25 full H ct network
 ## >>chng 02 apr 03, from 19.25 to 14.09, bound compton
