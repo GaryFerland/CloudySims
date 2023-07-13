@@ -63,16 +63,23 @@ void RT_tau_init(void)
 					}
 				}
 
-				if( ipISO!=ipH_LIKE )
+				if( ipISO == ipH_LIKE )
 				{
-					continue;
+					for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
+					{
+						ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][ipHi]].Zero();
+						ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][ipHi]].Zero();
+					}
 				}
-				for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
+				else if( ipISO == ipHE_LIKE )
 				{
-					/* ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]].Zero(); */
-					ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][ipHi]].Zero();
-					ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][ipHi]].Zero();
+					for( ipHi=2; ipHi <iso_ctrl.nLyman[ipISO]; ipHi++ )
+					{
+						ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]].Zero();
+					}
 				}
+				else
+					TotalInsanity();
 			}
 		}
 	}

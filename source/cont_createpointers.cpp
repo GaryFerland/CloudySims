@@ -570,46 +570,69 @@ void ContCreatePointers(void)
 			}
 		}
 	}
-	for( long ipISO=ipH_LIKE; ipISO<NISO; ++ipISO )
+
 	{
-		/* this will be over HI, HeII, then HeI only */
+		long ipISO = ipH_LIKE;
+
 		for( long nelem=ipISO; nelem < LIMELM; nelem++ )
 		{
 			if( dense.lgElmtOn[nelem])
 			{
 				/* these are the extra Lyman lines */
-				if( ipISO == ipH_LIKE )
+				string sLab = chIonLbl( nelem+1, nelem+1-ipISO );
+				for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
 				{
-					string sLab = chIonLbl( nelem+1, nelem+1-ipISO );
-					for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
-					{
-						long ipLo = 0;
-						/* some energies are negative for inverted levels */
-						char chLab[NCHLAB];
-						strncpy(chLab,sLab.c_str(),NCHLAB-1);
-						chLab[NCHLAB-1]='\0';
-						/* TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi]; */
-						TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][ipHi];
-						(*tr).ipCont() = 
-							ipLineEnergy((*tr).EnergyRyd() , chLab,
-							iso_sp[ipISO][nelem].fb[ipLo].ipIsoLevNIonCon);
+					long ipLo = 0;
+					/* some energies are negative for inverted levels */
+					char chLab[NCHLAB];
+					strncpy(chLab,sLab.c_str(),NCHLAB-1);
+					chLab[NCHLAB-1]='\0';
+					TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][ipHi];
+					(*tr).ipCont() = 
+						ipLineEnergy((*tr).EnergyRyd() , chLab,
+						iso_sp[ipISO][nelem].fb[ipLo].ipIsoLevNIonCon);
 
-						(*tr).Emis().ipFine() = 
-							ipFineCont((*tr).EnergyRyd() );
+					(*tr).Emis().ipFine() = 
+						ipFineCont((*tr).EnergyRyd() );
 
-						tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][ipHi];
-						(*tr).ipCont() = 
-							ipLineEnergy((*tr).EnergyRyd() , chLab,
-							iso_sp[ipISO][nelem].fb[ipLo].ipIsoLevNIonCon);
+					tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][ipHi];
+					(*tr).ipCont() = 
+						ipLineEnergy((*tr).EnergyRyd() , chLab,
+						iso_sp[ipISO][nelem].fb[ipLo].ipIsoLevNIonCon);
 
-						(*tr).Emis().ipFine() = 
-							ipFineCont((*tr).EnergyRyd() );
-					}
+					(*tr).Emis().ipFine() = 
+						ipFineCont((*tr).EnergyRyd() );
+				}
+			}
+		}
+	}
+
+	{
+		long ipISO = ipHE_LIKE;
+
+		for( long nelem=ipISO; nelem < LIMELM; nelem++ )
+		{
+			if( dense.lgElmtOn[nelem])
+			{
+				/* these are the extra Lyman lines */
+				for( long ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
+				{
+					long ipLo = 0;
+					/* some energies are negative for inverted levels */
+					char chLab[NCHLAB];
+					strncpy(chLab,"LyEx",NCHLAB-1);
+					chLab[NCHLAB-1]='\0';
+					TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi];
+					(*tr).ipCont() = 
+						ipLineEnergy((*tr).EnergyRyd() , chLab ,
+						iso_sp[ipISO][nelem].fb[ipLo].ipIsoLevNIonCon);
+
+					(*tr).Emis().ipFine() = 
+						ipFineCont((*tr).EnergyRyd() );
 				}
 
 				if( iso_ctrl.lgDielRecom[ipISO] )
 				{
-					ASSERT( ipISO>ipH_LIKE );
 					for( long ipLo=0; ipLo<iso_sp[ipISO][nelem].numLevels_max; ipLo++ )
 					{
 						char chLab[NCHLAB];

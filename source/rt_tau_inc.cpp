@@ -134,33 +134,34 @@ void RT_tau_inc(void)
 					}
 				}
 
-				if( ipISO!=ipH_LIKE )
+				if( ipISO == ipH_LIKE )
 				{
-					continue;
-				}
-				/* these are the extra Lyman lines, use all lines so
-				 * totals are correct as attribution may change */
-				for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
-				{
-					/* TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi];
-					(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
+					for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
+					{
+						TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][ipHi];
+						(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
+						RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, ipHi,
+							DopplerWidth[nelem] );
 
-					 actually do the work 
-					RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, ipHi,
-						DopplerWidth[nelem] ); */
-					
-					TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][ipHi];
-					(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
-					/* actually do the work */
-					RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, ipHi,
-						DopplerWidth[nelem] );
-					
-					tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][ipHi];
-					(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
-					/* actually do the work */
-					RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, ipHi,
-						DopplerWidth[nelem] );
+						tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][ipHi];
+						(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
+						RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, ipHi,
+							DopplerWidth[nelem] );
+					}
 				}
+				else if( ipISO == ipHE_LIKE )
+				{
+					for( long ipHi=2; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
+					{
+						TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi];
+						(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
+
+						RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, ipHi,
+							DopplerWidth[nelem] );
+					}
+				}
+				else
+					TotalInsanity();
 			}
 		}
 	}

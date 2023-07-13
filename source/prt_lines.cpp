@@ -173,16 +173,13 @@ void lines()
 			  "extra Lyman lines");
 	
 	long ipISO = ipH_LIKE;
-	/* loop over all elements on this iso-sequence */
+
 	for( long nelem=ipISO; nelem < LIMELM; ++nelem )
 	{
 		if( ! dense.lgElmtOn[nelem] )
 			continue;
 		for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
 		{
-			/* if (ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]].ipCont() > 0)
-				PutLine(ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]],
-						  "extra Lyman line"); */
 			if (ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][ipHi]].ipCont() > 0)
 			{
 				PutLine(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][ipHi]],
@@ -194,6 +191,20 @@ void lines()
 				PutLine(ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][ipHi]],
 						  "extra Lyman line");
 			}
+		}
+	}
+
+	ipISO = ipHE_LIKE;
+
+	for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+	{
+		if( ! dense.lgElmtOn[nelem] )
+			continue;
+		for( long ipHi=iso_sp[ipISO][nelem].numLevels_max; ipHi < iso_ctrl.nLyman_max[ipISO]; ipHi++ )
+		{
+			if (ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]].ipCont() > 0)
+				PutLine(ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]],
+						  "extra Lyman line");
 		}
 	}
 	

@@ -89,45 +89,49 @@ double RT_line_driving(void)
 					}
 				}
 
-				if( ipISO!=ipH_LIKE )
+				if( ipISO == ipH_LIKE )
 				{
-					continue;
+					for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
+					{
+						TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][ipHi];
+						/* do not include non-existent lines */
+						if( (*tr).ipCont() > 0 )
+						{
+							OneLine = (*tr).Emis().pump()*
+								(*tr).EnergyErg()*
+								(*tr).Emis().PopOpc();
+
+							accel_iso[ipISO] += OneLine;
+						}
+
+						tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][ipHi];
+						if( (*tr).ipCont() > 0 )
+						{
+							OneLine = (*tr).Emis().pump()*
+								(*tr).EnergyErg()*
+								(*tr).Emis().PopOpc();
+
+							accel_iso[ipISO] += OneLine;
+						}
+					}
 				}
-				for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
+				else if( ipISO == ipHE_LIKE )
 				{
-					/* do not include bogus lines
-					TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi];
-					if( (*tr).ipCont() > 0 )
+					for( ipHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
 					{
-						OneLine = (*tr).Emis().pump()*
-							(*tr).EnergyErg()*
-							(*tr).Emis().PopOpc();
+						TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi];
+						if( (*tr).ipCont() > 0 )
+						{
+							OneLine = (*tr).Emis().pump()*
+								(*tr).EnergyErg()*
+								(*tr).Emis().PopOpc();
 
-						accel_iso[ipISO] += OneLine; 
-					} */
-					
-					/* do not include bogus lines */
-					TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][ipHi];
-					if( (*tr).ipCont() > 0 )
-					{
-						OneLine = (*tr).Emis().pump()*
-							(*tr).EnergyErg()*
-							(*tr).Emis().PopOpc();
-
-						accel_iso[ipISO] += OneLine;
+							accel_iso[ipISO] += OneLine;
+						}
 					}
-
-					tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][ipHi];
-					if( (*tr).ipCont() > 0 )
-					{
-						OneLine = (*tr).Emis().pump()*
-							(*tr).EnergyErg()*
-							(*tr).Emis().PopOpc();
-
-						accel_iso[ipISO] += OneLine;
-					}
-
 				}
+				else
+					TotalInsanity();
 			}
 		}
 	}

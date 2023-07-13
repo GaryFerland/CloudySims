@@ -105,20 +105,28 @@ void RT_tau_reset(void)
 					}
 				}
 				
-				if( ipISO!=ipH_LIKE )
+				if( ipISO == ipH_LIKE )
 				{
-					continue;
+					/* Need all levels, as may have been raised/lowered throughout layer */
+					for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
+					{
+						/* fully transfer all of the extra lines even though
+						 * have not solved for their upper level populations */
+						RT_line_one_tau_reset(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][ipHi]]);
+						RT_line_one_tau_reset(ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][ipHi]]);
+					}
 				}
-				/* the extra Lyman lines */
-				/* Need all levels, as may have been raised/lowered throughout layer */
-				for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
+				else if( ipISO == ipHE_LIKE )
 				{
-					/* fully transfer all of the extra lines even though
-					 * have not solved for their upper level populations */
-					/* RT_line_one_tau_reset(ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]]); */
-					RT_line_one_tau_reset(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][ipHi]]);
-					RT_line_one_tau_reset(ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][ipHi]]);
+					for( ipHi=2; ipHi < iso_ctrl.nLyman_max[ipISO]; ipHi++ )
+					{
+						/* fully transfer all of the extra lines even though
+						 * have not solved for their upper level populations */
+						RT_line_one_tau_reset(ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]]);
+					}
 				}
+				else
+					TotalInsanity();
 			}
 		}
 	}

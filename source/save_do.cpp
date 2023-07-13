@@ -3833,18 +3833,6 @@ STATIC void SaveLineStuff(
 				 * model atoms */
 				if( lgSaveOpticalDepths )
 				{
-					/* >>chng 02 aug 23, for he-like, had starting on much too high a level since
-					 * index was number of levels - caught by Adrian Turner */
-					/* now output extra line lines, starting one above those already done above */
-					/*for( ipHi=iso_sp[ipISO][nelem].numLevels_max; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )*/
-					/* 06 aug 28, from numLevels_max to _local. */
-					/* for( long ipHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
-					{
-						++index;
-
-						Save1Line( ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]], ioPUN, xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
-					} */
-
 					if (ipISO == ipH_LIKE)
 					{
 						for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
@@ -3858,6 +3846,20 @@ STATIC void SaveLineStuff(
 							Save1Line( ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][ipHi]], ioPUN, xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
 						}
 					}
+					/* >>chng 02 aug 23, for he-like, had starting on much too high a level since
+					 * index was number of levels - caught by Adrian Turner */
+					/* now output extra line lines, starting one above those already done above */
+					/* 06 aug 28, from numLevels_max to _local. */
+					else if( ipISO == ipHE_LIKE )
+					{
+						for( long ipHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
+						{
+							++index;
+							Save1Line( ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]], ioPUN, xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
+						}
+					}
+					else
+						TotalInsanity();
 				}
 			}
 		}
