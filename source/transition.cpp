@@ -158,7 +158,7 @@ void DumpLine(const TransitionProxy& t)
 	  opac.albedo[t.ipCont()-1]);
 
 	fprintf( ioQQQ, 
-		"Tin%.1e Tout%.1e Esc%.1e eEsc%.1e DesP%.1e Pump%.1e OTS%.1e PopL,U %.1e %.1e PopOpc%.1e\n", 
+		"Tin%.1e Ttot%.1e Esc%.1e eEsc%.1e DesP%.1e Pump%.1e OTS%.1e PopL,U %.1e %.1e PopOpc%.1e\n", 
 	  t.Emis().TauIn(), 
 	  t.Emis().TauTot(), 
 	  t.Emis().Pesc(), 
