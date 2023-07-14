@@ -137,7 +137,8 @@ monitor line luminosity "O  6"      150.089A  2.022
 monitor line luminosity "O  6"      150.125A  1.948 
 ## >>chng 22 jul 09, wl from 152.154A to 152.204A, upgrade to Chianti v10
 ## >>chng 22 jul 09, from 2.157 to 2.191, upgrade to Chianti v10
-monitor line luminosity "Ni12"      152.204A  2.191 
+## >>chng 23 may 11, from 2.191 to 2.215, update RR DR to 2022 Badnell wor
+monitor line luminosity "Ni12"      152.204A  2.215 
 ## >>chng 22 jul 09, from 1.703 to 1.76, upgrade to Chianti v10
 monitor line luminosity "Fe 8"      167.486A  1.76 
 ## >>chng 22 jul 09, from 1.728 to 1.679, upgrade to Chianti v10

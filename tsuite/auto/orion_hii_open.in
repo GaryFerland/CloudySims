@@ -231,12 +231,14 @@ monitor line "N  2"  6583.45 0.5354 emergent
 ## >>chng 16 dec 20, from 0.0282 to 0.0303, add secondary autoionization to DR suppression
 ## >>chng 17 nov 20, from 0.0303 to 0.0324, Bug-fix in DR suppression (r11900)
 ## >>chng 19 jul 18, from 0.0324 to 0.0385, update SII A to Podobedova, Kelleher,&Wiese 2009, JPCRD, Vol. 3 
-monitor line "Blnd"  6720A 0.0385
+## >>chng 23 may 11, from 0.0385 to 0.043, update RR DR to 2022 Badnell wor
+monitor line "Blnd"  6720A 0.043
 ##
 ## >>chng 16 dec 20, from 0.0315 to 0.0338, add secondary autoionization to DR suppression
 ## >>chng 17 nov 20, from 0.0338 to 0.0362, Bug-fix in DR suppression (r11900)
 ## >>chng 19 jul 18, from 0.0362 to 0.043, update SII A to Podobedova, Kelleher,&Wiese 2009, JPCRD, Vol. 3 
-monitor line "Blnd"  6720A 0.043 emergent
+## >>chng 23 may 11, from 0.043 to 0.0479, update RR DR to 2022 Badnell wor
+monitor line "Blnd"  6720A 0.0479 emergent
 ##
 ## >>chng 09 jun 18, add this
 ## >>chng 14 mar 26, from 0.0082 to 0.0066, Move oxygen data to stout and chianti files
