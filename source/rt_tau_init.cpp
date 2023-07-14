@@ -73,9 +73,9 @@ void RT_tau_init(void)
 				}
 				else if( ipISO == ipHE_LIKE )
 				{
-					for( ipHi=2; ipHi <iso_ctrl.nLyman[ipISO]; ipHi++ )
+					for( ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
 					{
-						ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]].Zero();
+						ExtraLymanLinesHeLike[nelem][ipExtraLymanLinesHeLike[nelem][ipHi]].Zero();
 					}
 				}
 				else

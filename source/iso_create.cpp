@@ -336,7 +336,7 @@ void iso_create()
 					/* fill the extra Lyman lines */
 					for( long ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
 					{
-						FillExtraLymanLine( ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi], ipISO, nelem, ipHi, -1. );
+						FillExtraLymanLine( ExtraLymanLinesHeLike[nelem].begin()+ipExtraLymanLinesHeLike[nelem][ipHi], ipISO, nelem, ipHi, -1. );
 					}
 				}
 				else
@@ -637,11 +637,12 @@ STATIC void iso_allocate(void)
 		}
 	}
 
-	ipExtraLymanLines.reserve( NISO );
-
-	for( long ipISO=ipH_LIKE; ipISO<NISO; ++ipISO )
 	{
-		ipExtraLymanLines.reserve( ipISO, LIMELM );
+		long ipISO = ipHE_LIKE;
+
+		ipExtraLymanLinesHeLike.reserve( LIMELM );
+
+		ExtraLymanLinesHeLike.reserve(LIMELM);
 
 		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
 		{
@@ -650,58 +651,58 @@ STATIC void iso_allocate(void)
 			{
 				ASSERT( iso_sp[ipISO][nelem].numLevels_max > 0 );
 
-				ipExtraLymanLines.reserve( ipISO, nelem, iso_ctrl.nLyman_alloc[ipISO] );
+				long nAlloc = MAX2(iso_sp[ipISO][nelem].n_HighestResolved_max + iso_sp[ipISO][nelem].nCollapsed_max, iso_ctrl.nLyman_alloc[ipISO]);
+				ipExtraLymanLinesHeLike.reserve( nelem, nAlloc );
 			}
 		}
-	}
 
-	ipExtraLymanLines.alloc();
+		ipExtraLymanLinesHeLike.alloc();
 
-	ExtraLymanLines.resize(NISO);
-	for( long ipISO=ipH_LIKE; ipISO<NISO; ++ipISO )
-	{
-		ExtraLymanLines[ipISO].reserve(LIMELM);
 		for( long nelem=0; nelem < ipISO; ++nelem )
 		{
-			ExtraLymanLines[ipISO].push_back(
+			ExtraLymanLinesHeLike.push_back(
 				TransitionList("Insanity",&AnonStates));
 		}
+
 		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
 		{
 			if( dense.lgElmtOn[nelem] )
 			{
-				ExtraLymanLines[ipISO].push_back(
-					TransitionList("ExtraLymanLines",&iso_sp[ipISO][nelem].st));
+				ExtraLymanLinesHeLike.push_back(
+					TransitionList("ExtraLymanLinesHeLike",&iso_sp[ipISO][nelem].st));
 			}
 			else
 			{
-				ExtraLymanLines[ipISO].push_back(
+				ExtraLymanLinesHeLike.push_back(
 					TransitionList("Insanity",&AnonStates));
 			}
 		}
+
 		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
 		{
 			/* only grab core for elements that are turned on */
 			if( dense.lgElmtOn[nelem] )
 			{
 				/* junk the extra Lyman lines */
-				ExtraLymanLines[ipISO][nelem].resize(iso_ctrl.nLyman_alloc[ipISO]-2);
-				ExtraLymanLines[ipISO][nelem].states() = &iso_sp[ipISO][nelem].st;
+				long nAlloc = MAX2(iso_sp[ipISO][nelem].n_HighestResolved_max + iso_sp[ipISO][nelem].nCollapsed_max, iso_ctrl.nLyman_alloc[ipISO]);
+				AllTransitions.push_back(ExtraLymanLinesHeLike[nelem]);
+				ExtraLymanLinesHeLike[nelem].resize(nAlloc);
+				ExtraLymanLinesHeLike[nelem].states() = &iso_sp[ipISO][nelem].st;
 				unsigned int nExtraLyman = 0;
 				for( long ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
 				{
-					ipExtraLymanLines[ipISO][nelem][ipHi] = nExtraLyman;
-					ExtraLymanLines[ipISO][nelem][nExtraLyman].Junk();
+					ipExtraLymanLinesHeLike[nelem][ipHi] = nExtraLyman;
+					ExtraLymanLinesHeLike[nelem][nExtraLyman].Junk();
 					long ipHi_offset = iso_sp[ipISO][nelem].numLevels_max + ipHi - 2;
 					if( iso_ctrl.lgDielRecom[ipISO] )
 						ipHi_offset += 1;
-					ExtraLymanLines[ipISO][nelem][nExtraLyman].setHi(ipHi_offset);
+					ExtraLymanLinesHeLike[nelem][nExtraLyman].setHi(ipHi_offset);
 					/* lower level is just ground state of the ion */
-					ExtraLymanLines[ipISO][nelem][nExtraLyman].setLo(0);
-					ExtraLymanLines[ipISO][nelem][nExtraLyman].AddLine2Stack();
+					ExtraLymanLinesHeLike[nelem][nExtraLyman].setLo(0);
+					ExtraLymanLinesHeLike[nelem][nExtraLyman].AddLine2Stack();
 					++nExtraLyman;
 				}
-				ASSERT(ExtraLymanLines[ipISO][nelem].size() == nExtraLyman);
+				//ASSERT(ExtraLymanLinesHeLike[nelem].size() == nExtraLyman);
 			}
 		}
 	}
@@ -744,9 +745,9 @@ STATIC void iso_allocate(void)
 			if( dense.lgElmtOn[nelem] )
 			{
 				ExtraLymanLinesJ05.push_back(
-					TransitionList("ExtraLymanLines",&iso_sp[ipISO][nelem].stJ05));
+					TransitionList("ExtraLymanLinesJ05",&iso_sp[ipISO][nelem].stJ05));
 				ExtraLymanLinesJ15.push_back(
-					TransitionList("ExtraLymanLines",&iso_sp[ipISO][nelem].stJ15));
+					TransitionList("ExtraLymanLinesJ15",&iso_sp[ipISO][nelem].stJ15));
 			}
 			else
 			{

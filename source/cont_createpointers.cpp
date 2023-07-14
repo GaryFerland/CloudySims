@@ -614,15 +614,16 @@ void ContCreatePointers(void)
 		{
 			if( dense.lgElmtOn[nelem])
 			{
+				string sLab = chIonLbl( nelem+1, nelem+1-ipISO );
 				/* these are the extra Lyman lines */
-				for( long ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
+				for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
 				{
 					long ipLo = 0;
 					/* some energies are negative for inverted levels */
 					char chLab[NCHLAB];
-					strncpy(chLab,"LyEx",NCHLAB-1);
+					strncpy(chLab,sLab.c_str(),NCHLAB-1);
 					chLab[NCHLAB-1]='\0';
-					TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi];
+					TransitionList::iterator tr = ExtraLymanLinesHeLike[nelem].begin()+ipExtraLymanLinesHeLike[nelem][ipHi];
 					(*tr).ipCont() = 
 						ipLineEnergy((*tr).EnergyRyd() , chLab ,
 						iso_sp[ipISO][nelem].fb[ipLo].ipIsoLevNIonCon);

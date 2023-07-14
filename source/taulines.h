@@ -37,13 +37,13 @@ void dBase_solve(void );
  */
 extern TransitionProxy::iterator TauDummy;
 
-extern multi_arr<int,3> ipExtraLymanLines;
+extern multi_arr<int,2> ipExtraLymanLinesHeLike;
 extern multi_arr<int,2> ipExtraLymanLinesJ05;
 extern multi_arr<int,2> ipExtraLymanLinesJ15;
 
-/** this is the set of extra lines,
- * ExtraLymanLines[ipISO][ipZ][n]*/
-extern vector<vector<TransitionList> > ExtraLymanLines;
+/** this is the set of extra lines for He iso-sequence,
+ * ExtraLymanLinesHeLike[ipZ][n]*/
+extern vector<TransitionList> ExtraLymanLinesHeLike;
 
 /* vector of extra lyman lines for H iso-sequence transitions involving nP j=1/2 levels */
 /* ExtraLymanLinesJ05[ipZ][n] */
