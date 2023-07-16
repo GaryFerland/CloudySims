@@ -119,9 +119,9 @@ void RT_diffuse(void)
 						sp->trans(ipHi,ipLo).Emis().xIntensity() = 
 							sp->trans(ipHi,ipLo).Emis().Aul()*
 							sp->st[ipHi].Pop()*
-							sp->trans(ipHi,ipLo).Emis().Pesc() *
+							sp->trans(ipHi,ipLo).Emis().Pesc_total() *
 							sp->trans(ipHi,ipLo).EnergyErg();
-						
+
 						// Would be better to enable checks (and remove argument) --
 						// present state is to ensure backwards compatibility with previous
 						// unchecked code.

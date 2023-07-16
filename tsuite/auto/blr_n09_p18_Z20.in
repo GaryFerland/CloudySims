@@ -261,7 +261,8 @@ monitor itrzn 5.338 error 0.08
 ## >>chng 09 jul 15, from 5 to 7, set autocv from 0.1 to 0.2
 ## >>chng 09 jul 27, from 7 to 5, rm test on outward Hb - will create ticket on problems
 ## >>chng 09 jul 29, bcx icc and gcc do not get same result
-monitor niter < 6
+## >>chng 23 jul 07, from 6 to 9, use Pesc_total instead of Pesc w iso transitions
+monitor niter < 9
 ## >>chng 09 oct 05, from 3 to 2, [NI] pumping changes
 monitor niter > 2
 ##

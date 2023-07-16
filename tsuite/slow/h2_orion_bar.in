@@ -135,7 +135,8 @@ monitor column density HeH+ 12.44 error 0.1
 ## >>chng 13 oct 30, from 16.01 to 16.06, change H2/HD secondary scale factors
 ## >>chng 14 dec 04, from 16.06 to 16.12, fix double-counting of big-H2 Solomon rate
 ## >>chng 20 jul 21, from 16.12 to 16.54, update DR H2 diss as per  2020RNAAS...4...78S
-monitor column density O2   16.54 error 0.1
+## >>chng 23 may 15, from 16.54 to 16.5, GS updates 21 reactions to UMIST 2012
+monitor column density O2   16.5 error 0.1
 ## >>chng 11 jul 16, from 10 to 16.74, add column density monitors
 ## >>chng 11 nov 16, from 16.74 to 16.3, adjust newmole monitors
 ## >>chng 12 jan 06, from 16.3 to 16.77, several H2 model changes
@@ -155,7 +156,8 @@ monitor column density H2O  17.28 error 0.1
 ## >>chng 14 dec 04, from 15.46 to 15.5, fix double-counting of big-H2 Solomon rate
 ## >>chng 20 jul 21, from 15.5 to 15.92, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 21 sep 11, from 15.92 to 15.79, LAMDA update
-monitor column density C2   15.79 error 0.1
+## >>chng 23 may 15, from 15.79 to 15.72, GS updates 21 reactions to UMIST 2012
+monitor column density C2   15.72 error 0.1
 ## >>chng 11 jul 16, from 10 to 15.71, add column density monitors
 ## >>chng 11 nov 16, from 15.71 to 15.97, adjust newmole monitors
 ## >>chng 12 jan 06, from 15.97 to 15.58, several H2 model changes
