@@ -207,14 +207,26 @@ namespace {
 	else
 		return 0.;
 	}
+	/*hmrate - evalurate UMIST expression for rate coefficient */
 	double hmrate(const mole_reaction *rate) 
 	{
 		double te;
 		
 		DEBUG_ENTRY( "hmrate()" );
+		/* the UMIST equation is
+		 * rate = alpha \times (T/300)^beta \times exp( -gamma/T 
+		 alpha==rate->a; beta== rate->b; gamma==rate->c */  
 		
 		te = phycon.te+noneq_offset(rate);
-		
+		/* UMIST rates are simple temperature power laws that
+	 	 * can become large at the high temperatures Cloudy
+	 	 * may encounter. Do not extrapolate to above T>2.5e3K */ 
+		/* rate-b is the power beta in (T/300)^beta, positive beta
+		 * can diverge at high temperatures */
+		/* THIS CODE MUST BE KEPT PARALLEL WITH HMRATE4 IN MOLE.H */ 
+		if( rate->b > 0.)	
+			te = min(te, 2500.);
+		/* rate->c is gamma in expontntial */
 		if( rate->c < 0. )
 			ASSERT( -rate->c/te < 10. );
 

@@ -570,8 +570,15 @@ bool parse_species_label( const char mylab[], ChemNuclideList &atomsLeftToRight,
  *	( ((c)/phycon.te > 50.) ? 0. : ( ((b) == 0) ?  (a)*exp(-(c)/phycon.te) : \
  *					 (a)*pow(phycon.te/300.,(b))*exp(-(c)/phycon.te) ) ) ) ) */
 
+/* hmrate4 is clone of hmrate but takes a, b, c and te as explicit arguments */
 inline double hmrate4( double a, double b, double c, double te )
 {
+	/* UMIST rates are simple temperaturr power laws that
+	 * can become large at the high temperatures Cloudy
+	 * may encounter. Do not extrapolate rates above T>2.5e3K 
+	 * THIS CODE MUST BE KEPT PARALLEL WITH HMRATE IN MOLE_REACTIONS.CPP */ 
+	if (b >0.)	
+		te = min(te, 2500.);	
 	if( b == 0. && c == 0. )
 		return a;
 	else if( c == 0. )

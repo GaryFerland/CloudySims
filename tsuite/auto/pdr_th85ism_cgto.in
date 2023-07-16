@@ -195,12 +195,14 @@ monitor CO column density 19.19 error 0.1
 ## >>chng 20 aug 03, from 14.15 to 14.36, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from 14.36 to 14.07, LAMDA update
 ## >>chng 21 nov 04, from 14.07 to 14.17, update mole co data
-monitor H2O column density 14.17 error 0.20 
+## >>chng 23 may 15, from 14.17 to 13.53, GS updates 21 reactions to UMIST 2012
+monitor H2O column density 13.53 error 0.20 
 ##
 ## >>chng 07 dec 14, from 12.08 to 12.15 RP update is seq
 ## >>chng 12 apr 09, from 12.15 to 12.92, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 20 aug 03, from 12.92 to 13.1, update H3+ rates Indriola+ 2012
-monitor O2 column density 13.1 error 0.2 
+## >>chng 23 may 15, from 13.1 to 12.84, GS updates 21 reactions to UMIST 2012
+monitor O2 column density 12.84 error 0.2 
 ## 
 ## >>chng 05 aug 24, from 13.25 to 13.03, NA update CO cr ion rate
 ## >>chng 06 jan 04, from 13.03 to 13.37, NA C chem restore missed block reacts
@@ -210,7 +212,8 @@ monitor O2 column density 13.1 error 0.2
 ## >>chng 20 aug 03, from 14.07 to 14.26, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from 14.26 to 13.7, LAMDA update
 ## >>chng 21 nov 04, from 13.7 to 14.1, update mole co data
-monitor SiO column density 14.1 error 0.20 
+## >>chng 23 may 15, from 14.1 to 12.76, GS updates 21 reactions to UMIST 2012
+monitor SiO column density 12.76 error 0.20 
 ## 
 ## >>chng 05 mar 25, from 13.45 to 13.57 renorm H pops in level solver, inc err
 ## >>chng 05 jul 05, from 13.57 to 13.96 turn on Cl 
@@ -220,7 +223,8 @@ monitor SiO column density 14.1 error 0.20
 ## >>chng 20 aug 03, from 13.64 to 13.8, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from 13.8 to 13.54, LAMDA update
 ## >>chng 21 nov 04, from 13.54 to 13.71, update mole co data
-monitor OH column density 13.71 error 0.25
+## >>chng 23 may 15, from 13.71 to 13.2, GS updates 21 reactions to UMIST 2012
+monitor OH column density 13.2 error 0.25
 ## 
 ## >>chng 05 sep 30, add these 5
 ## >>chng 05 dec 08, from 10.16 to 10.01 update to Elwert Solomon rate
@@ -274,14 +278,16 @@ monitor itrzn 3.981
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -4.319 to -4.264, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -4.264 to -4.346, LAMDA update
-monitor "H2O " 538.142m line intensity -4.346
+## >>chng 23 may 15, from -4.346 to -4.627, GS updates 21 reactions to UMIST 2012
+monitor "H2O " 538.142m line intensity -4.627
 ## >>chng 13 jun 27, from -7.357 to -5.81, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 21 apr 10, from -5.81 to -7.145, update chemistry and lamba
 ## >>chng 21 apr 16, from -7.145 to -5.821, remove bad UMIST reaction
 ## >>chng 21 sep 11, from -5.821 to -7.638, LAMDA update
 ## >>chng 21 nov 04, from -7.638 to -7.469, update mole co data
-monitor "HNC " 1652.90m  line intensity -7.469
+## >>chng 23 may 15, from -7.469 to -7.569, GS updates 21 reactions to UMIST 2012
+monitor "HNC " 1652.90m  line intensity -7.569
 ## >>chng 13 jun 27, from -8.563 to -5.555, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 15 aug 03, from -5.555 to -5.584, update LAMDA to 2015

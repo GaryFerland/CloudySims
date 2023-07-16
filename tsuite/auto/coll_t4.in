@@ -55,17 +55,21 @@ save continuum "coll_t4.con"  units angstroms
 ## >>chng 16 mar 20, from -6.146 to -6.106, change from Werner model to Stout model for Fe+
 ## >>chng 16 mar 24, from -6.106 to -6.171, FeII cooling using Stout 80 levels
 ## >>chng 16 aug 07, from -6.171 to -6.207, Fran bug fix
-## >>chng 23 jun 27, from -6.207 to -6.183, update Fe+ model to Smyth+19
-monitor ctot -6.183
+## >>chng 23 may 15, from -6.207 to -6.289, GS updates 21 reactions to UMIST 2012
+## >>chng 23 jul 15, from -6.289 to -6.223, GS update UMIST to 2012 and set upper limit on T
+monitor ctot -6.223
 ##
 ## >>chng 12 nov 09, first run
 ## >>chng 13 feb 10, from 8.783 to 8.835, H2,e-=>H-,H update
 ## >>chng 21 sep 11, from 8.835 to 8.456, LAMDA update
-monitor CO column density 8.456 errr 0.1
+## >>chng 23 jul 15, from 8.456 to 9.472, GS update UMIST to 2012 and set upper limit on T
+monitor CO column density 9.472 errr 0.1
 ## >>chng 12 nov 09, first run
 ## >>chng 13 feb 10, from 7.696 to 7.545, H2,e-=>H-,H update
 ## >>chng 13 nov 19, from 7.545 to 7.459, fix CT bug in mole_eval_balance
-monitor H2 column density 7.459 errr 0.1
+## >>chng 23 may 15, from 7.459 to 7.746, GS updates 21 reactions to UMIST 2012
+## >>chng 23 jul 15, from 7.746 to 7.543, GS update UMIST to 2012 and set upper limit on T
+monitor H2 column density 7.543 errr 0.1
 ##
 ## >>chng 01 may 07, from -2.509 to -2.477, chng in He+ H ct rate
 ## >>chng 01 may 10, from -2.477 to -2.605, ct network update
@@ -92,7 +96,9 @@ monitor H2 column density 7.459 errr 0.1
 ## >>chng 12 nov 01, from -2.878 to -2.785, Chianti experimental levels, revised Badnell DR suppression
 ## >>chng 12 dec 11, from -2.785 to -2.861, CX to ground state
 ## >>chng 13 nov 19, from -2.861 to -3.191, fix CT bug in mole_eval_balance
-monitor ionization Hydrogen  2 -3.191 error 0.15
+## >>chng 23 may 15, from -3.191 to -3.326, GS updates 21 reactions to UMIST 2012
+## >>chng 23 jul 15, from -3.326 to -3.254, GS update UMIST to 2012 and set upper limit on T
+monitor ionization Hydrogen  2 -3.254 error 0.15
 ##
 ## >>chng 01 may 06, from -2.724 to -3.566, chng in he+ ct rate
 ## >>chng 04 mar 24, from -3.566 to -3.543 iterate, improve H pops
@@ -118,7 +124,8 @@ monitor ionization Hydrogen  2 -3.191 error 0.15
 ## >>chng 13 feb 01, from -9.46 to -9.607, BUGFIX, largely undo r6703
 ## >>chng 13 nov 19, from -9.607 to -9.881, fix CT bug in mole_eval_balance
 ## >>chng 16 mar 21, from -9.881 to -9.634, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
-monitor ionization Helium    2 -9.634 error 0.30
+## >>chng 23 may 15, from -9.634 to -9.923, GS updates 21 reactions to UMIST 2012
+monitor ionization Helium    2 -9.923 error 0.30
 ##
 ## >>chng 01 may 06, from -1.325 to -1.492, chng in he+ ct rate
 ## >>chng 01 may 10, from -1.492 to -1.469, ct network update
@@ -142,7 +149,9 @@ monitor ionization Helium    2 -9.634 error 0.30
 ## >>chng 12 mar 09, from -2.804 to -2.732, several renorms due to mid 5960s revisions
 ## >>chng 12 nov 01, from -2.732 to -2.64, Chianti experimental levels, revised Badnell DR suppression
 ## >>chng 13 nov 19, from -2.64 to -2.953, fix CT bug in mole_eval_balance
-monitor ionization Carbon    2 -2.953 error 0.20
+## >>chng 23 may 15, from -2.953 to -2.873, GS updates 21 reactions to UMIST 2012
+## >>chng 23 jul 15, from -2.873 to -3.009, GS update UMIST to 2012 and set upper limit on T
+monitor ionization Carbon    2 -3.009 error 0.20
 ##
 ## >>chng 01 may 07, from -2.328 to -2.296, chng in He+ H ct rate
 ## >>chng 01 may 10, from -2.296 to -2.423, ct network update
@@ -171,7 +180,9 @@ monitor ionization Carbon    2 -2.953 error 0.20
 ## >>chng 12 nov 01, from -2.778 to -2.687, Chianti experimental levels, revised Badnell DR suppression
 ## >>chng 12 dec 11, from -2.687 to -2.762, CX to ground state
 ## >>chng 13 nov 19, from -2.762 to -3.091, fix CT bug in mole_eval_balance
-monitor ionization Nitrogen  2 -3.091 error 0.15
+## >>chng 23 may 15, from -3.091 to -3.227, GS updates 21 reactions to UMIST 2012
+## >>chng 23 jul 15, from -3.227 to -3.155, GS update UMIST to 2012 and set upper limit on T
+monitor ionization Nitrogen  2 -3.155 error 0.15
 ##
 ## >>chng 01 may 07, from -2.565 to -2.533, chng in He+ H ct rate
 ## >>chng 01 may 10, from -2.533 to -2.661, ct network update
@@ -199,7 +210,9 @@ monitor ionization Nitrogen  2 -3.091 error 0.15
 ## >>chng 12 nov 01, from -2.973 to -2.88, Chianti experimental levels, revised Badnell DR suppression
 ## >>chng 12 dec 11, from -2.88 to -2.956, CX to ground state
 ## >>chng 13 nov 19, from -2.956 to -3.285, fix CT bug in mole_eval_balance
-monitor ionization Oxygen    2 -3.285 error 0.15
+## >>chng 23 may 15, from -3.285 to -3.42, GS updates 21 reactions to UMIST 2012
+## >>chng 23 jul 15, from -3.42 to -3.35, GS update UMIST to 2012 and set upper limit on T
+monitor ionization Oxygen    2 -3.35 error 0.15
 ##
 ## >>chng 01 may 06, from -2.237 to -2.260, chng in he+ ct rate
 ## >>chng 04 feb 21, from -2.260 to -2.117, and H- ct recomb
@@ -217,7 +230,8 @@ monitor ionization Oxygen    2 -3.285 error 0.15
 ## >>chng 11 sep 15, from -1.315 to -1.27, Chianti for Fe moderate to high ions
 ## >>chng 12 nov 01, from -1.27 to -1.495, Chianti experimental levels, revised Badnell DR suppression
 ## >>chng 13 feb 10, from -1.495 to -1.449, H2,e-=>H-,H update
-monitor ionization Magnesium 1 -1.449  error 0.1
+## >>chng 23 may 15, from -1.449 to -1.393, GS updates 21 reactions to UMIST 2012
+monitor ionization Magnesium 1 -1.393  error 0.1
 ##
 ## >>chng 01 jan 31, from -1.938 to -3.155 due to Al CT with H+
 ## >>chng 02 jul 19, from -3.155 to -3.192, better two photon
@@ -238,7 +252,9 @@ monitor ionization Magnesium 1 -1.449  error 0.1
 ## >>chng 12 nov 08, from -3.152 to -3.234, fix e-,H2 dissociation rate
 ## >>chng 13 feb 01, from -3.234 to -3.186, BUGFIX, largely undo r6703
 ## >>chng 13 nov 19, from -3.186 to -3.14, fix CT bug in mole_eval_balance
-monitor ionization Aluminium 1 -3.14 error 0.1
+## >>chng 23 may 15, from -3.14 to -3.04, GS updates 21 reactions to UMIST 2012
+## >>chng 23 jul 15, from -3.04 to -3.095, GS update UMIST to 2012 and set upper limit on T
+monitor ionization Aluminium 1 -3.095 error 0.1
 ##
 ## >>chng 01 jan 31, from -3.102 to 3.159, Si ct with He+
 ## >>chng 01 may 06, from -3.159 to -3.135, chng in he+ ct rate
@@ -262,7 +278,8 @@ monitor ionization Aluminium 1 -3.14 error 0.1
 ## >>chng 13 feb 01, from -0.9387 to -0.8666, BUGFIX, largely undo r6703
 ## >>chng 16 dec 20, from -0.8666 to -0.7565, add secondary autoionization to DR suppression
 ## >>chng 23 mar 17, from -0.7565 to -0.8235, add SiS and Lamda model"
-monitor ionization Silicon   1 -0.8235 error 0.15
+## >>chng 23 jul 15, from -0.8235 to -0.7535, GS update UMIST to 2012 and set upper limit on T
+monitor ionization Silicon   1 -0.7535 error 0.15
 ##
 ## >>chng 01 may 10, from -0.897 to -0.950, ct network update
 ## >>chng 01 jun 14, from -0.950 to -0.900 ct network update
@@ -292,7 +309,9 @@ monitor ionization Silicon   1 -0.8235 error 0.15
 ## >>chng 12 nov 08, from -1.116 to -1.017, fix e-,H2 dissociation rate
 ## >>chng 13 feb 01, from -1.017 to -1.137, BUGFIX, largely undo r6703
 ## >>chng 13 nov 19, from -1.137 to -1.362, fix CT bug in mole_eval_balance
-monitor ionization Sulphur   2 -1.362 error 0.15
+## >>chng 23 may 15, from -1.362 to -1.577, GS updates 21 reactions to UMIST 2012
+## >>chng 23 jul 15, from -1.577 to -1.479, GS update UMIST to 2012 and set upper limit on T
+monitor ionization Sulphur   2 -1.479 error 0.15
 ##
 ## >>chng 01 may 10, from -2.018 to -1.908, ct network update
 ## >>chng 01 jun 14, from -1.908 to -2.009 ct network update
@@ -316,7 +335,8 @@ monitor ionization Sulphur   2 -1.362 error 0.15
 ## >>chng 13 feb 01, from -3.391 to -3.441, BUGFIX, largely undo r6703
 ## >>chng 13 feb 10, from -3.441 to -3.488, H2,e-=>H-,H update
 ## >>chng 13 nov 19, from -3.488 to -3.432, fix CT bug in mole_eval_balance
-monitor ionization Argon     2 -3.432 error 0.1 
+## >>chng 23 may 15, from -3.432 to -3.546, GS updates 21 reactions to UMIST 2012
+monitor ionization Argon     2 -3.546 error 0.1 
 ##
 ## >>chng 01 jan 31, from -0.860 to -3.564 Fe ct with He+
 ## >>chng 02 jul 19, from -3.564 to -3.603 better two photon
@@ -339,7 +359,9 @@ monitor ionization Argon     2 -3.432 error 0.1
 ## >>chng 12 nov 01, from -3.578 to -3.647, Chianti experimental levels, revised Badnell DR suppression
 ## >>chng 12 nov 08, from -3.647 to -3.809, fix e-,H2 dissociation rate
 ## >>chng 13 feb 10, from -3.809 to -3.71, H2,e-=>H-,H update
-monitor ionization Iron      1 -3.71 error 0.15
+## >>chng 23 may 15, from -3.71 to -3.523, GS updates 21 reactions to UMIST 2012
+## >>chng 23 jul 15, from -3.523 to -3.622, GS update UMIST to 2012 and set upper limit on T
+monitor ionization Iron      1 -3.622 error 0.15
 ##
 ## >>chng 01 may 10, from 7.529 to 7.422 ct network update
 ## >>chng 01 jun 14, from 7.422 to 7.529 ct network update
@@ -369,7 +391,9 @@ monitor ionization Iron      1 -3.71 error 0.15
 ## >>chng 12 nov 01, from 7.16 to 7.245, Chianti experimental levels, revised Badnell DR suppression
 ## >>chng 12 dec 11, from 7.245 to 7.174, CX to ground state
 ## >>chng 13 nov 19, from 7.174 to 6.875, fix CT bug in mole_eval_balance
-monitor eden 6.875 error 0.1
+## >>chng 23 may 15, from 6.875 to 6.755, GS updates 21 reactions to UMIST 2012
+## >>chng 23 jul 15, from 6.755 to 6.82, GS update UMIST to 2012 and set upper limit on T
+monitor eden 6.82 error 0.1
 ##
 ## >>chng 04 dec 08, from 5 to 7.5 co-ion feedback, check converg
 ## >>chng 05 mar 25, from 7.5 to 5 renorm H pops in level solver
