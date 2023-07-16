@@ -706,7 +706,8 @@ monitor nzone 835 error 0.025
 ## >>chng 14 apr 07, from 4.459 to 3.946, move H/C out of ConvBase loop
 ## >>chng 15 mar 07, from 3.946 to 3.766, merging newmesh branch
 ## >>chng 17 apr 24, from 3.766 to 3.594, Stancil update Ne2, 3 CS to published version of Wang et al 17
-monitor itrzn 3.594 error 0.05
+## >>chng 23 jul 15, from 3.594 to 3.758, GS update UMIST to 2012 and set upper limit on T
+monitor itrzn 3.758 error 0.05
 ##
 ## >>chng 13 jun 27, from -8.869 to -3.679, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
