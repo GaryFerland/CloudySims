@@ -39,7 +39,7 @@ typedef void (*linefunc)(const TransitionProxy& t,
 
 /**MakeRT drive static or wind metal line radiative transfer,
  */
-void RT_line_all( linefunc line_one );
+void RT_line_all( linefunc line_one, bool lgExcludeLyman = false );
 
 void RT_line_all_escape( realnum* error ); 
 

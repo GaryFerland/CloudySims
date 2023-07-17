@@ -197,7 +197,7 @@ void RT_line_all_escape( realnum *error )
 	}
 }
 	
-void RT_line_all( linefunc line_one )
+void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 {
 	long int ion,
 		ipISO,
@@ -248,6 +248,9 @@ void RT_line_all( linefunc line_one )
 						/* negative ipCont means this is not a real line, so do not
 						 * transfer it */
 						if( iso_sp[ipISO][nelem].trans(ipHi,ipLo).ipCont() < 0 ) 
+							continue;
+
+						if( ipISO == ipH_LIKE && lgExcludeLyman && ipLo == 0 && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ) )
 							continue;
 
 						/* generate escape prob, pumping rate, destruction prob, 

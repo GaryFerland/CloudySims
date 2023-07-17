@@ -50,7 +50,7 @@ void RT_tau_inc(void)
 	ASSERT( !conv.lgFirstSweepThisZone );
 	conv.lgLastSweepThisZone = true;
 	RT_fine_clear();
-	RT_line_all( RT_line_one_fine );
+	RT_line_all( RT_line_one_fine, true );
 
 	/* rfield.lgOpacityFine flag set false with no fine opacities command 
 	 * tests show that always evaluating this changes fast run of
