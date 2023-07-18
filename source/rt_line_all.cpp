@@ -250,14 +250,15 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 						if( iso_sp[ipISO][nelem].trans(ipHi,ipLo).ipCont() < 0 ) 
 							continue;
 
-						if( ipISO == ipH_LIKE && lgExcludeLyman && ipLo == 0 && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ) )
-							continue;
+						bool lgSkipLyman = true;
+						if( lgExcludeLyman )
+							lgSkipLyman = ( ipISO == ipH_LIKE && ipLo == 0 && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ) );
 
 						/* generate escape prob, pumping rate, destruction prob, 
 						 * inward outward fracs */
 						fixit("should this use pestrk_up or pestrk?");
 						line_one( iso_sp[ipISO][nelem].trans(ipHi,ipLo),
-							     true,(realnum)iso_sp[ipISO][nelem].ex[ipHi][ipLo].pestrk_up,
+							     lgSkipLyman,(realnum)iso_sp[ipISO][nelem].ex[ipHi][ipLo].pestrk_up,
 									 DopplerWidth[nelem]);
 
 						/* set true to print pump rates*/

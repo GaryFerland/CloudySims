@@ -464,7 +464,7 @@ void RT_line_one_fine(
 	 * this can cause pump to depend on zone thickness, and leads to unstable
 	 * feedback in some models with the large H2 molecule, due to Solomon
 	 * process depending on zone thickness and level populations. */
-	bool /* lgShield_this_zone */,
+	bool lgSkipLyman,
 	/* Stark escape probability to be added to Pesc */
 	realnum /* pestrk */ ,
 	realnum DopplerWidth )
@@ -481,6 +481,9 @@ void RT_line_one_fine(
 	/* line damping constant at current temperature  */
 	t.Emis().damp() = t.Emis().dampXvel() / DopplerWidth;
 	ASSERT( t.Emis().damp() > 0. );
+
+	if( lgSkipLyman )
+		return;
 
 	/* option to keep track of population values during calls,
 	 * print out data to make histogram */
