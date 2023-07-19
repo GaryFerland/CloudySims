@@ -460,12 +460,7 @@ void RT_line_one_escape(
 void RT_line_one_fine(
 	/* the em line we will work on  */
 	const TransitionProxy &t,
-	/* this is option to not include line self shielding across this zone.
-	 * this can cause pump to depend on zone thickness, and leads to unstable
-	 * feedback in some models with the large H2 molecule, due to Solomon
-	 * process depending on zone thickness and level populations. */
-	bool lgSkipLyman,
-	/* Stark escape probability to be added to Pesc */
+	bool lgKeepLyman,
 	realnum /* pestrk */ ,
 	realnum DopplerWidth )
 {
@@ -482,7 +477,7 @@ void RT_line_one_fine(
 	t.Emis().damp() = t.Emis().dampXvel() / DopplerWidth;
 	ASSERT( t.Emis().damp() > 0. );
 
-	if( lgSkipLyman )
+	if( !lgKeepLyman )
 		return;
 
 	/* option to keep track of population values during calls,
