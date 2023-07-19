@@ -151,7 +151,7 @@ void RT_tau_inc(void)
 				}
 				else if( ipISO == ipHE_LIKE )
 				{
-					for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
+					for( long ipHi=2; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
 					{
 						TransitionList::iterator tr = ExtraLymanLinesHeLike[nelem].begin()+ipExtraLymanLinesHeLike[nelem][ipHi];
 						(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();

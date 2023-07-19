@@ -651,8 +651,7 @@ STATIC void iso_allocate(void)
 			{
 				ASSERT( iso_sp[ipISO][nelem].numLevels_max > 0 );
 
-				long nAlloc = MAX2(iso_sp[ipISO][nelem].n_HighestResolved_max + iso_sp[ipISO][nelem].nCollapsed_max, iso_ctrl.nLyman_alloc[ipISO]);
-				ipExtraLymanLinesHeLike.reserve( nelem, nAlloc );
+				ipExtraLymanLinesHeLike.reserve( nelem, iso_ctrl.nLyman_alloc[ipISO] );
 			}
 		}
 
@@ -684,9 +683,8 @@ STATIC void iso_allocate(void)
 			if( dense.lgElmtOn[nelem] )
 			{
 				/* junk the extra Lyman lines */
-				long nAlloc = MAX2(iso_sp[ipISO][nelem].n_HighestResolved_max + iso_sp[ipISO][nelem].nCollapsed_max, iso_ctrl.nLyman_alloc[ipISO]);
 				AllTransitions.push_back(ExtraLymanLinesHeLike[nelem]);
-				ExtraLymanLinesHeLike[nelem].resize(nAlloc);
+				ExtraLymanLinesHeLike[nelem].resize(iso_ctrl.nLyman_alloc[ipISO]-2);
 				ExtraLymanLinesHeLike[nelem].states() = &iso_sp[ipISO][nelem].st;
 				unsigned int nExtraLyman = 0;
 				for( long ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
@@ -702,7 +700,7 @@ STATIC void iso_allocate(void)
 					ExtraLymanLinesHeLike[nelem][nExtraLyman].AddLine2Stack();
 					++nExtraLyman;
 				}
-				//ASSERT(ExtraLymanLinesHeLike[nelem].size() == nExtraLyman);
+				ASSERT(ExtraLymanLinesHeLike[nelem].size() == nExtraLyman);
 			}
 		}
 	}

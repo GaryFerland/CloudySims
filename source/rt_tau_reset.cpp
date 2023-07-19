@@ -118,7 +118,7 @@ void RT_tau_reset(void)
 				}
 				else if( ipISO == ipHE_LIKE )
 				{
-					for( ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
+					for( ipHi=2; ipHi < iso_ctrl.nLyman_max[ipISO]; ipHi++ )
 					{
 						/* fully transfer all of the extra lines even though
 						 * have not solved for their upper level populations */
