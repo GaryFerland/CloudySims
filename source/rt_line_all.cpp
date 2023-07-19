@@ -365,6 +365,43 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 			}/* if nelem if ion <= dense.IonHigh */
 		}/* loop over nelem */
 
+		ipISO = ipHE_LIKE;
+
+		/* loop over all iso-electronic sequences */
+		for( nelem=ipISO; nelem < LIMELM; ++nelem )
+		{
+			/* parent ion stage, for H is 1, for He is 1 for He-like and
+			 * 2 for H-like */
+			ion = nelem+1-ipISO;
+
+			/* element turned off */
+			if( !dense.lgElmtOn[nelem] )
+				continue;
+			/* need we consider this ion? */
+			if( ion <= dense.IonHigh[nelem] )
+			{
+				/* loop over all lines */
+				ipLo = ipH1s;
+				/* these are the extra Lyman lines for the H iso sequence */
+				/* only update if significant abundance and need to update fine opac */
+				if( dense.xIonDense[nelem][ion] > 1e-30 )
+				{
+					for( ipHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
+					{
+						TransitionList::iterator tr = ExtraLymanLinesHeLike[nelem].begin()+ipExtraLymanLinesHeLike[nelem][ipHi];
+						/* we just want the population of the ground state */
+						(*(*tr).Lo()).Pop() =
+							iso_sp[ipISO][nelem].st[ipLo].Pop();
+
+						(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop(); //- (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
+
+						/* actually do the work */
+						line_one( *tr, true, 0.f, DopplerWidth[nelem]);
+					}
+				}
+			}
+		}
+
 		/* this is a major time sink for this routine - only evaluate on last
 		 * sweep when fine opacities are updated since only effect of UTAs is
 		 * to pump inner shell lines and add to total opacity */
