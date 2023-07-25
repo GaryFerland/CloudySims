@@ -107,9 +107,10 @@
 4.7757
 4.4076
 # >>chng 21 11 20, from 4.3194 to 4.2965 update OI CS
-# >>chng 21 11 21, from 41.2965 to 4.3182, revert user error in reading asserts
+# >>chng 21 11 21, from 4.2965 to 4.3182, revert user error in reading asserts
 # >>chng 23 07 15, from 4.3182 to 4.2931, revert user error in reading asserts
-4.2931
+# >>chng 23 07 24, from 4.2931 to 4.3048, fix all-double botches
+4.3048
 4.1014
 4.0517
 4.0171
