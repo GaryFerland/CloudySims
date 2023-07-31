@@ -259,6 +259,21 @@ void radius_increment(void)
 		}
 	}
 
+	long ipISO = ipH_LIKE;
+	for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+	{
+		if( dense.lgElmtOn[nelem] )
+		{
+			for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
+			{
+				ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][ipHi]].Lo()->ColDen() +=
+					radius.drad_x_fillfac * ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][ipHi]].Lo()->Pop();
+				ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][ipHi]].Lo()->ColDen() +=
+					radius.drad_x_fillfac * ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][ipHi]].Lo()->Pop();
+			}
+		}
+	}
+
 	/* integral of n(H0) / Tspin - related to 21 cm optical depth*/
 	if( hyperfine.Tspin21cm > SMALLFLOAT )
 		colden.H0_ov_Tspin += (double)(dense.xIonDense[ipHYDROGEN][0]) / hyperfine.Tspin21cm*radius.drad_x_fillfac;
