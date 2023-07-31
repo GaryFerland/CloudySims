@@ -166,6 +166,22 @@ void RT_OTS(void)
 				/* >>chng 06 aug 17, should go to numLevels_local instead of _max. */
 				for( ipHi=1; ipHi < iso_sp[ipISO][nelem].numLevels_local; ipHi++ )
 				{
+					/* add OTS for all nP or collapsed lines */
+					if( ipISO == ipH_LIKE && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ) )
+					{
+						ipLo = 0;
+
+						ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Emis().ots() =
+							ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Emis().Aul()*
+							ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Hi()->Pop()*
+							ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Emis().Pdest();
+
+						ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].Emis().ots() =
+							ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].Emis().Aul()*
+							ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].Hi()->Pop()*
+							ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].Emis().Pdest();
+					}
+
 					for( ipLo=0; ipLo < ipHi; ipLo++ )
 					{
 						/* this signifies a fake line */
@@ -189,9 +205,26 @@ void RT_OTS(void)
 						} */
 
 						/* finally dump the ots rate into the stack */
-						if( iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().ots() > SMALLFLOAT ) 
-							RT_OTS_AddLine(iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().ots(),
-								iso_sp[ipISO][nelem].trans(ipHi,ipLo).ipCont() );
+						if( ipISO == ipH_LIKE && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ) )
+						{
+							if( ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Emis().ots() > SMALLFLOAT )
+							{
+								RT_OTS_AddLine(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Emis().ots(),
+											ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].ipCont() );
+							}
+
+							if( ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].Emis().ots() > SMALLFLOAT )
+							{
+								RT_OTS_AddLine(ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].Emis().ots(),
+										ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].ipCont() );
+							}
+						}
+						else
+						{
+							if( iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().ots() > SMALLFLOAT )
+								RT_OTS_AddLine(iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().ots(),
+									iso_sp[ipISO][nelem].trans(ipHi,ipLo).ipCont() );
+						}
 					}
 				}
 				{
