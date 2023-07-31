@@ -50,6 +50,24 @@ void prtmet(void)
 			}
 		}
 
+		/* extra lyman lines H-like */
+		{
+			long ipISO=ipH_LIKE;
+
+			for( long nelem=ipISO; nelem < LIMELM; nelem++ )
+			{
+				if( dense.lgElmtOn[nelem] )
+				{
+					/* print one-electron doublets nP Lyman sequence optical depths */
+					for( long nLymanNP=2; nLymanNP < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; nLymanNP++ )
+					{
+						prme(false, ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nLymanNP]]);
+						prme(false, ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nLymanNP]]);
+					}
+				}
+			}
+		}
+
 		/* print main lines optical depths */
 		for( long i=0; i < nWindLine; i++ )
 		{
