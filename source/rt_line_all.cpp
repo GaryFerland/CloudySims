@@ -225,61 +225,13 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 		DopplerWidth[nelem] = GetDopplerWidth(dense.AtomicWeight[nelem]);	
 	}
 
-	for( ipISO=ipH_LIKE; ipISO < NISO; ++ipISO )
-	{
-		/* loop over all iso-electronic sequences */
-		for( nelem=ipISO; nelem < LIMELM; ++nelem )
-		{
-			/* parent ion stage, for H is 1, for He is 1 for He-like and 
-			 * 2 for H-like */
-			ion = nelem+1-ipISO;
-
-			/* element turned off */
-			if( !dense.lgElmtOn[nelem] )
-				continue;
-			/* need we consider this ion? */
-			if( ion <= dense.IonHigh[nelem] )
-			{
-				/* loop over all lines */
-				for( ipHi=1; ipHi < iso_sp[ipISO][nelem].numLevels_local; ++ipHi )
-				{
-					for( ipLo=0; ipLo < ipHi; ++ipLo )
-					{
-						/* negative ipCont means this is not a real line, so do not
-						 * transfer it */
-						if( iso_sp[ipISO][nelem].trans(ipHi,ipLo).ipCont() < 0 ) 
-							continue;
-
-						bool lgKeepLyman = true;
-						if( lgExcludeLyman )
-							lgKeepLyman = !( ipISO == ipH_LIKE && ipLo == 0 && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ) );
-
-						/* generate escape prob, pumping rate, destruction prob, 
-						 * inward outward fracs */
-						fixit("should this use pestrk_up or pestrk?");
-						line_one( iso_sp[ipISO][nelem].trans(ipHi,ipLo),
-							     lgKeepLyman,(realnum)iso_sp[ipISO][nelem].ex[ipHi][ipLo].pestrk_up,
-									 DopplerWidth[nelem]);
-
-						/* set true to print pump rates*/
-						enum {DEBUG_LOC=false};
-						if( DEBUG_LOC && nelem==1&& ipLo==0  /*&& iteration==2*/ )
-						{
-							fprintf(ioQQQ,"DEBUG pdest\t%3li\t%.2f\t%.3e\n",
-								ipHi ,
-								fnzone,
-								iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().Pdest());
-						}
-					}
-				}
-			}
-		}
-	}
-
 	if (conv.lgFirstSweepThisZone || conv.lgLastSweepThisZone ) 
 	{		
+		/* 	Radiative transfer information is needed from the resolved doublet, in order to use an
+			average of the optical depths of the resolved doublet, to compute the escape and destruction probabilities
+			of the unresolved doublet. So the loop over extra lyman lines has been moved above the lyman line loop. */
 		ipISO = ipH_LIKE;
-	
+
 		/* loop over all iso-electronic sequences */
 		for( nelem=ipISO; nelem < LIMELM; ++nelem )
 		{
@@ -417,6 +369,56 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 		}
 	}
 
+	for( ipISO=ipH_LIKE; ipISO < NISO; ++ipISO )
+	{
+		/* loop over all iso-electronic sequences */
+		for( nelem=ipISO; nelem < LIMELM; ++nelem )
+		{
+			/* parent ion stage, for H is 1, for He is 1 for He-like and
+			 * 2 for H-like */
+			ion = nelem+1-ipISO;
+
+			/* element turned off */
+			if( !dense.lgElmtOn[nelem] )
+				continue;
+			/* need we consider this ion? */
+			if( ion <= dense.IonHigh[nelem] )
+			{
+				/* loop over all lines */
+				for( ipHi=1; ipHi < iso_sp[ipISO][nelem].numLevels_local; ++ipHi )
+				{
+					for( ipLo=0; ipLo < ipHi; ++ipLo )
+					{
+						/* negative ipCont means this is not a real line, so do not
+						 * transfer it */
+						if( iso_sp[ipISO][nelem].trans(ipHi,ipLo).ipCont() < 0 )
+							continue;
+
+						bool lgKeepLyman = true;
+						if( lgExcludeLyman )
+							lgKeepLyman = !( ipISO == ipH_LIKE && ipLo == 0 && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ) );
+
+						/* generate escape prob, pumping rate, destruction prob,
+						 * inward outward fracs */
+						fixit("should this use pestrk_up or pestrk?");
+						line_one( iso_sp[ipISO][nelem].trans(ipHi,ipLo),
+							     lgKeepLyman,(realnum)iso_sp[ipISO][nelem].ex[ipHi][ipLo].pestrk_up,
+									 DopplerWidth[nelem]);
+
+						/* set true to print pump rates*/
+						enum {DEBUG_LOC=false};
+						if( DEBUG_LOC && nelem==1&& ipLo==0  /*&& iteration==2*/ )
+						{
+							fprintf(ioQQQ,"DEBUG pdest\t%3li\t%.2f\t%.3e\n",
+								ipHi ,
+								fnzone,
+								iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().Pdest());
+						}
+					}
+				}
+			}
+		}
+	}
 
 	/* external database lines */
 	for( long ipSpecies=0; ipSpecies<nSpecies; ipSpecies++ )
