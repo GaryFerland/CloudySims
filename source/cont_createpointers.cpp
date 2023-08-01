@@ -558,12 +558,20 @@ void ContCreatePointers(void)
 						 * not considered.	*/
 						if( iso_sp[ipISO][nelem].trans(ipHi,ipLo).EnergyRyd() < rfield.emm() )
 							continue;
-
+						
 						iso_sp[ipISO][nelem].trans(ipHi,ipLo).ipCont() = 
 							ipLineEnergy(iso_sp[ipISO][nelem].trans(ipHi,ipLo).EnergyRyd(), chLab.c_str(),
 							iso_sp[ipISO][nelem].fb[ipLo].ipIsoLevNIonCon);
-						iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().ipFine() = 
-							ipFineCont(iso_sp[ipISO][nelem].trans(ipHi,ipLo).EnergyRyd() );
+						
+						if(ipISO == ipH_LIKE && ipLo == 0 && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ))
+						{
+							TransitionList::iterator tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][ipHi];
+							iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().ipFine() = 
+								ipFineCont((*tr).EnergyRyd() );
+						}
+						else
+							iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().ipFine() = 
+								ipFineCont(iso_sp[ipISO][nelem].trans(ipHi,ipLo).EnergyRyd() );
 					}
 				}
 				iso_sp[ipISO][nelem].fb[0].ipIsoLevNIonCon = ipContEnergy(iso_sp[ipISO][nelem].fb[0].xIsoLevNIonRyd, chLab.c_str());
