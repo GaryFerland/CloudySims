@@ -565,7 +565,7 @@ void ContCreatePointers(void)
 						
 						if(ipISO == ipH_LIKE && ipLo == 0 && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ))
 						{
-							TransitionList::iterator tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][ipHi];
+							TransitionList::iterator tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][N_(ipHi)];
 							iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().ipFine() = 
 								ipFineCont((*tr).EnergyRyd() );
 						}
