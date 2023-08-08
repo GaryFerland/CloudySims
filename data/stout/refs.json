@@ -4866,20 +4866,17 @@
         "ref" : {
             "coll" : [
                 {
-                    "bibcode" : "1999ApJS..120..101V",
-                    "name" : "Verner, E. M., Verner, D. A., Korista, K. T., Ferguson, J. W., Hamann, F., & Ferland, G. J. 1999, ApJS, 120, 101"
+                    "bibcode" : "abstract"
                 }
             ],
             "energy" : [
                 {
-                    "bibcode" : "1999ApJS..120..101V",
-                    "name" : "Verner, E. M., Verner, D. A., Korista, K. T., Ferguson, J. W., Hamann, F., & Ferland, G. J. 1999, ApJS, 120, 101"
+                    "bibcode" : "abstract"
                 }
             ],
             "trans" : [
                 {
-                    "bibcode" : "1999ApJS..120..101V",
-                    "name" : "Verner, E. M., Verner, D. A., Korista, K. T., Ferguson, J. W., Hamann, F., & Ferland, G. J. 1999, ApJS, 120, 101"
+                    "bibcode" : "abstract"
                 }
             ]
         }
