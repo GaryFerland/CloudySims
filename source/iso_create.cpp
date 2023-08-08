@@ -313,18 +313,18 @@ void iso_create()
 				if( ipISO == ipH_LIKE)
 				{
 					/* fill the extra Lyman lines */
-					for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
+					for( long nHi=2; nHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; nHi++ )
 					{
-						FillExtraLymanLine( ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][ipHi], ipISO, nelem, ipHi, 0.5 );
-						FillExtraLymanLine( ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][ipHi], ipISO, nelem, ipHi, 1.5 );
+						FillExtraLymanLine( ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][nHi], ipISO, nelem, nHi, 0.5 );
+						FillExtraLymanLine( ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][nHi], ipISO, nelem, nHi, 1.5 );
 
 						enum {DEBUG_LOC=false};
-						if(DEBUG_LOC && ipISO == ipH_LIKE && nelem == ipIRON && ipHi == 2)
+						if(DEBUG_LOC && ipISO == ipH_LIKE && nelem == ipIRON && nHi == 2)
 						{
 							fprintf( ioQQQ, "%li\t%li\t%f\n",
 										nelem,
-										ipHi,
-										ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][ipHi]].EnergyWN()
+										nHi,
+										ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].EnergyWN()
 										);
 
 							cdEXIT(EXIT_FAILURE);
@@ -1223,9 +1223,6 @@ STATIC void FillExtraLymanLine( const TransitionList::iterator& t, long ipISO, l
 
 	DEBUG_ENTRY( "FillExtraLymanLine()" );
 
-	/* principle quantum number for nP levels can only be >= 2 */
-	//ASSERT (nHi >= 2);
-	
 	(*(*t).Hi()).status() = LEVEL_INACTIVE;
 
 	/* atomic number or charge and stage: */
@@ -1373,7 +1370,35 @@ STATIC void FillExtraLymanLine( const TransitionList::iterator& t, long ipISO, l
 
 	(*t).Emis().dampXvel() = (realnum)( 1.f / (*(*t).Hi()).lifetime() / PI4 / (*t).EnergyWN() );
 
-	(*t).Emis().iRedisFun() = iso_ctrl.ipResoRedist[ipISO];
+	if(ipISO == ipH_LIKE)
+	{
+		long ipHi;
+		if( nHi > iso_sp[ipH_LIKE][nelem].n_HighestResolved_local ) /* collapsed levels */
+		{
+			ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nHi,-1,-1);
+		}
+		else /* resolved levels */
+		{
+			ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nHi,1,2);
+		}
+
+		if( ipHi == iso_ctrl.nLyaLevel[ipISO] )
+		{
+			long redis = iso_ctrl.ipLyaRedist[ipISO];
+			// H LyA has a special redistribution function
+			if( ipISO==ipH_LIKE && nelem==ipHYDROGEN )
+				redis = ipLY_A;
+			(*t).Emis().iRedisFun() = redis;
+		}
+		else
+		{
+			/* these are rest of Lyman lines,
+			 * complete redistribution, doppler core only, K2 core, default ipCRD */
+			(*t).Emis().iRedisFun() = iso_ctrl.ipResoRedist[ipISO];
+		}
+	}
+	else
+		(*t).Emis().iRedisFun() = iso_ctrl.ipResoRedist[ipISO];
 
 	(*t).Emis().gf() = (realnum)(GetGF((*t).Emis().Aul(),	(*t).EnergyWN(), (*(*t).Hi()).g()));
 
