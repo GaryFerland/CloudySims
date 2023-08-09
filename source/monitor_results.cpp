@@ -1099,7 +1099,7 @@ void ParseMonitorResults(Parser &p)
 				p.NoNumb("grain index");
 			}
 		
-			if( wavelength[nAsserts] < 1 || wavelength[nAsserts] > LONG_MAX )
+			if( wavelength[nAsserts] < 1 || wavelength[nAsserts] > (realnum)LONG_MAX )
 			{
 				fprintf( ioQQQ, "  Unacceptable grain index.\n");
 				fprintf( ioQQQ, " Sorry.\n" );
