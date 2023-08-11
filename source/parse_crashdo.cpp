@@ -94,7 +94,7 @@ void ParseCrashDo(Parser &p)
 		fprintf(ioQQQ," If the next line says \"I am still alive - something is wrong ....\" then"
 			" there are problems.\n");
 		fflush(ioQQQ);
-		lng = (long)(LONG_MAX*sqrt(1e6));
+		lng = (long)((double)LONG_MAX*sqrt(1e6));
 		fprintf(ioQQQ," I am still alive - something is wrong, the result was %li\n",
 			lng);
 		lgCrash = true;
