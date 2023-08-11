@@ -96,7 +96,7 @@ void sprt_wl( string& chString , realnum wl )
 		{
 			oss << fixed << setw(LineSave.sig_figs+1) << setprecision(n) << wl;
 		}
-		else if (wl < INT_MAX)
+		else if (wl < (realnum)INT_MAX)
 		{
 			oss << setw(LineSave.sig_figs+1) << (int)wl;
 		}
