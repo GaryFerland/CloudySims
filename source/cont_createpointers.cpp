@@ -588,14 +588,14 @@ void ContCreatePointers(void)
 			{
 				/* these are the extra Lyman lines */
 				string sLab = chIonLbl( nelem+1, nelem+1-ipISO );
-				for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
+				for( long nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 				{
 					long ipLo = 0;
 					/* some energies are negative for inverted levels */
 					char chLab[NCHLAB];
 					strncpy(chLab,sLab.c_str(),NCHLAB-1);
 					chLab[NCHLAB-1]='\0';
-					TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][ipHi];
+					TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][nHi];
 					(*tr).ipCont() = 
 						ipLineEnergy((*tr).EnergyRyd() , chLab,
 						iso_sp[ipISO][nelem].fb[ipLo].ipIsoLevNIonCon);
@@ -603,7 +603,7 @@ void ContCreatePointers(void)
 					(*tr).Emis().ipFine() = 
 						ipFineCont((*tr).EnergyRyd() );
 
-					tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][ipHi];
+					tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][nHi];
 					(*tr).ipCont() = 
 						ipLineEnergy((*tr).EnergyRyd() , chLab,
 						iso_sp[ipISO][nelem].fb[ipLo].ipIsoLevNIonCon);

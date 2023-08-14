@@ -169,8 +169,6 @@ void RT_OTS(void)
 					/* add OTS for all nP or collapsed lines */
 					if( ipISO == ipH_LIKE && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ) )
 					{
-						ipLo = 0;
-
 						ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Emis().ots() =
 							ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Emis().Aul()*
 							ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Hi()->Pop()*

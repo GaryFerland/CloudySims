@@ -65,10 +65,10 @@ void RT_tau_init(void)
 
 				if( ipISO == ipH_LIKE )
 				{
-					for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
+					for( long nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 					{
-						ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][ipHi]].Zero();
-						ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][ipHi]].Zero();
+						ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].Zero();
+						ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]].Zero();
 					}
 				}
 				else if( ipISO == ipHE_LIKE )

@@ -3835,15 +3835,15 @@ STATIC void SaveLineStuff(
 				{
 					if (ipISO == ipH_LIKE)
 					{
-						for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
+						for( long nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 						{
 							++index;
 
-							Save1Line( ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][ipHi]], ioPUN, xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
+							Save1Line( ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]], ioPUN, xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
 
 							++index;
 
-							Save1Line( ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][ipHi]], ioPUN, xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
+							Save1Line( ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]], ioPUN, xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
 						}
 					}
 					/* >>chng 02 aug 23, for he-like, had starting on much too high a level since

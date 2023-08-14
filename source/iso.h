@@ -409,13 +409,18 @@ public:
 
 	const char *chISO[NISO];
 
-	/** number of Lyman lines to include only as opacity sources, in each iso seq,
-	 * all now set to 100 in zero.c */
+	/** number of Lyman lines to include only as opacity sources, in He-like ions,
+	 * all now set to 100 in iso.cpp */
 	long int nLyman[NISO],
 		/** max number of levels to consider - probably greater than above */
 		nLyman_max[NISO],
 		/** number of levels actually allocated - probably greater than above */
 		nLyman_alloc[NISO];
+
+	/** number of extra lyman lines for H-like ions
+	 *  to include both as opacity and emission sources,
+	 *  unlike the He-like this spans over the resolved and collapsed as well. */
+	long int nLymanHLike[LIMELM];
 
 	/** option to turn off l-mixing collisions */
 	bool lgColl_l_mixing[NISO];

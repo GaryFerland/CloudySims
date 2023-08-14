@@ -457,10 +457,10 @@ void IterStart()
 	{
 		if( dense.lgElmtOn[nelem] )
 		{
-			for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
+			for( long nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 			{
-				ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][ipHi]].Lo()->ColDen() = 0.;
-				ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][ipHi]].Lo()->ColDen() = 0.;
+				ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].Lo()->ColDen() = 0.;
+				ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]].Lo()->ColDen() = 0.;
 			}
 		}
 	}

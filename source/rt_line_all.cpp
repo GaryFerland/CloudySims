@@ -251,32 +251,32 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 				/* only update if significant abundance and need to update fine opac */
 				if( dense.xIonDense[nelem][ion] > 1e-30 )
 				{
-					for( long nLymanNP=2; nLymanNP < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; nLymanNP++ )
+					for( long nHi=2; nHi <= iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; nHi++ )
 					{
-						if( nLymanNP > iso_sp[ipH_LIKE][nelem].n_HighestResolved_local ) /* looping over collapsed levels */
+						if( nHi > iso_sp[ipH_LIKE][nelem].n_HighestResolved_local ) /* looping over collapsed levels */
 						{
-							long ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nLymanNP,-1,-1);
+							long ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nHi,-1,-1);
 
 							ASSERT(ipHi > 0);
 
-							TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][nLymanNP];
+							TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][nHi];
 							(*(*tr).Lo()).Pop() =
 								iso_sp[ipISO][nelem].st[ipLo].Pop();
 
 							(*(*tr).Hi()).Pop() =
-								iso_sp[ipISO][nelem].st[ipHi].Pop()*(3./pow2(nLymanNP))*(1./3.); /* (2l+1)/n^2 for nP, and 1/3 is the ratio of statistical weights for j=1/2 */
+								iso_sp[ipISO][nelem].st[ipHi].Pop()*(3./pow2(nHi))*(1./3.); /* (2l+1)/n^2 for nP, and 1/3 is the ratio of statistical weights for j=1/2 */
 
 							(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
 
 							/* actually do the work */
 							line_one( *tr, true, 0.f, DopplerWidth[nelem]); 
 
-							tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][nLymanNP];
+							tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][nHi];
 							(*(*tr).Lo()).Pop() =
 								iso_sp[ipISO][nelem].st[ipLo].Pop();
 
 							(*(*tr).Hi()).Pop() =
-								iso_sp[ipISO][nelem].st[ipHi].Pop()*(3./pow2(nLymanNP))*(2./3.); /* (2l+1)/n^3 for nP, and 1/3 is the ratio of statistical weights for j=3/2 */
+								iso_sp[ipISO][nelem].st[ipHi].Pop()*(3./pow2(nHi))*(2./3.); /* (2l+1)/n^3 for nP, and 1/3 is the ratio of statistical weights for j=3/2 */
 
 							(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
 
@@ -286,9 +286,9 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 			
 						else /* looping over resolved levels */
 						{
-						   long ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nLymanNP,1,2);
+						   long ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nHi,1,2);
 
-							TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][nLymanNP];
+							TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][nHi];
 							(*(*tr).Lo()).Pop() =
 								iso_sp[ipISO][nelem].st[ipLo].Pop();
 
@@ -300,7 +300,7 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 							/* actually do the work */
 							line_one( *tr, true, 0.f, DopplerWidth[nelem]);
 
-							tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][nLymanNP];
+							tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][nHi];
 							(*(*tr).Lo()).Pop() =
 								iso_sp[ipISO][nelem].st[ipLo].Pop();
 
@@ -312,7 +312,7 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 							/* actually do the work */
 							line_one( *tr, true, 0.f, DopplerWidth[nelem]);
 						}
-					}/* loop over nLymanNP */
+					}/* loop over nHi */
 				}
 			}/* if nelem if ion <= dense.IonHigh */
 		}/* loop over nelem */

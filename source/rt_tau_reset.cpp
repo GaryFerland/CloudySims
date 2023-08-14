@@ -108,12 +108,12 @@ void RT_tau_reset(void)
 				if( ipISO == ipH_LIKE )
 				{
 					/* Need all levels, as may have been raised/lowered throughout layer */
-					for( long ipHi=2; ipHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; ipHi++ )
+					for( long nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 					{
 						/* fully transfer all of the extra lines even though
 						 * have not solved for their upper level populations */
-						RT_line_one_tau_reset(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][ipHi]]);
-						RT_line_one_tau_reset(ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][ipHi]]);
+						RT_line_one_tau_reset(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]]);
+						RT_line_one_tau_reset(ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]]);
 					}
 				}
 				else if( ipISO == ipHE_LIKE )

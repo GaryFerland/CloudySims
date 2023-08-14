@@ -87,6 +87,13 @@ void t_isoCTRL::zero()
 		}
 	}
 
+	for( long nelem=ipHYDROGEN; nelem < LIMELM; ++nelem )
+	{
+		/* number of extra lyman lines for H-like ions,
+		   will be set in iso_create.cpp  */
+		nLymanHLike[nelem] = -1;
+	}
+
 	/* Dielectronic recombination forming hydrogen-like ions does not exist. */
 	lgDielRecom[ipH_LIKE] = false;
 
