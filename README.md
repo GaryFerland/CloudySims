@@ -15,6 +15,9 @@ The current version of Cloudy is C22, released in Fall 2022.
 A summary of what is new is available
 [here](https://gitlab.nublado.org/cloudy/cloudy/-/wikis/NewC22).
 
+If you used Cloudy in your research, please cite our most recent
+[release paper](https://ui.adsabs.harvard.edu/abs/2017RMxAA..53..385F).
+
 ## Brief History
 
 Cloudy recently migrated to a pure git version control system from a
