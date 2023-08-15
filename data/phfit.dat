@@ -1,4 +1,83 @@
  20061204
+#
+# This file contains ground state and inner shell non-relativistic
+# photoionization cross sections for atoms and ions of elements up
+# to Zn.
+#
+# The data in this file come from two papers:
+#
+# - Verner & Yakovlev 1995, A&AS, 109, 125
+#   https://ui.adsabs.harvard.edu/abs/1995A%26AS..109..125V
+#
+#   This paper provides fits to both valence and inner shell ionization.
+#   It makes up the first portion of the file, terminated by a line
+#   with three '-1's.
+#
+# - Verner, Ferland, Korista, & Yakovlev 1996, ApJ, 465, 487
+#   https://ui.adsabs.harvard.edu/abs/1996ApJ...465..487V
+#
+#   This paper provides fits to valence shell ionization only.
+#   It makes up the second portion of the file.
+#
+# The data below accommodate the fitting formulae in these papers.
+# The file begins with 3 lines of a data preamble is followed by
+# these tables.
+#
+# In the 1995 paper, 7 shells in total are modeled, from 1s to 4s.
+# Because the fitting formula depends on the orbital angular momentum
+# of the shell, the first line of the data preamble lists their values
+# (1s->0, 2s->0, 2p->1, etc). 
+#
+# The 1996 paper contains fits that extend from "the ionization
+# threshold up to the first jump due to inner shell photoionization".
+# This restriction is captured by the second line of data preamble --
+# it holds the lower bound shell indices for the application of the
+# 1996 formula, 30 values in total (one for each additional electron).
+#
+# The final line of data preamble contains 30 values for the shell
+# indices that each additional electron would find itself in.
+# Note that some 4th row elements start filling the 4s shell (index 7)
+# before completing 3d (index 6); this is not captured below, but it is
+# treated in the Cloudy source.
+#
+# The tables that make up the bulk of the file are derived from Table 1
+# in each paper.
+#
+# Table 1 below:
+# Col	Quantity	Units	Note
+# ---	--------	----	----
+# 1	nshell-1		shell index, in C scale
+# 2	ne-1			number of electrons in ion, in C scale
+# 3	Z-1			atomic number, in C scale
+# 4	Eth		eV	threshhold energy; valence values outdated
+# 5	E0		eV
+# 6	sigma0		Mbarn	cross section normalization
+# 7	y(a)
+# 8	P
+# 9	y(w)
+#
+# Columns 5-9 are the parameters employed in the fitting formula,
+# eqn. (1) in 1995 paper. 
+# See also online table:
+# 	https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+AS/109/125
+#
+#
+# Table 2 below:
+# Col	Quantity	Units	Note
+# ---	--------	----	----
+# 1	ne-1			number of electrons in ion, in C scale
+# 2	Z-1			atomic number, in C scale
+# 3	E0		eV
+# 4	sigma0		Mbarn	cross section normalization
+# 5	y(a)
+# 6	P
+# 7	y(w)
+# 8	y0
+# 9	y1
+#
+# Columns 3-9 are parameters employed in the fitting formula,
+# eqn. (1) in 1996 paper; see Table 1 therein.
+#
  0 0 1 0 1 2 0
  0 0 1 1 1 1 1 1 1 1 3 3 3 3 3 3 3 3 5 5 5 5 5 5 5 5 5 5 5 5
  1 1 2 2 3 3 3 3 3 3 4 4 5 5 5 5 5 5 6 6 6 6 6 6 6 6 6 6 7 7

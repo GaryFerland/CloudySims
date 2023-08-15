@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*PresTotCurrent determine the gas and line radiation pressures for current conditions,
  * this sets values of pressure.PresTotlCurr, also calls tfidle */
@@ -143,7 +143,7 @@ void PresTotCurrent()
 				/* this is the sum of all the energy needed to bring the atom up
 				 * to the ion+1 level of ionization - at this point a positive number */
 				phycon.EnergyIonization += dense.xIonDense[nelem][ion] * 
-					t_ADfA::Inst().ph1(Heavy.nsShells[nelem][i-1]-1,nelec,nelem,0)/EVRYD*kadvec;
+					t_ADfA::Inst().getEthresh(Heavy.nsShells[nelem][i-1],nelec+1,nelem+1)/EVRYD*kadvec;
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*cloudy the main routine, this IS Cloudy, return 0 normal exit, 1 error exit,
  * called by maincl when used as standalone program */

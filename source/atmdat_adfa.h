@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef ATMDAT_ADFA_H_
@@ -18,11 +18,26 @@ protected:
 private:
 	phfit_version version;
 	/* phfit.dat */
-	long int L[7];
+	static const int NSHELLS = 7;
+	long int L[NSHELLS];
 	long int NINN[LIMELM];
 	long int NTOT[LIMELM];
-	realnum PH1[7][LIMELM][LIMELM][6];
-	realnum PH2[LIMELM][LIMELM][7];
+	static const int NFIT_PH1 = 6,
+			NFIT_PH2 = 7;
+	realnum PH1[NSHELLS][LIMELM][LIMELM][NFIT_PH1];
+	realnum PH2[LIMELM][LIMELM][NFIT_PH2];
+
+	/** set_vshell_index -- Set valence shell index for given ion
+	 * The index is used to access the photoionization cross-section
+	 * data of Verner et al. (1995) or (1996).
+	 *
+	 * \param [in] ne   number of electrons
+	 * \param [in] Z    atomic number of element
+	 *
+	 * \returns long    index of valence shell
+	 */
+	inline long set_vshell_index( long ne, long Z ) const;
+
 	/* hpfit.dat */
 	realnum PHH[NHYDRO_MAX_LEVEL][5];
 	/* rec_lines.dat */
@@ -62,6 +77,17 @@ public:
 	    \param l
 	*/
 	realnum ph1(int i, int j, int k, int l) const { return PH1[i][j][k][l]; }
+
+	/** getEthresh -- get ionization threshold for shell
+	 * For inner shells use data of Verner et al. (1995) or (1996);
+	 * for valence shells use NIST ionization potentials.
+	 *
+	 * \param nshell [in]  shell index (1 - 1s, 2 - 2s, etc, <= 7)
+	 * \param nel    [in]  number of electrons in ion
+	 * \param Z      [in]  atomic number of element
+	 * \return ionization threshold, in eV
+	 */
+	double getEthresh( long nshell, long nel, long Z ) const;
 
 	/** sth array of cross sections for photoionization of hydrogen at threshold,
 	    0 is 1s, 1 is 2s, 2 is 2p, up to 400

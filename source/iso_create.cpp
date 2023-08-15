@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*iso_create create data for hydrogen and helium, 1 per coreload, called by ContCreatePointers 
  * in turn called after commands parsed */
@@ -142,7 +142,7 @@ double hydro_energy(long nelem, long n, long /* l */, long /* s  */, long /* g *
 	else
 		/* Dima's data in phfit.dat have ionization potentials in eV
 		 * with four significant figures*/
-		HIonPoten = t_ADfA::Inst().ph1(0,0,nelem,0)/EVRYD;
+		HIonPoten = atmdat.getIonPot(nelem, nelem)/EVRYD;
 	ASSERT(HIonPoten > 0.);
 
 	return HIonPoten/POW2((double)n)*RYD_INF;

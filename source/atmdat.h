@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef ATMDAT_H_
@@ -281,6 +281,17 @@ struct t_atmdat : public module {
 	/** accurate ionization potentials in Ryd */
 	double EIonPot[LIMELM][LIMELM];
 
+	/** getIonPot -- get ionization potential, in Ryd
+	 *
+	 * \param nelem [in]   element index (0 for H, 29 for Zn)
+	 * \param ion   [in]   ion charge (0 for neutral, nelem for H-like)
+	 * \return double      ionization potential, in Ry
+	 */
+	inline double getIonPot( long int nelem, long int ion )
+	{
+		return EIonPot[nelem][ion];
+	}
+
 	/** CharExcIon is ionization, */
 	/** [0] is Atom^0 + H+ => Atom+1 + H0
   	  * [n] is Atom^+n + H+ => Atom^+n-1 + H0 */
@@ -360,8 +371,8 @@ struct t_atmdat : public module {
 
 	/** true if CHIANTI database is enabled **/
 	bool lgChiantiOn;
-	/** true if CHIANTI database supplements opacity project lines */
-	bool lgChiantiHybrid;
+	/** true if CHIANTI database is supplemented by opacity project lines */
+	bool lgChiantiLvl2Hybrid;
 	/** true if Cloudy will print which Chianti species are being used as well as number of levels */
 	bool lgChiantiPrint;
 	/** true if Cloudy will use no theoretical energy levels from Chianti, only experimental. False means that only theoretical energy levels are used */
@@ -388,8 +399,8 @@ struct t_atmdat : public module {
 
 	/** true if Stout database is enabled **/
 	bool lgStoutOn;
-	/** true if Stout database supplements opacity project lines */
-	bool lgStoutHybrid;
+	/** true if Stout database supplements opacity project (Level 2) lines */
+	bool lgStoutLvl2Hybrid;
 	/** true if Cloudy will print which Stout species are being used as well as number of levels */
 	bool lgStoutPrint;
 	/**Stout filename variable **/

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParseDatabaseISO parse information from the atom XX-like command line */
 #include "cddefines.h"
@@ -124,6 +124,7 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 				iso_ctrl.lgCS_Seaton[ipISO] = false;
 				iso_ctrl.lgCS_B72[ipISO] = false;
 				iso_ctrl.lgCS_PSdeg[ipISO]=false;
+				iso_ctrl.lgCS_PSM20[ipISO]=false;
 			}
 			else if (ipISO == ipHE_LIKE)
 			{
@@ -161,6 +162,15 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 					iso_ctrl.lgCS_B72[ipISO] = false;
 					iso_ctrl.lgCS_PSdeg[ipISO] = true;
 				}
+				else if(p.nMatch("PSM17"))
+					iso_ctrl.lgCS_PSM20[ipISO]=false;
+				else if(p.nMatch("PSM20"))
+					{
+					/*
+					 * Default option from Badnell 2021.
+					 */
+					iso_ctrl.lgCS_PSM20[ipISO]=true;
+					}
 			}
 
 			/* use l-mix from
@@ -199,14 +209,26 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 			else if( p.nMatch("PENG") )
 			{
 				/* Pengelly & Seaton for l-mixing
+				 * N. Badnell et al. MNRAS (2021) 507, 2922
 				 * THAT'S IS THE DEFAULT
 				 */
 				iso_ctrl.lgCS_Vrinceanu[ipISO] = false;
 				iso_ctrl.lgCS_VOS12[ipISO]=false;
 				iso_ctrl.lgCS_VOS12QM[ipISO]=false;
 				iso_ctrl.lgCS_PS64[ipISO] = true;
+				/*classic Pengelly and Seaton 1964*/
 				if (p.nMatch("CLASS"))
 					iso_ctrl.lgCS_PSClassic[ipISO] = true;
+				/* PSM from Guzman+ 2016, 2017*/
+				else if(p.nMatch("PSM17"))
+					iso_ctrl.lgCS_PSM20[ipISO]=false;
+				else if(p.nMatch("PSM20"))
+				{
+					/*
+					 * Default option from Badnell 2021.
+					 */
+					iso_ctrl.lgCS_PSM20[ipISO]=true;
+				}
 			}
 			else if( p.nMatch(" OFF"  ) )
 			{
@@ -217,11 +239,12 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 				iso_ctrl.lgCS_Vrinceanu[ipISO] = false;
 				iso_ctrl.lgCS_VOS12[ipISO]=false;
 				iso_ctrl.lgCS_VOS12QM[ipISO]=false;
+				iso_ctrl.lgCS_PSM20[ipISO]=false;
 			}
 			else
 			{
 				fprintf( ioQQQ, "The database H-like l-mixing command needs a keyword\n"
-						" Options are OFF, PENGelly, VRINCeanu, VOS12 (SEMIClassical or Quantal).\n");
+						" Options are OFF, PENGelly, VRINCeanu, VOS12 (SEMIClassical or Quantal), PSM.\n");
 				cdEXIT(EXIT_FAILURE);
 			}
 		}

@@ -91,7 +91,8 @@ monitor line luminosity "He 2"  1640.41A 4.46 err 0.1
 ## >>chng 15 nov 16, from 2.87 to 2.33, update Si III, 1888 TP now 3x smaller
 ## >>chng 16 mar 24, from 2.33 to 2.074, FeII cooling using Stout 80 levels
 ## >>chng 20 jan 13, from 2.074 to 2.119, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor line luminosity "Blnd" 1888 2.119 err 0.1 ##tot sum of Si III] 1892+
+## >>chng 23 jun 27, from 2.119 to 2.18, update Fe+ model to Smyth+19
+monitor line luminosity "Blnd" 1888 2.18 err 0.1 ##tot sum of Si III] 1892+
 ## 
 ## >>chng 04 jun 12, from 3.255 to 3.278, chng cont shield fcn
 ## >>chng 06 jul 21, from 3.278 to 3.303, update Mg0 Si0 CT wth H+
@@ -130,7 +131,8 @@ monitor line luminosity "Blnd"  1860 3.335 0.10 ##total sum of both Al III comp
 ## >>chng 16 mar 24, from 3.113 to 2.998, FeII cooling using Stout 80 levels
 ## >>chng 16 aug 07, from 2.998 to 3.038, Fran bug fix
 ## >>chng 19 jul 18, from 3.038 to 3.018, update SII A to Podobedova, Kelleher,&Wiese 2009, JPCRD, Vol. 3 
-monitor line luminosity "blnd"  2326 3.018  ##total C II] 2324.69 + 2328.12
+## >>chng 23 jun 27, from 3.018 to 3.057, update Fe+ model to Smyth+19
+monitor line luminosity "blnd"  2326 3.057  ##total C II] 2324.69 + 2328.12
 ##
 ## >>chng 06 jul 21, from 6.669 to 6.692, update Mg0 Si0 CT wth H+
 ## >>chng 07 oct 22, from 6.692 to 6.667, resolve l-levels of h-like sequence
@@ -138,14 +140,16 @@ monitor line luminosity "blnd"  2326 3.018  ##total C II] 2324.69 + 2328.12
 ## >>chng 14 may 24, from 6.694 to 6.668, allow all NIST levels to be used
 ## >>chng 16 mar 24, from 6.668 to 6.563, FeII cooling using Stout 80 levels
 ## >>chng 16 aug 07, from 6.563 to 6.589, Fran bug fix
-monitor line luminosity "blnd" 2798 6.589 ##total of sum of both Mg II comp
+## >>chng 23 jun 27, from 6.589 to 6.62, update Fe+ model to Smyth+19
+monitor line luminosity "blnd" 2798 6.62 ##total of sum of both Mg II comp
 ##
 ## >>chng 10 jul 30, from 6.793 to 6.822, lower te floor so column density stopping criterion is reached
 ## >>chng 14 apr 19, from 6.822 to 6.79, Use Stout Ca 2
 ## >>chng 14 may 24, from 6.79 to 6.767, allow all NIST levels to be used
 ## >>chng 16 mar 24, from 6.767 to 6.687, FeII cooling using Stout 80 levels
 ## >>chng 16 aug 07, from 6.687 to 6.707, Fran bug fix
-monitor line luminosity "blnd"  3933 6.707
+## >>chng 23 jun 27, from 6.707 to 6.734, update Fe+ model to Smyth+19
+monitor line luminosity "blnd"  3933 6.734
 ## >>chng 10 jul 30, from 6.911 to 6.945, lower te floor so column density stopping criterion is reached
 ## >>chng 12 jul 01, from 6.945 to 6.921, update Badnell DR to 13-electron iso sequence
 ## >>chng 14 apr 19, from 6.921 to 6.856, Use Stout Ca 2
@@ -252,7 +256,8 @@ monitor itrzn 4.878 error 0.10
 monitor niter < 7
 ## >>chng 12 jul 02, from 4 to 3, change H,H=>H2,hv rate
 ## >>chng 14 nov 26, from 3 to 4, hop is between 5 and 6
-monitor niter > 3
+## >>chng 23 may 05, from >3 to >2, change caused by vib-rotational levels of SiS
+monitor niter  >2
 ## >>chng 14 may 31, see if monitoring exact value is helpful
 ## >>chng 14 jul 10, from 6 to 5, Add monitors for WillsNetzerWills FeII Lines
 ## >>chng 14 oct 28, from 6 to 5, relativistic Gaunt factors
@@ -267,7 +272,9 @@ monitor niter > 3
 ## >>chng 09 jan 08, from 182 to 192, minor changes in iter/zn, iterations, and zone that crept in over last month
 ## >>chng 09 jan 16, disable this assert because the values show a bimodal distribution over various platforms
 ## >>chng 14 may 31, re-enable as things should be more stable
-monitor nzone 737
+## >>chng 23 may 15, from 737 to 773, GS updates 21 reactions to UMIST 2012
+## >>chng 23 jul 15, from 773 to 858, GS update UMIST to 2012 and set upper limit on T
+monitor nzone 858
 ##
 ## >>chng 14 jul 10, from 1.01 to 2.949, Add monitors for WillsNetzerWills FeII Lines
 ## >>chng 16 mar 23, drop WillsNetzerWills FeII Lines

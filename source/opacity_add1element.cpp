@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*OpacityAdd1Element enter total photo cross section for all subshells into opacity array */
 #include "cddefines.h"
@@ -27,7 +27,7 @@ void OpacityAdd1Element(
 
 	/* this routine drives OpacityAdd1Subshell to put in total opacities for all shells*/
 
-	/*begin sanity check */
+	/* begin sanity check */
 	ASSERT( (nelem >=0 ) && (nelem < LIMELM) );
 
 	/* first do simple two-level systems -

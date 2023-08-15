@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*InitDefaultsPreparse initialization at start of simulation, called from cloudy
 * before parser, sets initial values of quantities changed by parser 
@@ -55,9 +55,9 @@ void InitDefaultsPreparse( void )
 	/* option to turn off collisional ionization with "no collisional ionization" cmmnd */
 	atmdat.lgCollIonOn = true;
 
-	// default, Chianti not on, but if on use hybrid, do not print
+	// default, use Chianti, use Chianti-level2 hybrid, do not print
 	atmdat.lgChiantiOn = true;
-	atmdat.lgChiantiHybrid = true;
+	atmdat.lgChiantiLvl2Hybrid = true;
 	atmdat.lgChiantiPrint = false;
 	//Use gbar to fill in dBase transitions if they lack collision strengths
 	atmdat.lgGbarOn = true;
@@ -81,10 +81,10 @@ void InitDefaultsPreparse( void )
 	/* nStoutMaxLevelsFe and nStoutMaxLevels are defaulted to 100 and 50 respectively if
 	 * the coronal command is used. See parse_coronal.cpp */
 
-	/* Stout on by default, optional printout off */
+	/* Stout on by default, use level2 OP hybrid,  optional printout off */
 	atmdat.lgStoutOn = true;
 	atmdat.lgStoutPrint = false;
-	atmdat.lgStoutHybrid = true;
+	atmdat.lgStoutLvl2Hybrid = true;
 
 	/* Lamda on by default, optional printout off */
 	atmdat.lgLamdaOn = true;

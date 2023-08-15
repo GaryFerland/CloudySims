@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cddefines.h"
 #include "atmdat_adfa.h"
@@ -461,10 +461,11 @@ STATIC double iso_get_collision_strength( long ipISO, long nelem, long ipCollide
 	if (0)
 	{
 		//printing some of the rates for testing
+		/* this chunk of printing code has been really useful for debugging collisions */
 		double rate_test;
 		double oHi=1./(double)gHi;
 		//double ogLo=1./(double)gLo;
-		if ( nelem == 1 && ipISO == 1 && nHi == nLo+1 && nHi < 200 && (ipCollider == ipELECTRON ))
+		if ( nelem == 0 && ipISO == 0 && nHi == nLo && nHi==2 && lHi==1 && lLo== 0 && (ipCollider == ipPROTON ))
 		{
 			double reduced_mass_collider_system = dense.AtomicWeight[nelem]*colliders.list[ipCollider].mass_amu/
 							(dense.AtomicWeight[nelem]+colliders.list[ipCollider].mass_amu)*ATOMIC_MASS_UNIT;

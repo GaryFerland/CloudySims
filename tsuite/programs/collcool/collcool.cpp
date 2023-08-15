@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*main program calling cloudy to produce a table giving ionization vs temperature */
 #include "cddefines.h"
@@ -90,7 +90,7 @@ int main( void )
 				cdRead( "element helium abundance -9"  );
 				cdRead( "metals -9"  );
 
-				sprintf(chLine,"element %s abundance %f ",chElementName[nelem],element_abund);
+				sprintf(chLine,"element %.11s abundance %f ",chElementName[nelem],element_abund);
 				cdRead( chLine  );
 
 				cdRead( "set eden 0"  );
@@ -132,7 +132,7 @@ int main( void )
 		fclose(ioRES);
 		cdEXIT(exit_status);
 	}
-	catch( bad_alloc )
+	catch( bad_alloc& )
 	{
 		fprintf( ioQQQ, " DISASTER - A memory allocation has failed. Most likely your computer "
 			 "ran out of memory.\n Try monitoring the memory use of your run. Bailing out...\n" );

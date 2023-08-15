@@ -32,6 +32,7 @@ save monitors "chianti_fe_cool.asr" last
 # commands giving the monitors    =========
 ## >>chng 11 apr 26, 2nd -18.86 to .83, 3rd -18.42 to .47, Ar seq recom rates
 ## >>chng 11 apr 29, 2nd -18.83 to .86, 3rd -18.42 to .47, Ar seq recom rates
+## >>chng 23 jun 27, 1st -19.07 to .1799, update Fe+ model to Smyth+19
 monitor ctot grid "chianti_fe_cool.dat"
 
 This tests the use of Chianti limited to Fe ions, and the Kurucz 

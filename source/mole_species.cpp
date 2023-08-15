@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*CO_Init called from cdInit to initialize co routines */
 /*CO_update_chem_rates update rate coefficients, only temp part - in mole_co_etc.c */
@@ -563,7 +563,7 @@ STATIC molecule *newspecies(
 
 	if (mol->n_nuclei() > 1 && mole_global.lgNoHeavyMole)
 	{
-		for( nNucs_ri it=mol->nNuclide.rbegin(); it != mol->nNuclide.rend(); --it )
+		for( nNucs_ri it=mol->nNuclide.rbegin(); it != mol->nNuclide.rend(); ++it )
 		{
 			if( it->first->el()->Z-1 != ipHYDROGEN )
 			{

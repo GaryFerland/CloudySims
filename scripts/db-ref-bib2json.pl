@@ -144,6 +144,8 @@
 # 	- update ADS BibTeX acquisition;
 # 	- request and store ADS tokens;
 # 	- update instructions above.
+# Chatzikos, 2023-Aug-14
+#	Ignore trailing 'abstract' from ADS references.
 #
 
 use warnings;
@@ -1239,6 +1241,7 @@ sub parse_stout_comments
 			$ref{name} = $name;
 			$ref{link} = 'http'. $http;
 			my @f = split( '/', $ref{link} );
+			pop( @f ) if $f[-1] eq 'abstract';
 			$ref{bibcode} = pop( @f );
 		}
 		elsif( $ref =~ m/NIST/i )

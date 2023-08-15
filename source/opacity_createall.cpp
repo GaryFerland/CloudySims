@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*OpacityCreateAll compute initial set of opacities for all species */
 /*OpacityCreate1Element generate ionic subshell opacities by calling t_ADfA::Inst().phfit */
@@ -748,7 +748,7 @@ STATIC void OpacityCreate1Element(
 			{
 				/* photo energy MAX so that we never eval below threshold */
 				energy = MAX2(rfield.anu(ip)*EVRYD , 
-					t_ADfA::Inst().ph1(nshell,nelec-1,nelem,0));
+					t_ADfA::Inst().getEthresh(nshell+1,nelec,nelem+1));
 
 				/* the cross section in mega barns */
 				cs = t_ADfA::Inst().phfit(nelem+1,nelec,nshell+1,energy);
@@ -803,9 +803,7 @@ STATIC double Opacity_iso_photo_cs(
 	{
 		if( index==0 )
 		{
-			/* this is the ground state, use Dima's routine, which works in eV
-			 * and returns megabarns */
-			double EgammaEV = MAX2(EgammaRyd*(realnum)EVRYD , t_ADfA::Inst().ph1(0,0,nelem,0));
+			double EgammaEV = MAX2(EgammaRyd, atmdat.getIonPot(nelem, nelem)) * EVRYD;
 			crs = t_ADfA::Inst().phfit(nelem+1,1,1,EgammaEV)* 1e-18;
 			/* make sure cross section is reasonable */
 			ASSERT( crs > 0. && crs < 1e-10 );

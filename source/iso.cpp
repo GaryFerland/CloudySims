@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cddefines.h"
 #include "iso.h"
@@ -7,6 +7,7 @@
 #include "freebound.h"
 #include "parser.h"
 #include "elementnames.h"
+#include "atmdat.h"
 
 t_isoCTRL iso_ctrl;
 
@@ -34,6 +35,7 @@ void t_isoCTRL::zero()
 		lgCS_Vrinceanu[ipISO] = false;
 		lgCS_Fujim[ipISO] = false;
 		lgCS_vrgm[ipISO] = false;
+		lgCS_PSM20[ipISO] = true;
 		lgCS_PS64[ipISO] = true;
 		lgCS_PSClassic[ipISO] = false;
 		lgCS_VOS12[ipISO] = false; // lgCS_Vrinceanu[ipISO] == true overrides
@@ -305,31 +307,19 @@ void iso_init_energies()
 				d.getToken(l);
 				d.getToken(s);
 				d.getToken(j);
-				if( n > 0 )
+				QNPack ind = QN2ind(n, l, s, 2*j+1);
+				d.getToken(iso_sp[ipISO][nelem].Energy[ind]);
+				if( ! d.lgEOL() )
 				{
-					QNPack ind = QN2ind(n, l, s, 2*j+1);
-					d.getToken(iso_sp[ipISO][nelem].Energy[ind]);
-					if( ! d.lgEOL() )
-					{
-						double error;
-						d.getToken( error );
-					}
-					d.checkEOL();
+					double error;
+					d.getToken( error );
 				}
-				else
-				{
-					d.getToken(iso_sp[ipISO][nelem].IonPot);
-					if( ! d.lgEOL() )
-					{
-						double error;
-						d.getToken( error );
-					}
-					d.checkEOL();
-					break;
-				}
+				d.checkEOL();
 			}
 			d.checkEOD();
+
+			double IP = atmdat.getIonPot(nelem, nelem-ipISO);
+			iso_sp[ipISO][nelem].IonPot = Energy(IP, "Ryd").WN();
 		}
 	}
 }
-

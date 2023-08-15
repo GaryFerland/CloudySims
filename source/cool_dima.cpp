@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*CoolDima compute cooling due to level 2 lines */
 /*ColStrGBar generate g-bar collision strengths for level 2 line2 */
@@ -39,8 +39,8 @@ void CoolDima(void)
 		ion = (*TauLine2[i].Hi()).IonStg();
 		nelem = (*TauLine2[i].Hi()).nelem();
 
-		if( (dense.lgIonChiantiOn[nelem-1][ion-1] && !atmdat.lgChiantiHybrid) ||
-				(dense.lgIonStoutOn[nelem-1][ion-1] && !atmdat.lgStoutHybrid) )
+		if( (dense.lgIonChiantiOn[nelem-1][ion-1] && !atmdat.lgChiantiLvl2Hybrid) ||
+				(dense.lgIonStoutOn[nelem-1][ion-1] && !atmdat.lgStoutLvl2Hybrid) )
 		{
 			/* If a species uses Chianti or Stout and hybrid is off, skip the level 2 lines */
 			continue;

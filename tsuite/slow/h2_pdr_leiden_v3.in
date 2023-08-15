@@ -86,7 +86,8 @@ monitor OH column density 14.07 error 0.1
 ## >>chng 20 jul 21, from 16.89 to 16.73, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from 16.73 to 16.62, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from 16.62 to 16.71, LAMDA update
-monitor SiO column density 16.71 error 0.1
+## >>chng 23 may 15, from 16.71 to 16.66, GS updates 21 reactions to UMIST 2012
+monitor SiO column density 16.66 error 0.1
 ## 
 ## >>chng 05 mar 25, from 16.38 to 16.47 renorm H pops in level solver
 ## >>chng 05 jun 19, from 16.47 to 16.42, small chng in chem net
@@ -100,7 +101,8 @@ monitor SiO column density 16.71 error 0.1
 ## >>chng 20 jul 21, from 16.27 to 16.34, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from 16.34 to 16.27, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from 16.27 to 16.32, LAMDA update
-monitor H2O column density 16.32 error 0.1
+## >>chng 23 may 15, from 16.32 to 16.27, GS updates 21 reactions to UMIST 2012
+monitor H2O column density 16.27 error 0.1
 ##
 ## >>chng 11 jul 16, add these
 ## >>chng 11 jul 18, from 10 to 12.36, leiden_v3 missed initial update, do not monitor tiny N in hack
@@ -135,17 +137,20 @@ monitor column density HeH+ 2.376 error 0.1
 ## >>chng 12 jul 01, from 13.48 to 13.52, update Badnell DR to 13-electron iso sequence
 ## >>chng 13 dec 18, from 13.52 to 13.45, fixes to Federman shielding
 ## >>chng 21 sep 11, from 13.45 to 13.34, LAMDA update
-monitor column density C2   13.34 error 0.1
+## >>chng 23 may 15, from 13.34 to 12.52, GS updates 21 reactions to UMIST 2012
+monitor column density C2   12.52 error 0.1
 ## >>chng 11 jul 18, from 10 to 12.47, leiden_v3 missed initial update, do not monitor tiny N in hack
 ## >>chng 13 jun 27, from 12.47 to 12.4, BUGFIX use g-bar for H2-H2 collisions
 ## >>chng 13 dec 18, from 12.4 to 12.34, fixes to Federman shielding
 ## >>chng 21 sep 11, from 12.34 to 11.99, LAMDA update
 ## >>chng 21 nov 04, from 11.99 to 11.95, update co mole data
-monitor column density C3   11.95 error 0.1
+## >>chng 23 may 15, from 11.95 to 12.01, GS updates 21 reactions to UMIST 2012
+monitor column density C3   12.01 error 0.1
 ## >>chng 11 jul 18, from 10 to 13.18, leiden_v3 missed initial update, do not monitor tiny N in hack
 ## >>chng 20 jul 21, from 13.18 to 13.08, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 21 sep 11, from 13.08 to 13.5, LAMDA update
-monitor column density CN   13.5 error 0.1
+## >>chng 23 may 15, from 13.5 to 13.41, GS updates 21 reactions to UMIST 2012
+monitor column density CN   13.41 error 0.1
 ## >>chng 11 jul 18, from 10 to 13.63, leiden_v3 missed initial update, do not monitor tiny N in hack
 ## >>chng 11 nov 16, from 13.63 to 13.67, adjust newmole monitors
 ## >>chng 13 mar 23, from 13.67 to 13.71, improve big h2/chemistry consistency
@@ -412,12 +417,14 @@ monitor "HNC " 1652.90m  line intensity -8.152
 ## >>chng 20 jul 21, from -9.859 to -9.799, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from -9.799 to -9.723, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -9.723 to -9.62, LAMDA update
-monitor "HCS+" 1755.88m  -9.62 line intensity
+## >>chng 23 may 15, from -9.62 to -9.846, GS updates 21 reactions to UMIST 2012
+monitor "HCS+" 1755.88m  -9.846 line intensity
 ## >>chng 13 jun 27, from -7.453 to -7.633, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 18, from -7.633 to -7.665, fixes to Federman shielding
 ## >>chng 21 sep 11, from -7.665 to -7.569, LAMDA update
-monitor "CS  " 3058.86m  -7.569 line intensity
+## >>chng 23 may 15, from -7.569 to -7.641, GS updates 21 reactions to UMIST 2012
+monitor "CS  " 3058.86m  -7.641 line intensity
 ## >>chng 13 jun 27, from -7.288 to -7.138, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 20 jul 21, from -7.138 to -7.16, update DR H2 diss as per  2020RNAAS...4...78S
@@ -463,7 +470,8 @@ monitor "CO  " 371.549m  -6.828 line intensity
 ## >>chng 14 mar 26, from -7.277 to -7.308, move O to external databases
 ## >>chng 20 jul 21, from -7.308 to -7.332, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 21 nov 04, from -7.332 to -7.378, update co mole data
-monitor "CO  " 325.137m  -7.378 line intensity
+## >>chng 23 may 15, from -7.378 to -7.308, GS updates 21 reactions to UMIST 2012
+monitor "CO  " 325.137m  -7.308 line intensity
 ## >>chng 13 jun 27, from -7.522 to -6.773, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 18, from -6.773 to -6.808, fixes to Federman shielding
@@ -475,7 +483,8 @@ monitor "^13CO" 906.599m  -6.808 line intensity
 ## >>chng 20 sep 06, from -8.689 to -8.709, further update to McCall CR-related rates from r14260
 ## >>chng 21 sep 11, from -8.709 to -9.922, LAMDA update
 ## >>chng 21 sep 15, from -9.922 to -8.768, go back to unresolved model
-monitor "CN  " 880.858m  -8.768  line intensity
+## >>chng 23 may 15, from -8.768 to -8.86, GS updates 21 reactions to UMIST 2012
+monitor "CN  " 880.858m  -8.86  line intensity
 # 
 # h2_pdr_leiden_v3.in
 # class pdr 

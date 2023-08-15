@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*phfit derive photoionization cross sections for first 30 elements */
 #include "cddefines.h"
@@ -20,58 +20,79 @@ t_ADfA::t_ADfA()
 	double help[9];
 	const long VERSION_MAGIC = 20061204L;
 
-	static const char chFile[] = "phfit.dat";
+	DataParser d;
 
-	FILE *io = open_data( chFile, "r" );
+	d.open( "phfit.dat", ES_NONE );
+	d.getline();
+	d.checkMagic(VERSION_MAGIC);
 
-	bool lgErr = false;
-	long i=-1, j=-1, k=-1, n;
+	d.getline();
+	for( long i = 0; i < NSHELLS; i++ ) d.getToken( L[i] );
 
-	lgErr = lgErr || ( fscanf( io, "%ld", &i ) != 1 );
-	if( lgErr || i != VERSION_MAGIC )
+	d.getline();
+	for( long i = 0; i < LIMELM; i++ ) d.getToken( NINN[i] );
+
+	d.getline();
+	for( long i = 0; i < LIMELM; i++ ) d.getToken( NTOT[i] );
+
+	/* 1995 table
+	 * >>refer	all	photo_cs	Verner and Yakovlev, 1995, A&AS, 109, 125
+	 */
+	while( d.getline() )
 	{
-		fprintf( ioQQQ, " File %s has incorrect version: %ld\n", chFile, i );
-		fprintf( ioQQQ, " I expected to find version: %ld\n", VERSION_MAGIC );
-		cdEXIT(EXIT_FAILURE);
-	}
+		long nshell, nelec, nelem;
+		d.getToken(nshell);
+		d.getToken(nelec);
+		d.getToken(nelem);
 
-	for( n=0; n < 7; n++ )
-		lgErr = lgErr || ( fscanf( io, "%ld", &L[n] ) != 1 );
-	for( n=0; n < 30; n++ )
-		lgErr = lgErr || ( fscanf( io, "%ld", &NINN[n] ) != 1 );
-	for( n=0; n < 30; n++ )
-		lgErr = lgErr || ( fscanf( io, "%ld", &NTOT[n] ) != 1 );
-	while( true )
-	{
-		lgErr = lgErr || ( fscanf( io, "%ld %ld %ld", &i, &j, &k ) != 3 );
-		//fprintf(ioQQQ,"DEBUGG phfit1 %ld %ld %ld\n", i, j, k );
-		if( i == -1 && j == -1 && k == -1 )
+		if( nshell < 0 && nelec < 0 && nelem < 0 )
+		{
+			d.checkEOL();
 			break;
-		lgErr = lgErr || ( fscanf( io, "%lf %le %le %le %le %le", &help[0], &help[1],
-					   &help[2], &help[3], &help[4], &help[5] ) != 6 );
-		/* ionization potential in eV */
-		ASSERT( help[0] > 0. );
-		//fprintf(ioQQQ,"DEBUGG phfit2 %le %le %le %le %le %le\n" , help[0] , help[1] , help[2] , help[3] , help[4] , help[5]);
-		for( int l=0; l < 6; ++l )
-			PH1[i][j][k][l] = (realnum)help[l];
-	}
-	while( true )
-	{
-		lgErr = lgErr || ( fscanf( io, "%ld %ld", &i, &j ) != 2 );
-		if( i == -1 && j == -1 )
-			break;
-		lgErr = lgErr || ( fscanf( io, "%le %le %le %le %le %le %le", &help[0], &help[1],
-					   &help[2], &help[3], &help[4], &help[5], &help[6] ) != 7 );
-		for( int l=0; l < 7; ++l )
-			PH2[i][j][l]  = (realnum)help[l];
-	}
-	fclose( io );
+		}
 
-	ASSERT( !lgErr );
+		ASSERT( 0 <= nshell && nshell < NSHELLS );
+		ASSERT( 0 <= nelem && nelem < LIMELM );
+		ASSERT( 0 <= nelec && nelec <= nelem );
+
+		for( long id = 0; id < NFIT_PH1; id++ )
+			d.getToken( PH1[nshell][nelec][nelem][id] );
+		d.checkEOL();
+	}
+
+	/* 1996 table
+	 * >>refer	all	photo_cs	Verner, D. A., Ferland, G. J., Korista, K. T., & Yakovlev, D. G. 1996, ApJ, 465, 487.
+	 */
+	while( d.getline() )
+	{
+		long nelec, nelem;
+		d.getToken(nelec);
+		d.getToken(nelem);
+
+		if( nelec < 0 && nelem < 0 )
+		{
+			d.checkEOL();
+			break;
+		}
+
+		ASSERT( 0 <= nelem && nelem < LIMELM );
+		ASSERT( 0 <= nelec && nelec <= nelem );
+
+		for( long id = 0; id < NFIT_PH2; id++ )
+			d.getToken( PH2[nelec][nelem][id] );
+		d.checkEOL();
+	}
+
+	d.checkEOD();
+
+	//--------------------------------------------
 
 	static const char chFile2[] = "hpfit.dat";
 
-	io = open_data( chFile2, "r" );
+	FILE *io = open_data( chFile2, "r" );
+
+	bool lgErr = false;
+	long i=-1, j=-1;
 
 	lgErr = lgErr || ( fscanf( io, "%ld", &i ) != 1 );
 	if( lgErr || i != VERSION_MAGIC )
@@ -244,7 +265,7 @@ t_ADfA::t_ADfA()
 
 	/*refer	HI	cs	Anderson, H., Ballance, C.P., Badnell, N.R., 
 	 *refercon	& Summers, H.P  2000, J Phys B, 33, 1255 */
-	DataParser d( "h_coll_str.dat", ES_NONE );
+	d.open( "h_coll_str.dat", ES_NONE );
 	d.getline();
 	d.checkMagic(VERSION_MAGIC);
 
@@ -263,6 +284,39 @@ t_ADfA::t_ADfA()
 		d.getToken(p, NHCSTE);
 		d.checkEOL();
 	}
+}
+
+inline long t_ADfA::set_vshell_index( long nelec, long Z ) const
+{
+	long nout = NTOT[nelec-1];
+
+	// NB NB
+	// 4th row elements start filling 4s (shell 7) before completely
+	// filling 3d (shell 6) -- true for all neutrals, and some singly
+	// ionized elements, see below
+	//
+	// The indices below are on C scale, i.e., they start at 0 for H,
+	// hence the +1
+	//
+	if( Z == nelec && Z > ipARGON+1 )
+		nout = 7;
+	else if( Z == (nelec + 1)
+		 && ( Z == ipCALCIUM+1
+			|| Z == ipSCANDIUM+1
+			|| Z == ipTITANIUM+1
+			|| Z == ipMANGANESE+1
+			|| Z == ipIRON+1 ) )
+		nout = 7;
+	return nout;
+}
+
+double t_ADfA::getEthresh( long int nshell, long int nelec, long int Z ) const
+{
+	long nout = set_vshell_index( nelec, Z );
+	if( nshell == nout )
+		return atmdat.getIonPot(Z-1, Z-nelec) * EVRYD;
+	else
+		return double(PH1[nshell-1][nelec-1][Z-1][0]);
 }
 
 double t_ADfA::phfit(long int nz, 
@@ -322,12 +376,8 @@ double t_ADfA::phfit(long int nz,
 		return crs;
 	}
 
-	nout = NTOT[ne-1];
-	if( nz == ne && nz > 18 )
-		nout = 7;
-	if( nz == (ne + 1) && ((((nz == 20 || nz == 21) || nz == 22) || 
-	  nz == 25) || nz == 26) )
-		nout = 7;
+	nout = set_vshell_index( ne, nz );
+
 	if( is > nout )
 	{ 
 		return crs;
@@ -340,8 +390,10 @@ double t_ADfA::phfit(long int nz,
 
 	ASSERT( is >= 1 && is <= 7 );
 
-	if( e < PH1[is-1][ne-1][nz-1][0] )
-	{ 
+	double ethres = getEthresh( is, ne, nz );
+
+	if( e < ethres )
+	{
 		return crs;
 	}
 
@@ -358,7 +410,10 @@ double t_ADfA::phfit(long int nz,
 		}
 		else
 		{
-			einn = PH1[nint-1][ne-1][nz-1][0];
+			if( nint == nout )
+				einn = ethres;
+			else
+				einn = double(PH1[nint-1][ne-1][nz-1][0]);
 		}
 	}
 
@@ -451,7 +506,7 @@ double t_ADfA::hpfit(long int iz,
 		}
 	}
 
-	eth = ph1(0,0,iz-1,0)/POW2((double)m);
+	eth = getEthresh(1,1,iz)/POW2((double)m);
 	ex = MAX2(1. , e/eth );
 
 	/* Don't just force to be at least one...make sure e/eth is close to one or greater.	*/

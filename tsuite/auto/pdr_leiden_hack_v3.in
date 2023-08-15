@@ -157,7 +157,8 @@ monitor itrzn 5.149
 ## >>chng 11 nov 16, from 505 to 544, adjust newmole monitors
 ## >>chng 13 aug 20, from 544 to 535, enable D chem by default
 ## >>chng 13 sep 17, from 535 to 541, D chem off by default
-monitor nzone 541 error 0.01
+## >>chng 23 may 15, from 541 to 525, GS updates 21 reactions to UMIST 2012
+monitor nzone 525 error 0.01
 ##
 ## >>chng 13 jun 27, from -8.869 to -6.631, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.

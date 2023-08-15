@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*HeCollid evaluate collisional rates */
 /*HeCSInterp interpolate on He1 collision strengths */
@@ -822,7 +822,11 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 			{
 				/* PS-M: Modified PS method
 				 * Refer to F. Guzman et al. MNRAS (2016) 464, 312
+				 *
+				 * 11/01/22 changed default to PSM20 formulas from
+				 * N. Badnell et al. MNRAS (2021) 507, 2922
 				 */
+
 				cs = CS_l_mixing_PS64_expI(
 						nelem,
 						ipHE_LIKE,
@@ -833,8 +837,14 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 						gHi,
 						lLo,
 						deltaE_eV,
-						Collider);
-				*where = "PSM   ";
+						Collider,
+						iso_ctrl.lgCS_PSM20[ipHE_LIKE]);
+
+				if(iso_ctrl.lgCS_PSM20[ipHE_LIKE])
+					*where = "PSM   ";
+				else
+					*where = "PSM20 ";
+
 			}
 		}
 		else
@@ -1355,6 +1365,7 @@ void my_Integrand_S62::operator() (const double proj_energy[], double res[], lon
 		res[i] = val[i] * (proj_energy[i]+deltaE)/EVRYD * cross_section;
 	}
 }
+
 /*CS_l_mixing_PS64 - find rate for l-mixing collisions by protons, for neutrals */
 /* This version does not assume that E_min/kt is small and works with the exponential integral */
 /* Pengelly, R.M., & Seaton, M.J., 1964, MNRAS, 127, 165
@@ -1371,7 +1382,8 @@ double CS_l_mixing_PS64_expI(
 		double g,
 		long lp,
 		double deltaE_eV,
-		long Collider)
+		long Collider,
+		bool lgPSM20)
 {
 	double cs;
 	double RD,R12,Sij,Plowb,RC,RC1,/*R1,*/EC,ED,
@@ -1463,7 +1475,7 @@ double CS_l_mixing_PS64_expI(
 		//R1 = sqrt(R12);
 		//RC = R1;
 	//}
-	double Emin = R12/(RC*RC);
+	double Emin = R12/(RC*RC); //Um
 
 	if (RC == RD)
 			fb2=1.;
@@ -1478,61 +1490,127 @@ double CS_l_mixing_PS64_expI(
 	/* Resolved Dnl depending on Sij */
 	double Dnl = 2. * pow2(ChargIncoming)*Sij/(3.*(2.*l+1.));
 
-	ASSERT( Dnl > 0. );
 	ASSERT( phycon.te  / Dnl / reduced_mass_2_emass > 0. );
+	ASSERT( Dnl > 0. );
 
-	EC = RD*RD/(RC1*RC1);
-	ED = R12/(RD*RD);
+	EC = RD*RD/(RC1*RC1); //Uc
+	ED = R12/(RD*RD); //Um
 	eEm = exp(-1.*Emin);
 	eED = exp(-1.*ED);
 	eEC = exp(-1.*EC);
 	eEmt1Em = eEm*(1.+Emin);
 
-	/* First exponential integral is used as the analitical solution of Maxwell averaged PS64 cross sections
-	 * Different cases are used depending on the cut-off
-	 */
-	if ( fb1 == 1 && fb2 == 1)
-		bracket = eEm + e1(Emin);
-	else
+	if(lgPSM20) 
+	/* N. Badnell et al. MNRAS (2021) 507, 2922 */
 	{
-		if (fb2 ==1 )
-			bracket = fb1*eEm+ fb2*e1(Emin); 
+		double Um = ED;
+
+		double Umc = sqrt(Um*EC);
+		//Dnl = 4. * pow2(ChargIncoming)*Sij/(3.*(2.*l+1.));
+
+
+		if(fb2 == 1)
+		{
+			/* this the asymptote of sqrt(pi/Um^3)*erf(Um)/2 - exp(-Um)/Um when Um->0*/
+			double nf = 2./3.;
+			/* we have looked for a value of Um low enough where the error is low
+			 * when x=1e-6 rel error = 5.99e-7 */
+			bracket = nf+e1(Um);		
+			if (Um > 1e-6)
+				bracket = sqrt(PI/pow3(Um))*erf(sqrt(Um))/2.-exp(-1.*Um)/Um + e1(Um);
+
+		}
 		else
 		{
-			if (EC > Emin)
-				bracket = fb1*eEm + 2.*e1(Emin) - e1(EC);
-			else
-				bracket = fb1*eED + e1(ED);
+			/* Use of the incomplete gamma function P(n,x)= 1 - e_(n-1)(x)e^-x for (n E Z) to
+			 * avoid cancellation errors
+			 *
+			 * where
+			 *
+			 *
+			 *            n        j
+			 *            -       x
+			 *  e_n       >      ----
+			 *            -       j!
+			 *    	      j=0
+			 *
+			 * Functions 6.5.3, 6.5.11, and 6.5.13 in
+			 * Abramowitz & Stegun Tenth Ed. 1972
+			 */
+			if (EC<Umc)
+			/* this is unlikely and correspond to contribution of eq (122) in Nigel's talk
+			 * it kicks on extreme high density cases
+			 */
+			{
+				/* this the asymptote of sqrt(pi/Um^3)*erf(Um)/2 - exp(-Um)/Um */
+				double nf = 2./3.;
+				/* we have looked for a value of Um low enough where the error is low
+                         	* when x=1e-6 rel error = 5.99e-7 */
+				if (Um > 1e-6)
+					nf = sqrt(PI/pow3(Um))*(erf(sqrt(Um))/2.) - exp(-1.*Um)/Um;
+
+				bracket = 4.*(1.-igamc(3,EC)+0.25*exp(-1.*EC)*EC*EC)/pow3(Umc) -
+						sqrt(PI/pow3(Um))*erf(sqrt(EC))/2. + nf;
+				bracket += e1(Um);
+
+			}
+			else //eq 12 Badnell et al. 2021 MNRAS 507, 2922
+			{
+				bracket = 4.*(1.-igamc(3,Umc))/pow3(Umc);
+				bracket += 2.*e1(Umc)-e1(EC);
+			}
+
+
 		}
 	}
-
-	//contribution 0<E<Emin, important for Emin/kt >>
-	contr = 0.;
-	if(fb1 != 1 )
+	else /* Guzman et al. MNRAS (2016) 464, 312 */
 	{
-		if ( fb2 == 1 )
-			contr = (1.-eEmt1Em)/Emin;
-		else if (fb2 !=1 )
+		/* First exponential integral is used as the analitical solution of Maxwell averaged PS64 cross sections
+		 * Different cases are used depending on the cut-off
+		 */
+		if ( fb1 == 1 && fb2 == 1)
+			bracket = eEm + e1(Emin);
+		else
 		{
-			if (EC >= Emin)
-			{
-				contr = 2.*( 1. -eEmt1Em)/pow2(Emin);
-				contr -= eEm;
-			}
+			if (fb2 ==1 )
+				bracket = fb1*eEm+ fb2*e1(Emin);
 			else
 			{
-				contr = ( 2. -eEC*(2.+EC))/pow2(Emin);
-				contr -= eEm*(1.+1./ED);
+				if (EC > Emin)
+					bracket = fb1*eEm + 2.*e1(Emin) - e1(EC);
+				else
+					bracket = fb1*eED + e1(ED);
 			}
 		}
 
-		contr *= 2./3.;
+		//contribution 0<E<Emin, important for Emin/kt >>
+		contr = 0.;
+		if(fb1 != 1 )
+		{
+			if ( fb2 == 1 )
+				contr = (1.-eEmt1Em)/Emin;
+			else if (fb2 !=1 )
+			{
+				if (EC >= Emin)
+				{
+					contr = 2.*( 1. -eEmt1Em)/pow2(Emin);
+					contr -= eEm;
+				}
+				else
+				{
+					contr = ( 2. -eEC*(2.+EC))/pow2(Emin);
+					contr -= eEm*(1.+1./ED);
+				}
+			}
 
-		bracket += contr;
+			contr *= 2./3.;
+
+			bracket += contr;
+
+		}
 	}
-
-
 	ASSERT( bracket >= 0.);
+
 
 	if (bracket == 0. )
 		return SMALLFLOAT;
@@ -1541,12 +1619,14 @@ double CS_l_mixing_PS64_expI(
 
 	double units = 2.*pow(BOHR_RADIUS_CM,3)*sqrt(PI)/vred/tau_zero;
 
+
 	rate = units * Dnl* bracket;
 
 	/* convert rate to collision strength */
 	/* NB - the term in parentheses corrects for the fact that COLL_CONST is only appropriate
 	 * for electron colliders and is off by reduced_mass_2_emass^-1.5 */
 	cs = rate / ( COLL_CONST * powpq(reduced_mass_2_emass, -3, 2) ) * phycon.sqrte * g;
+
 
 	ASSERT( cs > 0. );
 

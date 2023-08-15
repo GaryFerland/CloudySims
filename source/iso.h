@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef ISO_H_
@@ -481,6 +481,7 @@ public:
 		lgCS_Vrinceanu[NISO],
 		lgCS_PS64[NISO],
 		lgCS_PSClassic[NISO],
+		lgCS_PSM20[NISO],
 		lgCS_VOS12[NISO],
 		lgCS_VOS12QM[NISO],
 		lgCS_therm_ave[NISO],

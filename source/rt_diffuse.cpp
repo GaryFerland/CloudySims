@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2022 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*RT_diffuse evaluate local diffuse emission for this zone,
  * fill in ConEmitLocal[depth][energy] with diffuse emission,
@@ -119,9 +119,9 @@ void RT_diffuse(void)
 						sp->trans(ipHi,ipLo).Emis().xIntensity() = 
 							sp->trans(ipHi,ipLo).Emis().Aul()*
 							sp->st[ipHi].Pop()*
-							sp->trans(ipHi,ipLo).Emis().Pesc() *
+							sp->trans(ipHi,ipLo).Emis().Pesc_total() *
 							sp->trans(ipHi,ipLo).EnergyErg();
-						
+
 						// Would be better to enable checks (and remove argument) --
 						// present state is to ensure backwards compatibility with previous
 						// unchecked code.
