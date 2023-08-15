@@ -16,7 +16,7 @@ A summary of what is new is available
 [here](https://gitlab.nublado.org/cloudy/cloudy/-/wikis/NewC22).
 
 If you used Cloudy in your research, please cite our most recent
-[release paper](https://ui.adsabs.harvard.edu/abs/2017RMxAA..53..385F).
+[release paper](https://arxiv.org/abs/2308.06396)
 
 ## Brief History
 
