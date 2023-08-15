@@ -388,7 +388,6 @@ ab89f537f1218aeb5067470a8a6ff2d0  abundances/README.md
 7e20ef059c1cd6de57b92af4dae2b8ce  abundances/palme14-Met.abn
 0b2de2939ab74e42f7c7abf8181e4da5  abundances/palme14-Sol.abn
 d159b36cdf0127a3ca7fed959f030e80  abundances/primordial.abn
-7cb88f49473262fc73c91283a81f7ec9  abundances/readme.md
 074a4ca88f040499756b46a918aac8d8  abundances/solar84.abn
 2668403acf7b1d648eb681dc27a8ec18  abundances/solarC10.abn
 73d9a2f611fbeb9eb2c38149e04fda3f  abundances/solar_GASS10.abn
@@ -669,7 +668,7 @@ ea19d4b8f9ab508251eb9af0c08c141b  cdms+jpl/c066501.cat
 d4a8f8fdd9ca92a811b4cba9d499b96c  cdms+jpl/c066501.dat
 3dc9f99c8518fadd740b354d73996c75  cdms+jpl/c066502.cat
 4d51c9b5beee741dd2040a837845e64d  cdms+jpl/c066502.dat
-5b161069efa3f4f29101f1899f920994  cdms+jpl/convert_calpgm
+c200f2c0122f1f81703a1901d453daef  cdms+jpl/convert_calpgm
 5cca1e76689cf66420986131a0a3f0f5  cdms+jpl/convert_calpgm.cpp
 0d9428831f03c798a9eea78cd06a6d5f  cdms+jpl/get_database_files.pl
 848e8f9e1e012deac15b940aff8b78f2  cdms+jpl/masterlist
@@ -1494,7 +1493,7 @@ b280bcb06f5d21292170c432e4ec4399  chianti/zn/zn_28/zn_28.splups
 88555a260b29ada20df7e4f15422d30f  chianti/zn/zn_29/zn_29.elvlc
 93123677cecff6e6c83429dfd6b963ff  chianti/zn/zn_29/zn_29.splups
 486871f5fe9a60bc723571383039d76c  chianti/zn/zn_29/zn_29.wgfa
-13d26426501b7773c8adcc4768570caa  citation_cloudy.txt
+d5516c50bf1218fe0e05206247a25cc2  citation_cloudy.txt
 73de63d3fcbcdbeb4e7b387661c74354  citation_data.txt
 b62fda56786919cb171a24c064eaf404  clouds.jpg
 8eef81c02e6754965201ac743ee0296e  coll_ion.dat
@@ -1592,7 +1591,7 @@ c3d69c17670f97dc1dbe567a59a7962a  h2/get-H2-LTE-cooling.in
 066e9c7135e21d269d9f09f8359f23dc  h2/transprob_D_plus.dat
 e029c5b4dbc381851ee38892ba2f0b01  h2/transprob_X.dat
 9fa88ecb6a4450c7f6c8a58b14258ab2  h_coll_str.dat
-6d37921cad637754ab2b677268b80ca8  h_iso_recomb.dat
+c48bf06bc701a6e94826772072b18005  h_iso_recomb.dat
 7274769993a0404354e1177dadec40ea  h_phot_cs.dat
 c80e3f718929a840235469b5764aafb8  h_rad_rec.dat
 40f31f98d0258aa8359e1afcbefee281  he1_case_b.dat
@@ -1603,11 +1602,8 @@ b81595ce4fee96b7ba2daf6af5da31b4  he_iso_recomb.dat
 2fa9787feec382ddd8b6655849e05d02  helike_pcs_topbase.dat
 0970cd6690fc41b7b35d8309f7c2a12e  hheonly.ini
 faad2b51b7fea583e9aba3885019b2ba  hm05_galaxy.ascii
-d8bb7aa05b25a560b6690ae9af0b9d49  hm05_galaxy.idx
 c8a988eb57b066ede6d674382322bc49  hm05_quasar.ascii
-7134dee3f9c94b515201211c36c361fa  hm05_quasar.idx
 dcac575ba503c5e141a6359b95daa536  hm12_galaxy.ascii
-d7ef72c856bfd51668af560a9d7ed7fd  hm12_galaxy.idx
 edd057f0f7e4e1be82053c1e9e498f8a  honly.ini
 5ea2d5a470a6ad34763545a02764de3a  hpfit.dat
 2f4e394352f8e46c7befd9f444a00c30  hydro_energies.dat
@@ -1626,19 +1622,12 @@ bd1703723197066ffa17b19865a6093e  hydro_tpnl_switch.pl
 9a6de2c1de94b142f6f1043bbb081a4d  ism.szd
 203f53a61aaf4464904583163eecffff  isotopes.dat
 fd4f3e01568df5a97b5f93376d73fd84  ks19_q14.ascii
-cd764ec74321e2445fa3d2e1870d3448  ks19_q14.idx
 470eecdfa57aad064478fe776f3ff971  ks19_q15.ascii
-cd764ec74321e2445fa3d2e1870d3448  ks19_q15.idx
 0c48849c9a78a518b95c2238dde16f6a  ks19_q16.ascii
-cd764ec74321e2445fa3d2e1870d3448  ks19_q16.idx
 2f72174f3b4b4102b4886ebad3e8f1db  ks19_q17.ascii
-cd764ec74321e2445fa3d2e1870d3448  ks19_q17.idx
 61ebc2afdf02ed54cf2682a085ed32a8  ks19_q18.ascii
-cd764ec74321e2445fa3d2e1870d3448  ks19_q18.idx
 7e8c6c1dd7998dcbddc7ead49d95b217  ks19_q19.ascii
-cd764ec74321e2445fa3d2e1870d3448  ks19_q19.idx
 3f01818a1bf6152b99cd89bef8503895  ks19_q20.ascii
-cd764ec74321e2445fa3d2e1870d3448  ks19_q20.idx
 771e9ccec5465d05d560f95822d4a0f5  lamda/13co.dat
 7beb78819f10cf724f2ef9facd0a20a5  lamda/29sio.dat
 ede320fc142a50a366a3ae1016df7787  lamda/40ArHp.dat
@@ -1733,7 +1722,7 @@ aed3efbd346a5cc2aacfb0732936b6bb  pdr_leiden.ini
 8a0b364df2cae4d5295a4a9ec875c7f8  ph2n.rfi
 d030b549208e7afede9683d30276b00a  ph3c.rfi
 50dd728eebe61e52619f338a981e122b  ph3n.rfi
-40b24d3f9b95103289c1b7f54200e3ba  phfit.dat
+59cf3a77cf941d32e5cfbb89837758a9  phfit.dat
 bba107b69e7b562801f43a62a039b7aa  rad_rec.dat
 8d18f44666220956b27e2967d53b9484  rate05_feb17.csv
 2b18ffd9af3cde011df0dbfe2357cd64  rate05_feb17_readme.txt
@@ -2577,7 +2566,7 @@ e830cee3ee4323bc61aa82cfd21e9864  stout/p/p_8/p_8.nrg
 495c2e97825e7a96219493b4f7ed66db  stout/p/p_9/p_9.coll
 d2cda94dda904b6a29e7881989f8b343  stout/p/p_9/p_9.nrg
 c30ee2a134e74f9f190887380bb52a1a  stout/p/p_9/p_9.tp
-e53fcbf5062ae05d47704e428eedddc3  stout/refs.json
+1e58828f8f88356bc1e0ccd87246e208  stout/refs.json
 2b3a6a9d5501ac1136f6b1bc2090221f  stout/s/s_1/README.md
 fda0ece8e1a4e26901013abd5de747a0  stout/s/s_1/s_1.coll
 32995e08d72add38672236795eaadf54  stout/s/s_1/s_1.nrg
