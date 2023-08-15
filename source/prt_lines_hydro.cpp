@@ -18,6 +18,7 @@
 #include "lines_service.h"
 #include "elementnames.h"
 #include "ipoint.h"
+#include "taulines.h"
 
 static const int nCharL = 21;
 static const string chL[nCharL] = {"s","p","d","f","g","h","i","k","l","m","n","o","q","r","t","u","v","w","x","y","z"};
@@ -480,6 +481,12 @@ void lines_hydro(void)
 
 				for( ipHi=ipLo+1; ipHi < nLoop; ipHi++ )
 				{
+					double Ediff = ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].Hi()->energy().get("eV") - ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Hi()->energy().get("eV");
+
+					// skip if the resolved lyman lines are added elsewhere
+					if( ipLo == 0 && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ) && Ediff > iso_ctrl.Resolution )
+						continue;
+
 					// skip non-radiative transitions
 					if( iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo).ipCont() < 1 )
 						continue;

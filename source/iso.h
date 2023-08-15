@@ -422,6 +422,10 @@ public:
 	 *  unlike the He-like this spans over the resolved and collapsed as well. */
 	long int nLymanHLike[LIMELM];
 
+	/** default resolution for X-ray observations in eV,
+	 *  the energy difference between j=1/2 and j=3/2 levels */
+	double Resolution;
+
 	/** option to turn off l-mixing collisions */
 	bool lgColl_l_mixing[NISO];
 
@@ -512,6 +516,8 @@ public:
 	{
 		chISO[ipH_LIKE] = "H-like ";
 		chISO[ipHE_LIKE] = "He-like";
+		/* This is 1/10 of Athena's resolution in eV. */
+		Resolution = 0.25;
 	}
 };
 

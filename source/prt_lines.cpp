@@ -180,16 +180,21 @@ void lines()
 			continue;
 		for( long nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 		{
-			if (ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].ipCont() > 0)
-			{
-				PutLine(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]],
-						  "extra Lyman line");
-			}
+			double Ediff = ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]].Hi()->energy().get("eV") - ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].Hi()->energy().get("eV");
 			
-			if (ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]].ipCont() > 0)
+			if( Ediff > iso_ctrl.Resolution )
 			{
-				PutLine(ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]],
-						  "extra Lyman line");
+				if (ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].ipCont() > 0)
+				{
+					PutLine(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]],
+							  "extra Lyman line");
+				}
+
+				if (ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]].ipCont() > 0)
+				{
+					PutLine(ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]],
+							  "extra Lyman line");
+				}
 			}
 		}
 	}
