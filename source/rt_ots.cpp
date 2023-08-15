@@ -202,8 +202,8 @@ void RT_OTS(void)
 							iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().ots() = 0.;
 						} */
 
-						/* finally dump the ots rate into the stack */
-						if( ipISO == ipH_LIKE && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ) )
+						/* use the ots rate from the resolved doublet only for lyman lines */
+						if( ipISO == ipH_LIKE && ipLo == ipH1s && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ) )
 						{
 							if( ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Emis().ots() > SMALLFLOAT )
 							{
@@ -217,6 +217,7 @@ void RT_OTS(void)
 										ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].ipCont() );
 							}
 						}
+						/* otherwise use the ots rate from the unresolved model lines */
 						else
 						{
 							if( iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().ots() > SMALLFLOAT )
