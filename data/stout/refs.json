@@ -316,7 +316,7 @@
  "n_4" : {
   "element" : "n",
   "ion" : "4",
-  "list" : "all",
+  "list" : "default",
   "ref" : {
     "default" : {
      "coll" : [
@@ -497,7 +497,7 @@
  "o_5" : {
   "element" : "o",
   "ion" : "5",
-  "list" : "all",
+  "list" : "default",
   "ref" : {
     "default" : {
      "coll" : [
@@ -1223,7 +1223,7 @@
  "mg_10" : {
   "element" : "mg",
   "ion" : "10",
-  "list" : "all",
+  "list" : "default",
   "ref" : {
     "default" : {
      "coll" : [
@@ -2103,7 +2103,7 @@
  "s_5" : {
   "element" : "s",
   "ion" : "5",
-  "list" : "all",
+  "list" : "default",
   "ref" : {
     "default" : {
      "coll" : [
@@ -5350,7 +5350,7 @@
  "fe_2" : {
   "element" : "fe",
   "ion" : "2",
-  "list" : "all",
+  "list" : "default",
   "ref" : {
     "default" : {
      "coll" : [
@@ -5576,7 +5576,7 @@
  "fe_9" : {
   "element" : "fe",
   "ion" : "9",
-  "list" : "all",
+  "list" : "default",
   "ref" : {
     "default" : {
      "coll" : [
@@ -6436,7 +6436,7 @@
  "ni_11" : {
   "element" : "ni",
   "ion" : "11",
-  "list" : "all",
+  "list" : "default",
   "ref" : {
     "default" : {
      "coll" : [
@@ -6523,7 +6523,7 @@
  "ni_15" : {
   "element" : "ni",
   "ion" : "15",
-  "list" : "all",
+  "list" : "default",
   "ref" : {
     "default" : {
      "coll" : [
