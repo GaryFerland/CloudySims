@@ -232,6 +232,21 @@ sub load_json_or_die
 	return	&load_json();
 }
 
+sub set_dataset_order
+{
+	my ( $species_data ) = @_;
+
+	my @dataset_order = ( $default_dataset );
+
+	for my $dataset ( sort keys %{ $$species_data{ref} } )
+	{
+		push( @dataset_order, $dataset )
+			if( not &is_in_array( $dataset, \@dataset_order ) );
+	}
+
+	return \@dataset_order;
+}
+
 sub custom_to_json
 {
 	my( $hash ) = @_;
@@ -279,17 +294,10 @@ sub custom_to_json
 		{
 			$string .= ($tab x $ntabs) .'"ref" : {'."\n";
 
-			my @dataset_order = ( $default_dataset );
-
-			for my $dataset ( sort keys %{ $$hash{$species}{ref} } )
-			{
-				push( @dataset_order, $dataset )
-					if( not &is_in_array( $dataset,
-							\@dataset_order ) );
-			}
+			my $dataset_order = &set_dataset_order( $$hash{$species} );
 
 			$ntabs++;
-			for my $dataset ( @dataset_order )
+			for my $dataset ( @$dataset_order )
 			{
 				$ntabs++;
 				$string .= ($tab x $ntabs) ."\"$dataset\" : {"."\n";
@@ -336,7 +344,7 @@ sub custom_to_json
 
 				$string .= ($tab x $ntabs) ."}";
 				$string .= ","
-					if( $dataset ne $dataset_order[-1] );
+					if( $dataset ne $$dataset_order[-1] );
 				$string .= "\n";
 				$ntabs--;
 			}

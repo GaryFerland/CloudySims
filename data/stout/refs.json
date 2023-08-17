@@ -5488,6 +5488,21 @@
      ]
     },
     "Henderson18" : {
+     "coll" : [
+      {
+       "name" : "ADAS"
+      }
+     ],
+     "energy" : [
+      {
+       "name" : "ADAS"
+      }
+     ],
+     "trans" : [
+      {
+       "name" : "ADAS"
+      }
+     ]
     }
    }
   },
