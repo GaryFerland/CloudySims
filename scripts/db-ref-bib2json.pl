@@ -146,6 +146,9 @@
 # 	- update instructions above.
 # Chatzikos, 2023-Aug-14
 #	Ignore trailing 'abstract' from ADS references.
+# Chatzikos, 2023-Aug-17
+#	Process multiple atomic datasets, and store them as a hash of datasets
+#	in a species' references.
 #
 
 use warnings;
@@ -168,12 +171,6 @@ $| = 1;
 #
 # Global data
 #
-my %db_title =
-(
-	stout	=>	"Stout",
-	chianti	=>	"Chianti",
-	lamda	=>	"LAMDA",
-);
 my $masterlist_dir = "masterlist";
 my %masterlists =
 (
@@ -581,79 +578,83 @@ sub clean_hash
 	foreach my $sp ( sort keys %$all_species )
 	{
 		my $refs = $$all_species{$sp}{ref};
-		foreach my $file( sort keys( %$refs ) )
+		foreach my $dataset ( sort keys( %$refs ) )
 		{
-			foreach my $key ( @keys_to_delete )
+			my $dset = $$refs{$dataset};
+			for my $file ( sort keys %$dset )
 			{
-				my @all_bibcodes;
-				foreach my $ref ( @{ $$refs{$file} } )
+				foreach my $key ( @keys_to_delete )
 				{
-					if( exists( $$ref{$key} ) )
+					my @all_bibcodes;
+					foreach my $ref ( @{ $$dset{$file} } )
 					{
-						delete( $$ref{$key} );
-					}
-
-					delete $$ref{name}
-						if( exists( $$ref{name} ) and
-							( not defined( $$ref{name} )
-								or $$ref{name} eq "" ) );
-
-					push( @all_bibcodes, $$ref{bibcode} )
-						if( exists( $$ref{bibcode} ) and
-						    defined( $$ref{bibcode} ) );
-				}
-
-				# Remove duplicate entries
-				# These may arise when both the full reference and
-				# the ADS link appear in the data file
-				#
-				my %all_bibcodes;
-				foreach my $bib ( @all_bibcodes )
-				{
-					next	if( not defined( $bib ) or $bib eq "" );
-					if( not exists( $all_bibcodes{$bib} ) )
-					{
-						$all_bibcodes{$bib} = 1;
-					}
-					else
-					{
-						++$all_bibcodes{$bib};
-					}
-				}
-
-				#	my $json = &JSON::to_json( $$refs{$file}, {pretty => 1} );
-				#	print "BEFORE:\n$json\n";
-
-				foreach my $bib ( sort keys %all_bibcodes )
-				{
-					next	if( not defined( $bib ) or $bib eq "" );
-					next	if( $all_bibcodes{$bib} == 1 );
-
-					my @indices;
-					for( my $i = 0; $i < @{ $$refs{$file} }; $i++ )
-					{
-						push( @indices, $i )
-						  if( exists( $$refs{$file}[$i]{bibcode} ) and
-							( defined( $$refs{$file}[$i]{bibcode} )
-							or $$refs{$file}[$i]{bibcode} eq $bib ) );
-					}
-
-					my $ind_to_drop;
-					foreach my $index ( @indices )
-					{
-						if( $$refs{$file}[$index]{name} eq "" )
+						if( exists( $$ref{$key} ) )
 						{
-							$ind_to_drop = $index;
-							last;
+							delete( $$ref{$key} );
+						}
+
+						delete $$ref{name}
+							if( exists( $$ref{name} ) and
+								( not defined( $$ref{name} )
+									or $$ref{name} eq "" ) );
+
+						push( @all_bibcodes, $$ref{bibcode} )
+							if( exists( $$ref{bibcode} ) and
+							    defined( $$ref{bibcode} ) );
+					}
+
+					# Remove duplicate entries
+					# These may arise when both the full reference and
+					# the ADS link appear in the data file
+					#
+					my %all_bibcodes;
+					foreach my $bib ( @all_bibcodes )
+					{
+						next	if( not defined( $bib ) or $bib eq "" );
+						if( not exists( $all_bibcodes{$bib} ) )
+						{
+							$all_bibcodes{$bib} = 1;
+						}
+						else
+						{
+							++$all_bibcodes{$bib};
 						}
 					}
-					splice( @{ $$refs{$file} }, $ind_to_drop, 1 )
-						if( defined( $ind_to_drop ) );
-				}
 
-				#	$json = &JSON::to_json( $$refs{$file}, {pretty => 1} );
-				#	print "AFTER:\n$json\n";
-				#	die	if( length( $json ) > 3 );
+					#	my $json = &JSON::to_json( $$dset{$file}, {pretty => 1} );
+					#	print "BEFORE:\n$json\n";
+
+					foreach my $bib ( sort keys %all_bibcodes )
+					{
+						next	if( not defined( $bib ) or $bib eq "" );
+						next	if( $all_bibcodes{$bib} == 1 );
+
+						my @indices;
+						for( my $i = 0; $i < @{ $$dset{$file} }; $i++ )
+						{
+							push( @indices, $i )
+							  if( exists( $$dset{$file}[$i]{bibcode} ) and
+								( defined( $$dset{$file}[$i]{bibcode} )
+								or $$dset{$file}[$i]{bibcode} eq $bib ) );
+						}
+
+						my $ind_to_drop;
+						foreach my $index ( @indices )
+						{
+							if( $$dset{$file}[$index]{name} eq "" )
+							{
+								$ind_to_drop = $index;
+								last;
+							}
+						}
+						splice( @{ $$dset{$file} }, $ind_to_drop, 1 )
+							if( defined( $ind_to_drop ) );
+					}
+
+					#	$json = &JSON::to_json( $$dset{$file}, {pretty => 1} );
+					#	print "AFTER:\n$json\n";
+					#	die	if( length( $json ) > 3 );
+				}
 			}
 		}
 	}
@@ -1816,6 +1817,22 @@ sub pick_datatypes
 	return	\@datatypes;
 }
 
+sub get_basenames
+{
+	my( $dirname, $species ) = @_;
+
+	my @basenames;
+	for my $file ( glob "$dirname/$species*" )
+	{
+		my $b = &File::Basename::basename( $file );
+		( $b, undef ) = split( /\./, $b, 2 );
+		push( @basenames, $b)
+			if( not &BiblioToTeX::is_in_array( $b, \@basenames ) );
+	}
+
+	return \@basenames;
+}
+
 sub get_stored_ref
 {
 	my( $file_ref, $ref_type, $refs_arr ) = @_;
@@ -1842,10 +1859,13 @@ sub get_stored_ref
 
 sub update_refs_data
 {
-	my( $refs_data, $sp, $datatype, $file_refs ) = @_;
+	my( $species_refs, $dataset, $datatype, $file_refs ) = @_;
 
 	return
 		if( not defined( $file_refs ) );
+	
+	$$species_refs{$dataset} = ()
+		if( not exists $$species_refs{$dataset} );
 
 	for( my $iref = 0; $iref < @$file_refs; $iref++ )
 	{
@@ -1856,13 +1876,13 @@ sub update_refs_data
 		{
 			#	print "ref bibcode =\t $$ref{bibcode}\n";
 			$this_hr = &get_stored_ref( $ref, 'bibcode',
-					$$refs_data{$sp}{ref}{$datatype} );
+					$$species_refs{$dataset}{$datatype} );
 		}
 		elsif( exists( $$ref{name} ) and $$ref{name} ne "" )
 		{
 			print "ref name=\t $$ref{name}\n"	if 0;
 			$this_hr = &get_stored_ref( $ref, 'name',
-					$$refs_data{$sp}{ref}{$datatype} );
+					$$species_refs{$dataset}{$datatype} );
 
 			# Update existing record, instead of adding a new one
 			if( defined( $this_hr ) )
@@ -1904,19 +1924,19 @@ sub update_refs_data
 
 		if( not defined( $this_hr ) )
 		{
-			push( @{ $$refs_data{$sp}{ref}{$datatype} }, $ref );
+			push( @{ $$species_refs{$dataset}{$datatype} }, $ref );
 		}
 	}
 
-	if( exists $$refs_data{$sp}{ref}{$datatype} )
+	if( exists $$species_refs{$dataset}{$datatype} )
 	{
 		# Now do the reverse: prune all stored data that are not in the
 		# current version of the file
 		my @rm_index;
-		print @{ $$refs_data{$sp}{ref}{$datatype} }."\n"	if 0;
-		for( my $iref = 0; $iref < @{ $$refs_data{$sp}{ref}{$datatype} }; $iref++ )
+		print @{ $$species_refs{$dataset}{$datatype} }."\n"	if 0;
+		for( my $iref = 0; $iref < @{ $$species_refs{$dataset}{$datatype} }; $iref++ )
 		{
-			my $ref = $$refs_data{$sp}{ref}{$datatype}[ $iref ];
+			my $ref = $$species_refs{$dataset}{$datatype}[ $iref ];
 
 			my $this_hr;
 			if( exists( $$ref{bibcode} ) and $$ref{bibcode} ne "" )
@@ -1937,7 +1957,7 @@ sub update_refs_data
 			}
 		}
 
-		&remove_from_array( $$refs_data{$sp}{ref}{$datatype}, \@rm_index );
+		&remove_from_array( $$species_refs{$dataset}{$datatype}, \@rm_index );
 	}
 }
 
@@ -1960,21 +1980,34 @@ sub get_references
 			print "Processing species:\t $sp\n";
 		}
 
-		my $basename = $$species_hash{$sp}{element} ."/". $sp ."/". $sp;
-		foreach my $datatype ( @$datatypes )
-		{
-			my $suff = $suffix{$db}{$datatype};
-			my $file = $basename . $suff;
-			if( defined( $interactive ) )
-			{
-				print "\nProcess file: $file?";
-				my $resp = &get_response();
-				next	if( $resp eq 'n' );
-			}
+		my $dirname = $$species_hash{$sp}{element} ."/". $sp;
+		my $basenames_ref = &get_basenames( $dirname, $sp );
 
-			my $file_refs = &get_file_references(
-					$forceADSquery, $sp, $db, $file );
-			&update_refs_data( $species_hash, $sp, $datatype, $file_refs );
+		for my $basename ( @$basenames_ref )
+		{
+			my $dataset = $BiblioToTeX::default_dataset;
+			if( $basename ne $sp )
+			{
+				$dataset = $basename;
+				$dataset =~ s/^$sp\_//;
+			}
+			foreach my $datatype ( @$datatypes )
+			{
+				my $suff = $suffix{$db}{$datatype};
+				my $file = $dirname ."/". $basename . $suff;
+				if( defined( $interactive ) )
+				{
+					print "\nProcess file: $file?";
+					my $resp = &get_response();
+					next	if( $resp eq 'n' );
+				}
+
+				my $file_refs = &get_file_references(
+						$forceADSquery, $sp, $db, $file );
+				&update_refs_data( $$species_hash{$sp}{ref},
+							$dataset, $datatype,
+							$file_refs );
+			}
 		}
 	}
 }
