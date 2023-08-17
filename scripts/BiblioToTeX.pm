@@ -236,7 +236,7 @@ sub custom_to_json
 {
 	my( $hash ) = @_;
 
-	my $tab = " " x 4;
+	my $tab = " " x 1;
 
 	my @order_subhash = qw/element ion list/;
 
