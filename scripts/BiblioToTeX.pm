@@ -9,6 +9,9 @@
 # 	Rename prep_bibtex to define_month_macros, and disable its calling
 # 	-- current installation issues warnings like:
 # 	   warning: overriding existing definition of macro "sep"
+# Chatzikos, 2023-Aug-17
+#	Change structure of JSON file: make 'ref' contain datasets, currently
+#	only 'default', and move its previous contents into 'default'.
 #
 use warnings;
 use strict;
@@ -23,6 +26,7 @@ use File::Basename;
 use Text::BibTeX;
 use URI::Escape;
 use JSON;
+use Const::Fast;
 
 # Immediately flush output
 #
@@ -34,8 +38,9 @@ $| = 1;
 our $root_dir = "../";
 our $data_dir = "data/";
 our $bibliography;
-our @all_db = qw/ stout chianti lamda /;
-our %db_title =
+
+const our @all_db => qw/ stout chianti lamda /;
+const our %db_title =>
 (
 	stout	=>	"Stout",
 	chianti	=>	"Chianti",
@@ -169,20 +174,23 @@ sub read_contents
 #################################################################################
 #					STORAGE					#
 #################################################################################
-sub get_json_filename
-{
-	return	"refs.json";
-}
+const my $JSON_filename => "refs.json";
+
+#
+# Default dataset identifier, used in JSON file.
+# Other datasets are identified by the dataset string in their filenames;
+# e.g., 'Tayal18' is the identifier for the fe_2_Tayal18.* set of files
+#
+const our $default_dataset => "default";  # used in JSON file
 
 sub load_json
 {
 	my( $all_species ) = @_;
 
-	my $json_file = &get_json_filename();
-	if( -s $json_file )
+	if( -s $JSON_filename )
 	{
 		my $contents = join( '',
-			@{ &BiblioToTeX::read_contents( $json_file ) } );
+			@{ &BiblioToTeX::read_contents( $JSON_filename ) } );
 		my $species_stored = &JSON::from_json( $contents );
 		if( defined( $all_species ) )
 		{
@@ -201,12 +209,10 @@ sub load_json
 
 sub load_json_or_die
 {
-	my $json_file = &get_json_filename();
-
-	die "Error: JSON file does not exist:\t$json_file\n"
-		if( not -e $json_file );
-	die "Error: JSON file is empty:\t$json_file\n"
-		if( not -s $json_file );
+	die "Error: JSON file does not exist:\t$JSON_filename\n"
+		if( not -e $JSON_filename );
+	die "Error: JSON file is empty:\t$JSON_filename\n"
+		if( not -s $JSON_filename );
 
 	return	&load_json();
 }
@@ -257,19 +263,24 @@ sub custom_to_json
 		else
 		{
 			$string .= ($tab x $ntabs) .'"ref" : {'."\n";
-			my @datatypes = sort keys $$hash{$species}{ref};
+
+			$ntabs++;
+			my $dataset = $default_dataset; 
+			$string .= ($tab x $ntabs) ."\"$dataset\" : {"."\n";
+			
+			my @datatypes = sort keys $$hash{$species}{ref}{$dataset};
 			for( my $idt = 0; $idt < @datatypes; $idt++ )
 			{
 				my $datatype = $datatypes[ $idt ];
 				$ntabs++;
 				$string .= ($tab x $ntabs) ."\"$datatype\" : [";
-				my $nrefs = @{ $$hash{$species}{ref}{$datatype} };
+				my $nrefs = @{ $$hash{$species}{ref}{$dataset}{$datatype} };
 				if( $nrefs > 0 )
 				{
 					$string .= "\n";
 					for( my $iref = 0; $iref < $nrefs; $iref++ )
 					{
-						my $ref = $$hash{$species}{ref}{$datatype}[ $iref ];
+						my $ref = $$hash{$species}{ref}{$dataset}{$datatype}[ $iref ];
 						$ntabs++;
 						$string .= ($tab x $ntabs) ."{\n";
 						$ntabs++;
@@ -298,6 +309,9 @@ sub custom_to_json
 				$ntabs--;
 			}
 
+			$string .= ($tab x $ntabs) ."}";
+			$ntabs--;
+
 			$string .= ($tab x $ntabs) ."}\n";
 			$ntabs--;
 		}
@@ -314,20 +328,19 @@ sub custom_to_json
 
 sub store_json
 {
-	my( $species, $order_hash, $order_subhash ) = @_;
+	my( $species_data ) = @_;
 
-	my $pp_species = &custom_to_json( $species );
+	my $pp_species = &custom_to_json( $species_data );
 	#	die $pp_species;
-	#	my $pp_species = &JSON::to_json( $species, {pretty => 1} );
+	#	my $pp_species = &JSON::to_json( $species_data, {pretty => 1} );
 
-	my $json_file = &get_json_filename();
-	open FILE, "> $json_file"
-	  or die "Error: Could not open:\t $json_file\n";
+	open FILE, "> $JSON_filename"
+	  or die "Error: Could not open:\t $JSON_filename\n";
 
 	print FILE $pp_species;
 
 	close FILE
-	   or warn "Warning: Could not close:\t $json_file\n";
+	   or warn "Warning: Could not close:\t $JSON_filename\n";
 
 	return;
 }
