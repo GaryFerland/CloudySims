@@ -56,6 +56,9 @@
 # Chatzikos, 2016-Jan-28
 # Chatzikos, 2022-Apr-12
 # 	Bugfix: Count TeX rows only if data ref exists
+# Chatzikos, 2023-Aug-17
+# 	Update to new structure of references, containing datasets instead of
+# 	references within files.
 #
 
 use warnings;
@@ -223,7 +226,7 @@ sub get_nrows_in_TeX_table
 {
 	my( $species ) = @_;
 
-	my $ref = $$species{ref};
+	my $ref = $$species{ref}{$BiblioToTeX::default_dataset};
 
 	my %nrows;
 	   $nrows{energy} = @{ $$ref{energy} } if( exists $$ref{energy} );
@@ -248,7 +251,7 @@ sub print_species_multiple_TeX_rows
 
 	#	print "$$species{element}\t$$species{ion}\n";
 
-	my $ref = $$species{ref};
+	my $ref = $$species{ref}{$BiblioToTeX::default_dataset};
 
 	my @file_order = qw/ energy trans coll /;
 
