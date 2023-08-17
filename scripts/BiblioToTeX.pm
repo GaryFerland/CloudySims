@@ -10,8 +10,8 @@
 # 	-- current installation issues warnings like:
 # 	   warning: overriding existing definition of macro "sep"
 # Chatzikos, 2023-Aug-17
-#	Change structure of JSON file: make 'ref' contain datasets, currently
-#	only 'default', and move its previous contents into 'default'.
+#	Change structure of JSON file: make 'ref' contain datasets, and move
+#	its previous contents into the 'default' dataset.
 #
 use warnings;
 use strict;
@@ -170,6 +170,21 @@ sub read_contents
 	return	\@contents;
 }
 
+sub is_in_array
+{
+	my( $val, $array ) = @_;
+
+	return 0
+		if( not defined( $array ) );
+
+	for ( @$array )
+	{
+		return 1 if $val eq $_;
+	}
+
+	return 0;
+}
+
 
 #################################################################################
 #					STORAGE					#
@@ -264,53 +279,67 @@ sub custom_to_json
 		{
 			$string .= ($tab x $ntabs) .'"ref" : {'."\n";
 
-			$ntabs++;
-			my $dataset = $default_dataset; 
-			$string .= ($tab x $ntabs) ."\"$dataset\" : {"."\n";
-			
-			my @datatypes = sort keys $$hash{$species}{ref}{$dataset};
-			for( my $idt = 0; $idt < @datatypes; $idt++ )
+			my @dataset_order = ( $default_dataset );
+
+			for my $dataset ( sort keys %{ $$hash{$species}{ref} } )
 			{
-				my $datatype = $datatypes[ $idt ];
+				push( @dataset_order, $dataset )
+					if( not &is_in_array( $dataset,
+							\@dataset_order ) );
+			}
+
+			$ntabs++;
+			for my $dataset ( @dataset_order )
+			{
 				$ntabs++;
-				$string .= ($tab x $ntabs) ."\"$datatype\" : [";
-				my $nrefs = @{ $$hash{$species}{ref}{$dataset}{$datatype} };
-				if( $nrefs > 0 )
+				$string .= ($tab x $ntabs) ."\"$dataset\" : {"."\n";
+				
+				my @datatypes = sort keys $$hash{$species}{ref}{$dataset};
+				for my $datatype ( @datatypes )
 				{
-					$string .= "\n";
-					for( my $iref = 0; $iref < $nrefs; $iref++ )
+					$ntabs++;
+					$string .= ($tab x $ntabs) ."\"$datatype\" : [";
+					my $nrefs = @{ $$hash{$species}{ref}{$dataset}{$datatype} };
+					if( $nrefs > 0 )
 					{
-						my $ref = $$hash{$species}{ref}{$dataset}{$datatype}[ $iref ];
-						$ntabs++;
-						$string .= ($tab x $ntabs) ."{\n";
-						$ntabs++;
-						my @keys = sort keys %$ref;
-						for( my $ikey = 0; $ikey < @keys; $ikey++ )
-						{
-							my $key = $keys[ $ikey ];
-							$string .= ($tab x $ntabs) ."\"$key\" : \"$$ref{$key}\"";
-							$string .= ","
-								if( $ikey != @keys-1 );
-							$string .= "\n";
-						}
-						$ntabs--;
-						$string .= ($tab x $ntabs) ."}";
-						$string .= ","
-							if( $iref != $nrefs-1 );
 						$string .= "\n";
-						$ntabs--;
+						for( my $iref = 0; $iref < $nrefs; $iref++ )
+						{
+							my $ref = $$hash{$species}{ref}{$dataset}{$datatype}[ $iref ];
+							$ntabs++;
+							$string .= ($tab x $ntabs) ."{\n";
+							$ntabs++;
+							my @keys = sort keys %$ref;
+							for( my $ikey = 0; $ikey < @keys; $ikey++ )
+							{
+								my $key = $keys[ $ikey ];
+								$string .= ($tab x $ntabs) ."\"$key\" : \"$$ref{$key}\"";
+								$string .= ","
+									if( $ikey != @keys-1 );
+								$string .= "\n";
+							}
+							$ntabs--;
+							$string .= ($tab x $ntabs) ."}";
+							$string .= ","
+								if( $iref != $nrefs-1 );
+							$string .= "\n";
+							$ntabs--;
+						}
+						$string .= ($tab x $ntabs);
 					}
-					$string .= ($tab x $ntabs);
+					$string .=  "]";
+					$string .= ","
+						if( $datatype ne $datatypes[-1] );
+					$string .= "\n";
+					$ntabs--;
 				}
-				$string .=  "]";
+
+				$string .= ($tab x $ntabs) ."}";
 				$string .= ","
-					if( $idt != @datatypes-1 );
+					if( $dataset ne $dataset_order[-1] );
 				$string .= "\n";
 				$ntabs--;
 			}
-
-			$string .= ($tab x $ntabs) ."}";
-			$ntabs--;
 
 			$string .= ($tab x $ntabs) ."}\n";
 			$ntabs--;
