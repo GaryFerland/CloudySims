@@ -439,7 +439,6 @@ sub print_TeX_table_Stout
 	return;
 }
 
-
 sub print_TeX_table
 {
 	my( $deluxeTable, $numRows, $fontSize, $db, $species ) = @_;
@@ -462,34 +461,34 @@ sub print_TeX_table
 	return	$TeX;
 }
 
-
-#################################################################################
-#				MAIN PROGRAM					#
-#################################################################################
-
-my( $deluxeTable, $numRows, $fontSize, $db, $exampleTeX ) = &getInput();
-
-&BiblioToTeX::set_globals();
-&BiblioToTeX::order_elements();
-
-&BiblioToTeX::load_cloudy_bibliography();
-
-foreach my $db ( @$db )
+sub main
 {
-	my $curdir = &Cwd::cwd();
-
-	my $dbdir = $BiblioToTeX::data_dir ."/$db";
-	chdir $dbdir
-	   or die "Error: Could not chdir to db: $dbdir\n";
-
-	my $species = &BiblioToTeX::load_json_or_die();
-
-	chdir $curdir
-	   or die "Error: Could not chdir back to: $curdir\n";
-
-	my $tableTeX =
-		&print_TeX_table( $deluxeTable, $numRows, $fontSize, $db,
-					$species );
-	&BiblioToTeX::create_exampleTeX_Script( $deluxeTable, $tableTeX, 1 )
-		if( defined( $exampleTeX ) );
+	my( $deluxeTable, $numRows, $fontSize, $db, $exampleTeX ) = &getInput();
+	
+	&BiblioToTeX::set_globals();
+	&BiblioToTeX::order_elements();
+	
+	&BiblioToTeX::load_cloudy_bibliography();
+	
+	foreach my $db ( @$db )
+	{
+		my $curdir = &Cwd::cwd();
+	
+		my $dbdir = $BiblioToTeX::data_dir ."/$db";
+		chdir $dbdir
+		   or die "Error: Could not chdir to db: $dbdir\n";
+	
+		my $species = &BiblioToTeX::load_json_or_die();
+	
+		chdir $curdir
+		   or die "Error: Could not chdir back to: $curdir\n";
+	
+		my $tableTeX =
+			&print_TeX_table( $deluxeTable, $numRows, $fontSize, $db,
+						$species );
+		&BiblioToTeX::create_exampleTeX_Script( $deluxeTable, $tableTeX, 1 )
+			if( defined( $exampleTeX ) );
+	}
 }
+
+&main();
