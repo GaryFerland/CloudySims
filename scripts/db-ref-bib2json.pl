@@ -503,6 +503,10 @@ sub read_masterlists
 {
 	my $db = shift;
 	my %species;
+	#
+	# First reads StoutAll.ini, then Stout.ini.
+	# Species are overwritten if present in the latter.
+	#
 	foreach my $list ( sort keys %{ $masterlists{$db} } )
 	{
 		my $this_file = $masterlist_dir ."/".  $masterlists{$db}{$list};
@@ -1863,7 +1867,7 @@ sub update_refs_data
 
 	return
 		if( not defined( $file_refs ) );
-	
+
 	$$species_refs{$dataset} = ()
 		if( not exists $$species_refs{$dataset} );
 
@@ -2015,48 +2019,48 @@ sub get_references
 sub main
 {
 	my( $forceADSquery, $db, $ds, $species_list ) = &getInput();
-	
+
 	&get_ADS_token()
 		if( defined( $interactive ) );
-	
+
 	&Astro::ADS::Query::ads_mirror( $ADS_URL_service );
-	
+
 	&BiblioToTeX::set_globals();
 	&set_globals();
-	
+
 	&BiblioToTeX::load_cloudy_bibliography();
-	
+
 	foreach my $db ( @$db )
 	{
 		my $curdir = &Cwd::cwd();
-	
+
 		my $dbdir = $BiblioToTeX::data_dir ."/$db";
 		chdir $dbdir
 		   or die "Error: Could not chdir to db: $dbdir\n";
-	
+
 		my $all_species = &read_masterlists( $db );
 		#	my @all = keys %$all_species;
 		#	die "$dbdir:\t @all\n";
-	
+
 		&BiblioToTeX::load_json( $all_species );
 		#	my @all = keys %$all_species;
 		#	die "$dbdir:\t @all\n";
-	
+
 		my $species_hash = &get_species_subset( $species_list, $all_species, $db );
 		if( 0 )
 		{
 			my @all = keys %$species_hash;
 			die "$dbdir:\t @all\n";
 		}
-	
+
 		&get_references( $forceADSquery, $db, $ds, $species_hash );
 		&clean_hash( $all_species );
 		&BiblioToTeX::store_json( $all_species );
-	
+
 		chdir $curdir
 		   or die "Error: Could not chdir back to: $curdir\n";
 	}
-	
+
 	print "For missing data / refs, see:\t $empty_files\n"
 	 if( -s $empty_files );
 	print "For broken bibtex records, see:\t $broken_bibtex\n"

@@ -12,6 +12,7 @@
 # Chatzikos, 2023-Aug-17
 #	Change structure of JSON file: make 'ref' contain datasets, and move
 #	its previous contents into the 'default' dataset.
+#	Bugfix: Species masterlist was overwritten with value in JSON file.
 #
 use warnings;
 use strict;
@@ -211,13 +212,18 @@ sub load_json
 		{
 			foreach my $this_species ( sort keys %$species_stored )
 			{
+				#
+				# Preserve the masterlist, just read in!
+				#
+				my $list = $$all_species{$this_species}{list};
 				$$all_species{$this_species} =
 					$$species_stored{$this_species};
+				$$all_species{$this_species}{list} = $list;
 			}
 		}
 		else
 		{
-			return	$species_stored;
+			$all_species = $species_stored;
 		}
 	}
 }
