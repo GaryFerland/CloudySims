@@ -60,6 +60,8 @@
 # 	Update to new structure of references, containing datasets instead of
 # 	references within files.  Alternate datasets are shown in the Species
 # 	column, prepended by 'or'.
+# Chatzikos, 2023-Aug-18
+# 	Fix bug with number of lines per table.
 #
 
 use warnings;
@@ -347,9 +349,9 @@ sub print_species_multiple_TeX_rows
 						if( $citation =~ m/(\w+ NIST|NIST \w+)/ and
 						    $citation !~ m/ \d\d\d\d-\d\d-\d/ )
 						{
-							print "$citation\t =>\t";
+							#print "$citation\t =>\t";
 							$citation = 'NIST';
-							print "$citation\n";
+							#print "$citation\n";
 						}
 					}
 					print $FILE $citation
@@ -413,12 +415,12 @@ sub print_TeX_table_Stout
 
 			next	if( $nrows_for_species == 0 );
 
-			if( not defined( $deluxeTable ) and
-			    $numRows_perTable_current + $nrows_for_species >
-				$numRows_perTable )
+			if( not defined( $deluxeTable )
+			    and $numRows_perTable_current + $nrows_for_species
+		    		> $numRows_perTable )
 			{
 				$ntable_breaks++;
-				$numRows_perTable_current = 0;
+				$numRows_perTable_current = $nrows_for_species;
 				&print_TeX_table_footer( $deluxeTable, $FILE );
 				&print_TeX_table_header( $deluxeTable, $fontSize,
 						$db, $FILE, $ntable_breaks );

@@ -30,7 +30,7 @@ echo; echo "Hit enter to continue..."
 read < /dev/stdin
 
 echo "Preparing LaTeX table for Stout..."
-./db-ref-json2tex.pl -e -f=s -nr=35
+./db-ref-json2tex.pl -e -f=s -nr=40
 [ $? != 0 ] && exit "Something went wrong.  Exiting..."
 echo; echo "Hit enter to continue..."
 read < /dev/stdin
