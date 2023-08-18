@@ -269,7 +269,7 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 							(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
 
 							/* actually do the work */
-							line_one( *tr, true, 0.f, DopplerWidth[nelem]); 
+							line_one( *tr, true, 0.f, DopplerWidth[nelem], true);
 
 							tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][nHi];
 							(*(*tr).Lo()).Pop() =
@@ -281,7 +281,7 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 							(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
 
 							/* actually do the work */
-							line_one( *tr, true, 0.f, DopplerWidth[nelem]); 
+							line_one( *tr, true, 0.f, DopplerWidth[nelem], true);
 						}
 			
 						else /* looping over resolved levels */
@@ -298,7 +298,7 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 							(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
 
 							/* actually do the work */
-							line_one( *tr, true, 0.f, DopplerWidth[nelem]);
+							line_one( *tr, true, 0.f, DopplerWidth[nelem], true);
 
 							tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][nHi];
 							(*(*tr).Lo()).Pop() =
@@ -310,7 +310,7 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 							(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
 
 							/* actually do the work */
-							line_one( *tr, true, 0.f, DopplerWidth[nelem]);
+							line_one( *tr, true, 0.f, DopplerWidth[nelem], true);
 						}
 					}/* loop over nHi */
 				}
@@ -348,7 +348,7 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 						(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop(); //- (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
 
 						/* actually do the work */
-						line_one( *tr, true, 0.f, DopplerWidth[nelem]);
+						line_one( *tr, true, 0.f, DopplerWidth[nelem], true);
 					}
 				}
 			}
@@ -365,7 +365,7 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 			(*UTALines[i].Lo()).Pop() = dense.xIonDense[(*UTALines[i].Hi()).nelem()-1][(*UTALines[i].Hi()).IonStg()-1];
 			(*UTALines[i].Hi()).Pop() = 0.;
 			line_one( UTALines[i], true,0.f, 
-						 DopplerWidth[(*UTALines[i].Hi()).nelem()-1] );
+						 DopplerWidth[(*UTALines[i].Hi()).nelem()-1], true);
 		}
 	}
 
@@ -402,8 +402,8 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 						 * inward outward fracs */
 						fixit("should this use pestrk_up or pestrk?");
 						line_one( iso_sp[ipISO][nelem].trans(ipHi,ipLo),
-							     lgKeepLyman,(realnum)iso_sp[ipISO][nelem].ex[ipHi][ipLo].pestrk_up,
-									 DopplerWidth[nelem]);
+							     true,(realnum)iso_sp[ipISO][nelem].ex[ipHi][ipLo].pestrk_up,
+									 DopplerWidth[nelem], lgKeepLyman);
 
 						/* set true to print pump rates*/
 						enum {DEBUG_LOC=false};
@@ -434,7 +434,7 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 					continue;
 				if( (*tr).ipCont() > 0 )
 				{
-					line_one( *tr, true, 0.f, DopplerWidth );
+					line_one( *tr, true, 0.f, DopplerWidth, true);
 				}
 			}
 		}
@@ -452,7 +452,7 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 				for( ipLo=0; ipLo < iso_sp[ipISO][nelem].numLevels_local; ++ipLo )
 				{
 					line_one( SatelliteLines[ipISO][nelem][ipSatelliteLines[ipISO][nelem][ipLo]], true,0.f, 
-						 DopplerWidth[nelem] );
+						 DopplerWidth[nelem], true);
 				}
 			}
 		}
@@ -464,7 +464,7 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 
 	for( size_t i=0; i < HFLines.size(); i++ )
 	{
-		line_one( HFLines[i], true,0.f, DopplerWidth[(*HFLines[i].Hi()).nelem()-1] );
+		line_one( HFLines[i], true,0.f, DopplerWidth[(*HFLines[i].Hi()).nelem()-1], true );
 	}
 
 	for( long i=0; i < nWindLine; i++ )
@@ -484,7 +484,7 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 			// in CloudyChianti.ini - zero otherwise
 			 TauLine2[i].EnergyWN() >= dense.maxWN[nelem-1][ion-1])
 		{
-			line_one( TauLine2[i], true,0.f, DopplerWidth[(*TauLine2[i].Hi()).nelem()-1] );
+			line_one( TauLine2[i], true,0.f, DopplerWidth[(*TauLine2[i].Hi()).nelem()-1], true );
 		}
 	}
 

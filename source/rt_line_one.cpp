@@ -401,7 +401,8 @@ void RT_line_one_escape(
 	bool lgShield_this_zone,
 	/* Stark escape probability to be added to Pesc */
 	realnum pestrk,
-	realnum DopplerWidth )
+	realnum DopplerWidth,
+	bool )
 {
 	DEBUG_ENTRY( "RT_line_one_escape()" );
 
@@ -460,9 +461,10 @@ void RT_line_one_escape(
 void RT_line_one_fine(
 	/* the em line we will work on  */
 	const TransitionProxy &t,
-	bool lgKeepLyman,
+	bool,
 	realnum /* pestrk */ ,
-	realnum DopplerWidth )
+	realnum DopplerWidth,
+	bool lgKeepLyman )
 {
 	DEBUG_ENTRY( "RT_line_one_fine()" );
 
