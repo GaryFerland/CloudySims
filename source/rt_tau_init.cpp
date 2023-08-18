@@ -306,6 +306,8 @@ void RT_tau_init(void)
 			/* La may be case B, tlamin set to taumin and reset with Case B
 			 * command to 1e5.  Case A and C set it to 1e-5 */
 			iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauIn() = opac.tlamin;
+			ExtraLymanLinesJ05[nelem][2].Emis().TauIn() = opac.tlamin;
+			ExtraLymanLinesJ15[nelem][2].Emis().TauIn() = opac.tlamin;
 
 			/* scale factor so that all other Lyman lines are appropriate for this Lya optical depth*/
 			realnum f = opac.tlamin/iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().opacity();
@@ -321,6 +323,15 @@ void RT_tau_init(void)
 			{
 				iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauIn() = MAX2( opac.taumin, 
 					f*iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().opacity() );
+
+			}
+			for( nHi=3; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
+			{
+				ExtraLymanLinesJ05[nelem][nHi].Emis().TauIn() = MAX2( opac.taumin,
+					f*ExtraLymanLinesJ05[nelem][nHi].Emis().opacity() );
+
+				ExtraLymanLinesJ15[nelem][nHi].Emis().TauIn() = MAX2( opac.taumin,
+					f*ExtraLymanLinesJ15[nelem][nHi].Emis().opacity() );
 			}
 
 			/* after this set of if's the total Lya optical depth will be known,
@@ -329,8 +340,14 @@ void RT_tau_init(void)
 			if( opac.lgCaseB )
 			{
 				/* force outer optical depth to twice inner if case B */
-				iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauTot() = 
+				iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauTot() =
 					(realnum)(2.*iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauIn());
+
+				ExtraLymanLinesJ05[nelem][2].Emis().TauTot() =
+					(realnum)(2.*ExtraLymanLinesJ05[nelem][2].Emis().TauIn());
+				ExtraLymanLinesJ15[nelem][2].Emis().TauTot() =
+					(realnum)(2.*ExtraLymanLinesJ15[nelem][2].Emis().TauIn());
+
 				/* force off Balmer et al optical depths */
 				lgBalmerTauOn = false;
 			}

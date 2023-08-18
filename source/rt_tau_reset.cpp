@@ -149,17 +149,50 @@ void RT_tau_reset(void)
 				  2.f*iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauIn();
 				f = opac.tlamin/iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().opacity();
 
+				ExtraLymanLinesJ05[nelem][2].Emis().TauIn() = opac.tlamin;
+				ExtraLymanLinesJ05[nelem][2].Emis().TauCon() = ExtraLymanLinesJ05[nelem][2].Emis().TauIn();
+				ExtraLymanLinesJ05[nelem][2].Emis().TauTot() =
+				  2.f*ExtraLymanLinesJ05[nelem][2].Emis().TauIn();
+
+				ExtraLymanLinesJ15[nelem][2].Emis().TauIn() = opac.tlamin;
+				ExtraLymanLinesJ15[nelem][2].Emis().TauCon() = ExtraLymanLinesJ15[nelem][2].Emis().TauIn();
+				ExtraLymanLinesJ15[nelem][2].Emis().TauTot() =
+				  2.f*ExtraLymanLinesJ15[nelem][2].Emis().TauIn();
+
 				for( ipHi=3; ipHi < iso_sp[ipH_LIKE][nelem].numLevels_max; ipHi++ )
 				{
-					if( iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).ipCont() <= 0 )
-						continue;
+					if( iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).ipCont() > 0 )
+					{
+						iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauIn() =
+							f*iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().opacity();
+						/* reset line optical depth to continuum source */
+						iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauCon() = iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauIn();
+						iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauTot() =
+							2.f*iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauIn();
+					}
+				}
 
-					iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauIn() = 
-						f*iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().opacity();
-					/* reset line optical depth to continuum source */
-					iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauCon() = iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauIn();
-					iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauTot() = 
-						2.f*iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauIn();
+				for(long nHi=3; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
+				{
+					if( ExtraLymanLinesJ05[nelem][nHi].ipCont() > 0 )
+					{
+						ExtraLymanLinesJ05[nelem][nHi].Emis().TauIn() =
+							f*ExtraLymanLinesJ05[nelem][nHi].Emis().opacity();
+						/* reset line optical depth to continuum source */
+						ExtraLymanLinesJ05[nelem][nHi].Emis().TauCon() = ExtraLymanLinesJ05[nelem][nHi].Emis().TauIn();
+						ExtraLymanLinesJ05[nelem][nHi].Emis().TauTot() =
+							2.f*ExtraLymanLinesJ05[nelem][nHi].Emis().TauIn();
+					}
+
+					if( ExtraLymanLinesJ15[nelem][nHi].ipCont() > 0 )
+					{
+						ExtraLymanLinesJ15[nelem][nHi].Emis().TauIn() =
+							f*ExtraLymanLinesJ15[nelem][nHi].Emis().opacity();
+						/* reset line optical depth to continuum source */
+						ExtraLymanLinesJ15[nelem][nHi].Emis().TauCon() = ExtraLymanLinesJ15[nelem][nHi].Emis().TauIn();
+						ExtraLymanLinesJ15[nelem][nHi].Emis().TauTot() =
+							2.f*ExtraLymanLinesJ15[nelem][nHi].Emis().TauIn();
+					}
 				}
 			}
 		}
