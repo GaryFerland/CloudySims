@@ -294,8 +294,7 @@ sub fill_species_column
 
 sub print_species_multiple_TeX_rows
 {
-	my( $deluxeTable, $FILE, $species,
-		$nrows_in_TeX_table, $nrows_per_dset_file ) = @_;
+	my( $deluxeTable, $FILE, $species, $nrows_per_dset_file ) = @_;
 
 	#	print "$$species{element}\t$$species{ion}\n";
 
@@ -411,7 +410,7 @@ sub print_TeX_table_Stout
 			my $species = $these_species[ $ispecies ];
 			my( $nrows_for_species, $nrows_per_dset_file ) =
 					&get_nrows_in_TeX_table( $species );
-					
+
 			next	if( $nrows_for_species == 0 );
 
 			if( not defined( $deluxeTable ) and
@@ -430,7 +429,7 @@ sub print_TeX_table_Stout
 			}
 
 			&print_species_multiple_TeX_rows( $deluxeTable, $FILE,
-				$species, $nrows_for_species, $nrows_per_dset_file );
+				$species, $nrows_per_dset_file );
 		}
 	}
 
@@ -457,32 +456,32 @@ sub print_TeX_table
 	   or warn "Warning: Could not close file: $TeX\n";
 
 	print "Created:\t $TeX\n";
-	
+
 	return	$TeX;
 }
 
 sub main
 {
 	my( $deluxeTable, $numRows, $fontSize, $db, $exampleTeX ) = &getInput();
-	
+
 	&BiblioToTeX::set_globals();
 	&BiblioToTeX::order_elements();
-	
+
 	&BiblioToTeX::load_cloudy_bibliography();
-	
+
 	foreach my $db ( @$db )
 	{
 		my $curdir = &Cwd::cwd();
-	
+
 		my $dbdir = $BiblioToTeX::data_dir ."/$db";
 		chdir $dbdir
 		   or die "Error: Could not chdir to db: $dbdir\n";
-	
+
 		my $species = &BiblioToTeX::load_json_or_die();
-	
+
 		chdir $curdir
 		   or die "Error: Could not chdir back to: $curdir\n";
-	
+
 		my $tableTeX =
 			&print_TeX_table( $deluxeTable, $numRows, $fontSize, $db,
 						$species );
