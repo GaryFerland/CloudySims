@@ -307,7 +307,7 @@ sub custom_to_json
 			{
 				$ntabs++;
 				$string .= ($tab x $ntabs) ."\"$dataset\" : {"."\n";
-				
+
 				my @datatypes = sort keys $$hash{$species}{ref}{$dataset};
 				for my $datatype ( @datatypes )
 				{
