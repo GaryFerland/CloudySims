@@ -1,4 +1,8 @@
-# Ti chemistry from Phillip updated to RATE2012 
+# Ti chemistry from Phillip Stancil
+# Ti related reactions are mainly scaled by Si related reactions.
+# Phillip's rates were based on UMIST2006
+# Gargi Shaw updated the rates to UMIST2012 from UMIST2006.
+# #Si5209 means that Reaction is scaled to Si reaction, and the reaction number is 5209 in UMIST2012.
 C,TiH=>TiC,H:hmrate:6.59E-011:0:0 # Si5209
 C,TiH2=>HCTi,H:hmrate:1.E-010:0:0 # Si5207
 N,TiH=>TiN,H:hmrate:1.66E-010:-0.09:0 # Si5513
