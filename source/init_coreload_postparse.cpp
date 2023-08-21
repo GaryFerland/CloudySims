@@ -41,7 +41,8 @@ void InitCoreloadPostparse( void )
 				long numLevels = iso_sp[ipISO][nelem].numLevels_max;
 				long numLevels2 = iso_sp[ipISO][nelem].numLevels_max;
 				// "extra" Lyman lines
-				numLevels += iso_ctrl.nLyman_alloc[ipISO] - 2;
+				if(ipISO == ipHE_LIKE)
+					numLevels += iso_ctrl.nLyman_alloc[ipISO] - 2;
 				numLevels2 += iso_ctrl.nLyman_alloc[ipISO];
 				// satellite lines (one for doubly-excited continuum)
 				if( iso_ctrl.lgDielRecom[ipISO] )
