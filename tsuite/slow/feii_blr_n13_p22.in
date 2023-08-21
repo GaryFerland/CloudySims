@@ -252,7 +252,7 @@ monitor line luminosity "Blnd"  1860 8.886  ##total sum of both Al III comp
 ## >>chng 16 aug 17, from 6.842 to 6.884, bugfix at r11237
 ## >>chng 23 jul 24, from 6.884 to 6.8413, fix all-double botches
 ## >>chng 23 jul 24, err from 0.1 to 0.12, fix all-double botches
-monitor line luminosity "blnd" 2326 6.884  err 0.12
+monitor line luminosity "blnd" 2326 6.8413  err 0.12
 ##
 ## >>chng 06 aub 06, update O+2 & N+2 CT, from 8.985 to 9.007
 ## >>chng 06 nov 29, from 9.007 to 8.971, Badnell DR
