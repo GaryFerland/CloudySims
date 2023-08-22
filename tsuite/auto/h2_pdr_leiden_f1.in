@@ -38,6 +38,8 @@ print line faint -4
 table lines "LineList_PDR_H2.dat"
 save performance "h2_pdr_leiden_f1.per"
 save overview "h2_pdr_leiden_f1.ovr"
+save fine optical depths last no hash ".fopt" range 1150 1300 units Angstroms 1
+save save emitted continuum "h2_pdr_leiden_f1.econ" range 1150 1300 units angstroms
 ## show how emission varies across structure
 save line emissivity "h2_pdr_leiden_f1.ems" 
 ## >>chng 13 jul 24, wl from 2.1215m to 2.12125m, increased wl precision to 6 sig. fig.
