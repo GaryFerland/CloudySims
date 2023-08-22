@@ -1382,7 +1382,8 @@ STATIC void lines_iron_Ka()
 	if( dense.lgElmtOn[ipIRON] )
 	{
 		/* H-like one-electron Ka */
-		FeKaHLike = iso_sp[ipH_LIKE][ipIRON].trans(ipH2p,ipH1s).Emis().xIntensity();
+		FeKaHLike = ExtraLymanLinesJ05[ipIRON][ipH2p].Emis().xIntensity()+
+					ExtraLymanLinesJ15[ipIRON][ipH2p].Emis().xIntensity();
 
 		/* He-like two-electron Ka */
 		FeKaHeLike =
@@ -1398,9 +1399,6 @@ STATIC void lines_iron_Ka()
 			iso_sp[ipH_LIKE][ipIRON].trans(ipH2p,ipH1s).ipCont(),'i',false,
 			   "total intensity of Fe K-alpha line, grain, cold, hot, 1 and 2 electron" );
 	}
-
-	linadd(FeKaHLike,1.78177,"FeK1",'i' ,
-		"H-like one-electron Ka");
 
 	linadd(FeKaHeLike,1.85,"FeK2",'i' ,
 		"He-like two-electron Ka");
