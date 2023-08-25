@@ -122,14 +122,17 @@ void RT_diffuse(void)
 							sp->trans(ipHi,ipLo).Emis().Pesc() *
 							sp->trans(ipHi,ipLo).EnergyErg();
 
-						// Would be better to enable checks (and remove argument) --
-						// present state is to ensure backwards compatibility with previous
-						// unchecked code.
-						// First argument is fraction of line not emitted by scattering --
-						// would be better to do this on the basis of line physics rather than
-						// fiat...
-						const bool lgDoChecks = false;
-						sp->trans(ipHi,ipLo).outline(1.0, lgDoChecks );
+						if (!( ipISO == ipH_LIKE && ipLo == 0 && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ) ))
+						{
+							// Would be better to enable checks (and remove argument) --
+							// present state is to ensure backwards compatibility with previous
+							// unchecked code.
+							// First argument is fraction of line not emitted by scattering --
+							// would be better to do this on the basis of line physics rather than
+							// fiat...
+							const bool lgDoChecks = false;
+							sp->trans(ipHi,ipLo).outline(1.0, lgDoChecks );
+						}
 					}
 				}
 
