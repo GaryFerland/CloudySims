@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /* runs pure collisional models at range of temperatures, prints cooling */
 #include "cddefines.h"
@@ -115,7 +115,7 @@ int main( void )
 
 		cdEXIT(exit_status);
 	}
-	catch( bad_alloc )
+	catch( bad_alloc& )
 	{
 		fprintf( ioQQQ, " DISASTER - A memory allocation has failed. Most likely your computer "
 			 "ran out of memory.\n Try monitoring the memory use of your run. Bailing out...\n" );

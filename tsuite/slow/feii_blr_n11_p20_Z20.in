@@ -179,7 +179,9 @@ monitor line luminosity "Blnd"  1860 7.849 ##total sum of both Al III comp
 ## >>chng 14 jul 02, from 6.916 to 7.054, Add monitors for Fe II Bands
 ## >>chng 16 aug 17, from 7.054 to 7.073, bugfix at r11237
 ## >>chng 19 jun 28, from 7.073 to 7.104, reintegrate iso_collisions branch
-monitor line luminosity "blnd"  2326 7.104 ##total C II] 2324.69 + 2328.12
+## >>chng 23 jul 24, from 7.104 to 7.085, fix all-double botches
+## >>chng 23 jul 24, err from 0.05 to 0.10, fix all-double botches
+monitor line luminosity "blnd"  2326 7.085 err 0.10 ##total C II] 2324.69 + 2328.12
 ## 
 ## >>chng 06 aub 06, update O+2 & N+2 CT, from 8.193 to 8.215
 ## >>chng 06 nov 29, from 8.215 to 8.194, Badnell DR

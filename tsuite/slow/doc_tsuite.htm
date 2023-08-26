@@ -10,7 +10,7 @@
 
 
 </head>
-<body><h4>  This HTML file was created by the program doc_tsuite.pl.  doc_tsuite.txt contains a tab delimited list of the files. </h4>
+<body><h4>  This HTML file was created by the program doc_tsuite.pl, doc_tsuite.txt contains a tab delimited list of the files. </h4>
 <hr><kbd><h2>dynamics_HII_PDR.in</h2>  </kbd><h2><I>fast H+He+metals (low ionization parameter) 009 km s 
 </I></h2><kbd><br>title fast H+He+metals (low ionization parameter) 009 km s 
 <br>failures 1
@@ -22,7 +22,7 @@
 <br>phi(h) 9.5
 <br>sphere 
 <br>turbulence 8 km/sec
-<br>normalize to "Q(H)" 4861.33A 
+<br>normalize to "Q(H)" 4861.32A 
 <br>hden 3.5
 <br>init "ism.ini"
 <br>abundances hii region no grains
@@ -114,76 +114,6 @@ This is one of the 5 models that sample the LOC plane.
 <br>save dr ".dr" last
 <br>save convergence reason ".cvr"
 </kbd><p>
-monitor niter > 2 
-monitor niter < 5 
-##
-## >>chng 03 nov 10, from 360 to 400, improve he0 zoning
-## >>chng 08 apr 30, from < 400 to 347 H, He topoff change
-## >>chng 09 feb 23, from 347 to 351, remove otslin, otscon dampers (PR #84, r2758)
-## >>chng 09 jun 11, from 351 to 373, better approach to outer edge of bounded model
-## >>chng 09 jul 16, from 373 to 377, change autocv back to 0.2
-## >>chng 09 aug 02 from 377 to 375, bcx vs08, rm small error
-monitor nzone 375
-##
-mmonitor line intensity "Fe 2b" 1148 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 1212 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 1295 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 1365 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 1485 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 1615 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 1787 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 1822 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 2355 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 2495 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 2695 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 2758 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 2797 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 2935 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 4255 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 4558 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 4743 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 4855 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 4971 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 4975 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 5143 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 5318 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 5865 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 6265 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 6565 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 7445 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 7785 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 1.88900m 1.01 error 0.1
-##
-monitor line intensity "Fe 2b" 2.20000m 1.01 error 0.1
-##
-<p>
 This is one of the 5 models that sample the LOC plane.
 </p><hr><kbd><h2>feii_blr_n11_p20_Z20.in</h2>  </kbd><h2><I>FeII model 
 </I></h2><kbd><br>title FeII model 
@@ -432,6 +362,7 @@ This is one of the 5 models that sample the LOC plane.
 <br>element lithium off
 <br>element berylium off
 <br>element boron off
+<br>element limit -7 off
 <br>cosmic rays background linear 0.1266
 <br>cmb
 <br>iterate
@@ -445,7 +376,7 @@ This is one of the 5 models that sample the LOC plane.
 <br>stop zone 1
 <br># set to constant small thickness
 <br>set dr -10
-<br>normalize to "Q(H)" 4861.33A
+<br>normalize to "Q(H)" 4861.32A
 <br># 
 <br># the normalizing line is not defined on the emergent line stack
 <br>print lines emergent off
@@ -479,8 +410,8 @@ This is one of the 5 models that sample the LOC plane.
 <br>grains PAH 
 <br>database h2 
 <br>init file="ism.ini"
-<br>abundances he -1.01 c -3.52 n-8 o-3.30 ne-8 mg-5.89
-<br>continue si -6.10 s -5.10 cl-7 ar-8 fe -6.60
+<br>abundances he= -1.01 c= -3.52 n=-8 o=-3.30 ne=-8 mg=-5.89
+<br>continue si= -6.10 s= -5.10 cl=-7 ar=-8 fe= -6.60
 <br>normalize to 157.636m "C  2" 
 <br>sphere
 <br>Database H-like Lyman pumping off
@@ -537,9 +468,9 @@ for the UV pumping lines to become optically thick
 <br>Hden 3.500 
 <br>init file="ism.ini" 
 <br>Abundances H II region no grains                                                
-<br>grains orion                                                                    
+<br>grains orion no qheat
 <br># these were actually used in the paper
-<br>grains PAH
+<br>grains PAH no qheat
 <br>#
 <br># commands controlling geometry  =========
 <br>iterate
@@ -1064,12 +995,12 @@ physical?  Is it ever seen?
 <br>grains PAH
 <br>database h2 
 <br>init file="ism.ini"
-<br>abundances he -1.01 c -3.52 n-8 o-3.30 ne-8 mg-5.89
-<br>continue si -6.10 s -5.10 cl-7 ar-8 fe -6.60
+<br>abundances he= -1.01 c= -3.52 n=-8 o=-3.30 ne=-8 mg=-5.89
+<br>continue si= -6.10 s= -5.10 cl=-7 ar=-8 fe= -6.60
 <br>turbulence 2.7 km/sec
 <br>normalize to "C  2" 157.636m 
 <br>sphere
-<br>Database H-like Lyman pumping off
+<br>database H-like Lyman pumping off
 <br>cosmic rays, background
 <br># this should be the one actually used
 <br>stop AV 33.2 
@@ -1182,7 +1113,7 @@ which will result in fast fluorescent excitation of the
 <br># commands controlling output    =========
 <br>save performance "m17_p07.per"
 <br>save lines emissivity last "m17_p07.ems" 
-<br>H  1 6562.81A 
+<br>H  1 6562.80A 
 <br>Blnd 6720 
 <br>CO   1300.05m 
 <br>CO   2600.05m 
@@ -1280,7 +1211,7 @@ presented in Pellegrini et al. 2007, ApJ, 658, 1119
 <br># print lots of faint CO lines
 <br>print line faint -6
 <br># normalize to Ha
-<br>normalize to "H  1" 6562.81A
+<br>normalize to "H  1" 6562.80A
 <br>save performance "orion_hii_pdr_pp.per"
 <br>save overview last "orion_hii_pdr_pp.ovr"
 <br>save temperature last "orion_hii_pdr_pp.tem"
@@ -1351,6 +1282,8 @@ This is an XDR sim proposed by Nick Abel
 <br># want nT = 2e6 K cm-3
 <br>hden 5.88e-2 linear
 <br>constant pressure reset
+<br># >> chng 20 oct 05, from -6 to -5 for load balancing
+<br>element limit off  -5
 <br>#
 <br># commands controlling geometry  =========
 <br>set dr 0 
@@ -1394,6 +1327,8 @@ test time dependent cooling at constant pressure
 <br># want nT = 2e6 K cm-3
 <br>hden 5.88e-2 linear
 <br>constant pressure reset
+<br># >> chng 20 oct 05, from -6 to -5 for load balancing
+<br>element limit off  -5
 <br>#
 <br># commands controlling geometry  =========
 <br>set dr 0 

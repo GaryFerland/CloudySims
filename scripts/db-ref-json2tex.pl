@@ -56,6 +56,12 @@
 # Chatzikos, 2016-Jan-28
 # Chatzikos, 2022-Apr-12
 # 	Bugfix: Count TeX rows only if data ref exists
+# Chatzikos, 2023-Aug-17
+# 	Update to new structure of references, containing datasets instead of
+# 	references within files.  Alternate datasets are shown in the Species
+# 	column, prepended by 'or'.
+# Chatzikos, 2023-Aug-18
+# 	Fix bug with number of lines per table.
 #
 
 use warnings;
@@ -155,6 +161,8 @@ sub print_TeX_table_header
 				$BiblioToTeX::db_title{$db} ." database.\n";
 		print $FILE "\t\t". 'Species marked with $\ddagger$ are listed '
 		  .		"in Stout.ini, the default masterlist.\n";
+		print $FILE "\t\t". "Alternate species are shown in the first"
+		  .		" column, prepended by `or'.\n";
 		print $FILE "\t\t". '\label{table:'. $db .'-refs}' ."\n";
 		print $FILE "\t". "}\n";
 		print $FILE "\t". '\tablehead' ."\n";
@@ -181,6 +189,8 @@ sub print_TeX_table_header
 				$BiblioToTeX::db_title{$db} ." database.\n";
 			print $FILE "\t\t". 'Species marked with $\ddagger$ are listed '
 			  .		"in Stout.ini, the default masterlist.\n";
+			print $FILE "\t\t". "Alternate species are shown in the first"
+			  .		" column, prepended by `or'.\n";
 		}
 		else
 		{
@@ -223,123 +233,147 @@ sub get_nrows_in_TeX_table
 {
 	my( $species ) = @_;
 
-	my $ref = $$species{ref};
-
 	my %nrows;
-	   $nrows{energy} = @{ $$ref{energy} } if( exists $$ref{energy} );
-	   $nrows{trans} = @{ $$ref{trans} } if( exists $$ref{trans} );
-	   $nrows{coll} = @{ $$ref{coll} } if( exists $$ref{coll} );
+	for my $dataset ( keys %{ $$species{ref} } )
+	{
+		my $ref = $$species{ref}{$dataset};
+		$nrows{$dataset} = {};
+
+		$nrows{$dataset}{energy} = @{ $$ref{energy} }
+			if( exists $$ref{energy} );
+		$nrows{$dataset}{trans} = @{ $$ref{trans} }
+			if( exists $$ref{trans} );
+		$nrows{$dataset}{coll} = @{ $$ref{coll} }
+			if( exists $$ref{coll} );
+	}
 
 	my $nrows = 0;
-	   $nrows = $nrows{energy}
-	   	if( exists $nrows{energy} and $nrows{energy} > $nrows );
-	   $nrows = $nrows{trans}
-	   	if( exists $nrows{trans} and $nrows{trans} > $nrows );
-	   $nrows = $nrows{coll}
-	   	if( exists $nrows{coll} and $nrows{coll} > $nrows );
+	for my $dataset ( keys %nrows )
+	{
+		next if( not %{ $nrows{$dataset} } );
+		$nrows{$dataset}{max} =
+			&List::Util::max( values %{ $nrows{$dataset} } );
+		$nrows += $nrows{$dataset}{max};
+	}
+	print "$$species{element}\t$$species{ion}\t $nrows\n" if 0;
 
 	return	( $nrows, { %nrows } );
 }
 
+sub fill_species_column
+{
+	my( $FILE, $species, $dataset, $deluxeTable ) = @_;
+
+	print	$FILE	"\t\t\t";
+	if( defined( $species ) )
+	{
+		printf $FILE "%s", ucfirst( $$species{element} );
+
+		if( $$species{ion} == 2 )
+		{
+			print $FILE '$^{+}$';
+		}
+		elsif( $$species{ion} > 2 )
+		{
+			printf $FILE "\$^{%d+}\$", $$species{ion}-1;
+		}
+		print $FILE "\t". '$\ddagger$'
+		  if( $$species{list} eq "default" );
+	}
+	elsif( defined( $dataset ) )
+	{
+		print $FILE "or $dataset:";
+	}
+	else
+	{
+		if( defined( $deluxeTable ) )
+		{
+			print $FILE '\nodata';
+		}
+	}
+	print $FILE "\t&\n";
+}
+
 sub print_species_multiple_TeX_rows
 {
-	my( $deluxeTable, $FILE, $species,
-		$nrows_in_TeX_table, $nrows_per_file ) = @_;
+	my( $deluxeTable, $FILE, $species, $nrows_per_dset_file ) = @_;
 
 	#	print "$$species{element}\t$$species{ion}\n";
 
-	my $ref = $$species{ref};
-
 	my @file_order = qw/ energy trans coll /;
+	my $dataset_order = &BiblioToTeX::set_dataset_order( $species );
+#	print "$$species{element}\t$$species{ion}\t@$dataset_order\n";
 
-	#
-	# First row
-	#
-
-	# Column 1:	Species
-	#
-	printf	$FILE	"\t\t\t%s",	ucfirst( $$species{element} );
-
-	if( $$species{ion} == 2 )
+	for my $dataset ( @$dataset_order )
 	{
-		print	$FILE	'$^{+}$';
-	}
-	elsif( $$species{ion} > 2 )
-	{
-		printf	$FILE
-			"\$^{%d+}\$",
-			$$species{ion}-1;
-	}
-	print	$FILE
-		"\t". '$\ddagger$'
-	  if( $$species{list} eq "default" );
-	print	$FILE	"\t&\n";
-
-	for( my $i = 0; $i < $nrows_in_TeX_table; $i++ )
-	{
-		if( $i > 0 )
+		if( $dataset eq $BiblioToTeX::default_dataset )
 		{
-			print	$FILE	"\t\t\t";
-			if( defined( $deluxeTable ) )
-			{
-				print	$FILE	'\nodata';
-			}
-			else
-			{
-				print	$FILE	"\t";
-			}
-			print	$FILE	"\t&\n";
+			&fill_species_column( $FILE, $species );
 		}
-		
-		foreach my $file ( @file_order )
+		else
 		{
-			my $citation;
-			print	$FILE	"\t\t\t";
-			if( exists $$nrows_per_file{$file} and
-				defined( $$nrows_per_file{$file} ) and
-				$i < $$nrows_per_file{$file} )
+			&fill_species_column( $FILE, undef, $dataset, $deluxeTable );
+		}
+
+		my $ref = $$species{ref}{$dataset};
+
+		for( my $i = 0; $i < $$nrows_per_dset_file{$dataset}{max}; $i++ )
+		{
+			if( $i > 0 )
 			{
-				$citation = $$ref{$file}[ $i ]{bibcode};
-				if( defined( $citation ) )
+				&fill_species_column( $FILE, undef, undef, $deluxeTable );
+			}
+
+			foreach my $file ( @file_order )
+			{
+				my $citation;
+				print	$FILE	"\t\t\t";
+				if( exists $$nrows_per_dset_file{$dataset}{$file}
+				    and defined( $$nrows_per_dset_file{$dataset}{$file} )
+				    and $i < $$nrows_per_dset_file{$dataset}{$file} )
 				{
-					my $crossref =
-						&BiblioToTeX::get_crossref_abbrv( $citation );
-					if( not defined( $crossref ) )
+					$citation = $$ref{$file}[ $i ]{bibcode};
+					if( defined( $citation ) )
 					{
-						$crossref = $citation;
+						my $crossref =
+							&BiblioToTeX::get_crossref_abbrv( $citation );
+						if( not defined( $crossref ) )
+						{
+							$crossref = $citation;
+						}
+						$citation = "\\citet{". $crossref ."}";
 					}
-					$citation = "\\citet{". $crossref ."}";
+					else
+					{
+						$citation = $$ref{$file}[ $i ]{name};
+						if( $citation =~ m/(\w+ NIST|NIST \w+)/ and
+						    $citation !~ m/ \d\d\d\d-\d\d-\d/ )
+						{
+							#print "$citation\t =>\t";
+							$citation = 'NIST';
+							#print "$citation\n";
+						}
+					}
+					print $FILE $citation
+						if( defined( $citation ) );
+				}
+				elsif( $i == 0 and $file eq "coll" )
+				{
+					print $FILE 'baseline';
 				}
 				else
 				{
-					$citation = $$ref{$file}[ $i ]{name};
-					if( $citation =~ m/(\w+ NIST|NIST \w+)/ and
-					    $citation !~ m/ \d\d\d\d-\d\d-\d/ )
+					if( defined( $deluxeTable ) )
 					{
-						print "$citation\t =>\t";
-						$citation = 'NIST';
-						print "$citation\n";
+						print $FILE '\nodata';
 					}
 				}
-				print	$FILE	$citation
-					if( defined( $citation ) );
+				print $FILE "\t&"
+					if( $file ne $file_order[-1] );
+				print $FILE "\n";
 			}
-			elsif( $i == 0 and $file eq "coll" )
-			{
-				print	$FILE	'baseline';
-			}
-			else
-			{
-				if( defined( $deluxeTable ) )
-				{
-					print	$FILE	'\nodata';
-				}
-			}
-			print	$FILE	"\t&"
-				if( $file ne $file_order[ $#file_order ] );
-			print	$FILE	"\n";
+			print $FILE "\t\t". '\\\\' ."\n";
 		}
-		print	$FILE	"\t\t". '\\\\' ."\n";
 	}
 	print	$FILE	"\t\t". '\hline' ."\n";
 }
@@ -376,17 +410,17 @@ sub print_TeX_table_Stout
 		foreach my $ispecies ( @order )
 		{
 			my $species = $these_species[ $ispecies ];
-			my( $nrows_for_species, $nrows_per_file ) =
+			my( $nrows_for_species, $nrows_per_dset_file ) =
 					&get_nrows_in_TeX_table( $species );
-					
+
 			next	if( $nrows_for_species == 0 );
 
-			if( not defined( $deluxeTable ) and
-			    $numRows_perTable_current + $nrows_for_species >
-				$numRows_perTable )
+			if( not defined( $deluxeTable )
+			    and $numRows_perTable_current + $nrows_for_species
+		    		> $numRows_perTable )
 			{
 				$ntable_breaks++;
-				$numRows_perTable_current = 0;
+				$numRows_perTable_current = $nrows_for_species;
 				&print_TeX_table_footer( $deluxeTable, $FILE );
 				&print_TeX_table_header( $deluxeTable, $fontSize,
 						$db, $FILE, $ntable_breaks );
@@ -397,7 +431,7 @@ sub print_TeX_table_Stout
 			}
 
 			&print_species_multiple_TeX_rows( $deluxeTable, $FILE,
-				$species, $nrows_for_species, $nrows_per_file );
+				$species, $nrows_per_dset_file );
 		}
 	}
 
@@ -405,7 +439,6 @@ sub print_TeX_table_Stout
 
 	return;
 }
-
 
 sub print_TeX_table
 {
@@ -425,38 +458,38 @@ sub print_TeX_table
 	   or warn "Warning: Could not close file: $TeX\n";
 
 	print "Created:\t $TeX\n";
-	
+
 	return	$TeX;
 }
 
-
-#################################################################################
-#				MAIN PROGRAM					#
-#################################################################################
-
-my( $deluxeTable, $numRows, $fontSize, $db, $exampleTeX ) = &getInput();
-
-&BiblioToTeX::set_globals();
-&BiblioToTeX::order_elements();
-
-&BiblioToTeX::load_cloudy_bibliography();
-
-foreach my $db ( @$db )
+sub main
 {
-	my $curdir = &Cwd::cwd();
+	my( $deluxeTable, $numRows, $fontSize, $db, $exampleTeX ) = &getInput();
 
-	my $dbdir = $BiblioToTeX::data_dir ."/$db";
-	chdir $dbdir
-	   or die "Error: Could not chdir to db: $dbdir\n";
+	&BiblioToTeX::set_globals();
+	&BiblioToTeX::order_elements();
 
-	my $species = &BiblioToTeX::load_json_or_die();
+	&BiblioToTeX::load_cloudy_bibliography();
 
-	chdir $curdir
-	   or die "Error: Could not chdir back to: $curdir\n";
+	foreach my $db ( @$db )
+	{
+		my $curdir = &Cwd::cwd();
 
-	my $tableTeX =
-		&print_TeX_table( $deluxeTable, $numRows, $fontSize, $db,
-					$species );
-	&BiblioToTeX::create_exampleTeX_Script( $deluxeTable, $tableTeX, 1 )
-		if( defined( $exampleTeX ) );
+		my $dbdir = $BiblioToTeX::data_dir ."/$db";
+		chdir $dbdir
+		   or die "Error: Could not chdir to db: $dbdir\n";
+
+		my $species = &BiblioToTeX::load_json_or_die();
+
+		chdir $curdir
+		   or die "Error: Could not chdir back to: $curdir\n";
+
+		my $tableTeX =
+			&print_TeX_table( $deluxeTable, $numRows, $fontSize, $db,
+						$species );
+		&BiblioToTeX::create_exampleTeX_Script( $deluxeTable, $tableTeX, 1 )
+			if( defined( $exampleTeX ) );
+	}
 }
+
+&main();

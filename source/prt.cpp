@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*SetPrintLineCol set some parameters for the main line block & wl format */
 /*prt_LineLabels save all labels and wavelengths for emission line array */
@@ -96,7 +96,7 @@ void sprt_wl( string& chString , realnum wl )
 		{
 			oss << fixed << setw(LineSave.sig_figs+1) << setprecision(n) << wl;
 		}
-		else if (wl < INT_MAX)
+		else if (wl < (realnum)INT_MAX)
 		{
 			oss << setw(LineSave.sig_figs+1) << (int)wl;
 		}
