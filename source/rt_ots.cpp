@@ -104,6 +104,10 @@ void RT_OTS(void)
 		 * ok since dest probs updated on every iteration*/
 		iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().Pdest() *= (realnum)bwnfac;
 		ASSERT( iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().Pdest() >= 0. );
+		ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][2]].Emis().Pdest() *= (realnum)bwnfac;
+		ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][2]].Emis().Pdest() *= (realnum)bwnfac;
+		ASSERT( ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][2]].Emis().Pdest() >= 0.);
+		ASSERT( ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][2]].Emis().Pdest() >= 0.);
 		{
 			/* debugging code for line oscillation problems 
 			 * most often Lya OTS oscillations*/
