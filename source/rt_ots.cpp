@@ -241,7 +241,7 @@ void RT_OTS(void)
 									iso_sp[ipISO][nelem].trans(ipHi,ipLo).ipCont() );
 						}
 
-						if(ipISO == ipH_LIKE && nelem==ipHYDROGEN && ipLo == 0)
+						if(0 && ipISO == ipH_LIKE && nelem==ipHYDROGEN && ipLo == 0)
 						{
 							dprintf(ioQQQ, "%i\t%e\t%e\t%e\n",
 							ipHi,
