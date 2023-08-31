@@ -252,6 +252,7 @@ void RT_tau_reset(void)
 	// So zero this isn't ideal, just better than using whatever the
 	// value happens to be in the last zone of the previous iteration...
 	vzero(rfield.fine_opac_zone);
+	vzero(rfield.save_fine_opac_zone);
 
 	/* all level 2 heavy element lines */
 	for( long i=0; i < nWindLine; i++ )

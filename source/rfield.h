@@ -503,6 +503,8 @@ public:
 	double fine_resol;
 	/** the fine continuum opacity array  */
 	vector<realnum> fine_opac_zone;
+	/** the last fully evaluated opacity array */
+	vector<realnum> save_fine_opac_zone;
 	/** total optical depth array for fine continuum */
 	vector<realnum> fine_opt_depth;
 	/** energies at center of each bin for fine continuum */

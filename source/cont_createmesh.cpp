@@ -177,6 +177,9 @@ STATIC void rfield_opac_alloc()
 	rfield.fine_opac_zone.resize(rfield.nfine);
 	vzero(rfield.fine_opac_zone);
 
+	rfield.save_fine_opac_zone.resize(rfield.nfine);
+	vzero(rfield.save_fine_opac_zone);
+
 	/* this is the fine total optical array to ghost the main low-resolution array */
 	rfield.fine_opt_depth.resize(rfield.nfine);
 	vzero(rfield.fine_opt_depth);

@@ -237,9 +237,10 @@ double RTesc_lya(
 
 	if( abund > 0. )
 	{
-		/* the continuous opacity is positive, we have a valid soln */
-		beta = conopc/(abund/SQRTPI*t.Emis().opacity()/
-			DopplerWidth + conopc);
+		/* the continuous opacity is positive, we have a valid soln,
+		   this is the ratio of continuous to line opacity,
+		   which is within a scale factor of the destruction probability. */
+		beta = conopc/(rfield.save_fine_opac_zone[t.Emis().ipFine() + rfield.ipFineConVelShift] + conopc);
 	}
 	else
 	{
@@ -247,6 +248,17 @@ double RTesc_lya(
 		beta = 1e-10;
 	}
 
+#if 0
+	dprintf(ioQQQ, "rt_escprob.cpp %i\t%e\t%e\t%i\t%e\t%e\t%e\n",
+		nzone,
+		t.Emis().opacity(),
+		(abund/SQRTPI*t.Emis().opacity()/DopplerWidth),
+		t.Emis().ipFine() + rfield.ipFineConVelShift,
+		rfield.fine_opac_zone[t.Emis().ipFine() + rfield.ipFineConVelShift],
+		rfield.save_fine_opac_zone[t.Emis().ipFine() + rfield.ipFineConVelShift],
+		rfield.fine_anu[t.Emis().ipFine() + rfield.ipFineConVelShift]
+		);
+#endif
 	/* find rt.wayin, the escape prob in inward direction */
 	RTesc_lya_1side(
 		t.Emis().TauIn(),

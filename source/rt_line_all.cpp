@@ -493,7 +493,11 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 
 void RT_fine_clear()
 {
-	DEBUG_ENTRY( "RT_fine_init()" );
+	DEBUG_ENTRY( "RT_fine_clear()" );
+	
+	/* save fully evaluated fine opacity array for later use */
+	rfield.save_fine_opac_zone.swap(rfield.fine_opac_zone);
+
 	/* zero out fine opacity array */
 	/* this array is huge and takes significant time to zero out or update, 
 	 * only do so when needed, */

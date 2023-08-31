@@ -60,7 +60,11 @@ void RT_OTS(void)
 	double ots660;
 	realnum cont_phot_destroyed;
 	double save_lya_dest,
-	  save_he2lya_dest = 0.;
+	  save_lya_destJ05,
+	  save_lya_destJ15,
+	  save_he2lya_dest = 0.,
+	  save_he2lya_destJ05 = 0.,
+	  save_he2lya_destJ15 = 0.;
 
 	double save_he2rec_dest = 0.;
 
@@ -130,17 +134,25 @@ void RT_OTS(void)
 
 	/* save Lya loss rates so we can reset at end */
 	save_lya_dest = iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).Emis().Pdest();
+	save_lya_destJ05 = ExtraLymanLinesJ05[ipHYDROGEN][ipExtraLymanLinesJ05[ipHYDROGEN][2]].Emis().Pdest();
+	save_lya_destJ15 = ExtraLymanLinesJ15[ipHYDROGEN][ipExtraLymanLinesJ15[ipHYDROGEN][2]].Emis().Pdest();
 
 	/* this is option to kill Lya ots rates, 
 	 * rfield.lgLyaOTS is usually true (1), and set false (0) with
 	 * no lya ots command */
 	iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).Emis().Pdest() *= rfield.lgLyaOTS;
+	ExtraLymanLinesJ05[ipHYDROGEN][ipExtraLymanLinesJ05[ipHYDROGEN][2]].Emis().Pdest() *= rfield.lgLyaOTS;
+	ExtraLymanLinesJ15[ipHYDROGEN][ipExtraLymanLinesJ15[ipHYDROGEN][2]].Emis().Pdest() *= rfield.lgLyaOTS;
 
 	if( dense.lgElmtOn[ipHELIUM] )
 	{
 		/* option to kill heii lya and rec continua ots */
 		save_he2lya_dest = iso_sp[ipH_LIKE][ipHELIUM].trans(ipH2p,ipH1s).Emis().Pdest();
+		save_he2lya_destJ05 = ExtraLymanLinesJ05[ipHELIUM][ipExtraLymanLinesJ05[ipHELIUM][2]].Emis().Pdest();
+		save_he2lya_destJ15 = ExtraLymanLinesJ15[ipHELIUM][ipExtraLymanLinesJ15[ipHELIUM][2]].Emis().Pdest();
 		iso_sp[ipH_LIKE][ipHELIUM].trans(ipH2p,ipH1s).Emis().Pdest() *= rfield.lgHeIIOTS;
+		ExtraLymanLinesJ05[ipHELIUM][ipExtraLymanLinesJ05[ipHELIUM][2]].Emis().Pdest() *= rfield.lgHeIIOTS;
+		ExtraLymanLinesJ15[ipHELIUM][ipExtraLymanLinesJ15[ipHELIUM][2]].Emis().Pdest() *= rfield.lgHeIIOTS;
 
 		/* option to kill heii lya and rec continua ots */
 		save_he2rec_dest = iso_sp[ipH_LIKE][ipHELIUM].fb[ipH1s].RadRecomb[ipRecRad];
@@ -228,6 +240,20 @@ void RT_OTS(void)
 								RT_OTS_AddLine(iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().ots(),
 									iso_sp[ipISO][nelem].trans(ipHi,ipLo).ipCont() );
 						}
+
+						if(ipISO == ipH_LIKE && nelem==ipHYDROGEN && ipLo == 0)
+						{
+							dprintf(ioQQQ, "%i\t%e\t%e\t%e\n",
+							ipHi,
+							ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Emis().ots(),
+							ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].Emis().ots(),
+							iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().ots()
+							);
+							DumpLine(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]]);
+							DumpLine(ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]]);
+							DumpLine(iso_sp[ipISO][nelem].trans(ipHi,ipLo));
+						}
+
 					}
 				}
 				{
@@ -316,16 +342,23 @@ void RT_OTS(void)
 		}
 	}
 
-	/* now reset Lya dest prob in case is was clobbered by rfield.lgHeIIOTS */
+	/* now reset Lya dest prob in case it was clobbered by rfield.lgHeIIOTS */
 	iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).Emis().Pdest() = (realnum)save_lya_dest;
+	ExtraLymanLinesJ05[ipHYDROGEN][ipExtraLymanLinesJ05[ipHYDROGEN][2]].Emis().Pdest() = (realnum)save_lya_destJ05;
+	ExtraLymanLinesJ15[ipHYDROGEN][ipExtraLymanLinesJ15[ipHYDROGEN][2]].Emis().Pdest() = (realnum)save_lya_destJ15;
+
 	if( dense.lgElmtOn[ipHELIUM] )
 	{
 		iso_sp[ipH_LIKE][ipHELIUM].trans(ipH2p,ipH1s).Emis().Pdest() = (realnum)save_he2lya_dest;
+		ExtraLymanLinesJ05[ipHELIUM][ipExtraLymanLinesJ05[ipHELIUM][2]].Emis().Pdest() = (realnum)save_he2lya_destJ05;
+		ExtraLymanLinesJ15[ipHELIUM][ipExtraLymanLinesJ15[ipHELIUM][2]].Emis().Pdest() = (realnum)save_he2lya_destJ15;
 		iso_sp[ipH_LIKE][ipHELIUM].fb[ipH1s].RadRecomb[ipRecRad] = save_he2rec_dest;
 		if( bwnfac > 0. )
 		{
 			/* increase the destruction prob by the amount we decreased it above */
 			iso_sp[ipH_LIKE][ipHELIUM].trans(ipH2p,ipH1s).Emis().Pdest() /= (realnum)bwnfac;
+			ExtraLymanLinesJ05[ipHELIUM][ipExtraLymanLinesJ05[ipHELIUM][2]].Emis().Pdest() /= (realnum)bwnfac;
+			ExtraLymanLinesJ15[ipHELIUM][ipExtraLymanLinesJ15[ipHELIUM][2]].Emis().Pdest() /= (realnum)bwnfac;
 		}
 	}
 
