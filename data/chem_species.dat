@@ -1,5 +1,7 @@
 #
 # columns are species label, formation enthalpy at OK in KJ/mol
+# https://webbook.nist.gov/chemistry/form-ser/
+# https://cccbdb.nist.gov/hf0k.asp
 #
 C     	711.2
 O     	246.8
@@ -49,9 +51,8 @@ SiH   	374.9
 # formation enthalpy of SiOH+?
 SiOH+ 	0
 SiO   	-101.6
-SiO+  	1001.2
-# https://cccbdb.nist.gov/hf0k.asp,GS, 20230827
 SiO2	-320.7
+SiO+  	1001.2
 N2    	0
 N2+   	1503.3
 NO    	89.8
@@ -84,9 +85,9 @@ NS+   	1119
 SO    	5
 SO+   	1000.7
 #SiN   	371.2
-# https://cccbdb.nist.gov/hf0k.asp
-SiN	402.5	
+SiN	402.5
 SiN+  	0
+SiO2	-320.7
 N2O   	85.5
 HCS+  	1018
 OCS   	-142
@@ -168,8 +169,7 @@ TiOH+ 	0
 HTiS+ 	0
 # F compounds
 HF+     0
-# https://webbook.nist.gov/chemistry/form-ser/
-HF      -272.55 
+HF      -272.5
 H2F+    0
 CF+     0
 #https://cccbdb.nist.gov/hf0k.asp,GS, 20230827
