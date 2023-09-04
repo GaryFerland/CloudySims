@@ -12,7 +12,7 @@
 # col 6 energy of the transition eV
 # col 7 fluorescence yield omega (number of photons emitted per primary vacancy)
 # This is the Kaastra & Mewe 1993 database file with the Si and S Kalpha line energies updated with the values of Hell et al. 2016, ApJ. 
-# The complete update procedure is described in Camilloni et al. 2021, RNAAS.
+# The complete update procedure is described in Camilloni et al. 2021, 2021RNAAS...5..149C
   5  1  1  0  1   183.7 0.0006
   5  1  1  1  5    16.9 0.7129
   5  1  2  0  5     4.6 1.0000

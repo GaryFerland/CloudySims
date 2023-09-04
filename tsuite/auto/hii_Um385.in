@@ -62,8 +62,10 @@ monitor line "Ne 3"  15.5509m  0.1422
 monitor line "Ne 3"  36.0036m  0.0129
 ## >>chng 18 jun 20, from 0.0599 to 0.0644, #bugfixes at front face r12134:12136
 monitor line "Ne 3" 3868.76A  0.0644 error 0.08
-monitor line "S  3"  18.7078m  0.2797
-monitor line "S  3"   9530.62A  0.48
+## >>chng 23 may 11, from 0.2797 to 0.2653, update RR DR to 2022 Badnell wor
+monitor line "S  3"  18.7078m  0.2653
+## >>chng 23 may 11, from 0.48 to 0.4379, update RR DR to 2022 Badnell wor
+monitor line "S  3"   9530.62A  0.4379
 ## >>chng 18 jan 17, rm line, became too faint, only 1 sig fig, so could not assert high accuracy
 ## >>chng 18 jan 17, from 0.0009 to 0.0009, ## >>chng 18 jan 17, from 2.262 to 2.139, update Badnell RR, DR to http://dx.doi.org/10.1051/0004-6361/201731243
 ## monitor line "S  4"  10.5076m  0.0009

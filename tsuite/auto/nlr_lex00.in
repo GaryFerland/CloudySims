@@ -477,7 +477,8 @@ monitor line "si 2" 34.8046m 0.8469
 ## >>chng 14 dec 14, from 0.9187 to 1.046, update S2+ - S+ DR to Badnell+ 2015 ApJ
 ## >>chng 17 nov 20, from 1.046 to 1.093, Bug-fix in DR suppression (r11900)
 ## >>chng 19 sep 25, from 1.093 to 1.166, update Ne II H0 CS
-monitor line "Blnd" 6720 1.166
+## >>chng 23 may 11, from 1.166 to 1.221, update RR DR to 2022 Badnell wor
+monitor line "Blnd" 6720 1.221
 ##
 ## >>chng 00 sep 12, from 1.53 to 1.355, change in cs for s3
 ## 01 dec 21, from 1.355 to 1.270, inner shell yields

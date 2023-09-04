@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*InitMonitorResults, this must be called first, done at startup of ParseCommands*/
 /*ParseMonitorResults - parse input stream */
@@ -1099,7 +1099,7 @@ void ParseMonitorResults(Parser &p)
 				p.NoNumb("grain index");
 			}
 		
-			if( wavelength[nAsserts] < 1 || wavelength[nAsserts] > LONG_MAX )
+			if( wavelength[nAsserts] < 1 || wavelength[nAsserts] > (realnum)LONG_MAX )
 			{
 				fprintf( ioQQQ, "  Unacceptable grain index.\n");
 				fprintf( ioQQQ, " Sorry.\n" );

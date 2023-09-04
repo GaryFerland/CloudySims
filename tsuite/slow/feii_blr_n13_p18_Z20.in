@@ -89,7 +89,8 @@ monitor line luminosity "blnd" 1909 0.3438 err 0.1
 ## >>chng 14 may 24, from 2.592 to 2.546, use NIST for all default stout levels
 ## >>chng 15 nov 16, from 2.546 to 2.015, update Si III, 1888 TP now 3x smaller
 ## >>chng 16 aug 17, from 2.015 to 2.06, bugfix at r11237
-monitor line luminosity "blnd"  1888 2.06 error 0.1 
+## >>chng 23 jun 27, from 2.06 to 2.128, update Fe+ model to Smyth+19
+monitor line luminosity "blnd"  1888 2.128 error 0.1 
 ##
 ## >>chng 06 nov 29, from 3.132 to 3.080 Badnell DR
 ## >>chng 08 mar 17, from 3.080 to 3.052, RP update line overlap
@@ -102,7 +103,8 @@ monitor line luminosity "blnd"  1888 2.06 error 0.1
 ## >>chng 14 apr 19, from 3.221 to 3.254, move Ca 2 to Stout
 ## >>chng 14 may 24, from 3.254 to 3.234, use NIST for all default stout levels
 ## >>chng 16 aug 17, from 3.234 to 3.266, bugfix at r11237
-monitor line luminosity "Blnd"  1860 3.266  ##total sum of both Al III comp
+## >>chng 23 jun 27, from 3.266 to 3.293, update Fe+ model to Smyth+19
+monitor line luminosity "Blnd"  1860 3.293  ##total sum of both Al III comp
 ##
 ##total C II] 2324.69 + 2328.12
 ## >>chng 05 jul 17, from 3.07 to 3.09, first run in 6 mo
@@ -121,11 +123,13 @@ monitor line luminosity "blnd" 2326 2.947 error 0.1
 ## >>chng 14 apr 19, from 6.534 to 6.574, move Ca 2 to Stout
 ## >>chng 15 jan 14, from 6.574 to 6.554, FeII damping parameter fix
 ## >>chng 19 jun 14, from 6.554 to 6.575, update to CODATA 2018
-monitor line luminosity "blnd" 2798 6.575  ##total of sum of both Mg II comp
+## >>chng 23 jun 27, from 6.575 to 6.602, update Fe+ model to Smyth+19
+monitor line luminosity "blnd" 2798 6.602  ##total of sum of both Mg II comp
 ## >>chng 14 apr 19, from 6.713 to 6.68, move Ca 2 to Stout
 ## >>chng 15 nov 16, from 6.68 to 6.654, update Si III, 1888 TP now 3x smaller
 ## >>chng 19 jul 30, from 6.654 to 6.677, split He I 2 ^3P_J
-monitor line luminosity "Blnd"  3933 6.677
+## >>chng 23 jun 27, from 6.677 to 6.703, update Fe+ model to Smyth+19
+monitor line luminosity "Blnd"  3933 6.703
 ##
 ## >>chng 05 jul 17, from 6.46 to 6.48, first run in 6 mo
 ## >>chng 05 aug 05, from 6.48 to 6.44, NA update chem, chng col den
@@ -148,7 +152,8 @@ monitor line luminosity "Blnd"  1.08302m 6.151 error 0.1
 ## >>chng 14 may 24, from 6.806 to 6.781, use NIST for all default stout levels
 ## >>chng 16 aug 17, from 6.781 to 6.802, bugfix at r11237
 ## >>chng 19 aug 06, from 6.802 to 6.822, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
-monitor line luminosity "Fe 2c" 0 6.822
+## >>chng 23 jun 27, from 6.822 to 6.744, update Fe+ model to Smyth+19
+monitor line luminosity "Fe 2c" 0 6.744
 ##
 ## >>chng 09 jun 15, add this monitor
 ## >>chng 11 nov 16, from 6.62 to 6.649, adjust newmole monitors
@@ -157,7 +162,8 @@ monitor line luminosity "Fe 2c" 0 6.822
 ## >>chng 14 may 24, from 6.656 to 6.633, use NIST for all default stout levels
 ## >>chng 16 aug 17, from 6.633 to 6.662, bugfix at r11237
 ## >>chng 19 aug 07, from 6.662 to 6.681, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
-monitor line luminosity "Fe 2b" 2445 6.681
+## >>chng 23 jun 27, from 6.681 to 6.591, update Fe+ model to Smyth+19
+monitor line luminosity "Fe 2b" 2445 6.591
 ##
 ## >>chng 09 jun 15, add this monitor
 ## >>chng 11 jul 12, from 4.386 to 4.408, enable fit to Badnell DR suppression
@@ -171,7 +177,8 @@ monitor line luminosity "Fe 2b" 2445 6.681
 ## >>chng 15 nov 16, from 4.388 to 4.366, update Si III, 1888 TP now 3x smaller
 ## >>chng 16 aug 17, from 4.366 to 4.393, bugfix at r11237
 ## >>chng 20 jan 13, from 4.393 to 4.415, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor line luminosity "Fe 2b" 4558 4.415
+## >>chng 23 jun 27, from 4.415 to 4.542, update Fe+ model to Smyth+19
+monitor line luminosity "Fe 2b" 4558 4.542
 ##
 ## >>chng 08 aug 02, from <12 to <18 changes over past month
 ## >>chng 08 dec 08, from 18 to 8.012, upper limit -> equals (r2515)
@@ -199,7 +206,8 @@ monitor line luminosity "Fe 2b" 4558 4.415
 ## >>chng 14 apr 07, from 6.891 to 5.33, move H/C out of ConvBase loop
 ## >>chng 18 jun 20, from 5.33 to 5.82, bugfixes at front face r12134:12136
 ## >>chng 21 nov 02, from 5.82 to 5.243, fix bug with overresolving CS in isoseq
-monitor itrzn 5.243 error 0.1
+## >>chng 23 jul 24, from 5.243 to 5.541, fix all-double (near) botches
+monitor itrzn 5.541 error 0.1
 ##
 ## >>chng 05 sep 30, from <10 to <5
 ## >>chng 08 dec 08, from 5 to 4, upper limit -> equals (r2515)
@@ -224,27 +232,34 @@ monitor niter 3 error 0.01
 ## >>chng 12 aug 16, from 260 to 222, fix radasc bug from r6346
 ## >>chng 12 aug 16, from 222 to 176, further fix of Rawlings H2 rates
 ## >>chng 12 nov 28, from 176 to 185, Make HII dr test symmetric
-monitor nzone 185
+## >>chng 23 jun 27, from 185 to 176, update Fe+ model to Smyth+19
+monitor nzone 176
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.89, Move FeII to Stout
-monitor line intensity "Fe 2b" 1148 3.89 error 0.1
+## >>chng 23 jun 27, from 3.89 to 3.984, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 1148 3.984 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.271, Move FeII to Stout
-monitor line intensity "Fe 2b" 1212 3.271 error 0.1
+## >>chng 23 jun 27, from 3.271 to 4.286, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 1212 4.286 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 2.905, Move FeII to Stout
-monitor line intensity "Fe 2b" 1295 2.905 error 0.1
+## >>chng 23 jun 27, from 2.905 to 3.308, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 1295 3.308 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 2.833, Move FeII to Stout
-monitor line intensity "Fe 2b" 1365 2.833 error 0.1
+## >>chng 23 jun 27, from 2.833 to 3.43, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 1365 3.43 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.967, Move FeII to Stout
 ## >>chng 16 aug 17, from 3.967 to 4.006, bugfix at r11237
-monitor line intensity "Fe 2b" 1485 4.006 error 0.1
+## >>chng 23 jun 27, from 4.006 to 4.274, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 1485 4.274 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.131, Move FeII to Stout
 ## >>chng 19 jul 30, from 4.131 to 4.182, split He I 2 ^3P_J
-monitor line intensity "Fe 2b" 1615 4.182 error 0.1
+## >>chng 23 jun 27, from 4.182 to 4.221, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 1615 4.221 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.422, Move FeII to Stout
 ## >>chng 20 jan 13, from 3.422 to 3.461, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
@@ -252,73 +267,93 @@ monitor line intensity "Fe 2b" 1787 3.461 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.519, Move FeII to Stout
 ## >>chng 19 jun 14, from 3.519 to 3.56, update to CODATA 2018
-monitor line intensity "Fe 2b" 1822 3.56 error 0.1
+## >>chng 23 jun 27, from 3.56 to 3.686, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 1822 3.686 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 6.287, Move FeII to Stout
 ## >>chng 20 jan 13, from 6.287 to 6.326, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor line intensity "Fe 2b" 2355 6.326 error 0.1
+## >>chng 23 jun 27, from 6.326 to 6.214, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 2355 6.214 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 5.575, Move FeII to Stout
 ## >>chng 19 jun 14, from 5.575 to 5.614, update to CODATA 2018
-monitor line intensity "Fe 2b" 2495 5.614 error 0.1
+## >>chng 23 jun 27, from 5.614 to 5.467, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 2495 5.467 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 5.184, Move FeII to Stout
 ## >>chng 20 jan 13, from 5.184 to 5.222, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor line intensity "Fe 2b" 2695 5.222 error 0.1
+## >>chng 23 jun 27, from 5.222 to 5.301, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 2695 5.301 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 5.763, Move FeII to Stout
 monitor line intensity "Fe 2b" 2758 5.763 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.945, Move FeII to Stout
 ## >>chng 19 jun 14, from 3.945 to 3.983, update to CODATA 2018
-monitor line intensity "Fe 2b" 2797 3.983 error 0.1
+## >>chng 23 jun 27, from 3.983 to 3.545, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 2797 3.545 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 5.639, Move FeII to Stout
-monitor line intensity "Fe 2b" 2935 5.639 error 0.1
+## >>chng 23 jun 27, from 5.639 to 5.384, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 2935 5.384 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.261, Move FeII to Stout
-monitor line intensity "Fe 2b" 4255 4.261 error 0.1
+## >>chng 23 jun 27, from 4.261 to 4.618, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 4255 4.618 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.398, Move FeII to Stout
-monitor line intensity "Fe 2b" 4558 4.398 error 0.1
+## >>chng 23 jun 27, from 4.398 to 4.542, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 4558 4.542 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 2.675, Move FeII to Stout
-monitor line intensity "Fe 2b" 4743 2.675 error 0.1
+## >>chng 23 jun 27, from 2.675 to 2.108, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 4743 2.108 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 2.629, Move FeII to Stout
 monitor line intensity "Fe 2b" 4855 2.629 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 2.425, Move FeII to Stout
-monitor line intensity "Fe 2b" 4971 2.425 error 0.1
+## >>chng 23 jun 27, from 2.425 to 2.018, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 4971 2.018 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.987, Move FeII to Stout
-monitor line intensity "Fe 2b" 4975 4.987 error 0.1
+## >>chng 23 jun 27, from 4.987 to 4.659, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 4975 4.659 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.562, Move FeII to Stout
-monitor line intensity "Fe 2b" 5143 4.562 error 0.1
+## >>chng 23 jun 27, from 4.562 to 4.668, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 5143 4.668 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.127, Move FeII to Stout
-monitor line intensity "Fe 2b" 5318 4.127 error 0.1
+## >>chng 23 jun 27, from 4.127 to 4.654, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 5318 4.654 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 2.652, Move FeII to Stout
-monitor line intensity "Fe 2b" 5865 2.652 error 0.1
+## >>chng 23 jun 27, from 2.652 to 2.693, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 5865 2.693 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 2.931, Move FeII to Stout
-monitor line intensity "Fe 2b" 6265 2.931 error 0.1
+## >>chng 23 jun 27, from 2.931 to 3.448, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 6265 3.448 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.347, Move FeII to Stout
-monitor line intensity "Fe 2b" 6565 3.347 error 0.1
+## >>chng 23 jun 27, from 3.347 to 3.518, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 6565 3.518 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.019, Move FeII to Stout
-monitor line intensity "Fe 2b" 7445 3.019 error 0.1
+## >>chng 23 jun 27, from 3.019 to 3.39, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 7445 3.39 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 1.161, Move FeII to Stout
-monitor line intensity "Fe 2b" 7785 1.161 error 0.1
+## >>chng 23 jun 27, from 1.161 to 0.7516, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 7785 0.7516 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 2.347, Move FeII to Stout
-monitor line intensity "Fe 2b" 1.88900m 2.347 error 0.1
+## >>chng 23 jun 27, from 2.347 to 1.938, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 1.88900m 1.938 error 0.1
 ##
-monitor line intensity "Fe 2b" 2.20000m 1.01 error 0.1
+## >>chng 23 jun 27, from 1.01 to 0.1705, update Fe+ model to Smyth+19
+monitor line intensity "Fe 2b" 2.20000m 0.1705 error 0.1
 ##
 
 This is one of the 5 models that sample the LOC plane.

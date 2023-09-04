@@ -110,7 +110,8 @@ monitor line luminosity "Blnd"  1860 2.768  ##total sum of both Al III comp
 monitor line luminosity "blnd" 2326 3.068 err 0.1 
 ##
 ## >>chng 19 aug 06, from 6.766 to 6.786, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
-monitor line luminosity "blnd" 2798 6.786  ##total of sum of both Mg II comp
+## >>chng 23 jul 15, from 6.786 to 6.805, GS update UMIST to 2012 and set upper limit on T
+monitor line luminosity "blnd" 2798 6.805  ##total of sum of both Mg II comp
 ##
 ## >>chng 12 jul 01, from 6.816 to 6.79, update Badnell DR to 13-electron iso sequence
 ## >>chng 14 apr 19, from 6.79 to 6.712, Use Stout Ca 2
