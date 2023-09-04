@@ -45,7 +45,8 @@ void RT_line_all_escape( realnum *error )
 		}
 	}
 	
-
+	if(fudge(-1))
+		dprintf(ioQQQ, "rt_line_all do escape probabilities.\n");
 	RT_line_all(RT_line_one_escape);
 
 	if( opac.lgCaseB_no_pdest )
@@ -211,7 +212,7 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 
 	/* rfield.lgDoLineTrans - skip line transfer if requested with no line transfer
 	 * conv.nPres2Ioniz is zero during search phase and on first call in this zone */
-	if( !rfield.lgDoLineTrans && conv.nPres2Ioniz )
+	if( !rfield.lgDoLineTrans )
 	{
 		return;
 	}
@@ -225,8 +226,11 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 		DopplerWidth[nelem] = GetDopplerWidth(dense.AtomicWeight[nelem]);	
 	}
 
-	if (conv.lgFirstSweepThisZone || conv.lgLastSweepThisZone ) 
-	{		
+	{
+		if(fudge(-1))
+			dprintf(ioQQQ, "rt_line_all start radiative transfer. \t%.3f\n",
+			fnzone);
+
 		/* 	Radiative transfer information is needed from the resolved doublet, in order to use an
 			average of the optical depths of the resolved doublet, to compute the escape and destruction probabilities
 			of the unresolved doublet. So the loop over extra lyman lines has been moved above the lyman line loop. */
@@ -334,7 +338,7 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 			{
 				/* loop over all lines */
 				ipLo = ipH1s;
-				/* these are the extra Lyman lines for the H iso sequence */
+				/* these are the extra Lyman lines for the He iso sequence */
 				/* only update if significant abundance and need to update fine opac */
 				if( dense.xIonDense[nelem][ion] > 1e-30 )
 				{
@@ -367,6 +371,8 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 			line_one( UTALines[i], true,0.f, 
 						 DopplerWidth[(*UTALines[i].Hi()).nelem()-1], true);
 		}
+		if(fudge(-1))
+			dprintf(ioQQQ, "rt_line_all lines updated.\n");
 	}
 
 	for( ipISO=ipH_LIKE; ipISO < NISO; ++ipISO )
@@ -494,9 +500,6 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 void RT_fine_clear()
 {
 	DEBUG_ENTRY( "RT_fine_clear()" );
-	
-	/* save fully evaluated fine opacity array for later use */
-	rfield.save_fine_opac_zone.swap(rfield.fine_opac_zone);
 
 	/* zero out fine opacity array */
 	/* this array is huge and takes significant time to zero out or update, 

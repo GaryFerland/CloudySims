@@ -226,7 +226,7 @@ double RTesc_lya(
 	/* 
 	 * this is one of the three fundamental escape probability functions
 	 * the three are esc_CRDwing_1side, esc_PRD_1side, and RTesc_lya
-	 * evaluate esc prob for LA
+	 * evaluate esc prob for LA save total fine opacity, then zero out
 	 * optical depth in outer direction always defined
 	 */
 
@@ -240,7 +240,7 @@ double RTesc_lya(
 		/* the continuous opacity is positive, we have a valid soln,
 		   this is the ratio of continuous to line opacity,
 		   which is within a scale factor of the destruction probability. */
-		beta = conopc/(rfield.save_fine_opac_zone[t.Emis().ipFine() + rfield.ipFineConVelShift] + conopc);
+		beta = conopc/(rfield.fine_opac_zone[t.Emis().ipFine() + rfield.ipFineConVelShift]*SQRTPI + conopc);
 	}
 	else
 	{
@@ -248,17 +248,16 @@ double RTesc_lya(
 		beta = 1e-10;
 	}
 
-#if 0
-	dprintf(ioQQQ, "rt_escprob.cpp %i\t%e\t%e\t%i\t%e\t%e\t%e\n",
-		nzone,
-		t.Emis().opacity(),
-		(abund/SQRTPI*t.Emis().opacity()/DopplerWidth),
-		t.Emis().ipFine() + rfield.ipFineConVelShift,
-		rfield.fine_opac_zone[t.Emis().ipFine() + rfield.ipFineConVelShift],
-		rfield.save_fine_opac_zone[t.Emis().ipFine() + rfield.ipFineConVelShift],
-		rfield.fine_anu[t.Emis().ipFine() + rfield.ipFineConVelShift]
-		);
-#endif
+	if( fudge(-1) )
+		dprintf(ioQQQ, "rt_line_all %i\t%e\t%e\t%i\t%e\t%e\n",
+			nzone,
+			t.Emis().opacity(),
+			(abund/SQRTPI*t.Emis().opacity()/DopplerWidth),
+			t.Emis().ipFine() + rfield.ipFineConVelShift,
+			rfield.fine_opac_zone[t.Emis().ipFine() + rfield.ipFineConVelShift]*SQRTPI,
+			t.Emis().PopOpc()
+			);
+
 	/* find rt.wayin, the escape prob in inward direction */
 	RTesc_lya_1side(
 		t.Emis().TauIn(),

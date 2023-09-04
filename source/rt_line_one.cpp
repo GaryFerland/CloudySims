@@ -291,7 +291,6 @@ STATIC void RT_line_fine_opacity(
 	/* define fine opacity fine grid fine mesh */
 	/* rfield.lgOpacityFine flag set false with no fine opacities command */
 	/* opacities can be negative if masers are allowed */
-	ASSERT (conv.lgLastSweepThisZone);
 	if( ipLineCenter < 0 || abs(t.Emis().PopOpc()) < SMALLFLOAT ||
 		ipLineCenter>rfield.nfine || !rfield.lgOpacityFine )
 	{
@@ -311,8 +310,6 @@ STATIC void RT_line_fine_opacity(
 	// this product is less than SMALLFLOAT
 	// negative optical depth due to maser effect are allowed.
 	double dTauEffec = opac_line*radius.depth_x_fillfac;
-	if( abs(dTauEffec) < SMALLFLOAT )
-		return;
 
 	/* core width of optically thick line, do 4x with exponential Doppler core,
 	 * must be at least one cell, but profile is symmetric */
