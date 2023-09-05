@@ -79,6 +79,15 @@ void RT_line_all_escape( realnum *error )
 						/* hose the previously computed destruction probability */
 						iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().Pdest() = SMALLFLOAT; 
 					}
+
+					if( ipISO == ipH_LIKE )
+					{
+						for( long nHi=2; nHi <= iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; nHi++ )
+						{
+							ExtraLymanLinesJ05[nelem][nHi].Emis().Pdest() = SMALLFLOAT;
+							ExtraLymanLinesJ15[nelem][nHi].Emis().Pdest() = SMALLFLOAT;
+						}
+					}
 				}
 			}
 		}

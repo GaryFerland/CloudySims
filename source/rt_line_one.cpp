@@ -306,8 +306,7 @@ STATIC void RT_line_fine_opacity(
 	 * which is realnum */
 	realnum opac_line = (realnum)t.Emis().PopOpc() * t.Emis().opacity() / DopplerWidth;
 
-	// this is effective optical depth to this point. Do not do line if 
-	// this product is less than SMALLFLOAT
+	// this is effective optical depth to this point.
 	// negative optical depth due to maser effect are allowed.
 	double dTauEffec = opac_line*radius.depth_x_fillfac;
 
