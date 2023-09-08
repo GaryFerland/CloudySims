@@ -66,7 +66,8 @@ monitor line luminosity "H  1"  1215.67A 7.646 ##total Hydrogen Lyman-alpha 1215
 ## >>chng 13 sep 12, from 5.351 to 5.271, database Mg
 ## >>chng 14 may 24, from 5.271 to 5.216, allow all NIST levels to be used
 ## >>chng 20 jan 13, from 5.216 to 5.255, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor line luminosity "Blnd" 1397 5.255
+## >>chng 23 sep 08, from 5.255 to 5.207, fix SQRTPI in Lya destprob
+monitor line luminosity "Blnd" 1397 5.207
 ## 
 ## >>chng 06 aug 02, from 3.076 to 3.112, update O+2, N+2 CT
 ## >>chng 06 aug 09, from 3.112 to 3.220 Meudon 06, Bowen change

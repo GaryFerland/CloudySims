@@ -478,7 +478,8 @@ monitor itrzn 8.672
 ## >>chng 15 may 12, from 0.0184 to 0.0193, coll. str. reduced mass scaling
 ## >>chng 19 jul 30, from 0.0193 to 0.0163, split He I 2 ^3P_J
 ## >>chng 20 jan 13, from 0.0163 to 0.0151, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor Pradmax 0.0151
+## >>chng 23 sep 08, from 0.0151 to 0.0284, fix SQRTPI in Lya destprob
+monitor Pradmax 0.0284
 ##
 ## >>chng 13 jun 27, from -8.869 to -3.9, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.

@@ -583,7 +583,8 @@ monitor line luminosity "CO  " 289.041m  -2.902 error 0.15
 ## >>chng 12 apr 09, from -3.278 to -3.352, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 13 jul 24, wl from 260.2m to 260.169m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -3.352 to -3.497, update H3+ rates Indriola+ 2012
-monitor line luminosity "CO  " 260.169m  -3.497 error 0.15
+## >>chng 23 sep 08, from -3.497 to -3.439, fix SQRTPI in Lya destprob
+monitor line luminosity "CO  " 260.169m  -3.439 error 0.15
 ##
 ## >>chng 03 oct 03, from -2.245 to -2.201, integ co ion solvers
 ## >>chng 04 mar 04, from -2.201 to -2.349 improv conv, incr error
@@ -609,7 +610,8 @@ monitor line luminosity "CO  " 260.169m  -3.497 error 0.15
 ## >>chng 20 aug 03, from -4.07 to -4.231, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -4.231 to -4.152, LAMDA update
 ## >>chng 21 nov 04, from -4.152 to -4.234, update mole co data
-monitor line luminosity "CO  " 236.549m  -4.234 error 0.15
+## >>chng 23 sep 08, from -4.234 to -4.154, fix SQRTPI in Lya destprob
+monitor line luminosity "CO  " 236.549m  -4.154 error 0.15
 ##
 ## >>chng 03 oct 03, from -2.310 to -2.285, integ co ion solvers
 ## >>chng 04 mar 04, from -2.285 to -2.508 improv conv, incr error
@@ -636,7 +638,8 @@ monitor line luminosity "CO  " 236.549m  -4.234 error 0.15
 ## >>chng 14 mar 26, from -4.737 to -4.825, Move oxygen data to stout and chianti files
 ## >>chng 21 sep 11, from -4.825 to -4.676, LAMDA update
 ## >>chng 21 nov 04, from -4.676 to -4.861, update mole co data
-monitor line luminosity "CO  " 216.868m  -4.861 error 0.15
+## >>chng 23 sep 08, from -4.861 to -4.746, fix SQRTPI in Lya destprob
+monitor line luminosity "CO  " 216.868m  -4.746 error 0.15
 ## 
 ## >>chng 05 sep 30, add these 5
 ## >>chng 05 nov 22, from 11.19 to 10.99 stop half thick to avoid grn freeze out
@@ -771,7 +774,8 @@ monitor column density "C3H+"      10.45
 ## >>chng 21 apr 16, from 13.94 to 13.49, add molecular column densities
 ## >>chng 21 sep 11, from 13.49 to 11.13, LAMDA update
 ## >>chng 21 nov 04, from 11.13 to 13.42, update mole co data
-monitor column density "C3H"       13.42  
+## >>chng 23 sep 08, from 13.42 to 13.36, fix SQRTPI in Lya destprob
+monitor column density "C3H"       13.36  
 ## >>chng 21 apr 16, from 10.42 to 10.47, new monitor added
 ## >>chng 21 apr 16, from 10.47 to 10.59, add molecular column densities
 monitor column density "CCl+"      10.59  
@@ -791,14 +795,16 @@ monitor column density "CH"        14.54
 monitor column density "CH2+"      11.65  
 ## >>chng 21 apr 16, from 15.55 to 14.11, add molecular column densities
 ## >>chng 21 sep 11, from 14.11 to 14.06, LAMDA update
-monitor column density "CH2"       14.06  
+## >>chng 23 sep 08, from 14.06 to 14.02, fix SQRTPI in Lya destprob
+monitor column density "CH2"       14.02  
 ## >>chng 21 apr 16, from 13.41 to 12.08, add molecular column densities
 ## >>chng 21 sep 11, from 12.08 to 11.95, LAMDA update
 monitor column density "CH3+"      11.95
 ## >>chng 21 apr 16, from 15.2 to 12.41, add molecular column densities
 ## >>chng 21 sep 11, from 12.41 to 12.53, LAMDA update
 ## >>chng 21 nov 04, from 12.53 to 12.44, update mole co data
-monitor column density "CH3"       12.44  
+## >>chng 23 sep 08, from 12.44 to 12.38, fix SQRTPI in Lya destprob
+monitor column density "CH3"       12.38  
 ## >>chng 21 apr 16, from 10.12 to 6.262, add molecular column densities
 ## >>chng 21 nov 04, from 6.262 to 6.161, update mole co data
 ## >>chng 23 may 15, from 6.161 to 6.091, GS updates 21 reactions to UMIST 2012
@@ -830,7 +836,8 @@ monitor column density "CS"        16.79
 monitor column density "H2Cl+"     12.32  
 ## >>chng 21 apr 16, from 10.42 to 10.85, add molecular column densities
 ## >>chng 23 jun 27, from 10.85 to 10.89, update Fe+ model to Smyth+19
-monitor column density "H2O+"      10.89  
+## >>chng 23 sep 08, from 10.89 to 11.03, fix SQRTPI in Lya destprob
+monitor column density "H2O+"      11.03  
 ## >>chng 21 apr 16, from 14.05 to 16.46, add molecular column densities
 ## >>chng 23 may 15, from 16.46 to 16.4, GS updates 21 reactions to UMIST 2012
 monitor column density "H2O"       16.4  
@@ -859,7 +866,8 @@ monitor column density "HCS+"      13.08
 ## >>chng 21 sep 11, from 14.56 to 14.13, LAMDA update
 monitor column density "HNC"       14.13
 ## >>chng 21 apr 16, from 12.26 to 7.232, add molecular column densities
-monitor column density "HNO"       7.232  
+## >>chng 23 sep 08, from 7.232 to 7.186, fix SQRTPI in Lya destprob
+monitor column density "HNO"       7.186  
 ## >>chng 21 apr 16, from 12.97 to 11.73, add molecular column densities
 ## >>chng 21 sep 11, from 11.73 to 11.79, LAMDA update
 monitor column density "HS+"       11.79  
@@ -889,7 +897,8 @@ monitor column density "NH3"       15.52
 ## >>chng 21 sep 11, from 11.11 to 11.21, LAMDA update
 monitor column density "NH4+"      11.21  
 ## >>chng 21 apr 16, from 13.76 to 15.13, add molecular column densities
-monitor column density "NO"        15.13
+## >>chng 23 sep 08, from 15.13 to 15.08, fix SQRTPI in Lya destprob
+monitor column density "NO"        15.08
 ## >>chng 21 apr 16, from 11.47 to 11.02, add molecular column densities
 ## >>chng 21 sep 11, from 11.02 to 11.07, LAMDA update
 monitor column density "NS+"       11.07  
@@ -898,12 +907,14 @@ monitor column density "NS+"       11.07
 monitor column density "NS"        12.01
 ## >>chng 21 apr 16, from 11.9 to 8.208, add molecular column densities
 ## >>chng 21 sep 11, from 8.208 to 7.075, LAMDA update
-monitor column density "OCN"       7.075  
+## >>chng 23 sep 08, from 7.075 to 7.017, fix SQRTPI in Lya destprob
+monitor column density "OCN"       7.017  
 ## >>chng 21 apr 16, from 10.98 to 16.82, add molecular column densities
 ## >>chng 23 may 15, from 16.82 to 16.9, GS updates 21 reactions to UMIST 2012
 monitor column density "OCS"       16.9  
 ## >>chng 21 apr 16, from 10.33 to 11.39, add molecular column densities
-monitor column density "OH+"       11.39  
+## >>chng 23 sep 08, from 11.39 to 11.52, fix SQRTPI in Lya destprob
+monitor column density "OH+"       11.52  
 ## >>chng 21 apr 16, from 14.95 to 1.704, add molecular column densities
 monitor column density "OHgrn"     1.704  
 ## >>chng 21 apr 16, from 12.92 to 11.98, add molecular column densities
@@ -976,7 +987,8 @@ monitor itrzn 11.5
 ## >>chng 15 may 12, from 0.0176 to 0.0189, coll. str. reduced mass scaling
 ## >>chng 19 jul 30, from 0.0189 to 0.0162, split He I 2 ^3P_J
 ## >>chng 20 jan 13, from 0.0162 to 0.0151, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor Pradmax 0.0151
+## >>chng 23 sep 08, from 0.0151 to 0.028, fix SQRTPI in Lya destprob
+monitor Pradmax 0.028
 ##
 ## >>chng 13 jun 27, from -8.869 to -2.929, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.

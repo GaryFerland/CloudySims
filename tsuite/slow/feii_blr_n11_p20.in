@@ -119,7 +119,8 @@ monitor line luminosity "he 2"  1640.41A 7.847
 ## >>chng 14 mar 26, from 6.974 to 6.872, move O to external databases
 ## >>chng 16 aug 17, from 6.872 to 6.996, bugfix at r11237
 ## >>chng 19 jun 28, from 6.996 to 7.035, reintegrate iso_collisions branch
-monitor line luminosity "o  3"  1666.15 7.035 error 0.1
+## >>chng 23 sep 08, from 7.035 to 6.989, fix SQRTPI in Lya destprob
+monitor line luminosity "o  3"  1666.15 6.989 error 0.1
 ##
 ##total of sum of CIII] 1908.73+
 ## >>chng 03 oct 04, from 7.044 to 7.066, atom2 ots
@@ -134,7 +135,8 @@ monitor line luminosity "o  3"  1666.15 7.035 error 0.1
 ## >>chng 13 feb 19, from 6.877 to 6.916, tau_out consistency for LyA
 ## >>chng 16 aug 17, from 6.916 to 7.04, bugfix at r11237
 ## >>chng 19 aug 06, from 7.04 to 7.086, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
-monitor line luminosity "blnd" 1909 7.086 error 0.1
+## >>chng 23 sep 08, from 7.086 to 6.998, fix SQRTPI in Lya destprob
+monitor line luminosity "blnd" 1909 6.998 error 0.1
 ##
 ##total of sum of Si III] 1892+
 ## >>chng 05 jul 17, from 7.55 to 7.48, first run in 6 mo
@@ -148,7 +150,8 @@ monitor line luminosity "blnd" 1909 7.086 error 0.1
 ## >>chng 15 nov 16, from 7.284 to 7.156, update Si III, 1888 TP now 3x smaller
 ## >>chng 16 aug 17, from 7.156 to 7.316, bugfix at r11237
 ## >>chng 19 jul 30, from 7.316 to 7.359, split He I 2 ^3P_J
-monitor line luminosity "blnd"  1888 7.359 error 0.1
+## >>chng 23 sep 08, from 7.359 to 7.288, fix SQRTPI in Lya destprob
+monitor line luminosity "blnd"  1888 7.288 error 0.1
 ##
 ##total sum of both Al III comp
 ## >>chng 05 jul 17, from 6.91 to 6.85, first run in 6 mo
@@ -161,7 +164,8 @@ monitor line luminosity "blnd"  1888 7.359 error 0.1
 ## >>chng 15 mar 07, from 6.76 to 6.719, merging newmesh branch
 ## >>chng 16 aug 17, from 6.719 to 6.866, bugfix at r11237
 ## >>chng 19 jun 28, from 6.866 to 6.915, reintegrate iso_collisions branch
-monitor line luminosity "Blnd"  1860 6.915 error 0.1
+## >>chng 23 sep 08, from 6.915 to 6.851, fix SQRTPI in Lya destprob
+monitor line luminosity "Blnd"  1860 6.851 error 0.1
 ##
 ##total C II] 2324.69 + 2328.12
 ## >>chng 05 jul 17, from 6.23 to 6.17, first run in 6 mo

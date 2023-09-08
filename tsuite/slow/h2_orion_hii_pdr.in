@@ -440,7 +440,8 @@ monitor H2 column density level 0  2  19.15 error 0.1
 ## >>chng 14 dec 04, from 17.95 to 18.24, fix double-counting of big-H2 Solomon rate
 ## >>chng 16 dec 29, from 18.24 to 18.29, update H-H2 coll to Lique 2015
 ## >>chng 21 sep 11, from 18.29 to 18.23, LAMDA update
-monitor H2 column density level 0  3  18.23 error 0.1
+## >>chng 23 sep 08, from 18.23 to 18.28, fix SQRTPI in Lya destprob
+monitor H2 column density level 0  3  18.28 error 0.1
 ##
 ## >>chng 05 feb 12, from 15.54 to 15.58, better H2 conv
 ## >>chng 05 jul 17, from 15.58 to 16.44 first run in 6 mo

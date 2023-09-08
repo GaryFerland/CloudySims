@@ -35,7 +35,8 @@ save convergence reason ".cvr"
 ## >>chng 13 jul 24, wl from 1216 to 1215.68A, increased wl precision to 6 sig. fig.
 ## >>chng 16 aug 17, from 9.461 to 9.501, bugfix at r11237
 ## >>chng 17 may 26, wl from 1215.68A to 1215.67A, update Rydberg constant
-monitor line luminosity "H  1"  1215.67A 9.501 ##total Hydrogen Lyman-alpha 1215.67 
+## >>chng 23 sep 08, from 9.501 to 9.535, fix SQRTPI in Lya destprob
+monitor line luminosity "H  1"  1215.67A 9.535 ##total Hydrogen Lyman-alpha 1215.67 
 ##
 ## >>chng 10 jun 29, from 5.112 to 8.688, init
 ## >>chng 11 aug 06, from 8.688 to 8.658, effects of yesterday's changes, mostly r5341
@@ -75,7 +76,8 @@ monitor line luminosity "he 2"  1640.41A 8.864 ##total He II Balmer-alpha 1640
 ## >>chng 14 mar 26, from 7.284 to 7.135, move O to external databases
 ## >>chng 16 aug 17, from 7.135 to 7.213, bugfix at r11237
 ## >>chng 19 jul 30, from 7.213 to 7.239, split He I 2 ^3P_J
-monitor line luminosity "o  3"  1666.15 7.239 ##total O III] 1666
+## >>chng 23 sep 08, from 7.239 to 7.196, fix SQRTPI in Lya destprob
+monitor line luminosity "o  3"  1666.15 7.196 ##total O III] 1666
 ##
 ##total of sum of CIII] 1908.73+
 ## >>chng 10 jun 29, from 4.541 to 7.112, init
@@ -83,7 +85,8 @@ monitor line luminosity "o  3"  1666.15 7.239 ##total O III] 1666
 ## >>chng 12 nov 01, from 7.053 to 6.951, Chianti experimental levels, revised Badnell DR suppression
 ## >>chng 13 jan 10, from 6.951 to 7.014, fix in-zone continuum shielding
 ## >>chng 16 aug 17, from 7.014 to 7.135, bugfix at r11237
-monitor line luminosity "blnd" 1909 7.135 error 0.1
+## >>chng 23 sep 08, from 7.135 to 7.089, fix SQRTPI in Lya destprob
+monitor line luminosity "blnd" 1909 7.089 error 0.1
 ##
 ##total of sum of Si III] 1892+
 ## >>chng 10 jun 29, from 6.29 to 7.909, init
@@ -104,7 +107,8 @@ monitor line luminosity "blnd"  1888 7.569 error 0.1
 ## >>chng 13 dec 18, from 7.713 to 7.686, fixes to Federman shielding
 ## >>chng 16 aug 17, from 7.686 to 7.762, bugfix at r11237
 ## >>chng 19 jul 30, from 7.762 to 7.782, split He I 2 ^3P_J
-monitor line luminosity "Blnd"  1860 7.782 ##total sum of both Al III comp
+## >>chng 23 sep 08, from 7.782 to 7.744, fix SQRTPI in Lya destprob
+monitor line luminosity "Blnd"  1860 7.744 ##total sum of both Al III comp
 ##
 ## >>chng 10 jun 29, from 5.39 to 6.157, init
 ## >>chng 11 nov 16, from 6.157 to 6.04, adjust newmole monitors
@@ -128,7 +132,8 @@ monitor line luminosity "blnd" 2326 6.1749 err 0.1 ##total C II] 2324.69+2328.12
 ## >>chng 13 sep 12, from 8.089 to 8.115, Mg converted to database
 ## >>chng 13 dec 18, from 8.115 to 8.092, fixes to Federman shielding
 ## >>chng 16 aug 17, from 8.092 to 8.146, bugfix at r11237
-monitor line luminosity "blnd" 2798 8.146 ##total of sum of both Mg II comp
+## >>chng 23 sep 08, from 8.146 to 8.124, fix SQRTPI in Lya destprob
+monitor line luminosity "blnd" 2798 8.124 ##total of sum of both Mg II comp
 ##
 ##total of sum of both Mg II comp
 ## >>chng 10 jun 29, from 7.324 to 8.821, init

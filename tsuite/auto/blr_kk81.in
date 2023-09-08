@@ -358,7 +358,8 @@ monitor line "blnd" 1549    66.83
 ## >>chng 07 jan 20, from 3.48 to 3.66 e2 bug
 ## >>chng 08 apr 10, from 3.66 to 3.85, change default h-like levels, other minor changes
 ## >>chng 12 nov 01, from 3.85 to 3.173, Chianti experimental levels, revised Badnell DR suppression
-monitor line "blnd"  1750     3.173
+## >>chng 23 sep 08, from 3.173 to 2.883, fix SQRTPI in Lya destprob
+monitor line "blnd"  1750     2.883
 ##
 ## >>chng 01 mar 09, from 1.35 to 1.44 H redis function
 ## >>chng 01 dec 21, inner shell yields, 1.44 to 1.338
