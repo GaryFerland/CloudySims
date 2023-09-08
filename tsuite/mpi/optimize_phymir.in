@@ -45,7 +45,7 @@ monitor mpi
 ##
 monitor eden 5.040 error 0.1
 ## 
-monitor temperature hydrogen 2 4 
+monitor temperature "H+" 4 
 #
 # optimize_phymir.in 
 # class optimizer 

@@ -51,7 +51,7 @@ save fits "func_test_cycle2.fit"
 ##
 monitor mpi
 ##
-monitor hydro 2 temp grid "func_test_cycle2.dat" err 0.05
+monitor temp grid "func_test_cycle2.dat" "H+" err 0.05
 #
 # agn_S_grid.in
 # class BLR
