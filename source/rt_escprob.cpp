@@ -238,7 +238,9 @@ double RTesc_lya(
 	if( abund > 0. )
 	{
 		/* the continuous opacity is positive, we have a valid soln */
-		beta = conopc/(abund/SQRTPI*t.Emis().opacity()/
+		/* Bug fix on 2023 09 07, change /SQRTPI to *SQRTPI
+		   see Appendix B of Gunasekera et al 2023. */
+		beta = conopc/(abund*SQRTPI*t.Emis().opacity()/
 			DopplerWidth + conopc);
 	}
 	else
