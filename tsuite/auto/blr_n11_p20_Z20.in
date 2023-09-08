@@ -56,7 +56,8 @@ monitor line luminosity "blnd"  1035 6.022 ##total of sum of both O VI comp
 ## >>chng 16 aug 07, from 8.646 to 8.687, Fran bug fix
 ## >>chng 17 may 26, wl from 1215.68A to 1215.67A, update Rydberg constant
 ## >>chng 21 nov 02, from 8.687 to 8.666, fix bug with overresolving CS in isoseq
-monitor line luminosity "H  1"  1215.67A 8.666 ##total Hydrogen Lyman-alpha 1215.67 
+## >>chng 23 sep 08, from 8.666 to 8.691, fix SQRTPI in Lya destprob
+monitor line luminosity "H  1"  1215.67A 8.691 ##total Hydrogen Lyman-alpha 1215.67 
 ## 
 ## >>chng 06 nov 29, from 7.853 to 7.831, Badnell DR turned on
 ## >>chng 11 nov 16, from 7.831 to 7.809, adjust newmole monitors

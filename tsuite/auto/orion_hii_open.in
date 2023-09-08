@@ -293,7 +293,8 @@ monitor line "GraI" 0 119.6
 ## >>chng 13 jul 26, wl from 1216 to 1215.68A, increased wl precision to 6 sig. fig.
 ## >>chng 15 sep 28, from 28.82 to 27.15, degeneration criteria and lifetime changes to higher initial level
 ## >>chng 17 may 26, wl from 1215.68A to 1215.67A, update Rydberg constant
-monitor line "GraL" 1215.67A 27.15
+## >>chng 23 sep 08, from 27.15 to 22.03, fix SQRTPI in Lya destprob
+monitor line "GraL" 1215.67A 22.03
 ##
 ## grain emission 
 ## >>chng 13 jul 26, wl from 60.83m to 60.8322m, increased wl precision to 6 sig. fig.
@@ -311,7 +312,8 @@ monitor line "nFnu"  12.43m  49.7
 ## >>chng 07 jan 20, from 6.15 to 5.68 e2 bug
 ## >>chng 08 mar 20, from 5.68 to 5.94 value drifted but did not throw assert
 ## >>chng 09 feb 23, from 5.94 to 6.471, remove otslin, otscon dampers (PR #84, r2758)
-monitor line "nFnu"  7.580m   6.471
+## >>chng 23 sep 08, from 6.471 to 5.873, fix SQRTPI in Lya destprob
+monitor line "nFnu"  7.580m   5.873
 ##
 ## >>chng 13 jul 26, wl from 1.436m to 1.43649m, increased wl precision to 6 sig. fig.
 monitor line "nFnu"  1.43649m   1.441
@@ -329,7 +331,8 @@ monitor line "nFnu"  1.43649m   1.441
 ## >>chng 15 may 12, from 0.0294 to 0.0309, coll. str. reduced mass scaling
 ## >>chng 19 jul 30, from 0.0309 to 0.0271, split He I 2 ^3P_J
 ## >>chng 20 jan 13, from 0.0271 to 0.0258, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor Pradmax 0.0258
+## >>chng 23 sep 08, from 0.0258 to 0.054, fix SQRTPI in Lya destprob
+monitor Pradmax 0.054
 ## 
 ## >>chng 05 oct 01, from 0.0702 to 0.0519, RP update He levels
 ## >>chng 15 mar 07, from 0.0519 to 0.0718, merging newmesh branch

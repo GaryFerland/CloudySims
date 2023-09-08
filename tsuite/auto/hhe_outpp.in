@@ -135,7 +135,8 @@ monitor line "Ca B" 5875.64A  0.137
 ## >>chng 13 jul 30, wl from 4471.47A to 4471.49A, increased wl precision to 6 sig. fig.
 ## >>chng 18 feb 20, updated spectral label from "He 1" 4471.49A to "Blnd" 4472.76A, update He-like triplet labels and wl
 ## >>chng 18 mar 06, wl from 4472.76A to 4471.50A, adjust multiplet Blend WL for refraction index
-monitor line "Blnd" 4471.50A  0.0467
+## >>chng 23 sep 08, from 0.0467 to 0.0445, fix SQRTPI in Lya destprob
+monitor line "Blnd" 4471.50A  0.0445
 ## >>chng 13 jul 25, wl from 4471 to 4471.49A, increased wl precision to 6 sig. fig.
 monitor line "Ca B" 4471.49A  0.0452
 ##
@@ -147,7 +148,8 @@ monitor line "Ca B" 4471.49A  0.0452
 ## >>chng 13 jul 25, wl from 3889 to 3888.63A, increased wl precision to 6 sig. fig.
 ## >>chng 16 aug 07, from 0.0223 to 0.0236, Marios bug fixes
 ## >>chng 21 mar 16, wl from 3888.63A to 3888.64A, update NIST energies
-monitor line "He 1" 3888.64A  0.0236 
+## >>chng 23 sep 08, from 0.0236 to 0.0222, fix SQRTPI in Lya destprob
+monitor line "He 1" 3888.64A  0.0222 
 ## >>chng 13 jul 25, wl from 3889 to 3888.63A, increased wl precision to 6 sig. fig.
 ## >>chng 21 mar 16, wl from 3888.63A to 3888.64A, update NIST energies
 monitor line "Ca B" 3888.64A  0.104 

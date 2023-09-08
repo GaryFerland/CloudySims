@@ -164,7 +164,8 @@ monitor "CO  " 2600.05m  26.08 line intensity
 ## >>chng 13 jul 24, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from 27.08 to 27.13, C to external databases
 ## >>chng 14 mar 26, from 27.13 to 27.16, Move oxygen data to stout and chianti files
-monitor "CO  " 1300.05m  27.16 line intensity
+## >>chng 23 sep 08, from 27.16 to 27.12, fix SQRTPI in Lya destprob
+monitor "CO  " 1300.05m  27.12 line intensity
 ## >>chng 13 jun 27, from -6.149 to 27.36, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from 27.36 to 27.38, Move oxygen data to stout and chianti files
@@ -173,17 +174,20 @@ monitor "CO  " 866.727m  27.38 line intensity
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from 27.32 to 27.29, C to external databases
 ## >>chng 14 mar 26, from 27.29 to 27.27, Move oxygen data to stout and chianti files
-monitor "CO  " 650.074m  27.27 line intensity
+## >>chng 23 sep 08, from 27.27 to 27.23, fix SQRTPI in Lya destprob
+monitor "CO  " 650.074m  27.23 line intensity
 ## >>chng 13 jun 27, from -6.485 to 27.14, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from 27.14 to 27.06, C to external databases
 ## >>chng 14 mar 26, from 27.06 to 27.01, Move oxygen data to stout and chianti files
-monitor "CO  " 520.089m  27.01 line intensity
+## >>chng 23 sep 08, from 27.01 to 26.97, fix SQRTPI in Lya destprob
+monitor "CO  " 520.089m  26.97 line intensity
 ## >>chng 13 jun 27, from -6.954 to 26.91, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from 26.91 to 26.76, C to external databases
 ## >>chng 14 mar 26, from 26.76 to 26.68, Move oxygen data to stout and chianti files
-monitor "CO  " 433.438m  26.68 line intensity
+## >>chng 23 sep 08, from 26.68 to 26.63, fix SQRTPI in Lya destprob
+monitor "CO  " 433.438m  26.63 line intensity
 ## >>chng 13 jun 27, from -7.48 to 26.63, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from 26.63 to 26.42, C to external databases
