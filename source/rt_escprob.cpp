@@ -629,7 +629,8 @@ STATIC void RTesc_lya_1side(double taume,
 
 	DEBUG_ENTRY( "RTesc_lya_1side()" );
 
-	/* fits to numerical results of Hummer and Kunasz Ap.J. 80 */
+	/* fits to numerical results of https://articles.adsabs.harvard.edu/pdf/1980ApJ...236..609H */
+	/* taume is the line center optical depth */
 	tau = taume*SQRTPI;
 
 	/* this is the real escape probability */

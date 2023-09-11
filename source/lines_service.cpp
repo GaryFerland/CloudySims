@@ -267,7 +267,7 @@ double abscf(double gf,
 	ASSERT(enercm > 0.);
 	ASSERT(gf >= 0.0 );
 
-	/* derive line absorption coefficient, given the following:
+	/* derive line absorption coefficient in cm^2 / s, given the following:
 	 * gf, enercm, g_low
 	 * gf is product of g and oscillator strength */
 	abscf_v = ABSOR_COEFF_CONST * (gf/gl)/enercm;
