@@ -74,7 +74,9 @@ monitor thickness 14.34
 ## >>chng 11 nov 16, from 20.69 to 23.05, adjust newmole monitors
 ## >>chng 13 jul 24, wl from 1216 to 1215.68A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 1215.68A to 1215.67A, update Rydberg constant
-monitor line "H  1" 1215.67A 23.05
+## >>chng 23 may 11, from 23.05 to 21.96, update RR DR to 2022 Badnell wor
+## >>chng 23 sep 08, from 21.96 to 33.95, fix SQRTPI in Lya destprob
+monitor line "H  1" 1215.67A 33.95
 ##
 ## >>chng 13 jul 24, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant

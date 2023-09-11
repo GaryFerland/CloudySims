@@ -97,7 +97,8 @@ monitor itrzn 2.3 error 0.04
 ## >>chng 15 may 27, from 530 to 535, PS64 fixes
 ## >>chng 20 jan 30, from 535 to 530, Interpolate Anderson+2000 collisionstrengths to 0
 ## >>chng 20 aug 03, from 530 to 538, update H3+ rates Indriola+ 2012
-monitor nzone 538 error 0.01
+## >>chng 23 may 15, from 538 to 523, GS updates 21 reactions to UMIST 2012
+monitor nzone 523 error 0.01
 ##
 ## >>chng 13 jun 27, from -8.869 to -5.245, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.

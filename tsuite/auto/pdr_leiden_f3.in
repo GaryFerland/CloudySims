@@ -63,7 +63,9 @@ monitor "H2O " 538.142m line intensity -7.196
 ## >>chng 21 apr 10, from -6.154 to -6.269, update chemistry and lamba
 ## >>chng 21 apr 16, from -6.269 to -6.155, remove bad UMIST reaction
 ## >>chng 21 sep 11, from -6.155 to -6.441, LAMDA update
-monitor "HNC " 1652.90m  line intensity -6.441 
+## >>chng 23 mar 17, from -6.441 to -6.532, add SiS and Lamda model"
+## >>chng 23 may 15, from -6.532 to -6.596, GS updates 21 reactions to UMIST 2012
+monitor "HNC " 1652.90m  line intensity -6.596 
 ## >>chng 10 aug 21, from -9.86 to -7.004, add these lines
 ## >>chng 11 nov 16, from -7.004 to -7.063, adjust newmole monitors
 ## >>chng 12 jun 07, from -7.063 to -7.638, vib_evap fix
@@ -74,14 +76,17 @@ monitor "HNC " 1652.90m  line intensity -6.441
 ## >>chng 20 aug 03, from -7.643 to -7.584, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -7.584 to -7.541, LAMDA update
 ## >>chng 21 nov 04, from -7.541 to -7.435, update mole co data
-monitor "HCS+" 1755.88m  -7.435 line intensity
+## >>chng 23 mar 17, from -7.435 to -7.205, add SiS and Lamda model"
+## >>chng 23 may 15, from -7.205 to -7.165, GS updates 21 reactions to UMIST 2012
+monitor "HCS+" 1755.88m  -7.165 line intensity
 ## >>chng 10 aug 21, from -8.288 to -6.596, add these lines
 ## >>chng 12 jun 07, from -6.596 to -6.77, vib_evap fix
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 15 aug 03, from -6.77 to -6.746, update LAMDA to 2015
 ## >>chng 16 mar 21, from -6.746 to -6.717, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 21 nov 04, from -6.717 to -6.666, update mole co data
-monitor "CS  " 3058.86m  -6.666 line intensity
+## >>chng 23 may 15, from -6.666 to -6.621, GS updates 21 reactions to UMIST 2012
+monitor "CS  " 3058.86m  -6.621 line intensity
 ## >>chng 10 aug 21, from -8.887 to -6.971, add these lines
 ## >>chng 11 nov 16, from -6.971 to -8.145, adjust newmole monitors
 ## >>chng 12 jun 07, from -8.145 to -8.696, vib_evap fix
@@ -152,7 +157,9 @@ monitor "CO  " 325.137m  -6.108 line intensity
 ## >>chng 21 sep 11, from -7.347 to -7.697, LAMDA update
 ## >>chng 21 sep 15, from -7.697 to -7.011, go back to unresolved model
 ## >>chng 21 nov 04, from -7.011 to -7.065, update mole co data
-monitor "CN  " 880.858m  -7.065  line intensity
+## >>chng 23 mar 17, from -7.065 to -7.342, add SiS and Lamda model"
+## >>chng 23 may 15, from -7.342 to -7.073, GS updates 21 reactions to UMIST 2012
+monitor "CN  " 880.858m  -7.073  line intensity
 ## 
 monitor H2 column density 21.927 error 0.1
 ## 
@@ -165,6 +172,8 @@ monitor H2 column density 21.927 error 0.1
 ## >>chng 11 nov 16, from 17.51 to 16.03, adjust newmole monitors
 ## >>chng 12 jun 07, from 16.03 to 15.46, vib_evap fix
 ## >>chng 12 jun 07, from 15.46 to 15.7, bugfix, no satur'n in grn_photo
+## >>chng 23 mar 17, from 15.7 to 15.66, add SiS and Lamda model"
+## >>chng 23 may 15, from 15.66 to 15.7, GS updates 21 reactions to UMIST 2012
 monitor CO column density 15.7 error 0.1
 ## 
 ## >>chng 05 jul 02, from 17.03 to 16.95, A_V zoning was not exact
@@ -222,6 +231,8 @@ monitor column density H2+  9.22 error 0.1
 ## >>chng 11 nov 16, from 12.57 to 12.75, adjust newmole monitors
 ## >>chng 12 jun 07, from 12.75 to 12.87, vib_evap fix
 ## >>chng 12 jun 07, from 12.87 to 12.93, bugfix, no satur'n in grn_photo
+## >>chng 23 mar 17, from 12.93 to 12.98, add SiS and Lamda model"
+## >>chng 23 may 15, from 12.98 to 12.93, GS updates 21 reactions to UMIST 2012
 monitor column density H3+  12.93 error 0.1
 ## 
 monitor column density H2g  21.90 error 0.1
@@ -266,7 +277,8 @@ monitor line luminosity "c  1" 370.269m -5.395
 ## >>chng 13 dec 23, from -6.085 to -6.054, C to external databases
 ## >>chng 20 aug 03, from -6.054 to -6.012, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -6.012 to -6.054, LAMDA update
-monitor line luminosity "c  1" 609.590m -6.054
+## >>chng 23 mar 17, from -6.054 to -6.008, add SiS and Lamda model"
+monitor line luminosity "c  1" 609.590m -6.008
 ## 
 ## >>chng 07 jan 07, from -4.232 to -4.323, enable McCall et al. H3+ rate
 ## >>chng 11 nov 16, from -4.323 to -3.901, adjust newmole monitors
@@ -300,7 +312,8 @@ monitor line luminosity "O  1" 145.495m -5.541
 ## >>chng 13 nov 25, from 2.782 to 2.604, convergence branch changes
 ## >>chng 14 apr 07, from 2.604 to 2.211, move H/C out of ConvBase loop
 ## >>chng 21 sep 11, from 2.211 to 2.291, LAMDA update
-monitor itrzn 2.291 error 0.02
+## >>chng 23 mar 17, from 2.291 to 2.395, add SiS and Lamda model"
+monitor itrzn 2.395 error 0.02
 ##
 ## >>chng 05 dec 08, from 560 to 600 (564) add zone logic for ice
 ## >>chng 06 mar 02, from 600 to 660 (632) NA Fe0, Mg0, <-> Si+, S+, C+ ct,
@@ -320,7 +333,8 @@ monitor itrzn 2.291 error 0.02
 ## >>chng 21 apr 16, from 811 to 840, remove bad UMIST reaction
 ## >>chng 21 sep 11, from 840 to 763, LAMDA update
 ## >>chng 21 nov 04, from 763 to 787, update mole co data
-monitor nzone 787 error 0.01
+## >>chng 23 mar 17, from 787 to 742, add SiS and Lamda model"
+monitor nzone 742 error 0.01
 # 
 # pdr_leiden_f3.in
 # class pdr 

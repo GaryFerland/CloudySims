@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParseDLaw parse parameters on the dlaw command */
 #include "cddefines.h"
@@ -72,7 +72,7 @@ void ParseDLaw(Parser &p)
 		if( optimize.lgVarOn )
 		{
 			ostringstream oss;
-			oss << "DLW %f" << setprecision(7);
+			oss << "DLAW %f" << setprecision(7);
 			for( j=1; j < 10; j++ )
 				oss << " " << dense.DensityLaw[j];
 			strcpy( optimize.chVarFmt[optimize.nparm], oss.str().c_str() );

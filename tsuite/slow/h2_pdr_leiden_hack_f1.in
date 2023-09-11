@@ -75,12 +75,14 @@ monitor column density H2O  16.55 error 0.1
 ## >>chng 11 nov 16, from 14.97 to 14.93, adjust newmole monitors
 ## >>chng 21 sep 11, from 14.93 to 13.81, LAMDA update
 ## >>chng 21 nov 04, from 13.81 to 14.16, update co mole data
-monitor column density C2   14.16 error 0.1
+## >>chng 23 may 15, from 14.16 to 13.54, GS updates 21 reactions to UMIST 2012
+monitor column density C2   13.54 error 0.1
 ## >>chng 11 jul 16, from 10 to 12.92, add column density monitors
 ## >>chng 20 aug 03, from 12.92 to 12.79, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from 12.79 to 11.82, LAMDA update
 ## >>chng 21 nov 04, from 11.82 to 12.12, update co mole data
-monitor column density C3   12.12 error 0.1
+## >>chng 23 may 15, from 12.12 to 11.99, GS updates 21 reactions to UMIST 2012
+monitor column density C3   11.99 error 0.1
 ## >>chng 11 jul 16, from 10 to 16.01, add column density monitors
 ## >>chng 20 aug 03, from 16.01 to 16.19, update H3+ rates Indriola+ 2012
 monitor column density OH   16.19 error 0.1
@@ -229,7 +231,8 @@ monitor "CO  " 433.438m  -5.563 line intensity
 ## >>chng 13 jun 27, from -7.48 to -6.013, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -6.013 to -6.056, LAMDA update
-monitor "CO  " 371.549m  -6.056 line intensity
+## >>chng 23 may 15, from -6.056 to -6.015, GS updates 21 reactions to UMIST 2012
+monitor "CO  " 371.549m  -6.015 line intensity
 ## >>chng 13 jun 27, from -8.049 to -6.588, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -6.588 to -6.633, LAMDA update

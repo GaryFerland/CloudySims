@@ -8,6 +8,9 @@
 # Chatzikos, April 14, 2022
 #	Use docs/SpeciesLabels.txt instead of tsuite/auto/func_lines.spclab
 #	Move PDFs to docs/ instead of copying them
+# Chatzikos, Aug 17, 2023
+#	Add command-line option, "all, "to delete _all_ files.  The net effect
+#	is to create two PDF files in ../docs.
 #
 
 echo "Gathering references..."
@@ -27,7 +30,7 @@ echo; echo "Hit enter to continue..."
 read < /dev/stdin
 
 echo "Preparing LaTeX table for Stout..."
-./db-ref-json2tex.pl -e -f=s -nr=32
+./db-ref-json2tex.pl -e -f=s -nr=40
 [ $? != 0 ] && exit "Something went wrong.  Exiting..."
 echo; echo "Hit enter to continue..."
 read < /dev/stdin
@@ -81,8 +84,15 @@ source mktable-species-db-list.sh
 echo ; echo "Stout PDF bibliography completed successfully"
 
 echo ; echo "Cleaning up..."
-source cleanup-stout-refs-list.sh
-source cleanup-species-db-list.sh
+if [ "$1" == "all" ]; then
+	source cleanup-stout-refs-list.sh all
+	source cleanup-species-db-list.sh all
+	rm empty-files.txt stout-refs.tex species-db.tex
+
+else
+	source cleanup-stout-refs-list.sh
+	source cleanup-species-db-list.sh
+fi
 echo "Done!"
 
 echo ; echo "Moving PDFs to ../docs ..."

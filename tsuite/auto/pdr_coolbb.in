@@ -62,7 +62,8 @@ monitor CO column density 20.89
 monitor "ArH+" column density 7.142
 ## >>chng 13 jul 15, from -4.459 to -1.652 move to Stout/Chianti for Si, botches are due to improved atomic data
 ## >>chng 20 aug 03, from -1.652 to -1.796, update H3+ rates Indriola+ 2012
-monitor line luminosity "Si 2" 34.8046m  -1.796
+## >>chng 23 may 15, from -1.796 to -1.743, GS updates 21 reactions to UMIST 2012
+monitor line luminosity "Si 2" 34.8046m  -1.743
 ##
 ## >>chng 08 feb 20, from -1.123 to -1.475, grain charge transfer changes in ion_solver and iso*
 ## >>chng 08 jun 25, from -1.475 to -1.43 add source/sink to ioniz ladder
@@ -151,7 +152,8 @@ monitor "HNC " 1652.90m  line intensity -4.2
 ## >>chng 13 jul 24, wl from 178.2m to 178.228m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -2.411 to -2.507, LAMDA update
 ## >>chng 21 nov 04, from -2.507 to -2.466, update mole co data
-monitor "HCN " 178.228m line intensity -2.466
+## >>chng 23 may 15, from -2.466 to -2.513, GS updates 21 reactions to UMIST 2012
+monitor "HCN " 178.228m line intensity -2.513
 ## >>chng 13 jun 27, from -8.563 to -4.031, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 19, from -4.031 to -4.086, set number of iterations to 8 for proper convergence of the model
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.

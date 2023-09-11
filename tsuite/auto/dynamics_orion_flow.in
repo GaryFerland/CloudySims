@@ -170,7 +170,8 @@ monitor HHeicf 0.0161 error 0.02
 ##
 ## some dynamic stuff
 ## >>chng 12 oct 22, from -0.13 to -0.1362, zone tau in rt_line_one
-monitor velocity -0.1362
+## >>chng 23 sep 08, from -0.1362 to -0.1262, fix SQRTPI in Lya destprob
+monitor velocity -0.1262
 ##
 ## assert dynamics convergence error < xx 
 ##

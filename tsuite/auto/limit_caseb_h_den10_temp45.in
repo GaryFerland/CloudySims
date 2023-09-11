@@ -28,25 +28,30 @@ iterate
 ## >>chng 21 mar 16, wl from 6562.80A to 6562.82A, update NIST energies
 ## >>chng 21 apr 08, wl from 6562.82A to 6562.83A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 6562.83A to 6562.80A, revert to PvH energies for H
-monitor line case b "H  1"      6562.80A  3.782
+## >>chng 23 sep 08, from 3.782 to 2.817, fix SQRTPI in Lya destprob
+monitor line case b "H  1"      6562.80A  2.817
 ## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-monitor line case b "H  1"      4861.32A  2.249
+## >>chng 23 sep 08, from 2.249 to 1.838, fix SQRTPI in Lya destprob
+monitor line case b "H  1"      4861.32A  1.838
 ## >>chng 21 mar 16, wl from 4340.46A to 4340.47A, update NIST energies
 ## >>chng 21 aug 18, wl from 4340.47A to 4340.46A, revert to PvH energies for H
-monitor line case b "H  1"      4340.46A  1.901
+## >>chng 23 sep 08, from 1.901 to 1.62, fix SQRTPI in Lya destprob
+monitor line case b "H  1"      4340.46A  1.62
 ## >>chng 19 jun 28, from 0.9822 to 1.096, reintegrate iso_collisions branch
 ## >>chng 21 mar 16, wl from 4101.73A to 4101.74A, update NIST energies
 ## >>chng 21 aug 18, wl from 4101.74A to 4101.73A, revert to PvH energies for H
 ## >>chng 21 nov 02, from 1.096 to 1.209, fix bug with overresolving CS in isoseq
-monitor line case b "H  1"      4101.73A  1.209
+## >>chng 23 sep 08, from 1.209 to 1.133, fix SQRTPI in Lya destprob
+monitor line case b "H  1"      4101.73A  1.133
 ## >>chng 19 jun 28, from 0.9593 to 1.041, reintegrate iso_collisions branch
 ## >>chng 21 mar 16, wl from 3970.07A to 3970.08A, update NIST energies
 ## >>chng 21 aug 18, wl from 3970.08A to 3970.07A, revert to PvH energies for H
 ## >>chng 21 nov 02, from 1.041 to 1.144, fix bug with overresolving CS in isoseq
-monitor line case b "H  1"      3970.07A  1.144
+## >>chng 23 sep 08, from 1.144 to 1.087, fix SQRTPI in Lya destprob
+monitor line case b "H  1"      3970.07A  1.087
 ## >>chng 19 jun 28, from 0.941 to 1.003, reintegrate iso_collisions branch
 ## >>chng 21 mar 16, wl from 3889.05A to 3889.06A, update NIST energies
 ## >>chng 21 aug 18, wl from 3889.06A to 3889.05A, revert to PvH energies for H
@@ -82,19 +87,23 @@ monitor line case b "H  1"      3703.85A  0.9959
 ## >>chng 21 mar 16, wl from 3697.15A to 3697.16A, update NIST energies
 ## >>chng 21 aug 18, wl from 3697.16A to 3697.15A, revert to PvH energies for H
 monitor line case b "H  1"      3697.15A  0.9974
-monitor line case b "H  1"      1.87510m  2.297
+## >>chng 23 sep 08, from 2.297 to 1.872, fix SQRTPI in Lya destprob
+monitor line case b "H  1"      1.87510m  1.872
 ## >>chng 20 aug 22, wl from 1.28180m to 1.28181m, switched from computed to tabulated energies for H and He isoseq
-monitor line case b "H  1"      1.28181m  1.897
+## >>chng 23 sep 08, from 1.897 to 1.619, fix SQRTPI in Lya destprob
+monitor line case b "H  1"      1.28181m  1.619
 ## >>chng 19 jun 28, from 0.982 to 1.098, reintegrate iso_collisions branch
 ## >>chng 20 aug 22, wl from 1.09380m to 1.09381m, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 nov 02, from 1.098 to 1.212, fix bug with overresolving CS in isoseq
-monitor line case b "H  1"      1.09381m  1.212
+## >>chng 23 sep 08, from 1.212 to 1.134, fix SQRTPI in Lya destprob
+monitor line case b "H  1"      1.09381m  1.134
 ## >>chng 19 jun 28, from 0.9589 to 1.041, reintegrate iso_collisions branch
 ## >>chng 20 aug 22, wl from 1.00493m to 1.00494m, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 08, wl from 1.00494m to 1.00493m, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 1.00493m to 1.00494m, revert to PvH energies for H
 ## >>chng 21 nov 02, from 1.041 to 1.144, fix bug with overresolving CS in isoseq
-monitor line case b "H  1"      1.00494m  1.144
+## >>chng 23 sep 08, from 1.144 to 1.088, fix SQRTPI in Lya destprob
+monitor line case b "H  1"      1.00494m  1.088
 ## >>chng 19 jun 28, from 0.9409 to 1.003, reintegrate iso_collisions branch
 ## >>chng 20 aug 22, wl from 9545.93A to 9545.97A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 08, wl from 9545.97A to 9545.95A, up 1-e energies to np
@@ -124,19 +133,22 @@ monitor line case b "H  1"      8750.48A  0.9739
 ## >>chng 20 aug 22, wl from 4.05113m to 4.05115m, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 4.05115m to 4.05116m, update NIST energies
 ## >>chng 21 apr 08, wl from 4.05116m to 4.05115m, up 1-e energies to np
-monitor line case b "H  1"      4.05115m  1.878
+## >>chng 23 sep 08, from 1.878 to 1.61, fix SQRTPI in Lya destprob
+monitor line case b "H  1"      4.05115m  1.61
 ## >>chng 19 jun 28, from 0.9817 to 1.1, reintegrate iso_collisions branch
 ## >>chng 20 aug 22, wl from 2.62513m to 2.62515m, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 08, wl from 2.62515m to 2.62514m, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 2.62514m to 2.62515m, revert to PvH energies for H
 ## >>chng 21 nov 02, from 1.1 to 1.215, fix bug with overresolving CS in isoseq
-monitor line case b "H  1"      2.62515m  1.215
+## >>chng 23 sep 08, from 1.215 to 1.136, fix SQRTPI in Lya destprob
+monitor line case b "H  1"      2.62515m  1.136
 ## >>chng 19 jun 28, from 0.9585 to 1.041, reintegrate iso_collisions branch
 ## >>chng 20 aug 22, wl from 2.16551m to 2.16553m, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 08, wl from 2.16553m to 2.16552m, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 2.16552m to 2.16553m, revert to PvH energies for H
 ## >>chng 21 nov 02, from 1.041 to 1.145, fix bug with overresolving CS in isoseq
-monitor line case b "H  1"      2.16553m  1.145
+## >>chng 23 sep 08, from 1.145 to 1.088, fix SQRTPI in Lya destprob
+monitor line case b "H  1"      2.16553m  1.088
 ## >>chng 19 jun 28, from 0.9408 to 1.003, reintegrate iso_collisions branch
 ## >>chng 20 aug 22, wl from 1.94454m to 1.94456m, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 08, wl from 1.94456m to 1.94455m, up 1-e energies to np
@@ -152,13 +164,15 @@ monitor line case b "H  1"      1.81741m  1.055
 ## >>chng 21 apr 13, wl from 7.45782m to 7.45780m
 ## >>chng 21 aug 18, wl from 7.45780m to 7.45782m and Elow from 105291.6 to 105291.7, revert to PvH energies for H
 ## >>chng 21 nov 02, from 1.102 to 1.218, fix bug with overresolving CS in isoseq
-monitor line case b "H  1"      7.45782m  Elow=105291.7  1.218
+## >>chng 23 sep 08, from 1.218 to 1.138, fix SQRTPI in Lya destprob
+monitor line case b "H  1"      7.45782m  Elow=105291.7  1.138
 ## >>chng 19 jun 28, from 0.9584 to 1.041, reintegrate iso_collisions branch
 ## >>chng 20 aug 22, wl from 4.65247m to 4.65251m, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 13, wl from 4.65251m to 4.65248m
 ## >>chng 21 aug 18, wl from 4.65248m to 4.65251m and Elow from 105291.6 to 105291.7, revert to PvH energies for H
 ## >>chng 21 nov 02, from 1.041 to 1.145, fix bug with overresolving CS in isoseq
-monitor line case b "H  1"      4.65251m  Elow=105291.6  1.145
+## >>chng 23 sep 08, from 1.145 to 1.088, fix SQRTPI in Lya destprob
+monitor line case b "H  1"      4.65251m  Elow=105291.6  1.088
 ## >>chng 19 jun 28, from 0.9406 to 1.003, reintegrate iso_collisions branch
 ## >>chng 20 aug 22, wl from 3.73951m to 3.73954m, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 08, wl from 3.73954m to 3.73952m, up 1-e energies to np

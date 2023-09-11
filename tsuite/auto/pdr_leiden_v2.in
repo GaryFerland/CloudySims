@@ -60,7 +60,8 @@ monitor H2 column density 21.76 error 0.1
 ## >>chng 20 sep 06, from 17.11 to 17.16, further update to McCall CR-related rate
 ## >>chng 21 sep 11, from 17.16 to 17.04, LAMDA update
 ## >>chng 21 nov 04, from 17.04 to 17.14, update mole co data
-monitor CO column density 17.14 error 0.1
+## >>chng 23 may 15, from 17.14 to 17.19, GS updates 21 reactions to UMIST 2012
+monitor CO column density 17.19 error 0.1
 ##
 ## >>chng 05 jul 05, from 14.34 to 13.66, cdsqte err
 ## >>chng 05 aug 03, from 13.66 to 13.70, NA update CO, H chem net
@@ -217,7 +218,8 @@ monitor "H2O " 538.142m line intensity -8.323
 ## >>chng 20 aug 03, from -11.15 to -11.26, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -11.26 to -11.76, LAMDA update
 ## >>chng 21 nov 04, from -11.76 to -11.47, update mole co data
-monitor "HNC " 1652.90m  line intensity -11.47
+## >>chng 23 may 15, from -11.47 to -11.55, GS updates 21 reactions to UMIST 2012
+monitor "HNC " 1652.90m  line intensity -11.55
 ## >>chng 13 jun 27, from -8.563 to -13.49, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from -13.49 to -13.55, C to external databases
@@ -225,7 +227,8 @@ monitor "HNC " 1652.90m  line intensity -11.47
 ## >>chng 20 aug 03, from -13.45 to -13.55, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -13.55 to -12.37, LAMDA update
 ## >>chng 21 nov 04, from -12.37 to -13.09, update mole co data
-monitor "HCS+" 1755.88m  -13.09 line intensity
+## >>chng 23 may 15, from -13.09 to -13.14, GS updates 21 reactions to UMIST 2012
+monitor "HCS+" 1755.88m  -13.14 line intensity
 ## >>chng 13 jun 27, from -7.453 to -10.92, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 14 jan 05, from -10.92 to -10.94, N to external databases
@@ -234,7 +237,8 @@ monitor "HCS+" 1755.88m  -13.09 line intensity
 ## >>chng 20 aug 03, from -10.92 to -11.06, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -11.06 to -10.83, LAMDA update
 ## >>chng 21 nov 04, from -10.83 to -10.34, update mole co data
-monitor "CS  " 3058.86m  -10.34 line intensity
+## >>chng 23 may 15, from -10.34 to -10.46, GS updates 21 reactions to UMIST 2012
+monitor "CS  " 3058.86m  -10.46 line intensity
 ## >>chng 13 jun 27, from -7.288 to -7.823, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -7.823 to -7.866, LAMDA update
@@ -252,7 +256,8 @@ monitor "CO  " 1300.05m  -7.417 line intensity
 ## >>chng 20 sep 06, from -8.01 to -7.99, further update to McCall CR-related rate
 ## >>chng 21 sep 11, from -7.99 to -8.16, LAMDA update
 ## >>chng 21 nov 04, from -8.16 to -8.002, update mole co data
-monitor "CO  " 866.727m  -8.002 line intensity
+## >>chng 23 may 15, from -8.002 to -7.932, GS updates 21 reactions to UMIST 2012
+monitor "CO  " 866.727m  -7.932 line intensity
 ## >>chng 13 jun 27, from -6.177 to -9.518, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from -9.518 to -9.614, C to external databases
@@ -260,7 +265,8 @@ monitor "CO  " 866.727m  -8.002 line intensity
 ## >>chng 20 sep 06, from -9.646 to -9.612, further update to McCall CR-related rate
 ## >>chng 21 sep 11, from -9.612 to -9.87, LAMDA update
 ## >>chng 21 nov 04, from -9.87 to -9.629, update mole co data
-monitor "CO  " 650.074m  -9.629 line intensity
+## >>chng 23 may 15, from -9.629 to -9.517, GS updates 21 reactions to UMIST 2012
+monitor "CO  " 650.074m  -9.517 line intensity
 ## >>chng 13 jun 27, from -6.485 to -11.39, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from -11.39 to -11.76, C to external databases
@@ -268,7 +274,8 @@ monitor "CO  " 650.074m  -9.629 line intensity
 ## >>chng 20 aug 03, from -11.8 to -11.82, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -11.82 to -12, LAMDA update
 ## >>chng 21 nov 04, from -12 to -11.81, update mole co data
-monitor "CO  " 520.089m  -11.81 line intensity
+## >>chng 23 may 15, from -11.81 to -11.71, GS updates 21 reactions to UMIST 2012
+monitor "CO  " 520.089m  -11.71 line intensity
 ## >>chng 13 jun 27, from -6.954 to -12.96, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -12.96 to -12.88, update H2 - C II 158m collision rate
@@ -305,7 +312,8 @@ monitor "CO  " 325.137m  -14.39 line intensity
 ## >>chng 20 sep 06, from -9.579 to -9.557, further update to McCall CR-related rate
 ## >>chng 21 sep 11, from -9.557 to -9.75, LAMDA update
 ## >>chng 21 nov 04, from -9.75 to -9.573, update mole co data
-monitor "^13CO" 906.599m  -9.573 line intensity
+## >>chng 23 may 15, from -9.573 to -9.49, GS updates 21 reactions to UMIST 2012
+monitor "^13CO" 906.599m  -9.49 line intensity
 ## >>chng 13 jun 27, from -8.247 to -12.88, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from -12.88 to -13.08, C to external databases
@@ -315,7 +323,8 @@ monitor "^13CO" 906.599m  -9.573 line intensity
 ## >>chng 21 sep 11, from -12.94 to -12.7, LAMDA update
 ## >>chng 21 sep 15, from -12.7 to -12.5, go back to unresolved model
 ## >>chng 21 nov 04, from -12.5 to -12.64, update mole co data
-monitor "CN  " 880.858m  -12.64  line intensity
+## >>chng 23 may 15, from -12.64 to -12.78, GS updates 21 reactions to UMIST 2012
+monitor "CN  " 880.858m  -12.78  line intensity
 #
 # pdr_leiden_v2.in
 # class pdr  
