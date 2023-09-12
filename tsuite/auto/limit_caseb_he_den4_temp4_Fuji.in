@@ -19,7 +19,7 @@ database he-like resolved levels 30
 database he-like collapsed levels 70
 database collisions he-like helium Fujimoto
 constant temper 4
-case b no photoionzation no pdest 
+case b hummer no photoionzation no pdest 
 no scattering escape
 no induced processes
 iterate
@@ -47,7 +47,8 @@ save line list ratio column "limit_caseb_he_den4_temp4_Fuji.rat" "linelist_he1.d
 ## >>chng 13 jul 30, wl from 4471.47A to 4471.49A, increased wl precision to 6 sig. fig.
 ## >>chng 18 feb 20, updated spectral label from "He 1" 4471.49A to "Blnd" 4472.76A, update He-like triplet labels and wl
 ## >>chng 18 mar 06, wl from 4472.76A to 4471.50A, adjust multiplet Blend WL for refraction index
-monitor line luminosity "Blnd" 4471.50A -25.18575
+## >>chng 23 sep 12, from -25.19 to -25.21, use Hummer option on case b command
+monitor line luminosity "Blnd" 4471.50A -25.2145
 ## 
 ## >>chng 07 dec 03, from 0.419 to 0.438, RP changes iso sequences
 ## >>chng 13 jul 27, wl from 2945 to 2945.10A, increased wl precision to 6 sig. fig.
@@ -62,7 +63,8 @@ monitor line "He 1"  3613.64A 0.114
 ##
 ## >>chng 13 jul 27, wl from 3889 to 3888.63A, increased wl precision to 6 sig. fig.
 ## >>chng 21 mar 16, wl from 3888.63A to 3888.64A, update NIST energies
-monitor line "He 1"  3888.64A 2.555
+## >>chng 23 sep 12, from 2.555 to 2.287, use Hummer option on case b command
+monitor line "He 1"  3888.64A 2.287
 ## >>chng 02 dec 12, increase error
 ## >>chng 13 jul 27, wl from 3965 to 3964.73A, increased wl precision to 6 sig. fig.
 monitor line "He 1"  3964.73A 0.219 error 0.1
@@ -82,7 +84,8 @@ monitor line "Blnd"  4026.21A 0.467
 monitor line "Blnd"  4120.84A 0.047 error 0.3
 ## 
 ## >>chng 13 jul 27, wl from 4388 to 4387.93A, increased wl precision to 6 sig. fig.
-monitor line "He 1"  4387.93A 0.116 error 0.1
+## >>chng 23 sep 12, from 0.116 to 0.1266, use Hummer option on case b command
+monitor line "He 1"  4387.93A 0.1266 error 0.1
 ## >>chng 13 jul 27, wl from 4438 to 4437.55A, increased wl precision to 6 sig. fig.
 monitor line "He 1"  4437.55A 0.016 error 0.15
 ## >>chng 13 jul 27, wl from 4713 to 4713.02A, increased wl precision to 6 sig. fig.
@@ -90,7 +93,8 @@ monitor line "He 1"  4437.55A 0.016 error 0.15
 ## >>chng 18 feb 20, updated spectral label from "He 1" 4713.03A to "Blnd" 4714.37A, update He-like triplet labels and wl
 ## >>chng 18 mar 06, wl from 4714.37A to 4713.05A, adjust multiplet Blend WL for refraction index
 ## >>chng 21 mar 16, wl from 4713.05A to 4713.17A, update NIST energies
-monitor line "Blnd"  4713.17A 0.146 error 0.15
+## >>chng 23 sep 12, from 0.146 to 0.1042, use Hummer option on case b command
+monitor line "Blnd"  4713.17A 0.1042 error 0.15
 ## 
 ## >>chng 04 may 19, from 0.259 to 0.273, RP update he-like seq
 ## >>chng 13 jul 27, wl from 4922 to 4921.93A, increased wl precision to 6 sig. fig.
@@ -102,12 +106,14 @@ monitor line "He 1"  5015.68A 0.599
 ## 
 ## >>chng 13 jul 27, wl from 5048 to 5047.64A, increased wl precision to 6 sig. fig.
 ## >>chng 21 mar 16, wl from 5047.64A to 5047.74A, update NIST energies
-monitor line "He 1"  5047.74A 0.045
+## >>chng 23 sep 12, from 0.045 to 0.0401, use Hummer option on case b command
+monitor line "He 1"  5047.74A 0.0401
 ## >>chng 13 jul 27, wl from 5876 to 5875.61A, increased wl precision to 6 sig. fig.
 ## >>chng 13 jul 30, wl from 5875.61A to 5875.64A, increased wl precision to 6 sig. fig.
 ## >>chng 18 feb 20, updated spectral label from "He 1" 5875.64A to "Blnd" 5877.29A, update He-like triplet labels and wl
 ## >>chng 18 mar 06, wl from 5877.29A to 5875.66A, adjust multiplet Blend WL for refraction index
-monitor line "Blnd"  5875.66A 2.933 
+## >>chng 23 sep 12, from 2.933 to 2.729, use Hummer option on case b command
+monitor line "Blnd"  5875.66A 2.729 
 ## >>chng 13 jul 27, wl from 6678 to 6678.15A, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 22, from 0.775 to 0.8468, collapsed branch merge r8609
 monitor line "He 1"  6678.15A 0.8468 error 0.1
@@ -115,9 +121,11 @@ monitor line "He 1"  6678.15A 0.8468 error 0.1
 ## >>chng 13 jul 30, wl from 7065.18A to 7065.22A, increased wl precision to 6 sig. fig.
 ## >>chng 18 feb 20, updated spectral label from "He 1" 7065.22A to "Blnd" 7067.20A, update He-like triplet labels and wl
 ## >>chng 18 mar 06, wl from 7067.20A to 7065.25A, adjust multiplet Blend WL for refraction index
-monitor line "Blnd"  7065.25A 0.943 error 0.1
+## >>chng 23 sep 12, from 0.943 to 0.4701, use Hummer option on case b command
+monitor line "Blnd"  7065.25A 0.4701 error 0.1
 ## >>chng 13 jul 27, wl from 7281 to 7281.35A, increased wl precision to 6 sig. fig.
-monitor line "He 1"  7281.35A 0.196 error 0.1
+## >>chng 23 sep 12, from 0.196 to 0.1449, use Hummer option on case b command
+monitor line "He 1"  7281.35A 0.1449 error 0.1
 ## 
 ## >>chng 04 may 19, from 0.023 to 0.0242, RP update he-like seq
 ## >>chng 13 jul 27, wl from 9464 to 9463.57A, increased wl precision to 6 sig. fig.
@@ -133,7 +141,8 @@ monitor line "He 1"  9463.58A 0.0242
 ## >>chng 19 jun 28, from 32.42 to 34.46, reintegrate iso_collisions branch
 ## >>chng 19 jul 30, from 34.46 to 20.49, split He I 2 ^3P_J
 ## >>chng 20 jan 13, from 20.49 to 15.48, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor line "Blnd" 1.08302m 15.48
+## >>chng 23 sep 12, from 15.48 to 16.23, use Hummer option on case b command
+monitor line "Blnd" 1.08302m 16.23
 ## 
 ## >>chng 04 may 19, from 0.044 to 0.0471, RP update he-like seq
 ## >>chng 13 jul 27, wl from 11970 to 1.19692m, increased wl precision to 6 sig. fig.
@@ -184,7 +193,8 @@ monitor line "He 1" 1.95431m 0.0178
 ## 
 ## >>chng 13 jul 27, wl from 21120 to 2.11180m, increased wl precision to 6 sig. fig.
 ## >>chng 21 mar 16, wl from 2.11180m to 2.11202m, update NIST energies
-monitor line "He 1" 2.11202m 0.022 error 0.15
+## >>chng 23 sep 12, from 0.022 to 0.0159, use Hummer option on case b command
+monitor line "He 1" 2.11202m 0.0159 error 0.15
 #
 # limit_caseb_he_den4_temp4.in
 # class limit 

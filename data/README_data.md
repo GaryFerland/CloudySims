@@ -113,8 +113,8 @@ They are added by including an **init** command that names one of the following
 files.
 
 * **c84.ini** - makes code behave more like version 84  
-* **fast.ini** - this includes several commands that make the code run faster,
-at the expense of a less accurate simulation  
+* **fast.ini** - this includes a command that disables elements to make the code 
+run faster, at the expense of a less accurate simulation  
 * **honly.ini** - hydrogen only init file  
 * **hheonly.ini** - init file for H, He only  
 * **ism.ini** - turns off level 2 lines and only includes prominent elements

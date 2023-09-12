@@ -7,7 +7,7 @@ init "honly.ini"
 laser 5
 ionization -2
 stop zone 1
-case B hummer
+case B hummer no pdest no photoionization
 print departure hydrogen H-like
 print departure helium H-like
 print line faint -6
