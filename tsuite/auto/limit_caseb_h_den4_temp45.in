@@ -18,7 +18,7 @@ set dr 0
 database h-like resolved levels 30
 database h-like collapsed levels 70
 constant temperature 3e4
-case b no photoionzation no pdest 
+case b hummer no photoionzation no pdest 
 no scattering escape
 no induced processes
 iterate

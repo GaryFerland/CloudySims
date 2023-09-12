@@ -18,7 +18,7 @@ database h-like resolved levels 30
 database h-like collapsed levels 70
 ## database h-like gbar vriens
 constant temper 4
-case b no photoionzation no pdest 
+case b hummer no photoionzation no pdest 
 no scattering escape
 no induced processes
 iterate
@@ -201,18 +201,21 @@ monitor departure "H[490]"  0.711
 ## >>chng 17 sep 09, from 0.9571 to 0.9027, fix bug in high n collisional excitation rates for H-like iso-sequences
 ## >>chng 19 jun 28, from 0.9027 to 0.8563, reintegrate iso_collisions branch
 ## >>chng 19 aug 06, from 0.8563 to 0.779, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
-monitor departure "H[510]"  0.779
+## >>chng 23 sep 12, from 0.779 to 0.8798, use Hummer option on case b command
+monitor departure "H[510]"  0.8798
 ## >>chng 16 jul 28, from 1 to 1.263, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 1.263 to 0.9765, Marios bug fixes
 ## >>chng 17 sep 09, from 0.9765 to 1.216, fix bug in high n collisional excitation rates for H-like iso-sequences
 ## >>chng 19 aug 06, from 1.216 to 1.061, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
-monitor departure "H[520]"  1.061
+## >>chng 23 sep 12, from 1.061 to 1.187, use Hummer option on case b command
+monitor departure "H[520]"  1.187
 ## >>chng 16 jul 28, from 1 to 1.273, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 1.273 to 0.987, Marios bug fixes
 ## >>chng 17 sep 09, from 0.987 to 1.639, fix bug in high n collisional excitation rates for H-like iso-sequences
 ## >>chng 19 jun 28, from 1.639 to 1.693, reintegrate iso_collisions branch
 ## >>chng 19 aug 06, from 1.693 to 1.788, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
-monitor departure "H[530]"  1.788
+## >>chng 23 sep 12, from 1.788 to 1.657, use Hummer option on case b command
+monitor departure "H[530]"  1.657
 print departure h-like hydrogen
 print line faint 0.01
 print line column
