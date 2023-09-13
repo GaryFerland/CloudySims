@@ -210,8 +210,8 @@ double RTesc_lya(
 	double *esin, 
 	/* the destruction probility */
 	double *dest, 
-	/* abundance of the species */
-	double abund, 
+	/* stimulated emission corrected population of lower level */
+	double popopc,
 	const TransitionProxy& t,
 	realnum DopplerWidth)
 {
@@ -235,7 +235,7 @@ double RTesc_lya(
 	if (rt.lgElecScatEscape && NEW_PELEC_ESC)
 		conopc += dense.eden*SIGMA_THOMSON;
 
-	if( abund > 0. )
+	if( popopc > 0. )
 	{
 		/* the continuous opacity is positive, we have a valid soln,
 		   this is the ratio of continuous to line opacity,
@@ -254,7 +254,7 @@ double RTesc_lya(
 		dprintf(ioQQQ, "rt_line_all %i\t%e\t%e\t%i\t%e\t%e\n",
 			nzone,
 			t.Emis().opacity(),
-			(abund/SQRTPI*t.Emis().opacity()/DopplerWidth),
+			(popopc*SQRTPI*t.Emis().opacity()/DopplerWidth),
 			t.Emis().ipFine() + rfield.ipFineConVelShift,
 			rfield.fine_opac_zone[t.Emis().ipFine() + rfield.ipFineConVelShift]*SQRTPI,
 			t.Emis().PopOpc()
