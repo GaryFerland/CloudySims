@@ -10,6 +10,7 @@
 #include "rt.h"
 #include "cosmology.h"
 #include "transition.h"
+#include "iso.h"
 
 void RT_line_one_tauinc(const TransitionProxy&  t ,
 	/* following four are flags to generate info if some species has extreme maser */
@@ -46,6 +47,14 @@ void RT_line_one_tauinc(const TransitionProxy&  t ,
 			OpacityEffective = t.Emis().mult_opac();
 		else
 			OpacityEffective = OpacitySpecific; 
+	}
+
+	/* Don't use fine opacity array for unresolved lyman lines */
+	long ipISO = t.Lo()->nelem() - t.Lo()->IonStg();
+	long nelem = t.Lo()->nelem() - 1;
+	if(ipISO == ipH_LIKE && t.Lo()->n() == 1 && (t.Hi()->n() > iso_sp[ipISO][nelem].n_HighestResolved_local || t.Hi()->l() == 1) && t.Hi()->g() == 6)
+	{
+		OpacityEffective = OpacitySpecific;
 	}
 
 #if	0
