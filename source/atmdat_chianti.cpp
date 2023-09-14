@@ -693,7 +693,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 
 	string chUnCaps = chPrefix;
 	uncaps(chUnCaps);
-	
+
 	string chEnFilename = chUnCaps;
 	string chTraFilename = chUnCaps;
 	string chEleColFilename = chUnCaps;
@@ -792,7 +792,6 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 				nTheoreticalLevels++;
 
 			elvlcstream.ignore(INT_MAX,'\n');
-
 		}
 		elvlcstream.seekg(0,ios::beg);
 	}
@@ -832,7 +831,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 	dBaseSpecies[intNS].numLevels_max = HighestIndexInFile;
 
 	setProperties(dBaseSpecies[intNS]);
-	
+
 	if( tolower(dBaseSpecies[intNS].chLabel[0]) == 'f' && tolower(dBaseSpecies[intNS].chLabel[1]) == 'e')
 	{
 		// Fe is special case with more levels
@@ -958,12 +957,11 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 			elvlcstream.seekg(lvl_skipto_statwt,ios::cur);
 			elvlcstream.get(gtemp,lvl_statwt_col);
 			fstatwt = (realnum) atof(gtemp)	;
-			
+
 			//elvlcstream.get(thtemp,lvl_nrg_col);
 			//fenergy = (double) atof(thtemp);
-			
-			
-			//Reading experimental column  
+
+			//Reading experimental column
 			elvlcstream.seekg(lvl_skip_to_exp_nrg,ios::cur);
 			elvlcstream.get(exptemp,lvl_nrg_col);
 			fenergy = (double) atof(exptemp);
@@ -972,7 +970,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 			elvlcstream.seekg(lvl_skip_to_theo_nrg,ios::cur);
 			elvlcstream.get(theotemp,lvl_nrg_col);
 			theoenergy = (double) atof(theotemp);
-			
+
 			if(fstatwt <= 0.)
 			{
 				fprintf( ioQQQ, " WARNING: A positive non zero value is expected for the "
@@ -980,7 +978,6 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 						" level %li\n", chEnFilename.c_str(),ipLev);
 				cdEXIT(EXIT_FAILURE);
 			}
-
 
 			if( atmdat.lgChiantiExp )
 			{
@@ -1002,7 +999,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 				else
 				{
 					//intExperIndex.at(ipLev) = -1;
-					
+
 					// Reading only theory because fenergy = 0
 					dBaseStatesEnergy.at(ncounter).first = theoenergy;
 					fprintf(ioQQQ, " The first theo column energies are %f\n",theoenergy);
@@ -1010,7 +1007,6 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 					dBaseStatesStwt.at(ncounter) = fstatwt;
 					intExperIndex.at(ipLev) = ncounter;
 					ncounter++;
-					
 				}
 			}
 			/*else
@@ -1114,7 +1110,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 			    revIntExperIndex[ipos] = i-intExperIndex.begin();
 		}
 	}
-	
+
 	for( DoubleLongPairVector::iterator i=dBaseStatesEnergy.begin(); i != dBaseStatesEnergy.end(); i++ )
 	{
 
@@ -1302,7 +1298,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 				wgfastream.ignore(INT_MAX,'\n');
 				continue;
 			}
-	
+
 			if( ipHi == ipLo )
 			{
 				fprintf( ioQQQ," WARNING: Upper level = lower for a radiative transition in %s. Ignoring.\n", chTraFilename.c_str() );
@@ -1314,7 +1310,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 			{
 				fprintf(ioQQQ,"<%s>\t%li:%li\t%li:%li\t",dBaseSpecies[intNS].chLabel,ipLoInFile,ipHiInFile,ipLo+1,ipHi+1);
 			}
-	
+
 			ASSERT( ipHi != ipLo );
 			ASSERT( ipHi >= 0 );
 			ASSERT( ipLo >= 0 );
@@ -1512,7 +1508,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 				splupslines++;
 			}
 			splupsstream.seekg(0,ios::beg);
-	
+
 			for (int m = 0;m<splupslines;m++)
 			{
 				if( ipCollider == ipELECTRON )
