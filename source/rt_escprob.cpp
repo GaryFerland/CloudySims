@@ -800,7 +800,9 @@ void RT_DestProb(
 			// Use multiplet opacity where positive
 			if( t.Emis().mult_opac() > 0.f )
 				opac_line = t.Emis().mult_opac();
-			/* fac of 1.7 convert to Hummer convention for line opacity */
+			else if(lgIsLymanLineResolved(t))
+				opac_line = rfield.fine_opac_zone[t.Emis().ipFine() + rfield.ipFineConVelShift];
+			/* fac of SQRTPI convert to Hummer convention for line opacity */
 			double beta = conopc/(SQRTPI*opac_line + conopc);
 			if (NEW_PELEC_ESC)
 				beta = conopc/max(SQRTPI*opac_line,1e-6*conopc);

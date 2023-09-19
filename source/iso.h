@@ -740,4 +740,21 @@ void iso_multiplet_opacities( void );
  */
 string iso_comment_tran_levels( long ipISO, long nelem, long ipLo, long ipHi );
 
+inline bool lgIsLymanLine(const TransitionProxy &t)
+{
+	long ipISO = t.Lo()->nelem() - t.Lo()->IonStg();
+	long nelem = t.Lo()->nelem() - 1;
+	return (ipISO == ipH_LIKE && t.Lo()->n() == 1 && (t.Hi()->n() > iso_sp[ipISO][nelem].n_HighestResolved_local || t.Hi()->l() == 1));
+}
+
+inline bool lgIsLymanLineResolved(const TransitionProxy &t)
+{
+	return (lgIsLymanLine(t) && t.Hi()->g() < 6);
+}
+
+inline bool lgIsLymanLineUnresolved(const TransitionProxy &t)
+{
+	return (lgIsLymanLine(t) && t.Hi()->g() == 6);
+}
+
 #endif /* ISO_H_ */

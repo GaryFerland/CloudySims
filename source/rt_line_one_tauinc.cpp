@@ -50,12 +50,8 @@ void RT_line_one_tauinc(const TransitionProxy&  t ,
 	}
 
 	/* Don't use fine opacity array for unresolved lyman lines */
-	long ipISO = t.Lo()->nelem() - t.Lo()->IonStg();
-	long nelem = t.Lo()->nelem() - 1;
-	if(ipISO == ipH_LIKE && t.Lo()->n() == 1 && (t.Hi()->n() > iso_sp[ipISO][nelem].n_HighestResolved_local || t.Hi()->l() == 1) && t.Hi()->g() == 6)
-	{
+	if(lgIsLymanLineUnresolved(t))
 		OpacityEffective = OpacitySpecific;
-	}
 
 #if	0
 	if( rfield.anu( t.ipCont-1 ) < rfield.plsfrq )
