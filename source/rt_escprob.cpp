@@ -742,6 +742,12 @@ void RT_DestProb(
 {
 	double abund = t.Emis().PopOpc();
 	double crsec = t.Emis().opacity(); /* its line absorption cross section */
+	if(lgIsLymanLineResolved(t))
+	{
+		long nelem = t.Lo()->nelem() - 1;
+		long nHi = t.Hi()->n();
+		crsec = ExtraLymanLinesJ05[nelem][nHi].Emis().opacity() + ExtraLymanLinesJ15[nelem][nHi].Emis().opacity();
+	}
 	long int ipanu = t.ipCont();/* pointer to energy within continuum array, to get background opacity,
 										  * this is on the f not c scale */
 	double escp = t.Emis().Pesc(); // Escape probability
@@ -800,8 +806,7 @@ void RT_DestProb(
 			// Use multiplet opacity where positive
 			if( t.Emis().mult_opac() > 0.f )
 				opac_line = t.Emis().mult_opac();
-			else if(lgIsLymanLineResolved(t))
-				opac_line = rfield.fine_opac_zone[t.Emis().ipFine() + rfield.ipFineConVelShift];
+
 			/* fac of SQRTPI convert to Hummer convention for line opacity */
 			double beta = conopc/(SQRTPI*opac_line + conopc);
 			if (NEW_PELEC_ESC)
