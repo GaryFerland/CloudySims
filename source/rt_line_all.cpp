@@ -107,6 +107,8 @@ void RT_line_all_escape( realnum *error )
 		/* >>chng 01 apr 01, add test for tout >= 0., 
 		 * must not add to Pdest when it has not been refreshed here */
 		iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).Emis().Pdest() += hydro.dstfe2lya;
+		ExtraLymanLinesJ05[ipHYDROGEN][2].Emis().Pdest() += hydro.dstfe2lya;
+		ExtraLymanLinesJ15[ipHYDROGEN][2].Emis().Pdest() += hydro.dstfe2lya;
 	}
 
 	/* is continuum pumping of H Lyman lines included?  yes, but turned off
