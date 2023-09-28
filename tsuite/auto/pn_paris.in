@@ -523,7 +523,8 @@ monitor line "Si 2" 34.8046m  0.154
 ## >>chng 11 aug 05, from 0.1524 to 0.1693, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 13 mar 03, from 0.1693 to 0.177, update atomic models for S II, S III
 ## >>chng 15 aug 30, from 0.177 to 0.1679, update Si II stout to Laha+ 2015
-monitor line "Blnd" 2335  0.1679
+## >>chng 23 sep 28, from 0.1679 to 0.1757, current npSplit development result
+monitor line "Blnd" 2335  0.1757
 ##
 ## >>chng 01 jul 01 from 0.50 to 0.440 better diffuse fields, DP's garden
 ## >>chng 03 dec 08, from 0.440 to 0.539 chng ots, zoning
