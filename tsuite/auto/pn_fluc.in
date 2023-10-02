@@ -104,7 +104,8 @@ monitor line "He 2" 4685.68A 0.1267
 ## >>chng 06 nov 29, from 0.182 to 0.164, Badnell DR turned on
 ## >>chng 11 aug 05, from 0.164 to 0.1739, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 13 dec 23, from 0.1739 to 0.1847, C to external databases
-monitor line "blnd" 2326 0.1847
+## >>chng 23 sep 28, from 0.1847 to 0.1937, current npSplit development result
+monitor line "blnd" 2326 0.1937
 ##
 ## >>chng 00 sep 12, from 1.294 to 1.366 result of change in s3 cs
 ## >>chng 01 may 10, from 1.366 to 1.259, ct network revision
