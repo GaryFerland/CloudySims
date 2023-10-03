@@ -160,6 +160,17 @@ TiNC+ 	0
 HTiS  	0
 TiOH+ 	0
 HTiS+ 	0
+# >> 23 10 GS adds chemistry for P-bearing molecules, enthalphy from UMIST
+PN	105.8
+PO	-32.0
+PH	237.0
+CP	447.6
+PH+	1219.0
+PN+	1249.0
+PO+	778.0
+HCP	167.0
+CP+	1529.0
+PH2	112.3
 # F compounds
 HF+     0
 HF      0
