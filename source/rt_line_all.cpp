@@ -45,8 +45,6 @@ void RT_line_all_escape( realnum *error )
 		}
 	}
 	
-	if(fudge(-1))
-		dprintf(ioQQQ, "rt_line_all do escape probabilities.\n");
 	RT_line_all(RT_line_one_escape);
 
 	if( opac.lgCaseB_no_pdest )
@@ -238,10 +236,6 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 	}
 
 	{
-		if(fudge(-1))
-			dprintf(ioQQQ, "rt_line_all start radiative transfer. \t%.3f\n",
-			fnzone);
-
 		/* 	Radiative transfer information is needed from the resolved doublet, in order to use an
 			average of the optical depths of the resolved doublet, to compute the escape and destruction probabilities
 			of the unresolved doublet. So the loop over extra lyman lines has been moved above the lyman line loop. */
@@ -382,8 +376,6 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 			line_one( UTALines[i], true,0.f, 
 						 DopplerWidth[(*UTALines[i].Hi()).nelem()-1], true);
 		}
-		if(fudge(-1))
-			dprintf(ioQQQ, "rt_line_all lines updated.\n");
 	}
 
 	for( ipISO=ipH_LIKE; ipISO < NISO; ++ipISO )
@@ -411,16 +403,16 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 						if( iso_sp[ipISO][nelem].trans(ipHi,ipLo).ipCont() < 0 )
 							continue;
 
-						bool lgKeepLyman = true;
+						bool lgKeepLine = true;
 						if( lgExcludeLyman )
-							lgKeepLyman = !( ipISO == ipH_LIKE && ipLo == 0 && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ) );
+							lgKeepLine = !lgIsLymanLine(iso_sp[ipISO][nelem].trans(ipHi,ipLo));
 
 						/* generate escape prob, pumping rate, destruction prob,
 						 * inward outward fracs */
 						fixit("should this use pestrk_up or pestrk?");
 						line_one( iso_sp[ipISO][nelem].trans(ipHi,ipLo),
 							     true,(realnum)iso_sp[ipISO][nelem].ex[ipHi][ipLo].pestrk_up,
-									 DopplerWidth[nelem], lgKeepLyman);
+									 DopplerWidth[nelem], lgKeepLine);
 
 						/* set true to print pump rates*/
 						enum {DEBUG_LOC=false};

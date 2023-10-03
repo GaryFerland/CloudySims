@@ -30,9 +30,9 @@ save continuum ".conA" last units Angstroms
 save fine continuum ".finA" last units Angstroms range 7.6A to 15A merge 3
 save dr ".dr" last
 # this will be the default units, like the printout
-save line optical depths last ".lin"
-# this will be the same, in rygbergs
-save line optical depths last ".lin"  units rydberg
+save line optical depths last ".linkev" unit kev
+# this will be the same, in angstrom
+save line optical depths last ".lina" -3 units angstrom
 save monitors last ".asr" 
 #
 # commands giving the monitors    =========

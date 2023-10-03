@@ -219,7 +219,7 @@ void RT_OTS(void)
 						} */
 
 						/* use the ots rate from the resolved doublet only for lyman lines */
-						if( ipISO == ipH_LIKE && ipLo == ipH1s && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ) )
+						if( lgIsLymanLine(iso_sp[ipISO][nelem].trans(ipHi,ipLo)) )
 						{
 							if( ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Emis().ots() > SMALLFLOAT )
 							{
@@ -240,20 +240,6 @@ void RT_OTS(void)
 								RT_OTS_AddLine(iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().ots(),
 									iso_sp[ipISO][nelem].trans(ipHi,ipLo).ipCont() );
 						}
-
-						if(fudge(-1) && ipISO == ipH_LIKE && nelem==ipHYDROGEN && ipLo == 0)
-						{
-							dprintf(ioQQQ, "%i\t%e\t%e\t%e\n",
-							ipHi,
-							ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Emis().ots(),
-							ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].Emis().ots(),
-							iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().ots()
-							);
-							DumpLine(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]]);
-							DumpLine(ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]]);
-							DumpLine(iso_sp[ipISO][nelem].trans(ipHi,ipLo));
-						}
-
 					}
 				}
 				{

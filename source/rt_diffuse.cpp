@@ -122,7 +122,7 @@ void RT_diffuse(void)
 							sp->trans(ipHi,ipLo).Emis().Pesc_total() *
 							sp->trans(ipHi,ipLo).EnergyErg();
 
-						if (!( ipISO == ipH_LIKE && ipLo == 0 && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ) ))
+						if ( !lgIsLymanLine(sp->trans(ipHi,ipLo)) )
 						{
 							// Would be better to enable checks (and remove argument) --
 							// present state is to ensure backwards compatibility with previous

@@ -213,7 +213,7 @@ double RTesc_lya(
 	/* stimulated emission corrected population of lower level */
 	double popopc,
 	const TransitionProxy& t,
-	realnum DopplerWidth)
+	realnum )
 {
 	double beta, 
 	  conopc, 
@@ -249,16 +249,6 @@ double RTesc_lya(
 		/* abundance is zero, set miniumum dest prob */
 		beta = 1e-10;
 	}
-
-	if( fudge(-1) )
-		dprintf(ioQQQ, "rt_line_all %i\t%e\t%e\t%i\t%e\t%e\n",
-			nzone,
-			t.Emis().opacity(),
-			(popopc*SQRTPI*t.Emis().opacity()/DopplerWidth),
-			t.Emis().ipFine() + rfield.ipFineConVelShift,
-			rfield.fine_opac_zone[t.Emis().ipFine() + rfield.ipFineConVelShift]*SQRTPI,
-			t.Emis().PopOpc()
-			);
 
 	/* find rt.wayin, the escape prob in inward direction */
 	RTesc_lya_1side(
