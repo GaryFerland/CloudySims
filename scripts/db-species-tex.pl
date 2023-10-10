@@ -92,6 +92,7 @@ use warnings;
 use File::Basename;
 use Getopt::Long;
 
+use lib ".";
 use BiblioToTeX;
 
 my @save_argv = @ARGV;
