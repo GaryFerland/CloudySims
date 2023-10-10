@@ -162,6 +162,7 @@ use JSON;
 use Astro::ADS::Query;
 use Text::BibTeX;
 
+use lib ".";
 use BiblioToTeX;
 
 # Immediately flush output

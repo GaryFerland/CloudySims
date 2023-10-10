@@ -13,6 +13,8 @@
 #	Change structure of JSON file: make 'ref' contain datasets, and move
 #	its previous contents into the 'default' dataset.
 #	Bugfix: Species masterlist was overwritten with value in JSON file.
+# Chatzikos, 2023-Oct-10
+#	Update to Perl 5.34.
 #
 use warnings;
 use strict;
@@ -308,7 +310,7 @@ sub custom_to_json
 				$ntabs++;
 				$string .= ($tab x $ntabs) ."\"$dataset\" : {"."\n";
 
-				my @datatypes = sort keys $$hash{$species}{ref}{$dataset};
+				my @datatypes = sort keys %{ $$hash{$species}{ref}{$dataset} };
 				for my $datatype ( @datatypes )
 				{
 					$ntabs++;
