@@ -668,7 +668,7 @@ ea19d4b8f9ab508251eb9af0c08c141b  cdms+jpl/c066501.cat
 d4a8f8fdd9ca92a811b4cba9d499b96c  cdms+jpl/c066501.dat
 3dc9f99c8518fadd740b354d73996c75  cdms+jpl/c066502.cat
 4d51c9b5beee741dd2040a837845e64d  cdms+jpl/c066502.dat
-c200f2c0122f1f81703a1901d453daef  cdms+jpl/convert_calpgm
+63d25119b92368fbaea31691e97df07a  cdms+jpl/convert_calpgm
 5cca1e76689cf66420986131a0a3f0f5  cdms+jpl/convert_calpgm.cpp
 0d9428831f03c798a9eea78cd06a6d5f  cdms+jpl/get_database_files.pl
 848e8f9e1e012deac15b940aff8b78f2  cdms+jpl/masterlist
@@ -1493,7 +1493,7 @@ b280bcb06f5d21292170c432e4ec4399  chianti/zn/zn_28/zn_28.splups
 88555a260b29ada20df7e4f15422d30f  chianti/zn/zn_29/zn_29.elvlc
 93123677cecff6e6c83429dfd6b963ff  chianti/zn/zn_29/zn_29.splups
 486871f5fe9a60bc723571383039d76c  chianti/zn/zn_29/zn_29.wgfa
-d5516c50bf1218fe0e05206247a25cc2  citation_cloudy.txt
+2dbe1eea2bdb9095341d5c2267232a12  citation_cloudy.txt
 73de63d3fcbcdbeb4e7b387661c74354  citation_data.txt
 b62fda56786919cb171a24c064eaf404  clouds.jpg
 8eef81c02e6754965201ac743ee0296e  coll_ion.dat
@@ -2197,9 +2197,9 @@ a431019c476db1f081f8bf495b7b64ad  stout/fe/fe_25/fe_25.nrg.dat
 495c2e97825e7a96219493b4f7ed66db  stout/fe/fe_4/fe_4.coll
 25c05bfe0ac6382867cbe47d9dc38e73  stout/fe/fe_4/fe_4.nrg
 e236a05910876bff3e2a70d3bd4ff19e  stout/fe/fe_4/fe_4.tp
-6cf63a15d6194c0e3c8cbb7c51cbdd30  stout/fe/fe_4/fe_4_Henderson18.coll
-76ff159c32a2b6d4a6fc65c007dd21aa  stout/fe/fe_4/fe_4_Henderson18.nrg
-f0eee450da5a432fc0169d1ced3e5ed1  stout/fe/fe_4/fe_4_Henderson18.tp
+e4a5e62adff749d0537a56a6c0245400  stout/fe/fe_4/fe_4_Henderson18.coll
+0378b01b66a084009e9ce095c8204221  stout/fe/fe_4/fe_4_Henderson18.nrg
+97a9fe5520980413747d471bb4ce84f3  stout/fe/fe_4/fe_4_Henderson18.tp
 495c2e97825e7a96219493b4f7ed66db  stout/fe/fe_5/fe_5.coll
 f8e296919afa19d6dad9e768b053296e  stout/fe/fe_5/fe_5.nrg
 dd51a18308a9bafb244a4c294cdc91a7  stout/fe/fe_5/fe_5.tp
@@ -2566,7 +2566,7 @@ e830cee3ee4323bc61aa82cfd21e9864  stout/p/p_8/p_8.nrg
 495c2e97825e7a96219493b4f7ed66db  stout/p/p_9/p_9.coll
 d2cda94dda904b6a29e7881989f8b343  stout/p/p_9/p_9.nrg
 c30ee2a134e74f9f190887380bb52a1a  stout/p/p_9/p_9.tp
-1e58828f8f88356bc1e0ccd87246e208  stout/refs.json
+c5591a5b368730fced42048e5a8effd6  stout/refs.json
 2b3a6a9d5501ac1136f6b1bc2090221f  stout/s/s_1/README.md
 fda0ece8e1a4e26901013abd5de747a0  stout/s/s_1/s_1.coll
 32995e08d72add38672236795eaadf54  stout/s/s_1/s_1.nrg
