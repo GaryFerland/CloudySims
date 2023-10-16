@@ -945,7 +945,7 @@ void Badnell_rec_init( void )
 	{
 		count++;
 
-		if( chLine.size() >= 3 && chLine[2] == 'Z' )
+		if( chLine.find("Z ")  != string::npos )
 		{
 			/* number has to be 0 or 1, and indicates the first or second block of data
 			 * count is the line number for the start of that block */
