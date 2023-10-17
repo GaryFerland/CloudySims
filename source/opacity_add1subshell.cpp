@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*OpacityAdd1Subshell add opacity due to single shell to main opacity array*/
 /*OpacityAdd1SubshellInduc add opacity of individual species, including stimulated emission */
@@ -101,7 +101,7 @@ void OpacityAdd1SubshellInduc(
 
 	k = ipOpac - ipLowEnergy;
 
-	/* DepartCoef is dep coef, rfield.lgInducProcess is turned off with 'no indcued' command */
+	/* DepartCoef is dep coef, rfield.lgInducProcess is turned off with 'no induced' command */
 	if( (DepartCoef > 1e-35 && rfield.lgInducProcess) && hydro.lgHInducImp )
 	{
 		iup = MIN2(ipHiEnergy,rfield.nflux);

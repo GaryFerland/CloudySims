@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ContCreatePointers set up pointers for lines and continua called by cloudy after input read in 
  * and continuum mesh has been set */
@@ -335,7 +335,7 @@ void ContCreatePointers(void)
 
 	/* check that ionization potential of neutral carbon valence shell is
 	 * positive */
-	ASSERT( t_ADfA::Inst().ph1(2,5,5,0) > 0. );
+	ASSERT( atmdat.getIonPot(ipCARBON, 0) > 0. );
 
 	/* now fill in all sub-shell ionization array indices for elements heavier than He,
 	 * this must be done after previous loop on iso.ipIsoLevNIonCon[ipH_LIKE] since hydrogenic species use
@@ -348,13 +348,13 @@ void ContCreatePointers(void)
 	}
 
 	/* most of these are set in ipShells, but not h-like or he-like, so do these here */
-	Heavy.Valence_IP_Ryd[ipHYDROGEN][0] = t_ADfA::Inst().ph1(0,0,ipHYDROGEN,0)/EVRYD;
-	Heavy.Valence_IP_Ryd[ipHELIUM][0] = t_ADfA::Inst().ph1(0,1,ipHELIUM,0)/EVRYD;
-	Heavy.Valence_IP_Ryd[ipHELIUM][1] = t_ADfA::Inst().ph1(0,0,ipHELIUM,0)/EVRYD;
+	Heavy.Valence_IP_Ryd[ipHYDROGEN][0] = atmdat.getIonPot(ipHYDROGEN, 0);
+	Heavy.Valence_IP_Ryd[ipHELIUM][0] = atmdat.getIonPot(ipHELIUM, 0);
+	Heavy.Valence_IP_Ryd[ipHELIUM][1] = atmdat.getIonPot(ipHELIUM, 1);
 	for( long nelem=2; nelem<LIMELM; ++nelem )
 	{
-		Heavy.Valence_IP_Ryd[nelem][nelem-1] = t_ADfA::Inst().ph1(0,1,nelem,0)/EVRYD;
-		Heavy.Valence_IP_Ryd[nelem][nelem] = t_ADfA::Inst().ph1(0,0,nelem,0)/EVRYD;
+		Heavy.Valence_IP_Ryd[nelem][nelem-1] = atmdat.getIonPot(nelem, nelem-1);
+		Heavy.Valence_IP_Ryd[nelem][nelem] = atmdat.getIonPot(nelem, nelem);
 		if( dense.lgElmtOn[nelem])
 		{
 			/* now confirm that all are properly set */
@@ -997,7 +997,7 @@ STATIC void ipShells(
 		for( nshell=0; nshell < imax; nshell++ )
 		{
 			/* ionization potential of this shell in rydbergs */
-			thresh = (double)(t_ADfA::Inst().ph1(nshell,nelec-1,nelem,0)/EVRYD);
+			thresh = t_ADfA::Inst().getEthresh(nshell+1,nelec,nelem+1)/EVRYD;
 			if( thresh <= 0.1 )
 			{
 				/* negative ip shell does not exist, set upper limit
@@ -1074,7 +1074,7 @@ STATIC void ipShells(
 	/* this statement is in ContCreatePointers but has not been done when this routine called */
 	/*iso_sp[ipH_LIKE][ipZ].fb[ipLo].ipIsoLevNIonCon = ipContEnergy(iso_sp[ipH_LIKE][ipZ].fb[ipLo].xIsoLevNIonRyd,chLab);*/
 	/*opac.ipElement[nelem][nelem][0][0] = iso_sp[ipH_LIKE][nelem].fb[ipH1s].ipIsoLevNIonCon;*/
-	opac.ipElement[nelem][nelem][0][0] = ipoint( t_ADfA::Inst().ph1(0,0,nelem,0)/EVRYD );
+	opac.ipElement[nelem][nelem][0][0] = ipoint( t_ADfA::Inst().getEthresh(1,1,nelem+1)/EVRYD );
 	ASSERT( opac.ipElement[nelem][nelem][0][0] > 0 );
 
 	/* this is the high-energy limit */

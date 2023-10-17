@@ -16,6 +16,7 @@ set dr 0
 database h-like resolved levels 30
 database h-like collapsed levels 70
 ## database h-like gbar vriens
+# Hummer option not included here because the population of the excited states will be zero
 case b no photoionzation no pdest 
 no scattering escape
 no induced processes

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*save_opacity save total opacity in any element, save opacity command */
 #include "cddefines.h"
@@ -203,7 +203,7 @@ void save_opacity(FILE * ioPUN,
 
 						/* ionization potential of shell */
 						fprintf(ioPUN,"\t%.2f" ,
-							t_ADfA::Inst().ph1(nshell,nelec-1,nelem,0)/EVRYD);
+							t_ADfA::Inst().getEthresh(nshell+1,nelec,nelem+1)/EVRYD);
 
 						/* set lower and upper limits to this range */
 						long ipop = opac.ipElement[nelem][ion][nshell][2];

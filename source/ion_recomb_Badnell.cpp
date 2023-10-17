@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ion_recom_calculate calculate radiative and dielectronic recombination rate coefficients */
 /*Badnell_rec_init This code is written by Terry Yun, 2005 *
@@ -1014,7 +1014,7 @@ void Badnell_rec_init( void )
 	++chs;
 	sscanf(chLine.c_str()+chs, "%4i%2i%2i",&yr, &mo, &dy);
 	/* check magic number - the date on the line */
-	int dr_yr = 2017, dr_mo = 7, dr_dy = 7;
+	int dr_yr = 2023, dr_mo = 5, dr_dy = 12;
 	if((yr != dr_yr) || (mo != dr_mo) || (dy != dr_dy))
 	{
 		fprintf(ioQQQ,
@@ -1198,7 +1198,7 @@ void Badnell_rec_init( void )
 		}
 		++chs;
 		sscanf(chLine.c_str()+chs, "%4i%2i%2i", &yr, &mo, &dy);
-		int rr_yr = 2017, rr_mo = 7, rr_dy = 7;
+		int rr_yr = 2023, rr_mo = 5, rr_dy = 11;
 		if((yr != rr_yr)||(mo != rr_mo)||(dy != rr_dy))
 		{
 			fprintf(ioQQQ,"DISASTER PROBLEM The version of %s I found (%i %i %i) is not the current version (%i %i %i).\n",

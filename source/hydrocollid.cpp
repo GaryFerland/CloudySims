@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*HCSAR_interp interpolate on collision strengths */
 /*C6cs123 line collision rates for lower levels of hydrogenic carbon, n=1,2,3 */
@@ -1006,7 +1006,7 @@ realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 							lLo,
 							deltaE_eV,
 							ipCollider,
-							iso_ctrl.lgCS_PS20[ipH_LIKE]);
+							iso_ctrl.lgCS_PSM20[ipH_LIKE]);
 				}
 			}
 		}
@@ -1128,11 +1128,11 @@ realnum GetHlikeCollisionStrength( long nelem, long ipCollider,
 							//sHi,
 							deltaE_eV,
 							ipCollider,
-							iso_ctrl.lgCS_PS20[ipH_LIKE]);
-				if(iso_ctrl.lgCS_PS20[ipH_LIKE])
+							iso_ctrl.lgCS_PSM20[ipH_LIKE]);
+				if(iso_ctrl.lgCS_PSM20[ipH_LIKE])
 					*where = "PSM   ";
 				else
-					*where = "PS20  ";
+					*where = "PSM20 ";
 				}
 			}
 			else

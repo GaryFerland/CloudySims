@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*SaveDo produce save output during calculation,
  * chTime is 'MIDL' during calculation, 'LAST' at the end */
@@ -2427,7 +2427,7 @@ void SaveDo(
 										break;
 
 									/* array elements are shell, numb of electrons, element, 0 */
-									energy = t_ADfA::Inst().ph1(ips,nelem-ion,nelem,0);
+									energy = t_ADfA::Inst().getEthresh(ips+1,nelem-ion+1,nelem+1);
 
 									/* now print threshold with correct format */
 									if( energy < 10. )

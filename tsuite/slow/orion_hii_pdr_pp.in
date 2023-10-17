@@ -219,7 +219,8 @@ monitor "H2" column density 24.81 error 0.1
 ## >>chng 11 nov 16, from 21.52 to 20.99, adjust newmole monitors
 ## >>chng 12 apr 09, from 20.99 to 21.24, update backbround CR to Indiolo_07 (8x larger)
 ## >>chng 12 jun 08, from 21.24 to 20.91, Updates to grain chemistry
-monitor "CO" column density 20.91 error 0.15
+## >>chng 23 may 15, from 20.91 to 21.01, GS updates 21 reactions to UMIST 2012
+monitor "CO" column density 21.01 error 0.15
 ##
 ## >>chng 05 mar 25, from 18.38 to 18.48, renorm H pops in level solver
 ## >>chng 05 jun 07, from 18.48 to 18.90, NA add CO grain condensation
@@ -279,7 +280,8 @@ monitor "SiO" column density 17.74 error 0.25
 ## >>chng 12 apr 09, from 14.24 to 14.97, update backbround CR to Indiolo_07 (8x larger)
 ## >>chng 12 jun 08, from 14.97 to 14.83, Updates to grain chemistry
 ## >>chng 20 aug 03, from 14.83 to 15, update H3+ rates Indriola+ 2012
-monitor "OH" column density 15 error 0.1 
+## >>chng 23 may 15, from 15 to 14.95, GS updates 21 reactions to UMIST 2012
+monitor "OH" column density 14.95 error 0.1 
 ##
 ## >>chng 05 mar 22, from -4.10 to -4.06, NA update CO chem net
 ## >>chng 05 dec 08, from -4.10 to -4.31 update to Elwert Solomon rate
@@ -476,7 +478,8 @@ monitor itrzn 8.672
 ## >>chng 15 may 12, from 0.0184 to 0.0193, coll. str. reduced mass scaling
 ## >>chng 19 jul 30, from 0.0193 to 0.0163, split He I 2 ^3P_J
 ## >>chng 20 jan 13, from 0.0163 to 0.0151, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor Pradmax 0.0151
+## >>chng 23 sep 08, from 0.0151 to 0.0284, fix SQRTPI in Lya destprob
+monitor Pradmax 0.0284
 ##
 ## >>chng 13 jun 27, from -8.869 to -3.9, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
@@ -486,7 +489,8 @@ monitor "H2O " 538.142m line intensity -3.9
 ## >>chng 21 apr 10, from -5.056 to -5.219, update chemistry and LAMDA
 ## >>chng 21 apr 16, from -5.219 to -5.064, remove bad UMIST reaction
 ## >>chng 21 sep 11, from -5.064 to -5.271, LAMDA update
-monitor "HNC " 1652.90m  line intensity -5.271
+## >>chng 23 may 15, from -5.271 to -5.247, GS updates 21 reactions to UMIST 2012
+monitor "HNC " 1652.90m  line intensity -5.247
 ## >>chng 13 jun 27, from -8.563 to -5.569, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -5.569 to -5.51, LAMDA update
@@ -538,7 +542,8 @@ monitor "^13CO" 906.599m  -4.446 line intensity
 ## >>chng 13 jul 25, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -4.407 to -4.492, LAMDA update
 ## >>chng 21 sep 15, from -4.492 to -4.414, go back to unresolved model
-monitor "CN  " 880.858m  -4.414  line intensity
+## >>chng 23 may 15, from -4.414 to -4.467, GS updates 21 reactions to UMIST 2012
+monitor "CN  " 880.858m  -4.467  line intensity
 # orion_hii_pdr_pp.in
 # class hii pdr  
 # ========================================

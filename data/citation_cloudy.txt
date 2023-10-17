@@ -8,9 +8,9 @@
 # Be careful not add empty lines at the end since these will be copied to the output as well...
 #
  Cloudy is a research project that involves the creative efforts of many people.  It should be cited as follows:
-   "Calculations were performed with version XXXX of Cloudy (Ferland et al. 2017)."
+   "Calculations were performed with version XXXX of Cloudy (Chatzikos et al. 2023)."
 
  The reference is:
-   G. J. Ferland, M. Chatzikos, F. Guzman, M. L. Lykins, P. A. M. van Hoof, R. J. R. Williams, N. P. Abel, 
-   N. R. Badnell, F. P. Keenan, R. L. Porter, P. C. Stancil
-   Rev. Mexicana Astron. Astrofis., 53, 385 (2017) [http://adsabs.harvard.edu/abs/2017RMxAA..53..385F]
+   M. Chatzikos, S. Bianchi, F. Camilloni, P. Chakraborty, C. M. Gunasekera,
+   F. Guzmán, J. S. Milby, A. Sarkar, G. Shaw, P. A. M. van Hoof, G. J. Ferland
+   2023, RMxAA, 59, 327

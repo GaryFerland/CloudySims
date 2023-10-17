@@ -244,6 +244,7 @@ SO+
 OCS	LAMDA
 OCS+	
 SO2	LAMDA
+SiS	LAMDA
 S2	
 S2+	
 Cl	Stout

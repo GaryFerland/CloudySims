@@ -11,9 +11,12 @@ in close collaboration with a number of scientists -- see the
 
 # Version
 
-The current version of Cloudy is C22, released in Fall 2022.
+The current version of Cloudy is C23, released in 2023.
 A summary of what is new is available
-[here](https://gitlab.nublado.org/cloudy/cloudy/-/wikis/NewC22).
+[here](https://gitlab.nublado.org/cloudy/cloudy/-/wikis/NewC23).
+
+If you used Cloudy in your research, please cite our most recent
+[release paper](https://ui.adsabs.harvard.edu/abs/2023RMxAA..59..327C)
 
 ## Brief History
 
@@ -21,8 +24,7 @@ Cloudy recently migrated to a pure git version control system from a
 subversion (SVN) system (with limited support for git).
 Cloudy had been on a SVN repository for about 15 years, which is still 
 maintained as a read-only reference at
-[https://viewvc.nublado.org](https://viewvc.nublado.org) or
-[https://trac.nublado.org/browser](https://trac.nublado.org/browser).
+[https://trac.nublado.org](https://trac.nublado.org).
 
 The migration was done on 2020 Dec 2 at r14364.
 Only the trunk and a few actively maintained branches were migrated.

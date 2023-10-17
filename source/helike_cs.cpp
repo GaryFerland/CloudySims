@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*HeCollid evaluate collisional rates */
 /*HeCSInterp interpolate on He1 collision strengths */
@@ -823,7 +823,7 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 				/* PS-M: Modified PS method
 				 * Refer to F. Guzman et al. MNRAS (2016) 464, 312
 				 *
-				 * 11/01/22 changed default to PS20 formulas from
+				 * 11/01/22 changed default to PSM20 formulas from
 				 * N. Badnell et al. MNRAS (2021) 507, 2922
 				 */
 
@@ -838,12 +838,12 @@ realnum GetHelikeCollisionStrength( long nelem, long Collider,
 						lLo,
 						deltaE_eV,
 						Collider,
-						iso_ctrl.lgCS_PS20[ipHE_LIKE]);
+						iso_ctrl.lgCS_PSM20[ipHE_LIKE]);
 
-				if(iso_ctrl.lgCS_PS20[ipHE_LIKE])
+				if(iso_ctrl.lgCS_PSM20[ipHE_LIKE])
 					*where = "PSM   ";
 				else
-					*where = "PS20  ";
+					*where = "PSM20 ";
 
 			}
 		}

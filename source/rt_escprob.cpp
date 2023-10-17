@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*esc_CRDwing_1side fundamental escape probability radiative transfer routine, for complete redistribution */
 /*esc_PRD_1side fundamental escape probability radiative transfer routine for incomplete redistribution */
@@ -238,7 +238,9 @@ double RTesc_lya(
 	if( abund > 0. )
 	{
 		/* the continuous opacity is positive, we have a valid soln */
-		beta = conopc/(abund/SQRTPI*t.Emis().opacity()/
+		/* Bug fix on 2023 09 07, change /SQRTPI to *SQRTPI
+		   see Appendix B of Gunasekera et al 2023. */
+		beta = conopc/(abund*SQRTPI*t.Emis().opacity()/
 			DopplerWidth + conopc);
 	}
 	else
@@ -865,8 +867,6 @@ void RT_DestProb(
 			}
 			if (0 && t.chLabel() == "He 1 3888.63A")
 			{
-				static int i;
-				++i;
 				fprintf(ioQQQ,"Found it %g %g %g %g %ld\n",
 						  eovrlp_v,abund,conopc,escp,ipanu);
 			}
