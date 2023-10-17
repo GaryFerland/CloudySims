@@ -43,9 +43,18 @@ void iso_collisional_ionization( long ipISO, long nelem )
 	{
 		if( nelem == ipISO )
 		{
-			/* use routine from Vriens and Smeets (1981). */
-			/* >>refer	iso neutral	col.ion.	Vriens, L., & Smeets, A.H.M. 1980, Phys Rev A 22, 940 */
-			sp->fb[ipHi].ColIoniz = hydro_vs_ioniz( sp->fb[ipHi].xIsoLevNIonRyd, phycon.te );
+			if (nelem == ipHYDROGEN && opac.lgCaseB_HummerStorey)
+			{
+				/* collisional ionization from BEA Burgess & Percvival 1968 */
+				sp->fb[ipHi].ColIoniz = hydro_BEA_Thermal_ion(sp->fb[ipHi].xIsoLevNIonRyd, phycon.te);
+			}
+			else
+			{
+				/* use routine from Vriens and Smeets (1981). */
+				/* >>refer	iso neutral	col.ion.	Vriens, L., & Smeets, A.H.M. 1980, Phys Rev A 22, 940 */
+				sp->fb[ipHi].ColIoniz = hydro_vs_ioniz( sp->fb[ipHi].xIsoLevNIonRyd, phycon.te );
+
+			}
 		}
 		else
 		{
@@ -56,10 +65,12 @@ void iso_collisional_ionization( long ipISO, long nelem )
 			 * */
 			sp->fb[ipHi].ColIoniz = 
 				Hion_coll_ioniz_ratecoef( ipISO, nelem, N_(ipHi), sp->fb[ipHi].xIsoLevNIonRyd, phycon.te  );
+
 		}
 		
 		// iso_ctrl.lgColl_ionize is option to turn off collisions, "atom XX-like collis off" command
 		sp->fb[ipHi].ColIoniz *= iso_ctrl.lgColl_ionize[ipISO];
+
  	
 		iso_put_error(ipISO,nelem,sp->numLevels_max,ipHi,IPCOLLIS,0.20f,0.20f);
 	}

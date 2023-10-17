@@ -62,6 +62,17 @@ namespace {
 				return exp( -1.*EOverKT ) * col_str;
 			}
 	};
+	class BEA_Integrand : public std::unary_function<double, double>
+	{
+	public:
+		double Te, ionization_potential;
+
+		double operator() (double EOverKT) const
+		{
+			double cross_sec = hydro_BEA_ioniz(ionization_potential, EOverKT * Te);
+			return exp( -1.*EOverKT ) * EOverKT * cross_sec;
+		}
+	};
 }
 
 /*
@@ -256,6 +267,61 @@ double hydro_vs_ioniz( double ionization_energy_Ryd, double Te )
 	ASSERT( coef >= 0. );
 	return( coef );
 }
+
+/*obtain thermal coll_strengths for Binary Encounter Ionization */
+double hydro_BEA_Thermal_ion(double ion_pot, double te)
+{
+
+	double coll_str;
+	BEA_Integrand ioniz;
+
+	ioniz.Te = te;
+	ioniz.ionization_potential = ion_pot;
+
+
+	Integrator<BEA_Integrand,Gaussian32> BEA( ioniz );
+	/* do average over Maxwellian */
+	coll_str = BEA.sum( 0., 1. );
+	coll_str += BEA.sum( 1., 10. );
+
+	return coll_str* sqrt(8*te*BOLTZMANN/PI/ELECTRON_MASS);
+}
+
+/* generate collisional ionization rates using BEA from Burgess & Percival 1968 Academic Press
+ * formula (37)
+ */
+double hydro_BEA_ioniz(
+		double ionization_potential,
+		double Te
+		)
+{
+	double cross_section;
+	double factor_const;
+	double E1;
+	double ionpot,ionpot_inv;
+	double E1_inv;
+	double En;
+
+	/*units are ergs for the energy and esu for charge
+	 * that should produce cm^2 for the cross section*/
+	E1 = Te*BOLTZMANN;
+	ionpot = ionization_potential*EN1RYD;
+	En = ionpot+E1;
+	ionpot_inv = 1/ionpot;
+	E1_inv = 1/E1;
+
+
+	factor_const=pow(ELEM_CHARGE_ESU,4)*PI;
+	if (E1 >= ionpot)
+		cross_section = factor_const/En*((ionpot_inv-E1_inv)-(log(E1*ionpot_inv)/En));
+	else
+		cross_section =0.;
+
+
+
+	return cross_section;
+}
+
 
 /*Hion_coll_ioniz_ratecoef calculate hydrogenic ionization rates for all n, and Z*/
 double Hion_coll_ioniz_ratecoef(

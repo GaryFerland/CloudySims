@@ -34,6 +34,19 @@ double hydro_vs_coll_recomb( double ionization_energy_Ryd, double Te, double sta
  */
 double hydro_vs_ioniz( double ionization_energy_Ryd, double Te );
 
+/** hydro_BEA_Thermal_ioniz generate collisional ionization thermal rates using BEA from
+ * Burgess & Percival 1968 Academic Press
+ \param ion_pot
+ \param Te
+ */
+ double hydro_BEA_Thermal_ion(double ion_pot, double Te);
+
+/** hydro_BEA_ioniz generate collisional ionization cross sections using BEA from
+ * Burgess & Percival 1968 Academic Press
+ \param ionization_potential
+ \param Te
+ */
+double hydro_BEA_ioniz(double ionization_potential, double Te );
 
 /**Hion_coll_ioniz_ratecoef calculate hydrogenic ionization rates for all n, and Z
  \param ipISO the isoelectronic sequence 
