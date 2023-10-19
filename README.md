@@ -13,7 +13,7 @@ in close collaboration with a number of scientists -- see the
 
 The current version of Cloudy is C23, released in 2023.
 A summary of what is new is available
-[here](https://gitlab.nublado.org/cloudy/cloudy/-/wikis/NewC22).
+[here](https://gitlab.nublado.org/cloudy/cloudy/-/wikis/NewC23).
 
 If you used Cloudy in your research, please cite our most recent
 [release paper](https://ui.adsabs.harvard.edu/abs/2023RMxAA..59..327C)
