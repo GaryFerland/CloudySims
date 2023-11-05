@@ -1713,6 +1713,12 @@ int lines_table()
 	return miss;
 }
 
+void clear_lines_table()
+{
+	/* prevent spurious complaints about more than one table lines command being present in a grid */
+	chLINE_LIST.clear();
+}
+
 inline double getHexDouble(DataParser& d)
 {
 	union {
