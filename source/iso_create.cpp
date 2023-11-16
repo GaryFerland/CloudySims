@@ -1076,10 +1076,6 @@ STATIC void iso_assign_quantum_numbers(void)
 				{
 					iso_sp[ipISO][nelem].st[ipLo].nelem() = (int)(nelem+1);
 					iso_sp[ipISO][nelem].st[ipLo].IonStg() = (int)(nelem+1-ipISO);
-					iso_sp[ipISO][nelem].stJ05[ipLo].nelem() = (int)(nelem+1);
-					iso_sp[ipISO][nelem].stJ05[ipLo].IonStg() = (int)(nelem+1-ipISO);
-					iso_sp[ipISO][nelem].stJ15[ipLo].nelem() = (int)(nelem+1);
-					iso_sp[ipISO][nelem].stJ15[ipLo].IonStg() = (int)(nelem+1-ipISO);
 
 					if( iso_sp[ipISO][nelem].st[ipLo].j() >= 0 )
 					{
@@ -1103,43 +1099,10 @@ STATIC void iso_assign_quantum_numbers(void)
 						}
 					}
 					
-					/* stack of states for extra lyman lines 
-					   starting with j=1/2 */
-					if( iso_sp[ipISO][nelem].stJ05[ipLo].j() >= 0 )
-					{
-						iso_sp[ipISO][nelem].stJ05[ipLo].g() = 2.f*iso_sp[ipISO][nelem].stJ05[ipLo].j()+1.f;
-					}
-					else if( iso_sp[ipISO][nelem].stJ05[ipLo].l() >= 0 )
-					{
-						iso_sp[ipISO][nelem].stJ05[ipLo].g() = (2.f*iso_sp[ipISO][nelem].stJ05[ipLo].l()+1.f) *
-							iso_sp[ipISO][nelem].stJ05[ipLo].S();
-					}
-					else
-					{
-						iso_sp[ipISO][nelem].stJ05[ipLo].g() = 2.f*(realnum)POW2( iso_sp[ipISO][nelem].stJ05[ipLo].n() );
-					}
-					
-					/* j = 3/2 */
-					if( iso_sp[ipISO][nelem].stJ15[ipLo].j() >= 0 )
-					{
-						iso_sp[ipISO][nelem].stJ15[ipLo].g() = 2.f*iso_sp[ipISO][nelem].stJ15[ipLo].j()+1.f;
-					}
-					else if( iso_sp[ipISO][nelem].stJ15[ipLo].l() >= 0 )
-					{
-						iso_sp[ipISO][nelem].stJ15[ipLo].g() = (2.f*iso_sp[ipISO][nelem].stJ15[ipLo].l()+1.f) *
-							iso_sp[ipISO][nelem].stJ15[ipLo].S();
-					}
-					else
-					{
-						iso_sp[ipISO][nelem].stJ15[ipLo].g() = 2.f*(realnum)POW2( iso_sp[ipISO][nelem].stJ15[ipLo].n() );
-					}
-
 					char chConfiguration[32];
 					long nCharactersWritten = 0;
 
 					ASSERT( iso_sp[ipISO][nelem].st[ipLo].n() < 1000 );
-					ASSERT( iso_sp[ipISO][nelem].stJ05[ipLo].n() < 1000 );
-					ASSERT( iso_sp[ipISO][nelem].stJ15[ipLo].n() < 1000 );
 
 					/* Treat H-like levels as collapsed, for the purposes of
 					 * reporting comments in the output of 'save lines labels'.
@@ -1174,6 +1137,55 @@ STATIC void iso_assign_quantum_numbers(void)
 
 					iso_sp[ipISO][nelem].st[ipLo].chConfig() = chConfiguration;
 				}
+			}
+		}
+	}
+
+	long ipISO = ipH_LIKE;
+	for( long nelem=ipISO; nelem < LIMELM; nelem++ )
+	{
+		if( dense.lgElmtOn[nelem] )
+		{
+			for( ipLo=ipH1s; ipLo < iso_sp[ipISO][nelem].numLevels_max; ipLo++ )
+			{
+				iso_sp[ipISO][nelem].stJ05[ipLo].nelem() = (int)(nelem+1);
+				iso_sp[ipISO][nelem].stJ05[ipLo].IonStg() = (int)(nelem+1-ipISO);
+				iso_sp[ipISO][nelem].stJ15[ipLo].nelem() = (int)(nelem+1);
+				iso_sp[ipISO][nelem].stJ15[ipLo].IonStg() = (int)(nelem+1-ipISO);
+
+				/* stack of states for extra lyman lines
+				   starting with j=1/2 */
+				if( iso_sp[ipISO][nelem].stJ05[ipLo].j() >= 0 )
+				{
+					iso_sp[ipISO][nelem].stJ05[ipLo].g() = 2.f*iso_sp[ipISO][nelem].stJ05[ipLo].j()+1.f;
+				}
+				else if( iso_sp[ipISO][nelem].stJ05[ipLo].l() >= 0 )
+				{
+					iso_sp[ipISO][nelem].stJ05[ipLo].g() = (2.f*iso_sp[ipISO][nelem].stJ05[ipLo].l()+1.f) *
+						iso_sp[ipISO][nelem].stJ05[ipLo].S();
+				}
+				else
+				{
+					iso_sp[ipISO][nelem].stJ05[ipLo].g() = 2.f*(realnum)POW2( iso_sp[ipISO][nelem].stJ05[ipLo].n() );
+				}
+
+				/* j = 3/2 */
+				if( iso_sp[ipISO][nelem].stJ15[ipLo].j() >= 0 )
+				{
+					iso_sp[ipISO][nelem].stJ15[ipLo].g() = 2.f*iso_sp[ipISO][nelem].stJ15[ipLo].j()+1.f;
+				}
+				else if( iso_sp[ipISO][nelem].stJ15[ipLo].l() >= 0 )
+				{
+					iso_sp[ipISO][nelem].stJ15[ipLo].g() = (2.f*iso_sp[ipISO][nelem].stJ15[ipLo].l()+1.f) *
+						iso_sp[ipISO][nelem].stJ15[ipLo].S();
+				}
+				else
+				{
+					iso_sp[ipISO][nelem].stJ15[ipLo].g() = 2.f*(realnum)POW2( iso_sp[ipISO][nelem].stJ15[ipLo].n() );
+				}
+
+				ASSERT( iso_sp[ipISO][nelem].stJ05[ipLo].n() < 1000 );
+				ASSERT( iso_sp[ipISO][nelem].stJ15[ipLo].n() < 1000 );
 			}
 		}
 	}
