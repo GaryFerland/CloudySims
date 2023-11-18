@@ -52,20 +52,16 @@ void RT_tau_inc(void)
 	RT_fine_clear();
 	RT_line_all( RT_line_one_fine, true );
 
-	/* rfield.lgOpacityFine flag set false with no fine opacities command 
-	 * tests show that always evaluating this changes fast run of
+	/* tests show that always evaluating this changes fast run of
 	 * pn_paris from 26.7 sec to 35.1 sec 
 	 * but must always update fine opacities since used for transmission */
-	if( rfield.lgOpacityFine )
+	/* increment the fine opacity array */
+	for( long i=0; i<rfield.nfine; ++i )
 	{
-		/* increment the fine opacity array */
-		for( long i=0; i<rfield.nfine; ++i )
-		{
-			realnum tauzone = rfield.fine_opac_zone[i]*(realnum)radius.drad_x_fillfac;
-			rfield.fine_opt_depth[i] += tauzone;
-		}
-		rfield.trans_coef_total_stale = true;
+		realnum tauzone = rfield.fine_opac_zone[i]*(realnum)radius.drad_x_fillfac;
+		rfield.fine_opt_depth[i] += tauzone;
 	}
+	rfield.trans_coef_total_stale = true;
 
 	/* this may have updated some escape/destruction rates - force update
 	 * to all cooling lines */

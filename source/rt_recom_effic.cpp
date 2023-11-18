@@ -147,8 +147,8 @@ double RT_recom_effic(long int ip)
 		double OpacityEffective, EffectiveThickness;
 		realnum tau;
 
-		/* find line center opacity - use fine opacity if array indices are OK */
-		if( ipRecombEdgeFine>=0 && ipRecombEdgeFine<rfield.nfine && rfield.lgOpacityFine )
+		/* find line center opacity */
+		if( ipRecombEdgeFine>=0 && ipRecombEdgeFine<rfield.nfine )
 		{
 			/* use fine opacities fine grid fine mesh to get optical depth 
 			 * to continuum source */

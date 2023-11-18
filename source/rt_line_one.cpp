@@ -144,7 +144,7 @@ STATIC void RT_line_escape(
 			// value is used, or use other means to handle overlap
 			if( 0 && 
 				 t.Emis().ipFine()>=0 && ipLineCenter>0 && 
-				 ipLineCenter<rfield.nfine && rfield.lgOpacityFine )
+				 ipLineCenter<rfield.nfine )
 			{
 				OpacityEffective = rfield.fine_opac_zone[ipLineCenter];
 			}
@@ -289,10 +289,9 @@ STATIC void RT_line_fine_opacity(
 	long int ipLineCenter = t.Emis().ipFine() + rfield.ipFineConVelShift;
 
 	/* define fine opacity fine grid fine mesh */
-	/* rfield.lgOpacityFine flag set false with no fine opacities command */
 	/* opacities can be negative if masers are allowed */
 	if( ipLineCenter < 0 || abs(t.Emis().PopOpc()) < SMALLFLOAT ||
-		ipLineCenter>rfield.nfine || !rfield.lgOpacityFine )
+		ipLineCenter>rfield.nfine )
 	{
 		return;
 	}
