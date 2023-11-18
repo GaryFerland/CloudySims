@@ -294,6 +294,11 @@ void iso_create()
 							EnergyWN = RYD_INF * fabs(iso_sp[ipISO][nelem].fb[ipLo].xIsoLevNIonRyd -
 													  iso_sp[ipISO][nelem].fb[ipHi].xIsoLevNIonRyd);
 
+						if( ipISO == ipH_LIKE && ipHi == 1 )
+						{
+							EnergyWN = t_hydro_tbl::Inst().m1wn(N_(ipHi), L_(ipHi), nelem+1);
+						}
+
 						/* transition energy in various units: */
 						iso_sp[ipISO][nelem].trans(ipHi,ipLo).EnergyWN() = (realnum)EnergyWN;
 
