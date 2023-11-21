@@ -747,9 +747,10 @@ inline bool lgIsLymanLine(const TransitionProxy &t)
 	return (ipISO == ipH_LIKE && t.Lo()->n() == 1 && (t.Hi()->n() > iso_sp[ipISO][nelem].n_HighestResolved_local || t.Hi()->l() == 1));
 }
 
-inline bool lgIsLymanLineResolved(const TransitionProxy &t)
+inline bool lgIsLymanLineResolved(const TransitionProxy &t, const TransitionProxy &tJ05, const TransitionProxy &tJ15)
 {
-	return (lgIsLymanLine(t) && t.Hi()->g() < 6);
+	double Ediff = tJ15.Hi()->energy().get("eV") - tJ05.Hi()->energy().get("eV");
+        return (lgIsLymanLine(t) && Ediff > iso_ctrl.Resolution);
 }
 
 inline bool lgIsLymanLineUnresolved(const TransitionProxy &t)

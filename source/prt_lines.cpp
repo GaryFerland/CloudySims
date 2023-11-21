@@ -180,9 +180,7 @@ void lines()
 			continue;
 		for( long nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 		{
-			double Ediff = ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]].Hi()->energy().get("eV") - ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].Hi()->energy().get("eV");
-			
-			if( Ediff > iso_ctrl.Resolution )
+			if( lgIsLymanLineResolved(ExtraLymanLinesJ05[nelem][nHi], ExtraLymanLinesJ05[nelem][nHi], ExtraLymanLinesJ15[nelem][nHi]) )
 			{
 				if (ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].ipCont() > 0)
 				{

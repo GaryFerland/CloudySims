@@ -734,13 +734,12 @@ void RT_DestProb(
 	double crsec = t.Emis().opacity(); /* its line absorption cross section */
 	/* Low-Z resolved Lyman lines are overlapping, so add opacities of both
 	   components. We treat high Z and low n as two separate lines. */
-	if(lgIsLymanLineResolved(t))
+	if( lgIsLymanLine(t) && t.Hi()->g() < 6 )
 	{
 		long nelem = t.Lo()->nelem() - 1;
 		long nHi = t.Hi()->n();
 		double Ediff = ExtraLymanLinesJ15[nelem][nHi].EnergyWN() - ExtraLymanLinesJ05[nelem][nHi].EnergyWN();
 		double Vdiff = Ediff/t.EnergyWN()*SPEEDLIGHT;
-
 		if( Vdiff < DopplerWidth )
 			crsec = ExtraLymanLinesJ05[nelem][nHi].Emis().opacity() + ExtraLymanLinesJ15[nelem][nHi].Emis().opacity();
 	}

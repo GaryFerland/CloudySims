@@ -43,7 +43,7 @@ void prtmet(void)
 					{
 						for( long ipHi=ipLo+1; ipHi < iso_sp[ipISO][nelem].numLevels_local; ipHi++ )
 						{
-							if(!lgIsLymanLineResolved(iso_sp[ipISO][nelem].trans(ipHi,ipLo)))
+							if(!lgIsLymanLineResolved(iso_sp[ipISO][nelem].trans(ipHi,ipLo), ExtraLymanLinesJ05[nelem][N_(ipHi)], ExtraLymanLinesJ15[nelem][N_(ipHi)]))
 							{
 								prme(false,iso_sp[ipISO][nelem].trans(ipHi,ipLo));
 							}
@@ -64,7 +64,7 @@ void prtmet(void)
 					/* print one-electron doublets nP Lyman sequence optical depths */
 					for( long nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 					{
-						if(lgIsLymanLineResolved(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]]))
+						if( lgIsLymanLineResolved(ExtraLymanLinesJ05[nelem][nHi], ExtraLymanLinesJ05[nelem][nHi], ExtraLymanLinesJ15[nelem][nHi]) )
 						{
 							prme(false, ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]]);
 							prme(false, ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]]);

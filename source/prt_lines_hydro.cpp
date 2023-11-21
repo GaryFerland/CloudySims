@@ -481,10 +481,8 @@ void lines_hydro(void)
 
 				for( ipHi=ipLo+1; ipHi < nLoop; ipHi++ )
 				{
-					double Ediff = ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].Hi()->energy().get("eV") - ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Hi()->energy().get("eV");
-
 					// skip if the resolved lyman lines are added elsewhere
-					if( ipLo == 0 && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ) && Ediff > iso_ctrl.Resolution )
+					if( lgIsLymanLineResolved(iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo), ExtraLymanLinesJ05[nelem][N_(ipHi)], ExtraLymanLinesJ15[nelem][N_(ipHi)]) )
 						continue;
 
 					// skip non-radiative transitions
