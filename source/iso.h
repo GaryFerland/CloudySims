@@ -740,6 +740,8 @@ void iso_multiplet_opacities( void );
  */
 string iso_comment_tran_levels( long ipISO, long nelem, long ipLo, long ipHi );
 
+string extraLymanJ_comment_tran_levels( const TransitionProxy &t );
+
 inline bool lgIsLymanLine(const TransitionProxy &t)
 {
 	long ipISO = t.Lo()->nelem() - t.Lo()->IonStg();

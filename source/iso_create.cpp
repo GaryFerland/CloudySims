@@ -1320,58 +1320,67 @@ STATIC void FillExtraLymanLine( const TransitionList::iterator& t, long ipISO, l
 		(*(*t).Hi()).g() = iso_sp[ipISO][nelem].st[iso_ctrl.nLyaLevel[ipISO]].g();
 
 	/* \todo add correct configuration, or better still link to standard level */
-	(*(*t).Hi()).chConfig() = "ExtraLyman level (probably duplicate)";
+	if( ipISO == ipH_LIKE )
+	{
+		char chConfiguration[32];
+		int j_numerator = j*2;
+		sprintf( chConfiguration, "%li^2P%i/2", nHi, j_numerator );
+		(*(*t).Lo()).chConfig() = "1^2S1/2";
+		(*(*t).Hi()).chConfig() = chConfiguration;
+	}
+	else
+		(*(*t).Hi()).chConfig()  = "ExtraLyman level (probably duplicate)";
 
 	/* energies */
 	/********************************************************************************/
-	/* Adding Fine Structure Corrections to nP energy levels: 						*/
-	/* For all one-electron atoms the following equations     						*/
-	/* are being used to find the j-resolved energies.        						*/
-	/*																				*/	
-	/*																				*/	
-	/* Total nP_j level energy:                               						*/
-	/* Enerwn = E_0_n + E_FS_nj + E_LS_nlj + E_M_nj           						*/
-	/*																				*/	
-	/*																				*/	
-	/* Unperturbed Energy:															*/
-	/*         -µ Z^2 Ry															*/
-	/* E_0_n = ----------															*/
-	/*			   n^2 																*/
-	/*																				*/	
-	/* Dirac-point nucleas energy (Fine Structure correction): 						*/
-	/*                                     α Z               						*/
+	/* Adding Fine Structure Corrections to nP energy levels: 			*/
+	/* For all one-electron atoms the following equations     			*/
+	/* are being used to find the j-resolved energies.        			*/
+	/*										*/
+	/*										*/
+	/* Total nP_j level energy:                               			*/
+	/* Enerwn = E_0_n + E_FS_nj + E_LS_nlj + E_M_nj           			*/
+	/*										*/
+	/*										*/
+	/* Unperturbed Energy:								*/
+	/*         -µ Z^2 Ry								*/
+	/* E_0_n = ----------								*/
+	/*            n^2 								*/
+	/*										*/
+	/* Dirac-point nucleas energy (Fine Structure correction): 			*/
+	/*                                     α Z               			*/
 	/* E_FS_nj = m_e c^2 [ 1 + ( ------------------------- )^2 ]^-1/2 - m_e c^2   	*/
-	/*                           n - k + √ (k^2 - α^2 Z^2)     						*/
-	/*																				*/	
-	/* Lamb-Shift Correction (Resolving orbital-angular momentum l):				*/
-	/*			   8 Z^4 α^3               Z^2 Ry        3    c_lj   				*/
-	/* E_LS_nlj = ----------- Ry [log ( ----------- ) + --- --------]  				*/
-	/*			    3 π n^3   		      K_0(n,l)       8   2l + 1					*/
-	/*																				*/	
-	/*	where  c_lj = -l^{-1} if j = l-1/2; c_lj = (l+1)^{-1} if j=l+1/2			*/	
-	/*	       K_0(n,l) = Bethe logarithm; we have used a fit function instead		*/	
-	/*																				*/	
-	/* Nuclear Mass Recoil Correction:												*/
-	/*					m_e (α Z)^2			   m_e	 (α Z)^2 						*/	
-	/* E_M_nj = m_e c^2 ------------ - µ c^2 (-----) --------						*/
-	/*					 m_N 2 N^2 			   m_N	   2n^2							*/
-	/*																				*/	
-	/* where  N = (( n - k + √ (k^2 - α^2 Z^2) )^2 + α^2 Z^2)^1/2 					*/
-	/*																				*/	
-	/* m_e = electron mass 															*/
-	/* m_N = nuclear mass 															*/
-	/* µ = Reduced mass 															*/
-	/* c = speed of light 															*/
-	/* α = fine structure constant 													*/
-	/* Z = atomic number 															*/
-	/* n = principle quantum number 												*/
-	/* l = orbital angular quantum number 											*/
-	/* j = total quantum number (l+s) 												*/
-	/* k = j + 1/2 																	*/	
-	/* Ry = hc R∞ = Rydberg unit of energy 											*/
-	/* 																				*/
-	/* See Gunasekera et. al 2023 for further detail.								*/
-	/* 																				*/		
+	/*                           n - k + √ (k^2 - α^2 Z^2)     			*/
+	/*										*/
+	/* Lamb-Shift Correction (Resolving orbital-angular momentum l):		*/
+	/*			   8 Z^4 α^3               Z^2 Ry        3    c_lj   	*/
+	/* E_LS_nlj = ----------- Ry [log ( ----------- ) + --- --------]  		*/
+	/*			    3 π n^3   		      K_0(n,l)       8   2l + 1	*/
+	/*										*/
+	/*	where  c_lj = -l^{-1} if j = l-1/2; c_lj = (l+1)^{-1} if j=l+1/2	*/
+	/*	       K_0(n,l) = Bethe logarithm; we have used a fit function instead	*/
+	/*										*/
+	/* Nuclear Mass Recoil Correction:						*/
+	/*		     m_e (α Z)^2	   m_e	 (α Z)^2 			*/
+	/* E_M_nj = m_e c^2 ------------ - µ c^2 (-----) --------			*/
+	/*		      m_N 2 N^2 	   m_N	   2n^2				*/
+	/*										*/
+	/* where  N = (( n - k + √ (k^2 - α^2 Z^2) )^2 + α^2 Z^2)^1/2 			*/
+	/*										*/
+	/* m_e = electron mass 								*/
+	/* m_N = nuclear mass 								*/
+	/* µ = Reduced mass 								*/
+	/* c = speed of light 								*/
+	/* α = fine structure constant 							*/
+	/* Z = atomic number 								*/
+	/* n = principle quantum number 						*/
+	/* l = orbital angular quantum number 						*/
+	/* j = total quantum number (l+s) 						*/
+	/* k = j + 1/2 									*/
+	/* Ry = hc R∞ = Rydberg unit of energy 						*/
+	/* 										*/
+	/* See Gunasekera et. al 2023 for further detail.				*/
+	/* 										*/
 	/********************************************************************************/
 	if( ipISO == ipH_LIKE )
 	{

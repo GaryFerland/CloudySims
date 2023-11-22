@@ -178,20 +178,24 @@ void lines()
 	{
 		if( ! dense.lgElmtOn[nelem] )
 			continue;
-		for( long nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
+		long int nLoop  = iso_Max_Emitting_Level(nelem, ipISO, prt.lgPrnIsoCollapsed);
+		for( long nHi=N_(nLoop); nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 		{
-			if( lgIsLymanLineResolved(ExtraLymanLinesJ05[nelem][nHi], ExtraLymanLinesJ05[nelem][nHi], ExtraLymanLinesJ15[nelem][nHi]) )
+			if( lgIsLymanLineResolved(ExtraLymanLinesJ05[nelem][nHi],
+							ExtraLymanLinesJ05[nelem][nHi], ExtraLymanLinesJ15[nelem][nHi]) )
 			{
 				if (ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].ipCont() > 0)
 				{
+					string comment_trans = extraLymanJ_comment_tran_levels( ExtraLymanLinesJ05[nelem][nHi] );
 					PutLine(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]],
-							  "extra Lyman line");
+							comment_trans.c_str());
 				}
 
 				if (ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]].ipCont() > 0)
 				{
+					string comment_trans = extraLymanJ_comment_tran_levels( ExtraLymanLinesJ15[nelem][nHi] );
 					PutLine(ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]],
-							  "extra Lyman line");
+							comment_trans.c_str());
 				}
 			}
 		}

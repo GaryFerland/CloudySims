@@ -44,6 +44,12 @@ string iso_comment_tran_levels( long ipISO, long nelem, long ipLo, long ipHi )
 	return isoSeq + GenerateTransitionConfiguration( iso_sp[ipISO][nelem].trans(ipHi,ipLo) );
 }
 
+string extraLymanJ_comment_tran_levels( const TransitionProxy &t )
+{
+	string isoSeq = "H-like, ";
+	return isoSeq + GenerateTransitionConfiguration( t );
+}
+
 void lines_hydro(void)
 {
 	long ipISO = ipH_LIKE;
@@ -481,9 +487,20 @@ void lines_hydro(void)
 
 				for( ipHi=ipLo+1; ipHi < nLoop; ipHi++ )
 				{
-					// skip if the resolved lyman lines are added elsewhere
-					if( lgIsLymanLineResolved(iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo), ExtraLymanLinesJ05[nelem][N_(ipHi)], ExtraLymanLinesJ15[nelem][N_(ipHi)]) )
+					// n < nLoop levels of resolved lyman lines added here, remainder added in prt_lines.cpp
+					if( lgIsLymanLineResolved(iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo),
+									ExtraLymanLinesJ05[nelem][N_(ipHi)], ExtraLymanLinesJ15[nelem][N_(ipHi)]) )
+					{
+						string comment_trans = extraLymanJ_comment_tran_levels( ExtraLymanLinesJ05[nelem][N_(ipHi)] );
+						PutLine(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]],
+								comment_trans.c_str());
+
+						comment_trans = extraLymanJ_comment_tran_levels( ExtraLymanLinesJ15[nelem][N_(ipHi)] );
+						PutLine(ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]],
+								comment_trans.c_str());
+
 						continue;
+					}
 
 					// skip non-radiative transitions
 					if( iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo).ipCont() < 1 )
