@@ -506,10 +506,6 @@ void lines_hydro(void)
 					if( iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo).ipCont() < 1 )
 						continue;
 
-					// skip 2s-1s, so that 2p-1s comes first and cdLine finds LyA instead of the M1 transition.	
-					if( ipHi==1 && ipLo==0 )
-						continue;
-
 					long index_of_nHi_P;
 					/* if ipHi is collapsed level, index_of_nHi_P is ipHi */
 					if( N_(ipHi) > iso_sp[ipH_LIKE][nelem].n_HighestResolved_max )
@@ -520,6 +516,11 @@ void lines_hydro(void)
 					bool lgSkip;
 					if( N_(ipLo) > iso_sp[ipH_LIKE][nelem].n_HighestResolved_max || N_(ipLo) == N_(ipHi) )
 						lgSkip = false;
+					else if( ipHi==1 && ipLo==0 )
+                                        {
+						/* Dont skip M1 lines */
+                                                lgSkip = false;
+                                        }
 					else
 						lgSkip = !( ipHi == index_of_nHi_P && ipLo == index_of_nLo_S );
 
