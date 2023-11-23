@@ -46,6 +46,7 @@ class t_hydro_tbl : public Singleton<t_hydro_tbl>
 	multi_arr<double,3> p_en;
 	multi_arr<double,3> p_cs;
 
+	size_t p_Zmaxm1;
 	vector<realnum> p_tpwn;
 
 	void p_initn(long nu);

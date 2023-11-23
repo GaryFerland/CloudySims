@@ -309,11 +309,11 @@ void t_hydro_tbl::p_initwn()
 	d.getline();
 	d.checkMagic(m1wn_magic);
 	d.getline();
-	d.getToken(p_Zmax);
+	d.getToken(p_Zmaxm1);
 
-	p_tpwn.reserve(p_Zmax);
+	p_tpwn.reserve(p_Zmaxm1);
 
-	for( long Z=1; Z <= min(p_Zmax,LIMELM); ++Z )
+	for( long Z=1; Z <= min(p_Zmaxm1,LIMELM); ++Z )
 	{
 		d.getline();
 		long ZZ;
@@ -362,7 +362,11 @@ realnum t_hydro_tbl::tp(long nl, long ll, long nu, long lu, long Z)
 	return powi(realnum(Z),4)*(*p_tpnl[k1])[k2][nl-1][lu][dl]*p_RM(Z);
 }
 
+#ifdef NDEBUG
+realnum t_hydro_tbl::m1wn(long, long, long Z)
+#else
 realnum t_hydro_tbl::m1wn(long n, long l, long Z)
+#endif
 {
 	DEBUG_ENTRY( "t_hydro_tbl::m1wn()" );
 
