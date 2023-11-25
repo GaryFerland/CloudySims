@@ -184,7 +184,7 @@ void iso_init()
 	iso_sp[ipH_LIKE][ipSILICON].nCollapsed_max = 5;
 	iso_sp[ipH_LIKE][ipMAGNESIUM].nCollapsed_max = 5;
 	iso_sp[ipH_LIKE][ipSULPHUR].nCollapsed_max = 5;
-	iso_sp[ipH_LIKE][ipIRON].nCollapsed_max = 5;
+	//iso_sp[ipH_LIKE][ipIRON].nCollapsed_max = 5;
 	iso_sp[ipH_LIKE][LIMELM-1].nCollapsed_max = 5;
 
 	/* H and He are special cases since very high resolution, S/N
@@ -192,6 +192,10 @@ void iso_init()
 	 */
 	iso_sp[ipH_LIKE][ipHYDROGEN].n_HighestResolved_max = 10;
 	iso_sp[ipH_LIKE][ipHYDROGEN].nCollapsed_max = 15;
+	/* 2023 Nov, increasing no. of Fe levels as a result of
+	 * resolving Lyman alpha lines to j=1/2 and j=3/2 states */
+	iso_sp[ipH_LIKE][ipIRON].n_HighestResolved_max = 10;
+        iso_sp[ipH_LIKE][ipIRON].nCollapsed_max = 5;
 
 	iso_sp[ipH_LIKE][ipHELIUM].n_HighestResolved_max = 10;
 	iso_sp[ipH_LIKE][ipHELIUM].nCollapsed_max = 15;
