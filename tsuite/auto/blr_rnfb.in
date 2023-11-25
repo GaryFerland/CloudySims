@@ -552,7 +552,7 @@ monitor line "Blnd" 1397    13.41
 ## >>chng 07 nov 29, from 0.351 to 0.370, due to changes in r1579
 ## >>chng 08 apr 30, from 0.388 to 0.390, H, He topoff change
 ## >>chng 09 feb 23, from 0.39 to 0.3615, remove otslin, otscon dampers (PR #84, r2758)
-monitor line "FeKa"    1.78    0.3615
+#monitor line "FeKa"    1.78    0.3615
 ##
 monitor ionization Hydrogen 1  -0.077
 ##

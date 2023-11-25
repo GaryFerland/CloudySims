@@ -1372,51 +1372,19 @@ void lines()
 
 STATIC void lines_iron_Ka()
 {
-	DEBUG_ENTRY( "cool_iron_Ka()" );
+	DEBUG_ENTRY( "lines_iron_Ka()" );
 
 	if( trace.lgTrace )
 	{
-		fprintf( ioQQQ, "   cool_iron_Ka called\n" );
+		fprintf( ioQQQ, "   lines_iron_Ka called\n" );
 	}
-
-	double FeKaHLike = 0. , FeKaHeLike=0.;
-	/* one and two electron Ka */
-	if( dense.lgElmtOn[ipIRON] )
-	{
-		/* H-like one-electron Ka */
-		FeKaHLike = ExtraLymanLinesJ05[ipIRON][ipH2p].Emis().xIntensity()+
-					ExtraLymanLinesJ15[ipIRON][ipH2p].Emis().xIntensity();
-
-		/* He-like two-electron Ka */
-		FeKaHeLike =
-				iso_sp[ipHE_LIKE][ipIRON].trans(ipHe2p1P,ipHe1s1S).Emis().xIntensity()+
-				iso_sp[ipHE_LIKE][ipIRON].trans(ipHe2p3P0,ipHe1s1S).Emis().xIntensity()+
-				iso_sp[ipHE_LIKE][ipIRON].trans(ipHe2p3P1,ipHe1s1S).Emis().xIntensity()+
-				iso_sp[ipHE_LIKE][ipIRON].trans(ipHe2p3P2,ipHe1s1S).Emis().xIntensity();
-
-		/* total intensity of K-alpha line, cold, grain, hot, 1 and two electron
-		 * 19 sep 21 segfault if evaluated with dense.lgElmtOn[ipIRON] false
-		 * since continuum index not defined */
-		lindst((fe.fekcld+fe.fegrain)*1.03e-8+fe.fekhot*1.11e-8+FeKaHLike+FeKaHeLike,1.78f,"FeKa",
-			iso_sp[ipH_LIKE][ipIRON].trans(ipH2p,ipH1s).ipCont(),'i',false,
-			   "total intensity of Fe K-alpha line, grain, cold, hot, 1 and 2 electron" );
-	}
-
-	linadd(FeKaHeLike,1.85,"FeK2",'i' ,
-		"He-like two-electron Ka");
-
-	linadd( fe.fekhot*1.11e-8 ,1.8,"FeKH",'i' ,
-		"fluorescent hot iron, Fe 18 - 23 times ionized");
-
-	linadd(fe.fekcld*1.03e-8,1.75,"FeKC",'i',
-		"fluorescent cold iron, less than or 17 times ionized" );
 
 	linadd(fe.fegrain*1.03e-8,1.75,"FeKG",'i' ,
 		"grain production of cold iron");
 
 	if( trace.lgTrace )
 	{
-		fprintf( ioQQQ, "   cool_iron_Ka returns\n" );
+		fprintf( ioQQQ, "   lines_iron_Ka returns\n" );
 	}
 	return;
 }
