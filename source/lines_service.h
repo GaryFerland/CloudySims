@@ -8,7 +8,7 @@ class LinSv;
 
 LinSv *linadd(
   double xInten,
-  realnum wavelength,
+  t_wavl wavelength,
   const char *chLab,
   char chInfo ,	
   const char *chComment );
@@ -31,7 +31,7 @@ void outline_base_bin(bool lgTransStackLine, long int ip, double phots, realnum 
 \param *chComment string explaining line 
 */
 void lindst(double xInten,
-  realnum wavelength, 
+  t_wavl wavelength, 
   const char *chLab, 
   long int ipnt, 
   char chInfo, 
@@ -52,7 +52,7 @@ void lindst(double xInten,
 void lindst(double dampXvel,
   double damp,
   double xInten,
-  realnum wavelength,
+  t_wavl wavelength,
   const char *chLab,
   long int ipnt,
   char chInfo,
@@ -97,7 +97,7 @@ double emergent_line(
 \param *ipnt this is array index on the f, not c scale,
    for the continuum cell holding the line
 */
-void PntForLine(double wavelength, 
+void PntForLine(t_wavl wavelength, 
   const char *chLabel, 
   long int *ipnt);
 
@@ -149,8 +149,7 @@ double abscf(double gf,
  */
 realnum wlAirVac( double wlAir );
 
-/**RefIndex calculates the index of refraction of air using the line energy in wavenumbers,
- * used to convert vacuum wavelengths to air wavelengths. 
+/** RefIndex calculates the index of refraction of air using the line energy in wavenumbers for STP air
  \param EnergyWN - energy in wavenumbers
  */
 double RefIndex(double EnergyWN);
@@ -203,7 +202,7 @@ void set_xIntensity( const TransitionProxy &t );
 */
 inline double wn2ang( double fenergyWN )
 {
-	return safe_div( 1e+8, fenergyWN * RefIndex( fenergyWN ) );
+	return safe_div( 1e+8, fenergyWN );
 }
 
 #endif /* LINES_SERVICE_H_ */

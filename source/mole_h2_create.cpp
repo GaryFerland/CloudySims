@@ -609,7 +609,7 @@ void diatomics::init(void)
 		(*tr).EnergyWN() = (realnum)((*(*tr).Hi()).energy().WN() - (*(*tr).Lo()).energy().WN());
 		/*wavelength of transition in Angstroms */
 		if( (*tr).EnergyWN() > SMALLFLOAT)
-			(*tr).WLAng() = (realnum)(1.e8f/(*tr).EnergyWN() / RefIndex( (*tr).EnergyWN() ) );
+			(*tr).WLAng() = (realnum)wn2ang((*tr).EnergyWN());
 
 		(*tr).Coll().col_str() = 0.;
 	}

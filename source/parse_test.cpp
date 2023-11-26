@@ -210,7 +210,7 @@ void ParseTest(Parser &p)
 		/* >>chng 02 apr 19, from 0.7258 to 0.946, due to adding Lyman cont depth */
 		/* >>chng 07 oct 22, from 0.946  to 1.108, resolve l-levels of h-like sequence */
 		ostringstream wavlen;
-		wavlen << setprecision( LineSave.sig_figs ) << Hbeta_WavLen;	 
+		wavlen << Hbeta_WavLen.str();	 
 
 		StuffCommand( "MONITOR LINE \"CA B\"" + wavlen.str() + " 1.108", p, lgPrintTest );
 		ParseMonitorResults(p);

@@ -2,8 +2,7 @@
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*GetGF convert Einstein A into oscillator strength */
 /*abscf convert gf into absorption coefficient */
-/*RefIndex calculates the index of refraction of air using the line energy in wavenumbers,
- * used to convert vacuum wavelengths to air wavelengths. */
+/* RefIndex calculates the index of refraction of air using the line energy in wavenumbers for STP air */
 /*eina convert a gf into an Einstein A */
 /*WavlenErrorGet - find difference between two wavelengths */
 /*linadd enter lines into the line storage array, called once per zone */
@@ -272,11 +271,7 @@ double abscf(double gf,
 	return( abscf_v );
 }
 
-/* compute wavelength in air or vacuum given hardcoded air wavelengths,
- * option set by parse option PRINT WAVELENGTH VACUUM
- * this allows hardwired air wavelengths (which should not be there
- * in the first place) to be converted air/vacuum automatically
- */
+/* compute wavelength in vacuum given hardcoded air wavelengths */
 realnum wlAirVac( double wlAir )
 {
 	DEBUG_ENTRY( "wlAirVac()" );
@@ -284,32 +279,21 @@ realnum wlAirVac( double wlAir )
 	// Iterate since EnergyWN depends on wlVac not wlAir but
 	// difference should be small
 	double RefIndex_v = 1.;
-	if( !prt.lgPrintLineAirWavelengths && wlAir > 2000.)
+	if( wlAir > 2000. )
 	{
 		double wlVacuum = wlAir;
 		for( int i=0; i<2; ++i )
 		{
-			/* WN is wavenumber in microns^-1, WN2 is this squared */
-			double WN = 1e4 / wlVacuum;
-			double WN2 = WN*WN;
-
-			/* use a formula from
-			 *>>refer	air	index refraction	Peck & Reeder 1972, JOSA, 62, 8, 958 */
-			RefIndex_v = 1. +
-				1e-8 * (8060.51 + 2480990.0 / (132.274 - WN2) + 17455.7 / (39.32957 - WN2));
-
+			RefIndex_v = RefIndex(1e8 / wlVacuum);
 			wlVacuum = wlAir * RefIndex_v;
 		}
 	}
 
-	return( (realnum)(wlAir * RefIndex_v) );
+	return (realnum)(wlAir * RefIndex_v);
 }
 
-/*RefIndex calculates the index of refraction of air using the line energy in wavenumbers,
- * by default for STP air, returns index of refraction in vacuum (1) when
- * print line vacuum set
- * used to convert vacuum wavelengths to air wavelengths. */
-double RefIndex(double EnergyWN )
+/* RefIndex calculates the index of refraction of air using the line energy in wavenumbers for STP air */
+double RefIndex(double EnergyWN)
 {
 	DEBUG_ENTRY( "RefIndex()" );
 
@@ -318,7 +302,7 @@ double RefIndex(double EnergyWN )
 	double RefIndex_v = 1.0;
 
 	/* only do index of refraction if longward of 2000A */
-	if( EnergyWN < 5e4 && prt.lgPrintLineAirWavelengths )
+	if( EnergyWN < 5e4 )
 	{
 		/* xl is wavenumber in microns^-1, squared */
 		double xl = EnergyWN * 1e-4;
@@ -330,7 +314,7 @@ double RefIndex(double EnergyWN )
 	}
 
 	ASSERT( RefIndex_v >= 1. );
-	return( RefIndex_v );
+	return RefIndex_v;
 }
 
 /*WavlenErrorGet - given the real wavelength in A for a line
@@ -368,7 +352,7 @@ realnum WavlenErrorGet( realnum wavelength, long sig_figs )
 STATIC LinSv* lincom(
   double xEmiss,	/* xEmiss - local emissivity per unit vol, no fill fac */
   double xEmissIsoBkg,	/* xEmissIsoBkg - local emissivity corrected for isotropic backgrounds per unit vol, no fill fac */
-  realnum wavelength,	/* realnum wavelength */
+  t_wavl wavelength,	/* realnum wavelength */
   const char *chLab,/* string label for ion */
   // ipnt offset of line in continuum mesh
   long int ipnt, 
@@ -401,7 +385,7 @@ STATIC LinSv* lincom(
 
 		if (lgAdd)
 		{
-			if (wavelength > 0 && chInfo == 't' )
+			if (wavelength.wavlVac() > 0 && chInfo == 't' )
 			{
 				/* no need to increment or set [1] version since this is called with no continuum
 				 * index, don't know what to do */
@@ -441,8 +425,8 @@ STATIC LinSv* lincom(
 			ASSERT( ipnt > 0 );
 #		ifndef NDEBUG
 			double error = MAX2(0.1*rfield.anu(ipnt-1) , rfield.widflx(ipnt-1) );
-			ASSERT( wavelength<=0 ||
-					  fabs( rfield.anu(ipnt-1) - RYDLAM / wavelength) < error );
+			ASSERT( wavelength.wavlVac() <= 0_r ||
+					fabs( rfield.anu(ipnt-1) - RYDLAM / wavelength.wavlVac()) < error );
 #		endif
 		}
 
@@ -472,7 +456,7 @@ STATIC LinSv* lincom(
 /*linadd enter lines into the line storage array, called once per zone for each line*/
 LinSv *linadd(
   double xEmiss,	/* xEmiss - local emissivity per unit vol, no fill fac */
-  realnum wavelength,	/* realnum wavelength */
+  t_wavl wavelength,	/* realnum wavelength */
   const char *chLab,/* string label for ion */
   char chInfo,		/* character type of entry for line - given below */
 			/* 'c' cooling, 'h' heating, 'i' info only, 'r' recom line, 't' transferred line */
@@ -636,7 +620,7 @@ static void lindst1(
   double xEmiss,
   double xEmissIsoBkg,	/* xEmissIsoBkg - local emissivity corrected for isotropic backgrounds per unit vol, no fill fac */
   // wavelength of line in Angstroms
-  realnum wavelength,
+  t_wavl wavelength,
   // *chLab string label for ion
   const char *chLab,
   // ipnt offset of line in continuum mesh
@@ -684,7 +668,7 @@ void lindst(
   // xEmiss - local emissivity per unit vol
   double xEmiss, 
   // wavelength of line in Angstroms
-  realnum wavelength, 
+  t_wavl wavelength, 
   // *chLab string label for ion
   const char *chLab, 
   // ipnt offset of line in continuum mesh
@@ -707,7 +691,7 @@ void lindst(
   // xEmiss - local emissivity per unit vol
   double xEmiss,
   // wavelength of line in Angstroms
-  realnum wavelength,
+  t_wavl wavelength,
   // *chLab string label for ion
   const char *chLab,
   // ipnt offset of line in continuum mesh
@@ -738,25 +722,18 @@ void lindst(
 {
 	DEBUG_ENTRY( "lindst()" );
 
-	// H2O  212.468m
-	if (0 && LineSave.ipass > 0)
-		if (strncmp(LineSave.lines[LineSave.nsum].chALab(),"H2O ",4) == 0 &&
-			 fabs(LineSave.lines[LineSave.nsum].wavelength()-212.468e4) < 1e4)
-			fprintf(ioQQQ,"DEBUG lindst: %ld %4ld %15.8e %15.8e %15.8e %15.8e %15.8e\n",
-					  LineSave.nsum,nzone,radius.depth,t.Emis().xObsIntensity(),
-					  phots( t ),(*t.Hi()).Pop(),t.Emis().Pesc_total());
 	lindst1(t.Emis().dampXvel(),
-		t.Emis().damp(),
-		t.Emis().xIntensity()+extra.v,
-		t.Emis().xObsIntensity()+extra.v,
-		t.WLAng(), chLab, t.ipCont(), chInfo, lgOutToo, chComment, t );
+			t.Emis().damp(),
+			t.Emis().xIntensity()+extra.v,
+			t.Emis().xObsIntensity()+extra.v,
+			t_vac(t.WLAng()), chLab, t.ipCont(), chInfo, lgOutToo, chComment, t );
 
 }
 
 /*PntForLine generate pointer for forbidden line */
 void PntForLine(
   /* wavelength of transition in Angstroms */
-  double wavelength, 
+  t_wavl wavelength, 
   /* label for this line */
   const char *chLabel,
   /* this is array index on the f, not c scale,
@@ -777,9 +754,9 @@ void PntForLine(
 	DEBUG_ENTRY( "PntForLine()" );
 
 	/* must be 0 or greater */
-	ASSERT( wavelength >= 0. );
+	ASSERT( wavelength.wavlVac() >= 0. );
 
-	if( wavelength == 0. )
+	if( wavelength.wavlVac() == 0. )
 	{
 		/* zero is special flag to initialize */
 		nForLin = 0;
@@ -803,8 +780,8 @@ void PntForLine(
 				cdEXIT(EXIT_FAILURE);
 			}
 
+			double EnergyRyd = RYDLAM/wavelength.wavlVac();
 			/* ipLineEnergy will only put in line label if nothing already there */
-			const double EnergyRyd = RYDLAM/wavelength;
 			ipForLin[nForLin] = ipLineEnergy(EnergyRyd,chLabel , 0);
 			*ipnt = ipForLin[nForLin];
 		}

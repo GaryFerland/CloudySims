@@ -55,10 +55,12 @@ monitor line "cr h" 0  luminosity -22
 ## asserted values not yet set
 ## >>chng 13 jul 24, wl from 21.10c to 21.1050c, increased wl precision to 6 sig. fig.
 ## >>chng 13 jul 30, wl from 21.1050c to 21.1207c, increased wl precision to 6 sig. fig.
-monitor line "H  1" 21.1207c  luminosity -26.696
+## >>chng 23 nov 26, wl from 21.1207c to 21.1004c, update wavelengths for hyperfine lines
+monitor line "H  1" 21.1004c  luminosity -26.696
 ## >>chng 13 jul 30, wl from 16.00c to 16.7710c, increased wl precision to 6 sig. fig.
 ## >>chng 13 aug 1, from -35.662 to -35.7380, new data and calculations for hfs line
-monitor line "Mg 2" 16.7710c  luminosity -35.7380
+## >>chng 23 nov 26, wl from 16.7710c to 16.7664c, update wavelengths for hyperfine lines
+monitor line "Mg 2" 16.7664c  luminosity -35.7380
 ##
 monitor ionization helium 2 -4.14 error 0.1
 ##

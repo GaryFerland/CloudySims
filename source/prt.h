@@ -49,6 +49,7 @@ void sprt_wl(
 \param wvlng		line wavelength
  */
 void prt_line_err( FILE *ioOUT, const string& label, realnum wvlng );
+void prt_line_err( FILE *ioOUT, const string& label, t_wavl wvlng );
 void prt_line_err( FILE *ioOUT, const LineID& lineid );
 
 /* prt_line_inlist print line suitable for output list, label not enclosed in quotation marks

@@ -586,7 +586,7 @@ bool bands_file::load()
 				fprintf( ioQQQ, "string==%s==\n" ,chLine.c_str() );
 				return false;
 			}
-			wlLo[k] = (realnum)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
+			wlLo[k] = wlAirVac(FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL));
 			if( lgEOL )
 			{
 				fprintf( ioQQQ, " There should have been a number"
@@ -594,7 +594,7 @@ bool bands_file::load()
 				fprintf( ioQQQ, "string==%s==\n" ,chLine.c_str() );
 				return false;
 			}
-			wlHi[k] = (realnum)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
+			wlHi[k] = wlAirVac(FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL));
 			if( lgEOL )
 			{
 				fprintf( ioQQQ, " There should have been a number"
@@ -800,17 +800,17 @@ void band_emission::insert()
 	for( long iband = 0; iband < nBins; iband++ )
 	{
 		long ipnt;
-		PntForLine( double( getWl( iband ) ), bandLabel.c_str(), &ipnt );
+		PntForLine( t_air(getWl(iband)), bandLabel.c_str(), &ipnt );
 		lindst( inten_inward[ iband ] + inten_outward[ iband ],
-			getWl( iband ),
-			bandLabel.c_str(),
-			ipnt, 't', false,
-			(" total " + comment ).c_str() );
+				t_air(getWl( iband )),
+				bandLabel.c_str(),
+				ipnt, 't', false,
+				(" total " + comment ).c_str() );
 		lindst( inten_inward[ iband ],
-			getWl( iband ),
-			inwdLabel.c_str(),
-			ipnt, 't', false,
-			(" inward " + comment ).c_str() );
+				t_air(getWl( iband )),
+				inwdLabel.c_str(),
+				ipnt, 't', false,
+				(" inward " + comment ).c_str() );
 	}
 }
 /*============================================================================*/
@@ -910,7 +910,7 @@ void SpeciesBandsAccum()
 
 	/* molecules */
 	long i = StuffComment( "bands" );
-	linadd( 0., (realnum)i , "####", 'i', "  bands");
+	linadd( 0., t_vac(i), "####", 'i', "  bands");
 
 	for( auto it = SpecBands.begin(); it != SpecBands.end(); ++it )
 	{
@@ -930,7 +930,7 @@ void SpeciesBandsAccum()
 
 
 void SaveSpeciesBands( const long ipPun, const string &speciesLabel,
-			const string &fileBands, const bool lgEmergent )
+					   const string &fileBands, const bool lgEmergent )
 {
 	DEBUG_ENTRY( "SaveSpeciesBands()" );
 
@@ -976,12 +976,12 @@ void SaveSpeciesBands( const long ipPun, const string &speciesLabel,
 
 	for( long iband = 0; iband < bandsEm.bins(); iband++ )
 	{
-		LineID line_tot( bandsEm.getLabel().c_str(), bandsEm.getWl( iband ) );
+		LineID line_tot( bandsEm.getLabel().c_str(), t_air(bandsEm.getWl( iband )) );
 		itot = LineSave.findline(line_tot);
 		tot_emiss = LineSave.lines[itot].SumLine(ipEmType) *
 				radius.Conv2PrtInten;
 
-		LineID line_inw( bandsEm.inwdLabel.c_str(), bandsEm.getWl( iband ) );
+		LineID line_inw( bandsEm.inwdLabel.c_str(), t_air(bandsEm.getWl( iband )) );
 		inwd = LineSave.findline(line_inw);
 		inwd_emiss = LineSave.lines[inwd].SumLine(ipEmType) *
 				radius.Conv2PrtInten;

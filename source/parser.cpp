@@ -599,10 +599,10 @@ string Parser::getFirstChunkRaw(long nchar)
 LineID Parser::getLineID(bool lgAtStart)
 {
 	DEBUG_ENTRY( "Parser::getLineID()" );
-	LineID line;
+	string chLabel;
 	if( !lgAtStart || m_card_raw[0] == '\"' )
 	{
-		if( GetQuote( line.chLabel ) != 0 )
+		if( GetQuote( chLabel ) != 0 )
 		{
 			fprintf( ioQQQ, "getLineID found invalid quoted string:\n" );
 			showLocation();
@@ -612,7 +612,7 @@ LineID Parser::getLineID(bool lgAtStart)
 	else
 	{	 
 		/* order on line is label (col 1-4), wavelength */
-		line.chLabel = getFirstChunkRaw(4);
+		chLabel = getFirstChunkRaw(4);
 		// relax rule for whitespace in between tokens: if label
 		// is shorter than 4 chars, wavelength may start in 5th column
 		if( !isspace(m_card[3]) && !isspace(m_card[4]) )
@@ -622,43 +622,52 @@ LineID Parser::getLineID(bool lgAtStart)
 			cdEXIT(EXIT_FAILURE);
 		}
 	}
-	trimTrailingWhiteSpace( line.chLabel );
+	trimTrailingWhiteSpace( chLabel );
 
 	// Normalize common error "H 1 " or "H 1" for "H  1"
-	if ( line.chLabel.size() == 3 || line.chLabel.size() == 4 )
+	if ( chLabel.size() == 3 || chLabel.size() == 4 )
 	{
-		if ( line.chLabel[1] == ' ' &&
-			  ( line.chLabel.size() == 3 || line.chLabel[3] == ' ') )
+		if ( chLabel[1] == ' ' &&
+			  ( chLabel.size() == 3 || chLabel[3] == ' ' ) )
 		{
-			fprintf(ioQQQ,"WARNING: read \"%s\" as spectrum\n",line.chLabel.c_str());
-			if (line.chLabel.size() == 3)
-				line.chLabel += line.chLabel[2];
+			fprintf(ioQQQ,"WARNING: read \"%s\" as spectrum\n",chLabel.c_str());
+			if (chLabel.size() == 3)
+				chLabel += chLabel[2];
 			else
-				line.chLabel[3] = line.chLabel[2];
-			line.chLabel[2] = ' ';
-			fprintf(ioQQQ,"Assuming required spectrum is \"%s\"\n",line.chLabel.c_str());
+				chLabel[3] = chLabel[2];
+			chLabel[2] = ' ';
+			fprintf(ioQQQ,"Assuming required spectrum is \"%s\"\n",chLabel.c_str());
 		}
 	}
 
 	/* now get wavelength */
-	line.wave = (realnum)getWave();
+	realnum wave = (realnum)getWave();
+
+	/* determine the wavelength type */
+	wl_type type = WL_NATIVE;
+	if( nMatchErase("AIR") )
+		type = WL_AIR;
+	if( nMatchErase("VACUUM") )
+		type = WL_VACUUM;
 
 	/* scan for optional parameters */
+	int indLo = -1, indHi = -1;
+	realnum ELo = -1_r;
 	if( nMatch("INDE") )
 	{
-		line.indLo = (int)FFmtRead();
+		indLo = (int)FFmtRead();
 		if( lgEOL() )
 			NoNumb("lower level index");
-		if( line.indLo <= 0 )
+		if( indLo <= 0 )
 		{
 			fprintf( ioQQQ, "getLineID found invalid lower level index:\n" );
 			showLocation();
 			cdEXIT(EXIT_FAILURE);
 		}
-		line.indHi = (int)FFmtRead();
+		indHi = (int)FFmtRead();
 		if( lgEOL() )
 			NoNumb("upper level index");
-		if( line.indHi <= line.indLo )
+		if( indHi <= indLo )
 		{
 			fprintf( ioQQQ, "getLineID found invalid upper level index:\n" );
 			showLocation();
@@ -667,17 +676,17 @@ LineID Parser::getLineID(bool lgAtStart)
 	}
 	else if( nMatch("ELOW") )
 	{
-		line.ELo = FFmtRead();
+		ELo = FFmtRead();
 		if( lgEOL() )
 			NoNumb("lower level energy");
-		if( line.ELo <= 0_r )
+		if( ELo <= 0_r )
 		{
 			fprintf( ioQQQ, "getLineID found invalid lower level energy:\n" );
 			showLocation();
 			cdEXIT(EXIT_FAILURE);
 		}
 	}
-	return line;
+	return LineID(chLabel, t_wavl(wave, type), indLo, indHi, ELo);
 }
 
 // Simple recursive descent parser for expressions
@@ -688,7 +697,7 @@ LineID Parser::getLineID(bool lgAtStart)
 // http://eli.thegreenplace.net/2010/01/02/top-down-operator-precedence-parsing/
 
 STATIC bool ParseNumber(deque<Token> &chTokens, vector<double> &valstack,
-	const symtab &tab)
+						const symtab &tab)
 {
 	DEBUG_ENTRY( "ParseNumber()" );
 	if ( chTokens.size() < 1)
@@ -1364,9 +1373,9 @@ void DataParser::getLineID(LineID& line)
 		errorAbort("the line ID must be the first item on the line");
 	p_replaceSep();
 
-	line = LineID();
+	string chLabel;
 	if( p_line[0] == '\"' )
-		getQuote(line.chLabel);
+		getQuote(chLabel);
 	else
 	{
 		p_pos(min(p_line.length(), 4));
@@ -1376,29 +1385,30 @@ void DataParser::getLineID(LineID& line)
 		// is shorter than 4 chars, wavelength may start in 5th column
 		if( !isspace(p_line[3]) && !isspace(p_line[4]) )
 			errorAbort("found junk after line label");
-		line.chLabel = p_line.substr(0,4);
+		chLabel = p_line.substr(0,4);
 	}
-	trimTrailingWhiteSpace( line.chLabel );
+	trimTrailingWhiteSpace( chLabel );
 
 	// Normalize common error "H 1 " or "H 1" for "H  1"
-	if( line.chLabel.size() == 3 || line.chLabel.size() == 4 )
+	if( chLabel.size() == 3 || chLabel.size() == 4 )
 	{
-		if( line.chLabel[1] == ' ' &&
-		    ( line.chLabel.size() == 3 || line.chLabel[3] == ' ' ) )
+		if( chLabel[1] == ' ' &&
+		    ( chLabel.size() == 3 || chLabel[3] == ' ' ) )
 		{
 			ostringstream oss;
-			oss << "read \"" << line.chLabel << "\" as spectrum, ";
-			if( line.chLabel.size() == 3 )
-				line.chLabel += line.chLabel[2];
+			oss << "read \"" << chLabel << "\" as spectrum, ";
+			if( chLabel.size() == 3 )
+				chLabel += chLabel[2];
 			else
-				line.chLabel[3] = line.chLabel[2];
-			line.chLabel[2] = ' ';
-			oss << "assuming required spectrum is \"" << line.chLabel << "\"";
+				chLabel[3] = chLabel[2];
+			chLabel[2] = ' ';
+			oss << "assuming required spectrum is \"" << chLabel << "\"";
 			warning(oss.str());
 		}
 	}
 
-	p_ls >> line.wave;
+	realnum wave;
+	p_ls >> wave;
 	if( p_ls.fail() )
 		errorAbort("failed to read wavelength");
 
@@ -1410,31 +1420,45 @@ void DataParser::getLineID(LineID& line)
 		else if( c == 'M' )
 		{
 			(void)p_ls.get();
-			line.wave *= 1.e4;
+			wave *= 1.e4;
 		}
 		else if( c == 'C' )
 		{
 			(void)p_ls.get();
-			line.wave *= 1.e8;
+			wave *= 1.e8;
 		}
 	}
 
 	string key;
+	bool key_set = false;
+	wl_type type = WL_NATIVE;
 	if( getKeywordOptional(key) )
+	{
+		if( key == "AIR" )
+			type = WL_AIR;
+		else if( key.substr(0,4) == "VACU" )
+			type = WL_VACUUM;
+		else
+			key_set = true;
+	}
+
+	int indLo = -1, indHi = -1;
+	realnum ELo = -1_r;
+	if( key_set || getKeywordOptional(key) )
 	{
 		if( key.substr(0,4) == "INDE" )
 		{
-			getToken(line.indLo);
-			if( line.indLo <= 0 )
+			getToken(indLo);
+			if( indLo <= 0 )
 				errorAbort("invalid lower level index");
-			getToken(line.indHi);
-			if( line.indHi <= line.indLo )
+			getToken(indHi);
+			if( indHi <= indLo )
 				errorAbort("invalid upper level index");
 		}
 		else if( key == "ELOW" )
 		{
-			getToken(line.ELo);
-			if( line.ELo < 0_r )
+			getToken(ELo);
+			if( ELo < 0_r )
 				errorAbort("invalid lower level energy");
 		}
 		else
@@ -1442,6 +1466,7 @@ void DataParser::getLineID(LineID& line)
 			errorAbort("keyword not recognized");
 		}
 	}
+	line = LineID(chLabel, t_wavl(wave, type), indLo, indHi, ELo);
 }
 
 bool DataParser::lgEODMarker() const

@@ -788,7 +788,7 @@ void ParseStop(Parser &p)
 			StopCalc.nEmergent[StopCalc.nstpl] = 1;
 
 		/* get line wavelength */
-		StopCalc.StopLineWl1[StopCalc.nstpl] = (realnum)p.getWave();
+		StopCalc.StopLineWl1[StopCalc.nstpl] = t_nat(p.getWave());
 
 		/* get relative intensity */
 		StopCalc.stpint[StopCalc.nstpl] = (realnum)p.FFmtRead();
@@ -823,7 +823,7 @@ void ParseStop(Parser &p)
 
 			/* wavelength of second line, may be absent and so zero -
 			 * we will use Hbeta if not specified */
-			StopCalc.StopLineWl2[StopCalc.nstpl] = (realnum)p.getWaveOpt();
+			StopCalc.StopLineWl2[StopCalc.nstpl] = t_nat(p.getWaveOpt());
 
 		}
 		/* increment number of stop lines commands entered */

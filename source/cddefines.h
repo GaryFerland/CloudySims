@@ -1287,6 +1287,41 @@ inline sys_float exp10(sys_float x)
 	return exp10f(x);
 }
 
+/** this determines the type of the wavelength used in t_wavl
+ * WL_NATIVE: the wavelength type is the same as the type used in the printout
+ *            this option only exists for backward compatibility...
+ * WL_VACUUM: this wavelength is in vacuum
+ * WL_AIR:    this wavelength is in air; will silently be interpreted as vacuum if < 2000 A */
+typedef enum { WL_NATIVE, WL_VACUUM, WL_AIR } wl_type;
+
+/** type for declaring a wavelength with the type (air or vacuum) attached
+ * no conversion from air to vacuum wavelengths or vice versa is done here */
+class t_wavl {
+	realnum p_wavl;
+	wl_type p_type;
+	realnum p_convertWvl() const;
+	string p_convertWvlString() const;
+public:
+	t_wavl() : p_wavl(-1_r), p_type(WL_NATIVE) {}
+	t_wavl(realnum w, wl_type t) : p_wavl(w), p_type(t) {}
+	// unary minus
+	t_wavl operator- () const { return t_wavl(-p_wavl, p_type); }
+	realnum wavlVac() const { return p_convertWvl(); }
+	// convert wavelength to string for user output, can be either air or vacuum
+	string str() const { return p_convertWvlString(); }
+};
+
+// shorthand for turning literal constants into wavelengths, e.g. 1393.75_vac or 2795.53_air
+inline t_wavl operator "" _vac(unsigned long long wavl) { return t_wavl(wavl, WL_VACUUM); }
+inline t_wavl operator "" _vac(long double wavl) { return t_wavl(wavl, WL_VACUUM); }
+inline t_wavl operator "" _air(unsigned long long wavl) { return t_wavl(wavl, WL_AIR); }
+inline t_wavl operator "" _air(long double wavl) { return t_wavl(wavl, WL_AIR); }
+
+// shorthand for turning variables into wavelengths
+inline t_wavl t_nat(realnum w) { return t_wavl(w, WL_NATIVE); }
+inline t_wavl t_vac(realnum w) { return t_wavl(w, WL_VACUUM); }
+inline t_wavl t_air(realnum w) { return t_wavl(w, WL_AIR); }
+
 /**plankf evaluate Planck function for any cell at current electron temperature 
 \param ip
 */

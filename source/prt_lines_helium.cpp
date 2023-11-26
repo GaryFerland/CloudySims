@@ -66,8 +66,7 @@ void lines_helium()
 	ASSERT( !dense.lgElmtOn[ipHELIUM] || iso_sp[ipHE_LIKE][ipHELIUM].n_HighestResolved_max >= 3 );
 
 	long i = StuffComment( "He-like iso-sequence" );
-	linadd( 0., (realnum)i , "####", 'i',
-		" start He-like iso sequence");
+	linadd( 0., t_vac(i), "####", 'i', " start He-like iso sequence");
 
 	/* read in Case A and B lines from data file	*/
 	if( lgFirstRun )
@@ -107,8 +106,8 @@ void lines_helium()
 				}
 
 				linadd(	tnu->AulTotal * tnu->E2nu * EN1RYD * (*tnu->Pop), 
-					2. * wn2ang( (*sp).trans( tnu->ipHi, tnu->ipLo ).EnergyWN() ),
-					chLabel.c_str(), 'r', tpc_comment.c_str() );
+						t_vac(2. * wn2ang( (*sp).trans( tnu->ipHi, tnu->ipLo ).EnergyWN() )),
+						chLabel.c_str(), 'r', tpc_comment.c_str() );
 			}
 
 			/* here we will create an entry for the three lines 
@@ -130,7 +129,7 @@ void lines_helium()
 			if( multiplet.size() > 0 )
 			{
 				LinSv *lineHe1 =
-					linadd( 0.0, 0.0, "Blnd", 'i',
+					linadd( 0.0, 0_vac, "Blnd", 'i',
 						" total emission in He-like intercombination lines from 2p3P to ground ");
 				setup_multiplet( lineHe1, multiplet );
 				multiplet.resize( 0 );
@@ -185,7 +184,7 @@ void lines_helium()
 						if( multiplet.size() > 0 )
 						{
 							LinSv *lineHe1 =
-								linadd( 0.0, 0.0, "Blnd", 'i',
+								linadd( 0.0, 0_vac, "Blnd", 'i',
 									"total emission in He-like lines, use wgt average of three line wavelengths " );
 							setup_multiplet( lineHe1, multiplet );
 							multiplet.resize( 0 );
@@ -275,7 +274,7 @@ void lines_helium()
 				if( multiplet.size() > 0 )
 				{
 					LinSv *lineHe1 =
-						linadd( 0.0, 0.0, "Blnd", 'i',
+						linadd( 0.0, 0_vac, "Blnd", 'i',
 							"total emission in He-like lines, use wgt average of three line wavelengths " );
 					setup_multiplet( lineHe1, multiplet );
 					multiplet.resize( 0 );
@@ -337,7 +336,7 @@ void lines_helium()
 					double intens = linint( CaBDensities, intens_at_Te, NUMDENS, log10_eden );
 					intens = exp10(intens) * dense.xIonDense[nelem][nelem+1-ipISO]*dense.eden;
 					ASSERT( intens >= 0. );
-					linadd( intens, atmdat.CaseBWlHeI[i], "Ca B", 'i', "Case B intensity " );
+					linadd( intens, t_vac(atmdat.CaseBWlHeI[i]), "Ca B", 'i', "Case B intensity " );
 				}
 			}
 		}
@@ -377,9 +376,9 @@ void lines_helium()
 
 		/* now multiply by ergs of normalization line, so that relative flux of
 		* this line will be ratio of photon fluxes. */
-		if( LineSave.WavLNorm > 0 )
-			photons_3889_plus_7065 *= (ERG1CM*1.e8)/LineSave.WavLNorm;
-		linadd( photons_3889_plus_7065, 3889., "Pho+", 'i',
+		if( LineSave.WavLNorm.wavlVac() > 0 )
+			photons_3889_plus_7065 *= (ERG1CM*1.e8)/LineSave.WavLNorm.wavlVac();
+		linadd( photons_3889_plus_7065, 3889_air, "Pho+", 'i',
 			"photon sum given in Porter et al. 2007 (astro-ph/0611579)");
 	}
 

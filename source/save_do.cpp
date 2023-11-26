@@ -2247,7 +2247,7 @@ void SaveDo(
 								double relI,absI,PrtQuantity;
 								double WV = iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).WLAng();
 
-								if (cdLine("H  1",WV,&relI,&absI) == 0)
+								if (cdLine("H  1",t_wavl(WV, WL_VACUUM),&relI,&absI) == 0)
 									continue;
 
 								if( save.punarg[ipPun][0] > 0 )
@@ -2560,10 +2560,10 @@ void SaveDo(
 								"%.5e", radius.depth_mid_zone );
 
 							fprintf( save.params[ipPun].ipPnunit,
-								"\t%s ",
-								specline.chLabel.c_str() );
+									 "\t%s ",
+									 specline.chLabel().c_str() );
 							string chTemp;
-							sprt_wl( chTemp, specline.wave );
+							sprt_wl( chTemp, specline.wave() );
 							fprintf( save.params[ipPun].ipPnunit,
 								"%s", chTemp.c_str() );
 
@@ -2702,7 +2702,7 @@ void SaveDo(
 						prt_line_inlist( save.params[ipPun].ipPnunit, chLabel[n], Wl[n] );
 						/* get the line, non positive return says didn't find it */
 						/* arguments are 4-char label, wavelength, return log total intensity, linear rel inten */
-						if( cdLine( chLabel[n] , (realnum)(Wl[n]*1e4) , &rel, &absval ) <= 0 )
+						if( cdLine( chLabel[n] , t_wavl(Wl[n]*1e4, WL_AIR) , &rel, &absval ) <= 0 )
 						{
 							fprintf(save.params[ipPun].ipPnunit, " did not find\n");
 						}
@@ -2724,7 +2724,7 @@ void SaveDo(
 						{
 							prt_line_inlist( save.params[ipPun].ipPnunit,   "H2  ", Wl_H2[n] );
 							/* get the line, non positive return says didn't find it */
-							if( cdLine( "H2" , (realnum)(Wl_H2[n]*1e4) , &rel, &absval ) <= 0 )
+							if( cdLine( "H2" , t_wavl(Wl_H2[n]*1e4, WL_AIR) , &rel, &absval ) <= 0 )
 							{
 								fprintf(save.params[ipPun].ipPnunit, " did not find\n");
 							}
@@ -2863,7 +2863,7 @@ void SaveDo(
 						double relative , absolute, PrtQuantity;
 						if( cdLine(save.LineList[ipPun][j], &relative , &absolute , LineType) <= 0 )
 						{
-							if( !h2.lgEnabled && save.LineList[ipPun][j].chLabel == "H2" )
+							if( !h2.lgEnabled && save.LineList[ipPun][j].chLabel() == "H2" )
 							{
 								static bool lgMustPrintFirstTime = true;
 								if( lgMustPrintFirstTime )
@@ -2899,9 +2899,9 @@ void SaveDo(
 							if( save.lgLineListRatio[ipPun] && is_odd(j) )
 								fprintf( save.params[ipPun].ipPnunit , "/" );
 
-							fprintf( save.params[ipPun].ipPnunit, "%s ", save.LineList[ipPun][j].chLabel.c_str() );
+							fprintf( save.params[ipPun].ipPnunit, "%s ", save.LineList[ipPun][j].chLabel().c_str() );
 							string chTemp;
-							sprt_wl( chTemp, save.LineList[ipPun][j].wave );
+							sprt_wl( chTemp, save.LineList[ipPun][j].wave() );
 							fprintf( save.params[ipPun].ipPnunit, "%s ", chTemp.c_str() );
 						}
 

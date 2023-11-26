@@ -561,7 +561,7 @@ void IterStart()
 	timesc.sound = 0.;
 
 	string label;
-	realnum	wvlng;
+	t_wavl wvlng;
 
 	if( LineSave.lgNormSet )
 	{

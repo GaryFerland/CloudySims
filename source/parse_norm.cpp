@@ -52,9 +52,9 @@ void ParseNorm(Parser &p)
 	}
 
 	/* normalise lines to this rather than h-b, sec number is scale factor */
-	LineSave.WavLNorm = (realnum)p.getWave();
+	LineSave.WavLNorm = t_wavl(p.getWave(), WL_NATIVE);
 	
-	if( LineSave.WavLNorm < 0 )
+	if( LineSave.WavLNorm.wavlVac() < 0 )
 	{
 		fprintf( ioQQQ, "A negative wavelength does not make sense to me.\n" );
 		fprintf( ioQQQ, "Sorry.\n" );

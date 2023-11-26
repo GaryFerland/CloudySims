@@ -468,12 +468,12 @@ void ParseMonitorResults(Parser &p)
 		/* this will check a line intensity, get the line id */
 		LineID line = p.getLineID(false);
 
-		blend_iterator b = blends.find(line.chLabel);
+		blend_iterator b = blends.find(line.chLabel());
 		if( 0 && b != blends.end() )
 		{
 			assertBlends[nAsserts] = &(b->second);
 		}
-		else if( line.chLabel.length() > NCHLAB-1 )
+		else if( line.chLabel().length() > NCHLAB-1 )
 		{
 			fprintf( ioQQQ, " The label must be no more than %d char long, between double quotes.\n",
 				NCHLAB-1 );
@@ -484,8 +484,8 @@ void ParseMonitorResults(Parser &p)
 		/* store line into array */
 		lineids[nAsserts] = line;
 		// need these as well because of PrtOneMonitor()
-		chAssertLineLabel[nAsserts] = line.chLabel;
-		wavelength[nAsserts] = line.wave;
+		chAssertLineLabel[nAsserts] = line.chLabel();
+		wavelength[nAsserts] = line.wave();
 
 		/* now get intensity or luminosity - 
 		 * rel intensity is linear and intensity or luminosity are log */
@@ -1750,11 +1750,11 @@ bool lgCheckMonitors(
 				 * differences so that we can disambiguate below */
 
 				/* change chLabel to all caps */
-				strcpy(chFind, lineids[i].chLabel.c_str());
+				strcpy(chFind, lineids[i].chLabel().c_str());
 				caps(chFind);
 
 				/* get the error associated with specified significant figures */
-				errorwave = WavlenErrorGet( lineids[i].wave, LineSave.sig_figs );
+				errorwave = WavlenErrorGet( lineids[i].wave(), LineSave.sig_figs );
 
 				/* go through rest of line stack to look for close matches */
 				for( j=1; j < LineSave.nsum; j++ )
@@ -1772,7 +1772,7 @@ bool lgCheckMonitors(
 					 * So here we will find any lines within 1.5 Angstroms
 					 * of the 
 					 * asserted wavelength.  check wavelength and chLabel for a match */
-					if( fabs(LineSave.lines[j].wavelength()-lineids[i].wave) < 3.f*errorwave )
+					if( fabs(LineSave.lines[j].wavelength()-lineids[i].wave()) < 3.f*errorwave )
 					{
 						/* now see if labels agree */
 						if( strcmp(chCaps,chFind) == 0 )
@@ -1834,7 +1834,7 @@ bool lgCheckMonitors(
 
 			double relint_cb = 0.,
 				absint_cb = 0.;
-			if( cdLine( "Ca B", lineids[i].wave, &relint_cb, &absint_cb, iLineType[i] ) <= 0 )
+			if( cdLine( "Ca B", t_vac(lineids[i].wave()), &relint_cb, &absint_cb, iLineType[i] ) <= 0 )
 			{
 				fprintf( ioMONITOR, " monitor error: lgCheckMonitors could not find line ");
 				prt_line_err( ioMONITOR, lineids[i] );
@@ -2194,12 +2194,12 @@ bool lgCheckMonitors(
 
 						double relint, absint, CBrelint, CBabsint;
 						/* find the predicted line intensity */
-						cdLine( chAssertLineLabel[i], wl, &CBrelint, &CBabsint, iLineType[i] );
+						cdLine( chAssertLineLabel[i], t_vac(wl), &CBrelint, &CBabsint, iLineType[i] );
 						if( CBrelint < Param[i][4]  )
 							continue;
 						double error;
 						/* now find the Case B intensity - may not all be present */
-						if( cdLine( chElemLabelCaseB, wl, &relint, &absint, iLineType[i] ) > 0 )
+						if( cdLine( chElemLabelCaseB, t_vac(wl), &relint, &absint, iLineType[i] ) > 0 )
 						{
 							if (AssertError[i] > 0.)
 								error = (CBabsint - absint)/MAX2(CBabsint , absint);
@@ -2288,11 +2288,11 @@ bool lgCheckMonitors(
 					if( wl < Param[i][2] || wl > Param[i][3] )
 						continue;
 					double relint , absint,CBrelint , CBabsint;
-					cdLine( chAssertLineLabel[i], wl, &CBrelint, &CBabsint, iLineType[i] );
+					cdLine( chAssertLineLabel[i], t_vac(wl), &CBrelint, &CBabsint, iLineType[i] );
 					if( CBrelint < Param[i][4]  )
 						continue;
 					double error;
-					if( cdLine( chElemLabelCaseB, wl, &relint, &absint, iLineType[i] ) > 0)
+					if( cdLine( chElemLabelCaseB, t_vac(wl), &relint, &absint, iLineType[i] ) > 0)
 					{
 						if (AssertError[i] > 0.0)
 							error = (CBabsint - absint)/MAX2(CBabsint , absint);

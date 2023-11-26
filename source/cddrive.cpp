@@ -510,12 +510,12 @@ void cdPrintCommands( FILE * ioOUT )
  *
  ************************************************************************/
 
-/** cdEms obtain the local emissivity for a line, for the last computed zone */
+/** cdEmis obtain the local emissivity for a line, for the last computed zone */
 
 
 void cdEmis(
 	const char *chLabel,
-	realnum wavelength, 
+	t_wavl wavelength, 
 	/* the vol emissivity of this line in last computed zone */
 	double *emiss ,
 	// intrinsic or emergent
@@ -1054,7 +1054,7 @@ long debugLine( realnum wavelength )
 long int cdLine(
 	const string& chLabel, 
 	/* wavelength of line in angstroms, not format printed by code */
-	realnum wavelength, 
+	t_wavl wavelength, 
 	/* linear intensity relative to normalization line*/
 	double *relint, 
 	/* log of luminosity or intensity of line */

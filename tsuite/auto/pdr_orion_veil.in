@@ -212,13 +212,16 @@ monitor "CN  " 880.858m  23.74  line intensity
 ##
 ## >>chng 13 dec 18, from 29.05 to 29.19, fixes to Federman shielding
 ## >>chng 17 nov 20, from 29.19 to 29.17, Bug-fix in DR suppression (r11900)
-monitor "H  1" 21.1207c  29.17 line intensity
+## >>chng 23 nov 26, wl from 21.1207c to 21.1004c, update wavelengths for hyperfine lines
+monitor "H  1" 21.1004c  29.17 line intensity
 ##
 ## >>chng 13 aug 19, from 22.14 to 22.06, subtraction of isotropic continua
-monitor "H  1" 91.6354c  22.06 line intensity
+## >>chng 23 nov 26, wl from 91.6354c to 91.5471c, update wavelengths for hyperfine lines
+monitor "H  1" 91.5471c  22.06 line intensity
 ##
 ## >>chng 13 aug 18, from 23.3101 to 23.6111, doubled isotope abundance
-monitor "Mg 2" 16.7710c  23.6111 line intensity
+## >>chng 23 nov 26, wl from 16.7710c to 16.7664c, update wavelengths for hyperfine lines
+monitor "Mg 2" 16.7664c  23.6111 line intensity
 ##
 # pdr_orion_veil.in
 # class pdr 

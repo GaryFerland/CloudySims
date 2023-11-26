@@ -11,6 +11,7 @@
 #include "prt.h"
 #include "generic_state.h"
 #include "save.h"
+#include "lines_service.h"
 
 t_prt prt;
 t_line_col prt_linecol;
@@ -59,6 +60,9 @@ void sprt_wl( string& chString , realnum wl )
 	string chUnits;
 
 	DEBUG_ENTRY( "sprt_wl()" );
+
+	if( prt.lgPrintLineAirWavelengths && wl > 0_r )
+		wl /= RefIndex(1.e8/wl);
 
 	/* print in A unless > 1e4, then use microns */
 	if( wl > 1e8 )
@@ -172,14 +176,18 @@ void prt_LineLabels(
  * 		followed, if given, by the wavelength of the closest line of the same label */
 void prt_line_err( FILE *ioOUT, const LineID& line )
 {
-	fprintf( ioOUT, "with label (between quotes) \"%s\" and wavelength ", line.chLabel.c_str() );
-	prt_wl ( ioOUT, line.wave );
+	fprintf( ioOUT, "with label (between quotes) \"%s\" and wavelength ", line.chLabel().c_str() );
+	prt_wl ( ioOUT, line.wave() );
 	fprintf( ioOUT, ".\n" );
 	return;
 }
-void prt_line_err( FILE *ioOUT, const string& label, realnum wvlng )
+void prt_line_err( FILE *ioOUT, const string& label, t_wavl wvlng )
 {
 	prt_line_err( ioOUT, LineID(label, wvlng) );
+}
+void prt_line_err( FILE *ioOUT, const string& label, realnum wvlng )
+{
+	prt_line_err( ioOUT, LineID(label, t_vac(wvlng)) );
 }
 
 

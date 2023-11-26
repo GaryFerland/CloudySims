@@ -108,8 +108,8 @@ struct t_StopCalc {
 	/** number of stop line commands entered, 0 if none */
 	long int nstpl;
 
-	realnum StopLineWl1[MXSTPL],
-		StopLineWl2[MXSTPL];
+	t_wavl StopLineWl1[MXSTPL];
+	t_wavl StopLineWl2[MXSTPL];
 
 	/** line labels */
 	char chStopLabel1[MXSTPL][NCHLAB] ,

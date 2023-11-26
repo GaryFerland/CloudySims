@@ -586,7 +586,7 @@ void HyperfineCreate(void)
 	}
 
 	/* 
-	 * scan the string taken from Hyperfine.dat, parsing into
+	 * scan the string taken from hyperfine.dat, parsing into
 	 * needed variables.
 	 * nelem is the atomic number.
 	 * IonStg is the ionization stage.  Atom = 1, Z+ = 2, Z++ = 3, etc.

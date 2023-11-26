@@ -832,7 +832,7 @@ void PrtFinal(void)
 	{
 		static const int NWLH = 21;
 		/* list of all H case b lines */
-		realnum wlh[NWLH] = { 6562.80e0f, Hbeta_WavLen, 4340.46e0f, 4101.73e0f, 1.87510e4f, 1.28180e4f,
+		realnum wlh[NWLH] = { 6562.80e0f, 4861.32e0f, 4340.46e0f, 4101.73e0f, 1.87510e4f, 1.28180e4f,
 						  1.09380e4f, 1.00493e4f, 2.62513e4f, 2.16551e4f, 1.94454e4f, 7.45777e4f,
 						  4.65247e4f, 3.73951e4f, 4.05113e4f, 7.45777e4f, 3.29607e4f, 1215.67e0f,
 						  1025.72e0f, 972.537e0f, 949.743e0f };
@@ -899,12 +899,12 @@ void PrtFinal(void)
 
 	/* find apparent helium abundance, will not find these if helium is turned off */
 
-	if( cdLine("H  1",wlAirVac(Hbeta_WavLen),&hbeta,&absint)<=0 )
+	if( cdLine("H  1",Hbeta_WavLen,&hbeta,&absint)<=0 )
 	{
 		if( dense.lgElmtOn[ipHYDROGEN] )
 		{
 			/* this is a major logical error if hydrogen is turned on */
-			fprintf( ioQQQ, " PrtFinal could not find H  1  %.2f with cdLine.\n", Hbeta_WavLen );
+			fprintf( ioQQQ, " PrtFinal could not find H  1 %s with cdLine.\n", Hbeta_WavLen.str().c_str() );
 			cdEXIT(EXIT_FAILURE);
 		}
 		else
@@ -918,7 +918,7 @@ void PrtFinal(void)
 	{
 		/* get HeI 5876 triplet */
 		/* >>chng 06 may 15, changed this so that it works for up to six sig figs. */
-		if( cdLine("Blnd",wlAirVac(5875.66),&he5876,&absint)<=0 )
+		if( cdLine("Blnd",5875.66_air,&he5876,&absint)<=0 )
 		{
 			/* 06 aug 28, from numLevels_max to _local. */
 			if( iso_sp[ipHE_LIKE][ipHELIUM].numLevels_local >= 14 )
@@ -931,7 +931,7 @@ void PrtFinal(void)
 
 		/* get HeII 4686 */
 		/* >>chng 06 may 15, changed this so that it works for up to six sig figs. */
-		if( cdLine("He 2",wlAirVac(4685.68),&he4686,&absint)<=0 )
+		if( cdLine("He 2",4685.68_air,&he4686,&absint)<=0 )
 		{
 			/* 06 aug 28, from numLevels_max to _local. */
 			if( iso_sp[ipH_LIKE][ipHELIUM].numLevels_local > 5 )
@@ -974,7 +974,7 @@ void PrtFinal(void)
 	{
 		double o4363, o4959, o5007;
 
-		if( cdLine("O  3",wlAirVac(4958.91),&o4959,&absint)<=0 )
+		if( cdLine("O  3",4958.91_air,&o4959,&absint)<=0 )
 		{
 			if( dense.lgElmtOn[ipOXYGEN] )
 			{
@@ -984,7 +984,7 @@ void PrtFinal(void)
 			}
 		}
 
-		if( cdLine("O  3",wlAirVac(5006.84),&o5007,&absint)<=0 )
+		if( cdLine("O  3",5006.84_air,&o5007,&absint)<=0 )
 		{
 			if( dense.lgElmtOn[ipOXYGEN] )
 			{
@@ -993,7 +993,7 @@ void PrtFinal(void)
 			}
 		}
 
-		if( cdLine("O  3",wlAirVac(4363.21),&o4363,&absint)<=0 )
+		if( cdLine("O  3",4363.21_air,&o4363,&absint)<=0 )
 		{
 			if( dense.lgElmtOn[ipOXYGEN] )
 			{
@@ -1058,7 +1058,7 @@ void PrtFinal(void)
 	if( geometry.iEmissPower == 2 )
 	{
 		/* find temperature from Balmer continuum */
-		if( cdLine("Bac",3646.,&bacobs,&absint)<=0 )
+		if( cdLine("Bac",3646_air,&bacobs,&absint)<=0 )
 		{
 			fprintf( ioQQQ, " PrtFinal could not find Bac 3646 with cdLine.\n" );
 			cdEXIT(EXIT_FAILURE);
@@ -1120,16 +1120,16 @@ void PrtFinal(void)
 	if( geometry.iEmissPower == 2 )
 	{
 		/* find temperature from optically thin Balmer continuum and case B H-beta */
-		if( cdLine("thin",3646.,&bacthn,&absint)<=0 )
+		if( cdLine("thin",3646_air,&bacthn,&absint)<=0 )
 		{
 			fprintf( ioQQQ, " PrtFinal could not find thin 3646 with cdLine.\n" );
 			cdEXIT(EXIT_FAILURE);
 		}
 
 		/* >>chng 06 may 15, changed this so that it works for up to six sig figs. */
-		if( cdLine("Ca B",wlAirVac(Hbeta_WavLen),&hbcab,&absint)<=0 )
+		if( cdLine("Ca B",Hbeta_WavLen,&hbcab,&absint)<=0 )
 		{
-			fprintf( ioQQQ, " PrtFinal could not find Ca B %.2f with cdLine.\n", Hbeta_WavLen );
+			fprintf( ioQQQ, " PrtFinal could not find Ca B %s with cdLine.\n", Hbeta_WavLen.str().c_str() );
 			cdEXIT(EXIT_FAILURE);
 		}
 
