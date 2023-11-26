@@ -532,15 +532,7 @@ void lines_hydro(void)
 					{
 						comment_trans = iso_comment_tran_levels( ipISO, nelem, ipLo, ipHi );
 					}
-
-					if( ipHi==1 && ipLo==0 )
-					{
-						string chSpecies = chIonLbl(nelem+1, nelem+1-ipISO);
-						string chLabel = chSpecies + " M1";
-						PutLine(iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo), comment_trans.c_str(), chLabel.c_str());
-					}
-					else
-						PutLine(iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo), comment_trans.c_str());
+					PutLine(iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo), comment_trans.c_str());
 				}
 			}
 		}
