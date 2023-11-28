@@ -532,7 +532,14 @@ void lines_hydro(void)
 					{
 						comment_trans = iso_comment_tran_levels( ipISO, nelem, ipLo, ipHi );
 					}
-					PutLine(iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo), comment_trans.c_str());
+					if( ipHi==1 && ipLo==0 && fp_equal(iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo).WLAng(), 1.e8_r/iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo).EnergyWN()) )
+					{
+						string chSpecies = chIonLbl(nelem+1, nelem+1-ipISO);
+						string chLabel = chSpecies + " M1";
+						PutLine(iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo), comment_trans.c_str(), chLabel.c_str());
+					}
+					else
+						PutLine(iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo), comment_trans.c_str());
 				}
 			}
 		}
