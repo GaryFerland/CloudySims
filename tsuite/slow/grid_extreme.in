@@ -3,7 +3,8 @@ title exercise full range of density, temperature
 element lithium off
 element berylium off
 element boron off
-element limit -7 off
+## >>chng 23 11 20 include all elements to keep expanded chemistry stable`
+## element limit -7 off
 ## >>chng 12 apr 09, scale factor will result in CR rate for that meeting
 ## old value maintained to keep history
 cosmic rays background linear 0.1266
@@ -30,6 +31,7 @@ normalize to "Q(H)" 4861.32A
 # the normalizing line is not defined on the emergent line stack
 print lines emergent off
 save performance no hash "grid_extreme.per"
+save performance no hash "grid_extreme.lper" last
 save grid no hash "grid_extreme.grd" last 
 save overview last no hash "grid_extreme.ovr" last 
 save monitors last no hash "grid_extreme.asr" last 
