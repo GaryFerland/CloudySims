@@ -124,6 +124,28 @@ save continuum units Angstroms ".concum" cumulative
 
 
 \begin{shaded}
+\section{An illuminated cooling gas}
+\label{sec:Cooling-Illum}
+
+In principle, an illuminated gas does not cool freely.
+Radiative processes can affect its thermal evolution, and the emitted spectrum.
+Crucial in this respect is the ratio of incident photon to particle densities.
+In the limit that the ratio approaches zero, the gas will evolve as in the
+purely collisional case of Section~\ref{sec:Cooling-Heating-NonEq}.
+However, as the ratio increases, so does the influence of the radiation field,
+which may drive the gas to settle at the Compton temperature of the radiation
+field.
+
+If the gas does settle at a temperature above that specified with the command
+\cdCommand{stop time when temperature below [value]}, the code will iterate
+until the number of iterations criterion is met.
+This can present problems to the solvers, and even lead to crashes.
+For that reason, the code stops as soon as a temperature floor is detected
+-- identified as a temperature constant within 1\% in the last four timesteps.
+\end{shaded}
+
+
+\begin{shaded}
 \section{\protect\experimental Time-variable incident radiation field}
 \label{sec:TimeVariableRadiationFields}
 
