@@ -1179,6 +1179,17 @@ void DynaIterEnd(void)
 
 			if( dynamics.lgRecom )
 			{
+				if( StopCalc.TimeStop > 0 && dynamics.time_elapsed >= StopCalc.TimeStop )
+				{
+					dynamics.lgStatic_completed = true;
+					fprintf( ioQQQ, "DYNAMICS max elapsed time reached.\n" );
+				}
+
+				//
+				// Search for a temperature floor that would waste
+				// computing time, or could even lead to a crash;
+				// but not when the 'stop time' command is given.
+				//
 				//
 				// NB NB NB
 				//
@@ -1192,12 +1203,18 @@ void DynaIterEnd(void)
 				// Skip the first few iterations, to make sure we avoid
 				// this pathological case.
 				//
-				if( iteration > long( dynamics.n_initial_relax + 1
+				else if( StopCalc.TimeStop < 0.
+					 && iteration > long( dynamics.n_initial_relax + 1
 							+ dynamics.nlast_temps ) )
+				{
 					dynamics.update_recomb_recent_temps();
 
-				if( dynamics.recomb_temp_converged() )
-					dynamics.lgStatic_completed = true;
+					if( dynamics.recomb_temp_converged() )
+					{
+						fprintf( ioQQQ, "DYNAMICS temperature floor reached.\n" );
+						dynamics.lgStatic_completed = true;
+					}
+				}
 			}
 
 			/* this is heat radiated, after correction for change of H density in constant
@@ -1224,6 +1241,12 @@ void DynaIterEnd(void)
 			// Do nothing but talk.
 			if( lgPrintDynamics )
 				fprintf(ioQQQ,"DEBUG lgtimes -- stop time reached.\n" );
+		}
+		else if( StopCalc.TimeStop > 0. )
+		{
+			dynamics.timestep = timestep_next();
+			if( dynamics.time_elapsed + dynamics.timestep >= StopCalc.TimeStop )
+				dynamics.timestep = StopCalc.TimeStop - dynamics.time_elapsed;
 		}
 		/* at this point dynamics.time_elapsed is the time at the end of the 
 		 * previous iteration.  We need dt for the next iteration */

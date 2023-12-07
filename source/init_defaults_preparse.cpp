@@ -486,6 +486,8 @@ void InitDefaultsPreparse( void )
 	/* stop iterations, used to stop time dependent command */
 	StopCalc.TempLoStopIteration = -1.;
 
+	StopCalc.TimeStop = -1.;
+
 	/* ending column densities */
 	StopCalc.HColStop = COLUMN_INIT;
 	StopCalc.colpls = COLUMN_INIT;

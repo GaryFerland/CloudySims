@@ -86,7 +86,7 @@ void ParseStop(Parser &p)
 			if( p.nMatch("EXCE") )
 			{
 				/* option for this to be highest allowed temperature,
-				 * stop temperate exceeds */
+				 * stop temperature exceeds */
 				if( lgStopZone )
 					StopCalc.TempHiStopZone = (realnum)tread;
 				else
@@ -102,6 +102,15 @@ void ParseStop(Parser &p)
 					StopCalc.TempLoStopIteration = (realnum)tread;
 			}
 		}
+	}
+
+	/* stop after a specific time has elapsed
+	 * this is an alternative to the previous command,
+	 * intended for time-dependent simulations
+	 * NB NB it MUST appear after it! */
+	else if( p.nMatch("TIME") )
+	{
+		StopCalc.TimeStop = parse_input_time( p );
 	}
 
 	/* stop at 21cm line center optical depth  */

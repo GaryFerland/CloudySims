@@ -633,6 +633,12 @@ bool parserProcess(Parser &p, T *list, unsigned long nlist, V *value)
 	return lgFound;
 }
 
+/** parse_input_time
+ *  Parse the given time, and convert it to seconds.
+ * \param p
+ */
+realnum parse_input_time( Parser &p );
+
 /**ParseCosmicRays parse the cosmic rays command 
 \param *chCard
 */

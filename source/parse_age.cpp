@@ -9,6 +9,8 @@
 
 namespace Time {
 	const double YEAR=3.15569e7,
+	        GIGAYEAR=YEAR*1.0e9,
+	        MEGAYEAR=YEAR*1.0e6,
 		MILLENIUM=YEAR*1000.,
 		CENTURY=YEAR*100.,
 		MONTH=YEAR/12.,
@@ -21,6 +23,8 @@ namespace Time {
 
 	KeyAction<UnitConverter> TimeUnits[] =
 	{ 
+		MakeKeyAction(" GYR", UnitConverter(GIGAYEAR)),
+		MakeKeyAction(" MYR", UnitConverter(MEGAYEAR)),
 		MakeKeyAction("MILL", UnitConverter(MILLENIUM)),
 		MakeKeyAction("CENT", UnitConverter(CENTURY)),
 		MakeKeyAction("YEAR", UnitConverter(YEAR)),
@@ -35,21 +39,9 @@ namespace Time {
 
 }
 
-void ParseAge( Parser &p )
+realnum parse_input_time( Parser &p )
 {
-	DEBUG_ENTRY( "ParseAge()" );
-
-	/* set age for the cloud
-	 * various timescales will be checked in AgeCheck, called in comment */
-
 	realnum value = (realnum)p.FFmtRead();
-
-	/* key " off" turns age off */
-	if( p.lgEOL() && (!p.nWord(" OFF")) )
-	{
-		fprintf( ioQQQ, " The age must be on this line.\n" );
-		cdEXIT(EXIT_FAILURE);
-	}
 
 	/* check if log of age */
 	if( p.nWord(" LOG") )
@@ -59,7 +51,24 @@ void ParseAge( Parser &p )
 
 	parserProcess(p, Time::TimeUnits, NUMBEROF(Time::TimeUnits), &value);
 
-	timesc.CloudAgeSet = value;
+	return value;
+}
+
+void ParseAge( Parser &p )
+{
+	DEBUG_ENTRY( "ParseAge()" );
+
+	/* set age for the cloud
+	 * various timescales will be checked in AgeCheck, called in comment */
+
+	/* key " off" turns age off */
+	if( p.lgEOL() && (!p.nWord(" OFF")) )
+	{
+		fprintf( ioQQQ, " The age must be on this line.\n" );
+		cdEXIT(EXIT_FAILURE);
+	}
+
+	timesc.CloudAgeSet = parse_input_time( p );
 
 	return;
 }
