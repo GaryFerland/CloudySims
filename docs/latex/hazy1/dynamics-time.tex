@@ -140,8 +140,13 @@ If the gas does settle at a temperature above that specified with the command
 \cdCommand{stop time when temperature below [value]}, the code will iterate
 until the number of iterations criterion is met.
 This can present problems to the solvers, and even lead to crashes.
-For that reason, the code stops as soon as a temperature floor is detected
+By default, the code stops as soon as a temperature floor is detected
 -- identified as a temperature constant within 1\% in the last four timesteps.
+
+Alternatively, one can continue the integration up to a total integration time
+specified with the command \cdCommand{stop time $<$value$>$}.
+The value given is specified as with the \cdCommand{age} command, Section
+\ref{sec:AgeCommand}.
 \end{shaded}
 
 
