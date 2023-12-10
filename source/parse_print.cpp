@@ -525,17 +525,17 @@ void ParsePrint(
 				/* option to only certain print range of lines */
 				if( p.nMatch("RANG") )
 				{
-					prt.wlSort1 = (realnum)p.getWave();
+					prt.wlSort1 = p.getWave();
 
-					prt.wlSort2 = (realnum)p.getWave();
+					prt.wlSort2 = p.getWave();
 
 					if( p.lgEOL() )
 					{
 						fprintf( ioQQQ, " There must be two numbers for the RANGE option, the lower and upper wavelength.  Sorry.\n" );
 						cdEXIT(EXIT_FAILURE);
 					}
-					if( prt.wlSort1 <0. || prt.wlSort2 <0. || 
-						prt.wlSort1 >= prt.wlSort2 )
+					if( prt.wlSort1.wavlVac() < 0. || prt.wlSort2.wavlVac() < 0. || 
+						prt.wlSort1.wavlVac() >= prt.wlSort2.wavlVac() )
 					{
 						fprintf( ioQQQ, " The lower and upper wavelength must be positive and in the correct order.  Sorry.\n" );
 						cdEXIT(EXIT_FAILURE);
@@ -543,8 +543,8 @@ void ParsePrint(
 				}
 				else
 				{
-					prt.wlSort1 = -1;
-					prt.wlSort2 = 1e30f;
+					prt.wlSort1 = -1_vac;
+					prt.wlSort2 = 1e30_vac;
 				}
 			}
 			else if( p.nMatch("INTE") )

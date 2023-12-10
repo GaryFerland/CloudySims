@@ -299,14 +299,14 @@ STATIC void PrintSpectrum ()
 			if( prt.lgSortLineWavelength )
 			{
 				/* first check if wavelength range specified */
-				if( prt.wlSort1 >-0.1 )
+				if( prt.wlSort1.wavlVac() > -0.1 )
 				{
 					j = 0;
 					/* skip over those lines not desired */
 					for( i=0; i<iprnt; ++i )
 					{
-						realnum wavelength=LineSave.lines[Slines[i]].wavelength();
-						if( wavelength>= prt.wlSort1 && wavelength<= prt.wlSort2 )
+						realnum wavelength = LineSave.lines[Slines[i]].wavelength();
+						if( wavelength >= prt.wlSort1.wavlVac() && wavelength <= prt.wlSort2.wavlVac() )
 						{
 							if( j!=i )
 							{

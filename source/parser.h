@@ -201,6 +201,11 @@ public:
 		}		
 		return found;
 	}
+	// returns true if a given key is found as the first key after the current position
+	// there must be at least one separator character in front of the key as well as
+	// after the key. chKey must contain the full keyword, but abbreviation to nmin
+	// chars is supported.
+	bool nMatchSkip(const string& chKey, size_t nmin = 4);
 	bool hasCommand(const string& s2);
 	bool peekNextCommand(const string& s2);
 	bool Command(const char *name, OptionParser doOpts)
@@ -234,8 +239,8 @@ public:
 		return m_card_raw.substr(m_off);
 	}
 	void help(FILE *fp) const;
-	double getWave();
-	double getWaveOpt();
+	t_wavl getWave();
+	t_wavl getWaveOpt();
 	LineID getLineID(bool lgAtStart=true);
 	Symbol getSymbol();
 	int getElement();

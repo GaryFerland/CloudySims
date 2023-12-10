@@ -142,11 +142,11 @@ public:
 /** struct for holding user-defined blend */
 struct t_blend {
 	string chLabel;
-	realnum wave;
+	t_wavl wave;
 	bool lgQuiet;
 	bool lgIgnore;
 	vector<LineID> component;
-	t_blend() : chLabel("Blnd"), wave(0_r), lgQuiet(false), lgIgnore(false) {}
+	t_blend() : chLabel("Blnd"), lgQuiet(false), lgIgnore(false) {}
 };
 
 struct t_prt {
@@ -172,7 +172,7 @@ struct t_prt {
 
 	/** lower and upper wavelength bounds for printed spectrum,
 	 * range option on print sort command */
-	realnum wlSort1 , wlSort2;
+	t_wavl wlSort1 , wlSort2;
 
 	/** print hydrogenic level populations, 
 	 * set with print hydrogenic command

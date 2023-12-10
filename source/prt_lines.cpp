@@ -476,12 +476,12 @@ void lines()
 		}
 		if( !prt.blend[i].lgIgnore )
 		{
-			LinSv *UserBlnd = linadd(0.0,t_nat(prt.blend[i].wave),prt.blend[i].chLabel.c_str(),'i',"Blend" );
+			LinSv *UserBlnd = linadd(0.0,prt.blend[i].wave,prt.blend[i].chLabel.c_str(),'i',"Blend" );
 			if (UserBlnd)
 			{
 				for( size_t j=0; j < prt.blend[i].component.size(); ++j )
 					UserBlnd->addComponent(prt.blend[i].component[j]);
-				if( prt.blend[i].wave < 0_r )
+				if( prt.blend[i].wave.wavlVac() < 0_r )
 					UserBlnd->setBlendWavl();
 			}
 		}

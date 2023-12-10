@@ -89,13 +89,13 @@ void ParseSet(Parser &p)
 			if( chString_quotes_lowercase.length() > NCHLAB-1 )
 				fprintf( ioQQQ, " WARNING blend label is too long, truncated to: \"%s\"\n", blnd.chLabel.c_str() );
 		}
-		blnd.wave = p.FFmtRead();
+		blnd.wave = p.getWave();
 		if( p.lgEOL() )
-			blnd.wave = -1_r;
+			blnd.wave = -1_vac;
 		else
-			if( blnd.wave < 0_r )
+			if( blnd.wave.wavlVac() < 0_r )
 			{
-				fprintf( ioQQQ, " PROBLEM invalid wavelength supplied: %g\n", blnd.wave );
+				fprintf( ioQQQ, " PROBLEM negative wavelength supplied\n" );
 				cdEXIT(EXIT_FAILURE);
 			}
 		/* option to quietly ignore blend if database lines are not loaded for any atomic species in the blend */

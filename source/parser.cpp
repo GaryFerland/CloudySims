@@ -29,6 +29,17 @@ typedef std::map<string,double> symtab;
 STATIC bool ParseExpr(deque<Token> &chTokens, vector<double> &valstack,
 	const symtab &tab);
 
+// test if the keyword in "read" matches the string in "expected"
+// abbreviations are allowed, but a minimum of nmin characters must be typed
+// nmin must be at least 4 characters, unless "expected" is shorter
+STATIC bool matchKey(const string& read, const string& expected, size_t nmin = 4)
+{
+	nmin = min(max(nmin, 4), expected.size());
+	if( read.size() < nmin )
+		return false;
+	return ( read == expected.substr(0, read.size()) );
+}
+
 const char *Parser::nWord(const char *chKey) const
 {
 	return ::nWord(chKey, m_card.c_str());
@@ -46,6 +57,30 @@ void Parser::skip_whitespace()
 {
 	while (!at_end() && isspace(current()))
 		++m_off;
+}
+bool Parser::nMatchSkip(const string& chKey, size_t nmin)
+{
+	auto m_old = m_off; // remember in case we need to rewind
+	// first skip trailing junk
+	while( !at_end() && !isBoundaryChar(current()) )
+		++m_off;
+	// now skip separators, there must be at least one
+	size_t nsep = 0;
+	while( !at_end() && isBoundaryChar(current()) ) {
+		++nsep;
+		++m_off;
+	}
+	// now read the keyword until the next boundary char
+	string read;
+	while( !at_end() && !isBoundaryChar(current()) )
+		read.push_back(m_card[m_off++]);
+	bool lgMatch = matchKey(read, chKey, nmin);
+	if( nsep > 0 && lgMatch )
+		return true;
+	else {
+		m_off = m_old;
+		return false;
+	}
 }
 void Parser::newlineProcess(void)
 {
@@ -65,7 +100,7 @@ void Parser::newlineProcess(void)
 /*nWord determine whether match to a keyword occurs on command line,
  * return value is 0 if no match, and position of match within string if hit */
 const char *nWord(const char *chKey, 
-	    const char *chCard)
+				  const char *chCard)
 {
 	DEBUG_ENTRY( "nWord()" );
 
@@ -368,7 +403,7 @@ NORETURN void Parser::NoNumb(const char * chDesc) const
 	cdEXIT(EXIT_FAILURE);
  }
 
-double Parser::getWaveOpt()
+t_wavl Parser::getWaveOpt()
 {
 	double val = FFmtRead();
 	/* check for optional micron or cm units, else interpret as Angstroms */
@@ -389,11 +424,19 @@ double Parser::getWaveOpt()
 		val *= 1e8;
 		++m_off;
 	}
-	return val;
+	/* check if wavelength type is entered, this is optional */
+	wl_type type;
+	if( nMatchSkip("AIR") )
+		type = WL_AIR;
+	else if( nMatchSkip("VACUUM") )
+		type = WL_VACUUM;
+	else
+		type = WL_NATIVE;
+	return t_wavl(val, type);
 }
-double Parser::getWave()
+t_wavl Parser::getWave()
 {
-	double val = getWaveOpt();
+	auto val = getWaveOpt();
 	if( lgEOL() )
 	{
 		NoNumb("wavelength");
@@ -641,14 +684,7 @@ LineID Parser::getLineID(bool lgAtStart)
 	}
 
 	/* now get wavelength */
-	realnum wave = (realnum)getWave();
-
-	/* determine the wavelength type */
-	wl_type type = WL_NATIVE;
-	if( nMatchErase("AIR") )
-		type = WL_AIR;
-	if( nMatchErase("VACUUM") )
-		type = WL_VACUUM;
+	t_wavl wave = getWave();
 
 	/* scan for optional parameters */
 	int indLo = -1, indHi = -1;
@@ -686,7 +722,7 @@ LineID Parser::getLineID(bool lgAtStart)
 			cdEXIT(EXIT_FAILURE);
 		}
 	}
-	return LineID(chLabel, t_wavl(wave, type), indLo, indHi, ELo);
+	return LineID(chLabel, wave, indLo, indHi, ELo);
 }
 
 // Simple recursive descent parser for expressions
@@ -1434,9 +1470,9 @@ void DataParser::getLineID(LineID& line)
 	wl_type type = WL_NATIVE;
 	if( getKeywordOptional(key) )
 	{
-		if( key == "AIR" )
+		if( matchKey(key, "AIR") )
 			type = WL_AIR;
-		else if( key.substr(0,4) == "VACU" )
+		else if( matchKey(key, "VACUUM") )
 			type = WL_VACUUM;
 		else
 			key_set = true;
@@ -1446,7 +1482,7 @@ void DataParser::getLineID(LineID& line)
 	realnum ELo = -1_r;
 	if( key_set || getKeywordOptional(key) )
 	{
-		if( key.substr(0,4) == "INDE" )
+		if( matchKey(key, "INDEX") )
 		{
 			getToken(indLo);
 			if( indLo <= 0 )
@@ -1455,7 +1491,7 @@ void DataParser::getLineID(LineID& line)
 			if( indHi <= indLo )
 				errorAbort("invalid upper level index");
 		}
-		else if( key == "ELOW" )
+		else if( matchKey(key, "ELOW") )
 		{
 			getToken(ELo);
 			if( ELo < 0_r )

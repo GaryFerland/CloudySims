@@ -52,7 +52,7 @@ void ParseNorm(Parser &p)
 	}
 
 	/* normalise lines to this rather than h-b, sec number is scale factor */
-	LineSave.WavLNorm = t_wavl(p.getWave(), WL_NATIVE);
+	LineSave.WavLNorm = p.getWave();
 	
 	if( LineSave.WavLNorm.wavlVac() < 0 )
 	{
