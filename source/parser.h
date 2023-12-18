@@ -446,7 +446,7 @@ public:
 		if( p_ls.fail() )
 			return false;
 		else if( !isspace(p_ls.peek()) && !p_ls.eof() )
-			errorAbort("found trailing junk after token");
+			errorAbort("found unrecognized input after token");
 		else
 			return true;
 	}
@@ -490,7 +490,7 @@ public:
 		if( p_ls.fail() )
 			return false;
 		else if( !isspace(p_ls.peek()) && !p_ls.eof() )
-			errorAbort("found trailing junk after token");
+			errorAbort("found unrecognized input after token");
 		else
 			return true;
 	}
@@ -514,9 +514,11 @@ public:
 			errorAbort("failed to read a keyword");
 	}
 	// read line label plus wavelength
-	void getLineID(LineID& line);
+	void getLineID(LineID& line, bool lgAtStart=true);
+	// get the current position on the line
+	long getposLine() { return p_pos(); }
 	// skip to a specified position on the line
-	void skipTo(size_t p)
+	void setposLine(size_t p)
 	{
 		if( p < p_pos() )
 			errorAbort("skipping to requested position failed");
@@ -528,7 +530,7 @@ public:
 		auto cp = p_pos();
 		auto p = p_line.substr(cp).find(s);
 		if( p != string::npos )
-			skipTo(cp + p + s.length());
+			setposLine(cp + p + s.length());
 		else
 		{
 			ostringstream oss;
@@ -548,7 +550,7 @@ public:
 	void checkEOL()
 	{
 		if( !lgEOL() )
-			errorAbort("found trailing junk at the end of this line");
+			errorAbort("found unrecognized input at the end of this line");
 	}
 	// returns true if the end of the file is reached
 	bool lgEOF() const { return p_lgEOF; }

@@ -212,7 +212,7 @@ void ParseTest(Parser &p)
 		ostringstream wavlen;
 		wavlen << Hbeta_WavLen.str();	 
 
-		StuffCommand( "MONITOR LINE \"CA B\"" + wavlen.str() + " 1.108", p, lgPrintTest );
+		StuffCommand( "MONITOR LINE \"CA B\" " + wavlen.str() + " 1.108", p, lgPrintTest );
 		ParseMonitorResults(p);
 
 		/* >>chng 02 apr 19, from 2.4603 to 3.25, due to adding Lyman cont depth 

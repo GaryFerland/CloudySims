@@ -5,6 +5,7 @@
 #include "cddefines.h"
 #include "lines.h"
 #include "parser.h"
+#include "prt.h"
 
 namespace {
 	TEST(TestReadNumber)
@@ -54,12 +55,6 @@ namespace {
 		CHECK(fp_equal_tol(3.14159,p.FFmtRead(),1e-3));
 		CHECK(fp_equal_tol(2.71828,p.FFmtRead(),1e-3));
 	}
-//	TEST(TestReadCommaNumber)
-//	{
-//		Parser p;
-//		p.setline("1,000");
-//		CHECK_EQUAL(1000,p.FFmtRead());
-//	}
 	TEST(TestReadOKCommaNumber)
 	{
 		Parser p;
@@ -209,37 +204,113 @@ namespace {
 		p.setline("2^$a");
 		CHECK_EQUAL(32,p.FFmtRead());
 	}
+	TEST(TestTWavl)
+	{
+		LineSave.sig_figs = 6;
+
+		// first test printing wavelengths in vacuum
+		prt.lgPrintLineAirWavelengths = false;
+
+		t_wavl t;
+		CHECK( fp_equal(t.wavlVac(), -1_r) );
+		t = 5000_vac;
+		CHECK( fp_equal(t.wavlVac(), 5000_r) );
+		CHECK( t.str() == "5000.00A" );
+		t = 6564.522546600_vac;
+		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
+		CHECK( t.str() == "6564.52A" );
+		t = 6562.709693357_air;
+		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
+		CHECK( t.str() == "6564.52A" );
+		t = t_vac(6564.522546600_r);
+		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
+		CHECK( t.str() == "6564.52A" );
+		t = t_air(6562.709693357_r);
+		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
+		CHECK( t.str() == "6564.52A" );
+		t = t_nat(6564.522546600_r);
+		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
+		CHECK( t.str() == "6564.52A" );
+
+		// now test printing wavelengths in air
+		prt.lgPrintLineAirWavelengths = true;
+
+		t = 6564.522546600_vac;
+		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
+		CHECK( t.str() == "6562.71A" );
+		t = 6562.709693357_air;
+		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
+		CHECK( t.str() == "6562.71A" );
+		t = t_vac(6564.522546600_r);
+		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
+		CHECK( t.str() == "6562.71A" );
+		t = t_air(6562.709693357_r);
+		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
+		CHECK( t.str() == "6562.71A" );
+		t = t_nat(6562.709693357_r);
+		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
+		CHECK( t.str() == "6562.71A" );
+
+		// unary minus
+		t = -t_vac(6564.522546600_r);
+		CHECK( fp_equal(t.wavlVac(), -6564.522546600_r) );
+	}
 	TEST(TestReadLineID)
 	{
+		// LineID always stores wavelength in vacuum internally, but what it reads from the line
+		// can be either air or vacuum wavelength, depending on the value of prt.lgPrintLineAirWavelengths
+		// explicit keywords AIR or VACUUM can also be used to force the interpretation of the wavelength
+		prt.lgPrintLineAirWavelengths = false;
+
 		Parser p;
 		LineID line;
 		p.setline("H  1  1216");
 		line = p.getLineID();
-		CHECK( line.chLabel == "H  1" && line.wave == 1216_r && line.indLo < 0 && line.indHi < 0 );
+		CHECK( line.chLabel() == "H  1" && line.wave() == 1216_r && line.indLo() < 0 && line.indHi() < 0 );
 		p.setline("H  1 1216A");
 		line = p.getLineID();
-		CHECK( line.chLabel == "H  1" && line.wave == 1216_r && line.ELo < 0_r );
+		CHECK( line.chLabel() == "H  1" && line.wave() == 1216_r && line.ELo() < 0_r );
 		p.setline("\"Fe 2b\"  12.00m");
 		line = p.getLineID();
-		CHECK( line.chLabel == "Fe 2b" && line.wave == 12.00e4_r );
+		CHECK( line.chLabel() == "Fe 2b" && line.wave() == 12.00e4_r );
 		p.setline("\"Fe 2b  \"  12.00c # comment");
 		line = p.getLineID();
-		CHECK( line.chLabel == "Fe 2b" && line.wave == 12.00e8_r );
+		CHECK( line.chLabel() == "Fe 2b" && line.wave() == 12.00e8_r );
 		p.setline("CO  12.00C # comment");
 		line = p.getLineID();
-		CHECK( line.chLabel == "CO" && line.wave == 12.00e8_r );
+		CHECK( line.chLabel() == "CO" && line.wave() == 12.00e8_r );
 		p.setline("Al 2 1670. index=1,5");
 		line = p.getLineID();
-		CHECK( line.chLabel == "Al 2" && line.wave== 1670_r && line.indLo == 1 && line.indHi == 5 && line.ELo < 0_r );
+		CHECK( line.chLabel() == "Al 2" && line.wave()== 1670_r && line.indLo() == 1 && line.indHi() == 5 && line.ELo() < 0_r );
 		p.setline("Al 2 1670. Elow=1");
 		line = p.getLineID();
-		CHECK( line.chLabel == "Al 2" && line.wave == 1670_r && line.indLo < 0 && line.indHi < 0 && line.ELo == 1_r );
-		p.setline("monitor line \"H  1\" 1216 index=1,5 100.");
+		CHECK( line.chLabel() == "Al 2" && line.wave() == 1670_r && line.indLo() < 0 && line.indHi() < 0 && line.ELo() == 1_r );
+		p.setline("monitor line \"H  1\" 1216 index=1,5 -100.");
 		line = p.getLineID(false);
-		CHECK( line.chLabel == "H  1" && line.wave == 1216_r && line.indLo == 1 && line.indHi == 5 );
+		CHECK( line.chLabel() == "H  1" && line.wave() == 1216_r && line.indLo() == 1 && line.indHi() == 5 );
 		double x = p.FFmtRead();
-		CHECK( x == 100. );
+		CHECK( x == -100. );
+		p.setline("monitor line \"He 2\" 1217 -110.");
+		line = p.getLineID(false);
+		CHECK( line.chLabel() == "He 2" && line.wave() == 1217_r && line.indLo() == -1 );
+		x = p.FFmtRead();
+		CHECK( x == -110. );
 
+		p.setline("H  1 6562.71A air");
+		line = p.getLineID();
+		CHECK( line.chLabel() == "H  1" && fp_equal(line.wave(), 6564.523_r) );
+		CHECK( line.str() == "\"H  1\" 6564.52A" );
+
+		prt.lgPrintLineAirWavelengths = true;
+		p.setline("H  1 6562.71A");
+		line = p.getLineID();
+		CHECK( line.chLabel() == "H  1" && fp_equal(line.wave(), 6564.523_r) );
+		p.setline("H  1 6564.52A vacuum");
+		line = p.getLineID();
+		CHECK( line.chLabel() == "H  1" && fp_equal(line.wave(), 6564.52_r) );
+		CHECK( line.str() == "\"H  1\" 6562.71A" );
+
+		prt.lgPrintLineAirWavelengths = false;
 		// test failure modes
 		FILE *bak = ioQQQ;
 		FILE *tmp = tmpfile();
@@ -248,10 +319,10 @@ namespace {
 		// not really a failure, but a warning
 		p.setline("H 1   1216a");
 		line = p.getLineID();
-		CHECK( line.chLabel == "H  1" && line.wave == 1216._r );
+		CHECK( line.chLabel() == "H  1" && line.wave() == 1216._r );
 		p.setline("\"H 1\"   1216M");
 		line = p.getLineID();
-		CHECK( line.chLabel == "H  1" && line.wave == 1216.e4_r );
+		CHECK( line.chLabel() == "H  1" && line.wave() == 1216.e4_r );
 		// the rest are all real errors
 		p.setline("monitor line \"H  1\" 1216");
 		CHECK_THROW( (void)p.getLineID(), cloudy_exit );
@@ -265,8 +336,8 @@ namespace {
 		CHECK_THROW( (void)p.getLineID(), cloudy_exit );
 		p.setline("\"Fe 2b  12.00m");
 		CHECK_THROW( (void)p.getLineID(), cloudy_exit );
-		//p.setline("Fe 2  comment  12.00m");
-		//CHECK_THROW( (void)p.getLineID(), cloudy_exit );
+		p.setline("Fe 2  comment  12.00m");
+		CHECK_THROW( (void)p.getLineID(), cloudy_exit );
 		p.setline("Fe 2  12.00m  index");
 		CHECK_THROW( (void)p.getLineID(), cloudy_exit );
 		p.setline("Fe 2  12.00m  index=3");
@@ -282,6 +353,10 @@ namespace {
 		//p.setline("Fe 2  12.00m  keyword");
 		//CHECK_THROW( (void)p.getLineID(), cloudy_exit );
 		//p.setline("Fe 2  12.00 m");
+		//CHECK_THROW( (void)p.getLineID(), cloudy_exit );
+		//p.setline("H  1 6564.52A index=2,3 vacuum");
+		//CHECK_THROW( (void)p.getLineID(), cloudy_exit );
+		//p.setline("H  1 6564.52A Elow=82258.92 vacuum");
 		//CHECK_THROW( (void)p.getLineID(), cloudy_exit );
 		if( tmp != NULL )
 			fclose(tmp);

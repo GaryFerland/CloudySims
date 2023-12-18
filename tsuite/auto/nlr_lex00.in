@@ -92,7 +92,7 @@ save monitors last "nlr_lex00.asr"
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-monitor line "H  1" luminosity 4861.32A 0.1676
+monitor line "H  1" 4861.32A luminosity 0.1676
 ##
 ## >>chng 01 may 10, from 1.08 to 0.995, ct network chng
 ## >>chng 02 nov 08, from 0.995 to 0.9376, better est of Q(H) with temp

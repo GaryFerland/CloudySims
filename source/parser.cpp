@@ -642,87 +642,13 @@ string Parser::getFirstChunkRaw(long nchar)
 LineID Parser::getLineID(bool lgAtStart)
 {
 	DEBUG_ENTRY( "Parser::getLineID()" );
-	string chLabel;
-	if( !lgAtStart || m_card_raw[0] == '\"' )
-	{
-		if( GetQuote( chLabel ) != 0 )
-		{
-			fprintf( ioQQQ, "getLineID found invalid quoted string:\n" );
-			showLocation();
-			cdEXIT(EXIT_FAILURE);
-		}
-	}
-	else
-	{	 
-		/* order on line is label (col 1-4), wavelength */
-		chLabel = getFirstChunkRaw(4);
-		// relax rule for whitespace in between tokens: if label
-		// is shorter than 4 chars, wavelength may start in 5th column
-		if( !isspace(m_card[3]) && !isspace(m_card[4]) )
-		{
-			fprintf( ioQQQ, "getLineID found junk after line label:\n" );
-			showLocation();
-			cdEXIT(EXIT_FAILURE);
-		}
-	}
-	trimTrailingWhiteSpace( chLabel );
 
-	// Normalize common error "H 1 " or "H 1" for "H  1"
-	if ( chLabel.size() == 3 || chLabel.size() == 4 )
-	{
-		if ( chLabel[1] == ' ' &&
-			  ( chLabel.size() == 3 || chLabel[3] == ' ' ) )
-		{
-			fprintf(ioQQQ,"WARNING: read \"%s\" as spectrum\n",chLabel.c_str());
-			if (chLabel.size() == 3)
-				chLabel += chLabel[2];
-			else
-				chLabel[3] = chLabel[2];
-			chLabel[2] = ' ';
-			fprintf(ioQQQ,"Assuming required spectrum is \"%s\"\n",chLabel.c_str());
-		}
-	}
-
-	/* now get wavelength */
-	t_wavl wave = getWave();
-
-	/* scan for optional parameters */
-	int indLo = -1, indHi = -1;
-	realnum ELo = -1_r;
-	if( nMatch("INDE") )
-	{
-		indLo = (int)FFmtRead();
-		if( lgEOL() )
-			NoNumb("lower level index");
-		if( indLo <= 0 )
-		{
-			fprintf( ioQQQ, "getLineID found invalid lower level index:\n" );
-			showLocation();
-			cdEXIT(EXIT_FAILURE);
-		}
-		indHi = (int)FFmtRead();
-		if( lgEOL() )
-			NoNumb("upper level index");
-		if( indHi <= indLo )
-		{
-			fprintf( ioQQQ, "getLineID found invalid upper level index:\n" );
-			showLocation();
-			cdEXIT(EXIT_FAILURE);
-		}
-	}
-	else if( nMatch("ELOW") )
-	{
-		ELo = FFmtRead();
-		if( lgEOL() )
-			NoNumb("lower level energy");
-		if( ELo <= 0_r )
-		{
-			fprintf( ioQQQ, "getLineID found invalid lower level energy:\n" );
-			showLocation();
-			cdEXIT(EXIT_FAILURE);
-		}
-	}
-	return LineID(chLabel, wave, indLo, indHi, ELo);
+	DataParser d;
+	d.setline(m_card_raw);
+	LineID line;
+	d.getLineID(line, lgAtStart);
+	m_off = d.getposLine();
+	return line;
 }
 
 // Simple recursive descent parser for expressions
@@ -1401,17 +1327,25 @@ bool DataParser::getline()
 	return !p_lgEOF;
 }
 
-void DataParser::getLineID(LineID& line)
+void DataParser::getLineID(LineID& line, bool lgAtStart)
 {
 	DEBUG_ENTRY( "DataParser::getLineID()" );
 
-	if( p_pos() > 0 )
+	if( lgAtStart && p_pos() > 0 )
 		errorAbort("the line ID must be the first item on the line");
 	p_replaceSep();
 
 	string chLabel;
-	if( p_line[0] == '\"' )
+	if( !lgAtStart || p_line[0] == '\"' )
+	{
+		// skip to the first double quote on the line
+		if( p_line[0] != '\"' )
+		{
+			auto p = p_line.find('\"');
+			p_pos(p);
+		}
 		getQuote(chLabel);
+	}
 	else
 	{
 		p_pos(min(p_line.length(), 4));
@@ -1420,7 +1354,7 @@ void DataParser::getLineID(LineID& line)
 		// relax rule for whitespace in between tokens: if label
 		// is shorter than 4 chars, wavelength may start in 5th column
 		if( !isspace(p_line[3]) && !isspace(p_line[4]) )
-			errorAbort("found junk after line label");
+			errorAbort("found unrecognized input after line label");
 		chLabel = p_line.substr(0,4);
 	}
 	trimTrailingWhiteSpace( chLabel );
@@ -1468,6 +1402,7 @@ void DataParser::getLineID(LineID& line)
 	string key;
 	bool key_set = false;
 	wl_type type = WL_NATIVE;
+	auto cur = p_pos();
 	if( getKeywordOptional(key) )
 	{
 		if( matchKey(key, "AIR") )
@@ -1480,6 +1415,8 @@ void DataParser::getLineID(LineID& line)
 
 	int indLo = -1, indHi = -1;
 	realnum ELo = -1_r;
+	if( !key_set )
+		cur = p_pos();
 	if( key_set || getKeywordOptional(key) )
 	{
 		if( matchKey(key, "INDEX") )
@@ -1499,7 +1436,7 @@ void DataParser::getLineID(LineID& line)
 		}
 		else
 		{
-			errorAbort("keyword not recognized");
+			p_pos(cur);
 		}
 	}
 	line = LineID(chLabel, t_wavl(wave, type), indLo, indHi, ELo);
@@ -1528,7 +1465,9 @@ NORETURN void DataParser::errorAbort(const string& msg, FILE *io)
 	// this is OK since we abort immediately afterwards
 	p_ls.clear();
 	size_t p_ptr = p_pos();
-	fprintf(ioQQQ, "\n %s:%ld:%ld: PROBLEM ERROR: %s\n", p_filename.c_str(), p_nr, p_ptr, msg.c_str());
+	if( p_filename.length() > 0 )
+		fprintf(ioQQQ, "\n %s:%ld:%ld: PROBLEM ERROR: ", p_filename.c_str(), p_nr, p_ptr);
+	fprintf(ioQQQ, "%s\n", msg.c_str());
 	p_showLocation(p_ptr, io);
 	cdEXIT(EXIT_FAILURE);
 }
@@ -1543,7 +1482,9 @@ void DataParser::warning(const string& msg, FILE *io)
 	// always return -1 if an error flag is set...
 	p_ls.clear();
 	size_t p_ptr = p_pos();
-	fprintf(ioQQQ, "\n %s:%ld:%ld: WARNING: %s\n", p_filename.c_str(), p_nr, p_ptr, msg.c_str());
+	if( p_filename.length() > 0 )
+		fprintf(ioQQQ, "\n %s:%ld:%ld: WARNING: ", p_filename.c_str(), p_nr, p_ptr);
+	fprintf(ioQQQ, "%s\n", msg.c_str());
 	p_showLocation(p_ptr, io);
 	// restore state flags to initial state
 	p_ls.flags(f);
