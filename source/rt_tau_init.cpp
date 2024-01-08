@@ -289,6 +289,18 @@ void RT_tau_init(void)
 	/* set inward optical depths for hydrogenic ions to small number proportional to abundance */
 	for( nelem=0; nelem < LIMELM; nelem++ )
 	{
+		long ExtraLymanLineJ05Ratio, ExtraLymanLineJ15Ratio;
+		if(nelem < 2)
+		{
+			ExtraLymanLineJ05Ratio = 1.;
+                        ExtraLymanLineJ15Ratio = 1.;
+		}
+		else
+		{
+			ExtraLymanLineJ05Ratio = 1./3.;
+			ExtraLymanLineJ15Ratio = 2./3.;
+		}
+
 		if( dense.lgElmtOn[nelem] )
 		{
 			/* now get actual optical depths */
@@ -311,6 +323,8 @@ void RT_tau_init(void)
 
 			/* scale factor so that all other Lyman lines are appropriate for this Lya optical depth*/
 			realnum f = opac.tlamin/iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().opacity();
+			realnum fJ05 = opac.tlamin/ExtraLymanLinesJ05[nelem][2].Emis().opacity();
+			realnum fJ15 = opac.tlamin/ExtraLymanLinesJ15[nelem][2].Emis().opacity();
 			fixit("this appears to be redundant to code below.");
 
 			for( nHi=3; nHi<=iso_sp[ipH_LIKE][nelem].n_HighestResolved_max; nHi++ )
@@ -328,10 +342,10 @@ void RT_tau_init(void)
 			for( nHi=3; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 			{
 				ExtraLymanLinesJ05[nelem][nHi].Emis().TauIn() = MAX2( opac.taumin,
-					f*ExtraLymanLinesJ05[nelem][nHi].Emis().opacity() );
+					fJ05*ExtraLymanLinesJ05[nelem][nHi].Emis().opacity() );
 
 				ExtraLymanLinesJ15[nelem][nHi].Emis().TauIn() = MAX2( opac.taumin,
-					f*ExtraLymanLinesJ15[nelem][nHi].Emis().opacity() );
+					fJ15*ExtraLymanLinesJ15[nelem][nHi].Emis().opacity() );
 			}
 
 			/* after this set of if's the total Lya optical depth will be known,
@@ -362,6 +376,14 @@ void RT_tau_init(void)
 					  rt.DoubleTau*iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().opacity()/
 					  GetDopplerWidth(dense.AtomicWeight[nelem])*AbunRatio);
 					ASSERT( iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauTot() >= 0. );
+
+					ExtraLymanLinesJ05[nelem][2].Emis().TauTot() = (realnum)(StopCalc.colnut*
+					  rt.DoubleTau*ExtraLymanLinesJ05[nelem][2].Emis().opacity()/
+					  GetDopplerWidth(dense.AtomicWeight[nelem])*AbunRatio);
+
+					ExtraLymanLinesJ15[nelem][2].Emis().TauTot() = (realnum)(StopCalc.colnut*
+					  rt.DoubleTau*ExtraLymanLinesJ15[nelem][2].Emis().opacity()/
+					  GetDopplerWidth(dense.AtomicWeight[nelem])*AbunRatio);
 				}
 				/* has optical depth at some energy where we want to stop been specified?
 				 * taunu is energy where
@@ -372,6 +394,14 @@ void RT_tau_init(void)
 					iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauTot() = (realnum)(StopCalc.tauend*
 					  1.2e4*1.28e6/GetDopplerWidth(dense.AtomicWeight[nelem])*rt.DoubleTau*AbunRatio);
 					ASSERT( iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauTot() >= 0. );
+
+					ExtraLymanLinesJ05[nelem][2].Emis().TauTot() = (realnum)(StopCalc.tauend*
+					  1.2e4*1.28e6*(ExtraLymanLineJ05Ratio)/
+					  GetDopplerWidth(dense.AtomicWeight[nelem])*rt.DoubleTau*AbunRatio);
+
+					ExtraLymanLinesJ15[nelem][2].Emis().TauTot() = (realnum)(StopCalc.tauend*
+					  1.2e4*1.28e6*(ExtraLymanLineJ15Ratio)/
+					  GetDopplerWidth(dense.AtomicWeight[nelem])*rt.DoubleTau*AbunRatio);
 				}
 				else if( StopCalc.HColStop < 6e29 )
 				{
@@ -382,6 +412,12 @@ void RT_tau_init(void)
 					iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauTot() = (realnum)(coleff*
 					  7.6e-14*AbunRatio);
 					ASSERT( iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauTot() >= 0. );
+
+					ExtraLymanLinesJ05[nelem][2].Emis().TauTot() = (realnum)(coleff*
+					  7.6e-14*AbunRatio*(ExtraLymanLineJ05Ratio));
+
+					ExtraLymanLinesJ15[nelem][2].Emis().TauTot() = (realnum)(coleff*
+					  7.6e-14*AbunRatio*(ExtraLymanLineJ15Ratio));
 				}
 				else
 				{
@@ -389,31 +425,33 @@ void RT_tau_init(void)
 					iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauTot() = (realnum)(1e20*
 					  AbunRatio);
 					ASSERT( iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauTot() >= 0. );
+
+					ExtraLymanLinesJ05[nelem][2].Emis().TauTot() = (realnum)(1e20*
+					  AbunRatio*(ExtraLymanLineJ05Ratio));
+
+					ExtraLymanLinesJ15[nelem][2].Emis().TauTot() = (realnum)(1e20*
+					  AbunRatio*(ExtraLymanLineJ15Ratio));
 				}
 				/* allow Balmer et al. optical depths */
 				lgBalmerTauOn = true;
 			}
 
+
+			/* 2023 Nov 23, we looked through the following code, it seems the TAddHLya variables are
+			 * not doing anything. */
 			realnum TAddHLya = 0.f;
-			bool lgLyaContinuumCorrection = false;
-			if (lgLyaContinuumCorrection)
-			{
-				/* Lya total optical depth now known, is it optically thick?*/
-				if (iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauTot() > 1. )
-				{
-					TAddHLya = (realnum)MIN2(1.,iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauTot()/
-													 1e4);
-					iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauIn() += TAddHLya;
-				}
-				else
-				{
-					TAddHLya = opac.tlamin;
-				}
-			}
+			realnum TAddHLyaJ05 = 0.f;
+			realnum TAddHLyaJ15 = 0.f;
 
 			/* this scale factor is to set other lyman lines, given the Lya optical depth */
 			f = iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauTot()/
 				iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().opacity();
+
+			fJ05 = ExtraLymanLinesJ05[nelem][2].Emis().TauTot()/
+				ExtraLymanLinesJ05[nelem][2].Emis().opacity();
+
+			fJ15 = ExtraLymanLinesJ15[nelem][2].Emis().TauTot()/
+				ExtraLymanLinesJ05[nelem][2].Emis().opacity();
 
 			ipISO = ipH_LIKE;
 			ASSERT( ipISO<NISO && nelem < LIMELM );
@@ -448,6 +486,28 @@ void RT_tau_init(void)
 
 				iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauIn() = MAX2( 
 					opac.taumin, iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauIn() );
+			}
+			for( nHi=3; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
+			{
+				ExtraLymanLinesJ05[nelem][nHi].Emis().TauTot() = MAX2( opac.taumin,
+					ExtraLymanLinesJ05[nelem][nHi].Emis().opacity() * fJ05 );
+
+				ExtraLymanLinesJ05[nelem][nHi].Emis().TauIn() += TAddHLyaJ05*
+				  ExtraLymanLinesJ05[nelem][nHi].Emis().opacity()/
+				  ExtraLymanLinesJ05[nelem][2].Emis().opacity();
+
+				ExtraLymanLinesJ05[nelem][nHi].Emis().TauIn() = MAX2(
+					opac.taumin, ExtraLymanLinesJ05[nelem][nHi].Emis().TauIn() );
+
+				ExtraLymanLinesJ15[nelem][nHi].Emis().TauTot() = MAX2( opac.taumin,
+					ExtraLymanLinesJ15[nelem][nHi].Emis().opacity() * fJ15 );
+
+				ExtraLymanLinesJ15[nelem][nHi].Emis().TauIn() += TAddHLyaJ15*
+				  ExtraLymanLinesJ15[nelem][nHi].Emis().opacity()/
+				  ExtraLymanLinesJ15[nelem][2].Emis().opacity();
+
+				ExtraLymanLinesJ15[nelem][nHi].Emis().TauIn() = MAX2(
+					opac.taumin, ExtraLymanLinesJ15[nelem][nHi].Emis().TauIn() );
 			}
 
 			/* try to guess what Balmer cont optical guess,
@@ -562,6 +622,32 @@ void RT_tau_init(void)
 
 					/* this is fraction of line that goes inward, not known until second iteration*/
 					iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo).Emis().FracInwd() = 0.5;
+				}
+			}
+			for( nHi=ipH1s; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
+			{
+				if( ExtraLymanLinesJ05[nelem][nHi].ipCont() > 0 )
+				{
+					ExtraLymanLinesJ05[nelem][nHi].Emis().TauCon() =
+						ExtraLymanLinesJ05[nelem][nHi].Emis().TauIn();
+
+					ExtraLymanLinesJ05[nelem][nHi].Emis().TauIn() =
+						MIN2(	ExtraLymanLinesJ05[nelem][nHi].Emis().TauIn() ,
+						ExtraLymanLinesJ05[nelem][nHi].Emis().TauTot()/2.f );
+
+					ExtraLymanLinesJ05[nelem][nHi].Emis().FracInwd() = 0.5;
+				}
+
+				if( ExtraLymanLinesJ15[nelem][nHi].ipCont() > 0 )
+				{
+					ExtraLymanLinesJ15[nelem][nHi].Emis().TauCon() =
+						ExtraLymanLinesJ15[nelem][nHi].Emis().TauIn();
+
+					ExtraLymanLinesJ15[nelem][nHi].Emis().TauIn() =
+						MIN2(	ExtraLymanLinesJ15[nelem][nHi].Emis().TauIn() ,
+						ExtraLymanLinesJ15[nelem][nHi].Emis().TauTot()/2.f );
+
+					ExtraLymanLinesJ15[nelem][nHi].Emis().FracInwd() = 0.5;
 				}
 			}
 		}
