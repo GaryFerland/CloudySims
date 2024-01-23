@@ -102,10 +102,6 @@ void PrtZone(void)
 		}
 	}
 
-	DumpLine(iso_sp[ipH_LIKE][ipIRON].trans(ipH2p,ipH1s));
-	DumpLine(ExtraLymanLinesJ05[ipIRON][2]);
-	DumpLine(ExtraLymanLinesJ15[ipIRON][2]);
-
 	/* now return if not talking */
 	if( !called.lgTalk && !trace.nTrConvg )
 	{ 
