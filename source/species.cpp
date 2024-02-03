@@ -693,11 +693,10 @@ void parsespect(const char* chLabel, long& nelem, long& IonStg)
 	DEBUG_ENTRY( "parsespect()" );	
 	nelem = -1;
 	IonStg = -1;
-	if ( strlen(chLabel) != 4 || 
-		  ! (isalpha(chLabel[0])) ||
-		  ! (chLabel[1] == ' ' || isalpha(chLabel[1])) ||
-		  ! (chLabel[2] == ' ' || isdigit(chLabel[2])) ||
-		  ! (chLabel[3] == ' ' || isdigit(chLabel[3])))
+	if ( ! (isalpha(chLabel[0])) ||
+		! (chLabel[1] == ' ' || isalpha(chLabel[1])) ||
+		! (chLabel[2] == ' ' || isdigit(chLabel[2])) ||
+		! (chLabel[3] == ' ' || isdigit(chLabel[3])))
 	{
 		// Invalid spectrum -- return error state
 		return;
