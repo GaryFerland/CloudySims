@@ -298,7 +298,8 @@ void lines_hydro(void)
 		if( dense.IonHigh[nelem] == nelem + 1 )
 		{
 			/* bring nL - n'L' emission together as n-n' emission. */
-			for( ipHi=1; ipHi < iso_sp[ipH_LIKE][nelem].numLevels_max; ipHi++ )
+			/* ipHi starts at 2 so that we retain the intensity of M1 line, as a separate entry on the stack */
+			for( ipHi=2; ipHi < iso_sp[ipH_LIKE][nelem].numLevels_max; ipHi++ )
 			{
 				long index_of_nHi_P;
 
