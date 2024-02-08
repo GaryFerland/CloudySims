@@ -154,7 +154,8 @@ monitor itrzn 6.752
 ## >>chng 13 dec 23, from 23.45 to 23.93, C to external databases
 ## >>chng 14 mar 26, from 23.93 to 24.19, Move oxygen data to stout and chianti files
 ## >>chng 15 aug 03, from 24.19 to 24.46, update LAMDA to 2015
-monitor "H2O " 538.142m line intensity 24.46
+## >>chng 24 jan 09, from 24.46 to 24.41, resolve 1 electron Ly doublets
+monitor "H2O " 538.142m line intensity 24.41
 ## >>chng 13 jun 27, from -7.288 to 25.93, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from 25.93 to 26.03, C to external databases

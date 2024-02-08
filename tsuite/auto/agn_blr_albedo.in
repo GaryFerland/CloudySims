@@ -35,7 +35,8 @@ save monitors last "agn_blr_albedo.asr"
 # must assert the luminosity since change in this 
 # line would appear to change the rest of the spectrum
 #monitor line luminosity "FeKa" 1.78 10.070
-monitor line luminosity "C  6" 33.7360 10.07
+## >>chng 24 jan 09, from 10.07 to 10.02, resolve 1 electron Ly doublets
+monitor line luminosity "C  6" 33.7360 10.02
 ## >>chng 21 sep 11, from 26.2 to 27.41, LAMDA update
 ## >>chng 23 nov 24, from 27.41 to 29.700, remove FeKa, FeKH, FeKC, FeK1, FeK2
 monitor line "nFnu" 1000 29.700

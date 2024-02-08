@@ -285,7 +285,8 @@ monitor line luminosity "blnd" 2798 7.534 ##total of sum of both Mg II comp
 ## >>chng 14 apr 07, from 6.082 to 4.781, move H/C out of ConvBase loop
 ## >>chng 14 apr 08, from 4.781 to 4.312, O excit state photo back in
 ## >>chng 16 aug 07, from 4.312 to 4.925, Fran bug fix
-monitor itrzn 4.925 erro 0.1 
+## >>chng 24 jan 09, from 4.925 to 4.454, resolve 1 electron Ly doublets
+monitor itrzn 4.454 erro 0.1
 ##
 ## >>chng from 3 to <5 (actually 4)
 ## >>chng 08 dec 08, from 5 to 4, upper limit -> equals (r2515)

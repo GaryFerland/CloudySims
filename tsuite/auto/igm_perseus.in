@@ -23,6 +23,7 @@ iterate to convergence
 print line column
 print line sort wavelength
 print line faint -2
+print line faint off
 #print line sort intensity
 normalize "Fe25" 1.85040A  1
 save overview ".ovr" 
@@ -67,7 +68,14 @@ monitor line luminosity "Fe25"    1.49460A -29.13
 #
 ## >>chng 19 jul 20, -28.03, first run
 ## >>chng 20 aug 25, wl from 1.78177A to 1.77982A, switched from computed to tabulated energies for H and He isoseq
+## >>chng 24 feb 07, switched from FeKa to sum of Fe26 j-resolved and M1 transitions
 monitor line luminosity "Blnd"    1.77982A -28.03
+## >>chng 24 feb 07, add monitor
+monitor line luminosity "Fe26"	  1.78344A -28.51
+## >>chng 24 feb 07, add monitor
+monitor line luminosity "Fe26"	  1.77802A -28.21
+## >>chng 24 feb 07, add monitor
+monitor line luminosity "Fe26 M1" 1.78330A -29.79
 #
 ## >>chng 19 jul 20, -28.91, first run
 ## >>chng 20 aug 25, wl from 1.50337A to 1.50273A, switched from computed to tabulated energies for H and He isoseq
