@@ -273,7 +273,7 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 								iso_sp[ipISO][nelem].st[ipLo].Pop();
 
 							(*(*tr).Hi()).Pop() =
-								iso_sp[ipISO][nelem].st[ipHi].Pop()*(3./pow2(nHi))*(1./3.); /* (2l+1)/n^2 for nP, and 1/3 is the ratio of statistical weights for j=1/2 */
+								iso_sp[ipISO][nelem].st[ipHi].Pop()*(3./pow2(nHi))*(1./3.); /* 2(2l+1)/2n^2 for nP, and 1/3 is the ratio of statistical weights for j=1/2 */
 
 							(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
 
@@ -285,7 +285,7 @@ void RT_line_all( linefunc line_one, bool lgExcludeLyman )
 								iso_sp[ipISO][nelem].st[ipLo].Pop();
 
 							(*(*tr).Hi()).Pop() =
-								iso_sp[ipISO][nelem].st[ipHi].Pop()*(3./pow2(nHi))*(2./3.); /* (2l+1)/n^3 for nP, and 1/3 is the ratio of statistical weights for j=3/2 */
+								iso_sp[ipISO][nelem].st[ipHi].Pop()*(3./pow2(nHi))*(2./3.); /* 2(2l+1)/2n^2 for nP, and 2/3 is the ratio of statistical weights for j=3/2 */
 
 							(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
 
