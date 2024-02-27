@@ -18,6 +18,7 @@
 #include "iso.h"
 #include "wind.h"
 #include "geometry.h"
+#include "taulines.h"
 
 /*RT_line_pumping pumping by external and locally emitted radiation fields */
 STATIC void RT_line_pumping(
@@ -111,12 +112,26 @@ STATIC void RT_line_escape(
 		throw cloudy_abort("large negative optical depth");
 	}
 
+	auto TauIn = t.Emis().TauIn();
+	auto TauTot = t.Emis().TauTot();
+	if( lgIsLymanLine(t) && t.Hi()->g() < 6 )
+	{
+		long nelem = t.Lo()->nelem() - 1;
+                long nHi = t.Hi()->n();
+		double Ediff = ExtraLymanLinesJ15[nelem][nHi].EnergyWN() - ExtraLymanLinesJ05[nelem][nHi].EnergyWN();
+		double Vdiff = Ediff/t.EnergyWN()*SPEEDLIGHT;
+		if( Vdiff < DopplerWidth )
+		{
+			TauIn = ExtraLymanLinesJ15[nelem][nHi].Emis().TauIn() + ExtraLymanLinesJ05[nelem][nHi].Emis().TauIn();
+			TauTot = ExtraLymanLinesJ15[nelem][nHi].Emis().TauTot() + ExtraLymanLinesJ05[nelem][nHi].Emis().TauTot();
+		}
+	}
 	if( cosmology.lgDo )
 	{
 		/* Sobolev escape */
 		if( conv.lgFirstSweepThisZone && lgGoodTau )
 		{
-			realnum tau_Sobolev =  t.Emis().TauTot();
+			realnum tau_Sobolev =  TauTot;
 
 			if( tau_Sobolev < 1E-5 )
 			{
@@ -183,7 +198,7 @@ STATIC void RT_line_escape(
 		/* incomplete redistribution with wings */
 		if( conv.lgFirstSweepThisZone && lgGoodTau )
 		{
-			t.Emis().Pesc() = (realnum)esc_PRD( t.Emis().TauIn(), t.Emis().TauTot(), t.Emis().damp() );
+			t.Emis().Pesc() = (realnum)esc_PRD( TauIn, TauTot, t.Emis().damp() );
 
 			/* >>chng 03 jun 07, do not clobber esp prob when line is masing -
 			* this had effect of preventing total escape prob from getting larger than 1 */
@@ -204,7 +219,7 @@ STATIC void RT_line_escape(
 			/* >>chng 01 mar -6, escsub will call any of several esc prob routines,
 			* depending of how core is set.  We always want core-only for this option,
 			* so call  esca0k2(tau) directly */
-			t.Emis().Pesc() = (realnum)esc_CRDcore( t.Emis().TauIn(), t.Emis().TauTot() );
+			t.Emis().Pesc() = (realnum)esc_CRDcore( TauIn, TauTot );
 
 			if( pestrk > 0.f && t.Emis().Pesc() < 1.f )
 				t.Emis().Pesc() = min( 1.f, t.Emis().Pesc() + pestrk );
@@ -221,7 +236,7 @@ STATIC void RT_line_escape(
 		/* complete redistribution with damping wings */
 		if( conv.lgFirstSweepThisZone && lgGoodTau )
 		{
-			t.Emis().Pesc() = (realnum)esc_CRDwing( t.Emis().TauIn(), t.Emis().TauTot(), t.Emis().damp() );
+			t.Emis().Pesc() = (realnum)esc_CRDwing( TauIn, TauTot, t.Emis().damp() );
 
 			if( pestrk > 0.f && t.Emis().Pesc() < 1.f )
 				t.Emis().Pesc() = min( 1.f, t.Emis().Pesc() + pestrk );

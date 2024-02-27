@@ -161,60 +161,70 @@ monitor "H2O " 538.142m line intensity 24.41
 ## >>chng 13 dec 23, from 25.93 to 26.03, C to external databases
 ## >>chng 14 mar 26, from 26.03 to 26.08, Move oxygen data to stout and chianti files
 ## >>chng 23 sep 28, from 26.08 to 26.04, current npSplit development result
-monitor "CO  " 2600.05m  26.04 line intensity
+## >>chng 24 feb 27, from 26.04 to 26, Fix escape probability for Ly beta and higher
+monitor "CO  " 2600.05m  26 line intensity
 ## >>chng 13 jun 27, from -6.463 to 27.08, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from 27.08 to 27.13, C to external databases
 ## >>chng 14 mar 26, from 27.13 to 27.16, Move oxygen data to stout and chianti files
 ## >>chng 23 sep 08, from 27.16 to 27.12, fix SQRTPI in Lya destprob
-monitor "CO  " 1300.05m  27.12 line intensity
+## >>chng 24 feb 27, from 27.12 to 27.07, Fix escape probability for Ly beta and higher
+monitor "CO  " 1300.05m  27.07 line intensity
 ## >>chng 13 jun 27, from -6.149 to 27.36, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from 27.36 to 27.38, Move oxygen data to stout and chianti files
 ## >>chng 23 sep 28, from 27.38 to 27.34, current npSplit development result
-monitor "CO  " 866.727m  27.34 line intensity
+## >>chng 24 feb 27, from 27.34 to 27.29, Fix escape probability for Ly beta and higher
+monitor "CO  " 866.727m  27.29 line intensity
 ## >>chng 13 jun 27, from -6.177 to 27.32, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from 27.32 to 27.29, C to external databases
 ## >>chng 14 mar 26, from 27.29 to 27.27, Move oxygen data to stout and chianti files
 ## >>chng 23 sep 08, from 27.27 to 27.23, fix SQRTPI in Lya destprob
-monitor "CO  " 650.074m  27.23 line intensity
+## >>chng 24 feb 27, from 27.23 to 27.18, Fix escape probability for Ly beta and higher
+monitor "CO  " 650.074m  27.18 line intensity
 ## >>chng 13 jun 27, from -6.485 to 27.14, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from 27.14 to 27.06, C to external databases
 ## >>chng 14 mar 26, from 27.06 to 27.01, Move oxygen data to stout and chianti files
 ## >>chng 23 sep 08, from 27.01 to 26.97, fix SQRTPI in Lya destprob
-monitor "CO  " 520.089m  26.97 line intensity
+## >>chng 24 feb 27, from 26.97 to 26.91, Fix escape probability for Ly beta and higher
+monitor "CO  " 520.089m  26.91 line intensity
 ## >>chng 13 jun 27, from -6.954 to 26.91, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from 26.91 to 26.76, C to external databases
 ## >>chng 14 mar 26, from 26.76 to 26.68, Move oxygen data to stout and chianti files
 ## >>chng 23 sep 08, from 26.68 to 26.63, fix SQRTPI in Lya destprob
-monitor "CO  " 433.438m  26.63 line intensity
+## >>chng 24 feb 27, from 26.63 to 26.58, Fix escape probability for Ly beta and higher
+monitor "CO  " 433.438m  26.58 line intensity
 ## >>chng 13 jun 27, from -7.48 to 26.63, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from 26.63 to 26.42, C to external databases
 ## >>chng 14 mar 26, from 26.42 to 26.29, Move oxygen data to stout and chianti files
 ## >>chng 23 sep 28, from 26.29 to 26.24, current npSplit development result
-monitor "CO  " 371.549m  26.24 line intensity
+## >>chng 24 feb 27, from 26.24 to 26.19, Fix escape probability for Ly beta and higher
+monitor "CO  " 371.549m  26.19 line intensity
 ## >>chng 13 jun 27, from -8.049 to 26.31, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from 26.31 to 26.03, C to external databases
 ## >>chng 14 mar 26, from 26.03 to 25.86, Move oxygen data to stout and chianti files
 ## >>chng 23 sep 28, from 25.86 to 25.82, current npSplit development result
-monitor "CO  " 325.137m  25.82 line intensity
+## >>chng 24 feb 27, from 25.82 to 25.76, Fix escape probability for Ly beta and higher
+monitor "CO  " 325.137m  25.76 line intensity
 ## >>chng 13 jun 27, from -7.522 to 25.86, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from 25.86 to 25.88, Move oxygen data to stout and chianti files
 ## >>chng 23 sep 28, from 25.88 to 25.84, current npSplit development result
-monitor "^13CO" 906.599m  25.84 line intensity
+## >>chng 24 feb 27, from 25.84 to 25.8, Fix escape probability for Ly beta and higher
+monitor "^13CO" 906.599m  25.8 line intensity
 ## >>chng 13 jun 27, from -8.247 to 23.84, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from 23.84 to 23.68, C to external databases
 ## >>chng 14 mar 26, from 23.68 to 23.59, Move oxygen data to stout and chianti files
 ## >>chng 21 sep 11, from 23.59 to 22.98, LAMDA update
 ## >>chng 21 sep 15, from 22.98 to 23.74, go back to unresolved model
-monitor "CN  " 880.858m  23.74  line intensity
+## >>chng 24 feb 27, from 23.74 to 23.69, Fix escape probability for Ly beta and higher
+monitor "CN  " 880.858m  23.69  line intensity
 ##
 ## >>chng 13 dec 18, from 29.05 to 29.19, fixes to Federman shielding
 ## >>chng 17 nov 20, from 29.19 to 29.17, Bug-fix in DR suppression (r11900)
