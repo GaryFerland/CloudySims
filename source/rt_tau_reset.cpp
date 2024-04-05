@@ -144,7 +144,7 @@ void RT_tau_reset(void)
 					/* reset line optical depth to continuum source */
 					iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauCon() = iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauIn();
 					iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauTot() = 
-						2.f*iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauIn();
+						2.f*iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauIn();
 				}
 			}
 		}
