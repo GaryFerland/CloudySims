@@ -693,5 +693,7 @@ void InitDefaultsPreparse( void )
 
 	gv.clear();
 
+	clear_lines_table();
+
 	return;
 }

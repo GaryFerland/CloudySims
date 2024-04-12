@@ -62,6 +62,8 @@
 # 	column, prepended by 'or'.
 # Chatzikos, 2023-Aug-18
 # 	Fix bug with number of lines per table.
+# Chatzikos, 2023-Oct-10
+# 	Update to Perl 5.34.
 #
 
 use warnings;
@@ -72,6 +74,7 @@ use File::Basename;
 use Getopt::Long;
 use JSON;
 
+use lib ".";
 use BiblioToTeX;
 
 # Immediately flush output
