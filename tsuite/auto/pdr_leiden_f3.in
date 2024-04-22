@@ -218,7 +218,8 @@ monitor OH column density 12.19 error 0.1
 ## >>chng 13 feb 01, from 14.43 to 14.39, BUGFIX, largely undo r6703
 ## >>chng 20 aug 03, from 14.39 to 14.47, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from 14.47 to 14.51, LAMDA update
-monitor SiO column density 14.51 error 0.1
+## >>chng 24 apr 21, from 14.51 to 14.34, GS updates chemistry
+monitor SiO column density 14.34 error 0.1
 ## 
 ## >>chng 05 sep 30, add these 5
 monitor column density H2+  9.22 error 0.1
@@ -334,7 +335,8 @@ monitor itrzn 2.395 error 0.02
 ## >>chng 21 sep 11, from 840 to 763, LAMDA update
 ## >>chng 21 nov 04, from 763 to 787, update mole co data
 ## >>chng 23 mar 17, from 787 to 742, add SiS and Lamda model"
-monitor nzone 742 error 0.01
+## >>chng 24 apr 21, from 742 to 749, GS updates chemistry
+monitor nzone 749 error 0.01
 # 
 # pdr_leiden_f3.in
 # class pdr 

@@ -76,7 +76,8 @@ monitor CO column density 17.18 error 0.1
 ## >>chng 13 dec 23, from 13.6 to 13.53, C to external databases
 ## >>chng 20 aug 03, from 13.53 to 13.74, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from 13.74 to 13.79, further update to McCall CR-related rates from r14260
-monitor O2 column density 13.79 error 0.1
+## >>chng 24 apr 21, from 13.79 to 13.75, GS updates chemistry
+monitor O2 column density 13.75 error 0.1
 ##
 ## >>chng 06 sep 30, from 14.24 to 14.17, rjrw merge chem, corr several bugs
 ## >>chng 07 jan 10, from 14.17 to 14.43, H3+ to McCall rates
@@ -86,7 +87,8 @@ monitor O2 column density 13.79 error 0.1
 ## >>chng 12 jul 01, from 14.47 to 14.54, update Badnell DR to 13-electron iso sequence
 ## >>chng 20 aug 03, from 14.54 to 14.77, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from 14.77 to 14.81, further update to McCall CR-related rates from r14260
-monitor OH column density 14.81 error 0.1
+## >>chng 24 apr 21, from 14.81 to 14.75, GS updates chemistry
+monitor OH column density 14.75 error 0.1
 ##
 ## >>chng 05 jul 17, from 14.91 to 14.83 first run in 6 mo
 ## >>chng 07 jan 10, from 14.83 to 15.06, H3+ to McCall rates
@@ -154,7 +156,8 @@ monitor column density C2   12.62 error 0.1
 ## >>chng 21 sep 11, from 10.21 to 9.852, LAMDA update
 ## >>chng 21 nov 04, from 9.852 to 10.16, update co mole data
 ## >>chng 23 may 15, from 10.16 to 9.673, GS updates 21 reactions to UMIST 2012
-monitor column density C3   9.673 error 0.1
+## >>chng 24 apr 21, from 9.673 to 9.558, GS updates chemistry
+monitor column density C3   9.558 error 0.1
 ## >>chng 11 jul 16, from 10 to 13.51, add column density monitors
 ## >>chng 11 dec 12, from 13.51 to 13.46, bug-fix for updating grain opacity (r5759)
 ## >>chng 12 aug 21, from 13.46 to 13.5, fix CRPHOT botches and HD crash
@@ -163,7 +166,8 @@ monitor column density C3   9.673 error 0.1
 ## >>chng 21 sep 11, from 13.69 to 14.08, LAMDA update
 ## >>chng 21 nov 04, from 14.08 to 14.01, update co mole data
 ## >>chng 23 may 15, from 14.01 to 13.9, GS updates 21 reactions to UMIST 2012
-monitor column density CN   13.9 error 0.1
+## >>chng 24 apr 21, from 13.9 to 13.86, GS updates chemistry
+monitor column density CN   13.86 error 0.1
 ## >>chng 11 jul 16, from 10 to 14.1, add column density monitors
 ## >>chng 16 mar 21, from 14.1 to 14.18, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from 14.18 to 14.04, update H3+ rates Indriola+ 2012

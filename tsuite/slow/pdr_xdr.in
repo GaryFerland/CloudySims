@@ -118,7 +118,8 @@ monitor column density C3   13.07 error 0.1
 ## >>chng 11 jul 22, from 10 to 14.94, first run
 ## >>chng 14 mar 26, from 14.94 to 14.81, move O to external databases
 ## >>chng 23 may 15, from 14.81 to 14.74, GS updates 21 reactions to UMIST 2012
-monitor column density SiO  14.74 error 0.1
+## >>chng 24 apr 21, from 14.74 to 14.52, GS updates chemistry
+monitor column density SiO  14.52 error 0.1
 ## >>chng 11 jul 22, from 10 to 16.96, first run
 ## >>chng 12 jun 08, from 16.96 to 16.91, Updates to grain chemistry
 ## >>chng 14 mar 26, from 16.91 to 16.84, move O to external databases

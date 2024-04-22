@@ -89,7 +89,8 @@ monitor O2 column density 13.9 error 0.1
 ## >>chng 12 jul 01, from 14.48 to 14.55, update Badnell DR to 13-electron iso sequence
 ## >>chng 20 aug 03, from 14.55 to 14.78, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from 14.78 to 14.82, further update to McCall CR-related rate
-monitor OH column density 14.82 error 0.1
+## >>chng 24 apr 21, from 14.82 to 14.76, GS updates chemistry
+monitor OH column density 14.76 error 0.1
 ##
 ## >>chng 05 jul 05, from 14.91 to 14.81, cdsqte err
 ## >>chng 05 aug 03, from 14.81 to 14.90, NA update CO, H chem net

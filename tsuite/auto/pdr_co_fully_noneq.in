@@ -111,7 +111,8 @@ monitor column density CN 7.681
 ## >>chng 21 apr 10, from 8.409 to 8.295, update chemistry and lamba
 ## >>chng 21 sep 11, from 8.295 to 8.172, LAMDA update
 ## >>chng 23 may 15, from 8.172 to 8.099, GS updates 21 reactions to UMIST 2012
-monitor column density CH 8.099
+## >>chng 24 apr 21, from 8.099 to 8.173, GS updates chemistry
+monitor column density CH 8.173
 ##
 ## >>chng 08 dec 13, from 3.87 to 3.826, merging newsolvers branch
 ## >>chng 10 mar 03, from 3.826 to 3.944, enable all LAMDA and increase max num levels
@@ -128,7 +129,8 @@ monitor column density "ArH+" 1.324
 ## >>chng 10 mar 03, from 3.276 to 3.454, enable all LAMDA and increase max num levels
 ## >>chng 11 nov 16, from 3.454 to 3.403, adjust newmole monitors
 ## >>chng 21 sep 11, from 3.403 to 3.289, LAMDA update
-monitor eden 3.289
+## >>chng 24 apr 21, from 3.289 to 3.33, GS updates chemistry
+monitor eden 3.33
 ## 
 ## >>chng 07 feb 06, bugfix in r828, from 9 to 11 (9.03)
 ## >>chng 08 dec 08, from 11 to 3.836, upper limit -> equals (r2515)
@@ -178,14 +180,16 @@ monitor "HNC " 1652.90m  line intensity 21.94
 ## >>chng 21 sep 11, from 20.62 to 20.95, LAMDA update
 ## >>chng 23 may 15, from 20.95 to 20.61, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 jul 15, from 20.61 to 20.53, GS update UMIST to 2012 and set upper limit on T
-monitor "HCS+" 1755.88m  20.53 line intensity
+## >>chng 24 apr 21, from 20.53 to 20.8, GS updates chemistry
+monitor "HCS+" 1755.88m  20.8 line intensity
 ## >>chng 13 jun 27, from -7.453 to 22.9, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 21 apr 10, from 22.9 to 22.82, update chemistry and lamba
 ## >>chng 21 sep 11, from 22.82 to 23, LAMDA update
 ## >>chng 23 may 15, from 23 to 22.47, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 jul 15, from 22.47 to 22.4, GS update UMIST to 2012 and set upper limit on T
-monitor "CS  " 3058.86m  22.4 line intensity
+## >>chng 24 apr 21, from 22.4 to 22.88, GS updates chemistry
+monitor "CS  " 3058.86m  22.88 line intensity
 ## >>chng 13 jun 27, from -7.288 to 22.02, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 22.02 to 21.99, EleyRideal H2 formation
@@ -207,7 +211,8 @@ monitor "CO  " 1300.05m  23.24 line intensity
 ## >>chng 21 apr 16, from 23.63 to 23.68, remove bad UMIST reaction
 ## >>chng 23 may 15, from 23.68 to 23.77, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 jul 15, from 23.77 to 23.81, GS update UMIST to 2012 and set upper limit on T
-monitor "CO  " 866.727m  23.81 line intensity
+## >>chng 24 apr 21, from 23.81 to 23.75, GS updates chemistry
+monitor "CO  " 866.727m  23.75 line intensity
 ## >>chng 13 jun 27, from -6.177 to 24, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 24 to 23.96, EleyRideal H2 formation
@@ -216,7 +221,8 @@ monitor "CO  " 866.727m  23.81 line intensity
 ## >>chng 21 nov 04, from 23.82 to 23.86, update mole co data
 ## >>chng 23 may 15, from 23.86 to 23.93, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 jul 15, from 23.93 to 23.97, GS update UMIST to 2012 and set upper limit on T
-monitor "CO  " 650.074m  23.97 line intensity
+## >>chng 24 apr 21, from 23.97 to 23.9, GS updates chemistry
+monitor "CO  " 650.074m  23.9 line intensity
 ## >>chng 13 jun 27, from -6.485 to 23.91, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 23.91 to 23.87, EleyRideal H2 formation
@@ -225,7 +231,8 @@ monitor "CO  " 650.074m  23.97 line intensity
 ## >>chng 21 sep 11, from 23.7 to 23.74, LAMDA update
 ## >>chng 23 may 15, from 23.74 to 23.83, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 jul 15, from 23.83 to 23.88, GS update UMIST to 2012 and set upper limit on T
-monitor "CO  " 520.089m  23.88 line intensity
+## >>chng 24 apr 21, from 23.88 to 23.79, GS updates chemistry
+monitor "CO  " 520.089m  23.79 line intensity
 ## >>chng 13 jun 27, from -6.954 to 23.62, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 23.62 to 23.57, EleyRideal H2 formation
@@ -234,7 +241,8 @@ monitor "CO  " 520.089m  23.88 line intensity
 ## >>chng 21 sep 11, from 23.38 to 23.42, LAMDA update
 ## >>chng 23 may 15, from 23.42 to 23.52, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 jul 15, from 23.52 to 23.59, GS update UMIST to 2012 and set upper limit on T
-monitor "CO  " 433.438m  23.59 line intensity
+## >>chng 24 apr 21, from 23.59 to 23.48, GS updates chemistry
+monitor "CO  " 433.438m  23.48 line intensity
 ## >>chng 13 jun 27, from -7.48 to 23.16, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 23.16 to 23.1, EleyRideal H2 formation
@@ -243,7 +251,8 @@ monitor "CO  " 433.438m  23.59 line intensity
 ## >>chng 21 sep 11, from 22.88 to 22.92, LAMDA update
 ## >>chng 23 may 15, from 22.92 to 23.04, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 jul 15, from 23.04 to 23.12, GS update UMIST to 2012 and set upper limit on T
-monitor "CO  " 371.549m  23.12 line intensity
+## >>chng 24 apr 21, from 23.12 to 22.99, GS updates chemistry
+monitor "CO  " 371.549m  22.99 line intensity
 ## >>chng 13 jun 27, from -8.049 to 22.54, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 22.54 to 22.46, EleyRideal H2 formation
@@ -252,7 +261,8 @@ monitor "CO  " 371.549m  23.12 line intensity
 ## >>chng 21 sep 11, from 22.21 to 22.26, LAMDA update
 ## >>chng 23 may 15, from 22.26 to 22.4, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 jul 15, from 22.4 to 22.5, GS update UMIST to 2012 and set upper limit on T
-monitor "CO  " 325.137m  22.5 line intensity
+## >>chng 24 apr 21, from 22.5 to 22.33, GS updates chemistry
+monitor "CO  " 325.137m  22.33 line intensity
 ## >>chng 13 jun 27, from -7.522 to 22.29, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from 22.29 to 22.26, EleyRideal H2 formation

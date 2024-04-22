@@ -65,7 +65,8 @@ monitor OH column density 13.17 error 0.1
 ##
 ## >>chng 05 sep 08, from 15.52 to 15.56, first run in 2 mo
 ## >>chng 08 feb 20, bugfix r1803, from 15.56 to 15.45
-monitor SiO column density 15.45 error 0.1
+## >>chng 24 apr 21, from 15.45 to 15.38, GS updates chemistry
+monitor SiO column density 15.38 error 0.1
 ## 
 ## >>chng 11 jul 16, add these
 ## >>chng 11 jul 16, from 10 to 12.02, add column density monitors
@@ -110,7 +111,8 @@ monitor column density HeH+ 7.779 error 0.1
 ## >>chng 11 jul 16, from 10 to 15.19, add column density monitors
 ## >>chng 20 jul 21, from 15.19 to 15.27, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from 15.27 to 15.38, update H3+ rates Indriola+ 2012
-monitor column density H2O  15.38 error 0.1
+## >>chng 24 apr 21, from 15.38 to 15.55, GS updates chemistry
+monitor column density H2O  15.55 error 0.1
 ## >>chng 11 jul 16, from 10 to 13.26, add column density monitors
 ## >>chng 11 nov 16, from 13.26 to 13.32, adjust newmole monitors
 ## >>chng 20 jul 21, from 13.32 to 13.25, update DR H2 diss as per  2020RNAAS...4...78S
@@ -126,7 +128,8 @@ monitor column density C2   12.42 error 0.1
 ## >>chng 21 sep 11, from 9.463 to 10.18, LAMDA update
 ## >>chng 21 nov 04, from 10.18 to 9.431, update co mole data
 ## >>chng 23 may 15, from 9.431 to 9.608, GS updates 21 reactions to UMIST 2012
-monitor column density C3   9.608 error 0.1
+## >>chng 24 apr 21, from 9.608 to 9.539, GS updates chemistry
+monitor column density C3   9.539 error 0.1
 ## >>chng 11 jul 16, from 10 to 12.44, add column density monitors
 ## >>chng 11 nov 16, from 12.44 to 13.63, adjust newmole monitors
 ## >>chng 12 jan 06, from 13.63 to 12.45, several H2 model changes
@@ -394,7 +397,8 @@ monitor line luminosity "H2  " 2.12125m  -4.533 error 0.1
 ## >>chng 14 aug 14, from -6.763 to -6.793, botches due to H2-H+ collision changes at low-T in r9436
 ## >>chng 15 aug 03, from -6.793 to -6.837, update LAMDA to 2015
 ## >>chng 20 aug 03, from -6.837 to -6.743, update H3+ rates Indriola+ 2012
-monitor "H2O " 538.142m line intensity -6.743
+## >>chng 24 apr 21, from -6.743 to -6.617, GS updates chemistry
+monitor "H2O " 538.142m line intensity -6.617
 ## >>chng 13 jun 27, from -7.357 to -7.761, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 20 jul 21, from -7.761 to -7.742, update DR H2 diss as per  2020RNAAS...4...78S

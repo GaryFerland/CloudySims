@@ -59,7 +59,8 @@ monitor OH column density 13.17 error 0.1
 ## 
 ## >>chng 05 aug 03, from 15.52 to 15.57, NA update CO, H chem net
 ## >>chng 08 feb 20, from 15.57 to 15.45, grain charge transfer changes in ion_solver and iso*
-monitor SiO column density 15.45 error 0.1
+## >>chng 24 apr 21, from 15.45 to 15.38, GS updates chemistry
+monitor SiO column density 15.38 error 0.1
 ##
 ## >>chng 04 oct 14, from 885 to 975, PvH clean up grain elec phys, incr err
 ## >>chng 04 dec 08, from 975 to 6575, co-ion feedback, check converg
@@ -177,7 +178,8 @@ monitor nzone 818
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
 ## >>chng 15 aug 03, from -6.199 to -6.252, update LAMDA to 2015
 ## >>chng 20 aug 03, from -6.252 to -6.205, update H3+ rates Indriola+ 2012
-monitor "H2O " 538.142m line intensity -6.205
+## >>chng 24 apr 21, from -6.205 to -6.126, GS updates chemistry
+monitor "H2O " 538.142m line intensity -6.126
 ## >>chng 13 jun 27, from -7.357 to -7.758, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 15 mar 07, from -7.758 to -7.778, merging newmesh branch

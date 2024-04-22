@@ -316,7 +316,17 @@ monitor "SiO " 238.551m  -2.680  line intensity
 ## >>chng 13 jul 24, wl from 209.8m to 209.779m, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 29, from -2.789 to -2.746, double optical depth, iterate to convergence
 ## >>chng 20 aug 03, from -2.746 to -2.705, update H3+ rates Indriola+ 2012
-monitor "SiO " 209.779m  -2.705  line intensity
+## >>chng 24 apr 21, from -2.705 to -2.757, GS updates chemistry
+monitor "SiO " 209.779m  -2.757  line intensity
+##
+## >>chng 24 apr 21 GS add TiO
+monitor column density "TiO"	14.052
+##
+## >>chng 24 apr 21 GS add TiO
+monitor column density "TiO2"	15.235
+##
+## >>chng 24 apr 21 GS add TiO
+monitor column density "TiOH+"	10.461
 #
 # pdr_coolbb.in
 # class pdr 
