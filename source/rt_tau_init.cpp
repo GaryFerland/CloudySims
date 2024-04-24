@@ -293,7 +293,7 @@ void RT_tau_init(void)
 		if(nelem < 2)
 		{
 			ExtraLymanLineJ05Ratio = 1.;
-                        ExtraLymanLineJ15Ratio = 1.;
+			ExtraLymanLineJ15Ratio = 1.;
 		}
 		else
 		{
@@ -451,7 +451,7 @@ void RT_tau_init(void)
 				ExtraLymanLinesJ05[nelem][2].Emis().opacity();
 
 			fJ15 = ExtraLymanLinesJ15[nelem][2].Emis().TauTot()/
-				ExtraLymanLinesJ05[nelem][2].Emis().opacity();
+				ExtraLymanLinesJ15[nelem][2].Emis().opacity();
 
 			ipISO = ipH_LIKE;
 			ASSERT( ipISO<NISO && nelem < LIMELM );
@@ -487,6 +487,7 @@ void RT_tau_init(void)
 				iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauIn() = MAX2( 
 					opac.taumin, iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().TauIn() );
 			}
+
 			for( nHi=3; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 			{
 				ExtraLymanLinesJ05[nelem][nHi].Emis().TauTot() = MAX2( opac.taumin,

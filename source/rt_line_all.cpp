@@ -47,6 +47,30 @@ void RT_line_all_escape( realnum *error )
 	
 	RT_line_all(RT_line_one_escape);
 
+	/* Use j-resolved escape and destruction probabilities to compute the related quantities for the unresolved lines. */
+	for( long nelem=ipHYDROGEN; nelem < LIMELM; ++nelem )
+	{
+		long ion = nelem+1-ipHYDROGEN;
+
+		/* element turned off */
+		if( !dense.lgElmtOn[nelem] )
+			continue;
+		/* need we consider this ion? */
+		if( ion <= dense.IonHigh[nelem] )
+		{
+			for( long nHi=2; nHi <= iso_sp[ipH_LIKE][nelem].n_HighestResolved_local + iso_sp[ipH_LIKE][nelem].nCollapsed_local; nHi++ )
+			{
+				long ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nHi, 1, 2);
+
+				iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().Pesc() = ExtraLymanLinesJ05[nelem][nHi].Emis().Pesc()*1./3. +
+																			ExtraLymanLinesJ15[nelem][nHi].Emis().Pesc()*2./3.;
+
+				iso_sp[ipH_LIKE][nelem].trans(ipHi,ipH1s).Emis().Pdest() = ExtraLymanLinesJ05[nelem][nHi].Emis().Pdest()*1./3. +
+																			ExtraLymanLinesJ15[nelem][nHi].Emis().Pdest()*2./3.;
+			}
+		}
+	}
+
 	if( opac.lgCaseB_no_pdest )
 	{
 		for( long ipISO=ipH_LIKE; ipISO < NISO; ++ipISO )

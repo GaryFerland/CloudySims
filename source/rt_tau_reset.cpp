@@ -140,24 +140,25 @@ void RT_tau_reset(void)
 		{
 			if( dense.lgElmtOn[nelem] )
 			{
-				realnum f;
-				/* La may be case B, tlamin set to 1e9 by default with case b command */
+				/* La may be case B, tlamin set to 1e5 by default with case b command */
 				iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauIn() = opac.tlamin;
 				/* >>>chng 99 nov 22, did not reset TauCon */
 				iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauCon() = iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauIn();
 				iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauTot() = 
 				  2.f*iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().TauIn();
-				f = opac.tlamin/iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().opacity();
+				realnum f = opac.tlamin/iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().opacity();
 
 				ExtraLymanLinesJ05[nelem][2].Emis().TauIn() = opac.tlamin;
 				ExtraLymanLinesJ05[nelem][2].Emis().TauCon() = ExtraLymanLinesJ05[nelem][2].Emis().TauIn();
 				ExtraLymanLinesJ05[nelem][2].Emis().TauTot() =
 				  2.f*ExtraLymanLinesJ05[nelem][2].Emis().TauIn();
+				realnum fJ05 = opac.tlamin/ExtraLymanLinesJ05[nelem][2].Emis().opacity();
 
 				ExtraLymanLinesJ15[nelem][2].Emis().TauIn() = opac.tlamin;
 				ExtraLymanLinesJ15[nelem][2].Emis().TauCon() = ExtraLymanLinesJ15[nelem][2].Emis().TauIn();
 				ExtraLymanLinesJ15[nelem][2].Emis().TauTot() =
 				  2.f*ExtraLymanLinesJ15[nelem][2].Emis().TauIn();
+				realnum fJ15 = opac.tlamin/ ExtraLymanLinesJ15[nelem][2].Emis().opacity();
 
 				for( ipHi=3; ipHi < iso_sp[ipH_LIKE][nelem].numLevels_max; ipHi++ )
 				{
@@ -177,7 +178,7 @@ void RT_tau_reset(void)
 					if( ExtraLymanLinesJ05[nelem][nHi].ipCont() > 0 )
 					{
 						ExtraLymanLinesJ05[nelem][nHi].Emis().TauIn() =
-							f*ExtraLymanLinesJ05[nelem][nHi].Emis().opacity();
+							fJ05*ExtraLymanLinesJ05[nelem][nHi].Emis().opacity();
 						/* reset line optical depth to continuum source */
 						ExtraLymanLinesJ05[nelem][nHi].Emis().TauCon() = ExtraLymanLinesJ05[nelem][nHi].Emis().TauIn();
 						ExtraLymanLinesJ05[nelem][nHi].Emis().TauTot() =
@@ -187,7 +188,7 @@ void RT_tau_reset(void)
 					if( ExtraLymanLinesJ15[nelem][nHi].ipCont() > 0 )
 					{
 						ExtraLymanLinesJ15[nelem][nHi].Emis().TauIn() =
-							f*ExtraLymanLinesJ15[nelem][nHi].Emis().opacity();
+							fJ15*ExtraLymanLinesJ15[nelem][nHi].Emis().opacity();
 						/* reset line optical depth to continuum source */
 						ExtraLymanLinesJ15[nelem][nHi].Emis().TauCon() = ExtraLymanLinesJ15[nelem][nHi].Emis().TauIn();
 						ExtraLymanLinesJ15[nelem][nHi].Emis().TauTot() =

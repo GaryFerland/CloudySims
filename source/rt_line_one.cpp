@@ -114,18 +114,7 @@ STATIC void RT_line_escape(
 
 	auto TauIn = t.Emis().TauIn();
 	auto TauTot = t.Emis().TauTot();
-	if( lgIsLymanLine(t) && t.Hi()->g() < 6 )
-	{
-		long nelem = t.Lo()->nelem() - 1;
-                long nHi = t.Hi()->n();
-		double Ediff = ExtraLymanLinesJ15[nelem][nHi].EnergyWN() - ExtraLymanLinesJ05[nelem][nHi].EnergyWN();
-		double Vdiff = Ediff/t.EnergyWN()*SPEEDLIGHT;
-		if( Vdiff < DopplerWidth )
-		{
-			TauIn = ExtraLymanLinesJ15[nelem][nHi].Emis().TauIn() + ExtraLymanLinesJ05[nelem][nHi].Emis().TauIn();
-			TauTot = ExtraLymanLinesJ15[nelem][nHi].Emis().TauTot() + ExtraLymanLinesJ05[nelem][nHi].Emis().TauTot();
-		}
-	}
+
 	if( cosmology.lgDo )
 	{
 		/* Sobolev escape */

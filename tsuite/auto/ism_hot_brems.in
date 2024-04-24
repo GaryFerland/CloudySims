@@ -360,7 +360,8 @@ monitor iron 12 ionization fraction is  -1.219 error 0.2
 ## >>chng 10 aug 12, from -1.909 to -1.953, fix botches related to r4125; star botches from recent continuum mesh changes
 ## >>chng 11 aug 05, from -1.953 to -2.023, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 11 sep 15, from -2.023 to -1.941, Chianti for Fe moderate to high ions
-monitor iron 13 ionization fraction is  -1.941 error 0.1
+## >>chng 24 apr 22, from -1.941 to -1.995, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor iron 13 ionization fraction is  -1.995 error 0.1
 ##
 ## >>chng 01 feb 21 from -2.224 to -2.128 improved He-seq coll treatment
 ## >>chng 01 jun 15, from -2.128 to -2.028 full CT reaction network
@@ -422,7 +423,8 @@ monitor iron 14 ionization fraction is  -2.964 error 0.20
 ## >>chng 13 nov 13, from 41 to 52, resolve face at all freqs
 ## >>chng 13 nov 25, from 52 to 55, convergence branch changes
 ## >>chng 14 apr 07, from 55 to 51, move H/C out of ConvBase loop
-monitor nzone 51
+## >>chng 24 apr 22, from 51 to 48, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor nzone 48
 ##
 ## >>chng 03 nov 23, from 6 to 8 Kraemer et al. guess of dr
 ## >>chng 04 feb 15, from 8 to 7, conv ionz loop auger
