@@ -163,7 +163,7 @@ monitor "H2O " 538.142m line intensity 24.41
 ## >>chng 23 sep 28, from 26.08 to 26.04, current npSplit development result
 ## >>chng 24 feb 27, from 26.04 to 26, Fix escape probability for Ly beta and higher
 ## >>chng 24 apr 22, from 26 to 26.04, Redefine unresolved escape prob. to averaged np-split probabilites
-monitor "CO  " 26.0405m  26 line intensity
+monitor "CO  " 2600.05m  26.04 line intensity
 ## >>chng 13 jun 27, from -6.463 to 27.08, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from 27.08 to 27.13, C to external databases
