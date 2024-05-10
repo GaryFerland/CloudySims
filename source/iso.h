@@ -752,7 +752,8 @@ inline bool lgIsLymanLine(const TransitionProxy &t)
 inline bool lgIsLymanLineResolved(const TransitionProxy &t, const TransitionProxy &tJ05, const TransitionProxy &tJ15)
 {
 	double Ediff = tJ15.Hi()->energy().get("eV") - tJ05.Hi()->energy().get("eV");
-        return (lgIsLymanLine(t) && Ediff > iso_ctrl.Resolution);
+	long nelem = t.Lo()->nelem() - 1;
+	return (lgIsLymanLine(t) && Ediff > iso_ctrl.Resolution && nelem > ipHELIUM);
 }
 
 inline bool lgIsLymanLineUnresolved(const TransitionProxy &t)
