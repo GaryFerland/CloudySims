@@ -26,6 +26,7 @@ save monitors "blr_n09_p22.asr" last
 save overview "blr_n09_p22.ovr" last
 save dr "blr_n09_p22.dr" last 
 save convergence reason "blr_n09_p22.cvr"
+save linelist "blr_n09_p22.lin" "LineList_xray.dat" last no hash emergent absolut
 #
 # commands giving the monitors    =========
 ## strong blr lines
