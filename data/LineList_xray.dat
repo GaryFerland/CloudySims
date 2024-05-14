@@ -6,10 +6,11 @@ FeK1     1.78177A # type: i, H-like one-electron Ka
 FeK2     1.85000A # type: i, He-like two-electron 
 FeKH     1.80000A # type: i, fluorescent hot iron, Fe 18 - 23 times ionized
 FeKC     1.75000A # type: i, fluorescent cold iron, less than or 17 times ionized
+FeKG     1.75000A # type: i, grain production of cold iron
 Blnd     1.85951A  # Fe25 He-like
 O  8	 14.2280A # RRC
 O  7     16.7699A # RRC
-Blnd     21.8044A # O7
+Blnd     21.8070A # O7
 O  8     18.9689A # H-like
 Blnd     13.5529A # Ne9
 Ne10     12.1339A # H-like
@@ -20,7 +21,7 @@ Blnd     9.23121A # Mg11
 Mg12     8.42100A #H-like
 Si14     6.18222A #H-like
 O  7     22.1012A #He-like
-Blnd     21.8070A #O7
+Blnd     21.8070A # O7
 Ne 9     13.6987A #He-like
 Blnd     13.5529A # Ne9
 Mg11     9.31434A # He-like
@@ -28,4 +29,7 @@ Mg11     9.16875A #He-like
 Si13     6.74039A #He-like
 Blnd     6.68827A #Si13
 Fe24     18.3200A # type: t 
-Ca13     18.3100A #type:t
+
+
+
+
