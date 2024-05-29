@@ -36,8 +36,10 @@ save monitors ".asr" last
 #
 # commands giving the asserts    =========
 #
-monitor line luminosity cumulative intrinsic "Fe26"    1.78344A   12.00
-monitor line luminosity cumulative intrinsic "Fe26"    1.77802A   12.31
+## >>chng 24 may 29, from 12 to 11.95, include continuum lowering for H-like nP doublets
+monitor line luminosity cumulative intrinsic "Fe26"    1.78344A   11.95
+## >>chng 24 may 29, from 12.31 to 12.25, include continuum lowering for H-like nP doublets
+monitor line luminosity cumulative intrinsic "Fe26"    1.77802A   12.25
 ## >>chng 16 jul 24, from 13.65 to 13.91, update C III to 2014A&A...566A.104F
 ## >>chng 16 jul 24, from 13.91 to 13.65, update C III to 2014A&A...566A.104F
 ## >>chng 20 oct 05, from 13.65 to 13.68, limit more elements for load leveling

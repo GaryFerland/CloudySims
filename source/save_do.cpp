@@ -3840,7 +3840,7 @@ STATIC void SaveLineStuff(
 				{
 					if (ipISO == ipH_LIKE)
 					{
-						for( long nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
+						for( long nHi=2; nHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; nHi++ )
 						{
 							if(lgIsLymanLineResolved(ExtraLymanLinesJ05[nelem][nHi], 
 										ExtraLymanLinesJ05[nelem][nHi], ExtraLymanLinesJ15[nelem][nHi]))
