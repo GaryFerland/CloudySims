@@ -57,6 +57,10 @@ void PrtZone(void)
 	rmidle = radius.Radius - radius.drad*0.5*radius.dRadSign;
 	dmidle = radius.depth - radius.drad*0.5; */
 
+	//DumpLine( ExtraLymanLinesJ05[ipHYDROGEN][4] );
+	//DumpLine( ExtraLymanLinesJ15[ipHYDROGEN][4] );
+	//DumpLine(iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH4p,0) );
+
 	/* option to print single line when quiet but tracing convergence
 	 * with "trace convergence" command */
 	if( called.lgTalk || trace.nTrConvg )

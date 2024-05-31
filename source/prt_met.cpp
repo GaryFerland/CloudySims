@@ -71,6 +71,7 @@ void prtmet(void)
 					/* print one-electron doublets nP Lyman sequence optical depths */
 					for( long nHi=iso_sp[ipISO][nelem].numLevels_local; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 					{
+						fixit("Should the test for lgIsLymanLineResolved be here?");
 						if( lgIsLymanLineResolved(ExtraLymanLinesJ05[nelem][nHi],
 										ExtraLymanLinesJ05[nelem][nHi], ExtraLymanLinesJ15[nelem][nHi]) )
 						{
