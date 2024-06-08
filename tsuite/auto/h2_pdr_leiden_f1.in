@@ -742,7 +742,8 @@ monitor column density "SiN"       13.54
 ## >>chng 21 nov 04, from 11.16 to 11.25, update mole co data
 ## >>chng 23 may 15, from 11.25 to 11.13, GS updates 21 reactions to UMIST 2012
 ## >>chng 24 apr 21, from 11.13 to 11.25, GS updates chemistry
-monitor column density "SiOH+"     11.25
+## >>chng 24 jun 08, from 11.25 to 11.16, GS rm 3 TiO reactions
+monitor column density "SiOH+"     11.16
 ## >>chng 21 sep 11, from 10.1 to 10.05, LAMDA update
 ## >>chng 23 may 15, from 10.05 to 9.981, GS updates 21 reactions to UMIST 2012
 monitor column density "SO+"       9.981  

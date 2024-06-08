@@ -89,7 +89,8 @@ monitor "OH" column density 13.84 error 0.1
 ## >>chng 21 nov 04, from 14.86 to 14.92, update mole co data
 ## >>chng 23 may 15, from 14.92 to 14.76, GS updates 21 reactions to UMIST 2012
 ## >>chng 24 apr 21, from 14.76 to 14.5, GS updates chemistry
-monitor "SiO" column density 14.5 error 0.1
+## >>chng 24 jun 08, from 14.5 to 14.69, GS rm 3 TiO reactions
+monitor "SiO" column density 14.69 error 0.1
 ## 
 ## >>chng 05 mar 22, from 17.96 to 18.03, NA update CO chem net
 ## >>chng 05 mar 27, from 18.03 to 17.98, fix typo in above

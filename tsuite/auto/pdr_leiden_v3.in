@@ -61,7 +61,8 @@ monitor CO column density 18.15 error 0.1
 ## >>chng 11 nov 16, from 15.23 to 16.03, adjust newmole monitors
 ## >>chng 15 aug 03, from 16.03 to 15.95, update LAMDA to 2015
 ## >>chng 24 apr 21, from 15.95 to 15.7, GS updates chemistry
-monitor O2 column density 15.7 error 0.1
+## >>chng 24 jun 08, from 15.7 to 15.93, GS rm 3 TiO reactions
+monitor O2 column density 15.93 error 0.1
 ##
 ## >>chng 05 jul 02, from 14.24 to 14.21, AV stop was not exact
 ## >>chng 05 aug 24, from 14.21 to 14.13, NA update CO cr ion rate
@@ -73,7 +74,8 @@ monitor O2 column density 15.7 error 0.1
 ## >>chng 10 aug 25, from 13.6 to 14.35, bugfix r4165 & r4167
 ## >>chng 20 aug 03, from 14.35 to 14.4, update H3+ rates Indriola+ 2012
 ## >>chng 24 apr 21, from 14.4 to 14.16, GS updates chemistry
-monitor OH column density 14.16 error 0.1
+## >>chng 24 jun 08, from 14.16 to 14.42, GS rm 3 TiO reactions
+monitor OH column density 14.42 error 0.1
 ##
 ## >>chng 05 aug 24, from 17.14 to 17.04, NA update CO cr ion rate
 ## >>chng 05 dec 08, from 17.04 to 17.00, update to Elwert Solomon rate
@@ -96,7 +98,8 @@ monitor SiO column density 17.01 error 0.1
 ## >>chng 10 aug 25, from 16.29 to 16.43, bugfix r4165 & r4167
 ## >>chng 11 nov 16, from 16.43 to 16.57, adjust newmole monitors
 ## >>chng 24 apr 21, from 16.57 to 16.84, GS updates chemistry
-monitor H2O column density 16.84 error 0.1
+## >>chng 24 jun 08, from 16.84 to 16.59, GS rm 3 TiO reactions
+monitor H2O column density 16.59 error 0.1
 ## 
 ## >>chng 05 jun 26, from 13.41 to 18.32, make Federman chem the default
 ## >>chng 05 sep 27, from 18.326 to 17.25, TE, GS update H chem
@@ -128,7 +131,8 @@ monitor column density H2+  9.22 error 0.1
 ## >>chng 08 feb 20, from 12.29 to 12.34, grain charge transfer changes in ion_solver and iso*
 ## >>chng 20 aug 03, from 12.34 to 12.05, update H3+ rates Indriola+ 2012
 ## >>chng 24 apr 21, from 12.05 to 12.01, GS updates chemistry
-monitor column density H3+  12.01 error 0.1
+## >>chng 24 jun 08, from 12.01 to 12.06, GS rm 3 TiO reactions
+monitor column density H3+  12.06 error 0.1
 ## 
 monitor column density H2g  21.90 error 0.1
 ## 
@@ -238,7 +242,8 @@ monitor nzone 628
 ## >>chng 15 aug 03, from -6.767 to -6.829, update LAMDA to 2015
 ## >>chng 20 aug 03, from -6.829 to -6.794, update H3+ rates Indriola+ 2012
 ## >>chng 24 apr 21, from -6.794 to -6.704, GS updates chemistry
-monitor "H2O " 538.142m line intensity -6.704
+## >>chng 24 jun 08, from -6.704 to -6.789, GS rm 3 TiO reactions
+monitor "H2O " 538.142m line intensity -6.789
 ## >>chng 13 jun 27, from -7.357 to -7.823, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -7.823 to -8.127, LAMDA update
@@ -251,7 +256,8 @@ monitor "HNC " 1652.90m  line intensity -8.127
 ## >>chng 21 sep 11, from -9.435 to -9.369, LAMDA update
 ## >>chng 23 may 15, from -9.369 to -9.632, GS updates 21 reactions to UMIST 2012
 ## >>chng 24 apr 21, from -9.632 to -9.594, GS updates chemistry
-monitor "HCS+" 1755.88m  -9.594 line intensity
+## >>chng 24 jun 08, from -9.594 to -9.409, GS rm 3 TiO reactions
+monitor "HCS+" 1755.88m  -9.409 line intensity
 ## >>chng 13 jun 27, from -7.453 to -7.546, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -7.546 to -7.47, LAMDA update

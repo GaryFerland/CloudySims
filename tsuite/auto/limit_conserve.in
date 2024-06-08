@@ -516,7 +516,8 @@ monitor nzone 863
 ## >>chng 11 jul 12, from 35.93 to 36.40, enable fit to Badnell DR suppression
 ## >>chng 13 nov 05, from 36.4 to 18.12, convergence branch changes
 ## >>chng 14 apr 07, from 18.12 to 14.32, move H/C out of ConvBase loop
-monitor itrzn 14.32
+## >>chng 24 jun 08, from 14.32 to 11.66, GS rm 3 TiO reactions
+monitor itrzn 11.66
 ##
 # limit_conserve.in
 # class hii pdr  

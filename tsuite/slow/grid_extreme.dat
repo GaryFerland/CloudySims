@@ -27,9 +27,11 @@
 1.4589
 1.4571
 ## >> 23 may 15, from 1.4385 to 1.4823, GS updates 21 reactions to UMIST 2012
-1.4823
+## >> 24 jun 08, from 1.4823 to 1.4464, GS rm reactions to get this sim to converge on clang++
+1.4464
 ## >> 23 may 15, from 1.4419 to 1.4829 GS updates 21 reactions to UMIST 2012
-1.4829
+## >> 24 jun 08, from 1.4829 to 1.4484, GS rm reactions to get this sim to converge on clang++
+1.4484
 5.9812
 5.9812
 5.9812

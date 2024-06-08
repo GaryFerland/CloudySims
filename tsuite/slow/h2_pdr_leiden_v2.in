@@ -100,7 +100,8 @@ monitor OH column density 14.75 error 0.1
 ## >>chng 12 aug 21, from 14.99 to 15.05, fix CRPHOT botches and HD crash
 ## >>chng 20 aug 03, from 15.05 to 15.27, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from 15.27 to 15.31, further update to McCall CR-related rates from r14260
-monitor SiO column density 15.31 error 0.1
+## >>chng 24 jun 08, from 15.31 to 15.14, GS rm 3 TiO reactions
+monitor SiO column density 15.14 error 0.1
 ## 
 ## >>chng 11 jul 16, add these
 ## >>chng 11 jul 16, from 10 to 13.64, add column density monitors
@@ -157,7 +158,8 @@ monitor column density C2   12.62 error 0.1
 ## >>chng 21 nov 04, from 9.852 to 10.16, update co mole data
 ## >>chng 23 may 15, from 10.16 to 9.673, GS updates 21 reactions to UMIST 2012
 ## >>chng 24 apr 21, from 9.673 to 9.558, GS updates chemistry
-monitor column density C3   9.558 error 0.1
+## >>chng 24 jun 08, from 9.558 to 9.677, GS rm 3 TiO reactions
+monitor column density C3   9.677 error 0.1
 ## >>chng 11 jul 16, from 10 to 13.51, add column density monitors
 ## >>chng 11 dec 12, from 13.51 to 13.46, bug-fix for updating grain opacity (r5759)
 ## >>chng 12 aug 21, from 13.46 to 13.5, fix CRPHOT botches and HD crash
@@ -167,7 +169,8 @@ monitor column density C3   9.558 error 0.1
 ## >>chng 21 nov 04, from 14.08 to 14.01, update co mole data
 ## >>chng 23 may 15, from 14.01 to 13.9, GS updates 21 reactions to UMIST 2012
 ## >>chng 24 apr 21, from 13.9 to 13.86, GS updates chemistry
-monitor column density CN   13.86 error 0.1
+## >>chng 24 jun 08, from 13.86 to 13.9, GS rm 3 TiO reactions
+monitor column density CN   13.9 error 0.1
 ## >>chng 11 jul 16, from 10 to 14.1, add column density monitors
 ## >>chng 16 mar 21, from 14.1 to 14.18, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from 14.18 to 14.04, update H3+ rates Indriola+ 2012

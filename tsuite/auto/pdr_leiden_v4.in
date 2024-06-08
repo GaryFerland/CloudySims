@@ -179,7 +179,8 @@ monitor nzone 818
 ## >>chng 15 aug 03, from -6.199 to -6.252, update LAMDA to 2015
 ## >>chng 20 aug 03, from -6.252 to -6.205, update H3+ rates Indriola+ 2012
 ## >>chng 24 apr 21, from -6.205 to -6.126, GS updates chemistry
-monitor "H2O " 538.142m line intensity -6.126
+## >>chng 24 jun 08, from -6.126 to -6.21, GS rm 3 TiO reactions
+monitor "H2O " 538.142m line intensity -6.21
 ## >>chng 13 jun 27, from -7.357 to -7.758, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 15 mar 07, from -7.758 to -7.778, merging newmesh branch

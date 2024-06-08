@@ -181,7 +181,8 @@ monitor column density C3   14.01 error 0.1
 ## >>chng 20 jul 21, from 15.31 to 15.9, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 21 apr 10, from 15.9 to 15.85, update chemistry and LAMDA
 ## >>chng 24 apr 21, from 15.85 to 15.77, GS updates chemistry
-monitor column density SiO  15.77 error 0.1
+## >>chng 24 jun 08, from 15.77 to 15.85, GS rm 3 TiO reactions
+monitor column density SiO  15.85 error 0.1
 ## >>chng 11 jul 16, from 10 to 17.23, add column density monitors
 ## >>chng 11 nov 16, from 17.23 to 16.75, adjust newmole monitors
 ## >>chng 12 jan 06, from 16.75 to 17.29, several H2 model changes

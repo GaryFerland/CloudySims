@@ -103,7 +103,8 @@ monitor OH column density 14.76 error 0.1
 ## >>chng 12 aug 21, from 15.04 to 15.11, fix CRPHOT botches and HD crash
 ## >>chng 20 aug 03, from 15.11 to 15.28, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from 15.28 to 15.32, further update to McCall CR-related rate
-monitor SiO column density 15.32 error 0.1
+## >>chng 24 jun 08, from 15.32 to 15.15, GS rm 3 TiO reactions
+monitor SiO column density 15.15 error 0.1
 ## 
 ## >>chng 05 jun 26, from 97.3 to 107.6 make Federman chem the default
 ## >>chng 09 oct 05, from 107.6 to 360, [NI] pumping changes

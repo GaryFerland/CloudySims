@@ -371,7 +371,8 @@ monitor O2 column density 16.7 error 0.2
 ## >>chng 11 dec 21, from 9.796 to 15.87, H column density 1e22 -> 1e23
 ## >>chng 12 apr 09, from 15.87 to 16.32, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 24 apr 21, from 16.32 to 16.08, GS updates chemistry
-monitor SiO column density 16.08 error 0.25
+## >>chng 24 jun 08, from 16.08 to 16.34, GS rm 3 TiO reactions
+monitor SiO column density 16.34 error 0.25
 ## 
 ## >>chng 04 may 19, from 15.60 to 15.43, NA add several moles, reactions
 ## >>chng 04 may 29, from 15.43 to 15.28, NA update H chem
@@ -877,7 +878,8 @@ monitor column density "N2"        18.31
 ## >>chng 21 sep 11, from 13.03 to 13.11, LAMDA update
 monitor column density "N2H+"      13.11
 ## >>chng 21 apr 16, from 11.03 to 8.465, add molecular column densities
-monitor column density "N2O"       8.465
+## >>chng 24 jun 08, from 8.465 to 8.419, GS rm 3 TiO reactions
+monitor column density "N2O"       8.419
 ## >>chng 21 apr 16, from 15.58 to 12.58, add molecular column densities
 monitor column density "NH"        12.58  
 ## >>chng 21 apr 16, from 10.34 to 9.975, add molecular column densities
@@ -927,7 +929,8 @@ monitor column density "SiN"       11.51
 ## >>chng 21 apr 16, from 11.25 to 11.98, add molecular column densities
 ## >>chng 21 sep 11, from 11.98 to 12.08, LAMDA update
 ## >>chng 24 apr 21, from 12.08 to 12.34, GS updates chemistry
-monitor column density "SiOH+"     12.34
+## >>chng 24 jun 08, from 12.34 to 12.08, GS rm 3 TiO reactions
+monitor column density "SiOH+"     12.08
 ## >>chng 21 apr 16, from 10.1 to 12.34, add molecular column densities
 ## >>chng 21 sep 11, from 12.34 to 12.46, LAMDA update
 monitor column density "SO+"       12.46  
