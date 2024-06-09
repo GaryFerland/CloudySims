@@ -155,7 +155,7 @@ monitor line luminosity "h  1" 6562.80A -4.98 error 0.1
 ## >>chng 17 may 25, wl from 4340.49A to 4340.46A, up Rydberg constant
 ## >>chng 21 mar 16, wl from 4340.46A to 4340.47A, update NIST energies
 ## >>chng 21 aug 18, wl from 4340.47A to 4340.46A, revert to PvH energies for H
-monitor line luminosity "H  1" 4340.46A -5.927 error 0.1
+monitor line luminosity "H  1" 4340.46A -5.899 error 0.1
 ##
 ## H 2 pht very sensitive to J-bar in Lya
 ## >>chng 01 jun 15, from 20.8 to 15.7, H ct rates
