@@ -79,8 +79,11 @@ ifeq ($(VECTORIZE),vectorize)
   OPT += -ftree-vectorize
 endif
 
+# prevent using native optimizations for valgrind runs as valgrind may not support all hardware instructions
 ifeq ($(NATIVE),native)
-  OPT += -march=native
+  ifeq ($(filter -DVALGRIND,$(CXXFLAGS)),)
+    OPT += -march=native
+  endif
 endif
 
 ifeq ($(DYNAMIC),dynamic)
