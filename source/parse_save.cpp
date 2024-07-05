@@ -2077,10 +2077,10 @@ void ParseSave(Parser& p)
 
 		else if( p.nMatch("EFFI") )
 		{
-			/* save recombination efficiency */
+			/* save recombination efficiency, rate and escaping fraction for 1s and 2p of H */
 			strcpy( save.chSave[save.nsave], "RECE" );
 			sncatf( chHeader, 
-				"#Recom effic H, Heo, He+\n" );
+				"#Recom rate, esc frac, H 1S 2P\n" );
 		}
 
 		else
