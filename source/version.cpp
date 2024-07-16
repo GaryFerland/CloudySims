@@ -16,16 +16,17 @@ static const char* revision = REVISION;
 static const char* revision = "rev_not_set";
 #endif
 
-static const string release_branch = "release";
 
 t_version::t_version()
 {
 	static const char chMonth[12][4] =
 		{ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 
-	// REVISION is a dash-delimited string; it may consist of the branch name,
-	// followed by a tag, or by a git SHA1 commit string, and a modification
-	// identifier
+	// REVISION may consist of:
+	// - the version number (the tag on git sans the initial 'c')
+	// - the branch name followed by a git SHA1 commit string, and a
+	//   modification identifier
+	// - the empty string
 
 	if( strcmp( revision, "" ) != 0 && strcmp( revision, "rev_not_set" ) != 0 )
 	{
@@ -33,25 +34,41 @@ t_version::t_version()
 		string rev = revision;
 		Split( rev, "-", Part, SPM_RELAX );
 
-		if( Part[ 0 ] == release_branch )
+		string firstPart( Part[0] );
+
+		/* NB NB
+		 *
+		 * Check if the given revision is a version number (XX.XX)
+		 */
+		if( firstPart.size() == 5
+		    and isdigit( firstPart[0], std::locale("") )
+		    and isdigit( firstPart[1], std::locale("")  )
+		    and firstPart[2] == '.'
+		    and isdigit( firstPart[3], std::locale("")  )
+		    and isdigit( firstPart[4], std::locale("")  ) )
 		{
 			lgRelease = true;
-			Part.erase( Part.begin() );
+			chVersion = firstPart;
 		}
-
-		string rev_pr = "";
-		for( size_t i = 0 ; i < Part.size(); i++ )
+		else
 		{
-			if( i < Part.size()-1 )
-				rev_pr += Part[i] + ", ";
-			else
-				rev_pr += Part[i];
+			lgRelease = false;
+
+			string rev_pr = "";
+			for( size_t i = 0 ; i < Part.size(); i++ )
+			{
+				if( i < Part.size()-1 )
+					rev_pr += Part[i] + ", ";
+				else
+					rev_pr += Part[i];
+			}
+			chVersion = "(" + string( rev_pr ) + ")";
 		}
-		chVersion = "(" + string( rev_pr ) + ")";
 	}
 	else
 	{
-		// create a default version string in case the code is not versioned with git
+		// create a default version string in case the code is
+		// not versioned with git -- probably a tarball release
 
 		lgRelease = true;
 
