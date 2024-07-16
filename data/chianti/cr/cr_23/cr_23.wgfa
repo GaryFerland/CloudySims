@@ -227,7 +227,7 @@
    24   39         76.295      1.500e-02      5.720e+09 
    29   39         76.576      1.250e-01      4.760e+10 
  -1
-%filename:  cr_23.wgfa.olg.imp
+%filename:  cr_23.wgfa
 Theoretical gf and A-values:  Autostructure calculation
 A Breit-Pauli distorted wave implementation for AUTOSTRUCTURE
 Badnell, N.R., 2011, Computer Physics Communications, 182, 1528
@@ -249,7 +249,7 @@ ADSref:  https://ui.adsabs.harvard.edu/abs/1989PhRvA..40..150B/abstract
 
 Theoretical energies for n=2, 3 above IP
 Goryaev, F. F.; Vainshtein, L. A.; Urnov, A. M.
-Atomic data for doubly-excited states 2lnl‧ of He-like ions and 1s2lnl‧ of Li-like ions with Z = 6-36 and n = 2 , 3
+Atomic data for doubly-excited states 2lnl of He-like ions and 1s2lnl of Li-like ions with Z = 6-36 and n = 2 , 3
 2017, ADNDT, 113, 117-257
 adsRef:  http://adsabs.harvard.edu/abs/2017ADNDT.113..117G
 DOI:  10.1016/j.adt.2016.04.002
@@ -278,5 +278,5 @@ produced as a part of the 'CHIANTI' atomic database for astrophysical spectrosco
  K. Dere (GMU) - 2020 October 07
 
 Reference:
-Chianti  2022-02-18
+Chianti  2024-06-27
  -1

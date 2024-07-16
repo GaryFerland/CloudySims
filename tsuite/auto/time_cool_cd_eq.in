@@ -56,9 +56,11 @@ monitor line luminosity cumulative intrinsic "Fe17"      17.0960A   13.4
 ## >>chng 22 jul 09, from 11.83 to 11.69, upgrade to Chianti v10
 monitor line luminosity cumulative intrinsic "Fe14"      5303.00A   11.69
 ## >>chng 22 jul 09, from 11.59 to 11.48, upgrade to Chianti v10
-monitor line luminosity cumulative intrinsic "Fe13"      1.07462m   11.48
+## >>chng 24 jun 24, wl from 1.07462m to 1.07461m, update to Chianti v10.1
+monitor line luminosity cumulative intrinsic "Fe13"      1.07461m   11.48
 ## >>chng 22 jul 09, from 11.37 to 11.2, upgrade to Chianti v10
-monitor line luminosity cumulative intrinsic "Fe13"      1.07978m   11.2
+## >>chng 24 jun 24, wl from 1.07978m to 1.07980m, update to Chianti v10.1
+monitor line luminosity cumulative intrinsic "Fe13"      1.07980m   11.2
 ## >>chng 22 jul 09, wl from 2405.69A to 2405.68A, upgrade to Chianti v10
 ## >>chng 22 jul 09, from 11.12 to 11.26, upgrade to Chianti v10
 monitor line luminosity cumulative intrinsic "Fe12"      2405.68A   11.26
