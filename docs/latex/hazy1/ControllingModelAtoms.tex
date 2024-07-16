@@ -31,14 +31,16 @@ but can take quite some time to compute.
 By default we include an intermediate number of levels,
 chosen as a compromise between execution time and 
 an adequate model of the emission and cooling.
+The default number of resolved and collapsed levels can be
+found in LineLabels.out in the \Cloudy\ docs directory.
 
-\citet{2013MNRAS.429.3133L} describe the logic behind our selection of levels.  
+\citet{2013MNRAS.429.3133L} describe the logic behind our selection of levels.
 \Cloudy\ can do models in either photo or collisional ionization.
 For a particular ion the photoionization case will generally be cooler than the collisional case.
-For most elements the default limits are 50 levels for collisional and 15 for photoionization models.  
+For most elements the default limits are 50 levels for collisional and 15 for photoionization models.
 For iron, which tends to have many more levels due to the number of orbiting electrons,
-we settled on a default limit of 100 levels for the collisional case 
-and 25 levels for the photoionization case.  
+we settled on a default limit of 100 levels for the collisional case
+and 25 levels for the photoionization case.
 
 The maximum number of levels for various species can be adjusted with the
 commands described in this section.
@@ -465,6 +467,8 @@ The lower $n_{resolved}$ levels are $nl$ resolved.
 Another $n_{collapsed}$ levels,
 which replace the $nl$ terms with an $n$ configuration,
 are above the resolved levels.
+The default number of resolved and collapsed levels can be found in
+LineLabels.out in the docs directory.
 
 \begin{figure}
 \centering
@@ -988,14 +992,22 @@ The code includes a large number of ``extra'' Lyman lines,
 included as absorbers with optical depths output with
 the \cdCommand{save line optical depth} command,
 but not treated as part of the multi-level atoms.
-The default number of higher Lyman lines is 100, and
-this can be changed to any number with this command.
+The default number of H-like higher Lyman lines is the
+number of modelled levels plus 100, while the default number
+of He-like higher Lyman lines is 100, both of which can be
+changed to any number with this command.
 
 This changes the number of extra levels for the entire iso-electronic sequence.
 
 \subsubsection{Database H-like Lyman extra resolution 0.25}
 
-\TODO{Define this command.}
+The nP to 1s lines of the H-like isoelectronic sequence are resolved into the
+fine-structure components. This commands determines down to which atomic species Z
+and upto which principle quantum number n the nP levels are resolved to nPj=1/2 and
+nPj=3/2 levels. The default resolution has been set to 1/10 in eV of the Athena
+high-resolution X-ray mission, 0.25eV.
+
+This command does not affect the model atoms for \Ion{H}{I} and \Ion{He}{II}.
 
 \subsubsection{Database H-like Lyman pump}  
 
@@ -1070,11 +1082,10 @@ photoionization cross section.
 
 \subsection{Database H-like \OR{} He-like  redistribution [options]}
 
-This changes the form of the redistribution
-function for various lines within the model atom.
-This command is only
-used if you are not happy with the default redistribution functions.
-The command changes the redistribution functions for entire iso-sequences.
+This changes the form of the redistribution function for various
+lines within the model atom. This command is only used if you are
+not happy with the default redistribution functions. The command
+changes the redistribution functions for entire iso-sequences.
 
 A keyword to specify which set of lines to change is required.
 This is one of \cdCommand{alpha} (the H-like $2p - 1s$ transition or the He-like
@@ -1086,6 +1097,7 @@ The options are \cdCommand{PRD} (partial redistribution), \cdCommand{CRD} (compl
 with Doppler core only), and \cdCommand{CRDW}
 (complete redistribution with damping wings).
 (The underscore indicates a space.)
+However, note that this command has no effect on H L$\alpha$ line.
 
 The keyword \cdCommand{show} prints the current default
 redistribution functions at the time when the command is parsed.
