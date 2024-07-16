@@ -382,11 +382,17 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	 * since xIntensity is used here */
 	xIntensity_in = xIntensity*t.Emis().FracInwd();
 	ASSERT( xIntensity_in>=0. );
-	linadd(xIntensity_in,t.WLAng(),"Inwd",'i',chComment);
+	if( lgIsM1Line(t) )
+		linadd(xIntensity_in,t.WLAng(),"Inwd M1",'i',chComment);
+	else
+		linadd(xIntensity_in,t.WLAng(),"Inwd",'i',chComment);
 	
 	/* cooling part of line */
 	other = t.Coll().cool();
-	linadd(other,t.WLAng(),"Coll",'i',chComment);
+	if( lgIsM1Line(t) )
+		linadd(other,t.WLAng(),"Coll M1",'i',chComment);
+	else
+		linadd(other,t.WLAng(),"Coll",'i',chComment);
 	
 	/* fluorescent excited part of line */
 	double radiative_branching;
@@ -415,12 +421,18 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	}
 
 	other = (*t.Lo()).Pop() * t.Emis().pump() * radiative_branching * t.EnergyErg();
-	linadd(other,t.WLAng(),"Pump",'i',chComment);
+        if( lgIsM1Line(t) )
+		linadd(other,t.WLAng(),"Pump M1",'i',chComment);
+	else
+		linadd(other,t.WLAng(),"Pump",'i',chComment);
 		
 
 	/* heating part of line */
 	other = t.Coll().heat();
-	linadd(other,t.WLAng(),"Heat",'i',chComment);
+	if( lgIsM1Line(t) )
+		linadd(other,t.WLAng(),"Heat M1",'i',chComment);
+	else
+		linadd(other,t.WLAng(),"Heat",'i',chComment);
 
 	return;
 }
