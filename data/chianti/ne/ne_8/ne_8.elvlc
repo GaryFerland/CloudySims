@@ -50,7 +50,7 @@
  50 1s2.8p                2  1 P  0.5  2    1818017.800      16.566997    1818013.838      16.566961 
  51 1s2.8p                2  1 P  1.5  4    1818043.800      16.567234    1818036.642      16.567169 
  -1
-%filename:  ne_8.elvlc.olg.nist-kram
+%filename:  ne_8.elvlc
 Theoretical energy levels:
 Autostructure calculation with energy levels optimized to match to the observed energies
 A Breit-Pauli distorted wave implementation for AUTOSTRUCTURE
@@ -83,7 +83,7 @@ National Institute of Standards and Technology, Gaithersburg, MD.
 
 Theoretical energies for n=2, 3 above IP
 Goryaev, F. F.; Vainshtein, L. A.; Urnov, A. M.
-Atomic data for doubly-excited states 2lnl‧ of He-like ions and 1s2lnl‧ of Li-like ions with Z = 6-36 and n = 2 , 3
+Atomic data for doubly-excited states 2ln of He-like ions and 1s2lnl of Li-like ions with Z = 6-36 and n = 2 , 3
 2017, ADNDT, 113, 117-257
 adsRef:  http://adsabs.harvard.edu/abs/2017ADNDT.113..117G
 DOI:  10.1016/j.adt.2016.04.002
@@ -99,5 +99,5 @@ produced as a part of the 'CHIANTI' atomic database for astrophysical spectrosco
 
 
 Reference:
-Chianti  2022-02-18
+Chianti  2024-06-27
  -1
