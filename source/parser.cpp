@@ -195,7 +195,19 @@ void Parser::echo(void) const
 {
 	/* >>chng 04 jan 21, add HIDE option, mostly for print quiet command */
 	if( called.lgTalk && !::nMatch("HIDE",m_card.c_str()) )
+	{
 		fprintf( ioQQQ, "%23c* %-80s*\n", ' ', m_card_comment.c_str() );
+
+		bool lgNonASCII = false;
+		for( unsigned char c : m_card_raw ) {
+			if( c > 0x7f )
+				lgNonASCII = true;
+		}
+
+		if( lgNonASCII )
+			fprintf( ioQQQ, "CAUTION: the preceding line contains non-ASCII characters. "
+					 "These are not understood by Cloudy.\n" );
+	}
 }
 
 bool Parser::last(void) const
