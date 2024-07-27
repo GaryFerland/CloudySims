@@ -195,19 +195,7 @@ void Parser::echo(void) const
 {
 	/* >>chng 04 jan 21, add HIDE option, mostly for print quiet command */
 	if( called.lgTalk && !::nMatch("HIDE",m_card.c_str()) )
-	{
 		fprintf( ioQQQ, "%23c* %-80s*\n", ' ', m_card_comment.c_str() );
-
-		bool lgNonASCII = false;
-		for( unsigned char c : m_card_raw ) {
-			if( c > 0x7f )
-				lgNonASCII = true;
-		}
-
-		if( lgNonASCII )
-			fprintf( ioQQQ, "CAUTION: the preceding line contains non-ASCII characters. "
-					 "These are not understood by Cloudy.\n" );
-	}
 }
 
 bool Parser::last(void) const
@@ -288,6 +276,31 @@ bool Parser::getline(void)
 {
 	m_card_raw = input.readarray(&m_lgEOF);
 	newlineProcess();
+
+	// check if non-ASCII characters are present in the command section of the line.
+	// abort if they are found. Ignoring them can lead to wrong results, e.g. when
+	// the unicode symbol for math minus is used in -4, which would then be read as 4.
+	bool lgNonASCII = false;
+	for( unsigned char c : m_card_raw ) {
+		if( c > 0x7f )
+			lgNonASCII = true;
+	}
+
+	if( lgNonASCII ) {
+		fprintf( ioQQQ, "\n==" );
+		for( unsigned char c : m_card_raw ) {
+			if( isprint(c) )
+				fprintf( ioQQQ, "%c", c );
+			else
+				fprintf( ioQQQ, "\\x%2.2x", c );
+		}
+		fprintf( ioQQQ, "==\n" );
+		fprintf( ioQQQ, " ERROR: The preceding line in the input stream contains non-ASCII characters.\n" );
+		fprintf( ioQQQ, "        These are not understood by Cloudy and would be ignored by the parser.\n" );
+		fprintf( ioQQQ, "        This is dangerous as it could lead to incorrect models. Bailing out...\n" );
+		cdEXIT(EXIT_FAILURE);
+	}
+
 	if (m_lgEOF)
 		return false;
 	else
