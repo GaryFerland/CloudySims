@@ -113,4 +113,5 @@ t_version::t_version()
 	oss3 << __COMP << " " << __COMP_VER << " compiler. Mode " << mode << ", ";
 	oss3 << "denormalized float: " << TorF(flag[0]) << " double: " << TorF(flag[1]) << ".";
 	chInfo = oss3.str();
+	chVersion = "(Tokyo24)";
 }
