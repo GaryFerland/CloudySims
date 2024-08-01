@@ -854,7 +854,7 @@ void check_data( const string& fpath, const string& fname )
 			string checksum = VHstream( ioFile );
 			if( checksum != ptr->second )
 			{
-				fprintf( ioQQQ, "NOTE: using modified data in %s.\n", fname.c_str() );
+				//fprintf( ioQQQ, "NOTE: using modified data in %s.\n", fname.c_str() );
 				++cpu.i().nCSMismatch;
 			}
 			fclose( ioFile );
