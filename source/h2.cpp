@@ -33,7 +33,17 @@ diatomics::diatomics( const string& a, const double& e_star, const double* const
 		* off with atom h2 collisions off command */
 		lgColl_deexec_Calc = true;
 		lgColl_dissoc_coll = true;
-		lgEnabled = false;
+		/* default for whether large or small model is used
+		 * H2 - use large model by default
+		 * HD - use small model, actually not implemented */
+		if( strncmp( label.c_str() , "H2" , 2) ==0 )
+		{
+			lgEnabled = true; /* enable large H2  by default, disable with database H2 off */
+		}
+		else /* all other cases, curently only HD */
+		{
+			lgEnabled = false; /* do not enable large hd  by default */
+		}
 		lgEvaluated = false;
 		/* option to turn off H2 - grain collision & deexcitation,
 		* atom h2 grain collision on/off */

@@ -122,7 +122,12 @@ void diatomics::init(void)
 		
 	// find the species in the chemistry network	
 	sp = findspecies( label.c_str() );
-	ASSERT( sp != null_mole );
+	if( sp == null_mole )
+	{
+		fprintf(ioQQQ, "PROBLEM DISASTER species %s was enabled but is not in chemistry network.\n",
+		label.c_str());
+		cdEXIT(EXIT_FAILURE);
+	}
 
 	// find the same species with the excitation marker	
 	string strSpStar = shortlabel + "*";
