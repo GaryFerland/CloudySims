@@ -173,18 +173,24 @@ species, rather than detailed level balance equations.
 \label{sec:AtomH2}
 
 The large model of the \htwo\ molecule, described in \citet{Shaw2005},
-will be included if any of the family of \cdCommand{database H2}
-commands appears.
+is controlled by the family of \cdCommand{database H2}
+commands .
 The much
 faster three-level model outlined by \citet{Tielens1985a},
 \citet{Burton1990}, \citet{Draine1996},
 and expanded
-by \citet{Elwert2006}, is used by default.
+by \citet{Elwert2006}, is also available, although these tend to give low-quality results.
 The large molecule is
 represented by several thousand levels producing roughly half a million
 lines.
 AGN3 describes some properties of \htwo\ in section 8.3
 and appendix A6.
+
+The large \htwo\ model is used by default in this version of \Cloudy. 
+The large model could only be used in special cases in early versions 
+of the code, so the simple models outlined above were used by default. 
+Processors were not powerful enough to routinely emply the full
+model of \htwo.
 
 \emph{NB}  The number ``2'' appears in the keyword for this command.
 Any
@@ -212,10 +218,12 @@ will add more significant figures to the wavelengths printed in the main
 printout.
 This may help isolate a particular line.
 
-\subsection{Database H2}
+\subsection{Database H2 [on; off]}
 
-With no options, the only effect is to include the large model of the
-\htwo\ molecule.
+The large \htwo\ model is included by default. 
+The \cdCommand{ON} option will explicitly include it.
+The \cdCommand{OFF} option turns off the large model 
+and uses one of the small models described above instead.
 
 \subsection{Database H2 chemistry [simple; full]}
 
