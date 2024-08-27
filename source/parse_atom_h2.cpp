@@ -41,8 +41,12 @@ void ParseDatabaseH2(Parser &p )
 		TotalInsanity();
 	}
 
-	/* the mere calling of this routine turns the large H2 molecule on */
-	diatom->lgEnabled = true;
+	/* database H2 has two options, ON or OFF */
+	if( p.nMatch("ON " ) )
+		diatom->lgEnabled = true;
+	else if( p.nMatch("OFF " ) )
+		diatom->lgEnabled = false;
+
 
 	if( p.nMatch("LEVE") )
 	{
