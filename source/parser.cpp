@@ -645,6 +645,7 @@ LineID Parser::getLineID(bool lgAtStart)
 
 	DataParser d;
 	d.setline(m_card_raw);
+	d.setposLine(m_off);
 	LineID line;
 	d.getLineID(line, lgAtStart);
 	m_off = d.getposLine();
@@ -1338,12 +1339,9 @@ void DataParser::getLineID(LineID& line, bool lgAtStart)
 	string chLabel;
 	if( !lgAtStart || p_line[0] == '\"' )
 	{
-		// skip to the first double quote on the line
-		if( p_line[0] != '\"' )
-		{
-			auto p = p_line.find('\"');
-			p_pos(p);
-		}
+		// skip to the first double quote on the line starting from the current position
+		auto p = p_line.substr(p_pos()).find('\"') + p_pos();
+		p_pos(p);
 		getQuote(chLabel);
 	}
 	else
@@ -1357,7 +1355,7 @@ void DataParser::getLineID(LineID& line, bool lgAtStart)
 			errorAbort("found unrecognized input after line label");
 		chLabel = p_line.substr(0,4);
 	}
-	trimTrailingWhiteSpace( chLabel );
+	trimTrailingWhiteSpace(chLabel);
 
 	// Normalize common error "H 1 " or "H 1" for "H  1"
 	if( chLabel.size() == 3 || chLabel.size() == 4 )

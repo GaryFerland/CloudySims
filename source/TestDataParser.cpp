@@ -392,6 +392,14 @@ namespace {
 		d.getLineID(line);
 		CHECK( line.chLabel() == "H  1" && fp_equal(line.wave(), 6564.52_r) );
 		CHECK( line.str() == "\"H  1\" 6562.71A" );
+		// test an input line with two line IDs
+		d.setline("stop line \"c  2\" 157.636m air relative to \"o  3\" 5008.24 vacuum");
+		d.getLineID(line, false);
+		CHECK( line.chLabel() == "c  2" && fp_equal(line.wave(), 157.67897e4_r) );
+		CHECK( line.str() == "\"c  2\" 157.636m" );
+		d.getLineID(line, false);
+		CHECK( line.chLabel() == "o  3" && fp_equal(line.wave(), 5008.24_r) );
+		CHECK( line.str() == "\"o  3\" 5006.84A" );
 
 		prt.lgPrintLineAirWavelengths = false;
 		// test failure modes

@@ -2247,7 +2247,7 @@ void SaveDo(
 								double relI,absI,PrtQuantity;
 								double WV = iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).WLAng();
 
-								if (cdLine("H  1",t_wavl(WV, WL_VACUUM),&relI,&absI) == 0)
+								if (cdLine("H  1",t_vac(WV),&relI,&absI) == 0)
 									continue;
 
 								if( save.punarg[ipPun][0] > 0 )
@@ -2683,12 +2683,12 @@ void SaveDo(
 					const int NLINE_H2 = 30; 
 					/* the number of lines which are not H2 */
 					const int NLINE_NOTH_H2 = 5; 
-					/* the labels and wavelengths for the lines that are not H2 */
+					/* the labels and air wavelengths for the lines that are not H2 */
 					char chLabel[NLINE_NOTH_H2][NCHLAB]=
 					{ "C  2", "O  1", "O  1", "C  1", "C  1" };
 					double Wl[NLINE_NOTH_H2]=
 					{ 157.636 , 63.1679 , 145.495, 609.590 , 370.269 };
-					/* these are wavelengths in microns, conv to Angstroms before call */
+					/* these are air wavelengths in microns, conv to Angstroms before call */
 					/* >>chng 05 sep 06, many of following wavelengths updated to agree
 					 * with output - apparently not updated when energies changed */
 					double Wl_H2[NLINE_H2]=
@@ -2702,7 +2702,7 @@ void SaveDo(
 						prt_line_inlist( save.params[ipPun].ipPnunit, chLabel[n], Wl[n] );
 						/* get the line, non positive return says didn't find it */
 						/* arguments are 4-char label, wavelength, return log total intensity, linear rel inten */
-						if( cdLine( chLabel[n] , t_wavl(Wl[n]*1e4, WL_AIR) , &rel, &absval ) <= 0 )
+						if( cdLine( chLabel[n] , t_air(Wl[n]*1e4) , &rel, &absval ) <= 0 )
 						{
 							fprintf(save.params[ipPun].ipPnunit, " did not find\n");
 						}
@@ -2724,7 +2724,7 @@ void SaveDo(
 						{
 							prt_line_inlist( save.params[ipPun].ipPnunit,   "H2  ", Wl_H2[n] );
 							/* get the line, non positive return says didn't find it */
-							if( cdLine( "H2" , t_wavl(Wl_H2[n]*1e4, WL_AIR) , &rel, &absval ) <= 0 )
+							if( cdLine( "H2" , t_air(Wl_H2[n]*1e4) , &rel, &absval ) <= 0 )
 							{
 								fprintf(save.params[ipPun].ipPnunit, " did not find\n");
 							}

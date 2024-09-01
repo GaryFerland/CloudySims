@@ -1318,7 +1318,6 @@ inline t_wavl operator "" _air(unsigned long long wavl) { return t_wavl(wavl, WL
 inline t_wavl operator "" _air(long double wavl) { return t_wavl(wavl, WL_AIR); }
 
 // shorthand for turning variables into wavelengths
-inline t_wavl t_nat(realnum w) { return t_wavl(w, WL_NATIVE); }
 inline t_wavl t_vac(realnum w) { return t_wavl(w, WL_VACUUM); }
 inline t_wavl t_air(realnum w) { return t_wavl(w, WL_AIR); }
 
