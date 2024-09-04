@@ -441,6 +441,8 @@ namespace {
 		CHECK_THROW( d.getLineID(line), cloudy_exit );
 		d.setline("Fe 2  12.00m  elow=-1");
 		CHECK_THROW( d.getLineID(line), cloudy_exit );
+		d.setline("normalize to Fe 2  12.00m");
+		CHECK_THROW( d.getLineID(line, false), cloudy_exit );
 		//d.setline("Fe 2  12.00m  keyword");
 		//CHECK_THROW( d.getLineID(line), cloudy_exit );
 		//d.setline("Fe 2  12.00 m");

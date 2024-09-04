@@ -1122,13 +1122,13 @@ void cdLine_ip(long int ipLine,
 	{
 		return;
 	}
-	ASSERT( LineSave.ipNormWavL >= 0 );
+	ASSERT( LineSave.ipNormLine >= 0 );
 	ASSERT( LineSave.nsum > 0 );
 
 	/* does the normalization line have a positive intensity */
-	if( LineSave.lines[LineSave.ipNormWavL].SumLine(LineType) > 0. )
+	if( LineSave.lines[LineSave.ipNormLine].SumLine(LineType) > 0. )
 		*relint = LineSave.lines[ipLine].SumLine(LineType)/
-			LineSave.lines[LineSave.ipNormWavL].SumLine(LineType)*
+			LineSave.lines[LineSave.ipNormLine].SumLine(LineType)*
 			LineSave.ScaleNormLine;
 
 	/* return log of current line intensity if it is positive */

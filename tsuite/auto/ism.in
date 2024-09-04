@@ -33,7 +33,7 @@ set temperature floor 100K
 # commands controlling output    =========
 # this model has no heavy element molecules, because H2 does not
 # really fully form, since Lyman bands are not self-shielded
-normalize to 157.636m "C  2"
+normalize to "C  2" 157.636m
 print line pump
 save performance "ism.per"
 save monitors "ism.asr" last

@@ -1778,11 +1778,10 @@ void diatomics::H2_PunchDo( FILE* io ,  char chJOB[] , const char chTime[] , lon
 		 * are set up */
 		if( lgEnabled && LineSave.nsum > 0)
 		{
-			ASSERT( LineSave.ipNormWavL >= 0 );
+			ASSERT( LineSave.ipNormLine >= 0 );
 			/* get the normalization line */
-			if( LineSave.lines[LineSave.ipNormWavL].SumLine(0) > SMALLFLOAT )
-				renorm = LineSave.ScaleNormLine/
-				LineSave.lines[LineSave.ipNormWavL].SumLine(0);
+			if( LineSave.lines[LineSave.ipNormLine].SumLine(0) > SMALLFLOAT )
+				renorm = LineSave.ScaleNormLine/LineSave.lines[LineSave.ipNormLine].SumLine(0);
 			else
 				renorm = 1.;
 
@@ -1898,12 +1897,12 @@ long int diatomics::getLine( long iElecHi, long iVibHi, long iRotHi, long iElecL
 		return 0;
 	}
 
-	ASSERT( LineSave.ipNormWavL >= 0 );
+	ASSERT( LineSave.ipNormLine >= 0 );
 	/* does the normalization line have a positive intensity*/
-	if( LineSave.lines[LineSave.ipNormWavL].SumLine(0) > 0. )
+	if( LineSave.lines[LineSave.ipNormLine].SumLine(0) > 0. )
 	{
 		*relint = H2_SaveLine[iElecHi][iVibHi][iRotHi][iElecLo][iVibLo][iRotLo]/
-			LineSave.lines[LineSave.ipNormWavL].SumLine(0) * LineSave.ScaleNormLine;
+			LineSave.lines[LineSave.ipNormLine].SumLine(0) * LineSave.ScaleNormLine;
 	}
 	else
 	{

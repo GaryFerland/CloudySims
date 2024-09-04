@@ -115,7 +115,7 @@ STATIC void PrintSpectrum ()
 	/* get space for array of indices for lines, for possible sorting */
 	ipSortLines.resize(LineSave.nsum );
 
-	ASSERT( LineSave.ipNormWavL >= 0 );
+	ASSERT( LineSave.ipNormLine >= 0 && LineSave.ipNormLine < LineSave.nsum );
 
 	/* option to also print usual first two sets of line arrays 
 	 * but for two sets of cumulative arrays for time-dependent sims too */
@@ -134,19 +134,17 @@ STATIC void PrintSpectrum ()
 			continue;
 
 		/* this is the intensity of the line spectrum will be normalized to */
-		snorm = LineSave.lines[LineSave.ipNormWavL].SumLine(ipEmType);
+		snorm = LineSave.lines[LineSave.ipNormLine].SumLine(ipEmType);
 
 		/* check that this line has positive intensity */
-		if( ((snorm <= SMALLDOUBLE ) || (LineSave.ipNormWavL < 0)) || (LineSave.ipNormWavL > LineSave.nsum) )
+		if( snorm <= SMALLDOUBLE )
 		{
-			string wl_str;
-			sprt_wl( wl_str, LineSave.lines[LineSave.ipNormWavL].wavelength() );
 			fprintf(ioQQQ,
 				"\n\n"
-				" >>PROBLEM Normalization line (\"%s\" %s) has small or zero intensity, its value was %.2e and its intensity was set to 1.\n"
-				" >>Please consider using another normalization line (this is set with the NORMALIZE command).\n",
-				LineSave.lines[LineSave.ipNormWavL].chALab(), wl_str.c_str(), snorm);
-			fprintf( ioQQQ, " >>The relative intensities will be meaningless, and many lines may appear too faint.\n" );
+				" >>PROBLEM Normalization line (%s) has small or zero intensity, its value was %.2e and its intensity was set to 1.\n"
+				" >>Please consider using another normalization line (this is set with the NORMALIZE command).\n"
+				" >>The relative intensities will be meaningless, and many lines may appear too faint.\n",
+					LineSave.NormLine.str().c_str(), snorm);
 			snorm = 1.;
 		}
 		for( i=0; i < LineSave.nsum; i++ )

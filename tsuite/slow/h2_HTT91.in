@@ -24,7 +24,7 @@ database h2
 init file="ism.ini"
 abundances he= -1.01 c= -3.52 n=-8 o=-3.30 ne=-8 mg=-5.89
 continue si= -6.10 s= -5.10 cl=-7 ar=-8 fe= -6.60
-normalize to 157.636m "C  2" 
+normalize to "C  2" 157.636m 
 sphere
 ## >>chng 16 apr 14, had been case B, this gets same effect with
 ## no large Lyman optical depths

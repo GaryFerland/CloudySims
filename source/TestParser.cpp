@@ -352,6 +352,8 @@ namespace {
 		CHECK_THROW( (void)p.getLineID(), cloudy_exit );
 		p.setline("Fe 2  12.00m  elow=-1");
 		CHECK_THROW( (void)p.getLineID(), cloudy_exit );
+		p.setline("normalize to Fe 2  12.00m");
+		CHECK_THROW( (void)p.getLineID(false), cloudy_exit );
 		//p.setline("Fe 2  12.00m  keyword");
 		//CHECK_THROW( (void)p.getLineID(), cloudy_exit );
 		//p.setline("Fe 2  12.00 m");

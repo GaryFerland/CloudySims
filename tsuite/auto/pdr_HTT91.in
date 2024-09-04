@@ -39,7 +39,7 @@ Database H-like Lyman pumping off
 turbulence 1.5 km/sec
 # 
 # commands controlling output    =========
-normalize to 157.636m "C  2" 
+normalize to "C  2" 157.636m 
 # uv lines are strongly pumped by stellar continuum, break out contribution
 print line pump
 print line optical depths

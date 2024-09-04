@@ -560,29 +560,20 @@ void IterStart()
 	hmi.h2dtot = 0.;
 	timesc.sound = 0.;
 
-	string label;
-	t_wavl wvlng;
-
-	if( LineSave.lgNormSet )
-	{
-		label = LineSave.chNormLab;
-		wvlng = LineSave.WavLNorm;
-	}
+	LineID norm;
+	if( LineSave.NormLine.chLabel().size() > 0 )
+		norm = LineSave.NormLine;
 	else
-	{
-		label = "H  1";
-		wvlng = Hbeta_WavLen;
-	}
-	LineSave.ipNormWavL = LineSave.findline( LineID(label, wvlng) );
-	if( LineSave.ipNormWavL < 0 )
+		norm = LineID("H  1", Hbeta_WavLen);
+	LineSave.ipNormLine = LineSave.findline(norm);
+	if( LineSave.ipNormLine < 0 )
 	{
 		/* did not find the line if return is negative */
 		fprintf( ioQQQ, "PROBLEM could not find the normalisation line.\n");
-		fprintf( ioQQQ, "IterStart could not find the line \t" );
-		prt_line_err( ioQQQ,  label, wvlng );
+		fprintf( ioQQQ, "IterStart could not find the line: %s", norm.str().c_str() );
 		fprintf( ioQQQ, "Please check the emission line output to find the correct line identification.\n");
 		fprintf( ioQQQ, "Sorry.\n");
-		LineSave.ipNormWavL = 0;
+		LineSave.ipNormLine = 0;
 		fprintf( ioQQQ, "Setting normalisation line to first line in stack, and proceeding.\n");
 	}
 

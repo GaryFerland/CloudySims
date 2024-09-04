@@ -23,17 +23,10 @@ void t_LineSave::zero()
 	 * 0th is a zero for sanity, 1st is unit, 2nd is a comment */
 	/* >>chng 02 apr 22 from 2 to 3 since added unit at 1 */
 	/* >>chng 06 mar 11, from 3 to -1 will now set to "H  1" 4861 */
-	ipNormWavL = -1;
-	WavLNorm = Hbeta_WavLen;
-	lgNormSet = false;
+	ipNormLine = -1;
 	sig_figs = sig_figs_max;
-
-	/* the label for the normalization line */
-	strcpy( chNormLab, "    " );
-
 	/* The scale factor for the normalization line */
 	ScaleNormLine = 1.;
-
 }
 
 void t_LineSave::init(long index, char chSumTyp, const char *chComment, const char *label,

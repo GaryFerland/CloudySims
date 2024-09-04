@@ -28,7 +28,8 @@ constant temperature 4
 ## >>chng 13 jul 30, wl from 4471.47A to 4471.49A, increased wl precision to 6 sig. fig.
 ## >>chng 18 feb 20, updated spectral label from "he 1" 4471.49A to "Blnd" 4472.76A, update He-like triplet labels and wl
 ## >>chng 18 mar 06, wl from 4472.76A to 4471.50A, adjust multiplet Blend WL for refraction index
-normalize to "Blnd" 4471.50A 
+## >>chng 24 sep 03, wl from 4471.50A to 4472.76A, exercise the vacuum keyword in the test suite
+normalize to "Blnd" 4472.76A vacuum
 print lines column  
 print lines column 
 save overview "heatomt10lon.ovr"

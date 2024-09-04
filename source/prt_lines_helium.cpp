@@ -376,8 +376,8 @@ void lines_helium()
 
 		/* now multiply by ergs of normalization line, so that relative flux of
 		* this line will be ratio of photon fluxes. */
-		if( LineSave.WavLNorm.wavlVac() > 0 )
-			photons_3889_plus_7065 *= (ERG1CM*1.e8)/LineSave.WavLNorm.wavlVac();
+		if( LineSave.NormLine.wave() > 0 )
+			photons_3889_plus_7065 *= (ERG1CM*1.e8)/LineSave.NormLine.wave();
 		linadd( photons_3889_plus_7065, 3889_air, "Pho+", 'i',
 			"photon sum given in Porter et al. 2007 (astro-ph/0611579)");
 	}

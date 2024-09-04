@@ -121,11 +121,14 @@ struct t_LineSave : public module {
 	/** holds comment strings associated with various blocks of output lines */
 	string chHoldComments[NHOLDCOMMENTS];
 
-	/** NormWL is array index for emission line on normalize command */
-	long int ipNormWavL;
+	/** normalization line for line ratios in main output */
+	LineID NormLine;
 
-	/** WavLNorm is wavelength of emission line on normalize command */
-	t_wavl WavLNorm;
+	/** array index for emission line on normalize command */
+	long int ipNormLine;
+
+	/** ScaleNormLine is the scale factor for its appearance */
+	double ScaleNormLine;
 
 	/** number of significant figures for lines
 	 * this affects all aspects of reading and writing lines */
@@ -135,15 +138,6 @@ struct t_LineSave : public module {
 	/** length of string wl not including units
 	 *  typically, sig_figs+2 (dot & unit) */
 	int	wl_length;
-
-	/** ScaleNormLine is the scale factor for its appearance */
-	double ScaleNormLine;
-
-	/** chNormLab is optional label */
-	char chNormLab[NCHLAB];
-
-	/** flag saying whether norm has been set */
-	bool lgNormSet;
 
 	/** save rec coefficient data for recombination lines of C, N, O */
 	realnum RecCoefCNO[4][NRECCOEFCNO];
