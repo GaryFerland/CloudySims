@@ -181,15 +181,6 @@ void prt_line_err( FILE *ioOUT, const LineID& line )
 	fprintf( ioOUT, ".\n" );
 	return;
 }
-void prt_line_err( FILE *ioOUT, const string& label, t_wavl wvlng )
-{
-	prt_line_err( ioOUT, LineID(label, wvlng) );
-}
-void prt_line_err( FILE *ioOUT, const string& label, realnum wvlng )
-{
-	prt_line_err( ioOUT, LineID(label, t_vac(wvlng)) );
-}
-
 
 /* prt_line_inlist print line suitable for output list, label not enclosed in quotation marks */
 void prt_line_inlist ( FILE *ioOUT, const char *label, realnum wvlng )

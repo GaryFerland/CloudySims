@@ -1291,7 +1291,7 @@ void ParseSave(Parser& p)
 			"#depth cm\tTemp K\tHtot erg/cm3/s\tCtot erg/cm3/s\tAdve Htot erg/cm3/s\theat fracs\n" );
 	}
 
-	else if( p.nMatch("HELI") &&!( p.nMatch("IONI")))
+	else if( p.nMatch("HELI") && !p.nMatch("IONI") )
 	{
 		/* save helium & helium-like iso sequence, but not save helium ionization rate
 		 * save helium line wavelengths */
@@ -1328,7 +1328,7 @@ void ParseSave(Parser& p)
 		}
 
 		/* save information on 21 cm excitation processes - accept either keyword 21cm or 21 cm */
-		else if( p.nMatch("21 CM") ||p.nMatch("21CM"))
+		else if( p.nMatch("21 CM") || p.nMatch("21CM"))
 		{
 			/* save information about 21 cm line */
 			strcpy( save.chSave[save.nsave], "21CM" );

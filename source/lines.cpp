@@ -624,7 +624,7 @@ long t_LineSave::findline(const LineID& line)
 		/* >>chng 05 dec 21, report closest line if we did not find exact match, note that
 		 * exact match returns above, where we will return negative number of lines in stack */
 		fprintf( ioQQQ," PROBLEM findline did not find line " );
-		prt_line_err( ioQQQ, chCARD.c_str(), line.wave() );
+		prt_line_err( ioQQQ, line );
 		if( index_of_closest >= 0 )
 		{
 			fprintf( ioQQQ,"  The closest line (any label) was   \"%s\"\n", 

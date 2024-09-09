@@ -2255,35 +2255,37 @@ void SaveDo(
 								else
 									PrtQuantity = relI;
 
+								string wavlStr;
+								sprt_wl(wavlStr, iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).WLAng());
 
 								if (ipHi< iso_sp[ipH_LIKE][ipHYDROGEN].numLevels_local - iso_sp[ipH_LIKE][ipHYDROGEN].nCollapsed_local )
 									/* print resolved levels */
-									fprintf(save.params[ipPun].ipPnunit, "%li\t%li\t%li\t%li\t%7.6g\t%.2e\t%.4e\t\n",
+									fprintf(save.params[ipPun].ipPnunit, "%li\t%li\t%li\t%li\t%s\t%.2e\t%.4e\t\n",
 											iso_sp[ipH_LIKE][ipHYDROGEN].st[ipHi].n(),
 											iso_sp[ipH_LIKE][ipHYDROGEN].st[ipHi].l(),
 											iso_sp[ipH_LIKE][ipHYDROGEN].st[ipLo].n(),
 											iso_sp[ipH_LIKE][ipHYDROGEN].st[ipLo].l(),
-											iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).WLAng(),
+											wavlStr.c_str(),
 											iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).Emis().TauTot()*SQRTPI/flin,
 											PrtQuantity);
 								else if (ipLo<iso_sp[ipH_LIKE][ipHYDROGEN].numLevels_local- iso_sp[ipH_LIKE][ipHYDROGEN].nCollapsed_local)
 										/* print collapsed to resolved */
-									fprintf(save.params[ipPun].ipPnunit, "%li\t%i\t%li\t%li\t%7.6g\t%.2e\t%.4e\t\n",
+									fprintf(save.params[ipPun].ipPnunit, "%li\t%i\t%li\t%li\t%s\t%.2e\t%.4e\t\n",
 											iso_sp[ipH_LIKE][ipHYDROGEN].st[ipHi].n(),
 											-1,
 											iso_sp[ipH_LIKE][ipHYDROGEN].st[ipLo].n(),
 											iso_sp[ipH_LIKE][ipHYDROGEN].st[ipLo].l(),
-											iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).WLAng(),
+											wavlStr.c_str(),
 											iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).Emis().TauTot()*SQRTPI/flin,
 											PrtQuantity);
 								else
 									/* print collapsed to collapsed */
-									fprintf(save.params[ipPun].ipPnunit, "%li\t%i\t%li\t%i\t%7.6g\t%.2e\t%.4e\t\n",
+									fprintf(save.params[ipPun].ipPnunit, "%li\t%i\t%li\t%i\t%s\t%.2e\t%.4e\t\n",
 											iso_sp[ipH_LIKE][ipHYDROGEN].st[ipHi].n(),
 											-1,
 											iso_sp[ipH_LIKE][ipHYDROGEN].st[ipLo].n(),
 											-1,
-											iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).WLAng(),
+											wavlStr.c_str(),
 											iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).Emis().TauTot()*SQRTPI/flin,
 											PrtQuantity);
 

@@ -19,7 +19,6 @@
 #include "atoms.h"
 #include "called.h"
 #include "hmi.h"
-#include "numderiv.h"
 #include "magnetic.h"
 #include "phycon.h"
 #include "hyperfine.h"
@@ -57,12 +56,6 @@ static const bool PRT_DERIV = false;
 
 void CoolEvaluate(double *tot)
 {
-	static long int nhit = 0, 
-	  nzSave=0;
-
-	static double oltcool=0., 
-	  oldtemp=0.;
-
 	DEBUG_ENTRY( "CoolEvaluate()" );
 
 	/* returns tot, the total cooling,
@@ -718,25 +711,6 @@ void CoolEvaluate(double *tot)
 		  iso_sp[ipH_LIKE][ipHYDROGEN].coll_ion, 
 		  phycon.te );
 		fndneg();
-	}
-
-	/* possibility of getting empirical cooling derivative
-	 * normally false, set true with 'set numerical derivatives' command */
-	if( NumDeriv.lgNumDeriv )
-	{
-		if( ((nzone > 2 && nzone == nzSave) && ! fp_equal( oldtemp, phycon.te )) && nhit > 4 )
-		{
-			/* hnit is number of tries on this zone - use to stop numerical problems
-			 * do not evaluate numerical deriv until well into solution */
-			thermal.dCooldT = (oltcool - *tot)/(oldtemp - phycon.te);
-		}
-		if( nzone != nzSave )
-			nhit = 0;
-
-		nzSave = nzone;
-		nhit += 1;
-		oltcool = *tot;
-		oldtemp = phycon.te;
 	}
 	return;
 }

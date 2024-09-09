@@ -42,14 +42,10 @@ void sprt_wl(
 	string& chString,
 	realnum wl );
 
-/** prt_line_err produce an error message containing the line label and wavelength,
- *              followed, if given, by the wavelength of the closest line of the same label 
+/** prt_line_err produce an error message containing the line label and wavelength
 \param *ioOUT		output file handle
-\param *label		line label
-\param wvlng		line wavelength
+\param &lineid		line identification
  */
-void prt_line_err( FILE *ioOUT, const string& label, realnum wvlng );
-void prt_line_err( FILE *ioOUT, const string& label, t_wavl wvlng );
 void prt_line_err( FILE *ioOUT, const LineID& lineid );
 
 /* prt_line_inlist print line suitable for output list, label not enclosed in quotation marks

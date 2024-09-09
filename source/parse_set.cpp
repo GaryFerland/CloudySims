@@ -14,7 +14,6 @@
 #include "secondaries.h"
 #include "rfield.h"
 #include "ionbal.h"
-#include "numderiv.h"
 #include "dynamics.h"
 #include "iso.h"
 #include "predcont.h"
@@ -1729,12 +1728,6 @@ void ParseSet(Parser &p)
 		{
 			p.NoNumb("steps in heating-cooling map");
 		}
-	}
-
-	else if (p.nMatch("NUME") && p.nMatch("DERI"))
-	{
-		/* this is an option to use numerical derivatives for heating and cooling */
-		NumDeriv.lgNumDeriv = true;
 	}
 
 	else if (p.nMatch("PATH"))
