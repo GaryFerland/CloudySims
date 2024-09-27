@@ -1815,7 +1815,7 @@ void diatomics::H2_PunchDo( FILE* io ,  char chJOB[] , const char chTime[] , lon
 					double wl = (*tr).WLAng()/1e4;
 					fprintf(io, "%li-%li %c(%li)", iVibHi, iVibLo, chMolBranch( iRotHi, iRotLo ), iRotLo );
 					fprintf( io, "\t%ld\t%ld\t%ld\t%ld\t%ld\t%ld", iElecHi , iVibHi , iRotHi , iElecLo , iVibLo , iRotLo);
-					/* WLAng contains correction for index of refraction of air */
+					/* WLAng is in vacuum, prt_wl() converts to air if needed */
 					fprintf( io, "\t%.7f\t", wl );
 					/*prt_wl print floating wavelength in Angstroms, in output format */
 					prt_wl( io , (*tr).WLAng() );

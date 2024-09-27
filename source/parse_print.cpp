@@ -674,7 +674,7 @@ void ParsePrint(
 
 	else if( p.nMatch("COOL") )
 	{
-		/* print cooling array for a specified one */
+		/* print cooling array for a specified zone */
 		prt.nzdump = (long int)p.FFmtRead();
 
 		/* dump all zones if argument is zero or not present  */

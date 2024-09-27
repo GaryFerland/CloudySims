@@ -21,29 +21,25 @@ once per zone, or once per iteration.
 
 This command is described in Section~\ref{sec:no_buffering}.
 
-\section{Normalize to ``O  3'' 5006.84 [scale factor = 100]}
+\section{Normalize to ''O  3'' 5006.84 [scale factor = 100]}
 
 The strength of an emission line in the standard output will be given
 in intensity or luminosity units and as its intensity relative to a reference
-line.  In the main printout each emission line has a label and wavelength,
-followed by the energy radiated in the line, ending with the intensity
-relative to a reference line.
-
+line.  
 Emission-line intensities are usually listed relative to the intensity
-of H$\beta\ \lambda 4861$\AA, the default reference line.  By default the reference line
+of H$\beta\ \lambda 4861.32$\AA, the default reference line.  By default the reference line
 has an intensity of unity.  This command can change the reference line to
 any of the other predicted lines and can change the relative intensity of
 the reference line to another value.  The relative intensities of all lines
-in the spectrum will be relative to the intensity of the line whose label
-is within the double quotes and with wavelength given by the first number.
-The label must be the four-character string that identifies the line in
-the print out\footnote{The label was optional in versions 94 and before of the code, but
+in the spectrum will then be relative to the intensity of the line defined here.
+The normalization line can be specified as outlined in Section~\ref{sec:SpecifySpectralLines}.
+As a minimum you should specify a label within double quotes and a wavelength given by the first
+number on the line.\footnote{The label was optional in versions 94 and before of the code, but
 now is required due to the large number of lines, making unique wavelengths
 unusual.}
-and the wavelength must match the printed wavelength to
-all four figures.
-The wavelength units must appear if they are not
-Angstroms.
+The wavelength must match the printed wavelength to
+all significant figures and can be either in air or vacuum, as discussed in
+Section~\ref{sec:SpecifySpectralLines}.
 
 The optional second number sets the relative intensity of the reference
 line.
@@ -57,9 +53,7 @@ The scale factor must be greater than zero.
 
 The code works by finding the first line in the emission-line stack whose
 wavelength and label matches the line on this command.
-There is a possible
-uniqueness problem since more than one line can have the same wavelength.
-This is especially true for XUV or soft X-ray lines and for \htwo\ lines.
+How to disambiguate multiple matches is discussed in Section~\ref{sec:SpecifySpectralLines}.
 
 The following shows some examples of the \cdCommand{normalize} command:
 \begin{verbatim}
@@ -67,7 +61,10 @@ The following shows some examples of the \cdCommand{normalize} command:
 normalize to "H  1" 1.875m
 
 # normalize spectrum to the [OI] IR line on a scale where it is equal to 100
-normalize to ``O  1'' 63.17m = 100
+normalize to "O  1" 63.17m = 100
+
+# specify air wavelengths and disambiguate the line
+normalize to "H  1" 4.65247m air index=11, 23
 \end{verbatim}
 
 \section{Print ages}
@@ -106,7 +103,7 @@ If more than one appears then only the information for the
 requested elements will be printed.
 This is a debugging aid.
 
-\subsection{Print arrays levels ``species''}
+\subsection{Print arrays levels ''species''}
 \label{sec:PrintArraysLevels}
 
 \par
@@ -163,8 +160,8 @@ If no zone number or
 0 appears on the line then the coolants for \emph{all} zones will be printed.
 The total cooling and the fractional contribution of the strongest coolants
 are printed.  For each coolant a label gives an indication of the
-spectroscopic origin of the coolant and the following integer gives its
-wavelength, with a 0 to indicate a continuum.  The last number of the group
+spectroscopic origin of the coolant and the following number gives its
+vacuum wavelength, with a 0 to indicate a continuum.  The last number of the group
 is the fraction of the total cooling carried by that agent.
 
 \section{Print continuum indices}
@@ -507,11 +504,20 @@ It was originally added by Peter G. Martin.
 If the \cdCommand{range} option appears
 then two more numbers, the lower and upper bounds to the wavelength range,
 must also appear.
-Each number is interpreted as the wavelength in Angstroms
-by default, but is interpreted as the wavelength in microns or centimeters
-if the wavelength is immediately followed by a ``c'' or ``m.''
+Each number is interpreted as the wavelength in angstrom
+by default, but is interpreted as the wavelength in micron or centimeter
+if the wavelength is immediately followed by an ``m'' or ``c'', respectively.
 The two
 wavelengths must be positive and in increasing wavelength order.
+By default the wavelengths will be assumed to have the same type (air or
+vacuum) as used in the output (see Section~\ref{sec:CommandPrintVacuum}).
+Interpretation as air or vacuum wavelengths can be forced by appending the optional
+keyword \cdCommand{air} or \cdCommand{vacuum} directly behind the wavelength.
+Note that the keyword only applies to the wavelength directly preceding it, so
+it needs to be repeated, as shown below.
+\begin{verbatim}
+print line sort wavelength range 3500A air to 1.2m air
+\end{verbatim}
 
 \subsection{Print line sort intensity}
 
@@ -562,8 +568,25 @@ but if the keyword \cdCommand{arcsec} appears then the surface brightness will b
 \subsection{Print line vacuum}
 \label{sec:CommandPrintVacuum}
 By default we follow the atomic physics convention that vacuum line wavelengths are used
-for $\lambda < 2000$\AA\ and STP air wavelengths for $\lambda \ge 2000$\AA.
-This command will change to use vacuum wavelengths throughout.
+for $\lambda_{\rm vac} \le 2000$\,\AA\ and STP air wavelengths for $\lambda_{\rm vac} > 2000$\,\AA.
+This command will change the behavior to use vacuum wavelengths for all wavelengths.
+Note that this will only affect the wavelengths of atomic and molecular lines
+printed in the output. Internally the code always uses vacuum wavelengths.\footnote{This
+  was not the case in Cloudy versions C23 and older where the code would use air wavelengths
+  internally unless this command was used.}
+This includes the \cdCommand{save continuum} family of commands which will
+always report the SED (including emission lines) in vacuum wavelengths.
+
+Air wavelengths are shorter than vacuum wavelengths, which creates an ambiguity. Lines with
+a vacuum wavelength of 2000\,\AA\ would be reported with an air wavelength 1999.3521\,\AA. So
+for lines inbetween 1999.3521\,\AA\ and 2000\,\AA\ it is not clear whether these are air or
+vacuum wavelengths. To avoid the ambiguity, \Cloudy\ will assume that lines with wavelengths
+$\le$ 2000\,\AA\ are always vacuum wavelengths, which creates problems for some lines. This
+problem can be avoided by explicitly stating the vacuum wavelength of the line even when
+using air wavelengths in the output, e.g.:
+\begin{verbatim}
+"Ne 9" 2000.31A vacuum
+\end{verbatim}
 
 \section{Print macros}
 This prints the name and status of the macros that are used in the
@@ -882,7 +905,7 @@ The options are the following:  \cdCommand{charge} transfer,
 \cdCommand{hemis}, and \cdCommand{hecs} (for He$^0$
 collision strengths).
 
-\section{Save arrays levels ``species'' [fits or ppm] [iteration it] [zone nz]}
+\section{Save arrays levels ''species'' [fits or ppm] [iteration it] [zone nz]}
 
 This is a companion command to \cdCommand{print arrays levels}, and it is also a
 debugging aid.
@@ -1011,7 +1034,7 @@ elements, then the ionization stage, 1 for the atom,
 
 \section{Save chemistry options}
 
-\subsection{Save chemistry rates ``filename'' species ``molecule'' [coef]}
+\subsection{Save chemistry rates ''filename'' species ''molecule'' [coef]}
 \label{s:savechemrate}
 
 This command saves rates for molecular reactions involving a specific
@@ -1190,7 +1213,7 @@ units can be changed to any of several energy or wavelength units with the
 \cdCommand{units} keyword that appears on a \cdCommand{save continuum} command.  The following
 keywords are recognized: \cdCommand{\_micron}, \cdCommand{\_eV\_}, \cdCommand{\_keV},
 \cdCommand{\_MeV}, \cdCommand{wavenumber}, \cdCommand{centimeter} (also
-\cdCommand{\_cm\_}), \cdCommand{\_mm\_}, \cdCommand{\_nm\_}, \cdCommand{Angstrom},
+\cdCommand{\_cm\_}), \cdCommand{\_mm\_}, \cdCommand{\_nm\_}, \cdCommand{angstrom},
 \cdCommand{\_Hz\_},\cdCommand{\_kHz}, \cdCommand{\_MHz}, \cdCommand{\_GHz},
 \cdCommand{Kelvin} (also \cdCommand{\_K\_}), \cdCommand{erg\_}, and
 \cdCommand{\_Rydberg}.
@@ -1199,7 +1222,7 @@ these units must appear for the units of the energy scale to be changed.
 
 \subsection{Save continuum uses vacuum wavelengths}
 Vacuum wavelengths are always used in \cdCommand{save continuum} output.
-This is to avoid a discontinuity at 2000\AA, the point where line wavelengths switch from
+This is to avoid a discontinuity at 2000\,\AA, the point where line wavelengths switch from
 vacuum to air.
 The \cdCommand{print line vacuum} command, 
 described in Section~\ref{sec:CommandPrintVacuum},
@@ -1405,7 +1428,8 @@ accurate, the radius and depth in the middle of each zone is reported. One numbe
 be supplied on the command line, which is the wavelength / frequency at which
 the emissivity and opacity will be evaluated. You can use the keyword
 \cdCommand{units} as described in Section~\ref{output_units}. By default the
-frequency is assumed to be in Rydberg.
+frequency is assumed to be in Rydberg. If a wavelength unit is chosen, the number
+will always be interpreted as a vacuum wavelength.
 
 \subsection{Save emitted continuum}
 
@@ -1460,7 +1484,9 @@ of the fine continuum must be entered.
 The command also accepts
 a \cdCommand{units} option,
 described on page \pageref{output_units}, to change the units used
-in the specified energy range, and in resulting output.
+in the specified energy range, and in the resulting output. If wavelength
+units are chosen, the limits to the range will be interpreted as
+vacuum wavelengths.
 
 The optional third numerical parameter gives the number
 of fine continuum cells to average together, again with the intent of
@@ -1724,7 +1750,7 @@ The first number is the atomic number of the species.
 \label{sec:CommandSaveChianti}
 
 This saves collision strengths for Chianti transitions over a certain temperature range.
-The output gives species, lower level, upper level, wavelength in Angstroms, 
+The output gives species, lower level, upper level, vacuum wavelength in angstrom, 
 and collision strengths for each temperature given in the header row.
 This reports data for all active Chianti species in that particular run.
 
@@ -2091,9 +2117,11 @@ population vs excitation energy diagram.
 Each line of output begins with a spectroscopic designation of the line,
 followed by the upper and lower electronic, vibration, and rotation quantum
 numbers.
-This is followed by the wavelength of the line in microns.
+This is followed by the vacuum wavelength of the line in microns.
 The
-line wavelength is then printed as it appears in the output.
+line wavelength is then printed in the standard format as it appears in the output.
+This may be either an air or vacuum wavelength, depending on whether the
+\cdCommand{print line vacuum} command was used.
 The log of
 the intensity or luminosity in the line (depending on whether the intensity
 or luminosity case is specified), and the intensity of the line relative
@@ -2213,7 +2241,8 @@ This gives wavelengths of lines from $n=2$ levels of He-like ions.
 
 This gives some information related to the spin temperature of the 21
 cm line.
-The keyword is either \cdCommand{21 cm} or \cdCommand{21cm}.
+The keyword is either \cdCommand{21 cm} or \cdCommand{21cm} and does
+not depend on whether air or vacuum wavelengths are used.
 The level populations
 within 1s are determined including radiative excitation by \la, pumping by
 the external and diffuse continua, collisions, and radiative decay.  Several
@@ -2240,7 +2269,7 @@ produced with a call to \cdRoutine{GammaPrt}.
 
 The upper and lower quantum indices, the line wavelength, the optical
 depth, and the intensity of the emitted line, will be saved. If the \cdCommand{alpha}
-option is used, only $\alpha$ transitions($n\to n-1$) will be saved.
+option is used, only $\alpha$ transitions ($n\to n-1$) will be saved.
 
 \subsection{Save hydrogen Lya}
 
@@ -2317,8 +2346,11 @@ All lines that appear in the \Cloudy\ main output will also appear in
 this save file.\footnote{In versions 90 and before of the code, only the level 1 and level
 2 lines were output by this command.}
 
-Lines energy are in Rydbergs by default.  This command recognizes the
-\cdCommand{units} option.
+Line energies are in Rydberg by default.  This command recognizes the
+\cdCommand{units} option.  Note that when wavelength units are chosen, e.g.,
+\cdCommand{angstrom}, the wavelengths will always be printed in vacuum regardless
+of whether the \cdCommand{print line vacuum} command is used or not.  This makes
+the behavior compatible with the \cdCommand{save continuum} command.
 
 \subsection{Save lines, zone cumulative}
 
@@ -2337,7 +2369,7 @@ The keyword ``zone'' distinguishes the spatial integration performed
 here from the time integration performed in time-dependent problems.
 
 The line labels and wavelengths are followed by the depth into the cloud
-and the integrated intensities of the lines [erg cm$^{-2} \mathrm{s}^{-1}$] for each zone.
+and the integrated intensities of the lines [erg\,cm$^{-2}$\,s$^{-1}$] for each zone.
 This information can be used to follow the build up of emission lines across
 a computed structure.
 
@@ -2353,7 +2385,7 @@ end of lines
 
 If the optional keyword \cdCommand{relative} is specified then the quantities will
 be given relative to the normalization line. The default is to give
-the intensity $4\pi J [\mathrm{erg\, cm}^{-2} \mathrm{s}^{-1}$].
+the intensity $4\pi J\ [\mathrm{erg\, cm}^{-2}\,\mathrm{s}^{-1}$].
 
 The \cdCommand{save lines zone cumulative} and \cdCommand{save lines emissivity} commands can now be used in the same calculation.
 
@@ -2390,6 +2422,13 @@ This command recognizes the \cdCommand{units} option.
 The line
 can be given in any of the wavelength or energy units
 it understands.
+Note that if you use the \cdCommand{units} option
+and choose a wavelength type unit, e.g., \cdCommand{micron}, then the saved
+wavelengths will always be in vacuum, regardless of what is used in the main
+output. If you do not use the \cdCommand{units} option, wavelengths will be
+saved in the same format as in the main output, which means they can be either
+in air or vacuum, depending whether you use the \cdCommand{print line vacuum}
+command.
 
 \subsection{Save lines, emissivity}
 
@@ -2563,16 +2602,15 @@ This command works by calling routine \cdRoutine{cdGetLineList}
 which is described in Part~2 of this document.
 The filename within the second pair of quotes
 is sent to this routine.
-You can build your own file and several sample
-files giving lists of emission lines are included in the data directory.
-They have names that are of the form \cdFilename{LineList*.dat}
-and are intended for different circumstances.
+You can build your own file. The format is described below.
 
 \subsubsection{Line List data format}
 \label{sec:LineListDataFormat}
 
-Sample line list files are in the \cdFilename{data} directory in the download, with
-names starting with \cdFilename{LineList*.dat}.
+Several sample
+files giving lists of emission lines are included in the data directory.
+They have names that are of the form \cdFilename{LineList*.dat}
+and are intended for different circumstances.
 Any line that starts with a comment character (``\#'') in the first column is ignored.
 Lines containing data start with the line label in the first column,
 which is followed by the wavelength in the usual \Cloudy\ format
@@ -2583,6 +2621,7 @@ The following is an example.
 \begin{verbatim}
 # the [O III] green line
 O  3  5006.84
+O  3  5008.24 vacuum # same as above, but using an explicit vacuum wavelength
 Blnd  5007A # Blend: "O  3  5006.84A"+"O  3  4958.91A"+"O  3  4931.23A"
 H  1  4.65247m  Elow=105291.6 # Is it 7->5 or 35->7? Use Elow to disambiguate
 "Fe 2b" 7445
@@ -2627,13 +2666,13 @@ Suppose the file \cdFilename{linelist.dat} contains the following:
 #
 # the [O III] temperature indicator
 o  3     5006.84
-Blnd     4363
+o  3     4363.21
 \end{verbatim}
 The command
 \begin{verbatim}
 save line list "o3.lin" ratios from "linelist.dat"
 \end{verbatim}
-would report the ratio of the [\oiii] $\lambda$5006.84 to the $\lambda$4363 line.
+would report the ratio of the [\oiii] $\lambda$5006.84 to the $\lambda$4363.21 line.
 
 The following input script
 uses the \cdCommand{grid} command to predict the [\oiii] line ratio as a function of
@@ -2661,7 +2700,7 @@ stop zone 1
 \end{verbatim}
 This produces two output files, \cdFilename{O3.grd}
 containing the densities and temperatures,
-and \cdFilename{O3.pun}, containing the ratio $I$(5006.84) / $I$(4363)
+and \cdFilename{O3.lin}, containing the ratio $I$(5006.84) / $I$(4363.21)
 for each density and temperature.
 These could be plotted to show this line ratio
 as a function of density and temperature,
@@ -2683,7 +2722,13 @@ can be reset with the optional number that appears on the line---it is the
 log of the smallest optical depth to be printed (including line overlap).
 This command recognizes the \cdCommand{units} option so the line
 wavelengths can be in any of the wavelength or energy units
-understood by this option.
+understood by this option. Note that if you use the \cdCommand{units} option
+and choose a wavelength type unit, e.g., \cdCommand{micron}, then the saved
+wavelengths will always be in vacuum, regardless of what is used in the main
+output. If you do not use the \cdCommand{units} option, wavelengths will be
+saved in the same format as in the main output, which means they can be either
+in air or vacuum, depending whether you use the \cdCommand{print line vacuum}
+command.
 
 The line identification, element and ion, starts the output line, in
 the form used in the usual emission-line printout.
@@ -2709,7 +2754,7 @@ that there is no overlap between the line profiles any more.
 
 \subsection{Save line optical depth some}
 
-This saves the mean optical depth of up to 100 emission lines as a
+This saves the mean optical depth of an arbitrary number of emission lines as a
 function of depth into the cloud.  These must be requested for single
 line components: the optical depth for blends will be reported as 0.
 
@@ -3440,9 +3485,11 @@ the second is the bands file, followed by the species of choice.
 A user-defined bands file may be used instead, but it must follow the
 format of file \cdFilename{data/FeII\_bands.ini}.
 Briefly, each line holds one band only, described by three (positive)
-wavelengths, all in Angstr\"{o}m.
-The first column holds the wavelength that will be used with reporting,
-and the following two columns hold the minimum and maximum wavelengths
+vacuum wavelengths, all in angstrom.
+The first column holds the vacuum wavelength that will be used with reporting
+(note that this number will be converted to an air wavelength in the output
+unless the \cdCommand{print line vacuum} command is used),
+and the following two columns hold the minimum and maximum vacuum wavelengths
 of the band, in that order.
 The remainder of the line is ignored.
 Comment lines, which begin with a hash (\#), are ignored.
@@ -3452,7 +3499,7 @@ expected in any specific order, and they may also overlap.
 \par
 The output created in the file specified by the \cdCommand{save} command
 has four tab-delimited columns.
-The first column reports the wavelength of the band specified in the
+The first column reports the wavelength of the band as defined in the
 first column of the (input) bands file.
 The following three columns report the total, inward, and outward
 species line emission over that band.
@@ -3470,7 +3517,7 @@ and the summed up emission always appears in the main output.
 \par
 There, the bands are identified by the spectral label of the species, followed
 by a single `b'; e.g., the band for ``Fe+'' is ``Fe 2b''.
-This is then followed by the wavelength of the band, listed in the
+This is then followed by the wavelength of the band, defined in the
 first column of the bands file.
 This entry contains the sum of the inward and outward flux. For each of the
 bands a second entry will be created that only contains the inward flux.
@@ -3483,7 +3530,7 @@ See also Hazy 2, Section~\ref{Hazy2-sec:SpeciesBands}.
 This reports the optical depths of all lines for the specified species.
 The first two columns give the index of the upper and lower levels, in
 that order, on the physics (not C) scale, the third column gives the
-wavelength of the transition in Angstrom, and the last column gives
+vacuum wavelength of the transition in angstrom, and the last column gives
 the mean optical depth.
 
 
