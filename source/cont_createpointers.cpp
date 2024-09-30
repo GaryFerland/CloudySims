@@ -1296,9 +1296,9 @@ STATIC void ContBandsCreate(
 			 * these can contain numbers, next comes a space, then the number */
 			i = 6;
 			continuum.ContBandWavelength[k] = (realnum)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
-			/* >>chng 06 feb 21, multiply by 1e4 to convert micron wavelength into Angstroms,
+			/* >>chng 06 feb 21, multiply by 1e4 to convert micron wavelength into angstrom,
 			 * which is assumed by the code.  before this correction the band centroid 
-			 * wavelength was given in the output incorrectly listed as Angstroms.
+			 * wavelength was given in the output incorrectly listed as angstrom.
 			 * results were correct just label was wrong */
 			continuum.ContBandWavelength[k] *= 1e4f;
 
@@ -1393,11 +1393,11 @@ STATIC void ContBandsCreate(
 			fprintf(ioQQQ,
 					"DEBUG %s & ", 
 					continuum.chContBandLabels[k].c_str() );
-			prt_wl( ioQQQ , continuum.ContBandWavelength[k] );
+			t_air(continuum.ContBandWavelength[k]).prt_wl(ioQQQ); // use t_nat() here???
 			fprintf(ioQQQ," & ");
-			prt_wl( ioQQQ , xHi );
+			t_vac(xHi).prt_wl(ioQQQ);
 			fprintf(ioQQQ," -- ");
-			prt_wl( ioQQQ , xLow );
+			t_vac(xLow).prt_wl(ioQQQ);
 			fprintf(ioQQQ,"\\\\ \n");
 #			endif
 			++k;

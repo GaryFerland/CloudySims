@@ -404,7 +404,7 @@ STATIC void SaveSpeciesLines( FILE *ioPUN, const vector<genericState> &speciesLi
 			else
 			{
 				fprintf( ioPUN, "\t" );
-				prt_wl( ioPUN, realnum( tr->WLAng() ) );
+				tr->twav().prt_wl(ioPUN);
 			}
 
 			fprintf( ioPUN,"\t%li", ipLo);

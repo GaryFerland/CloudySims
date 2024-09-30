@@ -289,9 +289,7 @@ string TransitionProxy::chLabel() const
 
 	/* NB this function is profoundly slow due to sprintf statement
 	 * also - it cannot be evaluated within a write statement itself*/
-	string chWavLen;
-	sprt_wl(chWavLen, WLAng());
-	return chSpecies + " " + chWavLen;
+	return chSpecies + " " + twav().sprt_wl();
 }
 
 /*PutCS enter a collision strength into an individual line vector */

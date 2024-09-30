@@ -512,14 +512,12 @@ void lines_continuum(void)
 			/* this code can be used to create assert statements for the continuum shape */
 			if( !i )
 				fprintf(ioQQQ,"\n");
-			string chWL;
-			sprt_wl( chWL , (*TauDummy).WLAng() );
 			fprintf( ioQQQ,"assert line luminosity \"nInu\" %s  %.3f\n",
-				 chWL.c_str(), 
-				log10(SDIV(Cont_nInu/radius.dVeffAper) * radius.Conv2PrtInten)  );
+					 t_air(TauDummy->WLAng()).sprt_wl().c_str(), 
+					 log10(SDIV(Cont_nInu/radius.dVeffAper) * radius.Conv2PrtInten) );
 #			endif
 
-			linadd( Cont_nInu/radius.dVeffAper,t_air((*TauDummy).WLAng()),"nInu",'i',
+			linadd( Cont_nInu/radius.dVeffAper,t_air(TauDummy->WLAng()),"nInu",'i',
 				"transmitted and reflected incident continuum at selected energy points " );
 
 			/* emslin saves the per unit volume emissivity of a line, which is normally 

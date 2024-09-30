@@ -485,7 +485,7 @@ void ParseMonitorResults(Parser &p)
 		lineids[nAsserts] = line;
 		// need these as well because of PrtOneMonitor()
 		chAssertLineLabel[nAsserts] = line.chLabel();
-		wavelength[nAsserts] = line.wave();
+		wavelength[nAsserts] = line.wavlVac();
 
 		/* now get intensity or luminosity - 
 		 * rel intensity is linear and intensity or luminosity are log */
@@ -1754,7 +1754,7 @@ bool lgCheckMonitors(
 				caps(chFind);
 
 				/* get the error associated with specified significant figures */
-				errorwave = WavlenErrorGet( lineids[i].wave(), LineSave.sig_figs );
+				errorwave = WavlenErrorGet( lineids[i].wavlVac(), LineSave.sig_figs );
 
 				/* go through rest of line stack to look for close matches */
 				for( j=1; j < LineSave.nsum; j++ )
@@ -1772,7 +1772,7 @@ bool lgCheckMonitors(
 					 * So here we will find any lines within 1.5 Angstroms
 					 * of the 
 					 * asserted wavelength.  check wavelength and chLabel for a match */
-					if( fabs(LineSave.lines[j].wavelength()-lineids[i].wave()) < 3.f*errorwave )
+					if( fabs(LineSave.lines[j].wavelength()-lineids[i].wavlVac()) < 3.f*errorwave )
 					{
 						/* now see if labels agree */
 						if( strcmp(chCaps,chFind) == 0 )
@@ -1834,7 +1834,7 @@ bool lgCheckMonitors(
 
 			double relint_cb = 0.,
 				absint_cb = 0.;
-			if( cdLine( "Ca B", t_vac(lineids[i].wave()), &relint_cb, &absint_cb, iLineType[i] ) <= 0 )
+			if( cdLine( "Ca B", t_vac(lineids[i].wavlVac()), &relint_cb, &absint_cb, iLineType[i] ) <= 0 )
 			{
 				fprintf( ioMONITOR, " monitor error: lgCheckMonitors could not find line ");
 				prt_line_err( ioMONITOR, lineids[i] );
@@ -2187,19 +2187,19 @@ bool lgCheckMonitors(
 					for( long int ipHi=ipLo+1; ipHi< MIN2(25,nHighestPrinted); ++ipHi )
 					{
 						/* monitor the line */
-						realnum wl = atmdat.WaveLengthCaseB[nelemCaseB][ipHi][ipLo];
+						t_wavl wl = atmdat.WaveLengthCaseB[nelemCaseB][ipHi][ipLo];
 						/* range option to restrict wavelength coverage */
-						if( wl < Param[i][2] || wl > Param[i][3] )
+						if( wl.wavlVac() < Param[i][2] || wl.wavlVac() > Param[i][3] )
 							continue;
 
 						double relint, absint, CBrelint, CBabsint;
 						/* find the predicted line intensity */
-						cdLine( chAssertLineLabel[i], t_vac(wl), &CBrelint, &CBabsint, iLineType[i] );
+						cdLine( chAssertLineLabel[i], wl, &CBrelint, &CBabsint, iLineType[i] );
 						if( CBrelint < Param[i][4]  )
 							continue;
 						double error;
 						/* now find the Case B intensity - may not all be present */
-						if( cdLine( chElemLabelCaseB, t_vac(wl), &relint, &absint, iLineType[i] ) > 0 )
+						if( cdLine( chElemLabelCaseB, wl, &relint, &absint, iLineType[i] ) > 0 )
 						{
 							if (AssertError[i] > 0.)
 								error = (CBabsint - absint)/MAX2(CBabsint , absint);
@@ -2245,7 +2245,7 @@ bool lgCheckMonitors(
 							}
 							fprintf(ioMONITOR," %s %3li %3li ", 
 								chElemLabelCaseB.c_str() , ipHi , ipLo );
-							prt_wl(ioMONITOR, wl );
+							wl.prt_wl(ioMONITOR);
 							fprintf(ioMONITOR," %.2e %.2e %10.3f", 
 								log10(absint) , log10(CBabsint) , error );
 						}
@@ -2283,16 +2283,16 @@ bool lgCheckMonitors(
 				for( unsigned int ipLine=0; ipLine< atmdat.CaseBWlHeI.size(); ++ipLine )
 				{
 					/* monitor the line */
-					realnum wl = atmdat.CaseBWlHeI[ipLine];
+					t_wavl wl = atmdat.CaseBWlHeI[ipLine];
 					/* range option to restrict wavelength coverage */
-					if( wl < Param[i][2] || wl > Param[i][3] )
+					if( wl.wavlVac() < Param[i][2] || wl.wavlVac() > Param[i][3] )
 						continue;
 					double relint , absint,CBrelint , CBabsint;
-					cdLine( chAssertLineLabel[i], t_vac(wl), &CBrelint, &CBabsint, iLineType[i] );
+					cdLine( chAssertLineLabel[i], wl, &CBrelint, &CBabsint, iLineType[i] );
 					if( CBrelint < Param[i][4]  )
 						continue;
 					double error;
-					if( cdLine( chElemLabelCaseB, t_vac(wl), &relint, &absint, iLineType[i] ) > 0)
+					if( cdLine( chElemLabelCaseB, wl, &relint, &absint, iLineType[i] ) > 0)
 					{
 						if (AssertError[i] > 0.0)
 							error = (CBabsint - absint)/MAX2(CBabsint , absint);
@@ -2336,7 +2336,7 @@ bool lgCheckMonitors(
 						{
 							fprintf( ioMONITOR, " ChkMonitor botch>>");
 						}
-						prt_wl(ioMONITOR, wl );
+						wl.prt_wl(ioMONITOR);
 						fprintf(ioMONITOR," %.2e %.2e %10.3f", 
 							absint , CBabsint , error );
 					}
@@ -2807,24 +2807,24 @@ bool lgCheckMonitors(
 
 			LineSave.sig_figs = LineSave.sig_figs_max;
 
-			fprintf( ioMONITOR, "=============Line Disambiguation============================================================\n" );
-			fprintf( ioMONITOR, "                  Wavelengths                 ||                  Intensities               \n" );
-			fprintf( ioMONITOR, "Label     line     match1   match2   match3   ||   asserted     match1     match2     match3\n" );
+			fprintf( ioMONITOR, "=======================Line Disambiguation============================================================\n" );
+			fprintf( ioMONITOR, "                            Wavelengths                 ||                  Intensities               \n" );
+			fprintf( ioMONITOR, "Label               line     match1   match2   match3   ||   asserted     match1     match2     match3\n" );
 
 			for( i=0; i<nAsserts; ++i )
 			{
 				if( ipDisambiguate[i][1] > 0 )
 				{
 					fprintf( ioMONITOR , "%-*s ", NCHLAB-1, chAssertLineLabel[i].c_str() );
-					prt_wl( ioMONITOR , wavelength[i] );
+					t_vac(wavelength[i]).prt_wl(ioMONITOR);
 					fprintf( ioMONITOR , " " );
-					prt_wl( ioMONITOR , LineSave.lines[ipDisambiguate[i][0]].wavelength() );
+					t_vac(LineSave.lines[ipDisambiguate[i][0]].wavelength()).prt_wl(ioMONITOR);
 					fprintf( ioMONITOR , " " );
-					prt_wl( ioMONITOR , LineSave.lines[ipDisambiguate[i][1]].wavelength() );
+					t_vac(LineSave.lines[ipDisambiguate[i][1]].wavelength()).prt_wl(ioMONITOR);
 					fprintf( ioMONITOR , " " );
 					if( ipDisambiguate[i][2] > 0 )
 					{
-						prt_wl( ioMONITOR , LineSave.lines[ipDisambiguate[i][2]].wavelength() );
+						t_vac(LineSave.lines[ipDisambiguate[i][2]].wavelength()).prt_wl(ioMONITOR);
 						cdLine_ip( ipDisambiguate[i][2], &relint2, &absint1, iLineType[i] );
 					}
 					else
@@ -3025,7 +3025,7 @@ void PrtOneMonitor( FILE *ioMONITOR, const string& chAssertType, const string& c
 	/* special formatting for the emission lines */
 	if( chAssertType == "Ll"  || chAssertType == "Lr" || chAssertType == "Lb" )
 	{
-		prt_wl( ioMONITOR , wavelength );
+		t_vac(wavelength).prt_wl(ioMONITOR);
 	}
 	else
 	{

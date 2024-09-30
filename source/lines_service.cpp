@@ -2,7 +2,6 @@
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*GetGF convert Einstein A into oscillator strength */
 /*abscf convert gf into absorption coefficient */
-/* RefIndex calculates the index of refraction of air using the line energy in wavenumbers for STP air */
 /*eina convert a gf into an Einstein A */
 /*WavlenErrorGet - find difference between two wavelengths */
 /*linadd enter lines into the line storage array, called once per zone */
@@ -269,52 +268,6 @@ double abscf(double gf,
 	 * gf is product of g and oscillator strength */
 	abscf_v = ABSOR_COEFF_CONST * (gf/gl)/enercm;
 	return( abscf_v );
-}
-
-/* compute wavelength in vacuum given hardcoded air wavelengths */
-realnum wlAirVac( double wlAir )
-{
-	DEBUG_ENTRY( "wlAirVac()" );
-
-	// Iterate since EnergyWN depends on wlVac not wlAir but
-	// difference should be small
-	double RefIndex_v = 1.;
-	if( wlAir > 2000. )
-	{
-		double wlVacuum = wlAir;
-		for( int i=0; i<2; ++i )
-		{
-			RefIndex_v = RefIndex(1e8 / wlVacuum);
-			wlVacuum = wlAir * RefIndex_v;
-		}
-	}
-
-	return (realnum)(wlAir * RefIndex_v);
-}
-
-/* RefIndex calculates the index of refraction of air using the line energy in wavenumbers for STP air */
-double RefIndex(double EnergyWN)
-{
-	DEBUG_ENTRY( "RefIndex()" );
-
-	ASSERT( EnergyWN > 0. );
-
-	double RefIndex_v = 1.0;
-
-	/* only do index of refraction if longward of 2000A */
-	if( EnergyWN < 5e4 )
-	{
-		/* xl is wavenumber in microns^-1, squared */
-		double xl = EnergyWN * 1e-4;
-		xl *= xl;
-
-		/* use a formula from 
-		 *>>refer	air	index refraction	Peck & Reeder 1972, JOSA, 62, 8, 958 */
-		RefIndex_v += 1e-8 * (8060.51 + 2480990.0 / (132.274 - xl) + 17455.7 / (39.32957 - xl));
-	}
-
-	ASSERT( RefIndex_v >= 1. );
-	return RefIndex_v;
 }
 
 /*WavlenErrorGet - given the real wavelength in A for a line

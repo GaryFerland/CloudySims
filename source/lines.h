@@ -15,25 +15,26 @@ class LineID
 {
 	string p_chLabel;
 	// the constructors will make sure that this is always a wavelength in vacuum
-	realnum p_wave;
+	t_wavl p_wave;
 	// the remaining parameters are optional, used for line disambiguation
 	int p_indLo;
 	int p_indHi;
 	realnum p_ELo;
 public:
 	LineID() :
-		p_wave(-1_r), p_indLo(-1), p_indHi(-1), p_ELo(-1_r) {}
+		p_indLo(-1), p_indHi(-1), p_ELo(-1_r) {}
 	LineID(string lbl, t_wavl wv) :
-		p_chLabel(lbl), p_indLo(-1), p_indHi(-1), p_ELo(-1_r) { p_wave = wv.wavlVac(); }
+		p_chLabel(lbl), p_wave(wv), p_indLo(-1), p_indHi(-1), p_ELo(-1_r) {}
 	LineID(string lbl, t_wavl wv, realnum e) :
-		p_chLabel(lbl), p_indLo(-1), p_indHi(-1), p_ELo(e) { p_wave = wv.wavlVac(); }
+		p_chLabel(lbl), p_wave(wv), p_indLo(-1), p_indHi(-1), p_ELo(e) {}
 	LineID(string lbl, t_wavl wv, int ilo, int ihi) :
-		p_chLabel(lbl), p_indLo(ilo), p_indHi(ihi), p_ELo(-1_r) { p_wave = wv.wavlVac(); }
+		p_chLabel(lbl), p_wave(wv), p_indLo(ilo), p_indHi(ihi), p_ELo(-1_r) {}
 	LineID(string lbl, t_wavl wv, int ilo, int ihi, realnum e) :
-		p_chLabel(lbl), p_indLo(ilo), p_indHi(ihi), p_ELo(e) { p_wave = wv.wavlVac(); }
+		p_chLabel(lbl), p_wave(wv), p_indLo(ilo), p_indHi(ihi), p_ELo(e) {}
 	string chLabel() const { return p_chLabel; }
-	realnum wave() const { return p_wave; }
-	string str() const { return "\"" + p_chLabel + "\" " + t_vac(p_wave).str(); }
+	realnum wavlVac() const { return p_wave.wavlVac(); }
+	t_wavl twav() const { return p_wave; }
+	string str() const { return "\"" + p_chLabel + "\" " + p_wave.sprt_wl(); }
 	int indLo() const { return p_indLo; }
 	int indHi() const { return p_indHi; }
 	realnum ELo() const { return p_ELo; }
@@ -230,11 +231,9 @@ public:
 	{
 		return	m_chSumTyp;
 	}
-	void addComponent(const string& species,const double wavelength);
 	void addComponent(const LineID& line);
 	void addComponentID(long id);
-	void makeBlend(const char* species, const double wavelength, 
-				   const double width);
+	void makeBlend(const char* species, const t_wavl& wavelength, const realnum width);
 	void setBlendWavl();
 
 	const TransitionProxy getComponent(long ind)

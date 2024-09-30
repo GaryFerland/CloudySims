@@ -39,15 +39,15 @@ STATIC void getTransition(const LineID& line, TransitionProxy& tr)
 		long id = LineSave.findline(line);
 		if( id <= 0 )
 		{
-			fprintf( ioQQQ, "getTransition: the following line was not found: \"%s\" %.3f\n",
-					 line.chLabel().c_str(), line.wave() );
+			fprintf( ioQQQ, "getTransition: the following line was not found: \"%s\" %s\n",
+					 line.chLabel().c_str(), line.twav().sprt_wl().c_str() );
 			cdEXIT(EXIT_FAILURE);
 		}
 		tr = LineSave.lines[id].getTransition();
 		if( !tr.associated() )
 		{
-			fprintf( ioQQQ, "getTransition: the following line is not associated with a transition: \"%s\" %.3f\n",
-					 line.chLabel().c_str(), line.wave() );
+			fprintf( ioQQQ, "getTransition: the following line is not associated with a transition: \"%s\" %s\n",
+					 line.chLabel().c_str(), line.twav().sprt_wl().c_str() );
 			cdEXIT(EXIT_FAILURE);
 		}
 	}

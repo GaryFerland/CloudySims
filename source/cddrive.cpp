@@ -1700,6 +1700,12 @@ int cdRead( const string& chInputLine ) /* the string containing the command */
 		rfield.setResolutionScaleFactor(factor);
 	}
 
+	/* option to print vacuum wavelengths */
+	if( p.hasCommand("PRINT") && p.nMatch("LINE") && p.nMatch("VACUUM") )
+	{
+		prt.lgPrintLineAirWavelengths = false;
+	}
+
 	/* if the command is an init command, process it immediately
 	 * so that the lines in the init file can be inserted in situ */
 	if( p.hasCommand("INIT") )

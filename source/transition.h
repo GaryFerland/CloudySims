@@ -74,6 +74,7 @@ public:
 
 	/** wavelength, usually in Angstroms, used for printout, can be any units */
 	realnum &WLAng() const;
+	t_wavl twav() const;
 
 	/** transition energy in degrees kelvin*/
 	realnum EnergyK() const
@@ -173,6 +174,7 @@ public:
 
 	/** wavelength, usually in Angstroms, used for printout, can be any units */
 	realnum WLAng() const;
+	t_wavl twav() const;
 
 	/** transition energy in degrees kelvin*/
 	realnum EnergyK() const
@@ -454,13 +456,21 @@ inline CollisionProxy TransitionProxy::Coll() const
 	return m_list->Coll[m_index];
 }
 /** wavelength, usually in Angstroms, used for printout, can be any units */
-inline  realnum &TransitionProxy::WLAng() const
+inline realnum &TransitionProxy::WLAng() const
 {
 	return m_list->WLAng[m_index];
 }
-inline  realnum TransitionConstProxy::WLAng() const
+inline realnum TransitionConstProxy::WLAng() const
 {
 	return m_list->WLAng[m_index];
+}
+inline t_wavl TransitionProxy::twav() const
+{
+	return t_vac(WLAng());
+}
+inline t_wavl TransitionConstProxy::twav() const
+{
+	return t_vac(WLAng());
 }
 /** transition energy in wavenumbers */
 inline realnum &TransitionProxy::EnergyWN() const

@@ -1295,20 +1295,32 @@ inline sys_float exp10(sys_float x)
 typedef enum { WL_NATIVE, WL_VACUUM, WL_AIR } wl_type;
 
 /** type for declaring a wavelength with the type (air or vacuum) attached
- * no conversion from air to vacuum wavelengths or vice versa is done here */
+ *  the wavelength is stored as it was supplied, but can be converted to vacuum by wavlVac() */ 
 class t_wavl {
+	/** wavelength, in angstrom */
 	realnum p_wavl;
+	/** wavelength type: air, vacuum, or native */
 	wl_type p_type;
+	/** convert wavelength to vacuum, if needed */
 	realnum p_convertWvl() const;
-	string p_convertWvlString() const;
+	/** convert air wavelength to vacuum */
+	realnum p_wlAirVac() const;
+	/** calculate the index of refraction for STP air using the line energy
+	 \param EnergyWN - line energy in wavenumbers (cm^-1)
+	*/
+	double p_RefIndex(double EnergyWN) const;
 public:
 	t_wavl() : p_wavl(-1_r), p_type(WL_NATIVE) {}
 	t_wavl(realnum w, wl_type t) : p_wavl(w), p_type(t) {}
-	// unary minus
+	/** unary minus */
 	t_wavl operator- () const { return t_wavl(-p_wavl, p_type); }
+	/** gives the vacuum wavelength of the line in angstrom */
 	realnum wavlVac() const { return p_convertWvl(); }
-	// convert wavelength to string for user output, can be either air or vacuum
-	string str() const { return p_convertWvlString(); }
+	/** convert wavelength to string for user output, can be either air or vacuum
+	 *  this depends on whether the PRINT LINE VACUUM command is in effect */
+	string sprt_wl() const;
+	/** write wavelength to output stream */
+	void prt_wl(FILE *io) const;
 };
 
 // shorthand for turning literal constants into wavelengths, e.g. 1393.75_vac or 2795.53_air

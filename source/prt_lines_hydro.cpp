@@ -434,7 +434,7 @@ void lines_hydro(void)
 							realnum Enerwn = realnum(hydro_energy(nelem, ipLo, -1, -1, -1) -
 										 hydro_energy(nelem, ipHi, -1, -1, -1));
 							realnum wl = (realnum)wn2ang( double(Enerwn) );
-							atmdat.WaveLengthCaseB[nelem][ipHi][ipLo] = wl;
+							atmdat.WaveLengthCaseB[nelem][ipHi][ipLo] = t_vac(wl);
 							long ip = ipoint( Enerwn*WAVNRYD );
 							lindst(case_b_Intensity,t_vac(wl),chLab,ip,'i',false," case a or case b from Hummer & Storey tables" );
 						}

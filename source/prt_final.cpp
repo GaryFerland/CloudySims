@@ -144,7 +144,7 @@ STATIC void PrintSpectrum ()
 				" >>PROBLEM Normalization line (%s) has small or zero intensity, its value was %.2e and its intensity was set to 1.\n"
 				" >>Please consider using another normalization line (this is set with the NORMALIZE command).\n"
 				" >>The relative intensities will be meaningless, and many lines may appear too faint.\n",
-					LineSave.NormLine.str().c_str(), snorm);
+					LineSave.NormLine.twav().sprt_wl().c_str(), snorm);
 			snorm = 1.;
 		}
 		for( i=0; i < LineSave.nsum; i++ )
@@ -902,7 +902,7 @@ void PrtFinal(void)
 		if( dense.lgElmtOn[ipHYDROGEN] )
 		{
 			/* this is a major logical error if hydrogen is turned on */
-			fprintf( ioQQQ, " PrtFinal could not find H  1 %s with cdLine.\n", Hbeta_WavLen.str().c_str() );
+			fprintf( ioQQQ, " PrtFinal could not find H  1 %s with cdLine.\n", Hbeta_WavLen.sprt_wl().c_str() );
 			cdEXIT(EXIT_FAILURE);
 		}
 		else
@@ -1127,7 +1127,7 @@ void PrtFinal(void)
 		/* >>chng 06 may 15, changed this so that it works for up to six sig figs. */
 		if( cdLine("Ca B",Hbeta_WavLen,&hbcab,&absint)<=0 )
 		{
-			fprintf( ioQQQ, " PrtFinal could not find Ca B %s with cdLine.\n", Hbeta_WavLen.str().c_str() );
+			fprintf( ioQQQ, " PrtFinal could not find Ca B %s with cdLine.\n", Hbeta_WavLen.sprt_wl().c_str() );
 			cdEXIT(EXIT_FAILURE);
 		}
 

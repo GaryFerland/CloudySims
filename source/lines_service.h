@@ -142,18 +142,6 @@ double abscf(double gf,
 /** setting true will use low-density Lyman branching ratios */
 #define LOWDEN_LYMAN 0
 
-/**wlAirVac compute wavelength in air or vacuum given hardcoded air wavelengths,
- * option set by parse option PRINT WAVELENGTH VACUUM
- * returns wavelength in air or vac, depending on this flag
- \param wlAir - air wavelength
- */
-realnum wlAirVac( double wlAir );
-
-/** RefIndex calculates the index of refraction of air using the line energy in wavenumbers for STP air
- \param EnergyWN - energy in wavenumbers
- */
-double RefIndex(double EnergyWN);
-
 
 /**WavlenErrorGet - given the real wavelength in A for a line
  * routine will find the error expected between the real 

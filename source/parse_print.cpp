@@ -592,8 +592,8 @@ void ParsePrint(
 
 		else if( p.nMatch("VACUUM") )
 		{
-			/* print lines vacuum - use vacuum wavelengths */
-			prt.lgPrintLineAirWavelengths = false;
+			/* this was already handled in cdRead() */
+			(void)0;
 		}
 
 		else

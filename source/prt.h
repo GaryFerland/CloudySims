@@ -26,22 +26,6 @@ void PrtFinal(void);
 /**SetPrintLineCol	set main line block & wl printing formats */
 void SetPrintLineCol ();
 
-/**prt_wl write wavelength to io 
-\param *io
-\param wavelength
-*/
-void prt_wl( 
-	FILE *io , 
-	realnum wavelength );
-
-/**sprt_wl write wavelength to string - must be kept parallel with prt_wl 
-\param *chString
-\param wl
-*/
-void sprt_wl( 
-	string& chString,
-	realnum wl );
-
 /** prt_line_err produce an error message containing the line label and wavelength
 \param *ioOUT		output file handle
 \param &lineid		line identification
@@ -53,7 +37,7 @@ void prt_line_err( FILE *ioOUT, const LineID& lineid );
 \param *label		line label
 \param wvlng		line wavelength
  */
-void prt_line_inlist ( FILE *ioOUT, const char *label, realnum wvlng );
+void prt_line_inlist ( FILE *ioOUT, const char *label, t_wavl twav );
 
 /**PrtHeader print large block of incident continuum numbers at start, 
  just after echoing input commands */

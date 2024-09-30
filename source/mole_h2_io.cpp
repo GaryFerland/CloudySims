@@ -1810,24 +1810,19 @@ void diatomics::H2_PunchDo( FILE* io ,  char chJOB[] , const char chTime[] , lon
 					continue;
 				if( H2_SaveLine[iElecHi][iVibHi][iRotHi][iElecLo][iVibLo][iRotLo] > thresh )
 				{
-					/* air wavelength in microns */
-					/* WLAng contains correction for index of refraction of air */
-					double wl = (*tr).WLAng()/1e4;
 					fprintf(io, "%li-%li %c(%li)", iVibHi, iVibLo, chMolBranch( iRotHi, iRotLo ), iRotLo );
-					fprintf( io, "\t%ld\t%ld\t%ld\t%ld\t%ld\t%ld", iElecHi , iVibHi , iRotHi , iElecLo , iVibLo , iRotLo);
-					/* WLAng is in vacuum, prt_wl() converts to air if needed */
-					fprintf( io, "\t%.7f\t", wl );
-					/*prt_wl print floating wavelength in Angstroms, in output format */
-					prt_wl( io , (*tr).WLAng() );
+					fprintf(io, "\t%ld\t%ld\t%ld\t%ld\t%ld\t%ld\t", iElecHi, iVibHi, iRotHi, iElecLo, iVibLo, iRotLo);
+					/* prt_wl print wavelength in output format, converts to air if needed */
+					tr->twav().prt_wl(io);
 					/* the log of the line intensity or luminosity */
 					fprintf( io, "\t%.3f\t%.3e", 
 						log10( MAX2(1e-37, H2_SaveLine[iElecHi][iVibHi][iRotHi][iElecLo][iVibLo][iRotLo]*radius.Conv2PrtInten) ), 
 						H2_SaveLine[iElecHi][iVibHi][iRotHi][iElecLo][iVibLo][iRotLo]*renorm );
 					/* excitation energy of upper level in K */
-					fprintf( io, "\t%.3f", (*Hi).energy().K() );
+					fprintf(io, "\t%.3f", (*Hi).energy().K() );
 					/* the product g_hi h nu * Aul */
-					fprintf( io, "\t%.3e", (*tr).Emis().Aul() * (*tr).EnergyErg() * (*(*tr).Hi()).g() );
-					fprintf( io, "\n");
+					fprintf(io, "\t%.3e", (*tr).Emis().Aul() * (*tr).EnergyErg() * (*(*tr).Hi()).g() );
+					fprintf(io, "\n");
 				}
 			}
 		}

@@ -586,7 +586,7 @@ bool bands_file::load()
 				fprintf( ioQQQ, "string==%s==\n" ,chLine.c_str() );
 				return false;
 			}
-			wlLo[k] = wlAirVac(FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL));
+			double dummy = FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
 			if( lgEOL )
 			{
 				fprintf( ioQQQ, " There should have been a number"
@@ -594,7 +594,8 @@ bool bands_file::load()
 				fprintf( ioQQQ, "string==%s==\n" ,chLine.c_str() );
 				return false;
 			}
-			wlHi[k] = wlAirVac(FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL));
+			wlLo[k] = t_air(dummy).wavlVac();
+			dummy = FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
 			if( lgEOL )
 			{
 				fprintf( ioQQQ, " There should have been a number"
@@ -602,6 +603,7 @@ bool bands_file::load()
 				fprintf( ioQQQ, "string==%s==\n" ,chLine.c_str() );
 				return false;
 			}
+			wlHi[k] = t_air(dummy).wavlVac();
 			if( false )
 			{
 				fprintf(ioQQQ, " band data %f %f %f \n", prt_wl[k], wlLo[k],wlHi[k] );

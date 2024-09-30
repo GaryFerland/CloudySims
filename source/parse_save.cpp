@@ -1545,9 +1545,7 @@ void ParseSave(Parser& p)
 					sncatf( chHeader, "\t" );
 				sncatf( chHeader,
 						"%s ", save.LineList[save.nsave][j].chLabel().c_str() );
-				string chTemp;
-				sprt_wl( chTemp, save.LineList[save.nsave][j].wave() );
-				sncatf( chHeader, "%s", chTemp.c_str() );
+				sncatf( chHeader, "%s", save.LineList[save.nsave][j].twav().sprt_wl().c_str() );
 			}
 		}
 		sncatf( chHeader, "\n" );
@@ -1785,9 +1783,7 @@ void ParseSave(Parser& p)
 				{
 					sncatf( chHeader, "%s ",
 							save.LineList[save.nsave][j].chLabel().c_str() );
-					string chTemp;
-					sprt_wl( chTemp, save.LineList[save.nsave][j].wave() );
-					sncatf( chHeader, "%s", chTemp.c_str() );
+					sncatf( chHeader, "%s", save.LineList[save.nsave][j].twav().sprt_wl().c_str() );
 					if( j != save.nLineList[save.nsave] )
 					{
 						sncatf( chHeader, "\t" );

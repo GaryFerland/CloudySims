@@ -2074,28 +2074,21 @@ void SaveDo(
 							/* print element name, nuclear charge */
 							fprintf( save.params[ipPun].ipPnunit, "%li\t%s", 
 								nelem+1 , elementnames.chElementSym[nelem] );
-							/*prt_wl print floating wavelength in Angstroms, in output format */
+							/*prt_wl print wavelength in output format */
 							fprintf( save.params[ipPun].ipPnunit, "\t" );
-							prt_wl( save.params[ipPun].ipPnunit , 
-								iso_sp[ipHE_LIKE][nelem].trans(ipHe2p1P,ipHe1s1S).WLAng() );
+							iso_sp[ipHE_LIKE][nelem].trans(ipHe2p1P,ipHe1s1S).twav().prt_wl(save.params[ipPun].ipPnunit);
 							fprintf( save.params[ipPun].ipPnunit, "\t" );
-							prt_wl( save.params[ipPun].ipPnunit , 
-								iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P1,ipHe1s1S).WLAng() );
+							iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P1,ipHe1s1S).twav().prt_wl(save.params[ipPun].ipPnunit);
 							fprintf( save.params[ipPun].ipPnunit, "\t" );
-							prt_wl( save.params[ipPun].ipPnunit , 
-								iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P2,ipHe1s1S).WLAng() );
+							iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P2,ipHe1s1S).twav().prt_wl(save.params[ipPun].ipPnunit);
 							fprintf( save.params[ipPun].ipPnunit, "\t" );
-							prt_wl( save.params[ipPun].ipPnunit , 
-								iso_sp[ipHE_LIKE][nelem].trans(ipHe2s3S,ipHe1s1S).WLAng() );
+							iso_sp[ipHE_LIKE][nelem].trans(ipHe2s3S,ipHe1s1S).twav().prt_wl(save.params[ipPun].ipPnunit);
 							fprintf( save.params[ipPun].ipPnunit, "\t" );
-							prt_wl( save.params[ipPun].ipPnunit , 
-								iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P2,ipHe2s3S).WLAng() );
+							iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P2,ipHe2s3S).twav().prt_wl(save.params[ipPun].ipPnunit);
 							fprintf( save.params[ipPun].ipPnunit, "\t" );
-							prt_wl( save.params[ipPun].ipPnunit , 
-								iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P1,ipHe2s3S).WLAng() );
+							iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P1,ipHe2s3S).twav().prt_wl(save.params[ipPun].ipPnunit);
 							fprintf( save.params[ipPun].ipPnunit, "\t" );
-							prt_wl( save.params[ipPun].ipPnunit , 
-								iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P0,ipHe2s3S).WLAng() );
+							iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P0,ipHe2s3S).twav().prt_wl(save.params[ipPun].ipPnunit);
 							fprintf( save.params[ipPun].ipPnunit, "\n"); 
 						}
 					}
@@ -2255,8 +2248,7 @@ void SaveDo(
 								else
 									PrtQuantity = relI;
 
-								string wavlStr;
-								sprt_wl(wavlStr, iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).WLAng());
+								string wavlStr = iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).twav().sprt_wl();
 
 								if (ipHi< iso_sp[ipH_LIKE][ipHYDROGEN].numLevels_local - iso_sp[ipH_LIKE][ipHYDROGEN].nCollapsed_local )
 									/* print resolved levels */
@@ -2560,14 +2552,10 @@ void SaveDo(
 						{
 							fprintf( save.params[ipPun].ipPnunit,
 								"%.5e", radius.depth_mid_zone );
-
 							fprintf( save.params[ipPun].ipPnunit,
-									 "\t%s ",
-									 specline.chLabel().c_str() );
-							string chTemp;
-							sprt_wl( chTemp, specline.wave() );
+									 "\t%s ", specline.chLabel().c_str() );
 							fprintf( save.params[ipPun].ipPnunit,
-								"%s", chTemp.c_str() );
+									 "%s", specline.twav().sprt_wl().c_str() );
 
 							double lower = 0.,
 							       upper = 0.,
@@ -2690,7 +2678,7 @@ void SaveDo(
 					{ "C  2", "O  1", "O  1", "C  1", "C  1" };
 					double Wl[NLINE_NOTH_H2]=
 					{ 157.636 , 63.1679 , 145.495, 609.590 , 370.269 };
-					/* these are air wavelengths in microns, conv to Angstroms before call */
+					/* these are air wavelengths in micron, conv to angstrom before call */
 					/* >>chng 05 sep 06, many of following wavelengths updated to agree
 					 * with output - apparently not updated when energies changed */
 					double Wl_H2[NLINE_H2]=
@@ -2701,7 +2689,7 @@ void SaveDo(
 					/* print a header for the lines */
 					for( n=0; n<NLINE_NOTH_H2; ++n )
 					{
-						prt_line_inlist( save.params[ipPun].ipPnunit, chLabel[n], Wl[n] );
+						prt_line_inlist( save.params[ipPun].ipPnunit, chLabel[n], t_air(Wl[n]) );
 						/* get the line, non positive return says didn't find it */
 						/* arguments are 4-char label, wavelength, return log total intensity, linear rel inten */
 						if( cdLine( chLabel[n] , t_air(Wl[n]*1e4) , &rel, &absval ) <= 0 )
@@ -2724,7 +2712,7 @@ void SaveDo(
 							"lines where X goes from 0 to 29\n\n");
 						for( n=0; n<NLINE_H2; ++n )
 						{
-							prt_line_inlist( save.params[ipPun].ipPnunit,   "H2  ", Wl_H2[n] );
+							prt_line_inlist( save.params[ipPun].ipPnunit,   "H2  ", t_air(Wl_H2[n]) );
 							/* get the line, non positive return says didn't find it */
 							if( cdLine( "H2" , t_air(Wl_H2[n]*1e4) , &rel, &absval ) <= 0 )
 							{
@@ -2901,10 +2889,8 @@ void SaveDo(
 							if( save.lgLineListRatio[ipPun] && is_odd(j) )
 								fprintf( save.params[ipPun].ipPnunit , "/" );
 
-							fprintf( save.params[ipPun].ipPnunit, "%s ", save.LineList[ipPun][j].chLabel().c_str() );
-							string chTemp;
-							sprt_wl( chTemp, save.LineList[ipPun][j].wave() );
-							fprintf( save.params[ipPun].ipPnunit, "%s ", chTemp.c_str() );
+							fprintf(save.params[ipPun].ipPnunit, "%s ", save.LineList[ipPun][j].chLabel().c_str());
+							fprintf(save.params[ipPun].ipPnunit, "%s ", save.LineList[ipPun][j].twav().sprt_wl().c_str());
 						}
 
 						/* if taking ratio print every other line as ratio
@@ -3897,10 +3883,10 @@ void Save1Line( const TransitionProxy& t , FILE * ioPUN , realnum xLimit  , long
 			fprintf( ioPUN, "%-*.*s\t",CHARS_SPECIES, CHARS_SPECIES, chIonLbl(t).c_str());
 
 			/* print wavelengths, either line in main printout labels, 
-			 * or in various units in exponential notation - prt_wl is in prt.c */
-			if( strcmp( save.chConSavEnr[save.ipConPun], "labl" )== 0 )
+			 * or in various units in exponential notation */
+			if( strcmp( save.chConSavEnr[save.ipConPun], "labl" ) == 0 )
 			{
-				prt_wl( ioPUN , t.WLAng() );
+				t.twav().prt_wl(ioPUN);
 			}
 			else
 			{

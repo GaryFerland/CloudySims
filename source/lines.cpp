@@ -55,10 +55,7 @@ string LinSv::label() const
 	DEBUG_ENTRY( "LinSv::label()" );
 	string val = chALab();
 	val.resize( NCHLAB-1, ' ' );
-	val += " ";
-	string buf;
-	sprt_wl(buf, wavelength());
-	val += buf;
+	val += " " + t_vac(wavelength()).sprt_wl();
 	return val;
 }
 
@@ -237,19 +234,15 @@ void LinSv::addComponent(const LineID& line)
 		addComponentID(id);
 	}
 }
-void LinSv::addComponent(const string& species,const double wavelength1)
-{
-	addComponent(LineID(species, t_vac(wavelength1)));
-}
 
 // Automatically generate blend for specified species, at wavelength +/- width
-void LinSv::makeBlend(const char* chLabel,const double wavelength1, const double width)
+void LinSv::makeBlend(const char* chLabel,const t_wavl& wavelength1, const realnum width)
 {
 	DEBUG_ENTRY("LinSv::makeBlend()");
 	if ( LineSave.ipass == 0 )
 	{
-		realnum wlo = wlAirVac(wavelength1-width),
-			whi = wlAirVac(wavelength1+width);
+		realnum wlo = wavelength1.wavlVac()-width;
+		realnum whi = wavelength1.wavlVac()+width;
 			
 		/* check that chLabel[4] is null - supposed to be 4 char + end */
 		if( strlen(chLabel) > NCHLAB-1 )
@@ -391,7 +384,7 @@ long t_LineSave::findline(const LineID& line)
 	 * FLT_EPSILON*wavelength to broaden bounds enough to allow for
 	 * cancellation error
 	 */
-	realnum errorwave = WavlenErrorGet( line.wave(), LineSave.sig_figs ) + FLT_EPSILON*line.wave(), 
+	realnum errorwave = WavlenErrorGet( line.wavlVac(), LineSave.sig_figs ) + FLT_EPSILON*line.wavlVac(), 
 		smallest_error=BIGFLOAT,
 		smallest_error_w_correct_label=BIGFLOAT;
 
@@ -400,19 +393,17 @@ long t_LineSave::findline(const LineID& line)
 	// lines will not yet be sorted
 	if (ipass == 1)
 	{
-		string wlbuf;
 		// Need to search for lines within allowed band, and plausible confusions
 
 		// Find position in list of lines
 		vector<size_t>::iterator first =
 			lower_bound(SortWL.begin(),SortWL.end(),
-						line.wave()+errorwave, wavelength_compare_realnum);
+						line.wavlVac()+errorwave, wavelength_compare_realnum);
 
 		// first is now first line below upper limit
 		if (first == SortWL.end())
 		{
-			sprt_wl(wlbuf,line.wave());
-			fprintf(ioQQQ,"Didn't find anything at %s\n",wlbuf.c_str());
+			fprintf(ioQQQ,"Didn't find anything at %s\n",line.twav().sprt_wl().c_str());
 			cdEXIT(EXIT_FAILURE);
 		}
 
@@ -420,7 +411,7 @@ long t_LineSave::findline(const LineID& line)
 		vector<size_t>::iterator second;
 		for(second=first; second != SortWL.end(); ++second)
 		{
-			if (wavelength(*second) < line.wave()-errorwave)
+			if (wavelength(*second) < line.wavlVac()-errorwave)
 				break;
 		}
 
@@ -450,7 +441,7 @@ long t_LineSave::findline(const LineID& line)
 			if ( lgMatch )
 			{
 				++nmatch;
-				realnum dwl = wavelength(*pos)-line.wave();
+				realnum dwl = wavelength(*pos)-line.wavlVac();
 				if ( nmatch >= 2 )
 				{
 					if ( nmatch == 2 )
@@ -458,7 +449,7 @@ long t_LineSave::findline(const LineID& line)
 						fprintf(ioQQQ,"WARNING: multiple matching lines found in search for %s\n",
 								line.str().c_str());
 						fprintf(ioQQQ,"WARNING: match 1 is \"%s\" (dwl=%gA)\n",
-								lines[*found].biglabel().c_str(),wavelength(*found)-line.wave());
+								lines[*found].biglabel().c_str(),wavelength(*found)-line.wavlVac());
 					}
 					fprintf(ioQQQ,"WARNING: match %d is \"%s\" (dwl=%gA)\n",
 							nmatch, lines[*pos].biglabel().c_str(),dwl);
@@ -466,7 +457,7 @@ long t_LineSave::findline(const LineID& line)
 				if ( found == SortWL.end() )
 				{
 					found = pos;
-					dbest = fabs(wavelength(*pos)-line.wave());
+					dbest = fabs(wavelength(*pos)-line.wavlVac());
 				}
 				else if ( fabs(dwl) < dbest )
 				{
@@ -506,8 +497,8 @@ long t_LineSave::findline(const LineID& line)
 		realnum besterror = 0.;
 		for (;;)
 		{
-			realnum errordown = wavelength(*(first-1))-line.wave();
-			realnum errorup = line.wave() - (second == SortWL.end() ? 0.0 : wavelength(*second)) ;
+			realnum errordown = wavelength(*(first-1))-line.wavlVac();
+			realnum errorup = line.wavlVac() - (second == SortWL.end() ? 0.0 : wavelength(*second)) ;
 			realnum error = 0.;
 			vector<size_t>::iterator next;
 			if ( errordown < errorup || second == SortWL.end())
@@ -539,7 +530,7 @@ long t_LineSave::findline(const LineID& line)
 			if (best != SortWL.end() && error > 100.*besterror)
 				break;
 			// Assume this is clearly unmatched
-			if (error > 0.01*line.wave())
+			if (error > 0.01*line.wavlVac())
 				break;
 		}
 		if (best != SortWL.end())
@@ -559,7 +550,7 @@ long t_LineSave::findline(const LineID& line)
 	
 	for( j=1; j < nsum; j++ )
 	{
-		realnum current_error = (realnum)fabs(wavelength(j)-line.wave());
+		realnum current_error = (realnum)fabs(wavelength(j)-line.wavlVac());
 		/* use pre-capitalized version of label to be like input chLineLabel */
 		const char *chCaps = lines[j].chCLab();
 
@@ -592,14 +583,14 @@ long t_LineSave::findline(const LineID& line)
 
 		/* check wavelength and chLabel for a match */
 		if( lgDEBUG && (current_error <= errorwave || 
-			   fp_equal( line.wave() + errorwave, wavelength(j) ) ||
-			   fp_equal( line.wave() - errorwave, wavelength(j) ))  
+			   fp_equal( line.wavlVac() + errorwave, wavelength(j) ) ||
+			   fp_equal( line.wavlVac() - errorwave, wavelength(j) ))  
 		    && strcmp(chCaps,chCARD.c_str()) == 0 )
 		{
 			/* match, so set emiss to emissivity in line */
 			/* and announce success by returning line index within stack */
 			printf("Matched %s %15.8g %ld %18.11g %s\n",
-				   chCaps,line.wave(),j,wavelength(j),
+				   chCaps,line.wavlVac(),j,wavelength(j),
 				   lines[j].biglabel().c_str());
 		}
 	}

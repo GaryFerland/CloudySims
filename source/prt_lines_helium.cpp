@@ -336,7 +336,7 @@ void lines_helium()
 					double intens = linint( CaBDensities, intens_at_Te, NUMDENS, log10_eden );
 					intens = exp10(intens) * dense.xIonDense[nelem][nelem+1-ipISO]*dense.eden;
 					ASSERT( intens >= 0. );
-					linadd( intens, t_vac(atmdat.CaseBWlHeI[i]), "Ca B", 'i', "Case B intensity " );
+					linadd( intens, atmdat.CaseBWlHeI[i], "Ca B", 'i', "Case B intensity " );
 				}
 			}
 		}
@@ -375,9 +375,9 @@ void lines_helium()
 			phots( iso_sp[ipH_LIKE][ipHYDROGEN].trans(upperIndexofH8,ipH2s) );
 
 		/* now multiply by ergs of normalization line, so that relative flux of
-		* this line will be ratio of photon fluxes. */
-		if( LineSave.NormLine.wave() > 0 )
-			photons_3889_plus_7065 *= (ERG1CM*1.e8)/LineSave.NormLine.wave();
+		 * this line will be ratio of photon fluxes. */
+		if( LineSave.NormLine.wavlVac() > 0 )
+			photons_3889_plus_7065 *= (ERG1CM*1.e8)/LineSave.NormLine.wavlVac();
 		linadd( photons_3889_plus_7065, 3889_air, "Pho+", 'i',
 			"photon sum given in Porter et al. 2007 (astro-ph/0611579)");
 	}
@@ -437,11 +437,11 @@ STATIC void GetStandardHeLines()
 		double Ehi = iso_sp[ipHE_LIKE][ipHELIUM].energy(nHi, lHi, sHi, 2*jHi+1);
 		if( Elo >= 0. && Ehi >= 0. )
 		{
-			realnum Enerwn = fabs(Ehi - Elo);
-			atmdat.CaseBWlHeI.emplace_back( (realnum)wn2ang( (double)Enerwn ) );
+			double Enerwn = fabs(Ehi - Elo);
+			atmdat.CaseBWlHeI.emplace_back(t_vac(wn2ang(Enerwn)));
 		}
 		else
-			atmdat.CaseBWlHeI.emplace_back( wl );
+			atmdat.CaseBWlHeI.emplace_back(t_air(wl));
 		d.checkEOL();
 
 		for( long ipDens = 0; ipDens < NUMDENS; ++ipDens )
