@@ -46,7 +46,7 @@ void lines_setup(void)
 			}
 
 			/*now put into standard format */
-			TauLine2[i].WLAng() = wn2ang( double( TauLine2[i].EnergyWN() ) );
+			TauLine2[i].WLangVac() = wn2angVac( double( TauLine2[i].EnergyWN() ) );
 			(*TauLine2[i].Lo()).Pop() = 0.;
 			(*TauLine2[i].Hi()).Pop() = 0.;
 			TauLine2[i].Emis().iRedisFun() = ipPRD;
@@ -164,7 +164,7 @@ void lines_setup(void)
 		}
 
 		/*now put into standard format */
-		HFLines[i].WLAng() = 1.e8f/HFLines[i].EnergyWN();
+		HFLines[i].WLangVac() = 1.e8f/HFLines[i].EnergyWN();
 		(*HFLines[i].Lo()).Pop() = 0.;
 		(*HFLines[i].Hi()).Pop() = 0.;
 		/* change from partial to complete redistribution */

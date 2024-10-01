@@ -697,7 +697,8 @@ void SaveDo(
 								ipHi = tr->Tran().ipHi();
 								fprintf( save.params[ipPun].ipPnunit,"%s\t%i\t%i\t",
 										dBaseSpecies[ipSpecies].chLabel,ipLo+1,ipHi+1);
-								fprintf( save.params[ipPun].ipPnunit,"%.5e\t%.5e",tr->Tran().WLAng() , tr->Tran().Emis().Aul() );
+								fprintf( save.params[ipPun].ipPnunit,"%s\t%.5e",tr->Tran().twav().sprt_wl().c_str(),
+										 tr->Tran().Emis().Aul() );
 								fprintf( save.params[ipPun].ipPnunit,"\n");
 							}
 							// temperature scale
@@ -2238,9 +2239,9 @@ void SaveDo(
 									continue;
 
 								double relI,absI,PrtQuantity;
-								double WV = iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).WLAng();
+								t_wavl WV = iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).twav();
 
-								if (cdLine("H  1",t_vac(WV),&relI,&absI) == 0)
+								if (cdLine("H  1",WV,&relI,&absI) == 0)
 									continue;
 
 								if( save.punarg[ipPun][0] > 0 )

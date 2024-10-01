@@ -433,7 +433,7 @@ void lines_hydro(void)
 							 */
 							realnum Enerwn = realnum(hydro_energy(nelem, ipLo, -1, -1, -1) -
 										 hydro_energy(nelem, ipHi, -1, -1, -1));
-							realnum wl = (realnum)wn2ang( double(Enerwn) );
+							realnum wl = (realnum)wn2angVac( double(Enerwn) );
 							atmdat.WaveLengthCaseB[nelem][ipHi][ipLo] = t_vac(wl);
 							long ip = ipoint( Enerwn*WAVNRYD );
 							lindst(case_b_Intensity,t_vac(wl),chLab,ip,'i',false," case a or case b from Hummer & Storey tables" );
@@ -460,11 +460,8 @@ void lines_hydro(void)
 					tpc_comment = " two photon continuum, " +
 						iso_comment_tran_levels( ipISO, nelem, (*tnu).ipLo, (*tnu).ipHi );
 				}
-				// to be correct this should use t_vac(), but we use t_air() for backward compatibility
-				// since this is a continuuum and not a line, there is no "correct" wavelength anyway...
-				// this only makes a difference for the H I two-photon continuum
 				linadd(	tnu->AulTotal * tnu->E2nu * EN1RYD * (*tnu->Pop),
-						t_air(2. * wn2ang( iso_sp[ipH_LIKE][nelem].trans( (*tnu).ipHi, (*tnu).ipLo ).EnergyWN() )),
+						t_vac(2. * wn2angVac( iso_sp[ipH_LIKE][nelem].trans( (*tnu).ipHi, (*tnu).ipLo ).EnergyWN() )),
 						chLabel.c_str(), 'r', tpc_comment.c_str() );
 			}
 

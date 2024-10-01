@@ -376,11 +376,11 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	 * since xIntensity is used here */
 	xIntensity_in = xIntensity*t.Emis().FracInwd();
 	ASSERT( xIntensity_in>=0. );
-	linadd(xIntensity_in,t_vac(t.WLAng()),"Inwd",'i',chComment);
+	linadd(xIntensity_in,t.twav(),"Inwd",'i',chComment);
 	
 	/* cooling part of line */
 	other = t.Coll().cool();
-	linadd(other,t_vac(t.WLAng()),"Coll",'i',chComment);
+	linadd(other,t.twav(),"Coll",'i',chComment);
 	
 	/* fluorescent excited part of line */
 	double radiative_branching;
@@ -409,12 +409,12 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	}
 
 	other = (*t.Lo()).Pop() * t.Emis().pump() * radiative_branching * t.EnergyErg();
-	linadd(other,t_vac(t.WLAng()),"Pump",'i',chComment);
+	linadd(other,t.twav(),"Pump",'i',chComment);
 		
 
 	/* heating part of line */
 	other = t.Coll().heat();
-	linadd(other,t_vac(t.WLAng()),"Heat",'i',chComment);
+	linadd(other,t.twav(),"Heat",'i',chComment);
 
 	return;
 }
@@ -443,7 +443,7 @@ void TransitionProxy::Junk() const
 	DEBUG_ENTRY( "TransitionProxy::Junk()" );
 
 		/* wavelength, usually in A, used for printout */
-	WLAng() = -FLT_MAX;
+	WLangVac() = -FLT_MAX;
 
 	/* transition energy in wavenumbers */
 	EnergyWN() = -FLT_MAX;

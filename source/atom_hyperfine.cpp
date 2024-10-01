@@ -637,7 +637,7 @@ void HyperfineCreate(void)
 		}
 
 		double fenergyWN = MAX2(ENERGY_MIN_WN, 1.0 / wavelength);
-		HFLines[j].WLAng() = (realnum)(wavelength * 1e8f);
+		HFLines[j].WLangVac() = (realnum)(wavelength * 1e8f);
 		HFLines[j].EnergyWN() = (realnum) fenergyWN;
 
 		HFLines[j].Emis().dampXvel() = (realnum)( HFLines[j].Emis().Aul()
@@ -711,7 +711,7 @@ void HyperfineCreate(void)
 		q12 = (*HFLines[i].Hi()).g()/ (*HFLines[i].Lo()).g() * q21 * exp(-1 * h * c * HFLines[i].EnergyWN / (k * phycon.te)); 
 
 		x = Ne * q12 / (HFLines[i].Emis().Aul() * (1 + Ne * q21 / HFLines[i].Aul()));
-		HFLines[i].xIntensity() = N * HFLines[i].Emis().Aul() * x / (1.0 + x) * h * c / (HFLines[i].EnergyAng() / 1e8);
+		HFLines[i].xIntensity() = N * HFLines[i].Emis().Aul() * x / (1.0 + x) * h * c / (HFLines[i].WLangVac() / 1e8);
 
 	}
 #	endif

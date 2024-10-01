@@ -106,7 +106,7 @@ void lines_helium()
 				}
 
 				linadd(	tnu->AulTotal * tnu->E2nu * EN1RYD * (*tnu->Pop), 
-						t_vac(2. * wn2ang( (*sp).trans( tnu->ipHi, tnu->ipLo ).EnergyWN() )),
+						t_vac(2. * wn2angVac( (*sp).trans( tnu->ipHi, tnu->ipLo ).EnergyWN() )),
 						chLabel.c_str(), 'r', tpc_comment.c_str() );
 			}
 
@@ -212,7 +212,7 @@ void lines_helium()
 
 						/* 
 						fprintf(ioQQQ,"1 loop %li %li %.1f\n", ipLo,ipHi, 
-							sp->trans(ipHi,ipLo).WLAng() ); */
+							sp->trans(ipHi,ipLo).WLangVac() ); */
 						string comment_trans = "";
 						if( LineSave.ipass == 0 )
 						{
@@ -438,7 +438,7 @@ STATIC void GetStandardHeLines()
 		if( Elo >= 0. && Ehi >= 0. )
 		{
 			double Enerwn = fabs(Ehi - Elo);
-			atmdat.CaseBWlHeI.emplace_back(t_vac(wn2ang(Enerwn)));
+			atmdat.CaseBWlHeI.emplace_back(t_vac(wn2angVac(Enerwn)));
 		}
 		else
 			atmdat.CaseBWlHeI.emplace_back(t_air(wl));

@@ -609,7 +609,7 @@ void CoolEvaluate(double *tot)
 	(*(*TauDummy).Lo()).nelem() = 0;
 	(*TauDummy).Emis().Aul() = 0.;
 	(*TauDummy).EnergyWN() = 0.;
-	(*TauDummy).WLAng() = 0.;
+	(*TauDummy).WLangVac() = 0.;
 
 	// reset abundances to original values, may have been set zero to protect against old cloudy lines
 	if( atmdat.lgChiantiOn || atmdat.lgStoutOn)

@@ -47,17 +47,6 @@ STATIC void ContBandsCreate(
 	 * return value is 0 for success, 1 for failure */
 	 const char chFile[] );
 
-STATIC inline void print_emline_fine( const char *LineGroup, const TransitionProxy &tr )
-{
-	fprintf( ioQQQ, "%-10s -> '%s'\t Energy Ang= %.4e\t Ryd= %.4e\t Fine= %ld\t fine_ener= %.4e\n",
-			LineGroup,
-			tr.chLabel().c_str(),
-			tr.EnergyAng(),
-			tr.EnergyRyd(),
-			tr.Emis().ipFine(),
-			rfield.fine_anu[ tr.Emis().ipFine() ] );
-}
-
 void ContCreatePointers(void)
 {
 	/* counter to say whether pointers have ever been evaluated */
@@ -660,13 +649,6 @@ void ContCreatePointers(void)
 			/* get pointer to energy in continuum mesh */
 			UTALines[i].ipCont() = ipLineEnergy(UTALines[i].EnergyRyd(), chIonLbl(UTALines[i]).c_str(),0 );
 			UTALines[i].Emis().ipFine() = ipFineCont(UTALines[i].EnergyRyd() );
-			{
-				enum{ DEBUG_LOC = false };
-				if( DEBUG_LOC && UTALines[i].chLabel() == "Ar 7 43.5239A" )
-				{
-					print_emline_fine( "UTA", UTALines[i] );
-				}
-			}
 
 			/* find heating per absorption,
 			 * first find threshold for this shell in ergs */
@@ -837,23 +819,10 @@ void ContCreatePointers(void)
 		}
 	}
 
-	{
-		enum {DEBUG_LOC=false};
-		if( DEBUG_LOC )
-		{	
-			for( long i=0; i<11; ++i )
-			{
-				(*TauDummy).WLAng() = (realnum)(PI * exp10((double)i));
-				fprintf(ioQQQ,"%.2f\t%s\n", (*TauDummy).WLAng() , chLineLbl(*TauDummy).c_str());
-			}
-			cdEXIT(EXIT_FAILURE);
-		}
-	}
-
 	/* option to print out whole thing with "trace lines" command */
 	if( trace.lgTrLine )
 	{
-		fprintf( ioQQQ, "       WL(Ang)   E(RYD)   IP   gl  gu      gf       A        damp     abs K\n" );
+		fprintf( ioQQQ, "      WLvac(Ang)   E(RYD)   IP   gl  gu      gf       A        damp     abs K\n" );
 
 		/*Atomic Or Molecular lines*/
 		for (int ipSpecies=0; ipSpecies < nSpecies; ++ipSpecies)
@@ -861,7 +830,7 @@ void ContCreatePointers(void)
 			for( EmissionList::iterator em=dBaseTrans[ipSpecies].Emis().begin();
 				  em != dBaseTrans[ipSpecies].Emis().end(); ++em)
 			{
-				long iWL_Ang = (long)(*em).Tran().WLAng();
+				long iWL_Ang = (long)(*em).Tran().WLangVac();
 				
 				if( iWL_Ang > 1000000 )
 				{
@@ -872,7 +841,7 @@ void ContCreatePointers(void)
 					iWL_Ang /= 1000;
 				}
 				fprintf( ioQQQ, " %10.10s%5ld%10.3e %4li%4ld%4ld%10.2e%10.2e%10.2e%10.2e\n", 
-							chLineLbl((*em).Tran()).c_str(), iWL_Ang, RYDLAM/(*em).Tran().WLAng(), 
+							chLineLbl((*em).Tran()).c_str(), iWL_Ang, RYDLAM/(*em).Tran().WLangVac(), 
 							(*em).Tran().ipCont(), (long)((*(*em).Tran().Lo()).g()), 
 							(long)((*(*em).Tran().Hi()).g()),(*em).gf(), 
 							(*em).Aul(),(*em).dampXvel(), 
@@ -882,7 +851,7 @@ void ContCreatePointers(void)
 
 		for( long i=0; i < nWindLine; i++ )
 		{
-			long iWL_Ang = (long)TauLine2[i].WLAng();
+			long iWL_Ang = (long)TauLine2[i].WLangVac();
 
 			if( iWL_Ang > 1000000 )
 			{
@@ -893,7 +862,7 @@ void ContCreatePointers(void)
 				iWL_Ang /= 1000;
 			}
 			fprintf( ioQQQ, " %10.10s%5ld%10.3e %4li%4ld%4ld%10.2e%10.2e%10.2e%10.2e\n", 
-			  chLineLbl(TauLine2[i]).c_str(), iWL_Ang, RYDLAM/TauLine2[i].WLAng(), 
+			  chLineLbl(TauLine2[i]).c_str(), iWL_Ang, RYDLAM/TauLine2[i].WLangVac(), 
 			  TauLine2[i].ipCont(), (long)((*TauLine2[i].Lo()).g()), 
 			  (long)((*TauLine2[i].Hi()).g()), TauLine2[i].Emis().gf(), 
 			  TauLine2[i].Emis().Aul(), TauLine2[i].Emis().dampXvel(), 
@@ -901,7 +870,7 @@ void ContCreatePointers(void)
 		}
 		for( size_t i=0; i < HFLines.size(); i++ )
 		{
-			long iWL_Ang = (long)HFLines[i].WLAng();
+			long iWL_Ang = (long)HFLines[i].WLangVac();
 
 			if( iWL_Ang > 1000000 )
 			{
@@ -912,7 +881,7 @@ void ContCreatePointers(void)
 				iWL_Ang /= 1000;
 			}
 			fprintf( ioQQQ, " %10.10s%5ld%10.3e %4li%4ld%4ld%10.2e%10.2e%10.2e%10.2e\n", 
-			  chLineLbl(HFLines[i]).c_str(), iWL_Ang, RYDLAM/HFLines[i].WLAng(), 
+			  chLineLbl(HFLines[i]).c_str(), iWL_Ang, RYDLAM/HFLines[i].WLangVac(), 
 			  HFLines[i].ipCont(), (long)((*HFLines[i].Lo()).g()), 
 			  (long)((*HFLines[i].Hi()).g()), HFLines[i].Emis().gf(), 
 			  HFLines[i].Emis().Aul(), HFLines[i].Emis().dampXvel(), 

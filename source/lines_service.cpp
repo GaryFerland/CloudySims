@@ -374,13 +374,13 @@ STATIC LinSv* lincom(
 			// check that line wavelength and continuum index agree to some extent
 			// this check cannot be very precise because some lines have 
 			// "wavelengths" that are set by common usage rather than the correct
-			// wavelength derived from energy and index of refraction of air
+			// wavelength derived from energy
 			ASSERT( ipnt > 0 );
-#		ifndef NDEBUG
+#			ifndef NDEBUG
 			double error = MAX2(0.1*rfield.anu(ipnt-1) , rfield.widflx(ipnt-1) );
 			ASSERT( wavelength.wavlVac() <= 0_r ||
 					fabs( rfield.anu(ipnt-1) - RYDLAM / wavelength.wavlVac()) < error );
-#		endif
+#			endif
 		}
 
 		if( tr.associated() )
@@ -679,8 +679,7 @@ void lindst(
 			t.Emis().damp(),
 			t.Emis().xIntensity()+extra.v,
 			t.Emis().xObsIntensity()+extra.v,
-			t_vac(t.WLAng()), chLab, t.ipCont(), chInfo, lgOutToo, chComment, t );
-
+			t.twav(), chLab, t.ipCont(), chInfo, lgOutToo, chComment, t );
 }
 
 /*PntForLine generate pointer for forbidden line */

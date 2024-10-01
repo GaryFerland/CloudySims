@@ -189,7 +189,7 @@ double RT_line_driving(void)
 									if( OneLine / forlin_v > 0.03 )
 									{
 										fprintf(ioQQQ,"DEBUG OneLine %li %li %.2f  %.2e\n",
-												ipISO,nelem,iso_sp[ipISO][nelem].trans(ipHi,ipLo).EnergyAng() ,
+												ipISO,nelem,iso_sp[ipISO][nelem].trans(ipHi,ipLo).WLangVac() ,
 												OneLine/forlin_v);
 									}
 
@@ -216,7 +216,7 @@ double RT_line_driving(void)
 							)
 						{
 							fprintf(ioQQQ,"DEBUG OneLine %s %.2f  %.2e\n",
-									dBaseSpecies[ipSpecies].chLabel, (*tr).EnergyAng() , OneLine/forlin_v);
+									dBaseSpecies[ipSpecies].chLabel, (*tr).WLangVac() , OneLine/forlin_v);
 						}
 					}
 				}

@@ -112,12 +112,12 @@ double GetGF(double eina,
 
 /** S2Aul convert line strength S into transition probability Aul
 \param S line strength
-\param waveAng wavelength in Angstrom
+\param waveAng vacuum wavelength in Angstrom
 \param gup statistical weight of the upper level
 \param transType transition type, "E1", "M1", "E2", etc.
 */
 double S2Aul(double S,
-	     double EnergyAng,
+	     double waveAng,
 	     double gup,
 	     const string& transType);
 
@@ -184,11 +184,11 @@ const TransitionProxy FndLineHt(long int *level);
 /**set_xIntensity: compute gross and net number of emitted line photons */
 void set_xIntensity( const TransitionProxy &t );
 
-/**wn2ang convert energy in wavenumbers to walength in Angstrom
+/**wn2angVac convert energy in wavenumbers to vacuum wavelength in angstrom
  \param fenergyWN energy in wavenumbers, cm^-1
- \return wavelength in Angstrom
+ \return vacuum wavelength in angstrom
 */
-inline double wn2ang( double fenergyWN )
+inline double wn2angVac( double fenergyWN )
 {
 	return safe_div( 1e+8, fenergyWN );
 }

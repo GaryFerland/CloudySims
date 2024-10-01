@@ -209,8 +209,8 @@ void atmdat_LAMDA_readin( long intNS, const string& chEFilename )
 		(*tr).EnergyWN() = fenergyWN;
 
 		/* there are OH hyperfine levels where i+1 and i have exactly
-		 * the same energy, but the routine wn2ang handles this safely */
-		(*tr).WLAng() = (realnum) wn2ang(fenergyWN);
+		 * the same energy, but the routine wn2angVac handles this safely */
+		(*tr).WLangVac() = (realnum) wn2angVac(fenergyWN);
 	}
 
 	if( !read_whole_line( chLine, ioLevData ) )
@@ -286,11 +286,11 @@ void atmdat_LAMDA_readin( long intNS, const string& chEFilename )
 		(*tr).EnergyWN() = fenergyWN;
 		if( rfield.isEnergyBound( Energy( fenergyWN, "cm^-1" ) ) )
 		{
-			(*tr).WLAng() = (realnum) wn2ang( fenergyWN );
+			(*tr).WLangVac() = (realnum) wn2angVac( fenergyWN );
 			(*tr).Emis().gf() = (realnum)GetGF((*tr).Emis().Aul(),(*tr).EnergyWN(), (*(*tr).Hi()).g());
 		}
 		else
-			(*tr).WLAng() = 1e30;
+			(*tr).WLangVac() = 1e30;
 
 		(*tr).setComment( db_comment_tran_levels() );
 

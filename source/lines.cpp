@@ -302,7 +302,7 @@ void LinSv::setBlendWavl()
 		if( sum_wn_den > 0. )
 			sum_wn_num /= sum_wn_den;
 		if( sum_wn_num > 0. )
-			wl = wn2ang( sum_wn_num );
+			wl = wn2angVac( sum_wn_num );
 
 		LineSave.resetWavelength( m_index, wl );
 	}

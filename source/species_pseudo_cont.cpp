@@ -226,10 +226,10 @@ void pseudo_cont::sumBand( double *sumOutward, double *sumInward ) const
 	for( TransitionProxy::iterator tr = species.sp->lines->begin();
 		tr != species.sp->lines->end(); ++tr )
 	{
-		if( (*tr).WLAng() < wlLo || (*tr).WLAng() > wlHi )
+		if( (*tr).WLangVac() < wlLo || (*tr).WLangVac() > wlHi )
 			continue;
 
-		double bin = (log10( (*tr).WLAng() ) - log_wlLo) * log_step_inv;
+		double bin = (log10( (*tr).WLangVac() ) - log_wlLo) * log_step_inv;
 		long ibin = long( bin );
 		if( ! check_index( ibin ) )
 			continue;
@@ -239,10 +239,10 @@ void pseudo_cont::sumBand( double *sumOutward, double *sumInward ) const
 			if( DEBUG_BAND && (*tr).Emis().xIntensity() > 0. )
 			{
 				fprintf( ioQQQ,
-					"WLAng= %g\t wl(i)= %g\t wl(i+1)= %g\t "
+					"WLangVac= %g\t wl(i)= %g\t wl(i+1)= %g\t "
 					"bin= %g\t ibin= %ld\t inten= %g\t "
 					"frac_inw= %g\n",
-					(*tr).WLAng(),
+					(*tr).WLangVac(),
 					wl[ibin], wl[ibin+1],
 					bin, ibin,
 					(*tr).Emis().xIntensity(),
@@ -783,8 +783,8 @@ void band_emission::sumBand( double *sumOutward, double *sumInward ) const
 	{
 		for( long iband = 0; iband < nBins; ++iband )
 		{
-			if( (*tr).WLAng() >= getWlLo( iband ) &&
-				(*tr).WLAng() < getWlHi( iband ) )
+			if( (*tr).WLangVac() >= getWlLo( iband ) &&
+				(*tr).WLangVac() < getWlHi( iband ) )
 			{
 				sumOutward[ iband ] += (*tr).Emis().xIntensity() *
 					MAX2( 0., 1-(*tr).Emis().FracInwd() );

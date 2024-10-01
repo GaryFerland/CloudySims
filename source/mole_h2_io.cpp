@@ -1599,7 +1599,8 @@ void diatomics::H2_PunchDo( FILE* io ,  char chJOB[] , const char chTime[] , lon
 			nsave,
 			ipOrdered[nSOL];
 		int nFail;
-		realnum fsave[nSOL], wlsave[nSOL];
+		realnum fsave[nSOL];
+		string wlsave[nSOL];
 		/* Solomon process, and where it came from */
 		fprintf(io,"%.5e\t%.3e", 
 			/* depth in cm */
@@ -1640,7 +1641,7 @@ void diatomics::H2_PunchDo( FILE* io ,  char chJOB[] , const char chTime[] , lon
 					jhisave[nsave] = (*Hi).J();
 					ivhisave[nsave] = (*Hi).v();
 					iehisave[nsave] = (*Hi).n();
-					wlsave[nsave] = (*tr).WLAng();
+					wlsave[nsave] = tr->twav().sprt_wl();
 					++nsave;
 				}
 			}
@@ -1678,8 +1679,8 @@ void diatomics::H2_PunchDo( FILE* io ,  char chJOB[] , const char chTime[] , lon
 			{
 				long ip = ipOrdered[i];
 				/*lint -e644 not init */
-				fprintf(io,"\t%li\t%li\t%li\t%li\t%li\t%.3f\t%.3f", 
-					iehisave[ip],ivhisave[ip],jhisave[ip],ivlosave[ip] , jlosave[ip] , fsave[ip] , wlsave[ip] );
+				fprintf(io,"\t%li\t%li\t%li\t%li\t%li\t%.3f\t%s", 
+						iehisave[ip],ivhisave[ip],jhisave[ip],ivlosave[ip],jlosave[ip],fsave[ip],wlsave[ip].c_str());
 				/*lint +e644 not init */
 			}
 			fprintf(io,"\n"); 

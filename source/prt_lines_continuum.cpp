@@ -423,9 +423,9 @@ void lines_continuum(void)
 			double SourceReflected, DiffuseOutward, DiffuseInward;
 			double renorm;
 
-			/* put wavelength in Angstroms into dummy structure, so that we can use iWavLen
+			/* put wavelength in angstrom into dummy structure, so that we can use iWavLen
 			 * to get a proper wavelength with units, continuum energies are stored in PredCont */
-			(*TauDummy).WLAng() = (realnum)PredCont[i].Angstrom();
+			(*TauDummy).WLangVac() = (realnum)PredCont[i].Angstrom();
 			/*lambda = iWavLen(TauDummy , &chUnits , &chShift );*/
 
 			/* >>chng 00 dec 02, there were three occurrences of /opac.tmn which had the
@@ -486,7 +486,7 @@ void lines_continuum(void)
 			}
 
 			linadd((DiffuseInward+SourceReflected+DiffuseOutward+SourceTransmitted)/radius.dVeffAper,
-				   t_air((*TauDummy).WLAng()),"nFnu",'i',
+				   t_air((*TauDummy).WLangVac()),"nFnu",'i',
 				   "total continuum at selected energy points " );
 
 			/* emslin saves the per unit vol emissivity of a line, which is normally 
@@ -513,11 +513,11 @@ void lines_continuum(void)
 			if( !i )
 				fprintf(ioQQQ,"\n");
 			fprintf( ioQQQ,"assert line luminosity \"nInu\" %s  %.3f\n",
-					 t_air(TauDummy->WLAng()).sprt_wl().c_str(), 
+					 t_air(TauDummy->WLangVac()).sprt_wl().c_str(), 
 					 log10(SDIV(Cont_nInu/radius.dVeffAper) * radius.Conv2PrtInten) );
 #			endif
 
-			linadd( Cont_nInu/radius.dVeffAper,t_air(TauDummy->WLAng()),"nInu",'i',
+			linadd( Cont_nInu/radius.dVeffAper,t_air(TauDummy->WLangVac()),"nInu",'i',
 				"transmitted and reflected incident continuum at selected energy points " );
 
 			/* emslin saves the per unit volume emissivity of a line, which is normally 
@@ -533,7 +533,7 @@ void lines_continuum(void)
 				LineSave.lines[LineSave.nsum].SumLineZero();
 			}
 
-			linadd( (DiffuseInward+SourceReflected)/radius.dVeffAper,t_air((*TauDummy).WLAng()),"InwT",'i',
+			linadd( (DiffuseInward+SourceReflected)/radius.dVeffAper,t_air((*TauDummy).WLangVac()),"InwT",'i',
 				"total reflected continuum, total inward emission plus reflected (diffuse) total continuum ");
 
 			if( KILL_CONT && LineSave.ipass > 0 )
@@ -547,7 +547,7 @@ void lines_continuum(void)
 				LineSave.lines[LineSave.nsum].SumLineZero();
 			}
 
-			linadd(SourceReflected/radius.dVeffAper,t_air((*TauDummy).WLAng()),"InwC",'i',
+			linadd(SourceReflected/radius.dVeffAper,t_air((*TauDummy).WLangVac()),"InwC",'i',
 				"reflected incident continuum (only incident) ");
 
 			if( KILL_CONT && LineSave.ipass > 0 )
@@ -578,7 +578,7 @@ void lines_continuum(void)
 						/* chIonLbl generates a null terminated 4 char string, of form "C  2"
 						 * the result, chLable, is only used when ipass == 0, can be undefined otherwise */
 						double wn = RYD_INF * iso_sp[ipISO][nelem].fb[n].xIsoLevNIonRyd;
-						realnum wl = (realnum)wn2ang(wn);
+						realnum wl = (realnum)wn2angVac(wn);
 						linadd( 0. , t_vac(wl) ,chIonLbl(iso_sp[ipISO][nelem].trans(1,0)).c_str(),'i',
 							"radiative recombination continuum");
 					}
@@ -611,7 +611,7 @@ void lines_continuum(void)
 				{
 					string chLabel = chIonLbl( nelem+1, ion+1 );
 					double wn = RYD_INF * Heavy.Valence_IP_Ryd[nelem][ion];
-					realnum wl = (realnum)wn2ang(wn);
+					realnum wl = (realnum)wn2angVac(wn);
 					linadd( 0. , t_vac(wl) ,chLabel.c_str(),'i',
 						"radiative recombination continuum");
 				}

@@ -203,13 +203,13 @@ void lines()
 					double relint, absint;
 
 					if( cdLine("He 1", 
-							   t_vac(iso_sp[ipHE_LIKE][ipHELIUM].trans(ipHi,ipLo).WLAng()),
+							   iso_sp[ipHE_LIKE][ipHELIUM].trans(ipHi,ipLo).twav(),
 							   &relint, &absint ) )
 					{
 						//iso_sp[ipHE_LIKE][ipHELIUM].trans(ipHi,ipLo).Hi()->chLabel
 
-						//if( iso_sp[ipHE_LIKE][ipHELIUM].trans(ipHi,ipLo).WLAng() < 1.1E4 &&
-						//	iso_sp[ipHE_LIKE][ipHELIUM].trans(ipHi,ipLo).WLAng() > 3.59E3 &&
+						//if( iso_sp[ipHE_LIKE][ipHELIUM].trans(ipHi,ipLo).WLangVac() < 1.1E4 &&
+						//	iso_sp[ipHE_LIKE][ipHELIUM].trans(ipHi,ipLo).WLangVac() > 3.59E3 &&
 						//	ipLo!=3 && ipLo!=4 && relint >= 0.0009 )
 						long n=iso_sp[ipHE_LIKE][ipHELIUM].st[ipHi].n();
 						long np=iso_sp[ipHE_LIKE][ipHELIUM].st[ipLo].n();
@@ -228,7 +228,7 @@ void lines()
 								iso_sp[ipHE_LIKE][ipHELIUM].st[ipLo].n(),
 								iso_sp[ipHE_LIKE][ipHELIUM].st[ipLo].l(),
 								iso_sp[ipHE_LIKE][ipHELIUM].st[ipLo].S(),
-								iso_sp[ipHE_LIKE][ipHELIUM].trans(ipHi,ipLo).WLAng(),
+								iso_sp[ipHE_LIKE][ipHELIUM].trans(ipHi,ipLo).WLangVac(),
 								relint );
 						}
 					}
