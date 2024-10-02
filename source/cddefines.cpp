@@ -150,6 +150,9 @@ void t_wavl::prt_wl(FILE *ioOUT) const
 {
 	DEBUG_ENTRY( "prt_wl()" );
 
-	fprintf(ioOUT, "%.*s", LineSave.wl_length, sprt_wl().c_str() );
+	if( LineSave.wl_length > 0 )
+		fprintf(ioOUT, "%.*s", LineSave.wl_length, sprt_wl().c_str() );
+	else
+		fprintf(ioOUT, "%s", sprt_wl().c_str() );
 	return;
 }

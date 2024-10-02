@@ -29,6 +29,7 @@
 #include "freebound.h"
 #include "two_photon.h"
 #include "dense.h"
+#include "prt.h"
 #include "lines_service.h"
 
 /*LimitSh sets upper energy limit to subshell integrations */
@@ -1178,7 +1179,7 @@ STATIC void ContBandsCreate(
 	lgCalled = true;
 
 	/* use default filename if void string, else use file specified */
-	const char* chFilename = ( strlen(chFile) == 0 ) ? "continuum_bands.ini" : chFile;
+	const char* chFilename = ( strlen(chFile) == 0 ) ? "continuum_bands.dat" : chFile;
 
 	/* get continuum band data  */
 	if( trace.lgTrace )
@@ -1264,16 +1265,18 @@ STATIC void ContBandsCreate(
 			 * >>chng 06 aug 11 from 4 to 6, the first 4 char are labels and
 			 * these can contain numbers, next comes a space, then the number */
 			i = 6;
-			continuum.ContBandWavelength[k] = (realnum)FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
 			/* >>chng 06 feb 21, multiply by 1e4 to convert micron wavelength into angstrom,
 			 * which is assumed by the code.  before this correction the band centroid 
 			 * wavelength was given in the output incorrectly listed as angstrom.
 			 * results were correct just label was wrong */
-			continuum.ContBandWavelength[k] *= 1e4f;
+			/* treat the central wavelength as native so that it always appears
+			 * in the line stack as it was typed in the data file. this is OK
+			 * as this wavelength has no physical meaning, it is only a label */
+			continuum.ContBandWavelength[k] = t_wavl(FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL)*1e4, WL_NATIVE);
 
 			/* these are short and long wave limits, which are high and
-			 * low energy limits - these are now wl in microns but are
-			 * converted to Angstroms */
+			 * low energy limits - these are now vacuum wl in micron
+			 * but are converted to angstrom */
 			double xHi = FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL)*1e4;
 			double xLow = FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL)*1e4;
 			if( lgEOL )
@@ -1283,46 +1286,36 @@ STATIC void ContBandsCreate(
 				cdEXIT(EXIT_FAILURE);
 			}
 
-			{
-				enum {DEBUG_LOC=false};
-				if( DEBUG_LOC )
-				{
-					fprintf(ioQQQ, "READ:%s\n", chLine.c_str() );
-					fprintf(ioQQQ, "GOT: %s %g %g %g\n",continuum.chContBandLabels[k].c_str(),
-					continuum.ContBandWavelength[k] , xHi , xLow );
-				}
-			}
-
 			/* make sure bands bounds are in correct order, shorter - longer wavelength*/
 			if( xHi >= xLow )
 			{
 				fprintf( ioQQQ, " ContBandWavelength band %li "
 					"edges are in improper order.\n" ,k);
-				fprintf(ioQQQ,"band: %s %.3e %.3e %.3e \n",
+				fprintf(ioQQQ,"band: %s %s %.3e %.3e \n",
 						continuum.chContBandLabels[k].c_str(),
-						continuum.ContBandWavelength[k],
-						xHi , 
+						continuum.ContBandWavelength[k].sprt_wl().c_str(),
+						xHi, 
 						xLow);
 				cdEXIT(EXIT_FAILURE);
 			}
 
 			// check that central wavelength is indeed between the limits
 			// xHi & xLow are hi and low energy limits to band so logic reversed
-			if( continuum.ContBandWavelength[k] < xHi ||
-				continuum.ContBandWavelength[k] > xLow )
+			if( continuum.ContBandWavelength[k].wavlVac() < xHi ||
+				continuum.ContBandWavelength[k].wavlVac() > xLow )
 			{
 				fprintf( ioQQQ, " ContBandWavelength band number %li, "
 					"central wavelength not within band.\n" ,k);
-				fprintf(ioQQQ,"band ID:%s WL %.3e microns, band bounds %.3e to %.3e microns\n",
+				fprintf(ioQQQ,"band ID:%s WL %s, band bounds %.3e to %.3e micron\n",
 						continuum.chContBandLabels[k].c_str(),
-						continuum.ContBandWavelength[k],
+						continuum.ContBandWavelength[k].sprt_wl().c_str(),
 						xLow , xHi );
 				cdEXIT(EXIT_FAILURE);
 			}
 
-			/* get continuum index - RYDLAM is 911.6A = 1 Ryd so 1e4 converts 
-			 * micron to Angstrom - xHi is high energy (not wavelength)
-			 * edge of the band */
+			/* get continuum index - RYDLAM is 911.6A = 1 Ryd
+			 * xHi is lower wavlength edge in angstrom
+			 * (Low and Hi refer to energy, not wavelength) */
 			continuum.ipContBandHi[k] = ipoint( RYDLAM / xHi );
 			continuum.ipContBandLow[k] = ipoint( RYDLAM / xLow );
 
@@ -1336,11 +1329,6 @@ STATIC void ContBandsCreate(
 				rfield.anumin(continuum.ipContBandHi[k]-1)) /
 				rfield.widflx(continuum.ipContBandHi[k]-1);
 			ASSERT( continuum.BandEdgeCorrHi[k]>=0. && continuum.BandEdgeCorrHi[k]<=1.);
-			/*fprintf(ioQQQ,"DEBUG bands_continuum %s %.3e %li %li \n",
-				continuum.chContBandLabels[k].c_str(),
-				continuum.ContBandWavelength[k],
-				continuum.ipContBandHi[k] , 
-				continuum.ipContBandLow[k]);*/
 
 			if( trace.lgTrace && trace.lgConBug )
 			{
@@ -1356,19 +1344,22 @@ STATIC void ContBandsCreate(
 						 xHi,
 						 continuum.ipContBandHi[k] );
 			}
-#			if 0
-			// hazy table giving band properties
-#			include "prt.h"
-			fprintf(ioQQQ,
-					"DEBUG %s & ", 
-					continuum.chContBandLabels[k].c_str() );
-			t_air(continuum.ContBandWavelength[k]).prt_wl(ioQQQ); // use t_nat() here???
-			fprintf(ioQQQ," & ");
-			t_vac(xHi).prt_wl(ioQQQ);
-			fprintf(ioQQQ," -- ");
-			t_vac(xLow).prt_wl(ioQQQ);
-			fprintf(ioQQQ,"\\\\ \n");
-#			endif
+			if( false ) {
+				// hazy table giving band properties
+				bool lgPrtAirOld = prt.lgPrintLineAirWavelengths;
+				// make sure the last column prints vacuum wavl
+				prt.lgPrintLineAirWavelengths = false;
+				fprintf(ioQQQ,
+						"DEBUG %s & ", 
+						continuum.chContBandLabels[k].c_str() );
+				continuum.ContBandWavelength[k].prt_wl(ioQQQ);
+				fprintf(ioQQQ," & ");
+				t_vac(xHi).prt_wl(ioQQQ);
+				fprintf(ioQQQ," -- ");
+				t_vac(xLow).prt_wl(ioQQQ);
+				fprintf(ioQQQ,"\\\\ \n");
+				prt.lgPrintLineAirWavelengths = lgPrtAirOld;
+			}
 			++k;
 		}
 	}
@@ -1376,7 +1367,7 @@ STATIC void ContBandsCreate(
 	for( i=0; i<continuum.nContBand; ++i )
 	{
 		/* make sure all are positive */
-		if( continuum.ContBandWavelength[i] <=0. )
+		if( continuum.ContBandWavelength[i].wavlVac() <= 0. )
 		{
 			fprintf( ioQQQ, " ContBandWavelength band %li has non-positive entry.\n",i );
 			cdEXIT(EXIT_FAILURE);

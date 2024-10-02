@@ -263,7 +263,7 @@ void lines_continuum(void)
 		"Paschen continuum emission ");
 
 	/* these are a series of continuum bands defined in the file 
-	 * continuum_bands.ini - this makes it possible to enter any 
+	 * continuum_bands.dat - this makes it possible to enter any 
 	 * integrated total emission into the emission-line stack */
 	/* these entries only work correctly if the APERTURE command is not in effect */
 	if( geometry.iEmissPower == 2 )
@@ -349,11 +349,11 @@ void lines_continuum(void)
 					// observed definition of the wavelength.  This introduces an error
 					// since the wavelength is used to determine the transfer of the
 					// band against background opacities
-					-t_air(continuum.ContBandWavelength[nBand]),
+					-continuum.ContBandWavelength[nBand],
 					continuum.chContBandLabels[nBand].c_str(),
 					(continuum.ipContBandLow[nBand]+continuum.ipContBandHi[nBand])/2.,
 					't', false,
-					"continuum bands defined in continuum_bands.ini");
+					"continuum bands defined in continuum_bands.dat");
 
 			// emissivity has no meaning for these bands - quantity is net
 			// transmitted radiation field

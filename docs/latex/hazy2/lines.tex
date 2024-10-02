@@ -120,14 +120,14 @@ These give intensities of various continua.  These are either the total
 integrated continuum or the product $\nu F_\nu$ at certain energies.
 
 \subsubsection{Continuum bands}
-The file \cdFilename{continuum\_bands.ini} in the data directory
+The file \cdFilename{continuum\_bands.dat} in the data directory
 specifies a set of wavelength bands.
 The code will integrate over these bands to find the
 total radiated luminosity and enter this into the main emission-line stack.
 Currently this is a simple sum of the energy emitted between the upper and
 lower bounds of the band, and does not take into account the transmission function
 of particular instruments.
-The \cdFilename{continuum\_bands.ini} file can be edited to change 
+The \cdFilename{continuum\_bands.dat} file can be edited to change 
 the number of bands or their detailed properties.
 Table \ref{tab:continuum_bands} lists the bands in the file at the
 time of this writing.
@@ -135,7 +135,8 @@ The first and second columns give
 the label and wavelength as they appear in the printout.
 The last column
 gives the wavelength range for the integration.
-All three numbers are interpreted as vacuum wavelengths.
+The first wavelength is treated as a label and will always appear in the output
+as shown in the table. The last two numbers are interpreted as vacuum wavelengths.
 These entries will not be included if the \cdCommand{aperture} command is in effect.
 Please consult the file to see its current contents
 and feel free to add your own bands.
@@ -150,47 +151,51 @@ and feel free to add your own bands.
 \hline
 Label& Wavelength&Wavelength Range\\
 \hline
- FIR  & 83.00m & 40.00m -- 500.0m\\ 
- TIR  &  1800m & 500.0m --  3100m\\ 
- NIRa & 2.850m &  7000A -- 40.00m\\ 
- NIRb & 3.000m & 10000A -- 5.000m\\ 
- MIRa & 15.00m & 5.000m -- 25.00m\\ 
- MIRb & 22.50m & 5.000m -- 40.00m\\ 
- NMIR & 21.75m &  7000A -- 40.00m\\ 
- TFIR & 611.2m & 122.5m --  1100m\\ 
- TALL & 10000A & 0.010A -- 10000m\\ 
- F12  & 12.00m & 8.500m -- 15.00m\\ 
- F25  & 25.00m & 19.00m -- 30.00m\\ 
- F60  & 60.00m & 40.00m -- 80.00m\\ 
- F100 & 100.0m & 83.00m -- 120.0m\\ 
- MIPS & 24.00m & 20.80m -- 26.10m\\ 
- MIPS & 70.00m & 61.00m -- 80.00m\\ 
- MIPS & 160.0m & 140.0m -- 174.0m\\ 
- IRAC & 3.600m & 3.160m -- 3.920m\\ 
- IRAC & 4.500m & 4.000m -- 5.020m\\ 
- IRAC & 5.800m & 5.000m -- 6.400m\\ 
- IRAC & 8.000m & 6.500m -- 9.300m\\ 
- SPR1 & 250.0m & 212.0m -- 288.0m\\ 
- SPR2 & 350.0m & 297.0m -- 405.0m\\ 
- SPR3 & 500.0m & 414.0m -- 600.0m\\ 
- PAC1 & 70.00m & 60.00m -- 82.00m\\ 
- PAC2 & 100.0m & 84.00m -- 122.0m\\ 
- PAC3 & 160.0m & 130.0m -- 198.0m\\ 
- PAH  & 3.300m & 3.250m -- 3.350m\\ 
- PAHC & 3.230m & 3.200m -- 3.250m\\ 
- PAHC & 3.370m & 3.350m -- 3.400m\\ 
- PAH  & 6.200m & 5.900m -- 6.400m\\ 
- PAHC & 5.650m & 5.400m -- 5.900m\\ 
- PAH  & 7.900m & 7.400m -- 8.400m\\ 
- PAHC & 6.900m & 6.400m -- 7.400m\\ 
- PAH  & 11.30m & 11.10m -- 11.50m\\ 
- PAHC & 10.90m & 10.70m -- 11.10m\\ 
- PAH  & 11.80m & 11.60m -- 12.30m\\ 
- PAHC & 12.65m & 12.30m -- 13.00m\\ 
- PAH  & 13.30m & 12.90m -- 13.70m\\ 
- PAHC & 14.10m & 13.70m -- 14.50m\\ 
- Bcon &  3640A & 911.6A --  3646A\\ 
- Pcon &  5000A &  3646A --  8204A\\ 
+ FIR  & 83.0000m & 40.0000m -- 500.000m\\ 
+ TIR  & 1800.00m & 500.000m -- 3100.00m\\ 
+ NIRa & 2.85000m & 7000.00A -- 40.0000m\\ 
+ NIRb & 3.00000m & 10000.0A -- 5.00000m\\ 
+ MIRa & 15.0000m & 5.00000m -- 25.0000m\\ 
+ MIRb & 22.5000m & 5.00000m -- 40.0000m\\ 
+ NMIR & 21.7500m & 7000.00A -- 40.0000m\\ 
+ TFIR & 611.250m & 122.500m -- 1100.00m\\ 
+ TALL & 10000.0A & 0.0100000A -- 10000.0m\\ 
+ F12  & 12.0000m & 8.50000m -- 15.0000m\\ 
+ F25  & 25.0000m & 19.0000m -- 30.0000m\\ 
+ F60  & 60.0000m & 40.0000m -- 80.0000m\\ 
+ F100 & 100.000m & 83.0000m -- 120.000m\\ 
+ MIPS & 24.0000m & 20.8000m -- 26.1000m\\ 
+ MIPS & 70.0000m & 61.0000m -- 80.0000m\\ 
+ MIPS & 160.000m & 140.000m -- 174.000m\\ 
+ IRAC & 3.60000m & 3.16000m -- 3.92000m\\ 
+ IRAC & 4.50000m & 4.00000m -- 5.02000m\\ 
+ IRAC & 5.80000m & 5.00000m -- 6.40000m\\ 
+ IRAC & 8.00000m & 6.50000m -- 9.30000m\\ 
+ SPR1 & 250.000m & 212.000m -- 288.000m\\ 
+ SPR2 & 350.000m & 297.000m -- 405.000m\\ 
+ SPR3 & 500.000m & 414.000m -- 600.000m\\ 
+ PAC1 & 70.0000m & 60.0000m -- 82.0000m\\ 
+ PAC2 & 100.000m & 84.0000m -- 122.000m\\ 
+ PAC3 & 160.000m & 130.000m -- 198.000m\\ 
+ PAH  & 3.30000m & 3.25000m -- 3.35000m\\ 
+ PAHC & 3.23000m & 3.20000m -- 3.25000m\\ 
+ PAHC & 3.37000m & 3.35000m -- 3.40000m\\ 
+ PAH  & 6.20000m & 5.90000m -- 6.40000m\\ 
+ PAHC & 5.65000m & 5.40000m -- 5.90000m\\ 
+ PAH  & 7.90000m & 7.40000m -- 8.40000m\\ 
+ PAHC & 6.90000m & 6.40000m -- 7.40000m\\ 
+ PAH  & 11.3000m & 11.1000m -- 11.5000m\\ 
+ PAHC & 10.9000m & 10.7000m -- 11.1000m\\ 
+ PAH  & 11.8000m & 11.6000m -- 12.3000m\\ 
+ PAHC & 12.6500m & 12.3000m -- 13.0000m\\ 
+ PAH  & 13.3000m & 12.9000m -- 13.7000m\\ 
+ PAHC & 14.1000m & 13.7000m -- 14.5000m\\ 
+ Bcon & 3640.00A & 911.600A -- 3646.40A\\ 
+ Pcon & 5000.00A & 3646.40A -- 8204.40A\\ 
+ O3bn & 5007.00A & 4980.00A -- 5100.00A\\ 
+ SX   & 25.0000A & 8.26000A -- 41.3000A\\ 
+ HX   & 4.70000A & 1.23000A -- 8.26000A\\ 
+ ROSA & 12.3980A & 5.16600A -- 123.980A\\ 
 \hline
 \end{tabular}
 \end{table}
