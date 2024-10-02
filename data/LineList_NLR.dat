@@ -319,9 +319,11 @@ Na 3  7.31570m air
 Na 4  9.03096m air
 Na 4  21.3162m air
 # >>chng 22 jul 09, wl from 14.3228m to 14.3925m, upgrade to Chianti v10
-Na 6  14.3925m air
+# >>chng 24 jun 24, wl from 14.3925m to 14.3929m, update to Chianti v10.1
+Na 6  14.3929m air
 # >>chng 22 jul 09, wl from 8.61836m to 8.60825m, upgrade to Chianti v10
-Na 6  8.60825m air
+# >>chng 24 jun 24, wl from 8.60825m to 8.60795m, update to Chianti v10.1
+Na 6  8.60795m air
 # >>chng 22 jul 09, wl from 4.48712m to 4.48711m, upgrade to Chianti v10
 mg 4   4.48711m air
 mg 5   5.60700m air
@@ -351,8 +353,10 @@ S  3     33.4704m air
 s  4  10.5076m air
 # >>chng 22 jul 09, wl from 9914A to 9913.98A, upgrade to Chianti v10
 S  8     9913.98A air
-s  9     1.25201m air
-s  9     3.75414m air
+# >>chng 24 jun 24, wl from 1.25201m to 1.25196m, update to Chianti v10.1
+s  9     1.25196m air
+# >>chng 24 jun 24, wl from 3.75414m to 3.75418m, update to Chianti v10.1
+s  9     3.75418m air
 # >>chng 22 jul 09, wl from 1.91960m to 1.91958m, upgrade to Chianti v10
 s 11     1.91958m air
 # >>chng 22 jul 09, wl from 1.39238m to 1.39232m, upgrade to Chianti v10
@@ -365,7 +369,8 @@ Ar 5  13.0985m air
 Ar 6  4.52800m air
 # >>chng 22 jul 09, wl from 5534.02A to 5534.01A, upgrade to Chianti v10
 Ar10     5534.01A air
-Ar11     2.59535m air
+# >>chng 24 jun 24, wl from 2.59535m to 2.58419m, update to Chianti v10.1
+Ar11     2.58419m air
 Ca 4  3.20610m air
 Ca 5     4.15739m air
 Ca 5     11.4792m air

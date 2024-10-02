@@ -48,7 +48,7 @@
  48 1s.5g                 1  4 G  4.0  9          0.000       0.000000   13678738.000     124.649833 
  49 1s.5p                 1  1 P  1.0  3   13679363.000     124.655528   13679575.000     124.657460 
  -1
-%filename:  mg_11.elvlc.olg.yer.nist
+%filename:  mg_11.elvlc
 
 Theoretical gf and A-values:  Autostructure calculation
 A Breit-Pauli distorted wave implementation for AUTOSTRUCTURE
@@ -63,7 +63,7 @@ NIST Database for Atomic Spectroscopy, Version 1.0, NIST Standard Reference Data
 
 Theoretical energies for n=2, 3 above IP
 Goryaev, F. F.; Vainshtein, L. A.; Urnov, A. M.
-Atomic data for doubly-excited states 2lnl‧ of He-like ions and 1s2lnl‧ of Li-like ions with Z = 6-36 and n = 2 , 3
+Atomic data for doubly-excited states 2lnl of He-like ions and 1s2lnl of Li-like ions with Z = 6-36 and n = 2 , 3
 2017, ADNDT, 113, 117-257
 adsRef:  http://adsabs.harvard.edu/abs/2017ADNDT.113..117G
 DOI:  10.1016/j.adt.2016.04.002
@@ -82,5 +82,5 @@ mg_11 IP ev =  1.76180e+03 Ip invcm =    14209908.000 Ip Ryd =     129.49021
 mg_12 IP ev =  1.96266e+03 Ip invcm =    15829955.000 Ip Ryd =     144.25316
 
 Reference:
-Chianti  2022-02-18
+Chianti  2024-06-27
  -1

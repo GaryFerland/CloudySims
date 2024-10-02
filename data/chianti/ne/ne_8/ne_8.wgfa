@@ -267,7 +267,7 @@
    39   51      -3024.315      7.840e-02      1.430e+07 
    40   51      -3025.671      7.060e-01      1.290e+08 
  -1
-%filename:  ne_8.wgfa.olg.imp
+%filename:  ne_8.wgfa
 
 theoretical gf and A-values:  
 Optimized Autostructure calculation
@@ -292,7 +292,7 @@ National Institute of Standards and Technology, Gaithersburg, MD.
 
 Theoretical energies for n=2, 3 above IP
 Goryaev, F. F.; Vainshtein, L. A.; Urnov, A. M.
-Atomic data for doubly-excited states 2lnl‧ of He-like ions and 1s2lnl‧ of Li-like ions with Z = 6-36 and n = 2 , 3
+Atomic data for doubly-excited states 2lnl of He-like ions and 1s2lnl of Li-like ions with Z = 6-36 and n = 2 , 3
 2017, ADNDT, 113, 117-257
 adsRef:  http://adsabs.harvard.edu/abs/2017ADNDT.113..117G
 DOI:  10.1016/j.adt.2016.04.002
@@ -313,5 +313,5 @@ produced as a part of the 'CHIANTI' atomic database for astrophysical spectrosco
 %File processed with wgfa_tidy by pryoung on  6-Mar-2019
 
 Reference:
-Chianti  2022-02-18
+Chianti  2024-06-27
  -1

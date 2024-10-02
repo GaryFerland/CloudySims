@@ -338,14 +338,16 @@ monitor departure "H[510]"  1.402
 ## >>chng 16 aug 07, from 1.595 to 1.476, Marios bug fixes
 ## >>chng 17 sep 09, from 1.476 to 1.76, fix bug in high n collisional excitation rates for H-like iso-sequences
 ## >>chng 19 jun 28, from 1.76 to 1.877, reintegrate iso_collisions branch
-monitor departure "H[520]"  1.877
+## >>chng 24 apr 05, from 1.877 to 1.762, Total optical depth bug fix
+monitor departure "H[520]"  1.762
 ## >>chng 16 jul 28, from 1 to 9.239, new sims to monitor Case B and departure
 ## >>chng 16 aug 07, from 9.239 to 1.625, Fran bug fix
 ## >>chng 16 aug 07, from 1.625 to 1.506, Marios bug fixes
 ## >>chng 17 sep 09, from 1.506 to 2.658, fix bug in high n collisional excitation rates for H-like iso-sequences
 ## >>chng 19 jun 28, from 2.658 to 2.954, reintegrate iso_collisions branch
 ## >>chng 19 aug 06, from 2.954 to 3.158, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
-monitor departure "H[530]"  3.158
+## >>chng 24 apr 05, from 3.158 to 3.06, Total optical depth bug fix
+monitor departure "H[530]"  3.06
 print departure h-like hydrogen
 print line faint 0.01
 print line column
