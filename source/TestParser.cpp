@@ -215,35 +215,35 @@ namespace {
 		CHECK( fp_equal(t.wavlVac(), -1_r) );
 		t = 5000_vac;
 		CHECK( fp_equal(t.wavlVac(), 5000_r) );
-		CHECK( t.str() == "5000.00A" );
+		CHECK( t.sprt_wl() == "5000.00A" );
 		t = 6564.522546600_vac;
 		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
-		CHECK( t.str() == "6564.52A" );
+		CHECK( t.sprt_wl() == "6564.52A" );
 		t = 6562.709693357_air;
 		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
-		CHECK( t.str() == "6564.52A" );
+		CHECK( t.sprt_wl() == "6564.52A" );
 		t = t_vac(6564.522546600_r);
 		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
-		CHECK( t.str() == "6564.52A" );
+		CHECK( t.sprt_wl() == "6564.52A" );
 		t = t_air(6562.709693357_r);
 		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
-		CHECK( t.str() == "6564.52A" );
+		CHECK( t.sprt_wl() == "6564.52A" );
 
 		// now test printing wavelengths in air
 		prt.lgPrintLineAirWavelengths = true;
 
 		t = 6564.522546600_vac;
 		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
-		CHECK( t.str() == "6562.71A" );
+		CHECK( t.sprt_wl() == "6562.71A" );
 		t = 6562.709693357_air;
 		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
-		CHECK( t.str() == "6562.71A" );
+		CHECK( t.sprt_wl() == "6562.71A" );
 		t = t_vac(6564.522546600_r);
 		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
-		CHECK( t.str() == "6562.71A" );
+		CHECK( t.sprt_wl() == "6562.71A" );
 		t = t_air(6562.709693357_r);
 		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
-		CHECK( t.str() == "6562.71A" );
+		CHECK( t.sprt_wl() == "6562.71A" );
 
 		// unary minus
 		t = -t_vac(6564.522546600_r);
@@ -260,56 +260,58 @@ namespace {
 		LineID line;
 		p.setline("H  1  1216");
 		line = p.getLineID();
-		CHECK( line.chLabel() == "H  1" && line.wave() == 1216_r && line.indLo() < 0 && line.indHi() < 0 );
+		CHECK( line.chLabel() == "H  1" && line.wavlVac() == 1216_r && line.indLo() < 0 && line.indHi() < 0 );
 		p.setline("H  1 1216A");
 		line = p.getLineID();
-		CHECK( line.chLabel() == "H  1" && line.wave() == 1216_r && line.ELo() < 0_r );
+		CHECK( line.chLabel() == "H  1" && line.wavlVac() == 1216_r && line.ELo() < 0_r );
 		p.setline("\"Fe 2b\"  12.00m");
 		line = p.getLineID();
-		CHECK( line.chLabel() == "Fe 2b" && line.wave() == 12.00e4_r );
+		CHECK( line.chLabel() == "Fe 2b" && line.wavlVac() == 12.00e4_r );
 		p.setline("\"Fe 2b  \"  12.00c # comment");
 		line = p.getLineID();
-		CHECK( line.chLabel() == "Fe 2b" && line.wave() == 12.00e8_r );
+		CHECK( line.chLabel() == "Fe 2b" && line.wavlVac() == 12.00e8_r );
 		p.setline("CO  12.00C # comment");
 		line = p.getLineID();
-		CHECK( line.chLabel() == "CO" && line.wave() == 12.00e8_r );
+		CHECK( line.chLabel() == "CO" && line.wavlVac() == 12.00e8_r );
 		p.setline("Al 2 1670. index=1,5");
 		line = p.getLineID();
-		CHECK( line.chLabel() == "Al 2" && line.wave()== 1670_r && line.indLo() == 1 && line.indHi() == 5 && line.ELo() < 0_r );
+		CHECK( line.chLabel() == "Al 2" && line.wavlVac()== 1670_r && line.indLo() == 1 && line.indHi() == 5 && line.ELo() < 0_r );
 		p.setline("Al 2 1670. Elow=1");
 		line = p.getLineID();
-		CHECK( line.chLabel() == "Al 2" && line.wave() == 1670_r && line.indLo() < 0 && line.indHi() < 0 && line.ELo() == 1_r );
+		CHECK( line.chLabel() == "Al 2" && line.wavlVac() == 1670_r && line.indLo() < 0 && line.indHi() < 0 && line.ELo() == 1_r );
 		p.setline("monitor line \"H  1\" 1216 index=1,5 -100.");
 		line = p.getLineID(false);
-		CHECK( line.chLabel() == "H  1" && line.wave() == 1216_r && line.indLo() == 1 && line.indHi() == 5 );
+		CHECK( line.chLabel() == "H  1" && line.wavlVac() == 1216_r && line.indLo() == 1 && line.indHi() == 5 );
 		double x = p.FFmtRead();
 		CHECK( x == -100. );
 		p.setline("monitor line \"He 2\" 1217 -110.");
 		line = p.getLineID(false);
-		CHECK( line.chLabel() == "He 2" && line.wave() == 1217_r && line.indLo() == -1 );
+		CHECK( line.chLabel() == "He 2" && line.wavlVac() == 1217_r && line.indLo() == -1 );
 		x = p.FFmtRead();
 		CHECK( x == -110. );
 
 		p.setline("H  1 6562.71A air");
 		line = p.getLineID();
-		CHECK( line.chLabel() == "H  1" && fp_equal(line.wave(), 6564.523_r) );
+		CHECK( line.chLabel() == "H  1" && fp_equal(line.wavlVac(), 6564.523_r) );
 		CHECK( line.str() == "\"H  1\" 6564.52A" );
 
 		prt.lgPrintLineAirWavelengths = true;
 		p.setline("H  1 6562.71A");
 		line = p.getLineID();
-		CHECK( line.chLabel() == "H  1" && fp_equal(line.wave(), 6564.523_r) );
+		CHECK( line.chLabel() == "H  1" && fp_equal(line.wavlVac(), 6564.523_r) );
 		p.setline("H  1 6564.52A vacuum");
 		line = p.getLineID();
-		CHECK( line.chLabel() == "H  1" && fp_equal(line.wave(), 6564.52_r) );
+		CHECK( line.chLabel() == "H  1" && fp_equal(line.wavlVac(), 6564.52_r) );
 		CHECK( line.str() == "\"H  1\" 6562.71A" );
 		// test an input line with two line IDs
 		p.setline("stop line \"c  2\" 157.636m air relative to \"o  3\" 5008.24 vacuum");
 		line = p.getLineID(false);
-		CHECK( line.chLabel() == "c  2" && fp_equal(line.wave(), 157.67897e4_r) );
+		CHECK( line.chLabel() == "c  2" && fp_equal(line.wavlVac(), 157.67897e4_r) );
 		CHECK( line.str() == "\"c  2\" 157.636m" );
+		t_wavl t = line.twav();
+		CHECK( fp_equal(line.wavlVac(), t.wavlVac()) );
 		line = p.getLineID(false);
-		CHECK( line.chLabel() == "o  3" && fp_equal(line.wave(), 5008.24_r) );
+		CHECK( line.chLabel() == "o  3" && fp_equal(line.wavlVac(), 5008.24_r) );
 		CHECK( line.str() == "\"o  3\" 5006.84A" );
 
 		prt.lgPrintLineAirWavelengths = false;
@@ -321,10 +323,10 @@ namespace {
 		// not really a failure, but a warning
 		p.setline("H 1   1216a");
 		line = p.getLineID();
-		CHECK( line.chLabel() == "H  1" && line.wave() == 1216._r );
+		CHECK( line.chLabel() == "H  1" && line.wavlVac() == 1216._r );
 		p.setline("\"H 1\"   1216M");
 		line = p.getLineID();
-		CHECK( line.chLabel() == "H  1" && line.wave() == 1216.e4_r );
+		CHECK( line.chLabel() == "H  1" && line.wavlVac() == 1216.e4_r );
 		// the rest are all real errors
 		p.setline("monitor line \"H  1\" 1216");
 		CHECK_THROW( (void)p.getLineID(), cloudy_exit );
