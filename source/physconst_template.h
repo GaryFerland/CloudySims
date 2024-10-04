@@ -23,7 +23,7 @@
  *********************************************************************/
 
 // Define macros for mathematical operations, undefined at foot of file
-// Can be converted back when constexpr() can be relied on (C++11)
+// Can be converted back when constexpr can be relied on to accept sqrt()
 
 #define pow2(a) ((a)*(a))
 #define pow3(a) ((a)*(a)*(a))
@@ -202,7 +202,7 @@ NEW_CONSTANT( SAHA, sqrt(pow3(HION_LTE_POP)) );
 // Need to use explicit constant rather than formula as sqrt() isn't
 // guaranteed to be evaluated at compile-time.  Checked by an ASSERT
 // in t_physconst::t_physconst() in physconst.cpp
-NEW_CONSTANT( SAHA, 4.1413302848114741e-16 );
+NEW_CONSTANT( SAHA, 4.141330276355497e-16 );
 #endif
 
 /** number of ergs per wavenumber, 1.9864e-16 */
@@ -287,7 +287,7 @@ NEW_CONSTANT( MILNE_CONST, SPEEDLIGHT*sqrt(pow3(FINE_STRUCTURE2)*pow3(TE1RYD)/PI
 // Need to use explicit constant rather than formula as sqrt() isn't
 // guaranteed to be evaluated at compile-time.  Checked by an ASSERT
 // in t_physconst::t_physconst() in physconst.cpp
-NEW_CONSTANT( MILNE_CONST, 4.1234755895831189e+11 );
+NEW_CONSTANT( MILNE_CONST, 4.123475589581428e+11 );
 #endif
 
 /** This is the constant used in converting oscillator strengths to As. The formula is
@@ -329,8 +329,7 @@ NEW_CONSTANT( FREE_FREE_EMIS,
 // Need to use explicit constant rather than formula as sqrt() isn't
 // guaranteed to be evaluated at compile-time.  Checked by an ASSERT
 // in t_physconst::t_physconst() in physconst.cpp
-NEW_CONSTANT( FREE_FREE_EMIS, 1.03252650591203e-11 );
-                              
+NEW_CONSTANT( FREE_FREE_EMIS, 1.032526505912028e-11 );
 #endif
 
 /* Free-free absorption constant.
@@ -353,5 +352,5 @@ NEW_CONSTANT( FREE_FREE_ABS,
 // Need to use explicit constant rather than formula as sqrt() isn't
 // guaranteed to be evaluated at compile-time.  Checked by an ASSERT
 // in t_physconst::t_physconst() in physconst.cpp
-NEW_CONSTANT( FREE_FREE_ABS, 1.03699735547723e-38 );
+NEW_CONSTANT( FREE_FREE_ABS, 1.036997355477227e-38 );
 #endif
