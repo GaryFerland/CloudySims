@@ -25,7 +25,7 @@ save species lines ".lin" "Fe+" last
 save species continuum units microns ".fe2con" "Fe+" last
 save species column density ".fe2col" "Fe+[:]" last
 save species densities ".lev" "Fe+[:]" last
-save species bands ".fe2b" "FeII_bands.ini" "Fe+" last
+save species bands ".fe2b" "FeII_bands.dat" "Fe+" last
 save overview ".ovr" last
 save dr ".dr" last 
 save convergence reason ".cvr"
@@ -375,7 +375,8 @@ monitor line intensity "Fe 2b" 4855 5.032 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.539, Move FeII to Stout
 ## >>chng 23 jun 27, from 4.539 to 4.895, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 4971 4.895 error 0.1
+## >>chng 24 oct 03, from 4.895 to 4.946, reinterpret species band edges as vacuum wl
+monitor line intensity "Fe 2b" 4971 4.946 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.849, Move FeII to Stout
 ## >>chng 23 jun 27, from 4.849 to 5.071, update Fe+ model to Smyth+19
@@ -409,7 +410,8 @@ monitor line intensity "Fe 2b" 7445 5.1 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 2.946, Move FeII to Stout
 ## >>chng 23 jun 27, from 2.946 to 2.405, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 7785 2.405 error 0.1
+## >>chng 24 oct 03, from 2.405 to 2.301, reinterpret species band edges as vacuum wl
+monitor line intensity "Fe 2b" 7785 2.301 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.715, Move FeII to Stout
 ## >>chng 23 jun 27, from 4.715 to 5.103, update Fe+ model to Smyth+19

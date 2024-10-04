@@ -3440,6 +3440,8 @@ and the intensity directed inward, and outward, in that order,
 in four tab-delimited columns.
 The photon energy is reported in Ryd, unless other units are
 specified with the \cdCommand{units} option.
+If a wavelength unit is chosen (e.g., \cdCommand{micron})
+vacuum wavelengths will be reported over the entire wavelength range.
 The units of the intensity in the intensity and luminosity
 cases follow those for the \cdCommand{save continuum} command,
 described in Section~\ref{sec:CommandSaveContinuum}.
@@ -3471,10 +3473,10 @@ list in the main output.
 
 \par
 For example, the following computes the emission of the ``Fe+'' species
-over the bands found in \cdFilename{data/FeII\_bands.ini},
+over the bands found in \cdFilename{data/FeII\_bands.dat},
 %
 \begin{verbatim}
-save species bands "bands.feii" "FeII_bands.ini" "Fe+"
+save species bands "bands.feii" "FeII_bands.dat" "Fe+"
 \end{verbatim}
 %
 The first file to appear in the command is the output file,
@@ -3482,16 +3484,14 @@ the second is the bands file, followed by the species of choice.
 
 \par
 A user-defined bands file may be used instead, but it must follow the
-format of file \cdFilename{data/FeII\_bands.ini}.
+format of file \cdFilename{data/FeII\_bands.dat}.
 Briefly, each line holds one band only, described by three (positive)
-vacuum wavelengths, all in angstrom.
-The first column holds the vacuum wavelength that will be used with reporting
-(note that this number will be converted to an air wavelength in the output
-unless the \cdCommand{print line vacuum} command is used),
+wavelengths, all in angstrom.
+The first column holds the wavelength that will be used with reporting
 and the following two columns hold the minimum and maximum vacuum wavelengths
 of the band, in that order.
 The remainder of the line is ignored.
-Comment lines, which begin with a hash (\#), are ignored.
+Comment lines, which begin with a hash (\#), are also ignored.
 Bands are independent of each other, which means that they are not
 expected in any specific order, and they may also overlap.
 
@@ -3510,7 +3510,7 @@ keyword \cdCommand{emergent} may be used.
 \par
 The bands will appear in the main output only if a \cdCommand{save} command is
 entered.
-The only exception to this rule is the ``FeII'' bands file: it is always parsed,
+The only exception to this rule is the \ion{Fe}{2} bands file: it is always parsed,
 and the summed up emission always appears in the main output.
 
 \par
