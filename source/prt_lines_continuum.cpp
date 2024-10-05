@@ -423,11 +423,6 @@ void lines_continuum(void)
 			double SourceReflected, DiffuseOutward, DiffuseInward;
 			double renorm;
 
-			/* put wavelength in angstrom into dummy structure, so that we can use iWavLen
-			 * to get a proper wavelength with units, continuum energies are stored in PredCont */
-			(*TauDummy).WLangVac() = (realnum)PredCont[i].Angstrom();
-			/*lambda = iWavLen(TauDummy , &chUnits , &chShift );*/
-
 			/* >>chng 00 dec 02, there were three occurrences of /opac.tmn which had the
 			 * effect of raising the summed continuum by the local opacity correction factor.
 			 * in the case of the Lyman continuum this raised the reported value by orders
@@ -486,7 +481,7 @@ void lines_continuum(void)
 			}
 
 			linadd((DiffuseInward+SourceReflected+DiffuseOutward+SourceTransmitted)/radius.dVeffAper,
-				   t_air((*TauDummy).WLangVac()),"nFnu",'i',
+				   t_vac(PredCont[i].angstromVac()),"nFnu",'i',
 				   "total continuum at selected energy points " );
 
 			/* emslin saves the per unit vol emissivity of a line, which is normally 
@@ -508,16 +503,17 @@ void lines_continuum(void)
 			Cont_nInu = rfield.flux[0][PredCont[i].ip_C()]*renorm*radius.r1r0sq +
 				rfield.ConRefIncid[0][PredCont[i].ip_C()]*renorm;
 
-#			if 0
-			/* this code can be used to create assert statements for the continuum shape */
-			if( !i )
-				fprintf(ioQQQ,"\n");
-			fprintf( ioQQQ,"assert line luminosity \"nInu\" %s  %.3f\n",
-					 t_air(TauDummy->WLangVac()).sprt_wl().c_str(), 
-					 log10(SDIV(Cont_nInu/radius.dVeffAper) * radius.Conv2PrtInten) );
-#			endif
+			if( false )
+			{
+				/* this code can be used to create assert statements for the continuum shape */
+				if( !i )
+					fprintf(ioQQQ,"\n");
+				fprintf( ioQQQ,"assert line luminosity \"nInu\" %s  %.3f\n",
+						 t_vac(PredCont[i].angstromVac()).sprt_wl().c_str(), 
+						 log10(SDIV(Cont_nInu/radius.dVeffAper) * radius.Conv2PrtInten) );
+			}
 
-			linadd( Cont_nInu/radius.dVeffAper,t_air(TauDummy->WLangVac()),"nInu",'i',
+			linadd( Cont_nInu/radius.dVeffAper,t_vac(PredCont[i].angstromVac()),"nInu",'i',
 				"transmitted and reflected incident continuum at selected energy points " );
 
 			/* emslin saves the per unit volume emissivity of a line, which is normally 
@@ -533,7 +529,7 @@ void lines_continuum(void)
 				LineSave.lines[LineSave.nsum].SumLineZero();
 			}
 
-			linadd( (DiffuseInward+SourceReflected)/radius.dVeffAper,t_air((*TauDummy).WLangVac()),"InwT",'i',
+			linadd( (DiffuseInward+SourceReflected)/radius.dVeffAper,t_vac(PredCont[i].angstromVac()),"InwT",'i',
 				"total reflected continuum, total inward emission plus reflected (diffuse) total continuum ");
 
 			if( KILL_CONT && LineSave.ipass > 0 )
@@ -547,7 +543,7 @@ void lines_continuum(void)
 				LineSave.lines[LineSave.nsum].SumLineZero();
 			}
 
-			linadd(SourceReflected/radius.dVeffAper,t_air((*TauDummy).WLangVac()),"InwC",'i',
+			linadd(SourceReflected/radius.dVeffAper,t_vac(PredCont[i].angstromVac()),"InwC",'i',
 				"reflected incident continuum (only incident) ");
 
 			if( KILL_CONT && LineSave.ipass > 0 )

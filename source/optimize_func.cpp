@@ -337,7 +337,7 @@ chi2_type optimize_func(const realnum param[],
 			const char* catstr;
 			// treat radio continuum flux as absolute flux so that it can be used
 			// as a more accurate replacement of the normalization line intensity
-			if( optimize.ContEner[k].mm() <= 1. )
+			if( optimize.ContEner[k].mmVac() <= 1. )
 			{
 				cat = 5;
 				catstr = "Photometry";

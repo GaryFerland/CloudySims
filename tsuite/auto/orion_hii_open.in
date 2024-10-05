@@ -298,25 +298,30 @@ monitor line "GraL" 1215.67A 22.03
 ##
 ## grain emission 
 ## >>chng 13 jul 26, wl from 60.83m to 60.8322m, increased wl precision to 6 sig. fig.
-monitor line "nFnu"  60.8322m  15.68
+## >>chng 24 oct 05, wl from 60.8322m to 60.8157m, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  60.8157m  15.68
 ##
 ## >>chng 07 oct 26, from 148.2 to 141.2, very close to botch after recent changes
 ## >>chng 08 jul 08, from 141.2 to 148.3 line radiation pressure
 ## >>chng 13 jul 26, wl from 21.42m to 21.4199m, increased wl precision to 6 sig. fig.
-monitor line "nFnu"  21.4199m 148.3
+## >>chng 24 oct 05, wl from 21.4199m to 21.4141m, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  21.4141m 148.3
 ##
 ## >>chng 07 jan 20, from 49.9 to 47.2 e2 bug
 ## >>chng 08 jul 08, from 47.2 to 49.7 line radiation pressure
-monitor line "nFnu"  12.43m  49.7
+## >>chng 24 oct 05, wl from 12.43m to 12.4266m, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  12.4266m  49.7
 ##
 ## >>chng 07 jan 20, from 6.15 to 5.68 e2 bug
 ## >>chng 08 mar 20, from 5.68 to 5.94 value drifted but did not throw assert
 ## >>chng 09 feb 23, from 5.94 to 6.471, remove otslin, otscon dampers (PR #84, r2758)
 ## >>chng 23 sep 08, from 6.471 to 5.873, fix SQRTPI in Lya destprob
-monitor line "nFnu"  7.580m   5.873
+## >>chng 24 oct 05, wl from 7.580m to 7.57793m, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  7.57793m   5.873
 ##
 ## >>chng 13 jul 26, wl from 1.436m to 1.43649m, increased wl precision to 6 sig. fig.
-monitor line "nFnu"  1.43649m   1.441
+## >>chng 24 oct 05, wl from 1.43649m to 1.43610m, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  1.43610m   1.441
 ##
 ## >>chng 07 oct 26, from 0.0470 to 0.0508, due to changes in r1472
 ## >>chng 07 dec 14, from 0.0508 to 0.0532 RP update is seq

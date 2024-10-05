@@ -82,10 +82,12 @@ monitor line "Inwd" 4861.32A =0.5002 error 0.03 ##no surprise if not unity, sinc
 ## 
 ## >>chng 13 jul 25, wl from 3588 to 3587.67A, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, from 18 to 18.39, change normalizing line to "H  1" 4861.36A.
-monitor line "nFnu" 3587.67A = 18.39 error 0.02 ##total Balmer continuum rel to h-beta
+## >>chng 24 oct 05, wl from 3587.67A to 3586.64A, reinterpret PredCont wl as vacuum
+monitor line "nFnu" 3586.64A = 18.39 error 0.02 ##total Balmer continuum rel to h-beta
 ## >>chng 13 jul 25, wl from 3588 to 3587.67A, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, from 9 to 9.203, change normalizing line to "H  1" 4861.36A.
-monitor line "InwT" 3587.67A = 9.203 error 0.02 ##inward Balmer continuum rel to h-beta
+## >>chng 24 oct 05, wl from 3587.67A to 3586.64A, reinterpret PredCont wl as vacuum
+monitor line "InwT" 3586.64A = 9.203 error 0.02 ##inward Balmer continuum rel to h-beta
 ## 
 ## >>chng 01 aug 23, from 18.26 to 18.633, 2x better continuum resolution
 ## >>chng 17 sep 09, from 18.63 to 18.98, fix bug in high n collisional excitation rates for H-like iso-sequences

@@ -20,7 +20,7 @@ falls below \TEMPSTOPDEFAULT, the default lowest-allowed kinetic temperature.
 This
 choice of lowest temperature was made with optical emission lines in mind.
 Setting another outer limit is not necessary unless molecules or lines with
-very low ionization and excitation potentials (i.e., the [C II] or [O I]
+very low ionization and excitation potentials (e.g., the [\cii] or [\oi]
 far infrared lines) are of interest.
 You lower
 the stopping temperature with the \cdCommand{stop temperature} command.
@@ -75,8 +75,8 @@ default of \TEMPSTOPDEFAULT.
 This occurs very near the hydrogen \hplus\ - \hO\ ionization front.
 Optical and UV lines form at higher temperatures so the calculation would
 include all contributors to the optical/UV spectrum.
-Lines such as [C II]
-158$\mu$ or [Si~II] 34.8$\mu$ form in cool neutral gas,
+Lines such as [\cii]
+158\,$\mu$m or [\ion{Si}{2}] 34.8\,$\mu$m form in cool neutral gas,
 so these lines would become
 stronger if the calculation went more deeply, into cold neutral gas.
 
@@ -644,7 +644,7 @@ if $> 10$ or if the \cdCommand{linear} keyword appears.
 The default value is $T_{low} =$~\TEMPSTOPDEFAULT.
 Gas cooler than this produces little
 optical emission, but may be a strong emitter of infrared lines such as
-the [C II] 158 $\mu$m or the [O I]$^3P$ lines.
+the [\cii] 158 $\mu$m or the [\oi] $^3$P lines.
 The lowest temperature allowed,
 $T_{low}$, should be adjusted with this command
 so that the excitation potential

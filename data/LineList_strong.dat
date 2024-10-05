@@ -24,7 +24,8 @@ O  3  4363.21 air
 # >>chng 21 april 7, H I wl from 4861.33 to 4861.34A, replacing average energy with np energies
 # >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
 H  1	4861.32A air
-nFnu	4885.36 air
+# >>chng 24 oct 05, wl from 4885.36 to 4884.00A, reinterpret PredCont wl as vacuum
+nFnu	4884.00A air
 O  3	5006.84 air
 O  1	5577.34 air
 # >>chng 22 jul 09, wl from 5754.61 to 5754.59A, upgrade to Chianti v10

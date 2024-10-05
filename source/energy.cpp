@@ -165,23 +165,23 @@ double Energy::get(const char *unit) const
 	}
 	else if( isSameUnit(unit,ENERGY_CM) )
 	{
-		return cm();
+		return cmVac();
 	}
 	else if( isSameUnit(unit,ENERGY_MM) )
 	{
-		return mm();
+		return mmVac();
 	}
 	else if( isSameUnit(unit,ENERGY_MICRON) )
 	{
-		return micron();
+		return micronVac();
 	}
 	else if( isSameUnit(unit,ENERGY_NM) )
 	{
-		return nm();
+		return nmVac();
 	}
 	else if( isSameUnit(unit,ENERGY_A) )
 	{
-		return Angstrom();
+		return angstromVac();
 	}
 	else if( isSameUnit(unit,ENERGY_HZ) )
 	{

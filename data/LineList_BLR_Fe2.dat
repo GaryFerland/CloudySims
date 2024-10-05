@@ -374,17 +374,27 @@ Inci  4860   air #  incident continuum at 4860 Angstroms in units of nuF(nu)
 # The following are the total non-line emission from the cloud 
 # (diffuse + reflected continuum) at a given wavelength in Angstroms.
 # All have units of nuF(nu).
-nFnu 122.4m  air # microns 
+# >>chng 24 oct 05, wl from 122.4m to 122.367m, reinterpret PredCont wl as vacuum
+nFnu 122.367m  air # microns 
 #
-nFnu  8329.68   air # Angstrom
-nFnu  8078.61   air
-nFnu  6209.66   air
-nFnu  4885.36   air
-nFnu  3704.34   air
-nFnu  3587.67   air
-nFnu  2392.03   air
-nFnu  2071.34   air
-nFnu  2052.68   air
+# >>chng 24 oct 05, wl from 8329.68 to 8327.39A, reinterpret PredCont wl as vacuum
+nFnu  8327.39A   air # Angstrom
+# >>chng 24 oct 05, wl from 8078.61 to 8076.39A, reinterpret PredCont wl as vacuum
+nFnu  8076.39A   air
+# >>chng 24 oct 05, wl from 6209.66 to 6207.94A, reinterpret PredCont wl as vacuum
+nFnu  6207.94A   air
+# >>chng 24 oct 05, wl from 4885.36 to 4884.00A, reinterpret PredCont wl as vacuum
+nFnu  4884.00A   air
+# >>chng 24 oct 05, wl from 3704.34 to 3703.28A, reinterpret PredCont wl as vacuum
+nFnu  3703.28A   air
+# >>chng 24 oct 05, wl from 3587.67 to 3586.64A, reinterpret PredCont wl as vacuum
+nFnu  3586.64A   air
+# >>chng 24 oct 05, wl from 2392.03 to 2391.30A, reinterpret PredCont wl as vacuum
+nFnu  2391.30A   air
+# >>chng 24 oct 05, wl from 2071.34 to 2070.68A, reinterpret PredCont wl as vacuum
+nFnu  2070.68A   air
+# >>chng 24 oct 05, wl from 2052.68 to 2052.02A, reinterpret PredCont wl as vacuum
+nFnu  2052.02A   air
 nFnu  1793.44   vacuum
 nFnu  1585.12   vacuum
 #
