@@ -294,6 +294,11 @@ namespace {
 		line = p.getLineID();
 		CHECK( line.chLabel() == "H  1" && fp_equal(line.wavlVac(), 6564.523_r) );
 		CHECK( line.str() == "\"H  1\" 6564.52A" );
+		p.setline("H  1 6562.71A air index=2, 5");
+		line = p.getLineID();
+		CHECK( line.chLabel() == "H  1" && fp_equal(line.wavlVac(), 6564.523_r) );
+		CHECK( line.str() == "\"H  1\" 6564.52A" );
+		CHECK( line.indLo() == 2 && line.indHi() == 5 );
 
 		prt.lgPrintLineAirWavelengths = true;
 		p.setline("H  1 6562.71A");
