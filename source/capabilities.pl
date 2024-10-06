@@ -70,16 +70,20 @@ unlink "tmp_cloudyconfig.out";
 if( $arch ne "arm64" )
 {
     # test if the -no-pie and -fno-pie flags are supported
-    if( $compiler eq "clang" || $os =~ /Darwin/ ) {
-        $npflags = "-fno-pie";
-    }
-    else  {
-        $npflags = "-no-pie -fno-pie";
-    }
+	# first try both flags
+	$npflags = "-no-pie -fno-pie";
     $ret = system( "$ARGV[0] $npflags -o tmp_cloudyconfig.out tmp_cloudyconfig.cpp > /dev/null 2>&1" );
     if( $ret == 0 ) {
         $res .= "$npflags ";
     }
+	else {
+		# try only the -fno-pie flag
+		$npflags = "-fno-pie";
+		$ret = system( "$ARGV[0] $npflags -o tmp_cloudyconfig.out tmp_cloudyconfig.cpp > /dev/null 2>&1" );
+		if( $ret == 0 ) {
+			$res .= "$npflags ";
+		}
+	}
 }
 unlink "tmp_cloudyconfig.cpp";
 unlink "tmp_cloudyconfig.out";
