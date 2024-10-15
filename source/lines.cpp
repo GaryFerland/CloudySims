@@ -24,6 +24,7 @@ void t_LineSave::zero()
 	/* >>chng 02 apr 22 from 2 to 3 since added unit at 1 */
 	/* >>chng 06 mar 11, from 3 to -1 will now set to "H  1" 4861 */
 	ipNormLine = -1;
+	NormLine = LineID("H  1", Hbeta_WavLen);
 	sig_figs = sig_figs_max;
 	/* The scale factor for the normalization line */
 	ScaleNormLine = 1.;

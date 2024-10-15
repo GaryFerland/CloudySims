@@ -1318,9 +1318,9 @@ public:
 	realnum wavlVac() const { return p_convertWvl(); }
 	/** convert wavelength to string for user output, can be either air or vacuum
 	 *  this depends on whether the PRINT LINE VACUUM command is in effect */
-	string sprt_wl() const;
+	string sprt_wl(const char* format=NULL) const;
 	/** write wavelength to output stream */
-	void prt_wl(FILE *io) const;
+	void prt_wl(FILE *io, const char* format=NULL) const;
 };
 
 // shorthand for turning literal constants into wavelengths, e.g. 1393.75_vac or 2795.53_air

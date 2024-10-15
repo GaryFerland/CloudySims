@@ -62,17 +62,18 @@ bool Parser::nMatchSkip(const string& chKey, size_t nmin)
 {
 	auto m_old = m_off; // remember in case we need to rewind
 	// first skip trailing junk
-	while( !at_end() && !isBoundaryChar(current()) )
+	while( !at_end() && !isSeparatorChar(current()) )
 		++m_off;
 	// now skip separators, there must be at least one
 	size_t nsep = 0;
-	while( !at_end() && isBoundaryChar(current()) ) {
+	while( !at_end() && isSeparatorChar(current()) )
+	{
 		++nsep;
 		++m_off;
 	}
 	// now read the keyword until the next boundary char
 	string read;
-	while( !at_end() && !isBoundaryChar(current()) )
+	while( !at_end() && !isSeparatorChar(current()) )
 		read.push_back(m_card[m_off++]);
 	bool lgMatch = matchKey(read, chKey, nmin);
 	if( nsep > 0 && lgMatch )
@@ -175,6 +176,11 @@ bool isBoundaryChar(char c)
 		return isspace(c) ? true : false ;
 	else 	// Words are strings starting with A-Z, a-z or _
 		return (! isalpha(c) ) && c != '_';
+}
+
+bool isSeparatorChar(char c)
+{
+	return ( isblank(c) || c == '=' || c == '_' || c == ',' );
 }
 
 bool Parser::isComment(void) const

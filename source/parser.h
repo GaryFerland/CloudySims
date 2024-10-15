@@ -28,6 +28,7 @@ struct CloudyCommand {
 };
 
 bool isBoundaryChar(char c);
+bool isSeparatorChar(char c);
 
 class Symbol {
 public:
@@ -173,15 +174,16 @@ public:
 		}
 		return i>0;
 	}
-	bool GetRange(const char *chKey, double *val1, double *val2)
+	bool GetRange(const char* chKey, t_wavl& val1, t_wavl& val2)
 	{
 		int i = nMatch1(chKey);
-		if (i > 0) {
+		if( i > 0 )
+		{
 			m_off = i-1;
-			*val1 = FFmtRead();
-			*val2 = FFmtRead();
+			val1 = getWaveOpt();
+			val2 = getWaveOpt();
 		}
-		return i>0;
+		return ( i > 0 );
 	}
 	bool nMatchErase(const char *chKey)
 	{

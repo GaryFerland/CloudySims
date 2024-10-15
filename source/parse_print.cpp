@@ -523,12 +523,8 @@ void ParsePrint(
 
 				/* wavelength has range option */
 				/* option to only certain print range of lines */
-				if( p.nMatch("RANG") )
+				if( p.GetRange("RANG", prt.wlSort1, prt.wlSort2) )
 				{
-					prt.wlSort1 = p.getWave();
-
-					prt.wlSort2 = p.getWave();
-
 					if( p.lgEOL() )
 					{
 						fprintf( ioQQQ, " There must be two numbers for the RANGE option, the lower and upper wavelength.  Sorry.\n" );

@@ -87,7 +87,7 @@ double t_wavl::p_RefIndex(double EnergyWN) const
 }
 
 /* write wavelength to string */
-string t_wavl::sprt_wl() const
+string t_wavl::sprt_wl(const char* format) const
 {
 	DEBUG_ENTRY( "sprt_wl()" );
 
@@ -95,6 +95,14 @@ string t_wavl::sprt_wl() const
 
 	if( prt.lgPrintLineAirWavelengths && wl > 0_r )
 		wl /= p_RefIndex(1.e8/wl);
+
+	if( format != NULL )
+	{
+		auto buflen = snprintf(NULL, 0, format, wl); // dry run to get buffer length
+		vector<char> buf(buflen+1); // buflen does not include the terminating 0-byte
+		snprintf(buf.data(), buflen+1, format, wl);
+		return string(buf.data());
+	}
 
 	/* print in angstrom unless > 1e4, then use micron */
 	string chUnits;
@@ -146,11 +154,13 @@ string t_wavl::sprt_wl() const
 }
 
 /* write wavelength to output stream */
-void t_wavl::prt_wl(FILE *ioOUT) const
+void t_wavl::prt_wl(FILE *ioOUT, const char* format) const
 {
 	DEBUG_ENTRY( "prt_wl()" );
 
-	if( LineSave.wl_length > 0 )
+	if( format != NULL )
+		fprintf(ioOUT, "%s", sprt_wl(format).c_str() );
+	else if( LineSave.wl_length > 0 )
 		fprintf(ioOUT, "%.*s", LineSave.wl_length, sprt_wl().c_str() );
 	else
 		fprintf(ioOUT, "%s", sprt_wl().c_str() );

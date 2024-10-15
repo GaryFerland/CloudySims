@@ -1160,9 +1160,13 @@ tested.
 \item[The range option]  The keyword \cdCommand{range}
 tells the code to only check the
 monitored values over a restricted wavelength range.
-The wavelengths of
-the lines are stored in angstrom so the range must be given in
-the same units. The numbers are interpreted as vacuum wavelengths.
+The wavelengths can be entered in the standard \Cloudy\ format.
+Interpretation as air or vacuum wavelengths can be forced by appending the optional keyword
+\cdCommand{air} or \cdCommand{vacuum} directly behind the wavelength. Note that the keyword
+only applies to the wavelength directly preceding it, so it needs to be repeated, as shown below.
+\begin{verbatim}
+monitor Case B H-like hydrogen 0.15 range 1000A vacuum to 4.00m air
+\end{verbatim}
 This was added as a way to exclude the intensities of
 unobservable MIR - FIR lines.  These lines come from higher levels in the
 atom and generally have a larger error due to the finite size of the model.

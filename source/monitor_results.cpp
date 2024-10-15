@@ -561,19 +561,20 @@ void ParseMonitorResults(Parser &p)
 		}
 
 		/* range option - to limit check on a certain wavelength range */
-		if( p.GetRange("RANG",&Param[nAsserts][2],&Param[nAsserts][3]) )
+		t_wavl wlLo, wlHi;
+		if( p.GetRange("RANG", wlLo, wlHi) )
 		{
 			if( p.lgEOL() ) 
 			{
-				/* did not get 2 numbers */
-				fprintf(ioQQQ," The monitor Case B range option must have two numbers,"
-					" the lower and upper limit to the wavelengths in Angstroms.\n");
-				fprintf(ioQQQ," There must be a total of three numbers on the line,"
-					" the relative error followed by the lower and upper limits to the "
-					"wavelength in Angstroms.\n");
+				/* did not get all the numbers */
+				fprintf(ioQQQ," The monitor Case B range option must have a total of"
+						" three numbers on the line: the relative error followed by the"
+						" lower and upper limits to the wavelength.\n");
 				cdEXIT(EXIT_FAILURE);
 			}
-			if( Param[nAsserts][2]>Param[nAsserts][3])
+			Param[nAsserts][2] = wlLo.wavlVac();
+			Param[nAsserts][3] = wlHi.wavlVac();
+			if( Param[nAsserts][2] > Param[nAsserts][3] )
 			{
 				/* make sure in increasing order */
 				double sav = Param[nAsserts][3];

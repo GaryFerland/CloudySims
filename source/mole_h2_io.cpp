@@ -170,7 +170,7 @@ void diatomics::H2_ParseSave( Parser &p,
 		/* save H2 lines - all in X */
 		strcpy( save.chSave[save.nsave], "H2ln" );
 		sncatf( chHeader,
-			"#H2 line\tEhi\tVhi\tJhi\tElo\tVlo\tJlo\twl(mic)\twl(lab)\tlog L or I\tI/Inorm\tExcit(hi, K)\tg_u h nu * Aul\n" );
+			"#H2 line\tEhi\tVhi\tJhi\tElo\tVlo\tJlo\twl(ang)\twl(lab)\tlog L or I\tI/Inorm\tExcit(hi, K)\tg_u h nu * Aul\n" );
 		/* first optional number changes the threshold of weakest line to print*/
 		/* fe2thresh is intensity relative to normalization line,
 		 * normally Hbeta, and is set to zero in zero.c */
@@ -1641,7 +1641,7 @@ void diatomics::H2_PunchDo( FILE* io ,  char chJOB[] , const char chTime[] , lon
 					jhisave[nsave] = (*Hi).J();
 					ivhisave[nsave] = (*Hi).v();
 					iehisave[nsave] = (*Hi).n();
-					wlsave[nsave] = tr->twav().sprt_wl();
+					wlsave[nsave] = tr->twav().sprt_wl("%.3f");
 					++nsave;
 				}
 			}
@@ -1813,7 +1813,9 @@ void diatomics::H2_PunchDo( FILE* io ,  char chJOB[] , const char chTime[] , lon
 				{
 					fprintf(io, "%li-%li %c(%li)", iVibHi, iVibLo, chMolBranch( iRotHi, iRotLo ), iRotLo );
 					fprintf(io, "\t%ld\t%ld\t%ld\t%ld\t%ld\t%ld\t", iElecHi, iVibHi, iRotHi, iElecLo, iVibLo, iRotLo);
-					/* prt_wl print wavelength in output format, converts to air if needed */
+					/* prt_wl print wavelength in custom format (in angstrom), converts to air if needed */
+					tr->twav().prt_wl(io, "%.3f\t");
+					/* prt_wl print wavelength in standard output format, converts to air if needed */
 					tr->twav().prt_wl(io);
 					/* the log of the line intensity or luminosity */
 					fprintf( io, "\t%.3f\t%.3e", 

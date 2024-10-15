@@ -249,6 +249,102 @@ namespace {
 		t = -t_vac(6564.522546600_r);
 		CHECK( fp_equal(t.wavlVac(), -6564.522546600_r) );
 	}
+	TEST(TestReadWave)
+	{
+		// first test wavelengths in vacuum
+		prt.lgPrintLineAirWavelengths = false;
+
+		Parser p;
+		p.setline("2316.23A");
+		t_wavl t = p.getWave();
+		CHECK( fp_equal(t.wavlVac(), 2316.23_r) );
+		CHECK( !p.lgEOL() );
+		p.setline("12.1623m");
+		t = p.getWave();
+		CHECK( fp_equal(t.wavlVac(), 12.1623e4_r) );
+		p.setline("12.1623c");
+		t = p.getWave();
+		CHECK( fp_equal(t.wavlVac(), 12.1623e8_r) );
+		p.setline("2316.23 air");
+		t = p.getWave();
+		CHECK( fp_equal(t.wavlVac(), 2316.9419_r) );
+		p.setline("2316.23 vacuum");
+		t = p.getWave();
+		CHECK( fp_equal(t.wavlVac(), 2316.23_r) );
+
+		// now test wavelengths in air
+		prt.lgPrintLineAirWavelengths = true;
+
+		p.setline("2316.23A");
+		t = p.getWave();
+		CHECK( fp_equal(t.wavlVac(), 2316.9419_r) );
+		p.setline("2316.23 air");
+		t = p.getWave();
+		CHECK( fp_equal(t.wavlVac(), 2316.9419_r) );
+		p.setline("2316.23 vacuum");
+		t = p.getWave();
+		CHECK( fp_equal(t.wavlVac(), 2316.23_r) );
+
+		// test failure modes
+		FILE *bak = ioQQQ;
+		FILE *tmp = tmpfile();
+		if( tmp != NULL )
+			ioQQQ = tmp;
+		p.setline("no number");
+		t = p.getWaveOpt();
+		CHECK( p.lgEOL() );
+		p.setline("no number");
+		CHECK_THROW( (void)p.getWave(), cloudy_exit );
+		if( tmp != NULL )
+			fclose(tmp);
+		ioQQQ = bak;
+	}
+	TEST(TestReadRange)
+	{
+		// first test printing wavelengths in vacuum
+		prt.lgPrintLineAirWavelengths = false;
+
+		Parser p;
+		t_wavl t1, t2;
+		p.setline("range 1200 2.3c");
+		CHECK( p.GetRange("RANG", t1, t2) );
+		CHECK( fp_equal(t1.wavlVac(), 1200_r) );
+		CHECK( fp_equal(t2.wavlVac(), 2.3e8_r) );
+		p.setline("range 4100 air 5600 vacuum");
+		CHECK( p.GetRange("RANG", t1, t2) );
+		CHECK( fp_equal(t1.wavlVac(), 4101.1571_r) );
+		CHECK( fp_equal(t2.wavlVac(), 5600_r) );
+		p.setline("range 4100 air 5600");
+		CHECK( p.GetRange("RANG", t1, t2) );
+		CHECK( fp_equal(t1.wavlVac(), 4101.1571_r) );
+		CHECK( fp_equal(t2.wavlVac(), 5600_r) );
+
+		// now test wavelengths in air
+		prt.lgPrintLineAirWavelengths = true;
+
+		p.setline("range 1200 5400a");
+		CHECK( p.GetRange("RANG", t1, t2) );
+		CHECK( fp_equal(t1.wavlVac(), 1200_r) );
+		CHECK( fp_equal(t2.wavlVac(), 5401.5013_r) );
+		p.setline("range 4100 air 5600 vacuum");
+		CHECK( p.GetRange("RANG", t1, t2) );
+		CHECK( fp_equal(t1.wavlVac(), 4101.1571_r) );
+		CHECK( fp_equal(t2.wavlVac(), 5600_r) );
+		p.setline("range 4100 5600 vacuum");
+		CHECK( p.GetRange("RANG", t1, t2) );
+		CHECK( fp_equal(t1.wavlVac(), 4101.1571_r) );
+		CHECK( fp_equal(t2.wavlVac(), 5600_r) );
+
+		// test failure modes
+		p.setline("1200 2.3c");
+		CHECK( !p.GetRange("RANG", t1, t2) );
+		p.setline("range");
+		CHECK( p.GetRange("RANG", t1, t2) );
+		CHECK( p.lgEOL() );
+		p.setline("range 1200 vacuum");
+		CHECK( p.GetRange("RANG", t1, t2) );
+		CHECK( p.lgEOL() );
+	}
 	TEST(TestReadLineID)
 	{
 		// LineID always stores wavelength in vacuum internally, but what it reads from the line

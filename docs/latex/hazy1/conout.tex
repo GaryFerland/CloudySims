@@ -175,7 +175,7 @@ label is for the first line that was entered in a particular cell.
 It is
 not the strongest line and there may be many lines contributing to a
 particular cell.
-This command will print the line energy (Rydberg),
+This command will print the line energy (rydberg),
 continuum array index, and the line's spectroscopic notation, for every
 line that is included in the calculation.
 The lines will be printed in
@@ -186,7 +186,7 @@ within a particular cell.
 This is a debugging aid.
 
 There are two optional numbers which give the lower and upper limit to
-the energy range (Rydbergs) to be printed.
+the energy range (rydberg) to be printed.
 All lines are printed if these
 numbers do not appear then.
 
@@ -382,7 +382,7 @@ If the distance to an object is set with the
 \cdCommand{distance} command and line luminosities are predicted
 then this command says to print the observed
 flux at the Earth rather than the line luminosity.
-The units are ergs cm$^{-2}\mathrm{s}^{-1}$.
+The units are erg\,cm$^{-2}$\,s$^{-1}$.
 (No correction for interstellar extinction is included, of course).
 Both the keywords \cdCommand{flux} and \cdCommand{Earth} must appear.
 This command can be
@@ -516,7 +516,7 @@ keyword \cdCommand{air} or \cdCommand{vacuum} directly behind the wavelength.
 Note that the keyword only applies to the wavelength directly preceding it, so
 it needs to be repeated, as shown below.
 \begin{verbatim}
-print line sort wavelength range 3500A air to 1.2m air
+print line sort wavelength range 1200A vacuum to 1.2m air
 \end{verbatim}
 
 \subsection{Print line sort intensity}
@@ -1208,15 +1208,15 @@ in Section~\ref{sec:no_isotropic_continua}.
 \label{units_option}
 
 By default, the energy units for the first column, which gives the
-wavelength or energy for each point in the continuum, are Rydbergs.  The
+wavelength or energy for each point in the continuum, are rydberg.  The
 units can be changed to any of several energy or wavelength units with the
 \cdCommand{units} keyword that appears on a \cdCommand{save continuum} command.  The following
 keywords are recognized: \cdCommand{\_micron}, \cdCommand{\_eV\_}, \cdCommand{\_keV},
 \cdCommand{\_MeV}, \cdCommand{wavenumber}, \cdCommand{centimeter} (also
 \cdCommand{\_cm\_}), \cdCommand{\_mm\_}, \cdCommand{\_nm\_}, \cdCommand{angstrom},
 \cdCommand{\_Hz\_},\cdCommand{\_kHz}, \cdCommand{\_MHz}, \cdCommand{\_GHz},
-\cdCommand{Kelvin} (also \cdCommand{\_K\_}), \cdCommand{erg\_}, and
-\cdCommand{\_Rydberg}.
+\cdCommand{kelvin} (also \cdCommand{\_K\_}), \cdCommand{erg\_}, and
+\cdCommand{\_rydberg}.
 Both the keyword \cdCommand{units} and one of
 these units must appear for the units of the energy scale to be changed.
 
@@ -1263,7 +1263,7 @@ are defined in the Chapter \cdSectionTitle{Definitions}.
 \begin{description}
 \item[Column 1.]  The first column gives the photon energy in the units set
 with the \cdCommand{units} option.  The default
-units are Rydbergs.
+units are rydberg.
 
 \item[Column 2.]  This is the incident continuum at the illuminated face of
 the cloud.
@@ -1428,7 +1428,7 @@ accurate, the radius and depth in the middle of each zone is reported. One numbe
 be supplied on the command line, which is the wavelength / frequency at which
 the emissivity and opacity will be evaluated. You can use the keyword
 \cdCommand{units} as described in Section~\ref{output_units}. By default the
-frequency is assumed to be in Rydberg. If a wavelength unit is chosen, the number
+frequency is assumed to be in rydberg. If a wavelength unit is chosen, the number
 will always be interpreted as a vacuum wavelength.
 
 \subsection{Save emitted continuum}
@@ -1539,7 +1539,7 @@ the attenuated incident continuum, the OTS line, the OTS continuum, the
 outward continuum and the outward lines.  The first optional number is the
 lowest energy in the output.  If missing or zero, the lowest energy
 considered by the code will be used.  Numbers less than 100 are interpreted
-as the energy in Rydbergs and those greater than 100 as the cell number.
+as the energy in rydberg and those greater than 100 as the cell number.
 
 \subsection{Save ionizing continuum [options]}
 
@@ -1550,7 +1550,7 @@ it is only saved for the last zone.
 The first optional number on the command line is the lowest energy to
 include in the output.  If it is missing or zero then the lowest energy
 considered by the code will be used.  It is interpreted as the energy in
-Rydbergs if the number is less than 100 and as the cell number if it is
+rydberg if the number is less than 100 and as the cell number if it is
 greater than 100.  The second optional number is the threshold for the
 faintest interaction to print.  The default is one percent of the quantity
 given in the \cdMono{rate/tot} column.
@@ -1561,7 +1561,7 @@ right to left.
 The first column in the resulting output is the cell number
 of the C scale, so the first cell is zero.
 Next comes the photon energy
-in Rydbergs unless changed with the \cdCommand{units} option.  The third column, with
+in rydberg unless changed with the \cdCommand{units} option.  The third column, with
 the header \cdMono{flux}, is the flux of photons within this frequency bin
 (\emph{not}
 per unit frequency) with units s$^{-1}$~cm$^{-2}$.  The forth column gives the
@@ -1639,13 +1639,13 @@ set by the \cdCommand{set save line width / resolution} command
 is not used in this command.  This is to insure that lines have
 the correct intensity in the save file, as needed for energy conservation.
 The \cdCommand{units} keyword is also ignored. The output will always use
-the standard unit (Rydberg) as the frequency unit.
+the standard unit (rydberg) as the frequency unit.
 
 \subsection{Save two photon continuum}
 
 This saves the total two-photon continuum and is mainly a debugging
 aid.  The photon energy is followed by the number of photons emitted per
-Rydberg per second, then by $\nu F_\nu$.  The details of two photon emission,
+rydberg per second, then by $\nu F_\nu$.  The details of two photon emission,
 including induced processes, are discussed by \citet{Bottorff2006}.
 
 \section{Save convergence [reason, error]}
@@ -1687,7 +1687,10 @@ and can be reset with the \cdCommand{set WeakHeatCool} command.
 
 This is mainly used for debugging and its output is not well documented.
 The line labels may, or may not, correspond to labels used in the main
-emission-line output.  The code adds individual coolants to the total cooling
+emission-line output. If they are, the wavelength reported here will be
+the vacuum wavelength of the line, irrespective of whether the
+\cdCommand{print line vacuum} command has been used or not.
+The code adds individual coolants to the total cooling
 by calling routine \cdRoutine{CoolAdd}.
 The arguments to that call include the string
 and a number that follows it.   To discover the process for a particular
@@ -1966,7 +1969,7 @@ for more details.
 
 \subsection{Save grain qs}
 
-The photon energy in Rydberg is followed by the absorption and scattering
+The photon energy in rydberg is followed by the absorption and scattering
 efficiency for each grain species. The absorption efficiency $Q_{\rm abs}$ is
 defined as the ratio of the absorption cross section $\sigma_{\rm abs}$ and
 the geometric projected grain surface area $\sigma_{\rm g} = \pi a^2$. This
@@ -2117,10 +2120,9 @@ population vs excitation energy diagram.
 Each line of output begins with a spectroscopic designation of the line,
 followed by the upper and lower electronic, vibration, and rotation quantum
 numbers.
-This is followed by the 
-line wavelength in the standard format as it appears in the output.
-This may be either an air or vacuum wavelength, depending on whether the
-\cdCommand{print line vacuum} command was used.
+This is followed by the wavelength of the line in angstrom.
+Next the
+line wavelength is printed as it appears in the output.
 The log of
 the intensity or luminosity in the line (depending on whether the intensity
 or luminosity case is specified), and the intensity of the line relative
@@ -2335,7 +2337,7 @@ This set of commands will save some details about line formation.
 
 This gives the intensities of all lines in a form in which they can easily
 be plotted by other software.  The first column lists the line energy in
-Rydbergs.  The next gives the spectroscopic designation of the ion.  The
+rydberg.  The next gives the spectroscopic designation of the ion.  The
 following two columns give the log of the intrinsic and emergent intensities
 or luminosities of the line.  These will be in the same units as the main printout
 and are the absolute intensities, luminosities, surface brightness, etc and not the 
@@ -2345,7 +2347,7 @@ All lines that appear in the \Cloudy\ main output will also appear in
 this save file.\footnote{In versions 90 and before of the code, only the level 1 and level
 2 lines were output by this command.}
 
-Line energies are in Rydberg by default.  This command recognizes the
+Line energies are in rydberg by default.  This command recognizes the
 \cdCommand{units} option.  Note that when wavelength units are chosen, e.g.,
 \cdCommand{angstrom}, the wavelengths will always be printed in vacuum regardless
 of whether the \cdCommand{print line vacuum} command is used or not.  This makes
@@ -2997,11 +2999,11 @@ It actually saves the photoionization cross section, not the opacity due to the 
 
 This version of the command creates the file needed to generate one of
 the figures used in another Part of \Hazy.
-The output gives the energy in Rydbergs,
+The output gives the energy in rydberg,
 then keV, following by the hydrogen, helium, and total gas opacities.
 The
 opacities are in units of $10^{24} \mathrm{cm}^{-2}$ and have been multiplied by the cube
-of the energy in Rydbergs.
+of the energy in rydberg.
 
 \subsection{Save opacity shell 26 5 3}
 
@@ -3009,14 +3011,14 @@ This saves the state-specific photoionization cross section for a
 subshell of any species.  The first number is the atomic number of the
 element, the second number the ionization stage, 1 for an atom, and the
 third number the subshell, between 1 and 7 representing $1s, 2s, 2p$, etc.
-The save file will contain the incident photon energy in Rydbergs
+The save file will contain the incident photon energy in rydberg
 followed by the cross section [cm$^2$].
 
 \subsection{Save brems opacity}
 
 This saves the free-free (a.k.a.\ brems) opacity of the gas as a function of
 frequency in the last computed zone. The first column gives the frequency in
-Rydberg, the second column the regular free-free opacity (between electrons
+rydberg, the second column the regular free-free opacity (between electrons
 and ions), and the third column the electron-electron brems opacity. The
 latter two quantities both have units cm$^{-1}$.
 
@@ -3236,7 +3238,7 @@ of \hi\ L$\alpha $, are given as a function of depth into the cloud.
 The continuum source function for the local diffuse radiation field will
 be saved.  The first column is the photon energy.  The second column is
 the diffuse radiation field at that energy, in units of photons per second
-per Rydberg.
+per rydberg.
 Column three contains the total absorption opacity [cm$^{-1}$]
 at that energy.
 Column 4 contains the source function, the ratio of the
@@ -3263,7 +3265,7 @@ than the Lyman continuum edge will be saved for all depths into the cloud.
 All quantities are evaluated at the lowest energy continuum cell that lies
 within the Lyman continuum.  The first column gives the integrated optical
 depth from the illuminated face of the cloud to the current position.  The
-second is the ratio of the diffuse field (photons per Rydberg per second)
+second is the ratio of the diffuse field (photons per rydberg per second)
 to the absorption opacity.  The third is the OTS continuum at this frequency,
 and the last is the ratio of the OTS continuum to the opacity, a photon
 measure of the OTS source function.
@@ -3537,7 +3539,7 @@ the mean optical depth.
 
 \subsubsection{Save species energies}
 This reports the level energies.  The default is to give level
-energies in Rydbergs but this can be changed with the
+energies in rydberg but this can be changed with the
 \cdCommand{units} keyword.  The energies are reported relative to the
 ground state of the species.  This command is useful for identifying
 excitation levels from their index numbers, and should generally be
