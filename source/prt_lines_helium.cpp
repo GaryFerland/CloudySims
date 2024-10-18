@@ -441,6 +441,7 @@ STATIC void GetStandardHeLines()
 			atmdat.CaseBWlHeI.emplace_back(t_vac(wn2angVac(Enerwn)));
 		}
 		else
+			// he1_case_b.dat contains air wavelengths
 			atmdat.CaseBWlHeI.emplace_back(t_air(wl));
 		d.checkEOL();
 

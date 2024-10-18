@@ -56,7 +56,7 @@ void prt_LineLabels(
 	{
 		if( LineSave.lines[i].isSeparator() )
 		{
-			fprintf(ioOUT,"####\t%s",LineSave.chHoldComments[(int)LineSave.lines[i].wavelength()].c_str()); 
+			fprintf(ioOUT,"####\t%s",LineSave.chHoldComments[(int)LineSave.lines[i].wavlVac()].c_str()); 
 		}
 		else
 		{

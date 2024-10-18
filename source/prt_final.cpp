@@ -303,7 +303,7 @@ STATIC void PrintSpectrum ()
 					/* skip over those lines not desired */
 					for( i=0; i<iprnt; ++i )
 					{
-						realnum wavelength = LineSave.lines[Slines[i]].wavelength();
+						realnum wavelength = LineSave.lines[Slines[i]].wavlVac();
 						if( wavelength >= prt.wlSort1.wavlVac() && wavelength <= prt.wlSort2.wavlVac() )
 						{
 							if( j!=i )
@@ -323,7 +323,7 @@ STATIC void PrintSpectrum ()
 				vector<realnum> wavelength(iprnt);
 				for( i=0; i<iprnt; ++i )
 				{
-					wavelength[i] = LineSave.lines[Slines[i]].wavelength();
+					wavelength[i] = LineSave.lines[Slines[i]].wavlVac();
 				}
 
 				/*spsort netlib routine to sort array returning sorted indices */
@@ -420,7 +420,7 @@ STATIC void PrintSpectrum ()
 					/*fprintf( ioQQQ, "1111222223333333444444444      " ); */
 					/* this string was set in */
 					fprintf( ioQQQ, "%s",LineSave.chHoldComments[
-							 (int)LineSave.lines[Slines[ipLin]].wavelength()].c_str() ); 
+							 (int)LineSave.lines[Slines[ipLin]].wavlVac()].c_str() ); 
 				}
 				else
 				{
@@ -848,10 +848,10 @@ void PrtFinal(void)
 				/* this logic must be kept parallel with which H lines are
 				 * added as case B in lines_hydro - any automatic hosing of
 				 * case b would kill both H I and He II */
-				errorwave = WavlenErrorGet( LineSave.lines[i].wavelength(), LineSave.sig_figs );
+				errorwave = WavlenErrorGet( LineSave.lines[i].wavlVac(), LineSave.sig_figs );
 				for( j=0; j<NWLH; ++j )
 				{
-					if( fabs(LineSave.lines[i].wavelength()-wlh[j] ) <= errorwave )
+					if( fabs(LineSave.lines[i].wavlVac()-wlh[j] ) <= errorwave )
 					{
 						LineSave.lines[i].SumLineZero();
 						break;
@@ -878,10 +878,10 @@ void PrtFinal(void)
 				/* this logic must be kept parallel with which H lines are
 				 * added as case B in lines_hydro - any automatic hosing of
 				 * case b would kill both H I and He II */
-				errorwave = WavlenErrorGet( LineSave.lines[i].wavelength(), LineSave.sig_figs );
+				errorwave = WavlenErrorGet( LineSave.lines[i].wavlVac(), LineSave.sig_figs );
 				for( j=0; j<NWLHE; ++j )
 				{
-					if( fabs(LineSave.lines[i].wavelength()-wlhe[j] ) <= errorwave )
+					if( fabs(LineSave.lines[i].wavlVac()-wlhe[j] ) <= errorwave )
 					{
 						LineSave.lines[i].SumLineZero();
 						break;

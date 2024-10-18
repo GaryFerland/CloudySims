@@ -53,7 +53,7 @@ realnum t_wavl::p_wlAirVac() const
 	{
 		double RefIndex_v = 1.;
 		// iterate since wavenumber depends on wlVac not wlAir, but difference should be small
-		for( int i=0; i<2; ++i )
+		for( int i=0; i < 2; ++i )
 		{
 			RefIndex_v = p_RefIndex(1e8 / wlVacuum);
 			wlVacuum = wlAir * RefIndex_v;

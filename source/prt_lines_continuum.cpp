@@ -574,8 +574,8 @@ void lines_continuum(void)
 						/* chIonLbl generates a null terminated 4 char string, of form "C  2"
 						 * the result, chLable, is only used when ipass == 0, can be undefined otherwise */
 						double wn = RYD_INF * iso_sp[ipISO][nelem].fb[n].xIsoLevNIonRyd;
-						realnum wl = (realnum)wn2angVac(wn);
-						linadd( 0. , t_vac(wl) ,chIonLbl(iso_sp[ipISO][nelem].trans(1,0)).c_str(),'i',
+						t_wavl wl = t_vac(wn2angVac(wn));
+						linadd( 0. , wl ,chIonLbl(iso_sp[ipISO][nelem].trans(1,0)).c_str(),'i',
 							"radiative recombination continuum");
 					}
 					else
@@ -607,8 +607,8 @@ void lines_continuum(void)
 				{
 					string chLabel = chIonLbl( nelem+1, ion+1 );
 					double wn = RYD_INF * Heavy.Valence_IP_Ryd[nelem][ion];
-					realnum wl = (realnum)wn2angVac(wn);
-					linadd( 0. , t_vac(wl) ,chLabel.c_str(),'i',
+					t_wavl wl = t_vac(wn2angVac(wn));
+					linadd( 0. , wl ,chLabel.c_str(),'i',
 						"radiative recombination continuum");
 				}
 				else

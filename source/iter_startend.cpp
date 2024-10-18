@@ -560,17 +560,12 @@ void IterStart()
 	hmi.h2dtot = 0.;
 	timesc.sound = 0.;
 
-	LineID norm;
-	if( LineSave.NormLine.chLabel().size() > 0 )
-		norm = LineSave.NormLine;
-	else
-		norm = LineID("H  1", Hbeta_WavLen);
-	LineSave.ipNormLine = LineSave.findline(norm);
+	LineSave.ipNormLine = LineSave.findline(LineSave.NormLine);
 	if( LineSave.ipNormLine < 0 )
 	{
 		/* did not find the line if return is negative */
 		fprintf( ioQQQ, "PROBLEM could not find the normalisation line.\n");
-		fprintf( ioQQQ, "IterStart could not find the line: %s", norm.str().c_str() );
+		fprintf( ioQQQ, "IterStart could not find the line: %s", LineSave.NormLine.str().c_str() );
 		fprintf( ioQQQ, "Please check the emission line output to find the correct line identification.\n");
 		fprintf( ioQQQ, "Sorry.\n");
 		LineSave.ipNormLine = 0;
@@ -581,7 +576,6 @@ void IterStart()
 	 * find index for lines and save for future iterations */
 	if( iteration == 1 )
 	{
-		/* nstpl is number of stop line commands, 0 if none entered */
 		for( auto& p : StopCalc.sle )
 		{
 			double relint, absint ;

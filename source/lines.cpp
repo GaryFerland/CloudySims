@@ -56,7 +56,7 @@ string LinSv::label() const
 	DEBUG_ENTRY( "LinSv::label()" );
 	string val = chALab();
 	val.resize( NCHLAB-1, ' ' );
-	val += " " + t_vac(wavelength()).sprt_wl();
+	val += " " + twav().sprt_wl();
 	return val;
 }
 
@@ -244,7 +244,7 @@ void LinSv::makeBlend(const char* chLabel,const t_wavl& wavelength1, const realn
 	{
 		realnum wlo = wavelength1.wavlVac()-width;
 		realnum whi = wavelength1.wavlVac()+width;
-			
+
 		/* check that chLabel[4] is null - supposed to be 4 char + end */
 		if( strlen(chLabel) > NCHLAB-1 )
 		{
@@ -273,8 +273,8 @@ void LinSv::makeBlend(const char* chLabel,const t_wavl& wavelength1, const realn
 			/* use pre-capitalized version of label to be like input chLineLabel */
 			const char *chCaps = LineSave.lines[j].chCLab();
 
-			if (LineSave.wavelength(j) >= wlo && 
-				 LineSave.wavelength(j) <= whi &&
+			if (LineSave.wavlVac(j) >= wlo && 
+				 LineSave.wavlVac(j) <= whi &&
 			    strcmp(chCaps,chCARD.c_str()) == 0)
 			{
 				addComponentID(j);
@@ -305,7 +305,7 @@ void LinSv::setBlendWavl()
 		if( sum_wn_num > 0. )
 			wl = wn2angVac( sum_wn_num );
 
-		LineSave.resetWavelength( m_index, wl );
+		LineSave.resetWavlVac( m_index, wl );
 	}
 }
 
@@ -319,7 +319,7 @@ static bool wavelength_compare (long a, long b)
 	LinSv* a1 = &LineSave.lines[a];
 	LinSv* b1 = &LineSave.lines[b];
 	/* comparison is b-a so we get inverse wavelength order (increasing energy order) */
-	if( b1->wavelength() < a1->wavelength() )
+	if( b1->wavlVac() < a1->wavlVac() )
 		return true;
 	else 
 		return false;
@@ -328,7 +328,7 @@ static bool wavelength_compare (long a, long b)
 static bool wavelength_compare_realnum (size_t a, realnum wavelength)
 {
 	/* comparison is b-a so we get inverse wavelength order (increasing energy order) */
-	if( wavelength < LineSave.wavelength(a) )
+	if( wavelength < LineSave.wavlVac(a) )
 		return true;
 	else 
 		return false;
@@ -412,7 +412,7 @@ long t_LineSave::findline(const LineID& line)
 		vector<size_t>::iterator second;
 		for(second=first; second != SortWL.end(); ++second)
 		{
-			if (wavelength(*second) < line.wavlVac()-errorwave)
+			if (wavlVac(*second) < line.wavlVac()-errorwave)
 				break;
 		}
 
@@ -442,7 +442,7 @@ long t_LineSave::findline(const LineID& line)
 			if ( lgMatch )
 			{
 				++nmatch;
-				realnum dwl = wavelength(*pos)-line.wavlVac();
+				realnum dwl = wavlVac(*pos)-line.wavlVac();
 				if ( nmatch >= 2 )
 				{
 					if ( nmatch == 2 )
@@ -450,7 +450,7 @@ long t_LineSave::findline(const LineID& line)
 						fprintf(ioQQQ,"WARNING: multiple matching lines found in search for %s\n",
 								line.str().c_str());
 						fprintf(ioQQQ,"WARNING: match 1 is \"%s\" (dwl=%gA)\n",
-								lines[*found].biglabel().c_str(),wavelength(*found)-line.wavlVac());
+								lines[*found].biglabel().c_str(),wavlVac(*found)-line.wavlVac());
 					}
 					fprintf(ioQQQ,"WARNING: match %d is \"%s\" (dwl=%gA)\n",
 							nmatch, lines[*pos].biglabel().c_str(),dwl);
@@ -458,7 +458,7 @@ long t_LineSave::findline(const LineID& line)
 				if ( found == SortWL.end() )
 				{
 					found = pos;
-					dbest = fabs(wavelength(*pos)-line.wavlVac());
+					dbest = fabs(wavlVac(*pos)-line.wavlVac());
 				}
 				else if ( fabs(dwl) < dbest )
 				{
@@ -498,8 +498,8 @@ long t_LineSave::findline(const LineID& line)
 		realnum besterror = 0.;
 		for (;;)
 		{
-			realnum errordown = wavelength(*(first-1))-line.wavlVac();
-			realnum errorup = line.wavlVac() - (second == SortWL.end() ? 0.0 : wavelength(*second)) ;
+			realnum errordown = wavlVac(*(first-1))-line.wavlVac();
+			realnum errorup = line.wavlVac() - (second == SortWL.end() ? 0.0 : wavlVac(*second)) ;
 			realnum error = 0.;
 			vector<size_t>::iterator next;
 			if ( errordown < errorup || second == SortWL.end())
@@ -551,7 +551,7 @@ long t_LineSave::findline(const LineID& line)
 	
 	for( j=1; j < nsum; j++ )
 	{
-		realnum current_error = (realnum)fabs(wavelength(j)-line.wavlVac());
+		realnum current_error = (realnum)fabs(wavlVac(j)-line.wavlVac());
 		/* use pre-capitalized version of label to be like input chLineLabel */
 		const char *chCaps = lines[j].chCLab();
 
@@ -584,14 +584,14 @@ long t_LineSave::findline(const LineID& line)
 
 		/* check wavelength and chLabel for a match */
 		if( lgDEBUG && (current_error <= errorwave || 
-			   fp_equal( line.wavlVac() + errorwave, wavelength(j) ) ||
-			   fp_equal( line.wavlVac() - errorwave, wavelength(j) ))  
+			   fp_equal( line.wavlVac() + errorwave, wavlVac(j) ) ||
+			   fp_equal( line.wavlVac() - errorwave, wavlVac(j) ))  
 		    && strcmp(chCaps,chCARD.c_str()) == 0 )
 		{
 			/* match, so set emiss to emissivity in line */
 			/* and announce success by returning line index within stack */
 			printf("Matched %s %15.8g %ld %18.11g %s\n",
-				   chCaps,line.wavlVac(),j,wavelength(j),
+				   chCaps,line.wavlVac(),j,wavlVac(j),
 				   lines[j].biglabel().c_str());
 		}
 	}

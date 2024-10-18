@@ -1328,7 +1328,7 @@ void ParseSave(Parser& p)
 		}
 
 		/* save information on 21 cm excitation processes - accept either keyword 21cm or 21 cm */
-		else if( p.nMatch("21 CM") || p.nMatch("21CM"))
+		else if( p.nMatch("21 CM") || p.nMatch("21CM") )
 		{
 			/* save information about 21 cm line */
 			strcpy( save.chSave[save.nsave], "21CM" );

@@ -163,12 +163,16 @@ struct t_LineSave : public module {
 	void setSortWL();
 	void init(long index, char chSumTyp, const char *chComment, const char *label,
 			  bool lgAdd, t_wavl wavelength, const TransitionProxy& tr);
-	realnum wavelength(long index)
+	realnum wavlVac(long index) const
 	{
 		return m_wavelength[index];
 	}
+	t_wavl twav(long index) const
+	{
+		return t_vac(wavlVac(index));
+	}
 
-	void resetWavelength( long index, realnum wl )
+	void resetWavlVac( long index, realnum wl )
 	{
 		m_wavelength[index] = wl;
 	}
@@ -330,9 +334,13 @@ public:
 	}
 
 	/** the wavelength of the line */
-	realnum wavelength() const
+	realnum wavlVac() const
 	{
-		return LineSave.wavelength(m_index);
+		return LineSave.wavlVac(m_index);
+	}
+	t_wavl twav() const
+	{
+		return LineSave.twav(m_index);
 	}
 
 	/** comment describing the line */
@@ -429,7 +437,7 @@ public:
 
 		if( !isBlend() )
 		{
-			if( m_chSumTyp != 't' || LineSave.wavelength(m_index) <= realnum(0.) )
+			if( m_chSumTyp != 't' || LineSave.wavlVac(m_index) <= 0_r )
 				ASSERT( m_SumLine[ipEmer] == 0. );
 			else
 				ASSERT( m_SumLine[ipIntr] > m_SumLine[ipEmer] ||

@@ -1032,7 +1032,7 @@ long debugLine( realnum wavelength )
 	{
 		/* check wavelength and chLabel for a match */
 		/* if( fabs(LineSave.lines[j].wavelength- wavelength)/MAX2(DELTA,wavelength) < errorwave ) */
-		if( fabs(LineSave.lines[j].wavelength()-wavelength) < errorwave )
+		if( fabs(LineSave.lines[j].wavlVac()-wavelength) < errorwave )
 		{
 			LineSave.lines[j].prt(stdout);
 			printf("\n");

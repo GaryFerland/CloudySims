@@ -35,7 +35,7 @@ void prt_line_err( FILE *ioOUT, const LineID& lineid );
 /* prt_line_inlist print line suitable for output list, label not enclosed in quotation marks
 \param *ioOUT		output file handle
 \param *label		line label
-\param wvlng		line wavelength
+\param twav			line wavelength
  */
 void prt_line_inlist ( FILE *ioOUT, const char *label, t_wavl twav );
 

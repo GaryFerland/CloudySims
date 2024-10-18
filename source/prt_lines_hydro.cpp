@@ -433,10 +433,10 @@ void lines_hydro(void)
 							 */
 							realnum Enerwn = realnum(hydro_energy(nelem, ipLo, -1, -1, -1) -
 										 hydro_energy(nelem, ipHi, -1, -1, -1));
-							realnum wl = (realnum)wn2angVac( double(Enerwn) );
-							atmdat.WaveLengthCaseB[nelem][ipHi][ipLo] = t_vac(wl);
+							t_wavl wl = t_vac(wn2angVac(double(Enerwn)));
+							atmdat.WaveLengthCaseB[nelem][ipHi][ipLo] = wl;
 							long ip = ipoint( Enerwn*WAVNRYD );
-							lindst(case_b_Intensity,t_vac(wl),chLab,ip,'i',false," case a or case b from Hummer & Storey tables" );
+							lindst(case_b_Intensity,wl,chLab,ip,'i',false," case a or case b from Hummer & Storey tables" );
 						}
 					}
 				}

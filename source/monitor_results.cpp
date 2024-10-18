@@ -1773,7 +1773,7 @@ bool lgCheckMonitors(
 					 * So here we will find any lines within 1.5 Angstroms
 					 * of the 
 					 * asserted wavelength.  check wavelength and chLabel for a match */
-					if( fabs(LineSave.lines[j].wavelength()-lineids[i].wavlVac()) < 3.f*errorwave )
+					if( fabs(LineSave.lines[j].wavlVac()-lineids[i].wavlVac()) < 3.f*errorwave )
 					{
 						/* now see if labels agree */
 						if( strcmp(chCaps,chFind) == 0 )
@@ -1835,7 +1835,7 @@ bool lgCheckMonitors(
 
 			double relint_cb = 0.,
 				absint_cb = 0.;
-			if( cdLine( "Ca B", t_vac(lineids[i].wavlVac()), &relint_cb, &absint_cb, iLineType[i] ) <= 0 )
+			if( cdLine( "Ca B", lineids[i].twav(), &relint_cb, &absint_cb, iLineType[i] ) <= 0 )
 			{
 				fprintf( ioMONITOR, " monitor error: lgCheckMonitors could not find line ");
 				prt_line_err( ioMONITOR, lineids[i] );
@@ -2819,13 +2819,13 @@ bool lgCheckMonitors(
 					fprintf( ioMONITOR , "%-*s ", NCHLAB-1, chAssertLineLabel[i].c_str() );
 					t_vac(wavelength[i]).prt_wl(ioMONITOR);
 					fprintf( ioMONITOR , " " );
-					t_vac(LineSave.lines[ipDisambiguate[i][0]].wavelength()).prt_wl(ioMONITOR);
+					LineSave.lines[ipDisambiguate[i][0]].twav().prt_wl(ioMONITOR);
 					fprintf( ioMONITOR , " " );
-					t_vac(LineSave.lines[ipDisambiguate[i][1]].wavelength()).prt_wl(ioMONITOR);
+					LineSave.lines[ipDisambiguate[i][1]].twav().prt_wl(ioMONITOR);
 					fprintf( ioMONITOR , " " );
 					if( ipDisambiguate[i][2] > 0 )
 					{
-						t_vac(LineSave.lines[ipDisambiguate[i][2]].wavelength()).prt_wl(ioMONITOR);
+						LineSave.lines[ipDisambiguate[i][2]].twav().prt_wl(ioMONITOR);
 						cdLine_ip( ipDisambiguate[i][2], &relint2, &absint1, iLineType[i] );
 					}
 					else
