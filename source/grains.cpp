@@ -790,7 +790,7 @@ STATIC void InitBinAugerData(size_t nd,
 	temp.zero();
 
 	/* this converts gv.bin[nd].elmAbund[nelem] to particle density inside the grain */
-	double norm = gv.bin[nd].cnv_H_pGR/gv.bin[nd].AvVol;
+	double norm = gv.bin[nd].cnv_H_pGR/double(gv.bin[nd].AvVol);
 
 	/* this loop calculates the probability that photoionization occurs in a given shell */
 	for( ns=0; ns < gv.bin[nd].sd.size(); ns++ )
