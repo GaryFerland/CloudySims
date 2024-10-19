@@ -696,15 +696,24 @@ long nType = 0;
 
 if( cdLine( "H  1", 4861.32_air, &relint, &absint, nType ) < 0 )
     printf("did not find this line\n");
+// alternate forms
+realnum wlHbeta = 4861.32_r;
+if( cdLine( "H  1", t_air(wlHbeta), &relint, &absint, nType ) < 0 )
+    printf("did not find this line\n");
+t_wavl twHbeta = 4861.32_air;
+if( cdLine( "H  1", twHbeta, &relint, &absint, nType ) < 0 )
+    printf("did not find this line\n");
 \end{verbatim}
 
 The first argument in the call is the line label, the
 string (upper or lower case) used by the code to identify
 the line in the main emission-line printout.  The second variable gives
 the wavelength of the line in angstrom. An extension ``\_air'' or ``\_vac''
-should be appended to the number to indicate whether it is an air or vacuum
-wavelength. Both of these must exactly match
-the label and wavelength used by \Cloudy\ to identify the line
+should be appended to the literal number to indicate whether it is an air or vacuum
+wavelength. If you are using variables, you can use the syntax ``t\_air(var)'' or
+``t\_vac(var)'' instead, or use a variable of type t\_wavl.
+Both the label and wavelength must exactly match
+the ones used by \Cloudy\ to identify the line
 (see the chapter \cdSectionTitle{Lines} for a full description).
 The third variable (\cdVariable{relint} in the above
 example) is a double-precision pointer to the relative intensity of the
