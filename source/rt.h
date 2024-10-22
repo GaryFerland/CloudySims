@@ -23,11 +23,13 @@ process depending on zone thickness and level populations.
 void RT_line_one_escape(const TransitionProxy& t, 
 		 bool lgShield_this_zone,
 		 realnum pestrk,
-		 realnum DopplerWidth);
+		 realnum DopplerWidth,
+		 bool = true);
 void RT_line_one_fine(const TransitionProxy& t, 
 		 bool lgShield_this_zone,
 		 realnum pestrk,
-		 realnum DopplerWidth);
+		 realnum DopplerWidth,
+		 bool lgKeepLyman);
 
 // Reset the fine opacity array and velocity shift
 void RT_fine_clear();
@@ -35,11 +37,12 @@ void RT_fine_clear();
 typedef void (*linefunc)(const TransitionProxy& t, 
 								 bool lgShield_this_zone,
 								 realnum pestrk,
-								 realnum DopplerWidth);
+								 realnum DopplerWidth,
+								 bool lgKeepLyman);
 
 /**MakeRT drive static or wind metal line radiative transfer,
  */
-void RT_line_all( linefunc line_one );
+void RT_line_all( linefunc line_one, bool lgExcludeLyman = false );
 
 void RT_line_all_escape( realnum* error ); 
 

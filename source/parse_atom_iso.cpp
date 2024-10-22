@@ -583,17 +583,38 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 		}
 		else if( p.nMatch("EXTRA") )
 		{
-			/* option to set number of "extra" Lyman lines, used for optical depths only */
-			iso_ctrl.nLyman_max[ipISO] = (long int)p.FFmtRead();
-			iso_ctrl.nLyman[ipISO] = MIN2(iso_ctrl.nLyman[ipISO],
-													iso_ctrl.nLyman_max[ipISO]);
-			if( p.lgEOL() )
-				p.NoNumb("'extra' Lyman lines");
-			if( iso_ctrl.nLyman[ipISO] < 2 )
+			if( p.nMatch("RESO") )
 			{
-				// Code does not elsewhere protect against values less than 2.
-				fprintf(ioQQQ," Sorry, the value on this DATABASE xx-LIKE LYMAN command must be at least 2.\n");
-				cdEXIT(EXIT_FAILURE);
+				if (ipISO != ipH_LIKE )
+				{
+					fprintf(ioQQQ," Sorry, the DATABASE H-LIKE LYMAN EXTRA RESOLUTION command only works for hydrogen-like atoms.\n");
+					cdEXIT(EXIT_FAILURE);
+				}
+
+				/* option to set resolution of "extra" Lyman lines */
+				iso_ctrl.Resolution = p.FFmtRead();
+				if( p.lgEOL() )
+					p.NoNumb("'extra' Lyman lines resolution");
+				if( iso_ctrl.Resolution <= 0. )
+				{
+					fprintf(ioQQQ," Sorry, the value on this DATABASE H-LIKE LYMAN EXTRA RESOLUTION command must be positive.\n");
+					cdEXIT(EXIT_FAILURE);
+				}
+			}
+			else
+			{
+				/* option to set number of "extra" Lyman lines, used for optical depths only */
+				iso_ctrl.nLyman_max[ipISO] = (long int)p.FFmtRead();
+				iso_ctrl.nLyman[ipISO] = MIN2(iso_ctrl.nLyman[ipISO],
+														iso_ctrl.nLyman_max[ipISO]);
+				if( p.lgEOL() )
+					p.NoNumb("'extra' Lyman lines");
+				if( iso_ctrl.nLyman[ipISO] < 2 )
+				{
+					// Code does not elsewhere protect against values less than 2.
+					fprintf(ioQQQ," Sorry, the value on this DATABASE xx-LIKE LYMAN command must be at least 2.\n");
+					cdEXIT(EXIT_FAILURE);
+				}
 			}
 		}
 		else

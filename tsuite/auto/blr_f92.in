@@ -753,7 +753,7 @@ monitor line "Blnd" 1397      3.777 error 0.1
 ## >>chng 12 aug 06, from 1.251 to 1.174, bugfix - include Pelec_esc in several places
 ## >>chng 16 aug 17, from 1.174 to 1.12, botches due to bugfix at r11237
 ## >>chng 23 sep 08, from 1.12 to 1.037, fix SQRTPI in Lya destprob
-monitor line "FeKa"    1.78      1.037
+#monitor line "FeKa"    1.78      1.037
 ##
 ## >>chng 01 may 19 from -0.029 to -0.092 ct upgrade, more ionization in piz
 ## >>chng 01 jun 15, from -0.092 to -0.045 O ct

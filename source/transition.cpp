@@ -145,30 +145,34 @@ void DumpLine(const TransitionProxy& t)
 	string chLbl = "DEBUG "+chLineLbl(t);
 
 	fprintf( ioQQQ, 
-		"%10.10s Te%.2e eden%.1e CS%.2e Aul%.1e Tex%.2e cool%.1e het%.1e conopc%.1e albdo%.2e\n", 
-	  chLbl.c_str(), 
-	  phycon.te, 
-	  dense.eden, 
-	  t.Coll().col_str(), 
-	  t.Emis().Aul(), 
-	  TexcLine(t), 
-	  t.Coll().cool(), 
-	  t.Coll().heat() ,
-	  opac.opacity_abs[t.ipCont()-1],
-	  opac.albedo[t.ipCont()-1]);
+		"%10.10s Te%.6e eden%.6e CS%.6e Aul%.6e Tex%.6e cool%.6e\n",
+          chLbl.c_str(),
+          phycon.te,
+          dense.eden,
+          t.Coll().col_str(),
+          t.Emis().Aul(),
+          TexcLine(t),
+          t.Coll().cool() );
 
-	fprintf( ioQQQ, 
-		"Tin%.1e Tout%.1e Esc%.1e eEsc%.1e DesP%.1e Pump%.1e OTS%.1e PopL,U %.1e %.1e PopOpc%.1e\n", 
-	  t.Emis().TauIn(), 
-	  t.Emis().TauTot(), 
-	  t.Emis().Pesc(), 
-	  t.Emis().Pelec_esc(), 
-	  t.Emis().Pdest(), 
-	  t.Emis().pump(), 
-	  t.Emis().ots(), 
-	  (*t.Lo()).Pop(), 
-	  (*t.Hi()).Pop() ,
-	  t.Emis().PopOpc() );
+        fprintf( ioQQQ,
+                "het%.6e conopc%.6e albdo%.6e Tin%.6e Tout%.6e Esc%.6e eEsc%.6e\n",
+          t.Coll().heat(),
+          opac.opacity_abs[t.ipCont()-1],
+          opac.albedo[t.ipCont()-1],
+	  t.Emis().TauIn(),
+          t.Emis().TauTot(),
+          t.Emis().Pesc(),
+          t.Emis().Pelec_esc() );
+
+	fprintf( ioQQQ,
+                "DesP%.6e Pump%.6e OTS%.6e PopL,U %.6e %.6e PopOpc%.6e\n",
+          t.Emis().Pdest(),
+          t.Emis().pump(),
+          t.Emis().ots(),
+          (*t.Lo()).Pop(),
+          (*t.Hi()).Pop(),
+          t.Emis().PopOpc() );
+
 	return;
 }
 
@@ -378,11 +382,17 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	 * since xIntensity is used here */
 	xIntensity_in = xIntensity*t.Emis().FracInwd();
 	ASSERT( xIntensity_in>=0. );
-	linadd(xIntensity_in,t.WLAng(),"Inwd",'i',chComment);
+	if( lgIsM1Line(t) )
+		linadd(xIntensity_in,t.WLAng(),"Inwd M1",'i',chComment);
+	else
+		linadd(xIntensity_in,t.WLAng(),"Inwd",'i',chComment);
 	
 	/* cooling part of line */
 	other = t.Coll().cool();
-	linadd(other,t.WLAng(),"Coll",'i',chComment);
+	if( lgIsM1Line(t) )
+		linadd(other,t.WLAng(),"Coll M1",'i',chComment);
+	else
+		linadd(other,t.WLAng(),"Coll",'i',chComment);
 	
 	/* fluorescent excited part of line */
 	double radiative_branching;
@@ -411,12 +421,18 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	}
 
 	other = (*t.Lo()).Pop() * t.Emis().pump() * radiative_branching * t.EnergyErg();
-	linadd(other,t.WLAng(),"Pump",'i',chComment);
+        if( lgIsM1Line(t) )
+		linadd(other,t.WLAng(),"Pump M1",'i',chComment);
+	else
+		linadd(other,t.WLAng(),"Pump",'i',chComment);
 		
 
 	/* heating part of line */
 	other = t.Coll().heat();
-	linadd(other,t.WLAng(),"Heat",'i',chComment);
+	if( lgIsM1Line(t) )
+		linadd(other,t.WLAng(),"Heat M1",'i',chComment);
+	else
+		linadd(other,t.WLAng(),"Heat",'i',chComment);
 
 	return;
 }

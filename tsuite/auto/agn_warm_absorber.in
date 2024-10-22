@@ -73,48 +73,53 @@ monitor line luminosity "Ne 9"      13.4471A  3.118
 ## >>chng 17 may 25, wl from 16.0086A to 16.0067A, up Rydberg constant
 ## >>chng 20 aug 22, wl from 16.0067A to 16.0056A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 08, wl from 16.0056A to 16.0059A, up 1-e energies to np
-monitor line luminosity "O  8"      16.0059A  2.221  
+## >>chng 24 apr 22, from 2.221 to 2.379, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line luminosity "O  8"      16.0059A  2.379
 ## ground state radiative recombination continuum  
 ## >>chng 21 march 16, wl from 16.7725A to 16.7699A, update to NIST energies
-monitor line luminosity "O  7"      16.7699A  3.573   
+monitor line luminosity "O  7"      16.7699A  3.573
 monitor line luminosity "O  7"      17.7680A  2.04
-monitor line luminosity "O  7"      18.6270A  2.146 
+monitor line luminosity "O  7"      18.6270A  2.146
 ## >>chng 17 may 25, wl from 18.9732A to 18.9709A, up Rydberg constant
 ## >>chng 20 aug 22, wl from 18.9709A to 18.9696A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 18.9696A to 18.9689A, update NIST energies
-monitor line luminosity "O  8"      18.9689A  4.165  
+monitor line luminosity "O  8"      18.9689A  4.165
 monitor line luminosity "O  7"      21.6020A  3.336
-monitor line luminosity "O  7"      21.8070A  3.381 
+monitor line luminosity "O  7"      21.8070A  3.381
 ## >>chng 18 feb 20, updated spectral label from "TOTL" 21.8070A to "Blnd" 21.8070A, update He-like triplet labels and wl
-monitor line luminosity "Blnd"      21.8070A  3.385   
+monitor line luminosity "Blnd"      21.8070A  3.385
 monitor line luminosity "O  7"      22.1012A  3.992  
 ## >>chng 17 may 25, wl from 24.7837A to 24.7807A, up Rydberg constant
 ## >>chng 20 aug 22, wl from 24.7807A to 24.7819A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 24.7819A to 24.7810A, update NIST energies
-monitor line luminosity "N  7"      24.7810A  3.254
+## >>chng 24 apr 22, from 3.254 to 3.293, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line luminosity "N  7"      24.7810A  3.293
 monitor line luminosity "N  6"      28.7870A  2.392  
 ## >>chng 20 aug 25, wl from 33.7372A to 33.7368A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 33.7368A to 33.7360A, update NIST energies
-monitor line luminosity "C  6"      33.7360A  3.531 
+## >>chng 24 apr 22, from 3.531 to 3.594, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line luminosity "C  6"      33.7360A  3.594
 monitor line luminosity "C  5"      40.2678A  2.324
-monitor line luminosity "S 10"      42.4800A  2.325  
+## >>chng 24 jan 09, from 2.325 to 2.299, resolve 1 electron Ly doublets
+## >>chng 24 apr 22, from 2.299 to 2.321, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line luminosity "S 10"      42.4800A  2.321
 monitor line luminosity "Si 8"      49.9099A  1.866  
 monitor line luminosity "Si 9"      55.2899A  2.127  
 monitor line luminosity "Si 9"      55.4401A  2.354  
 monitor line luminosity "Si 8"      60.8598A  2.149  
 ## >>chng 22 jul 09, wl from 62.7511A to 62.7510A, upgrade to Chianti v10
 ## >>chng 22 jul 09, from 1.838 to 1.885, upgrade to Chianti v10
-monitor line luminosity "Mg 9"      62.7510A  1.885  
-monitor line luminosity "Fe 9"      67.9902A  1.835  
-monitor line luminosity "Si 8"      69.4300A  1.773  
-monitor line luminosity "Mg 8"      69.7000A  1.757  
-monitor line luminosity "Mg 8"      71.3501A  1.871  
-monitor line luminosity "Mg 8"      75.1501A  2.081  
-monitor line luminosity "Ne 7"      75.9601A  1.846  
-monitor line luminosity "Fe10"      77.4497A  1.934  
-monitor line luminosity "Fe 9"      82.9401A  1.958  
-monitor line luminosity "Mg 7"      83.7500A  1.658  
-monitor line luminosity "Mg 7"      84.0598A  1.848  
+monitor line luminosity "Mg 9"      62.7510A  1.885
+monitor line luminosity "Fe 9"      67.9902A  1.835
+monitor line luminosity "Si 8"      69.4300A  1.773
+monitor line luminosity "Mg 8"      69.7000A  1.757
+monitor line luminosity "Mg 8"      71.3501A  1.871
+monitor line luminosity "Mg 8"      75.1501A  2.081
+monitor line luminosity "Ne 7"      75.9601A  1.846
+monitor line luminosity "Fe10"      77.4497A  1.934
+monitor line luminosity "Fe 9"      82.9401A  1.958
+monitor line luminosity "Mg 7"      83.7500A  1.658
+monitor line luminosity "Mg 7"      84.0598A  1.848
 ## >>chng 22 jul 09, wl from 88.0817A to 88.0790A, upgrade to Chianti v10
 monitor line luminosity "Ne 8"      88.0790A  2.087  
 ## >>chng 22 jul 09, wl from 88.1196A to 88.1170A, upgrade to Chianti v10
@@ -150,8 +155,11 @@ monitor line luminosity "Fe 8"      168.172A  1.913
 ## >>chng 22 jul 09, from 1.703 to 1.833, upgrade to Chianti v10
 monitor line luminosity "Fe 8"      168.544A  1.833 
 ## >>chng 22 jul 09, wl from 168.930A to 168.929A, upgrade to Chianti v10
-monitor line luminosity "Fe 8"      168.929A  1.863 
-monitor line luminosity "Fe 9"      171.073A  2.718 
+## >>chng 24 jan 09, from 1.863 to 1.841, resolve 1 electron Ly doublets
+monitor line luminosity "Fe 8"      168.929A  1.841
+## >>chng 24 jan 09, from 2.718 to 2.687, resolve 1 electron Ly doublets
+## >>chng 24 apr 22, from 2.687 to 2.71, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line luminosity "Fe 9"      171.073A  2.71
 monitor line luminosity "O  5"      172.169A  1.54 
 ## >>chng 22 jul 09, wl from 174.531A to 174.250A, upgrade to Chianti v10
 ## >>chng 22 jul 09, from 2.889 to 2.79, upgrade to Chianti v10
@@ -178,7 +186,9 @@ monitor carbon 5 ionization -2.6 error 0.1
 ## >>chng 09 feb 23, from -0.96 to -0.9893, remove otslin, otscon dampers (PR #84, r2758)
 ## >>chng 11 aug 05, from -0.9893 to -0.9535, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 12 feb 27, from -0.9535 to -0.9299, Upgrade to Chianti 7
-monitor carbon 6 ionization -0.9299
+## >>chng 24 jan 09, from -0.9299 to -0.9691, resolve 1 electron Ly doublets
+## >>chng 24 apr 22, from -0.9691 to -0.9387, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor carbon 6 ionization -0.9387
 ## 
 monitor carbon 7 ionization -0.056
 ##
@@ -363,7 +373,8 @@ monitor iron ionization	18	-0.8353 error 0.1
 ## >>chng 12 oct 22, from -1.752 to -1.815, zone tau in rt_line_one
 ## >>chng 12 oct 26, from -1.815 to -1.449, adjust montiors to this branch
 ## >>chng 13 nov 25, from -1.449 to -1.404, remove jump from Federman shielding fn
-monitor iron ionization	19	-1.404 error 0.1
+## >>chng 24 apr 22, from -1.404 to -1.446, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor iron ionization	19	-1.446 error 0.1
 ## 
 ## >>chng 05 mar 03, from -3.656 to -3.600, new romas uta
 ## >>chng 06 feb 03, from -3.600 to -3.458, guess dr to Badnell mean

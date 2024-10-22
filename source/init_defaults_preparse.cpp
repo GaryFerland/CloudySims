@@ -650,9 +650,6 @@ void InitDefaultsPreparse( void )
 		rfield.ncont[i] = 0;
 	}
 
-	/* line overlap opacity, turn off with no fine opacity command */
-	rfield.lgOpacityFine = true;
-
 	pseudoContDef.wlLo = 1000.;
 	pseudoContDef.wlHi = 7000.;
 	pseudoContDef.nBins = 1000;

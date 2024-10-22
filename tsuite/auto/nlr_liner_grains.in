@@ -332,7 +332,8 @@ monitor itrzn 12.88
 ## >>chng 18 jun 20, from 206 to 200, #bugfixes at front face r12134:12136
 ## >>chng 19 sep 25, from 200 to 213, update Ne II H0 CS
 ## >>chng 21 sep 11, from 213 to 193, LAMDA update
-monitor nzone 193 error 0.01
+## >>chng 24 apr 22, from 193 to 191, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor nzone 191 error 0.01
 ##
 ## >>chng 04 apr 16, add this assert
 ## >>chng 04 apr 28, from -1.125 to -1.101, He+ - H ct rate update

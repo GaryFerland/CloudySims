@@ -10,7 +10,8 @@
 typedef void (*linefunc)(const TransitionProxy& t, 
 								 bool lgShield_this_zone,
 								 realnum pestrk,
-								 realnum DopplerWidth);
+								 realnum DopplerWidth,
+								 bool lgKeepLyman);
 class Parser;
 class molecule;
 class CollRateCoeffArray;

@@ -69,10 +69,10 @@ double PressureRadiationLine( const TransitionProxy &t, realnum DopplerWidth )
 		((*t.Hi()).Pop()/(*t.Hi()).g())/PopOpc * width;
 
 	/* this prevents line radiation PressureReturned from being very large when line 
-	 * is not optically thick but total opacity at that energy is large 
+	 * is not optically thick but total opacity at that energy is l
 	 * due to overlapping transitions */
 	long int ipLineCenter = t.Emis().ipFine() + rfield.ipFineConVelShift;
-	if( ipLineCenter > 0 && ipLineCenter < rfield.nfine && rfield.lgOpacityFine &&
+	if( ipLineCenter > 0 && ipLineCenter < rfield.nfine &&
 		rfield.fine_opac_zone[ipLineCenter] > SMALLFLOAT )
 	{
 		double FractionThisLine = t.Emis().VoigtLineCen() * t.Emis().PopOpc() * t.Emis().opacity() /

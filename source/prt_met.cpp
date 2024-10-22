@@ -43,7 +43,39 @@ void prtmet(void)
 					{
 						for( long ipHi=ipLo+1; ipHi < iso_sp[ipISO][nelem].numLevels_local; ipHi++ )
 						{
-							prme(false,iso_sp[ipISO][nelem].trans(ipHi,ipLo));
+							/* print resolved one-electron doublets nP Lyman sequence optical depths */
+							if(lgIsLymanLineResolved(iso_sp[ipISO][nelem].trans(ipHi,ipLo),
+											ExtraLymanLinesJ05[nelem][N_(ipHi)], ExtraLymanLinesJ15[nelem][N_(ipHi)]))
+							{
+								prme(false, ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]]);
+								prme(false, ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]]);
+							}
+							else
+								prme(false,iso_sp[ipISO][nelem].trans(ipHi,ipLo));
+						}
+					}
+				}
+			}
+		}
+
+		/* extra lyman lines H-like */
+		{
+			long ipISO=ipH_LIKE;
+
+			for( long nelem=ipISO; nelem < LIMELM; nelem++ )
+			{
+				if( dense.lgElmtOn[nelem] )
+				{
+					if( (*iso_sp[ipISO][nelem].trans(1,0).Lo()).ColDen() <= 0. )
+                                                continue;
+					/* print one-electron doublets nP Lyman sequence optical depths */
+					for( long nHi=iso_sp[ipISO][nelem].numLevels_local; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
+					{
+						if( lgIsLymanLineResolved(ExtraLymanLinesJ05[nelem][nHi],
+										ExtraLymanLinesJ05[nelem][nHi], ExtraLymanLinesJ15[nelem][nHi]) )
+						{
+							prme(false, ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]]);
+							prme(false, ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]]);
 						}
 					}
 				}

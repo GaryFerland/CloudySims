@@ -399,7 +399,7 @@ void diatomics::H2_RTMake( linefunc line_one )
 		 * include self-shielding of line across this zone.  This introduces a dr dependent
 		 * variation in the line pumping rate, which made H2 abundance fluctuate due to
 		 * Solomon process having slight dr-caused mole. */
-		line_one( *tr, false, 0.f, doppler_width ); 
+		line_one( *tr, false, 0.f, doppler_width, true );
 	}
 
 	return;

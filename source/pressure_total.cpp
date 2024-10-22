@@ -234,12 +234,6 @@ void PresTotCurrent()
 				/* wind.DiskRadius normally zero, set with disk option on wind command */
 				(1.-wind.DiskRadius/reff) );
 		}
-
-#		if 0
-		if( fudge(-1) )
-			fprintf(ioQQQ,"DEBUG pressure_total updates AccelTotalOutward to %.2e grav %.2e\n",
-			wind.AccelTotalOutward , wind.AccelGravity );
-#		endif
 	}
 
 	/* must always evaluate H La width since used elsewhere */
