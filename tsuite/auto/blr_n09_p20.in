@@ -38,7 +38,8 @@ save convergence reason "blr_n09_p20.cvr"
 ## >>chng 13 apr 14, from 8.408 to 8.43, update DR suppression
 ## >>chng 15 may 14, from 8.43 to 8.406, CollisSuppres, final version from Dragan Nikolic
 ## >>chng 16 nov 14, from 8.406 to 8.428, Reintegration of RydDep after several bug fixes
-monitor line luminosity "blnd"  1035 8.428 ##total of sum of both O VI comp
+## >>chng 24 oct 03, from 8.428 to 8.408, Update Chianti 10.0 to v10.1
+monitor line luminosity "blnd"  1035 8.408 ##total of sum of both O VI comp
 ## 
 ## >>chng 08 apr 30, from 8.290 to 8.269 H, He topoff change
 ## >>chng 12 aug 06, from 8.269 to 8.291, bugfix - include Pelec_esc in several places

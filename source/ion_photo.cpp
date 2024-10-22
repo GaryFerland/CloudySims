@@ -476,8 +476,6 @@ void ion_photo(
 	{
 		if( !dense.lgElmtOn[ipIRON] )
 		{
-			fe.fekcld = 0.;
-			fe.fekhot = 0.;
 			fe.fegrain = 0.;
 		}
 		else
@@ -487,34 +485,9 @@ void ion_photo(
 			static const double fyield[NDIM+1] = {.34,.34,.35,.35,.36,.37,.37,.38,.39,.40,
 			  .41,.42,.43,.44,.45,.46,.47,.47,.48,.48,.49,.49,.11,.75,0.,0.,0.};
 
-			long int i, limit, limit2;
-			/* ntotal fluorescence production of K-alpha
-			 * "cold" iron has M-shell electrons, up to Fe 18 */
-			fe.fekcld = 0.;
-			limit = MIN2(18,dense.IonHigh[ipIRON]);
-
-			for( i=dense.IonLow[ipIRON]; i < limit; i++ )
-			{
-				ASSERT( i < NDIM + 1 );
-				fe.fekcld +=
-					(realnum)(ionbal.PhotoRate_Shell[ipIRON][i][0][0]*dense.xIonDense[ipIRON][i]*
-				  fyield[i]);
-			}
-
-			/* same sum for hot iron, do not include one and two electron Fe */
-			fe.fekhot = 0.;
-			limit = MAX2(18,dense.IonLow[ipIRON]);
-
+			long int i, limit2;
 			limit2 = MIN2(ipIRON-1,dense.IonHigh[ipIRON]);
 			ASSERT( limit2 <= LIMELM + 1 );
-
-			for( i=limit; i < limit2; i++ )
-			{
-				ASSERT( i < NDIM + 1 );
-				fe.fekhot +=
-					(realnum)(ionbal.PhotoRate_Shell[ipIRON][i][0][0]*dense.xIonDense[ipIRON][i]*
-				  fyield[i]);
-			}
 
 			/* Fe Ka from grains - Fe in grains assumed to be atomic
 			 * gv.elmSumAbund[ipIRON] is number density of iron added over all grain species */

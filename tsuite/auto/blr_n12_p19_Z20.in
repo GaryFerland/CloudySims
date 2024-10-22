@@ -82,7 +82,8 @@ monitor line luminosity "Blnd" 1397 5.207
 ## >>chng 13 may 06, from 3.26 to 3.217, use Stout/Chianti for Al ions
 ## >>chng 13 jul 15, from 3.217 to 3.157, move to Stout/Chianti for Si, botches are due to improved atomic data
 ## >>chng 13 sep 12, from 3.157 to 3.075, database Mg
-monitor line luminosity "blnd"  1402 3.075 ##total O IV] 1402 
+## >>chng 23 sep 28, from 3.075 to 3.034, current npSplit development result
+monitor line luminosity "blnd"  1402 3.034 ##total O IV] 1402 
 ## 
 ## >>chng 06 aug 02, from 5.224 to 5.244, update O+2, N+2 CT
 ## >>chng 06 aug 09, from 5.244 to 5.308 Meudon 06, Bowen change
@@ -99,7 +100,8 @@ monitor line luminosity "blnd"  1402 3.075 ##total O IV] 1402
 ## >>chng 13 sep 12, from 5.277 to 5.206, database Mg
 ## >>chng 14 may 24, from 5.206 to 5.133, allow all NIST levels to be used
 ## >>chng 19 jul 30, from 5.133 to 5.186, split He I 2 ^3P_J
-monitor line luminosity "blnd" 1549 5.186 ##total of sum of both C IV comp
+## >>chng 24 apr 22, from 5.186 to 5.144, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line luminosity "blnd" 1549 5.144 ##total of sum of both C IV comp
 ##
 ## >>chng 09 jun 28, from 1 to 4.984, check convergence of outward Hb
 ## >>chng 11 jul 12, from 4.984 to 5.015, enable fit to Badnell DR suppression

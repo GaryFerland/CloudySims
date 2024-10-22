@@ -648,24 +648,22 @@ void ParseCommands(void)
 			"NOTE exchange with the NO GRAIN GAS COLLISIONAL ENERGY EXCHANGE command.\n\n\n");
 	}
 
-	if( !rfield.lgDoLineTrans && rfield.lgOpacityFine )
+	if( !rfield.lgDoLineTrans)
 	{
 		if( called.lgTalk )
 		{
 			fprintf( ioQQQ, " NOTE NO LINE TRANSER set but fine opacities still computed.\n" );
 			fprintf( ioQQQ, " NOTE Turning off fine opacities.\n\n" );
 		}
-		rfield.lgOpacityFine = false;
 	}
 
-	if( h2.lgEnabled && (!rfield.lgDoLineTrans || !rfield.lgOpacityFine) )
+	if( h2.lgEnabled && (!rfield.lgDoLineTrans) )
 	{
 		if( called.lgTalk )
 		{
 			fprintf( ioQQQ, " NOTE Large H2 molecule turned on but line transfer and fine opacities are not.\n" );
 			fprintf( ioQQQ, " NOTE Turning on line transfer and fine opacities.\n\n" );
 		}
-		rfield.lgOpacityFine = true;
 		rfield.lgDoLineTrans = true;
 	}
 

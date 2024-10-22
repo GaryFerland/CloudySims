@@ -241,7 +241,8 @@ monitor line "Ne 3" 15.5509m  1.425
 ## >>chng 13 jul 26, wl from 3869 to 3868.75A, increased wl precision to 6 sig. fig.
 ## >>chng 15 oct 14, from 1.937 to 1.552, update Ne 3 cs to McLaughlin+11
 ## >>chng 15 oct 15, wl from 3868.75A to 3868.76A, update Ne III energies
-monitor line "Ne 3" 3868.76A  1.552 error 0.15
+## >>chng 24 feb 27, from 1.552 to 1.321, Fix escape probability for Ly beta and higher
+monitor line "Ne 3" 3868.76A  1.321 error 0.15
 ##
 ## >>chng 06 jul 25, from 0.798 to 0.878 HN update OIII, OII collision data
 ## >>chng 09 feb 23, from 0.878 to 0.7853, remove otslin, otscon dampers (PR #84, r2758)
@@ -277,16 +278,19 @@ monitor line "mg 4" 4.48711m  0.1099
 ## >>chng 06 mar 11, from 0.161 to 0.177 chng n prin quan from 4 to 5
 ## when atom h-like levels smallest - this affects results!
 ## >>chng 11 jul 12, from 0.177 to 0.1602, enable fit to Badnell DR suppression
-monitor line "Si 2" 34.8046m  0.1602 error 0.1
+## >>chng 24 jan 09, from 0.1602 to 0.1455, resolve 1 electron Ly doublets
+monitor line "Si 2" 34.8046m  0.1455 error 0.1
 ##
 ## >>chng 06 mar 11, from 0.161 to 0.207 chng n prin quan from 4 to 5
 ## when atom h-like levels smallest - this affects results!
-monitor line "Blnd" 2335  0.207 error 0.3
+## >>chng 24 feb 27, from 0.207 to 0.1503, Fix escape probability for Ly beta and higher
+monitor line "Blnd" 2335  0.1503 error 0.3
 ##
 ## >>chng 03 dec 08, from 0.440 to 0.65 chng ots, zoning
 ## >>chng 09 jan 22, from 0.65 to 0.47, some minor botches as a result of r2655
 ## >>chng 16 jul 24, from 0.47 to 0.6004, update C III to 2014A&A...566A.104F
-monitor line "Blnd" 1888  0.6004 error 0.3
+## >>chng 24 feb 27, from 0.6004 to 0.4318, Fix escape probability for Ly beta and higher
+monitor line "Blnd" 1888  0.4318 error 0.3
 ##
 ## >>chng 03 dec 08, from 0.205 to 0.255 chng ots, zoning
 ## >>chng 09 feb 23, from 0.255 to 0.1917, remove otslin, otscon dampers (PR #84, r2758)

@@ -452,6 +452,31 @@ void IterStart()
 		}
 	}
 
+	ipISO = ipH_LIKE;
+	for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+	{
+		if( dense.lgElmtOn[nelem] )
+		{
+			for( long nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
+			{
+				ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].Lo()->ColDen() = 0.;
+				ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]].Lo()->ColDen() = 0.;
+			}
+		}
+	}
+
+	ipISO = ipHE_LIKE;
+	for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+	{
+		if( dense.lgElmtOn[nelem] )
+		{
+			for(long ipHi = iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
+			{
+				ExtraLymanLinesHeLike[nelem][ipExtraLymanLinesHeLike[nelem][ipHi]].Lo()->ColDen() = 0.;
+			}
+		}
+	}
+
 	/* now zero heavy element molecules */
 	molcol("ZERO",ioQQQ);
 

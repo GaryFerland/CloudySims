@@ -285,7 +285,9 @@ monitor line luminosity "blnd" 2798 7.534 ##total of sum of both Mg II comp
 ## >>chng 14 apr 07, from 6.082 to 4.781, move H/C out of ConvBase loop
 ## >>chng 14 apr 08, from 4.781 to 4.312, O excit state photo back in
 ## >>chng 16 aug 07, from 4.312 to 4.925, Fran bug fix
-monitor itrzn 4.925 erro 0.1 
+## >>chng 24 jan 09, from 4.925 to 4.454, resolve 1 electron Ly doublets
+## >>chng 24 feb 27, from 4.454 to 5.04, Fix escape probability for Ly beta and higher
+monitor itrzn 5.04 erro 0.1
 ##
 ## >>chng from 3 to <5 (actually 4)
 ## >>chng 08 dec 08, from 5 to 4, upper limit -> equals (r2515)
@@ -316,7 +318,9 @@ monitor niter <5
 ## >>chng 19 aug 06, from 411 to 385, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 21 nov 02, from 385 to 390, fix bug with overresolving CS in isoseq, increase for FLT_IS_DBL
 ## >>chng 21 nov 04, from 390 to 408, update mole co data
-monitor nzone 408 
+## >>chng 23 sep 28, from 408 to 345, current npSplit development result
+## >>chng 24 feb 27, from 345 to 402, Fix escape probability for Ly beta and higher
+monitor nzone 402 
 ##
 ## >>chng 14 jul 10, from 1.01 to 4.449, Add monitors for WillsNetzerWills FeII Lines
 ## >>chng 16 mar 23, drop WillsNetzerWills FeII Lines

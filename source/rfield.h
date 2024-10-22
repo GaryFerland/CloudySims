@@ -518,8 +518,6 @@ public:
 	 * flow.  Evaluated in RT_line_all */
 	long int ipFineConVelShift;
 
-	/** option to turn off fine opacities with no fine opacity command */
-	bool lgOpacityFine;
 	/** says that fine optical depths will be saved, so save them */
 	bool lgSaveOpacityFine;
 

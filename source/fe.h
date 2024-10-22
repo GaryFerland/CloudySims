@@ -7,10 +7,6 @@
 /**\file fe.h - vars that are for Fe only */
 struct t_fe {
 
-	/** fekhot, fekcld, number of photons in hot and cold iron, per unit vol */
-	realnum fekhot, 
-	  fekcld;
-
 	/** Fe Ka from iron in grains */
 	realnum fegrain;
 

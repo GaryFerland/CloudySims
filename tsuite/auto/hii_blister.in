@@ -404,7 +404,8 @@ monitor HHeicf 0.1349 error 0.01
 ## >>chng 14 jun 11, from 4.604 to 5.014, BUGFIX 14 jan 05, N to external databases, did not include N I, Mg II excited state photo
 ## >>chng 17 feb 10, from 5.014 to 4.479, default size of N 1 model atom set to 50
 ## >>chng 18 jun 20, from 4.479 to 4.901, #bugfixes at front face r12134:12136
-monitor itrzn 4.901 error 0.05
+## >>chng 24 apr 22, from 4.901 to 4.665, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor itrzn 4.665 error 0.05
 # 
 # hii_blister.in
 # class hii

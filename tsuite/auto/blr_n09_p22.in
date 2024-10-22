@@ -60,7 +60,8 @@ monitor line luminosity "H  1"  1215.67A 6.863
 ## >>chng 07 may 21, from 2.921 to 2.884, fix bug in He-like DR extrapolation
 ## >>chng 11 sep 15, from 2.884 to 2.91, Chianti for Fe moderate to high ions
 ## >>chng 11 nov 16, from 2.91 to 2.96, adjust newmole monitors
-monitor line luminosity "blnd"  1240 2.96
+## >>chng 24 jan 09, from 2.96 to 2.938, resolve 1 electron Ly doublets
+monitor line luminosity "blnd"  1240 2.938
 ## 
 ## >>chng 09 jun 28, from 1 to 4.215, check convergence of outward Hb
 ## >>chng 11 sep 15, from 4.215 to 4.244, Chianti for Fe moderate to high ions

@@ -30,6 +30,7 @@
 #include "rfield.h"
 #include "freebound.h"
 #include "dense.h"
+#include "taulines.h"
 
 void PrtZone(void)
 {

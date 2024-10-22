@@ -166,7 +166,9 @@ monitor line "o  3"  5006.84 17.57
 ## >>chng 11 aug 05, from 0.176 to 0.186, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 16 jul 24, from 0.186 to 0.1953, update C III to 2014A&A...566A.104F
 ## >>chng 19 mar 01, change "Blnd" 4363 -> "O  3" 4363.21
-monitor line "O  3"  4363.21 0.1953
+## >>chng 24 feb 27, from 0.1953 to 0.186, Fix escape probability for Ly beta and higher
+## >>chng 24 apr 22, from 0.186 to 0.1951, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line "O  3"  4363.21 0.1951
 ##
 ## >>chng 14 mar 26, from 1.305 to 1.369, Move oxygen data to stout and chianti files
 monitor line "O  3" 51.8004m  1.369

@@ -13,6 +13,18 @@
 /*  IN THE FOLLOWING WE HAVE  n > n'                                    */
 /************************************************************************/
 
+/** add comment describing the parameters like in H_photo_cs */
+//inline 
+double hv(
+	/* returns energy in ergs */
+	/* principal quantum number, 1 for ground, upper level     */
+	long int n,
+	/* principal quantum number, 1 for ground, lower level     */
+	long int nprime,
+	long int iz,
+	double mass_nuc
+);
+
 /** returns hydrogenic photoionization cross section in cm^2             
 \param photon_energy photon energy relative to threshold
 \param n principal quantum number, 1 for ground

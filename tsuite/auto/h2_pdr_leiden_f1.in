@@ -1,4 +1,5 @@
 title low density and flux model 1 
+set save prefix "h2_pdr_leiden_f1"
 database H2 He collisions new 
 #
 # commands controlling continuum =========
@@ -36,10 +37,12 @@ print line faint -4
 # saves
 # check that all lines are found
 table lines "LineList_PDR_H2.dat"
-save performance "h2_pdr_leiden_f1.per"
-save overview "h2_pdr_leiden_f1.ovr"
+save performance ".per"
+save overview ".ovr"
+save fine optical depths last no hash ".fopt" range 1150 1300 units Angstroms 1
+save save emitted continuum ".econ" range 1150 1300 units angstroms
 ## show how emission varies across structure
-save line emissivity "h2_pdr_leiden_f1.ems" 
+save line emissivity ".ems" 
 ## >>chng 13 jul 24, wl from 2.1215m to 2.12125m, increased wl precision to 6 sig. fig.
 H2   2.12125m
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
@@ -49,19 +52,19 @@ O  1 63.1679m
 Si 2 34.8046m
 end of lines
 ## 
-save leiden lines "h2_pdr_leiden_f1.lin"
-save leiden "h2_pdr_leiden_f1.lei"
-save dr "h2_pdr_leiden_f1.dr" 
-save molecules "h2_pdr_leiden_f1.mol"
-save grain physical conditions "h2_pdr_leiden_f1.grn"
-save overview "h2_pdr_leiden_f1.ovr"
-save monitors "h2_pdr_leiden_f1.asr"
-save H2 lines "h2_pdr_leiden_f1.h2lin" all
-save H2 column density "h2_pdr_leiden_f1.h2col"
-save H2 populations matrix zone "h2_pdr_leiden_f1.pop"
-save H2 rates "h2_pdr_leiden_f1.rat"
-save dominant rates "h2_pdr_leiden_f1.h2" "H2" 
-save chemistry rates "h2_pdr_leiden_f1.h2d" "H2" destruction
+save leiden lines ".lin"
+save leiden ".lei"
+save dr ".dr" 
+save molecules ".mol"
+save grain physical conditions ".grn"
+save overview ".ovr"
+save monitors ".asr"
+save H2 lines ".h2lin" all
+save H2 column density ".h2col"
+save H2 populations matrix zone ".pop"
+save H2 rates ".rat"
+save dominant rates ".h2" "H2" 
+save chemistry rates ".h2d" "H2" destruction
 #
 # commands giving the monitors    =========
 ## >> chng 20 sep 06 change default error to acknowledge stability of ISM chemistry

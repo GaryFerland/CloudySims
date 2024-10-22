@@ -565,7 +565,7 @@ monitor line "Blnd" 1397      4.254
 monitor line "Fe 2c"    0     4.856 error 0.1
 ##
 ## >>chng 06 jul 18, from 0.102 to 0.0971 RP major upgrade VS coll strengths
-monitor line "FeKa"    1.78      0.0971
+#monitor line "FeKa"    1.78      0.0971
 ##
 ## >>chng 16 mar 24, from -0.019 to -0.0515, FeII cooling using Stout 80 levels
 monitor ionization Hydrogen 1 -0.0515
