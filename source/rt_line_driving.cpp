@@ -89,20 +89,49 @@ double RT_line_driving(void)
 					}
 				}
 
-				for( ipHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
+				if( ipISO == ipH_LIKE )
 				{
-					/* do not include bogus lines */
-					TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi];
-					if( (*tr).ipCont() > 0 )
+					for( long nHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 					{
-						OneLine = (*tr).Emis().pump()*
-							(*tr).EnergyErg()*
-							(*tr).Emis().PopOpc();
+						TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][nHi];
+						/* do not include non-existent lines */
+						if( (*tr).ipCont() > 0 )
+						{
+							OneLine = (*tr).Emis().pump()*
+								(*tr).EnergyErg()*
+								(*tr).Emis().PopOpc();
 
-						accel_iso[ipISO] += OneLine;
+							accel_iso[ipISO] += OneLine;
+						}
+
+						tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][nHi];
+						if( (*tr).ipCont() > 0 )
+						{
+							OneLine = (*tr).Emis().pump()*
+								(*tr).EnergyErg()*
+								(*tr).Emis().PopOpc();
+
+							accel_iso[ipISO] += OneLine;
+						}
 					}
-
 				}
+				else if( ipISO == ipHE_LIKE )
+				{
+					for( ipHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
+					{
+						TransitionList::iterator tr = ExtraLymanLinesHeLike[nelem].begin()+ipExtraLymanLinesHeLike[nelem][ipHi];
+						if( (*tr).ipCont() > 0 )
+						{
+							OneLine = (*tr).Emis().pump()*
+								(*tr).EnergyErg()*
+								(*tr).Emis().PopOpc();
+
+							accel_iso[ipISO] += OneLine;
+						}
+					}
+				}
+				else
+					TotalInsanity();
 			}
 		}
 	}

@@ -18,6 +18,7 @@
 #include "lines_service.h"
 #include "elementnames.h"
 #include "ipoint.h"
+#include "taulines.h"
 
 static const int nCharL = 21;
 static const string chL[nCharL] = {"s","p","d","f","g","h","i","k","l","m","n","o","q","r","t","u","v","w","x","y","z"};
@@ -41,6 +42,12 @@ string iso_comment_tran_levels( long ipISO, long nelem, long ipLo, long ipHi )
 {
 	string isoSeq = ( ipISO == ipHE_LIKE ) ? "He-like, " : "H-like, ";
 	return isoSeq + GenerateTransitionConfiguration( iso_sp[ipISO][nelem].trans(ipHi,ipLo) );
+}
+
+string extraLymanJ_comment_tran_levels( const TransitionProxy &t )
+{
+	string isoSeq = "H-like, ";
+	return isoSeq + GenerateTransitionConfiguration( t );
 }
 
 void lines_hydro(void)
@@ -290,7 +297,8 @@ void lines_hydro(void)
 		if( dense.IonHigh[nelem] == nelem + 1 )
 		{
 			/* bring nL - n'L' emission together as n-n' emission. */
-			for( ipHi=1; ipHi < iso_sp[ipH_LIKE][nelem].numLevels_max; ipHi++ )
+			/* ipHi starts at 2 so that we retain the intensity of M1 line, as a separate entry on the stack */
+			for( ipHi=2; ipHi < iso_sp[ipH_LIKE][nelem].numLevels_max; ipHi++ )
 			{
 				long index_of_nHi_P;
 
@@ -479,12 +487,23 @@ void lines_hydro(void)
 
 				for( ipHi=ipLo+1; ipHi < nLoop; ipHi++ )
 				{
+					// n < nLoop levels of resolved lyman lines added here, remainder added in prt_lines.cpp
+					if( lgIsLymanLineResolved(iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo),
+									ExtraLymanLinesJ05[nelem][N_(ipHi)], ExtraLymanLinesJ15[nelem][N_(ipHi)]) )
+					{
+						string comment_trans = extraLymanJ_comment_tran_levels( ExtraLymanLinesJ05[nelem][N_(ipHi)] );
+						PutLine(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]],
+								comment_trans.c_str());
+
+						comment_trans = extraLymanJ_comment_tran_levels( ExtraLymanLinesJ15[nelem][N_(ipHi)] );
+						PutLine(ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]],
+								comment_trans.c_str());
+
+						continue;
+					}
+
 					// skip non-radiative transitions
 					if( iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo).ipCont() < 1 )
-						continue;
-
-					// skip 2s-1s, so that 2p-1s comes first and cdLine finds LyA instead of the M1 transition.	
-					if( ipHi==1 && ipLo==0 )
 						continue;
 
 					long index_of_nHi_P;
@@ -497,6 +516,11 @@ void lines_hydro(void)
 					bool lgSkip;
 					if( N_(ipLo) > iso_sp[ipH_LIKE][nelem].n_HighestResolved_max || N_(ipLo) == N_(ipHi) )
 						lgSkip = false;
+					else if( ipHi==1 && ipLo==0 )
+                                        {
+						/* Dont skip M1 lines */
+                                                lgSkip = false;
+                                        }
 					else
 						lgSkip = !( ipHi == index_of_nHi_P && ipLo == index_of_nLo_S );
 
@@ -508,7 +532,15 @@ void lines_hydro(void)
 					{
 						comment_trans = iso_comment_tran_levels( ipISO, nelem, ipLo, ipHi );
 					}
-					PutLine(iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo), comment_trans.c_str());
+					if( ipHi==1 && ipLo==0 && fp_equal(iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo).WLangVac(),
+													   1.e8_r/iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo).EnergyWN()) )
+					{
+						string chSpecies = chIonLbl(nelem+1, nelem+1-ipISO);
+						string chLabel = chSpecies + " M1";
+						PutLine(iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo), comment_trans.c_str(), chLabel.c_str());
+					}
+					else
+						PutLine(iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo), comment_trans.c_str());
 				}
 			}
 		}

@@ -10,6 +10,7 @@
 #include "rt.h"
 #include "cosmology.h"
 #include "transition.h"
+#include "iso.h"
 
 void RT_line_one_tauinc(const TransitionProxy&  t ,
 	/* following four are flags to generate info if some species has extreme maser */
@@ -33,7 +34,7 @@ void RT_line_one_tauinc(const TransitionProxy&  t ,
 
 
 	/* find line center opacity - use fine opacity if array indices are OK */
-	if( t.Emis().ipFine()>=0 && ipLineCenter>0 && ipLineCenter<rfield.nfine && rfield.lgOpacityFine )
+	if( t.Emis().ipFine()>=0 && ipLineCenter>0 && ipLineCenter<rfield.nfine )
 	{
 		/* use fine opacities fine grid fine mesh to get optical depth 
 		 * to continuum source */
@@ -47,6 +48,10 @@ void RT_line_one_tauinc(const TransitionProxy&  t ,
 		else
 			OpacityEffective = OpacitySpecific; 
 	}
+
+	/* Don't use fine opacity array for unresolved lyman lines */
+	if(lgIsLymanLineUnresolved(t))
+		OpacityEffective = OpacitySpecific;
 
 #if	0
 	if( rfield.anu( t.ipCont-1 ) < rfield.plsfrq )

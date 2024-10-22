@@ -283,7 +283,9 @@ monitor niter < 5
 ## >>chng 09 jul 16, from 373 to 377, change autocv back to 0.2
 ## >>chng 09 aug 02 from 377 to 375, bcx vs08, rm small error
 ## >>chng 23 feb 26, from 375 to 400, reenabled monitors
-monitor nzone 400
+## >>chng 23 sep 28, from 400 to 343, current npSplit development result
+## >>chng 24 feb 27, from 343 to 398, Fix escape probability for Ly beta and higher
+monitor nzone 398
 ##
 ## >>chng 23 feb 26, from 1.01 to 6.077, reenabled monitors
 ## >>chng 23 jul 05, from 6.077 to 6.467, update Fe+ model to Smyth+19

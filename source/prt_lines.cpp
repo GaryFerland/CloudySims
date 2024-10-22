@@ -170,22 +170,50 @@ void lines()
 	/* next come the extra Lyman lines */
 	i = StuffComment( "extra Lyman" );
 	linadd( 0., t_vac(i), "####", 'i' , "extra Lyman lines");
+	
+	long ipISO = ipH_LIKE;
 
-	for( long ipISO=ipH_LIKE; ipISO < NISO; ++ipISO )
+	for( long nelem=ipISO; nelem < LIMELM; ++nelem )
 	{
-		/* loop over all iso-electronic sequences */
-		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+		if( ! dense.lgElmtOn[nelem] )
+			continue;
+		long int nLoop  = iso_Max_Emitting_Level(nelem, ipISO, prt.lgPrnIsoCollapsed);
+		for( long nHi=N_(nLoop); nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 		{
-			if( ! dense.lgElmtOn[nelem] )
-				continue;
-			for( long ipHi=iso_sp[ipISO][nelem].numLevels_max; ipHi < iso_ctrl.nLyman_max[ipISO]; ipHi++ )
+			if( lgIsLymanLineResolved(ExtraLymanLinesJ05[nelem][nHi],
+							ExtraLymanLinesJ05[nelem][nHi], ExtraLymanLinesJ15[nelem][nHi]) )
 			{
-				if (ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]].ipCont() > 0)
-					PutLine(ExtraLymanLines[ipISO][nelem][ipExtraLymanLines[ipISO][nelem][ipHi]],
-							  "extra Lyman line");
+				if (ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].ipCont() > 0)
+				{
+					string comment_trans = extraLymanJ_comment_tran_levels( ExtraLymanLinesJ05[nelem][nHi] );
+					PutLine(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]],
+							comment_trans.c_str());
+				}
+
+				if (ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]].ipCont() > 0)
+				{
+					string comment_trans = extraLymanJ_comment_tran_levels( ExtraLymanLinesJ15[nelem][nHi] );
+					PutLine(ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]],
+							comment_trans.c_str());
+				}
 			}
 		}
 	}
+
+	ipISO = ipHE_LIKE;
+
+	for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+	{
+		if( ! dense.lgElmtOn[nelem] )
+			continue;
+		for( long ipHi=iso_sp[ipISO][nelem].numLevels_max; ipHi < iso_ctrl.nLyman_max[ipISO]; ipHi++ )
+		{
+			if (ExtraLymanLinesHeLike[nelem][ipExtraLymanLinesHeLike[nelem][ipHi]].ipCont() > 0)
+				PutLine(ExtraLymanLinesHeLike[nelem][ipExtraLymanLinesHeLike[nelem][ipHi]],
+						  "extra Lyman line");
+		}
+	}
+	
 
 #if	0
 	/* This is Ryan's code for dumping lots of Helium lines according to
@@ -1338,53 +1366,19 @@ void lines()
 
 STATIC void lines_iron_Ka()
 {
-	DEBUG_ENTRY( "cool_iron_Ka()" );
+	DEBUG_ENTRY( "lines_iron_Ka()" );
 
 	if( trace.lgTrace )
 	{
-		fprintf( ioQQQ, "   cool_iron_Ka called\n" );
+		fprintf( ioQQQ, "   lines_iron_Ka called\n" );
 	}
-
-	double FeKaHLike = 0. , FeKaHeLike=0.;
-	/* one and two electron Ka */
-	if( dense.lgElmtOn[ipIRON] )
-	{
-		/* H-like one-electron Ka */
-		FeKaHLike = iso_sp[ipH_LIKE][ipIRON].trans(ipH2p,ipH1s).Emis().xIntensity();
-
-		/* He-like two-electron Ka */
-		FeKaHeLike =
-				iso_sp[ipHE_LIKE][ipIRON].trans(ipHe2p1P,ipHe1s1S).Emis().xIntensity()+
-				iso_sp[ipHE_LIKE][ipIRON].trans(ipHe2p3P0,ipHe1s1S).Emis().xIntensity()+
-				iso_sp[ipHE_LIKE][ipIRON].trans(ipHe2p3P1,ipHe1s1S).Emis().xIntensity()+
-				iso_sp[ipHE_LIKE][ipIRON].trans(ipHe2p3P2,ipHe1s1S).Emis().xIntensity();
-
-		/* total intensity of K-alpha line, cold, grain, hot, 1 and two electron
-		 * 19 sep 21 segfault if evaluated with dense.lgElmtOn[ipIRON] false
-		 * since continuum index not defined */
-		lindst((fe.fekcld+fe.fegrain)*1.03e-8+fe.fekhot*1.11e-8+FeKaHLike+FeKaHeLike,1.78_vac,"FeKa",
-			iso_sp[ipH_LIKE][ipIRON].trans(ipH2p,ipH1s).ipCont(),'i',false,
-			   "total intensity of Fe K-alpha line, grain, cold, hot, 1 and 2 electron" );
-	}
-
-	linadd(FeKaHLike,1.78177_vac,"FeK1",'i' ,
-		"H-like one-electron Ka");
-
-	linadd(FeKaHeLike,1.85_vac,"FeK2",'i' ,
-		"He-like two-electron Ka");
-
-	linadd( fe.fekhot*1.11e-8 ,1.8_vac,"FeKH",'i' ,
-		"fluorescent hot iron, Fe 18 - 23 times ionized");
-
-	linadd(fe.fekcld*1.03e-8,1.75_vac,"FeKC",'i',
-		"fluorescent cold iron, less than or 17 times ionized" );
 
 	linadd(fe.fegrain*1.03e-8,1.75_vac,"FeKG",'i' ,
 		"grain production of cold iron");
 
 	if( trace.lgTrace )
 	{
-		fprintf( ioQQQ, "   cool_iron_Ka returns\n" );
+		fprintf( ioQQQ, "   lines_iron_Ka returns\n" );
 	}
 	return;
 }

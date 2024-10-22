@@ -1059,6 +1059,8 @@ void mie_read_opc(/*@in@*/const char *chFile,
 
 	/* fraction of the integrated volume contained in this bin */
 	gv.bin[nd].dustp[4] = 1.;
+	/* fraction of the integrated area contained in this bin */
+	gv.bin[nd].dustp[5] = 1.;
 
 	/* average grain radius <a^3>/<a^2> for entire size distr (cm) */
 	mie_next_data(chFile,io2,chLine,&dl);

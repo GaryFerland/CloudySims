@@ -627,7 +627,8 @@ monitor nzone 205
 ## >>chng 13 nov 05, from 12.35 to 7.718, convergence branch changes
 ## >>chng 14 apr 07, from 7.718 to 5.813, move H/C out of ConvBase loop
 ## >>chng 14 jun 11, from 5.813 to 6.22, BUGFIX 14 jan 05, N to external databases, did not include N I, Mg II excited state photo
-monitor itrzn 6.22 error 0.07
+## >>chng 24 jan 09, from 6.22 to 5.819, resolve 1 electron Ly doublets
+monitor itrzn 5.819 error 0.07
 ##
 # nlr_lex00.in
 # class nlr 

@@ -36,7 +36,8 @@ monitor case b h-like element hydrogen 0.10 range 1000A vacuum to 4.00m air
 ## >>chng 13 aug 20, from -11.21 to -11.28, enable D chem by default
 ## >>chng 13 sep 17, from -11.28 to -11.19, D chem off by default
 ## >>chng 13 nov 05, from -11.19 to -11.14, convergence branch changes
-monitor csupra -11.14 error 0.1
+## >>chng 23 sep 27, from -11.14 to -11.20, current npSplit development result
+monitor csupra -11.20 error 0.1
 #
 # limit_caseb_h_n8.in
 # class limit 

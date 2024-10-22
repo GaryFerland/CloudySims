@@ -413,6 +413,21 @@ void PrtComment(void)
 		bangin(chLine);
 	}
 
+	if( dense.lgElmtOn[ipHELIUM] )
+	{
+		double Ediff = ExtraLymanLinesJ15[ipHELIUM][2].Hi()->energy().get("eV") - ExtraLymanLinesJ05[ipHELIUM][2].Hi()->energy().get("eV");
+		if( Ediff > iso_ctrl.Resolution )
+			bangin( "  !He II Lyman doublet splitting is ignored, regardless of resolution." );
+	}
+
+    if( true )
+    {
+        double Ediff = ExtraLymanLinesJ15[ipHYDROGEN][2].Hi()->energy().get("eV") - ExtraLymanLinesJ05[ipHYDROGEN][2].Hi()->energy().get("eV");
+        if( Ediff > iso_ctrl.Resolution )
+            bangin( "  !H I Lyman doublet splitting is ignored, regardless of resolution." );
+    }
+
+
 	/* PrtComment if test code is in place */
 	if( lgTestCodeCalled && !t_version::Inst().lgRelease )
 	{

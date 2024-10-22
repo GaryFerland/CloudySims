@@ -152,7 +152,8 @@ monitor line "h  1" 1215.67A 24.63
 ## >>chng 15 may 27, from 9.304 to 10.26, PS64 fixes
 ## >>chng 16 oct 21, from 10.26 to 10.93, new l-changing rates from Hlike_HS87 reintegration
 ## >>chng 18 feb 13, wl from 0 to 2431.34A, update two-photon wl 
-## >>chng 24 oct 01, wl from 2431.34A to 2430.60A, treat H I two-photon cont. wl as vacuum
+## >>chng 24 jan 09, wl from 2431.34A to 2431.35A, resolve 1 electron Ly doublets
+## >>chng 24 oct 01, wl from 2431.35A to 2430.60A, treat H I two-photon cont. wl as vacuum
 monitor line "h  1" 2430.60A 10.93
 ##
 ## >>chng 07 oct 22, from 0.3708 to 0.3318, resolve l-levels of h-like sequence
@@ -297,7 +298,8 @@ monitor line "O  1"  6300.30 0.0084
 ## >>chng 06 jul 25, from 1.995 to 2.181 HN update OII collision data
 ## >>chng 06 aug 11, from 2.18 to 2.05 Meudon 06, use Badnell RR DR
 ## >>chng 13 mar 03, from 2.05 to 2.25, update atomic models for S II, S III
-monitor line "blnd"  3727 2.25
+## >>chng 24 feb 27, from 2.25 to 2.352, Fix escape probability for Ly beta and higher
+monitor line "blnd"  3727 2.352
 ##
 ## >>chng 06 aug 11, from 1.26 to 1.37 Meudon 06, use Badnell RR DR
 ## >>chng 06 aug 17, from 1.37 to  1.24 HN update fit to O3 cs
