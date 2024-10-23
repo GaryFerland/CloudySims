@@ -153,8 +153,8 @@ monitor line "h  1" 1215.67A 24.63
 ## >>chng 16 oct 21, from 10.26 to 10.93, new l-changing rates from Hlike_HS87 reintegration
 ## >>chng 18 feb 13, wl from 0 to 2431.34A, update two-photon wl 
 ## >>chng 24 jan 09, wl from 2431.34A to 2431.35A, resolve 1 electron Ly doublets
-## >>chng 24 oct 01, wl from 2431.35A to 2430.60A, treat H I two-photon cont. wl as vacuum
-monitor line "h  1" 2430.60A 10.93
+## >>chng 24 oct 01, wl from 2431.35A to 2430.61A, treat H I two-photon cont. wl as vacuum
+monitor line "h  1" 2430.61A 10.93
 ##
 ## >>chng 07 oct 22, from 0.3708 to 0.3318, resolve l-levels of h-like sequence
 ## >>chng 08 apr 30, from 0.332 to 0.380 H, He topoff change

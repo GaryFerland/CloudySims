@@ -333,7 +333,7 @@ public:
 			m_emslin[1] = m_emslin[0];
 	}
 
-	/** the wavelength of the line */
+	/** the vacuum wavelength of the line */
 	realnum wavlVac() const
 	{
 		return LineSave.wavlVac(m_index);
