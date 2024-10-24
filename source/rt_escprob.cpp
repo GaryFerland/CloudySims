@@ -210,10 +210,10 @@ double RTesc_lya(
 	double *esin, 
 	/* the destruction probility */
 	double *dest, 
-	/* abundance of the species */
-	double abund, 
+	/* stimulated emission corrected population of lower level */
+	double popopc,
 	const TransitionProxy& t,
-	realnum DopplerWidth)
+	realnum )
 {
 	double beta, 
 	  conopc, 
@@ -226,7 +226,7 @@ double RTesc_lya(
 	/* 
 	 * this is one of the three fundamental escape probability functions
 	 * the three are esc_CRDwing_1side, esc_PRD_1side, and RTesc_lya
-	 * evaluate esc prob for LA
+	 * evaluate esc prob for LA save total fine opacity, then zero out
 	 * optical depth in outer direction always defined
 	 */
 
@@ -235,11 +235,14 @@ double RTesc_lya(
 	if (rt.lgElecScatEscape && NEW_PELEC_ESC)
 		conopc += dense.eden*SIGMA_THOMSON;
 
-	if( abund > 0. )
+	if( popopc > 0. )
 	{
-		/* the continuous opacity is positive, we have a valid soln */
-		beta = conopc/(abund/SQRTPI*t.Emis().opacity()/
-			DopplerWidth + conopc);
+		/* the continuous opacity is positive, we have a valid soln,
+		   this is the ratio of continuous to line opacity,
+		   which is within a scale factor of the destruction probability. */
+		/* Bug fix on 2023 09 07, change /SQRTPI to *SQRTPI
+		   see Appendix B of Gunasekera et al 2023. */
+		beta = conopc/(rfield.fine_opac_zone[t.Emis().ipFine() + rfield.ipFineConVelShift]*SQRTPI + conopc);
 	}
 	else
 	{
@@ -618,7 +621,8 @@ STATIC void RTesc_lya_1side(double taume,
 
 	DEBUG_ENTRY( "RTesc_lya_1side()" );
 
-	/* fits to numerical results of Hummer and Kunasz Ap.J. 80 */
+	/* fits to numerical results of https://articles.adsabs.harvard.edu/pdf/1980ApJ...236..609H */
+	/* taume is the line center optical depth */
 	tau = taume*SQRTPI;
 
 	/* this is the real escape probability */
@@ -728,6 +732,17 @@ void RT_DestProb(
 {
 	double abund = t.Emis().PopOpc();
 	double crsec = t.Emis().opacity(); /* its line absorption cross section */
+	/* Low-Z resolved Lyman lines are overlapping, so add opacities of both
+	   components. We treat high Z and low n as two separate lines. */
+	if( lgIsLymanLine(t) && t.Hi()->g() < 6 )
+	{
+		long nelem = t.Lo()->nelem() - 1;
+		long nHi = t.Hi()->n();
+		double Ediff = ExtraLymanLinesJ15[nelem][nHi].EnergyWN() - ExtraLymanLinesJ05[nelem][nHi].EnergyWN();
+		double Vdiff = Ediff/t.EnergyWN()*SPEEDLIGHT;
+		if( Vdiff < DopplerWidth )
+			crsec = ExtraLymanLinesJ05[nelem][nHi].Emis().opacity() + ExtraLymanLinesJ15[nelem][nHi].Emis().opacity();
+	}
 	long int ipanu = t.ipCont();/* pointer to energy within continuum array, to get background opacity,
 										  * this is on the f not c scale */
 	double escp = t.Emis().Pesc(); // Escape probability
@@ -786,7 +801,8 @@ void RT_DestProb(
 			// Use multiplet opacity where positive
 			if( t.Emis().mult_opac() > 0.f )
 				opac_line = t.Emis().mult_opac();
-			/* fac of 1.7 convert to Hummer convention for line opacity */
+
+			/* fac of SQRTPI convert to Hummer convention for line opacity */
 			double beta = conopc/(SQRTPI*opac_line + conopc);
 			if (NEW_PELEC_ESC)
 				beta = conopc/max(SQRTPI*opac_line,1e-6*conopc);

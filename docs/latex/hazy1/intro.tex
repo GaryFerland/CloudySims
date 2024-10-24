@@ -128,7 +128,7 @@ The code will stop if there are not.
 Grains are
 not part of the default composition but can be included.
 All stages of
-ionization are treated, and all published charge exchange, radiative
+ionization are treated, and all published charge transfer, radiative
 recombination, and dielectronic recombination processes are included as
 recombination mechanisms.
 Photoionization from valence and inner shells
@@ -175,18 +175,22 @@ A flow can be computed with the \cdCommand{wind} command.
 
 \section{The input deck}
 
-\noindent \Cloudy\ is driven by a set of command lines.
-These normally reside in a small input file which the code reads
-when it starts.
-The commands are four-letter keywords (either
-upper or lower case) followed by free-format numbers that
-may be mixed with letters.  The input is dependent on case for items
-within quotation marks \verb|"|, such as file names (although the
-case of filenames may then be ignored on some operating
-systems).  Where the names of 
-molecular species are specified, these will often need to be in quotation
-marks, so that, for example, carbon monoxide (CO) and cobalt (Co) can be
-distinguished.
+\noindent \Cloudy\ is driven by a set of command lines. These normally reside
+in a small input file which the code reads when it starts. The first word on
+each line is called the command, which is usually followed by one or more
+keywords and/or numbers. The commands and keywords may be abbreviated to a
+minimum of 4 characters, provided that abbreviation is unique. Commands and
+keywords may be entered as either upper or lower case characters (i.e., they
+are case-insensitive) but text between double quotes (\verb|"|) is always
+treated as case-sensitive. For file names that case may be ignored by the
+operating system though. Where the names of molecular species are specified,
+these will often need to be in quotation marks, so that, for example, carbon
+monoxide (CO) and cobalt (Co) can be distinguished. Numbers may be entered in
+the usual computer notation (e.g., $-2$, 1.23, or +4.33e5). Non-ASCII
+characters are forbidden in commands, but they are allowed in comments. The
+input script (and other files that \Cloudy\ needs) need to be typed in a plain
+text editor, such as \cdMono{emacs} or \cdMono{vi} on Linux/UNIX systems or
+\cdMono{notepad} on Windows, but {\em not} word processors like \cdMono{MS word}.
 
 When \Cloudy\ is executed as a stand-alone program standard input
 (\cdFilename{stdin}) is read for input and standard output

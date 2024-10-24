@@ -68,6 +68,9 @@ long int StuffComment( const char * chComment );
  * returns 0 if ok, n is n lines not found */
 int lines_table();
 
+/** clear the name of the table read by the table lines command. */
+void clear_lines_table();
+
 class LinSv;
 
 void cdEmis(

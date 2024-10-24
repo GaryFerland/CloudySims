@@ -265,7 +265,7 @@
    39   51       1937.984      7.570e-02      3.360e+07 
    40   51       1937.984      6.810e-01      3.020e+08 
  -1
-%filename:  mg_10.wgfa.olg.imp
+%filename:  mg_10.wgfa
 
 Theoretical radiative data:
 Autostructure calculation with energy levels optimized to match to the observed energies
@@ -283,7 +283,7 @@ National Institute of Standards and Technology, Gaithersburg, MD.
 
 Theoretical energies for n=2, 3 above IP
 Goryaev, F. F.; Vainshtein, L. A.; Urnov, A. M.
-Atomic data for doubly-excited states 2lnl‧ of He-like ions and 1s2lnl‧ of Li-like ions with Z = 6-36 and n = 2 , 3
+Atomic data for doubly-excited states 2lnl of He-like ions and 1s2lnl of Li-like ions with Z = 6-36 and n = 2 , 3
 2017, ADNDT, 113, 117-257
 adsRef:  http://adsabs.harvard.edu/abs/2017ADNDT.113..117G
 DOI:  10.1016/j.adt.2016.04.002
@@ -303,5 +303,5 @@ produced as a part of the 'CHIANTI' atomic database for astrophysical spectrosco
 %File processed with wgfa_tidy by pryoung on  6-Mar-2019
 
 Reference:
-Chianti  2022-02-18
+Chianti  2024-06-27
  -1

@@ -67,7 +67,7 @@ NIST Database for Atomic Spectroscopy, Version 1.0, NIST Standard Reference Data
 
 Theoretical energies for n=2, 3 above IP
 Goryaev, F. F.; Vainshtein, L. A.; Urnov, A. M.
-Atomic data for doubly-excited states 2lnl‧ of He-like ions and 1s2lnl‧ of Li-like ions with Z = 6-36 and n = 2 , 3
+Atomic data for doubly-excited states 2lnl of He-like ions and 1s2lnl of Li-like ions with Z = 6-36 and n = 2 , 3
 2017, ADNDT, 113, 117-257
 adsRef:  http://adsabs.harvard.edu/abs/2017ADNDT.113..117G
 DOI:  10.1016/j.adt.2016.04.002
@@ -84,5 +84,5 @@ produced as a part of the  'CHIANTI' atomic database for astrophysical spectrosc
  K. Dere (GMU) - 2020 July 05
 
 Reference:
-Chianti  2022-02-18
+Chianti  2024-06-27
  -1

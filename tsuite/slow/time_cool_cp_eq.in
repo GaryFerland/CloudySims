@@ -60,7 +60,8 @@ monitor line luminosity cumulative intrinsic "Fe24"      11.4260A   13.36
 ## >>chng 22 jul 09, from 13.46 to 13.48, upgrade to Chianti v10
 monitor line luminosity cumulative intrinsic "Fe23"      12.1610A   13.48
 ## >>chng 20 oct 05, from 12.59 to 12.62, limit more elements for load leveling
-monitor line luminosity cumulative intrinsic "Fe20"      13.0520A   12.62
+## >>chng 23 sep 28, from 12.62 to 12.6, current npSplit development result
+monitor line luminosity cumulative intrinsic "Fe20"      13.0520A   12.6
 ## >>chng 20 oct 05, from 13.79 to 13.84, limit more elements for load leveling
 ## >>chng 22 jul 09, from 13.84 to 13.8, upgrade to Chianti v10
 monitor line luminosity cumulative intrinsic "Fe17"      17.0510A   13.8
@@ -74,10 +75,12 @@ monitor line luminosity cumulative intrinsic "Fe17"      17.0960A   13.65
 monitor line luminosity cumulative intrinsic "Fe14"      5303.00A   11.94
 ## >>chng 20 oct 05, from 11.8 to 11.85, limit more elements for load leveling
 ## >>chng 22 jul 09, from 11.85 to 11.73, upgrade to Chianti v10
-monitor line luminosity cumulative intrinsic "Fe13"      1.07462m   11.73
+## >>chng 24 jun 24, wl from 1.07462m to 1.07461m, update to Chianti v10.1
+monitor line luminosity cumulative intrinsic "Fe13"      1.07461m   11.73
 ## >>chng 20 oct 05, from 11.58 to 11.63, limit more elements for load leveling
 ## >>chng 22 jul 09, from 11.63 to 11.45, upgrade to Chianti v10
-monitor line luminosity cumulative intrinsic "Fe13"      1.07978m   11.45
+## >>chng 24 jun 24, wl from 1.07978m to 1.07980m, update to Chianti v10.1
+monitor line luminosity cumulative intrinsic "Fe13"      1.07980m   11.45
 ## >>chng 20 oct 05, from 11.34 to 11.38, limit more elements for load leveling
 ## >>chng 22 jul 09, wl from 2405.69A to 2405.68A, upgrade to Chianti v10
 ## >>chng 22 jul 09, from 11.38 to 11.51, upgrade to Chianti v10

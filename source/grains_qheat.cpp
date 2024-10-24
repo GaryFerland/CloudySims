@@ -245,11 +245,13 @@ void GrainMakeDiffuse()
 		/* >>chng 04 nov 09, do not evaluate quantum heating if abundance is negligible, PvH
 		 * this prevents PAH's deep inside molecular regions from failing if GrnVryDepth is used */
 		/* >>chng 04 dec 31, introduced separate thresholds near I-front and in molecular region, PvH */
+		/* >>chng 24 oct 12, replace dstAbund with GrnDpth in test below to avoid false negatives
+		 * in low-metallicity models, also test for fractional surface area in the current bin, PvH */
 		realnum threshold = ( dense.xIonDense[ipHYDROGEN][0]+dense.xIonDense[ipHYDROGEN][1] > hmi.H2_total ) ?
 			gv.dstAbundThresholdNear : gv.dstAbundThresholdFar;
 		long qnbin=-200;
 
-		if( lgLocalQHeat && gv.bin[nd].dstAbund >= threshold )
+		if( lgLocalQHeat && gv.bin[nd].GrnDpth >= threshold && gv.bin[nd].dustp[5] > 1.e-12 )
 		{
 			qheat(qtemp,qprob,&qnbin,nd);
 

@@ -104,7 +104,7 @@
 104 1s.8d                 3  2 D  2.0  5          0.000       0.000000    5878570.000      53.569472 
 105 1s.8d                 3  2 D  3.0  7    5878400.000      53.567923    5878573.000      53.569499 
  -1
-%filename:  o_7.elvlc.olg.yer.nist
+%filename:  o_7.elvlc
 
 Theoretical gf and A-values:  Autostructure calculation
 A Breit-Pauli distorted wave implementation for AUTOSTRUCTURE
@@ -118,11 +118,11 @@ Observed energies:
 Kramida, A., Ralchenko, Yu., Reader, J., and NIST ASD Team (2019). NIST Atomic Spectra Database (ver. 5.7.1), [Online]. 
 Available: https://physics.nist.gov/asd [2020, March 2]. 
 National Institute of Standards and Technology, Gaithersburg, MD. DOI: https://doi.org/10.18434/T4W30F
-taken from R. L. Kelly, J. Phys. Chem. Ref. Data 16, Suppl. 1, 1–1698 (1987); Erratum: 17, 953 (1998) 
+taken from R. L. Kelly, J. Phys. Chem. Ref. Data 16, Suppl. 1, 1-1698 (1987); Erratum: 17, 953 (1998) 
 
 Theoretical energies for n=2, 3 above IP
 Goryaev, F. F.; Vainshtein, L. A.; Urnov, A. M.
-Atomic data for doubly-excited states 2lnl‧ of He-like ions and 1s2lnl‧ of Li-like ions with Z = 6-36 and n = 2 , 3
+Atomic data for doubly-excited states 2lnl of He-like ions and 1s2lnl of Li-like ions with Z = 6-36 and n = 2 , 3
 2017, ADNDT, 113, 117-257
 adsRef:  http://adsabs.harvard.edu/abs/2017ADNDT.113..117G
 DOI:  10.1016/j.adt.2016.04.002
@@ -139,5 +139,5 @@ produced as a part of the 'CHIANTI' atomic database for astrophysical spectrosco
 K. Dere (GMU) - 2020 June 15
 
 Reference:
-Chianti  2022-02-18
+Chianti  2024-06-27
  -1

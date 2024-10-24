@@ -13,4 +13,4 @@
  The reference is:
    M. Chatzikos, S. Bianchi, F. Camilloni, P. Chakraborty, C. M. Gunasekera,
    F. Guzmán, J. S. Milby, A. Sarkar, G. Shaw, P. A. M. van Hoof, G. J. Ferland
-   2023, arxiv:2308.06396 [https://arxiv.org/abs/2308.06396]
+   2023, RMxAA, 59, 327

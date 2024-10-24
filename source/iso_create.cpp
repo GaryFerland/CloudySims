@@ -32,7 +32,9 @@ STATIC void iso_allocate(void);
 /* define levels of iso sequences and assign quantum numbers to those levels */
 STATIC void iso_assign_quantum_numbers(void);
 
-STATIC void FillExtraLymanLine( const TransitionList::iterator& t, long ipISO, long nelem, long nHi );
+STATIC void iso_assign_extralyman_levels();
+
+STATIC void FillExtraLymanLine( const TransitionList::iterator& t, long ipISO, long nelem, long nHi, double j );
 
 STATIC void iso_satellite( void );
 
@@ -219,6 +221,9 @@ void iso_create()
 	/* loop over iso sequences and assign quantum numbers to all levels */
 	iso_assign_quantum_numbers();
 
+	/* initialize extra lyman lines */
+	iso_assign_extralyman_levels();
+
 	/* this is a dummy line, junk it too. */
 	(*TauDummy).Junk();
 	(*TauDummy).AddHiState();
@@ -289,6 +294,11 @@ void iso_create()
 							EnergyWN = RYD_INF * fabs(iso_sp[ipISO][nelem].fb[ipLo].xIsoLevNIonRyd -
 													  iso_sp[ipISO][nelem].fb[ipHi].xIsoLevNIonRyd);
 
+						if( ipISO == ipH_LIKE && ipHi == 1 )
+						{
+							EnergyWN = t_hydro_tbl::Inst().m1wn(N_(ipHi), L_(ipHi), nelem+1);
+						}
+
 						/* transition energy in various units: */
 						iso_sp[ipISO][nelem].trans(ipHi,ipLo).EnergyWN() = (realnum)EnergyWN;
 
@@ -310,11 +320,37 @@ void iso_create()
 					}
 				}
 
-				/* fill the extra Lyman lines */
-				for( ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
+				if( ipISO == ipH_LIKE)
 				{
-					FillExtraLymanLine( ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi], ipISO, nelem, ipHi );
+					/* fill the extra Lyman lines */
+					for( long nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
+					{
+						FillExtraLymanLine( ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][nHi], ipISO, nelem, nHi, 0.5 );
+						FillExtraLymanLine( ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][nHi], ipISO, nelem, nHi, 1.5 );
+
+						enum {DEBUG_LOC=false};
+						if(DEBUG_LOC && ipISO == ipH_LIKE && nelem == ipIRON && nHi == 2)
+						{
+							fprintf( ioQQQ, "%li\t%li\t%f\n",
+										nelem,
+										nHi,
+										ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].EnergyWN()
+										);
+
+							cdEXIT(EXIT_FAILURE);
+						}
+					}
 				}
+				else if( ipISO == ipHE_LIKE )
+				{
+					/* fill the extra Lyman lines */
+					for( long ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
+					{
+						FillExtraLymanLine( ExtraLymanLinesHeLike[nelem].begin()+ipExtraLymanLinesHeLike[nelem][ipHi], ipISO, nelem, ipHi, -1. );
+					}
+				}
+				else
+					TotalInsanity();
 			}
 		}
 	}
@@ -611,13 +647,133 @@ STATIC void iso_allocate(void)
 		}
 	}
 
+	{
+		long ipISO = ipHE_LIKE;
+
+		ipExtraLymanLinesHeLike.reserve( LIMELM );
+
+		ExtraLymanLinesHeLike.reserve(LIMELM);
+
+		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+		{
+			/* only grab core for elements that are turned on */
+			if( dense.lgElmtOn[nelem] )
+			{
+				ASSERT( iso_sp[ipISO][nelem].numLevels_max > 0 );
+
+				ipExtraLymanLinesHeLike.reserve( nelem, iso_ctrl.nLyman_alloc[ipISO] );
+			}
+		}
+
+		ipExtraLymanLinesHeLike.alloc();
+
+		for( long nelem=0; nelem < ipISO; ++nelem )
+		{
+			ExtraLymanLinesHeLike.push_back(
+				TransitionList("Insanity",&AnonStates));
+		}
+
+		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+		{
+			if( dense.lgElmtOn[nelem] )
+			{
+				ExtraLymanLinesHeLike.push_back(
+					TransitionList("ExtraLymanLinesHeLike",&iso_sp[ipISO][nelem].st));
+			}
+			else
+			{
+				ExtraLymanLinesHeLike.push_back(
+					TransitionList("Insanity",&AnonStates));
+			}
+		}
+
+		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+		{
+			/* only grab core for elements that are turned on */
+			if( dense.lgElmtOn[nelem] )
+			{
+				AllTransitions.push_back(ExtraLymanLinesHeLike[nelem]);
+				ExtraLymanLinesHeLike[nelem].resize(iso_ctrl.nLyman_alloc[ipISO]-2);
+			}
+		}
+	}
+
+	/* Set up H-like extra lyman lines */
+	{
+		long ipISO = ipH_LIKE;
+
+		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+		{
+			if( dense.lgElmtOn[nelem] )
+			{
+				iso_ctrl.nLymanHLike[nelem] =
+					iso_sp[ipISO][nelem].n_HighestResolved_max + iso_sp[ipISO][nelem].nCollapsed_max + iso_ctrl.nLyman_alloc[ipISO] + 1;
+			}
+		}
+
+		ipExtraLymanLinesJ05.reserve( LIMELM );
+		ipExtraLymanLinesJ15.reserve( LIMELM );
+
+		ExtraLymanLinesJ05.reserve(LIMELM);
+		ExtraLymanLinesJ15.reserve(LIMELM);
+	
+		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+		{
+			if( dense.lgElmtOn[nelem] )
+			{
+				ipExtraLymanLinesJ05.reserve( nelem, iso_ctrl.nLymanHLike[nelem] );
+				ipExtraLymanLinesJ15.reserve( nelem, iso_ctrl.nLymanHLike[nelem] );
+			}
+		}
+
+		ipExtraLymanLinesJ05.alloc();
+		ipExtraLymanLinesJ15.alloc();
+
+		for( long nelem=0; nelem < ipISO; ++nelem )
+		{
+			ExtraLymanLinesJ05.push_back(
+				TransitionList("Insanity",&AnonStates));
+			ExtraLymanLinesJ15.push_back(
+				TransitionList("Insanity",&AnonStates));
+		}
+
+		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+		{
+			if( dense.lgElmtOn[nelem] )
+			{
+				ExtraLymanLinesJ05.push_back(
+					TransitionList("ExtraLymanLinesJ05",&iso_sp[ipISO][nelem].stJ05));
+				ExtraLymanLinesJ15.push_back(
+					TransitionList("ExtraLymanLinesJ15",&iso_sp[ipISO][nelem].stJ15));
+			}
+			else
+			{
+				ExtraLymanLinesJ05.push_back(
+					TransitionList("Insanity",&AnonStates));
+				ExtraLymanLinesJ15.push_back(
+					TransitionList("Insanity",&AnonStates));
+			}
+		}
+
+		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+		{
+			/* only grab core for elements that are turned on */
+			if( dense.lgElmtOn[nelem] )
+			{
+				AllTransitions.push_back(ExtraLymanLinesJ05[nelem]);
+				ExtraLymanLinesJ05[nelem].resize(iso_ctrl.nLymanHLike[nelem]);
+
+				AllTransitions.push_back(ExtraLymanLinesJ15[nelem]);
+				ExtraLymanLinesJ15[nelem].resize(iso_ctrl.nLymanHLike[nelem]);
+			}
+		}
+	}
+
 	ipSatelliteLines.reserve( NISO );
-	ipExtraLymanLines.reserve( NISO );
 
 	for( long ipISO=ipH_LIKE; ipISO<NISO; ++ipISO )
 	{
 		ipSatelliteLines.reserve( ipISO, LIMELM );
-		ipExtraLymanLines.reserve( ipISO, LIMELM );
 
 		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
 		{
@@ -627,29 +783,25 @@ STATIC void iso_allocate(void)
 				ASSERT( iso_sp[ipISO][nelem].numLevels_max > 0 );
 
 				ipSatelliteLines.reserve( ipISO, nelem, iso_sp[ipISO][nelem].numLevels_max );
-				ipExtraLymanLines.reserve( ipISO, nelem, iso_ctrl.nLyman_alloc[ipISO] );
 			}
 		}
 	}
 
 	ipSatelliteLines.alloc();
-	ipExtraLymanLines.alloc();
 
 	Transitions.resize(NISO);
 	SatelliteLines.resize(NISO);
-	ExtraLymanLines.resize(NISO);
+
 	for( long ipISO=ipH_LIKE; ipISO<NISO; ++ipISO )
 	{
 		Transitions[ipISO].reserve(LIMELM);
 		SatelliteLines[ipISO].reserve(LIMELM);
-		ExtraLymanLines[ipISO].reserve(LIMELM);
+		
 		for( long nelem=0; nelem < ipISO; ++nelem )
 		{
 			Transitions[ipISO].push_back(
 				TransitionList("Insanity",&AnonStates));
 			SatelliteLines[ipISO].push_back(
-				TransitionList("Insanity",&AnonStates));
-			ExtraLymanLines[ipISO].push_back(
 				TransitionList("Insanity",&AnonStates));
 		}
 		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
@@ -660,8 +812,6 @@ STATIC void iso_allocate(void)
 					TransitionList("Isosequence",&iso_sp[ipISO][nelem].st));
 				SatelliteLines[ipISO].push_back(
 					TransitionList("SatelliteLines",&iso_sp[ipISO][nelem].st));
-				ExtraLymanLines[ipISO].push_back(
-					TransitionList("ExtraLymanLines",&iso_sp[ipISO][nelem].st));
 			}
 			else
 			{
@@ -669,10 +819,9 @@ STATIC void iso_allocate(void)
 					TransitionList("Insanity",&AnonStates));
 				SatelliteLines[ipISO].push_back(
 					TransitionList("Insanity",&AnonStates));
-				ExtraLymanLines[ipISO].push_back(
-					TransitionList("Insanity",&AnonStates));
 			}
 		}
+
 		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
 		{
 			/* only grab core for elements that are turned on */
@@ -717,26 +866,6 @@ STATIC void iso_allocate(void)
 				}
 				ASSERT(Transitions[ipISO][nelem].size() == nTransition);
 				iso_sp[ipISO][nelem].tr = &Transitions[ipISO][nelem];
-
-				/* junk the extra Lyman lines */
-				AllTransitions.push_back(ExtraLymanLines[ipISO][nelem]);
-				ExtraLymanLines[ipISO][nelem].resize(iso_ctrl.nLyman_alloc[ipISO]-2);
-				ExtraLymanLines[ipISO][nelem].states() = &iso_sp[ipISO][nelem].st;
-				unsigned int nExtraLyman = 0;
-				for( long ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
-				{
-					ipExtraLymanLines[ipISO][nelem][ipHi] = nExtraLyman;
-					ExtraLymanLines[ipISO][nelem][nExtraLyman].Junk();
-					long ipHi_offset = iso_sp[ipISO][nelem].numLevels_max + ipHi - 2;
-					if( iso_ctrl.lgDielRecom[ipISO] )
-						ipHi_offset += 1;
-					ExtraLymanLines[ipISO][nelem][nExtraLyman].setHi(ipHi_offset);
-					/* lower level is just ground state of the ion */
-					ExtraLymanLines[ipISO][nelem][nExtraLyman].setLo(0);
-					ExtraLymanLines[ipISO][nelem][nExtraLyman].AddLine2Stack();
-					++nExtraLyman;
-				}
-				ASSERT(ExtraLymanLines[ipISO][nelem].size() == nExtraLyman);
 			}
 		}
 	}
@@ -798,7 +927,29 @@ STATIC void iso_assign_quantum_numbers(void)
 					iso_sp[ipISO][nelem].st[i].n() = in;
 					iso_sp[ipISO][nelem].st[i].S() = is;
 					iso_sp[ipISO][nelem].st[i].l() = il;
-					iso_sp[ipISO][nelem].st[i].j() = -1;
+					iso_sp[ipISO][nelem].st[i].j() = -1._r;
+					iso_sp[ipISO][nelem].stJ05[i].n() = in;
+					iso_sp[ipISO][nelem].stJ05[i].S() = is;
+					iso_sp[ipISO][nelem].stJ05[i].l() = il;
+					iso_sp[ipISO][nelem].stJ15[i].n() = in;
+					iso_sp[ipISO][nelem].stJ15[i].S() = is;
+					iso_sp[ipISO][nelem].stJ15[i].l() = il;
+					if(in == 1)
+					{
+						iso_sp[ipISO][nelem].stJ05[i].j() = 0.5_r;
+						/* This is the ground state for np3/2 -> 1s1/2 transition */
+						iso_sp[ipISO][nelem].stJ15[i].j() = 0.5_r;
+					}
+					else if(il == 1)
+					{
+						iso_sp[ipISO][nelem].stJ05[i].j() = 0.5_r;
+						iso_sp[ipISO][nelem].stJ15[i].j() = 1.5_r;
+					}
+					else
+					{
+						iso_sp[ipISO][nelem].stJ05[i].j() = -1._r;
+						iso_sp[ipISO][nelem].stJ15[i].j() = -1._r;
+					}
 					++i;
 				}
 			}
@@ -809,7 +960,15 @@ STATIC void iso_assign_quantum_numbers(void)
 				iso_sp[ipISO][nelem].st[level].n() = in;
 				iso_sp[ipISO][nelem].st[level].S() = -LONG_MAX;
 				iso_sp[ipISO][nelem].st[level].l() = -LONG_MAX;
-				iso_sp[ipISO][nelem].st[level].j() = -1;
+				iso_sp[ipISO][nelem].st[level].j() = -1._r;
+				iso_sp[ipISO][nelem].stJ05[level].n() = in;
+				iso_sp[ipISO][nelem].stJ05[level].S() = -LONG_MAX;
+				iso_sp[ipISO][nelem].stJ05[level].l() = -LONG_MAX;
+				iso_sp[ipISO][nelem].stJ05[level].j() = 0.5_r;
+				iso_sp[ipISO][nelem].stJ15[level].n() = in;
+				iso_sp[ipISO][nelem].stJ15[level].S() = -LONG_MAX;
+				iso_sp[ipISO][nelem].stJ15[level].l() = -LONG_MAX;
+				iso_sp[ipISO][nelem].stJ15[level].j() = 1.5_r;
 				++in;
 			}
 			--in;
@@ -854,7 +1013,7 @@ STATIC void iso_assign_quantum_numbers(void)
 							iso_sp[ipISO][nelem].st[i].S() = is;
 							iso_sp[ipISO][nelem].st[i].l() = il;
 							/* this is not a typo, J=L for singlets.  */
-							iso_sp[ipISO][nelem].st[i].j() = il;
+							iso_sp[ipISO][nelem].st[i].j() = (realnum)il;
 							++i;
 						}
 						/* 2 triplet P is j-resolved */
@@ -866,7 +1025,7 @@ STATIC void iso_assign_quantum_numbers(void)
 								iso_sp[ipISO][nelem].st[i].n() = in;
 								iso_sp[ipISO][nelem].st[i].S() = is;
 								iso_sp[ipISO][nelem].st[i].l() = il;
-								iso_sp[ipISO][nelem].st[i].j() = ij;
+								iso_sp[ipISO][nelem].st[i].j() = (realnum)ij;
 								++i;
 								++ij;
 								/* repeat this for the separate j-levels within 2^3P. */
@@ -877,7 +1036,7 @@ STATIC void iso_assign_quantum_numbers(void)
 							iso_sp[ipISO][nelem].st[i].n() = in;
 							iso_sp[ipISO][nelem].st[i].S() = is;
 							iso_sp[ipISO][nelem].st[i].l() = il;
-							iso_sp[ipISO][nelem].st[i].j() = -1L;
+							iso_sp[ipISO][nelem].st[i].j() = -1._r;
 							++i;
 						}
 					}
@@ -888,7 +1047,7 @@ STATIC void iso_assign_quantum_numbers(void)
 					iso_sp[ipISO][nelem].st[i].n() = in;
 					iso_sp[ipISO][nelem].st[i].S() = 1L;
 					iso_sp[ipISO][nelem].st[i].l() = 1L;
-					iso_sp[ipISO][nelem].st[i].j() = 1L;
+					iso_sp[ipISO][nelem].st[i].j() = 1._r;
 					++i;
 				}
 			}
@@ -899,7 +1058,7 @@ STATIC void iso_assign_quantum_numbers(void)
 				iso_sp[ipISO][nelem].st[level].n() = in;
 				iso_sp[ipISO][nelem].st[level].S() = -LONG_MAX;
 				iso_sp[ipISO][nelem].st[level].l() = -LONG_MAX;
-				iso_sp[ipISO][nelem].st[level].j() = -1;
+				iso_sp[ipISO][nelem].st[level].j() = -1._r;
 				++in;
 			}
 			--in;
@@ -944,6 +1103,7 @@ STATIC void iso_assign_quantum_numbers(void)
 							TotalInsanity();
 						}
 					}
+					
 					char chConfiguration[32];
 					long nCharactersWritten = 0;
 
@@ -963,7 +1123,7 @@ STATIC void iso_assign_quantum_numbers(void)
 						( iso_sp[ipISO][nelem].st[ipLo].j() >= 0 &&
 						iso_sp[ipISO][nelem].st[ipLo].S() == ipTRIPLET ) )
 					{
-						nCharactersWritten = sprintf( chConfiguration, "%3li^%li%c_%li", 
+						nCharactersWritten = sprintf( chConfiguration, "%3li^%li%c_%.1f", 
 							iso_sp[ipISO][nelem].st[ipLo].n(), 
 							iso_sp[ipISO][nelem].st[ipLo].S(),
 							chL[ MIN2( 20, iso_sp[ipISO][nelem].st[ipLo].l() ) ],
@@ -985,13 +1145,161 @@ STATIC void iso_assign_quantum_numbers(void)
 			}
 		}
 	}
+
+	long ipISO = ipH_LIKE;
+	for( long nelem=ipISO; nelem < LIMELM; nelem++ )
+	{
+		if( dense.lgElmtOn[nelem] )
+		{
+			for( ipLo=ipH1s; ipLo < iso_sp[ipISO][nelem].numLevels_max; ipLo++ )
+			{
+				iso_sp[ipISO][nelem].stJ05[ipLo].nelem() = (int)(nelem+1);
+				iso_sp[ipISO][nelem].stJ05[ipLo].IonStg() = (int)(nelem+1-ipISO);
+				iso_sp[ipISO][nelem].stJ15[ipLo].nelem() = (int)(nelem+1);
+				iso_sp[ipISO][nelem].stJ15[ipLo].IonStg() = (int)(nelem+1-ipISO);
+
+				/* stack of states for extra lyman lines
+				   starting with j=1/2 */
+				if( iso_sp[ipISO][nelem].stJ05[ipLo].j() >= 0 )
+				{
+					iso_sp[ipISO][nelem].stJ05[ipLo].g() = 2.f*iso_sp[ipISO][nelem].stJ05[ipLo].j()+1.f;
+				}
+				else if( iso_sp[ipISO][nelem].stJ05[ipLo].l() >= 0 )
+				{
+					iso_sp[ipISO][nelem].stJ05[ipLo].g() = (2.f*iso_sp[ipISO][nelem].stJ05[ipLo].l()+1.f) *
+						iso_sp[ipISO][nelem].stJ05[ipLo].S();
+				}
+				else
+				{
+					iso_sp[ipISO][nelem].stJ05[ipLo].g() = 2.f*(realnum)POW2( iso_sp[ipISO][nelem].stJ05[ipLo].n() );
+				}
+
+				/* j = 3/2 */
+				if( iso_sp[ipISO][nelem].stJ15[ipLo].j() >= 0 )
+				{
+					iso_sp[ipISO][nelem].stJ15[ipLo].g() = 2.f*iso_sp[ipISO][nelem].stJ15[ipLo].j()+1.f;
+				}
+				else if( iso_sp[ipISO][nelem].stJ15[ipLo].l() >= 0 )
+				{
+					iso_sp[ipISO][nelem].stJ15[ipLo].g() = (2.f*iso_sp[ipISO][nelem].stJ15[ipLo].l()+1.f) *
+						iso_sp[ipISO][nelem].stJ15[ipLo].S();
+				}
+				else
+				{
+					iso_sp[ipISO][nelem].stJ15[ipLo].g() = 2.f*(realnum)POW2( iso_sp[ipISO][nelem].stJ15[ipLo].n() );
+				}
+
+				ASSERT( iso_sp[ipISO][nelem].stJ05[ipLo].n() < 1000 );
+				ASSERT( iso_sp[ipISO][nelem].stJ15[ipLo].n() < 1000 );
+			}
+		}
+	}
 	return;
+}
+
+STATIC void iso_assign_extralyman_levels()
+{
+	DEBUG_ENTRY( "iso_assign_extralyman_levels()" );
+
+	long ipISO = ipH_LIKE;
+
+	for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+	{
+		/* only grab core for elements that are turned on */
+		if( dense.lgElmtOn[nelem] )
+		{
+			ExtraLymanLinesJ05[nelem].states() = &iso_sp[ipISO][nelem].stJ05;
+			/* We will be indexing by principal quantum number, so the first two elements must not be used. */
+			ExtraLymanLinesJ05[nelem][0].Junk();
+			ExtraLymanLinesJ05[nelem][1].Junk();
+			for( long nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
+			{
+				ipExtraLymanLinesJ05[nelem][nHi] = nHi;
+				ExtraLymanLinesJ05[nelem][nHi].Junk();
+
+				long ipHi;
+				if( nHi <= iso_sp[ipH_LIKE][nelem].n_HighestResolved_max ) /* resolved levels */
+				{
+					ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nHi,1,2);
+				}
+				else if( nHi <= iso_sp[ipH_LIKE][nelem].n_HighestResolved_max + iso_sp[ipH_LIKE][nelem].nCollapsed_max ) /* collapsed levels */
+				{
+					ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nHi,-1,-1);
+				}
+				else
+				{
+					ipHi = iso_sp[ipISO][nelem].numLevels_max + nHi - (iso_sp[ipH_LIKE][nelem].n_HighestResolved_max + iso_sp[ipH_LIKE][nelem].nCollapsed_max) - 1;
+				}
+
+				ExtraLymanLinesJ05[nelem][nHi].setHi(ipHi);
+				/* lower level is just ground state of the ion */
+				ExtraLymanLinesJ05[nelem][nHi].setLo(0);
+				ExtraLymanLinesJ05[nelem][nHi].AddLine2Stack();
+				ASSERT( ExtraLymanLinesJ05[nelem][nHi].Lo()->g() > 0. );
+			}
+
+			ExtraLymanLinesJ15[nelem].states() = &iso_sp[ipISO][nelem].stJ15;
+			ExtraLymanLinesJ15[nelem][0].Junk();
+			ExtraLymanLinesJ15[nelem][1].Junk();
+			for( long nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
+			{
+				ipExtraLymanLinesJ15[nelem][nHi] = nHi;
+				ExtraLymanLinesJ15[nelem][nHi].Junk();
+
+				long ipHi;
+				if( nHi <= iso_sp[ipH_LIKE][nelem].n_HighestResolved_max ) /* resolved levels */
+				{
+					ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nHi,1,2);
+				}
+				else if( nHi <= iso_sp[ipH_LIKE][nelem].n_HighestResolved_max + iso_sp[ipH_LIKE][nelem].nCollapsed_max ) /* collapsed levels */
+				{
+					ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nHi,-1,-1);
+				}
+				else
+				{
+					ipHi = iso_sp[ipISO][nelem].numLevels_max + nHi - (iso_sp[ipH_LIKE][nelem].n_HighestResolved_max + iso_sp[ipH_LIKE][nelem].nCollapsed_max) - 1;
+				}
+
+				ExtraLymanLinesJ15[nelem][nHi].setHi(ipHi);
+				/* lower level is just ground state of the ion */
+				ExtraLymanLinesJ15[nelem][nHi].setLo(0);
+				ExtraLymanLinesJ15[nelem][nHi].AddLine2Stack();
+				ASSERT( ExtraLymanLinesJ15[nelem][nHi].Lo()->g() > 0. );
+			}
+		}
+	}
+
+	ipISO = ipHE_LIKE;
+
+	for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+	{
+		/* only grab core for elements that are turned on */
+		if( dense.lgElmtOn[nelem] )
+		{
+			ExtraLymanLinesHeLike[nelem].states() = &iso_sp[ipISO][nelem].st;
+			unsigned int nExtraLyman = 0;
+			for( long ipHi=2; ipHi < iso_ctrl.nLyman_alloc[ipISO]; ipHi++ )
+			{
+				ipExtraLymanLinesHeLike[nelem][ipHi] = nExtraLyman;
+				ExtraLymanLinesHeLike[nelem][nExtraLyman].Junk();
+				long ipHi_offset = iso_sp[ipISO][nelem].numLevels_max + ipHi - 2;
+				if( iso_ctrl.lgDielRecom[ipISO] )
+					ipHi_offset += 1;
+				ExtraLymanLinesHeLike[nelem][nExtraLyman].setHi(ipHi_offset);
+				/* lower level is just ground state of the ion */
+				ExtraLymanLinesHeLike[nelem][nExtraLyman].setLo(0);
+				ExtraLymanLinesHeLike[nelem][nExtraLyman].AddLine2Stack();
+				++nExtraLyman;
+			}
+			ASSERT(ExtraLymanLinesHeLike[nelem].size() == nExtraLyman);
+		}
+	}
 }
 
 #if defined(__ICC) && defined(__i386)
 #pragma optimization_level 1
 #endif
-STATIC void FillExtraLymanLine( const TransitionList::iterator& t, long ipISO, long nelem, long nHi )
+STATIC void FillExtraLymanLine( const TransitionList::iterator& t, long ipISO, long nelem, long nHi, double j )
 {
 	double Enerwn, Aul;
 
@@ -1006,17 +1314,124 @@ STATIC void FillExtraLymanLine( const TransitionList::iterator& t, long ipISO, l
 	(*(*t).Hi()).n() = nHi;
 
 	/* statistical weight is same as statistical weight of corresponding LyA. */
-	(*(*t).Hi()).g() = iso_sp[ipISO][nelem].st[iso_ctrl.nLyaLevel[ipISO]].g();
+	if (ipISO == ipH_LIKE)
+		(*(*t).Hi()).g() = 2.*j+1.;
+	else
+		(*(*t).Hi()).g() = iso_sp[ipISO][nelem].st[iso_ctrl.nLyaLevel[ipISO]].g();
 
 	/* \todo add correct configuration, or better still link to standard level */
-	(*(*t).Hi()).chConfig() = "ExtraLyman level (probably duplicate)";
+	if( ipISO == ipH_LIKE )
+	{
+		char chConfiguration[32];
+		int j_numerator = j*2;
+		sprintf( chConfiguration, "%li^2P%i/2", nHi, j_numerator );
+		(*(*t).Lo()).chConfig() = "1^2S1/2";
+		(*(*t).Hi()).chConfig() = chConfiguration;
+	}
+	else
+		(*(*t).Hi()).chConfig()  = "ExtraLyman level (probably duplicate)";
 
 	/* energies */
-	Enerwn = iso_sp[ipISO][nelem].fb[0].xIsoLevNIonRyd * RYD_INF * (  1. - 1./POW2((double)nHi) );
+	/********************************************************************************/
+	/* Adding Fine Structure Corrections to nP energy levels: 			*/
+	/* For all one-electron atoms the following equations     			*/
+	/* are being used to find the j-resolved energies.        			*/
+	/*										*/
+	/*										*/
+	/* Total nP_j level energy:                               			*/
+	/* Enerwn = E_0_n + E_FS_nj + E_LS_nlj + E_M_nj           			*/
+	/*										*/
+	/*										*/
+	/* Unperturbed Energy:								*/
+	/*         -µ Z^2 Ry								*/
+	/* E_0_n = ----------								*/
+	/*            n^2 								*/
+	/*										*/
+	/* Dirac-point nucleas energy (Fine Structure correction): 			*/
+	/*                                     α Z               			*/
+	/* E_FS_nj = m_e c^2 [ 1 + ( ------------------------- )^2 ]^-1/2 - m_e c^2   	*/
+	/*                           n - k + √ (k^2 - α^2 Z^2)     			*/
+	/*										*/
+	/* Lamb-Shift Correction (Resolving orbital-angular momentum l):		*/
+	/*			   8 Z^4 α^3               Z^2 Ry        3    c_lj   	*/
+	/* E_LS_nlj = ----------- Ry [log ( ----------- ) + --- --------]  		*/
+	/*			    3 π n^3   		      K_0(n,l)       8   2l + 1	*/
+	/*										*/
+	/*	where  c_lj = -l^{-1} if j = l-1/2; c_lj = (l+1)^{-1} if j=l+1/2	*/
+	/*	       K_0(n,l) = Bethe logarithm; we have used a fit function instead	*/
+	/*										*/
+	/* Nuclear Mass Recoil Correction:						*/
+	/*		     m_e (α Z)^2	   m_e	 (α Z)^2 			*/
+	/* E_M_nj = m_e c^2 ------------ - µ c^2 (-----) --------			*/
+	/*		      m_N 2 N^2 	   m_N	   2n^2				*/
+	/*										*/
+	/* where  N = (( n - k + √ (k^2 - α^2 Z^2) )^2 + α^2 Z^2)^1/2 			*/
+	/*										*/
+	/* m_e = electron mass 								*/
+	/* m_N = nuclear mass 								*/
+	/* µ = Reduced mass 								*/
+	/* c = speed of light 								*/
+	/* α = fine structure constant 							*/
+	/* Z = atomic number 								*/
+	/* n = principle quantum number 						*/
+	/* l = orbital angular quantum number 						*/
+	/* j = total quantum number (l+s) 						*/
+	/* k = j + 1/2 									*/
+	/* Ry = hc R∞ = Rydberg unit of energy 						*/
+	/* 										*/
+	/* See Gunasekera et. al 2023 for further detail.				*/
+	/* 										*/
+	/********************************************************************************/
+	if( ipISO == ipH_LIKE )
+	{
+		double reduced_mass = (nelem+1)*PROTON_MASS*ELECTRON_MASS/(((nelem+1)*PROTON_MASS)+ELECTRON_MASS);
+		double ELECTRON_REST_ENGY_cm = 4.1214844832e9;
+		double mc2 = ELECTRON_REST_ENGY_cm*reduced_mass/ELECTRON_MASS;
+		double Eo = -iso_sp[ipISO][nelem].IonPot;
+		double Za = FINE_STRUCTURE*(nelem+1.);
+
+		/*Resolving j levels: Dirac equation*/
+		double DiracN = nHi - (j + 0.5) + pow( pow2(j + 0.5) - pow2(Za), 0.5);
+		double DiracEnergy = ELECTRON_REST_ENGY_cm*(pow(1 + pow2(Za/DiracN), -0.5)  - 1.) - Eo;
+
+		/* Mass Recoil Correction */
+		double N = sqrt( pow2( nHi - (j + 0.5) + sqrt( pow2(j + 0.5) - pow2(Za)) ) + pow2(Za) );
+		double mass_recoil_correction_term1 = ELECTRON_REST_ENGY_cm*(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(N));
+		double mass_recoil_correction = mass_recoil_correction_term1 - mc2*pow2(ELECTRON_MASS/(PROTON_MASS*(nelem+1.)))*pow2(Za)/(2*pow2(nHi));
+
+		/* Resolving l levels: Lamb Shift */
+		double m=0.04950538, t=0.54290526, b=0.95342613;
+		double Bethe_Log = ( m*exp(-nHi*t) + b );
+		Bethe_Log = Bethe_Log * exp( pow(1./nHi,3.) * pow((nelem)/(nelem+1.),4.) * log(Bethe_Log) );
+		double Lamb_correction_factor = 8.*pow(nelem+1.,4.)*pow(FINE_STRUCTURE,3.)*RYD_INF/(3.*M_PI*pow(nHi,3.));
+		double Lamb_correction = Lamb_correction_factor*log(1./Bethe_Log);
+		if ( j==0.5 )
+		{
+			Lamb_correction += Lamb_correction_factor*(-1./3.)*(3./8.);
+		}
+		else if ( j==1.5 )
+		{
+			Lamb_correction += Lamb_correction_factor*(-1./6.)*(3./8.);
+		}
+
+		if (nelem > 0)
+		{
+			Enerwn = DiracEnergy + (mass_recoil_correction*0.5) + Lamb_correction;
+		}
+		else
+		{
+			Enerwn = DiracEnergy + mass_recoil_correction + Lamb_correction;
+		}
+	}
+	else
+	{
+		Enerwn = iso_sp[ipISO][nelem].fb[0].xIsoLevNIonRyd * RYD_INF * (  1. - 1./POW2((double)nHi) );
+	}
 
 	/* transition energy in various units:*/
 	(*t).EnergyWN() = (realnum)(Enerwn);
 	(*t).WLAng() = (realnum) wn2ang( Enerwn );
+
 	(*(*t).Hi()).energy().set( Enerwn, "cm^-1" );
 
 	if( ipISO == ipH_LIKE )
@@ -1046,7 +1461,35 @@ STATIC void FillExtraLymanLine( const TransitionList::iterator& t, long ipISO, l
 
 	(*t).Emis().dampXvel() = (realnum)( 1.f / (*(*t).Hi()).lifetime() / PI4 / (*t).EnergyWN() );
 
-	(*t).Emis().iRedisFun() = iso_ctrl.ipResoRedist[ipISO];
+	if(ipISO == ipH_LIKE)
+	{
+		long ipHi;
+		if( nHi > iso_sp[ipH_LIKE][nelem].n_HighestResolved_local ) /* collapsed levels */
+		{
+			ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nHi,-1,-1);
+		}
+		else /* resolved levels */
+		{
+			ipHi = iso_sp[ipH_LIKE][nelem].QN2Index(nHi,1,2);
+		}
+
+		if( ipHi == iso_ctrl.nLyaLevel[ipISO] )
+		{
+			long redis = iso_ctrl.ipLyaRedist[ipISO];
+			// H LyA has a special redistribution function
+			if( ipISO==ipH_LIKE && nelem==ipHYDROGEN )
+				redis = ipLY_A;
+			(*t).Emis().iRedisFun() = redis;
+		}
+		else
+		{
+			/* these are rest of Lyman lines,
+			 * complete redistribution, doppler core only, K2 core, default ipCRD */
+			(*t).Emis().iRedisFun() = iso_ctrl.ipResoRedist[ipISO];
+		}
+	}
+	else
+		(*t).Emis().iRedisFun() = iso_ctrl.ipResoRedist[ipISO];
 
 	(*t).Emis().gf() = (realnum)(GetGF((*t).Emis().Aul(),	(*t).EnergyWN(), (*(*t).Hi()).g()));
 

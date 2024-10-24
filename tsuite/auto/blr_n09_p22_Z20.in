@@ -57,7 +57,9 @@ end of lines
 ## >>chng 11 oct 04, from 5.928 to 5.853, Chianti for line-less ions of P and heavier elements
 ## >>chng 11 dec 16, from 5.853 to 5.832, adjust botches due to recent iso recomb changes
 ## >>chng 13 feb 01, from 5.832 to 5.877, BUGFIX, largely undo r6703
-monitor "H+" temperature 5.877
+## >>chng 24 jan 09, from 5.877 to 5.901, resolve 1 electron Ly doublets
+## >>chng 24 apr 22, from 5.901 to 5.872, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor "H+" temperature 5.872
 ##
 ## strong blr lines
 ##total of sum of both O VI comp
@@ -119,7 +121,9 @@ monitor line luminosity "H  1"  1215.67A 8.406
 ## >>chng 13 jan 10, from 8.54 to 8.613, fix in-zone continuum shielding
 ## >>chng 13 jul 15, from 8.613 to 8.585, move to Stout/Chianti for Si, botches are due to improved atomic data
 ## >>chng 13 jul 24, from 8.585 to 8.553, Ne to external databases
-monitor line luminosity "blnd"  1240 8.553
+## >>chng 24 jan 09, from 8.553 to 8.533, resolve 1 electron Ly doublets
+## >>chng 24 apr 22, from 8.533 to 8.554, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line luminosity "blnd"  1240 8.554
 ##
 ##total He II Balmer-alpha 1640
 ## >>chng 05 mar 02, from 8.047 to 8.079, Romas UTA data update

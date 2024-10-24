@@ -1,4 +1,5 @@
 title "Paris meeting PN"
+set save prefix "pn_paris"
 # standard" PN model of the Pequignot Meudon Conference
 #
 # commands controlling continuum =========
@@ -35,17 +36,17 @@ print lines emergent off
 print line optical depths 
 print ages 
 print column densities 
-save performance "pn_paris.per"
-save overview "pn_paris.ovr"
-save transmitted continuum "pn_paris.trn"
-save continuum units microns "pn_paris.con"
-save element carbon  "pn_paris.car"
-save physical conditions "pn_paris.phy"
-save element nitrogen "pn_paris.nit" 
-save monitors"pn_paris.asr"
-save dr "pn_paris.dr"
-save temperature "pn_paris.tem"
-save lines emissivity "pn_paris.ems"
+save performance ".per"
+save overview ".ovr"
+save transmitted continuum ".trn"
+save continuum units microns ".con"
+save element carbon  ".car"
+save physical conditions ".phy"
+save element nitrogen ".nit"
+save monitors".asr"
+save dr ".dr"
+save temperature ".tem"
+save lines emissivity ".ems"
 ## >>chng 13 jul 25, wl from 6563 to 6562.85A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 6562.85A to 6562.81A, update Rydberg constant
 ## >>chng 20 aug 25, wl from 6562.81A to 6562.80A, switched from computed to tabulated energies for H and He isoseq
@@ -55,7 +56,7 @@ save lines emissivity "pn_paris.ems"
 h  1 6562.80A
 Blnd  6720
 end of lines
-save averages "pn_paris.avr" last
+save averages ".avr" last
 temperature hydrogen 1 
 end of averagers
 #
@@ -71,7 +72,8 @@ end of averagers
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-monitor line "H  1" 4861.32A luminosity 35.47
+## >>chng 24 feb 27, from 35.47 to 35.45, Fix escape probability for Ly beta and higher
+monitor line "H  1" 4861.32A luminosity 35.45
 ##
 ## >>chng 01 jul 01 from 34.938 to 34.966, better diffuse fields, DP's garden
 ## >>chng 03 dec 08, from 34.966 to 34.938, chng ots, zoning
@@ -193,7 +195,8 @@ monitor line "Ca B" 4471.49A 0.0374
 ## >>chng 05 oct 01, from 0.0158 to 0.0146, RP update he levels
 ## >>chng 08 apr 30, from 0.0146 to 0.0157 H, He topoff change
 ## >>chng 13 jul 25, wl from 20580 to 2.05813m, increased wl precision to 6 sig. fig.
-monitor line "He 1"  2.05813m  0.0157
+## >>chng 24 feb 27, from 0.0157 to 0.0149, Fix escape probability for Ly beta and higher
+monitor line "He 1"  2.05813m  0.0149
 ##
 ## >>chng 01 mar 16, from 0.916 to 0.856, update HeI cs
 ## >>chng 02 dec 11, from 0.856 to 0.848, new hei
@@ -273,7 +276,9 @@ monitor line "blnd" 1909 1.644 error 0.1
 ## >>chng 14 mar 26, from 2.2 to 2.056, Move oxygen data to stout and chianti files
 ## >>chng 16 jul 24, from 2.056 to 2.15, update C III to 2014A&A...566A.104F
 ## >>chng 19 mar 01, from 2.15 to 2.05, remove recombination, etc, components from blends (#415)
-monitor line "blnd" 1549 2.05
+## >>chng 24 jul 15, from 2.05 to 2.153, Update chianti to v10.1
+## >>chng 24 feb 27, from 2.153 to 2.157, Fix escape probability for Ly beta and higher
+monitor line "blnd" 1549 2.157
 ##
 ## >>chng 00 dec 12, from 1.03 to 0.887, change in CS for [NII]
 ## >>chng 03 may 22, from 0.887 to 0.842, Lya dest prob DEST0
@@ -307,7 +312,8 @@ monitor line "blnd" 1486 0.2762 error 0.1
 ## >>chng 06 nov 29, from 0.206 to 0.181, Badnell DR turned on
 ## >>chng 09 feb 23, from 0.181 to 0.1524, remove otslin, otscon dampers (PR #84, r2758)
 ## >>chng 11 aug 05, from 0.1524 to 0.1283, make PRD redis func for h-like ions; LY_A func is now for H only
-monitor line "blnd"  1240 0.1283 error 0.1
+## >>chng 24 feb 27, from 0.1283 to 0.1408, Fix escape probability for Ly beta and higher
+monitor line "blnd"  1240 0.1408 error 0.1
 ##
 ## >>chng 01 may 10, from 0.121 to 0.111 ct network chng
 ## >>chng 03 dec 08, from 0.111 to 0.118 chng ots, zoning
@@ -395,7 +401,9 @@ monitor line "o  3"  5006.84 17.69
 ## >>chng 11 aug 05, from 0.1511 to 0.1786, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 16 jul 24, from 0.1786 to 0.1887, update C III to 2014A&A...566A.104F
 ## >>chng 19 mar 01, change "Blnd" 4363 -> "O  3" 4363.21
-monitor line "O  3"  4363.21 0.1887
+## >>chng 24 feb 27, from 0.1887 to 0.1785, Fix escape probability for Ly beta and higher
+## >>chng 24 apr 22, from 0.1785 to 0.1879, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line "O  3"  4363.21 0.1879
 ##
 ## >>chng 14 mar 26, from 1.305 to 1.389, Move oxygen data to stout and chianti files
 monitor line "O  3" 51.8004m  1.389
@@ -502,7 +510,9 @@ monitor line "Ne 5" 24.3109m  0.8413
 ## >>chng 13 nov 25, from 1.06 to 1.011, remove jump from Federman shielding fn
 ## >>chng 13 nov 25, from 1.011 to 1.059, convergence branch changes
 ## >>chng 22 jul 09, from 1.059 to 1.158, upgrade to Chianti v10
-monitor line "blnd" 2798  1.158
+## >>chng 24 feb 27, from 1.158 to 1.104, Fix escape probability for Ly beta and higher
+## >>chng 24 apr 22, from 1.104 to 1.162, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line "blnd" 2798  1.162
 ##
 ## >>chng 03 dec 08, from 0.122 to 0.129 chng ots, zoning
 ## >>chng 06 aug 09, from 0.129 to 0.117 Meudon 06, badnell dr & rr
@@ -523,7 +533,8 @@ monitor line "Si 2" 34.8046m  0.154
 ## >>chng 11 aug 05, from 0.1524 to 0.1693, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 13 mar 03, from 0.1693 to 0.177, update atomic models for S II, S III
 ## >>chng 15 aug 30, from 0.177 to 0.1679, update Si II stout to Laha+ 2015
-monitor line "Blnd" 2335  0.1679
+## >>chng 23 sep 28, from 0.1679 to 0.1757, current npSplit development result
+monitor line "Blnd" 2335  0.1757
 ##
 ## >>chng 01 jul 01 from 0.50 to 0.440 better diffuse fields, DP's garden
 ## >>chng 03 dec 08, from 0.440 to 0.539 chng ots, zoning

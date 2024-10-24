@@ -1,4 +1,5 @@
 title generate continuum due to hot ism in high Z,z starburst
+set save prefix "ism_hot_brems"
 # 
 # commands controlling continuum =========
 # this sets up coronal equilibrium for temperature and continuum
@@ -29,14 +30,14 @@ normalize to "O  7" 21.6020
 # this shortens the printout somewhat
 print line faint 1
 # output options
-save performance "ism_hot_brems.per"
-save continuum last "ism_hot_brems.con" no title, units keV
-save sulphur ionization "ism_hot_brems.sul"
-save overview last "ism_hot_brems.ovr"
-save monitors last "ism_hot_brems.asr"
-save species data sources "ism_hot_brems.dsource"
+save performance ".per"
+save continuum last ".con" no title, units keV
+save sulphur ionization ".sul"
+save overview last ".ovr"
+save monitors last ".asr"
+save dr last ".dr"
+#save species data sources ".dsource"
 # this is only to document the problem described above
-save dr last "ism_hot_brems.dr"
 #
 # commands giving the monitors    =========
 ## >>chng 01 aug 17, from -5.036 to -4.996, ? ?
@@ -145,7 +146,9 @@ monitor line luminosity "Fe12" 214.399A -1.482
 ## >>chng 06 nov 29, from 0.198 to 0.057, Badnell DR turned on
 ## >>chng 13 jul 15, from 0.057 to -0.3852, move to Stout/Chianti for Si, botches are due to improved atomic data
 ## >>chng 22 jul 09, wl from 319.840 to 319.839A, upgrade to Chianti v10
-monitor line luminosity "si 8" 319.839A  -0.3852 error 0.15
+## >>chng 24 jun 24, wl from 319.839A to 319.826A, update to Chianti v10.1
+## >>chng 24 jul 15, from -0.3852 to -0.4698, Update chianti to v10.1
+monitor line luminosity "si 8" 319.826A  -0.4698 error 0.15
 ##
 ## >>chng 01 jun 15, from -0.106 to -0.272, full CT reaction network
 ## >>chng 01 aug 08, from -0.272 to -0.304, ? ? ?
@@ -185,7 +188,8 @@ monitor hydrogen 1 ionization fraction is -6.957
 ## >>chng 14 may 24, from -5.182 to -4.994, allow all NIST levels to be used
 ## >>chng 15 oct 14, from -4.994 to -5.014, update DR suppression in r10716
 ## >>chng 16 jul 04, from -5.014 to -4.987, upgrade Fe 9 and Ni 11 to Stout
-monitor helium 2 ionization fraction is -4.987
+## >>chng 24 jul 15, from -4.987 to -4.968, Update chianti to v10.1
+monitor helium 2 ionization fraction is -4.968
 ##
 ## add this, 02 mar 16, o very optically thick, 
 ## >>chng 02 mar 25, from -0.586 to -0.428, further chngs to he-like
@@ -360,7 +364,8 @@ monitor iron 12 ionization fraction is  -1.219 error 0.2
 ## >>chng 10 aug 12, from -1.909 to -1.953, fix botches related to r4125; star botches from recent continuum mesh changes
 ## >>chng 11 aug 05, from -1.953 to -2.023, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 11 sep 15, from -2.023 to -1.941, Chianti for Fe moderate to high ions
-monitor iron 13 ionization fraction is  -1.941 error 0.1
+## >>chng 24 apr 22, from -1.941 to -1.995, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor iron 13 ionization fraction is  -1.995 error 0.1
 ##
 ## >>chng 01 feb 21 from -2.224 to -2.128 improved He-seq coll treatment
 ## >>chng 01 jun 15, from -2.128 to -2.028 full CT reaction network
@@ -422,7 +427,8 @@ monitor iron 14 ionization fraction is  -2.964 error 0.20
 ## >>chng 13 nov 13, from 41 to 52, resolve face at all freqs
 ## >>chng 13 nov 25, from 52 to 55, convergence branch changes
 ## >>chng 14 apr 07, from 55 to 51, move H/C out of ConvBase loop
-monitor nzone 51
+## >>chng 24 apr 22, from 51 to 48, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor nzone 48
 ##
 ## >>chng 03 nov 23, from 6 to 8 Kraemer et al. guess of dr
 ## >>chng 04 feb 15, from 8 to 7, conv ionz loop auger

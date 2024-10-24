@@ -817,7 +817,7 @@
    82  105      -3918.495      5.660e-01      3.560e+07 
    83  105      -3918.649      1.540e-02      9.690e+05 
  -1
-%filename:  o_7.wgfa.olg.imp
+%filename:  o_7.wgfa
 
 Theoretical gf and A-values:  Autostructure calculation
 A Breit-Pauli distorted wave implementation for AUTOSTRUCTURE
@@ -831,11 +831,11 @@ Observed energies of bound levels:
 Kramida, A., Ralchenko, Yu., Reader, J., and NIST ASD Team (2019). NIST Atomic Spectra Database (ver. 5.7.1), [Online]. 
 Available: https://physics.nist.gov/asd [2020, March 2]. 
 National Institute of Standards and Technology, Gaithersburg, MD. DOI: https://doi.org/10.18434/T4W30F
-taken from R. L. Kelly, J. Phys. Chem. Ref. Data 16, Suppl. 1, 1–1698 (1987); Erratum: 17, 953 (1998) 
+taken from R. L. Kelly, J. Phys. Chem. Ref. Data 16, Suppl. 1, 1-1698 (1987); Erratum: 17, 953 (1998) 
 
 Theoretical energies for n=2, 3 above IP
 Goryaev, F. F.; Vainshtein, L. A.; Urnov, A. M.
-Atomic data for doubly-excited states 2lnl‧ of He-like ions and 1s2lnl‧ of Li-like ions with Z = 6-36 and n = 2 , 3
+Atomic data for doubly-excited states 2lnl of He-like ions and 1s2lnl of Li-like ions with Z = 6-36 and n = 2 , 3
 2017, ADNDT, 113, 117-257
 adsRef:  http://adsabs.harvard.edu/abs/2017ADNDT.113..117G
 DOI:  10.1016/j.adt.2016.04.002
@@ -866,5 +866,5 @@ two-photon A-value:  Derevianko, A.; Johnson, W. R., 1997, Phys Rev A, 56, 1288
  K. Dere (GMU) - 2020 June 15
 
 Reference:
-Chianti  2022-02-18
+Chianti  2024-06-27
  -1

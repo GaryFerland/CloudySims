@@ -171,6 +171,13 @@ bool cloudy()
 	/* find thickness of next zone */
 	radius_next();
 
+	/* Make sure fine opacities are set up early */
+	RT_line_all( RT_line_one_fine, true );
+	/* Setting up the fine opacities changes the solution,
+	   so we need find the initial solution again. */
+	ConvInitSolution();
+	RT_line_all( RT_line_one_fine, true );
+
 	/* set up some zone variables, correct continuum for sphericity, 
 	 * after return, radius is equal to the inner radius, not outer radius
 	 * of this zone */
@@ -308,6 +315,13 @@ bool cloudy()
 		ConvInitSolution();
 
 		radius_next();
+
+		/* Make sure fine opacities are set up early */
+		RT_line_all( RT_line_one_fine, true );
+		/* Setting up the fine opacities changes the solution,
+	       so we need find the initial solution again. */
+		ConvInitSolution();
+		RT_line_all( RT_line_one_fine, true );
 	}
 
 	CloseSaveFiles( false );

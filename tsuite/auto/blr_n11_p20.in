@@ -47,7 +47,8 @@ monitor line luminosity "blnd"  1035 6.89 ##total of sum of both O VI comp
 ## >>chng 06 aug 09, from 8.940 to 8.969 Meudon 06, Bowen change
 ## >>chng 13 jul 24, wl from 1216 to 1215.68A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 1215.68A to 1215.67A, update Rydberg constant
-monitor line luminosity "H  1"  1215.67A 8.969 ##total Hydrogen Lyman-alpha 1215.67 
+## >>chng 23 sep 08, from 8.969 to 8.993, fix SQRTPI in Lya destprob
+monitor line luminosity "H  1"  1215.67A 8.993 ##total Hydrogen Lyman-alpha 1215.67 
 ##
 ## >>chng 06 aug 09, from 7.479 to 7.520 Meudon 06, Bowen change
 ## >>chng 06 nov 29, from 7.520 to 7.440, Badnell DR turned on
@@ -72,7 +73,8 @@ monitor line luminosity "blnd"  1240 7.456 ##total of sum of both N V comp
 ## >>chng 13 nov 22, from 7.675 to 7.633, collapsed branch merge r8609
 ## >>chng 16 aug 07, from 7.633 to 7.712, Fran bug fix
 ## >>chng 19 jul 30, from 7.712 to 7.734, split He I 2 ^3P_J
-monitor line luminosity "Blnd" 1397 7.734 ##total of sum of both Si IV comp
+## >>chng 23 sep 08, from 7.734 to 7.697, fix SQRTPI in Lya destprob
+monitor line luminosity "Blnd" 1397 7.697 ##total of sum of both Si IV comp
 ##
 ## >>chng 06 aug 09, from 7.309 to 7.350 Meudon 06, Bowen change
 ## >>chng 06 nov 29, from 7.350 to 7.412, Badnell DR turned on
@@ -167,7 +169,8 @@ monitor line luminosity "he 2"  1640.41A 7.85 ##total He II Balmer-alpha 1640
 ## >>chng 14 mar 26, from 6.971 to 7.016, Move oxygen data to stout and chianti files
 ## >>chng 16 aug 07, from 7.016 to 7.14, Fran bug fix
 ## >>chng 19 jul 30, from 7.14 to 7.185, split He I 2 ^3P_J
-monitor line luminosity "blnd"  1666 7.185 error 0.1
+## >>chng 23 sep 08, from 7.185 to 7.125, fix SQRTPI in Lya destprob
+monitor line luminosity "blnd"  1666 7.125 error 0.1
 ##
 ## >>chng 03 oct 04, from 7.044 to 7.066, atom2 ots
 ## >>chng 04 may 19, from 7.066 to 7.023 RP update helike sequence
@@ -183,7 +186,8 @@ monitor line luminosity "blnd"  1666 7.185 error 0.1
 ## >>chng 13 jul 15, from 6.885 to 6.923, move to Stout/Chianti for Si, botches are due to improved atomic data
 ## >>chng 16 aug 07, from 6.923 to 7.038, Fran bug fix
 ## >>chng 19 aug 06, from 7.038 to 7.083, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
-monitor line luminosity "blnd" 1909 7.083 error 0.1 ## sum of CIII] 1908.73+
+## >>chng 23 sep 08, from 7.083 to 6.996, fix SQRTPI in Lya destprob
+monitor line luminosity "blnd" 1909 6.996 error 0.1 ## sum of CIII] 1908.73+
 ##
 ## >>chng 03 dec 10, from 7.547 to 7.577, dr logic, incr error
 ## >>chng 05 mar 12, from 7.58 to 7.48, RP merge He-like code
@@ -197,7 +201,8 @@ monitor line luminosity "blnd" 1909 7.083 error 0.1 ## sum of CIII] 1908.73+
 ## >>chng 15 nov 16, from 7.286 to 7.158, update Si III, 1888 TP now 3x smaller
 ## >>chng 16 aug 07, from 7.158 to 7.316, Fran bug fix
 ## >>chng 19 jul 30, from 7.316 to 7.359, split He I 2 ^3P_J
-monitor line luminosity "Blnd" 1888 7.359 err 0.1 ##tot sum Si III] 1892+
+## >>chng 23 sep 08, from 7.359 to 7.288, fix SQRTPI in Lya destprob
+monitor line luminosity "Blnd" 1888 7.288 err 0.1 ##tot sum Si III] 1892+
 ##
 ##tot sum both Al III comp
 ## >>chng 03 dec 10, from 6.932 to 6.958, dr logic, incr error
@@ -212,7 +217,8 @@ monitor line luminosity "Blnd" 1888 7.359 err 0.1 ##tot sum Si III] 1892+
 ## >>chng 11 aug 05, from 6.72 to 6.759, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 16 aug 07, from 6.759 to 6.864, Fran bug fix
 ## >>chng 19 jun 28, from 6.864 to 6.912, reintegrate iso_collisions branch
-monitor line luminosity "Blnd"  1860 6.912 err 0.1
+## >>chng 23 sep 08, from 6.912 to 6.849, fix SQRTPI in Lya destprob
+monitor line luminosity "Blnd"  1860 6.849 err 0.1
 ##
 ## >>chng 04 apr 28, from 6.328 to 6.354, He+ - H ct update
 ## >>chng 05 mar 12, from 6.35 to 6.28, RP merge He-like code
@@ -244,7 +250,8 @@ monitor line luminosity "blnd" 2326 5.845 error 0.1 ##total C II] 2324.69 + 2328
 ## >>chng 11 nov 16, from 7.514 to 7.458, adjust newmole monitors
 ## >>chng 14 apr 08, from 7.458 to 7.431, O excit state photo back in
 ## >>chng 16 aug 07, from 7.431 to 7.574, Fran bug fix
-monitor line luminosity "blnd" 2798 7.574 ##total of sum of both Mg II comp
+## >>chng 23 sep 08, from 7.574 to 7.534, fix SQRTPI in Lya destprob
+monitor line luminosity "blnd" 2798 7.534 ##total of sum of both Mg II comp
 ##
 ## >>chng 04 feb 14, from 5 to 6, conv ioniz loop auger
 ## >>chng 04 mar 05, from 6 to 5, improve convergence
@@ -278,7 +285,9 @@ monitor line luminosity "blnd" 2798 7.574 ##total of sum of both Mg II comp
 ## >>chng 14 apr 07, from 6.082 to 4.781, move H/C out of ConvBase loop
 ## >>chng 14 apr 08, from 4.781 to 4.312, O excit state photo back in
 ## >>chng 16 aug 07, from 4.312 to 4.925, Fran bug fix
-monitor itrzn 4.925 erro 0.1 
+## >>chng 24 jan 09, from 4.925 to 4.454, resolve 1 electron Ly doublets
+## >>chng 24 feb 27, from 4.454 to 5.04, Fix escape probability for Ly beta and higher
+monitor itrzn 5.04 erro 0.1
 ##
 ## >>chng from 3 to <5 (actually 4)
 ## >>chng 08 dec 08, from 5 to 4, upper limit -> equals (r2515)
@@ -309,7 +318,9 @@ monitor niter <5
 ## >>chng 19 aug 06, from 411 to 385, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 21 nov 02, from 385 to 390, fix bug with overresolving CS in isoseq, increase for FLT_IS_DBL
 ## >>chng 21 nov 04, from 390 to 408, update mole co data
-monitor nzone 408 
+## >>chng 23 sep 28, from 408 to 345, current npSplit development result
+## >>chng 24 feb 27, from 345 to 402, Fix escape probability for Ly beta and higher
+monitor nzone 402 
 ##
 ## >>chng 14 jul 10, from 1.01 to 4.449, Add monitors for WillsNetzerWills FeII Lines
 ## >>chng 16 mar 23, drop WillsNetzerWills FeII Lines

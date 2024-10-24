@@ -22,7 +22,7 @@ public:
 	{
 		map<string,double>::const_iterator p;
 		for( p = p_constant.begin(); p !=  p_constant.end(); ++p )
-			fprintf( io, "%-20s %.15g\n", (*p).first.c_str(), (*p).second );
+			fprintf( io, "%-20s %.16g\n", (*p).first.c_str(), (*p).second );
 	}
 	double get_constant(const string& s) const
 	{

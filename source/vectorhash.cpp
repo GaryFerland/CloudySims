@@ -34,7 +34,7 @@
 #include <immintrin.h>
 #endif
 
-#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#if ( defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__) ) && !defined(__CYGWIN__)
 #include <unistd.h>
 #else
 #define _POSIX_MAPPED_FILES 0
@@ -88,7 +88,19 @@ inline uint32_t rotl32 ( uint32_t x, int r )
 
 #endif
 
-#ifdef _MSC_VER
+#if defined(__CYGWIN__)
+// _aligned_malloc / _aligned_free defined in Windows, but not Cygwin, reported by Richard Rudy
+inline int posix_memalign(void **p, size_t a, size_t s)
+{
+	*p = aligned_alloc(s, a);
+	return ( *p == NULL ) ? errno : 0;
+}
+
+inline void posix_memalign_free(void *p)
+{
+	free(p);
+}
+#elif defined(_MSC_VER)
 // posix_memalign not defined on windows
 inline int posix_memalign(void **p, size_t a, size_t s)
 {

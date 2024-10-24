@@ -153,7 +153,8 @@ monitor line "Ca B" 4471.49A  0.0455
 ## >>chng 13 jul 30, wl from 4471.47A to 4471.49A, increased wl precision to 6 sig. fig.
 ## >>chng 18 feb 20, updated spectral label from "He 1" 4471.49A to "Blnd" 4472.76A, update He-like triplet labels and wl
 ## >>chng 18 mar 06, wl from 4472.76A to 4471.50A, adjust multiplet Blend WL for refraction index
-monitor line "Blnd" 4471.50A  0.0466
+## >>chng 23 sep 08, from 0.0466 to 0.0445, fix SQRTPI in Lya destprob
+monitor line "Blnd" 4471.50A  0.0445
 ## >>chng 11 feb 08, from 0.0466 to 0.0443, minor changes due to new case B
 ## >>chng 13 feb 12, from 0.0443 to 0.0463, changes due to r7242
 ## >>chng 13 jul 25, wl from 4471 to 4471.49A, increased wl precision to 6 sig. fig.

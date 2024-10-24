@@ -132,12 +132,6 @@ void ParseDont(Parser &p )
 		opac.lgUseFileOpac = false;
 	}
 
-	else if( p.nMatch("FINE") && p.nMatch("OPAC") )
-	{
-		/* no fine opacities */
-		rfield.lgOpacityFine = false;
-	}
-
 	else if( p.nMatch("FINE") )
 	{
 		/* turn off fine structure optical depths */
