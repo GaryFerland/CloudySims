@@ -352,7 +352,8 @@ monitor eden 4.524
 ## >>chng 16 dec 16, error from 0.1 to 0.15 to pass gcc 6.2.0 compiler sim
 ## >>chng 17 may 26, from 3.521 to 3.80, average of gcc/cloudy9 llvm/mac
 ## >>chng 24 jan 09, from 3.8 to 4.319, resolve 1 electron Ly doublets
-monitor itrzn 4.319 error 0.15
+## >>chng 24 oct 24, from 4.319 to 3.596, merge master
+monitor itrzn 3.596 error 0.15
 ## 
 ## >>chng 04 may 19, from <70 to <90 NA update CO mole, addit moles
 ## >>chng 05 dec 22, from 90 to 60 (41), rationalize zone asserts
