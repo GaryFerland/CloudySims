@@ -1,5 +1,5 @@
 This lists those who have contributed to the development of Cloudy.  This list is incomplete.
-If we have overlooked you please contact Gary Ferland at gary at pa dot uky dot edu
+If we have overlooked you please contact Gary Ferland at gary at g dot uky dot edu
 
 - Nick Abel
 - Yago Ascasibar
@@ -7,6 +7,7 @@ If we have overlooked you please contact Gary Ferland at gary at pa dot uky dot 
 - Kevin Blagrave
 - Bob Carswell
 - Marios Chatzikos
+- Priyanka Chakraborty
 - Steve Cota
 - Torsten Elwert
 - Jason Ferguson
@@ -20,6 +21,7 @@ If we have overlooked you please contact Gary Ferland at gary at pa dot uky dot 
 - Peter Martin
 - Humeshkar Nemala
 - Ryan Porter
+- Arnab Sakar
 - Joshua Schlueter
 - Gargi Shaw
 - Peter van Hoof
