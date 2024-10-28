@@ -585,82 +585,56 @@ void IterStart()
 	hmi.h2dtot = 0.;
 	timesc.sound = 0.;
 
-	string label;
-	realnum	wvlng;
-
-	if( LineSave.lgNormSet )
-	{
-		label = LineSave.chNormLab;
-		wvlng = LineSave.WavLNorm;
-	}
-	else
-	{
-		label = "H  1";
-		wvlng = Hbeta_WavLen;
-	}
-	LineSave.ipNormWavL = LineSave.findline( LineID(label, wvlng) );
-	if( LineSave.ipNormWavL < 0 )
+	LineSave.ipNormLine = LineSave.findline(LineSave.NormLine);
+	if( LineSave.ipNormLine < 0 )
 	{
 		/* did not find the line if return is negative */
 		fprintf( ioQQQ, "PROBLEM could not find the normalisation line.\n");
-		fprintf( ioQQQ, "IterStart could not find the line \t" );
-		prt_line_err( ioQQQ,  label, wvlng );
+		fprintf( ioQQQ, "IterStart could not find the line: %s", LineSave.NormLine.str().c_str() );
 		fprintf( ioQQQ, "Please check the emission line output to find the correct line identification.\n");
 		fprintf( ioQQQ, "Sorry.\n");
-		LineSave.ipNormWavL = 0;
+		LineSave.ipNormLine = 0;
 		fprintf( ioQQQ, "Setting normalisation line to first line in stack, and proceeding.\n");
 	}
 
 	/* set up stop line command on first iteration 
-	 * find index for lines and save for future iterations 
-	 * StopCalc.nstpl is zero (false) if no stop line commands entered */
-	if( iteration == 1 && StopCalc.nstpl )
+	 * find index for lines and save for future iterations */
+	if( iteration == 1 )
 	{
-		/* nstpl is number of stop line commands, 0 if none entered */
-		for( long int nStopLine=0; nStopLine < StopCalc.nstpl; nStopLine++ )
+		for( auto& p : StopCalc.sle )
 		{
 			double relint, absint ;
 
 			/* returns array index for line in array stack if we found the line, 
 			 * return negative of total number of lines as debugging aid if line not found */
-			StopCalc.ipStopLin1[nStopLine] = cdLine( StopCalc.chStopLabel1[nStopLine], 
-				/* wavelength of line in angstroms, not format printed by code */
-				StopCalc.StopLineWl1[nStopLine], &relint, &absint );
+			p.ipStopLine1 = cdLine( p.line1, &relint, &absint );
 
-			if( StopCalc.ipStopLin1[nStopLine]<0 )
+			if( p.ipStopLine1 < 0 )
 			{
 				fprintf( ioQQQ, 
 					" IterStart could not find first line in STOP LINE command, line number %ld: ",
-					StopCalc.ipStopLin1[nStopLine] );
-				prt_line_err( ioQQQ, StopCalc.chStopLabel1[nStopLine],
-						 StopCalc.StopLineWl1[nStopLine] );
+						 p.ipStopLine1 );
+				prt_line_err( ioQQQ, p.line1 );
 				cdEXIT(EXIT_FAILURE);
 			}
 
-			StopCalc.ipStopLin2[nStopLine] = cdLine( StopCalc.chStopLabel2[nStopLine], 
-				/* wavelength of line in angstroms, not format printed by code */
-				StopCalc.StopLineWl2[nStopLine], &relint, &absint );
+			p.ipStopLine2 = cdLine( p.line2, &relint, &absint );
 
-			if( StopCalc.ipStopLin2[nStopLine] < 0 )
+			if( p.ipStopLine2 < 0 )
 			{
 				fprintf( ioQQQ, 
 					" IterStart could not find second line in STOP LINE command, line number %ld: ", 
-					StopCalc.ipStopLin2[nStopLine] );
-				prt_line_err( ioQQQ, StopCalc.chStopLabel2[nStopLine],
-						 StopCalc.StopLineWl2[nStopLine] );
+						 p.ipStopLine2 );
+				prt_line_err( ioQQQ, p.line2 );
 				cdEXIT(EXIT_FAILURE);
 			}
 
 			if( trace.lgTrace )
 			{
-				fprintf( ioQQQ, 
-					" stop line 1 is number %5ld label is %s\n", 
-					StopCalc.ipStopLin1[nStopLine], 
-							LineSave.lines[StopCalc.ipStopLin1[nStopLine]].label().c_str());
-				fprintf( ioQQQ, 
-					" stop line 2 is number %5ld label is %s\n", 
-				  StopCalc.ipStopLin2[nStopLine], 
-							LineSave.lines[StopCalc.ipStopLin2[nStopLine]].label().c_str());
+				fprintf( ioQQQ, " stop line 1 is number %5ld label is %s\n", 
+						 p.ipStopLine1, LineSave.lines[p.ipStopLine1].label().c_str() );
+				fprintf( ioQQQ, " stop line 2 is number %5ld label is %s\n", 
+						 p.ipStopLine2, LineSave.lines[p.ipStopLine2].label().c_str() );
 			}
 		}
 	}

@@ -293,9 +293,7 @@ string TransitionProxy::chLabel() const
 
 	/* NB this function is profoundly slow due to sprintf statement
 	 * also - it cannot be evaluated within a write statement itself*/
-	string chWavLen;
-	sprt_wl(chWavLen, WLAng());
-	return chSpecies + " " + chWavLen;
+	return chSpecies + " " + twav().sprt_wl();
 }
 
 /*PutCS enter a collision strength into an individual line vector */
@@ -382,17 +380,17 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	 * since xIntensity is used here */
 	xIntensity_in = xIntensity*t.Emis().FracInwd();
 	ASSERT( xIntensity_in>=0. );
-	if( lgIsM1Line(t) )
-		linadd(xIntensity_in,t.WLAng(),"Inwd M1",'i',chComment);
+	if( lgIsM1Line(t) )	
+		linadd(xIntensity_in,t.twav(),"Inwd M1",'i',chComment);
 	else
-		linadd(xIntensity_in,t.WLAng(),"Inwd",'i',chComment);
+		linadd(xIntensity_in,t.twav(),"Inwd",'i',chComment);
 	
 	/* cooling part of line */
 	other = t.Coll().cool();
 	if( lgIsM1Line(t) )
-		linadd(other,t.WLAng(),"Coll M1",'i',chComment);
+		linadd(other,t.twav(),"Coll M1",'i',chComment);
 	else
-		linadd(other,t.WLAng(),"Coll",'i',chComment);
+		linadd(other,t.twav(),"Coll",'i',chComment);
 	
 	/* fluorescent excited part of line */
 	double radiative_branching;
@@ -421,18 +419,17 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	}
 
 	other = (*t.Lo()).Pop() * t.Emis().pump() * radiative_branching * t.EnergyErg();
-        if( lgIsM1Line(t) )
-		linadd(other,t.WLAng(),"Pump M1",'i',chComment);
+	if( lgIsM1Line(t) )
+		linadd(other,t.twav(),"Pump M1",'i',chComment);
 	else
-		linadd(other,t.WLAng(),"Pump",'i',chComment);
-		
+		linadd(other,t.twav(),"Pump",'i',chComment);
 
 	/* heating part of line */
 	other = t.Coll().heat();
 	if( lgIsM1Line(t) )
-		linadd(other,t.WLAng(),"Heat M1",'i',chComment);
+		linadd(other,t.twav(),"Heat M1",'i',chComment);
 	else
-		linadd(other,t.WLAng(),"Heat",'i',chComment);
+		linadd(other,t.twav(),"Heat",'i',chComment);
 
 	return;
 }
@@ -461,7 +458,7 @@ void TransitionProxy::Junk() const
 	DEBUG_ENTRY( "TransitionProxy::Junk()" );
 
 		/* wavelength, usually in A, used for printout */
-	WLAng() = -FLT_MAX;
+	WLangVac() = -FLT_MAX;
 
 	/* transition energy in wavenumbers */
 	EnergyWN() = -FLT_MAX;

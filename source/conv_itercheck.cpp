@@ -183,19 +183,19 @@ void ConvIterCheck( void )
 							
 							/* for iterate to convergence, print reason why it was not converged
 							 * on 3rd and higher iterations */
-							sprintf( conv.chNotConverged, "database %s %.1f",
-										dBaseSpecies[ipSpecies].chLabel ,
-										(*tr).WLAng() );
+							sprintf( conv.chNotConverged, "database %s %s",
+									 dBaseSpecies[ipSpecies].chLabel,
+									 tr->twav().sprt_wl().c_str() );
 							
 							if( save.lgPunConv )
 							{
 								lgReasonGiven = true;
-								fprintf( save.ipPunConv, " database  %s %.1f iteration %li old %.3e new %.3e \n",
-											dBaseSpecies[ipSpecies].chLabel ,
-											(*tr).WLAng(),
-											iteration,
-											(*tr).Emis().TauTot() ,
-											(*tr).Emis().TauIn());
+								fprintf( save.ipPunConv, " database  %s %s iteration %li old %.3e new %.3e \n",
+										 dBaseSpecies[ipSpecies].chLabel,
+										 tr->twav().sprt_wl().c_str(),
+										 iteration,
+										 (*tr).Emis().TauTot() ,
+										 (*tr).Emis().TauIn());
 							}
 						}
 					}

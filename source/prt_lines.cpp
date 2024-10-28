@@ -39,15 +39,15 @@ STATIC void getTransition(const LineID& line, TransitionProxy& tr)
 		long id = LineSave.findline(line);
 		if( id <= 0 )
 		{
-			fprintf( ioQQQ, "getTransition: the following line was not found: \"%s\" %.3f\n",
-					 line.chLabel.c_str(), line.wave );
+			fprintf( ioQQQ, "getTransition: the following line was not found: \"%s\" %s\n",
+					 line.chLabel().c_str(), line.twav().sprt_wl().c_str() );
 			cdEXIT(EXIT_FAILURE);
 		}
 		tr = LineSave.lines[id].getTransition();
 		if( !tr.associated() )
 		{
-			fprintf( ioQQQ, "getTransition: the following line is not associated with a transition: \"%s\" %.3f\n",
-					 line.chLabel.c_str(), line.wave );
+			fprintf( ioQQQ, "getTransition: the following line is not associated with a transition: \"%s\" %s\n",
+					 line.chLabel().c_str(), line.twav().sprt_wl().c_str() );
 			cdEXIT(EXIT_FAILURE);
 		}
 	}
@@ -129,7 +129,7 @@ void lines()
 	 * these are lines that are not transferred otherwise,
 	 * in following routines there will be pairs of calls, first to
 	 * PntForLine to get pointer, then lindst to add to stack */
-	PntForLine(0.,"FILL",&i);
+	PntForLine(0_vac,"FILL",&i);
 
 	/* evaluate rec coefficient for rec lines of C, N, O
 	 * some will be used in LineSet2 and then zeroed out,
@@ -137,16 +137,16 @@ void lines()
 	t_ADfA::Inst().rec_lines(phycon.te,LineSave.RecCoefCNO);
 
 	/* put in something impossible in element 0 of line stack */
-	linadd(0.f,0,"zero",'i' , "null placeholder");
+	linadd(0.f,0_vac,"zero",'i' , "null placeholder");
 
 	/* this is compared with true volume in final.  The number can't
 	 * actually be unity since this would overflow on a 32 bit machine */
 	/* integrate the volume as a sanity check */
-	linadd( 1.e-10 , 1 , "Unit" , 'i' , "unit integration placeholder");
+	linadd( 1.e-10 , 1_vac, "Unit" , 'i' , "unit integration placeholder");
 	static long int ipOneAng=-1;
 	if( LineSave.ipass<0 )
 		ipOneAng = ipoint( RYDLAM );
-	lindst( 1.e-10 , 1. , "UntD" , ipOneAng , 'i' , false,"unit integration placeholder");
+	lindst( 1.e-10 , 1_vac , "UntD" , ipOneAng , 'i' , false,"unit integration placeholder");
 
 	/* initial set of general properties */
 	lines_general();
@@ -169,8 +169,7 @@ void lines()
 
 	/* next come the extra Lyman lines */
 	i = StuffComment( "extra Lyman" );
-	linadd( 0., (realnum)i , "####", 'i' ,
-			  "extra Lyman lines");
+	linadd( 0., t_vac(i), "####", 'i' , "extra Lyman lines");
 	
 	long ipISO = ipH_LIKE;
 
@@ -232,13 +231,13 @@ void lines()
 					double relint, absint;
 
 					if( cdLine("He 1", 
-						iso_sp[ipHE_LIKE][ipHELIUM].trans(ipHi,ipLo).WLAng(),
-						&relint, &absint ) )
+							   iso_sp[ipHE_LIKE][ipHELIUM].trans(ipHi,ipLo).twav(),
+							   &relint, &absint ) )
 					{
 						//iso_sp[ipHE_LIKE][ipHELIUM].trans(ipHi,ipLo).Hi()->chLabel
 
-						//if( iso_sp[ipHE_LIKE][ipHELIUM].trans(ipHi,ipLo).WLAng() < 1.1E4 &&
-						//	iso_sp[ipHE_LIKE][ipHELIUM].trans(ipHi,ipLo).WLAng() > 3.59E3 &&
+						//if( iso_sp[ipHE_LIKE][ipHELIUM].trans(ipHi,ipLo).WLangVac() < 1.1E4 &&
+						//	iso_sp[ipHE_LIKE][ipHELIUM].trans(ipHi,ipLo).WLangVac() > 3.59E3 &&
 						//	ipLo!=3 && ipLo!=4 && relint >= 0.0009 )
 						long n=iso_sp[ipHE_LIKE][ipHELIUM].st[ipHi].n();
 						long np=iso_sp[ipHE_LIKE][ipHELIUM].st[ipLo].n();
@@ -257,7 +256,7 @@ void lines()
 								iso_sp[ipHE_LIKE][ipHELIUM].st[ipLo].n(),
 								iso_sp[ipHE_LIKE][ipHELIUM].st[ipLo].l(),
 								iso_sp[ipHE_LIKE][ipHELIUM].st[ipLo].S(),
-								iso_sp[ipHE_LIKE][ipHELIUM].trans(ipHi,ipLo).WLAng(),
+								iso_sp[ipHE_LIKE][ipHELIUM].trans(ipHi,ipLo).WLangVac(),
 								relint );
 						}
 					}
@@ -278,8 +277,8 @@ void lines()
 
 	/* external database lines */
 	i = StuffComment( "database lines" );
-	linadd( 0., (realnum)i , "####", 'i' ,
-		"database lines");
+	linadd( 0., t_vac(i), "####", 'i', "database lines");
+
 	for (int ipSpecies=0; ipSpecies < nSpecies; ++ipSpecies)
 	{
 		for( EmissionList::iterator em=dBaseTrans[ipSpecies].Emis().begin();
@@ -303,16 +302,14 @@ void lines()
 
 	/* level 1 lines */
 	ipnt = StuffComment( "level 1 lines" );
-	linadd( 0., (realnum)ipnt , "####", 'i',
-		"start level 1 lines" );
+	linadd( 0., t_vac(ipnt), "####", 'i', "start level 1 lines" );
 
 	/* do iron Ka */
 	lines_iron_Ka();
 
 	/* next come some recombination lines */
 	i = StuffComment( "recombination" );
-	linadd( 0., (realnum)i , "####", 'i' ,
-		"recombination lines");
+	linadd( 0., t_vac(i), "####", 'i', "recombination lines");
 
 	/***********************************************************************
 	 * large number of C, N, and O recombination lines                     *
@@ -354,15 +351,14 @@ void lines()
 			f2 = 0.;
 		}
 		/* stuff it into the stack */
-		PntForLine(LineSave.RecCoefCNO[2][i], chLabel.c_str(), &ipnt);
-		lindst(f2,wlAirVac(LineSave.RecCoefCNO[2][i]), chLabel.c_str(), ipnt, 'r', true,
+		PntForLine(t_air(LineSave.RecCoefCNO[2][i]), chLabel.c_str(), &ipnt);
+		lindst(f2,t_air(LineSave.RecCoefCNO[2][i]), chLabel.c_str(), ipnt, 'r', true,
 			"recombination line");
 	}
 
 	/* next come the atom_level2 lines */
 	i = StuffComment( "level2 lines" );
-	linadd( 0., (realnum)i , "####", 'i' ,
-		"level2 lines");
+	linadd( 0., t_vac(i), "####", 'i' , "level2 lines");
 
 	/* add in all the other level 2 wind lines
 	 * Dima's 6k lines */
@@ -386,11 +382,10 @@ void lines()
 
 	/* next come the hyperfine structure lines */
 	i = StuffComment( "hyperfine structure" );
-	linadd( 0., (realnum)i , "####", 'i' ,
-		"hyperfine structure lines");
+	linadd( 0., t_vac(i), "####", 'i', "hyperfine structure lines");
 
 	/* this is total cooling due to all HF lines */
-	linadd( hyperfine.cooling_total, 0., "hfin", 'i' ,
+	linadd( hyperfine.cooling_total, 0_vac, "hfin", 'i' ,
 		"total cooling all hyperfine structure lines");
 
 	/* remember largest local cooling for possible printout in comments */
@@ -405,8 +400,7 @@ void lines()
 
 	/* next come the inner shell fluorescent lines */
 	i = StuffComment( "inner shell" );
-	linadd( 0., (realnum)i , "####", 'i' ,
-		"inner shell lines");
+	linadd( 0., t_vac(i), "####", 'i', "inner shell lines");
 
 	// Opacity Project satellite lines from data / UTA
 	// the heat component of these lines is the heat per pump, a constant
@@ -449,7 +443,7 @@ void lines()
 			/* intensity of line */
 			xInten,
 			/* wavelength of line in Angstroms */
-			(realnum)RYDLAM / t_yield::Inst().energy(i),
+			t_vac(RYDLAM / t_yield::Inst().energy(i)),
 			/* label */
 			chLabel.c_str() ,
 			/* continuum array offset for line as set in ipoint */
@@ -470,7 +464,7 @@ void lines()
 	/* blends of other lines */
 	i = StuffComment( "miscellaneous" );
 
-	linadd( 0., (realnum)i , "####", 'i' ,	"miscellaneous");
+	linadd( 0., t_vac(i), "####", 'i', "miscellaneous");
 
 	/* add blends */
 	for( size_t i=0; i < prt.blend.size(); ++i )
@@ -481,10 +475,10 @@ void lines()
 			{
 				string speciesLabel;
 				long nelem, ion;
-				parsespect(prt.blend[i].component[j].chLabel.c_str(), nelem, ion);
+				parsespect(prt.blend[i].component[j].chLabel().c_str(), nelem, ion);
 				if( nelem < 0 || ion <= 0 )
 					// assume molecular species
-					speciesLabel = prt.blend[i].component[j].chLabel;
+					speciesLabel = prt.blend[i].component[j].chLabel();
 				else
 				{
 					char chLabelChemical[10];
@@ -515,7 +509,7 @@ void lines()
 			{
 				for( size_t j=0; j < prt.blend[i].component.size(); ++j )
 					UserBlnd->addComponent(prt.blend[i].component[j]);
-				if( prt.blend[i].wave < 0_r )
+				if( prt.blend[i].wave.wavlVac() < 0_r )
 					UserBlnd->setBlendWavl();
 			}
 		}
@@ -526,8 +520,8 @@ void lines()
 	{
 		double eff = dense.eden*dense.xIonDense[ipCALCIUM][2]*5.4e-21/(phycon.te/
 		  phycon.te10/phycon.te10);
-		PntForLine( 3933., "Ca2R", &ipnt);
-		lindst(eff, 3933., "Ca2R", ipnt, 't', false, "recombination emission" );
+		PntForLine( 3933_air, "Ca2R", &ipnt);
+		lindst(eff, 3933_air, "Ca2R", ipnt, 't', false, "recombination emission" );
 	}
 
 	/*** CARBON ***/
@@ -538,13 +532,13 @@ void lines()
 	if( atmdat.lgdBaseSourceExists[ipCARBON][0] )
 	{
 		static TransitionProxy lineCIa;
-		getTransition(LineID("C  1",1657.01), lineCIa);
+		getTransition(LineID("C  1",1657.01_vac), lineCIa);
 		/* >>chng 97 may 02, added better rec coefficient
 		 * C I 1656 recombination, all agents */
 		double rec = LineSave.ipass <= 0 ? 0.0 :
 			GetLineRec(3,1657)*emit_frac(lineCIa);
-		PntForLine( 1656., "C 1R", &ipnt);
-		lindst(rec, 1656., "C 1R", ipnt, 't', false, "recombination" );
+		PntForLine( 1656_vac, "C 1R", &ipnt);
+		lindst(rec, 1656_vac, "C 1R", ipnt, 't', false, "recombination" );
 	}
 
 	/* C 1 9850 */
@@ -568,17 +562,17 @@ void lines()
 		double volEmis = recCoeff*dense.eden*dense.xIonDense[ipCARBON][1]*HC_ERG_ANG/c19850WL;
 
 		static TransitionProxy lineCIb;
-		getTransition(LineID("C  1",9850.26), lineCIb);
+		getTransition(LineID("C  1",9850.26_air), lineCIb);
 		double rec = LineSave.ipass <= 0 ? 0.0 :
 			volEmis*emit_frac(lineCIb); // 9850.26
-		PntForLine( wlAirVac(9850.), "C 1R", &ipnt);
-		lindst(rec, wlAirVac(9850.), "C 1R", ipnt, 't', false, "recombination" );
+		PntForLine( 9850_air, "C 1R", &ipnt);
+		lindst(rec, 9850_air, "C 1R", ipnt, 't', false, "recombination" );
 	}
 
 	/* C 2 2326 */
 	if( atmdat.lgdBaseSourceExists[ipCARBON][1] )
 	{
-		linadd(ionbal.PhotoRate_Shell[ipCARBON][0][1][0]*dense.xIonDense[ipCARBON][0]*0.1*8.6e-12,wlAirVac(2326.),"C 2H",'i' ,
+		linadd(ionbal.PhotoRate_Shell[ipCARBON][0][1][0]*dense.xIonDense[ipCARBON][0]*0.1*8.6e-12,2326_air,"C 2H",'i' ,
 			"photoproduction, Hofmann and Trefftz");
 		// see 1980A&A....82..256H, 1983A&A...126..415H
 	}
@@ -587,14 +581,14 @@ void lines()
 	if( atmdat.lgdBaseSourceExists[ipCARBON][1] )
 	{
 		static TransitionProxy lineCIIa;
-		getTransition(LineID("C  2",1335.71), lineCIIa);
+		getTransition(LineID("C  2",1335.71_vac), lineCIIa);
 
 		/* >>chng 97 may 02, better rec coef */
 		/* >>chng 02 jul 01, add function to return emission probability */
 		double rec = LineSave.ipass <= 0 ? 0.0 :
 			GetLineRec(11,1335)*emit_frac(lineCIIa); // 1335.71
-		PntForLine( 1335., "C 2R", &ipnt);
-		lindst(rec, 1335., "C 2R", ipnt, 't', false, "recombination" );
+		PntForLine( 1335_vac, "C 2R", &ipnt);
+		lindst(rec, 1335_vac, "C 2R", ipnt, 't', false, "recombination" );
 	}
 
 	/* C 2 3920 */
@@ -614,23 +608,23 @@ void lines()
 		}
 
 		// pumped 3920, count as recomb since does remove energy
-		PntForLine(3920.,"C 2P",&ipnt);
-		lindst(pump*0.387 * 5.08e-12/(1.+dense.eden/1e12) ,3920,"C 2P",ipnt,'r',true ,
+		PntForLine(3920_air,"C 2P",&ipnt);
+		lindst(pump*0.387 * 5.08e-12/(1.+dense.eden/1e12) ,3920_air,"C 2P",ipnt,'r',true ,
 			"this is only pumped, no recombination part");
 
 		/* convert UV pump rate to intensity with branching ratio and hnu */
 		pump *= 0.305 * 0.387 * 3.02e-12;
 
-		linadd(pump/(1.+dense.eden/1e12),wlAirVac(6580.),"C 2P",'i',
+		linadd(pump/(1.+dense.eden/1e12),6580_air,"C 2P",'i',
 			"excitation by pumping" );
 
 		static TransitionProxy lineCIIc;
-		getTransition(LineID("C  2",6578.05), lineCIIc);
+		getTransition(LineID("C  2",6578.05_air), lineCIIc);
 		/* C 2 6580 */
 		double rec = LineSave.ipass <= 0 ? 0.0 :
 			GetLineRec(8, 6580 )*emit_frac(lineCIIc);
-		PntForLine( wlAirVac(6580.), "C 2R", &ipnt);
-		lindst(rec/(1.+dense.eden/1e12), wlAirVac(6580.), "C 2R", ipnt, 't', false, "recombination" );
+		PntForLine( 6580_air, "C 2R", &ipnt);
+		lindst(rec/(1.+dense.eden/1e12), 6580_air, "C 2R", ipnt, 't', false, "recombination" );
 	}
 
 	/* C 3 977
@@ -638,29 +632,29 @@ void lines()
 	if( atmdat.lgdBaseSourceExists[ipCARBON][2] )
 	{
 		static TransitionProxy lineCIIIc;
-		getTransition(LineID("C  3",977.020), lineCIIIc);
+		getTransition(LineID("C  3",977.020_vac), lineCIIIc);
 		/* >>chng 02 jul 01, add function to compute emission fraction */
 		double rec = LineSave.ipass <= 0 ? 0.0 :
 			GetLineRec(179,977)*emit_frac(lineCIIIc);
-		PntForLine( 977., "C 3R", &ipnt);
-		lindst(rec, 977., "C 3R", ipnt, 't', false, "dielectronic recombination" );
+		PntForLine( 977_vac, "C 3R", &ipnt);
+		lindst(rec, 977_vac, "C 3R", ipnt, 't', false, "dielectronic recombination" );
 	}
 
 	/* C 3 1909 */
 	if( atmdat.lgdBaseSourceExists[ipCARBON][2] )
 	{
 		static TransitionProxy lineCIII;
-		getTransition(LineID("C  3",1908.73), lineCIII);
+		getTransition(LineID("C  3",1908.73_vac), lineCIII);
 		/* >>chng 02 jul 01, add function to compute emission fraction */
 		double corr =  LineSave.ipass <= 0 ? 0.0 :
 			emit_frac(lineCIII); // 1908.73
 		fac = dense.eden*dense.xIonDense[ipCARBON][3]/(phycon.te/phycon.te10);
 
-		PntForLine( 1909., "C 3R", &ipnt );
-		lindst( 3.1e-19*fac*corr, 1909., "C 3R", ipnt, 't', false,
+		PntForLine( 1909_vac, "C 3R", &ipnt );
+		lindst( 3.1e-19*fac*corr, 1909_vac, "C 3R", ipnt, 't', false,
 			"recombination from Storey" );
 
-		lindst(ionbal.PhotoRate_Shell[ipCARBON][1][1][0]*dense.xIonDense[ipCARBON][1]*0.62*corr*1.05e-11,1909,"C 3H",ipnt,'t',false,
+		lindst(ionbal.PhotoRate_Shell[ipCARBON][1][1][0]*dense.xIonDense[ipCARBON][1]*0.62*corr*1.05e-11,1909_vac,"C 3H",ipnt,'t',false,
 			"production following relax following inner shell photoionization" );
 	}
 
@@ -668,27 +662,27 @@ void lines()
 	if( atmdat.lgdBaseSourceExists[ipCARBON][2] )
 	{
 		static TransitionProxy lineCIIIb;
-		getTransition(LineID("C  3",1175.71), lineCIIIb);
+		getTransition(LineID("C  3",1175.71_vac), lineCIIIb);
 		/* >>chng 97 may 02, better rec ocef */
 		/* >>chng 02 jul 01, add function to compute emission fraction */
 		double rec = LineSave.ipass <= 0 ? 0.0 :
 			GetLineRec(178,1176)*emit_frac(lineCIIIb); // 1175.71
-		PntForLine( 1175., "C 3R", &ipnt );
-		lindst(rec, 1175., "C 3R", ipnt, 't', false, "dielectronic recombination" );
+		PntForLine( 1175_vac, "C 3R", &ipnt );
+		lindst(rec, 1175_vac, "C 3R", ipnt, 't', false, "dielectronic recombination" );
 	}
 
 	/* C 4 1549 */
 	if( atmdat.lgdBaseSourceExists[ipCARBON][3] )
 	{
 		static TransitionProxy lineCIV;
-		getTransition(LineID("C  4",1548.19), lineCIV);
+		getTransition(LineID("C  4",1548.19_vac), lineCIV);
 		/* recombination C 4 1549 from C 5
 		 * >>chng 97 may 02, better rec coef */
 		/* >>chng 02 jul 01, add function to compute emission fraction */
 		double rec = LineSave.ipass <= 0 ? 0.0 :
 			GetLineRec(25,1549)*emit_frac(lineCIV); // 1548.19
-		PntForLine( 1549., "C 4R", &ipnt );
-		lindst(rec, 1549., "C 4R", ipnt, 't', false, "recombination" );
+		PntForLine( 1549_vac, "C 4R", &ipnt );
+		lindst(rec, 1549_vac, "C 4R", ipnt, 't', false, "recombination" );
 	}
 
 	/*** End of Carbon ***/
@@ -720,7 +714,7 @@ void lines()
 		double rec12 = eff_recrate_2D * fac_n1 * 6./10.;
 
 		static TransitionProxy lineNI5199;
-		getTransition(LineID("N  1",5197.90), lineNI5199);
+		getTransition(LineID("N  1",5197.90_air), lineNI5199);
 
 		double emit_frac_5197 = LineSave.ipass <= 0 ? 0.0 : 
 			emit_frac(lineNI5199); // 5197.90
@@ -730,8 +724,8 @@ void lines()
 			3.82e-12*emit_frac_5197;
 
 		/**** Terry's addition **************/
-		PntForLine( wlAirVac(5199.), "N  1", &ipnt);
-		lindst(rec, wlAirVac(5199.), "N 1R", ipnt, 't', true,
+		PntForLine( 5199_air, "N  1", &ipnt);
+		lindst(rec, 5199_air, "N 1R", ipnt, 't', true,
 			"estimate of production by recombination" );
 
 		/* this is upper limit to production of 5200 by chemistry - assume every photo dissociation
@@ -739,14 +733,14 @@ void lines()
 		 * co.nitro_dissoc_rate is the total N photo dissociation rate, cm-3 s-1 */
 		// count as recombination since removes energy but is not coolng
 		double chem = mole.dissoc_rate("N") * 3.82e-12 * emit_frac_5197;
-		lindst( chem, wlAirVac(5199.), "N 1C", ipnt, 'r', true,
+		lindst( chem, 5199_air, "N 1C", ipnt, 'r', true,
 			"upper limit to production by chemistry" );
 
 		/* this is upper limit to production of 5200 by charge transfer -
 		 * atmdat.HCharExcRecTo_N0_2D is the rate coefficient (cm3 s-1) for N+(3P) + H0 -> H+ + N0(2D) */
 		double ctRate = atmdat.HCharExcRecTo_N0_2D*dense.xIonDense[ipHYDROGEN][0]*dense.xIonDense[ipNITROGEN][1] *
 			3.82e-12 * emit_frac_5197;
-		lindst( ctRate, wlAirVac(5199.), "N 1T", ipnt, 'r', true,
+		lindst( ctRate, 5199_air, "N 1T", ipnt, 'r', true,
 			"upper limit to production by charge transfer" );
 
 		//	// estimate of pumping contribution to 5200 doublet
@@ -761,8 +755,8 @@ void lines()
 	/* May be a combination of lines 1D - 3P  */
 	double efficn2 = 4e-3/(4e-3 + 5.18e-6*dense.eden/phycon.sqrte);
 	double rec = 8e-22/(phycon.te70/phycon.te03/phycon.te03)*efficn2;
-	PntForLine( 6584., "N 2R", &ipnt );
-	lindst( rec*dense.xIonDense[ipNITROGEN][2]*dense.eden, 6584., "N 2R", ipnt, 't', false,
+	PntForLine( 6584_air, "N 2R", &ipnt );
+	lindst( rec*dense.xIonDense[ipNITROGEN][2]*dense.eden, 6584_air, "N 2R", ipnt, 't', false,
 		"N 2 6584 alone, recombination" );
 
 	/***********************/
@@ -775,13 +769,13 @@ void lines()
 		double ctRate = 1.8e-11*dense.xIonDense[ipHELIUM][0]*dense.xIonDense[ipNITROGEN][2]*1.146/(1.146 +
 		  0.87*dense.cdsqte)*3.46e-12;
 
-		PntForLine(5755.,"N  2",&ipnt);
+		PntForLine(5755_air,"N  2",&ipnt);
 
-		lindst(ctRate,wlAirVac(5755.),"N 2T",ipnt,'r',true,
+		lindst(ctRate,5755_air,"N 2T",ipnt,'r',true,
 			"charge transfer" );
 
 		static TransitionProxy lineNII5755;
-		getTransition(LineID("N  2",5754.59), lineNII5755);
+		getTransition(LineID("N  2",5754.59_air), lineNII5755);
 
 		/* >>chng 01 jul 09, add recombination contribution to 5755 */
 		/* >>refer	n2	rec	Liu, X.W., Storey, P.J., Barlow, M.J., Danziger, I.J., Cohen, M.,
@@ -814,7 +808,7 @@ void lines()
 			rec = 0.;
 		}
 
-		lindst( rec ,wlAirVac(5755.),"N 2R",ipnt,'t',true, "recombination" );
+		lindst( rec, 5755_air,"N 2R",ipnt,'t',true, "recombination" );
 	}
 
 	/***********************/
@@ -823,14 +817,14 @@ void lines()
 	if( atmdat.lgdBaseSourceExists[ipNITROGEN][1] )
 	{
 		static TransitionProxy lineNII1085;
-		getTransition(LineID("N  2",1085.70), lineNII1085);
+		getTransition(LineID("N  2",1085.70_vac), lineNII1085);
 
 		double rec = LineSave.ipass <= 0 ? 0.0 :
 			GetLineRec(201,1085)*emit_frac(lineNII1085); // 1085.70
 		/* Collisional suppression from emit_frac_db of 1085A may not be accurate.
 		 * It is based on the strongest line in the blend.*/
-		PntForLine( 1085., "N 2R", &ipnt );
-		lindst( MAX2(0.,rec), 1085., "N 2R", ipnt, 't', false, "dielectronic recombination" );
+		PntForLine( 1085_vac, "N 2R", &ipnt );
+		lindst( MAX2(0.,rec), 1085_vac, "N 2R", ipnt, 't', false, "dielectronic recombination" );
 	}
 
 	/***********************/
@@ -839,13 +833,13 @@ void lines()
 	if( atmdat.lgdBaseSourceExists[ipNITROGEN][2] )
 	{
 		static TransitionProxy lineNIIIb;
-		getTransition(LineID("N  3",989.799), lineNIIIb);
+		getTransition(LineID("N  3",989.799_vac), lineNIIIb);
 
 		double rec = LineSave.ipass <= 0 ? 0.0 :
 			GetLineRec(216,991)*emit_frac(lineNIIIb); // 989.799
 
-		PntForLine( 990., "N 3R", &ipnt );
-		lindst(rec, 990., "N 3R", ipnt, 't', false, "recombination" );
+		PntForLine( 990_vac, "N 3R", &ipnt );
+		lindst(rec, 990_vac, "N 3R", ipnt, 't', false, "recombination" );
 	}
 
 	/***********************/
@@ -854,7 +848,7 @@ void lines()
 	if( atmdat.lgdBaseSourceExists[ipNITROGEN][3] )
 	{
 		static TransitionProxy lineNIV765;
-		getTransition(LineID("N  4",765.147), lineNIV765);
+		getTransition(LineID("N  4",765.147_vac), lineNIV765);
 
 		/* >>chng 97 may 02, better expression for dielectronic recombination */
 		/* >>chng 02 jul 01, add function to get emission fraction */
@@ -862,8 +856,8 @@ void lines()
 			GetLineRec(287,765)*emit_frac(lineNIV765); // 765.147
 
 		/* dielectronic recombination contribution from Nussbaumer and Storey 1984 */
-		PntForLine( 765., "N 4R", &ipnt );
-		lindst( MAX2(0.,rec), 765., "N 4R", ipnt, 't', false,
+		PntForLine( 765_vac, "N 4R", &ipnt );
+		lindst( MAX2(0.,rec), 765_vac, "N 4R", ipnt, 't', false,
 			"recombination" );
 	}
 	/*** End of Nitrogen ***/
@@ -887,41 +881,41 @@ void lines()
 		/****** O 2 2471  *****/
 		/*********************/
 		static TransitionProxy lineOII2471a;
-		getTransition(LineID("O  2",2470.22), lineOII2471a);
+		getTransition(LineID("O  2",2470.22_air), lineOII2471a);
 		static TransitionProxy lineOII2471b;
-		getTransition(LineID("O  2",2470.34), lineOII2471b);
+		getTransition(LineID("O  2",2470.34_air), lineOII2471b);
 		/**********************/
 
 		/***********************/
 		/****** O 2 3726  *****/
 		/*********************/
 		static TransitionProxy lineOII3726;
-		getTransition(LineID("O  2",3726.03), lineOII3726);
+		getTransition(LineID("O  2",3726.03_air), lineOII3726);
 		/*********************/
 
 		/***********************/
 		/****** O 2 3728  *****/
 		/*********************/
 		static TransitionProxy lineOII3728;
-		getTransition(LineID("O  2",3728.81), lineOII3728);
+		getTransition(LineID("O  2",3728.81_air), lineOII3728);
 		/********************/
 
 		/***********************/
 		/****** O 2 7323  *****/
 		/*********************/
 		static TransitionProxy lineOII7323a;
-		getTransition(LineID("O  2",7318.92), lineOII7323a);
+		getTransition(LineID("O  2",7318.92_air), lineOII7323a);
 		static TransitionProxy lineOII7323b;
-		getTransition(LineID("O  2",7319.99), lineOII7323b);
+		getTransition(LineID("O  2",7319.99_air), lineOII7323b);
 		/*********************/
 
 		/***********************/
 		/****** O 2 7332  *****/
 		/*********************/
 		static TransitionProxy lineOII7332a;
-		getTransition(LineID("O  2",7329.67), lineOII7332a);
+		getTransition(LineID("O  2",7329.67_air), lineOII7332a);
 		static TransitionProxy lineOII7332b;
-		getTransition(LineID("O  2",7330.73), lineOII7332b);
+		getTransition(LineID("O  2",7330.73_air), lineOII7332b);
 		/*********************/
 
 		/* total recombination to 2P^o, the highest two levels of the 5-level atom,
@@ -1035,10 +1029,10 @@ void lines()
 		}
 
 		rec7332 = reco23tot * chO7332;
-		linadd(rec7332,wlAirVac(7332.),"O 2R",'i',"recombination, P1/2-D3/2 and P3/2-D3/2 together" );
+		linadd(rec7332,7332_air,"O 2R",'i',"recombination, P1/2-D3/2 and P3/2-D3/2 together" );
 
 		rec7323 = reco23tot * chO7323;
-		linadd(rec7323,wlAirVac(7323.),"O 2R",'i',"recombination, P1/2-D5/2 and P3/2-D5/2 together" );
+		linadd(rec7323,7323_air,"O 2R",'i',"recombination, P1/2-D5/2 and P3/2-D5/2 together" );
 
 		/* total recombination to 2D^o, the middle two levels of the 5-level atom,
 		 * which produces the 3727 multiplet, last factor accounts for coll deexcit */
@@ -1061,13 +1055,13 @@ void lines()
 		oxy.s3727 = (realnum)((oxy.s3727 + oxy.s7325*0.5)*5.34e-12*
 		  9.7e-5/(9.7e-5 + dense.eden*1.15e-6/phycon.sqrte));
 
-		linadd(oxy.s3727,3727,"O 2H",'i',"line produced by photoionization of O0" );
+		linadd(oxy.s3727,3727_air,"O 2H",'i',"line produced by photoionization of O0" );
 
-		linadd( rec3726 ,3726,"O 2R",'i',"recombination, D3/2 - S3/2 transition" );
+		linadd( rec3726 ,3726_air,"O 2R",'i',"recombination, D3/2 - S3/2 transition" );
 
-		PntForLine( 3729., "O 2R", &ipnt );
+		PntForLine( 3729_air, "O 2R", &ipnt );
 		// refer	o2	rec	Liu, X-W., Storey, P.J., Barlow, M.J., Danziger, I.J.,refercon	Cohen, M., & Bryce, M., 2000, MNRAS, 312, 585
-		lindst( rec3730 ,3729., "O 2R", ipnt, 't', false,
+		lindst( rec3730 ,3729_air, "O 2R", ipnt, 't', false,
 				"recombination, Liu et al. 2000, MNRAS, 312, 585, D5/2 - S3/2 transition" );
 
 		/***********************/
@@ -1075,7 +1069,7 @@ void lines()
 		/*********************/
 
 		rec2471 = reco23tot * chO2471*2471./7325. * 8.05e-12/2.72e-12;
-		linadd(rec2471,wlAirVac(2471.),"O 2R",'i', "recombination, both 2P 1/2 and 3/2 to ground" );
+		linadd(rec2471,2471_air,"O 2R",'i', "recombination, both 2P 1/2 and 3/2 to ground" );
 
 		/***********************/
 		/****** O 2 7325  *****/
@@ -1084,7 +1078,7 @@ void lines()
 		oxy.s7325 = (realnum)(oxy.s7325*2.72e-12*0.34/(0.34 + dense.eden*
 			  6.04e-6/phycon.sqrte));
 
-		linadd(oxy.s7325,7325,"O 2H",'i',"line produced by photoionization of O0" );
+		linadd(oxy.s7325,7325_air,"O 2H",'i',"line produced by photoionization of O0" );
 
 		/***********************/
 		/****** O 2 P and R ***/
@@ -1103,27 +1097,27 @@ void lines()
 			pump = 0.;
 		}
 
-		PntForLine(3120.,"O  2",&ipnt);
-		lindst(pump*0.336 * 6.37e-12/(1.+dense.eden/1e12) ,3120,"O 2P",ipnt,'r',true,
+		PntForLine(3120_air,"O  2",&ipnt);
+		lindst(pump*0.336 * 6.37e-12/(1.+dense.eden/1e12) ,3120_air,"O 2P",ipnt,'r',true,
 			"OII 3113.62 - 3139.68 (8 lines) are only pumped, no recombination part" );
 
-		PntForLine(3300.,"O  2",&ipnt);
-		lindst(pump*0.147 * 6.03e-12/(1.+dense.eden/1e12) ,3300,"O 2P",ipnt,'r',true,
+		PntForLine(3300_air,"O  2",&ipnt);
+		lindst(pump*0.147 * 6.03e-12/(1.+dense.eden/1e12) ,3300_air,"O 2P",ipnt,'r',true,
 			"OII 3277.56 - 3306.45 (6 lines) are only pumped, no recombination part" );
 
-		PntForLine(3762.,"O  2",&ipnt);
-		lindst(pump*0.087 * 5.29e-12/(1.+dense.eden/1e12) ,3762,"O 2P",ipnt,'r',true,
+		PntForLine(3762_air,"O  2",&ipnt);
+		lindst(pump*0.087 * 5.29e-12/(1.+dense.eden/1e12) ,3762_air,"O 2P",ipnt,'r',true,
 			"OII 3739.76/3762.47/3777.42 (3 lines) are only pumped, no recombination part" );
 
 		/* recombination and specific pump for OII 4638.86-4696.35 (8 lines) */
 		rec = GetLineRec(82, 4651 );
-		PntForLine( 4651.,"O  2",&ipnt);
-		lindst(rec, 4651.,"O 2R",ipnt,'t',true,
+		PntForLine( 4651_air,"O  2",&ipnt);
+		lindst(rec, 4651_air,"O 2R",ipnt,'t',true,
 			"total recombination, 4638.86-4696.35 (8 lines)" );
 
 		/* convert UV pump rate to intensity with branching ratio and hnu recombination
 		 * part of O II 4651 line */
-		linadd(pump* 0.336 * 0.933 * 4.27e-12/(1.+dense.eden/1e12),4651,"O 2P",'i',
+		linadd(pump* 0.336 * 0.933 * 4.27e-12/(1.+dense.eden/1e12),4651_air,"O 2P",'i',
 			"excitation by pumping" );
 
 		/***********************/
@@ -1133,11 +1127,11 @@ void lines()
 		/* recombination and specific pump for OII 4317.14-4366.89 (6 lines) */
 		rec = GetLineRec(83, 4341 );
 
-		PntForLine( wlAirVac(4341.), "O 2R", &ipnt );
-		lindst(rec/(1.+dense.eden/1e12), wlAirVac(4341.), "O 2R", ipnt, 't', false,
+		PntForLine( 4341_air, "O 2R", &ipnt );
+		lindst(rec/(1.+dense.eden/1e12), 4341_air, "O 2R", ipnt, 't', false,
 			"recombination" );
 
-		linadd(pump* 0.147 * 0.661 * 4.58e-12/(1.+dense.eden/1e12),wlAirVac(4341.),"O 2P",'i',
+		linadd(pump* 0.147 * 0.661 * 4.58e-12/(1.+dense.eden/1e12),4341_air,"O 2P",'i',
 			"excitation by pumping" );
 
 		/***********************/
@@ -1147,10 +1141,10 @@ void lines()
 		double rec = GetLineRec(84, 3736 );
 		/* convert UV pump rate to intensity with branching ratio and hnu */
 
-		PntForLine( wlAirVac(3736.), "O 2R", &ipnt );
-		lindst(rec/(1.+dense.eden/1e12), wlAirVac(3736.), "O 2R", ipnt, 't', false,
+		PntForLine( 3736_air, "O 2R", &ipnt );
+		lindst(rec/(1.+dense.eden/1e12), 3736_air, "O 2R", ipnt, 't', false,
 			"recombination" );
-		linadd(pump* 0.087 * 0.763 * 5.33e-12/(1.+dense.eden/1e12),wlAirVac(3736.),"O 2P",'i',
+		linadd(pump* 0.087 * 0.763 * 5.33e-12/(1.+dense.eden/1e12),3736_air,"O 2P",'i',
 			   "excitation by pumping" );
 	}
 
@@ -1160,9 +1154,9 @@ void lines()
 	if( atmdat.lgdBaseSourceExists[ipOXYGEN][2] )
 	{
 		static TransitionProxy lineOIII1666a;
-		getTransition(LineID("O  3",1666.15), lineOIII1666a);
+		getTransition(LineID("O  3",1666.15_vac), lineOIII1666a);
 		static TransitionProxy lineOIII1666b;
-		getTransition(LineID("O  3",1660.81), lineOIII1666b);
+		getTransition(LineID("O  3",1660.81_vac), lineOIII1666b);
 
 		double efac = 0.0;
 		if (LineSave.ipass > 0)
@@ -1170,10 +1164,10 @@ void lines()
 			efac = (emit_frac(lineOIII1666a) + emit_frac(lineOIII1666b))*0.5;
 		}
 			
-		linadd(ionbal.PhotoRate_Shell[ipOXYGEN][3][1][0]*dense.xIonDense[ipOXYGEN][1]*0.3*1.20e-11*efac,1665,"O 3H",'i',
+		linadd(ionbal.PhotoRate_Shell[ipOXYGEN][3][1][0]*dense.xIonDense[ipOXYGEN][1]*0.3*1.20e-11*efac,1665_vac,"O 3H",'i',
 			"due to inner shell (2s^2) ionization" );
 
-		linadd(oxy.AugerO3*1.20e-11*efac*0.27,1665,"O 3A",'i',
+		linadd(oxy.AugerO3*1.20e-11*efac*0.27,1665_vac,"O 3A",'i',
 				"due to K-shell ionization" );
 	}
 
@@ -1183,7 +1177,7 @@ void lines()
 	if( atmdat.lgdBaseSourceExists[ipOXYGEN][2] )
 	{
 		static TransitionProxy lineOIII5007;
-		getTransition(LineID("O  3",5006.84), lineOIII5007);
+		getTransition(LineID("O  3",5006.84_air), lineOIII5007);
 
 		/* o iii 5007+4959, As 96 NIST */
 		/*The cs of the transitions 3P0,1,2 to 1D2 are added together to give oiii_cs3P1D2 */
@@ -1199,7 +1193,7 @@ void lines()
 			d5007t += (realnum)(tr.Emis().xObsIntensity()*oxy.d5007r/aeff);
 		}
 
-		linadd(d5007t/1.25,5007,"LOST",'i',"O III 5007 lost through excited state photo");
+		linadd(d5007t/1.25,5007_air,"LOST",'i',"O III 5007 lost through excited state photo");
 	}
 
 	/***********************/
@@ -1240,12 +1234,12 @@ void lines()
 		double ct4363 = phycon.sqrte*1.3e-12*4.561e-12*dense.xIonDense[ipHYDROGEN][0]*dense.xIonDense[ipOXYGEN][3]*
 		  effec;
 
-		PntForLine(4363.,"O  3",&ipnt);
+		PntForLine(4363_air,"O  3",&ipnt);
 
-		lindst(r4363,wlAirVac(4363.),"O 3R",ipnt,'t',true,
+		lindst(r4363,4363_air,"O 3R",ipnt,'t',true,
 			"recombination, coefficient from Burgess and Seaton" );
 
-		linadd(ct4363,wlAirVac(4363.),"O 3C",'i' ,
+		linadd(ct4363,4363_air,"O 3C",'i' ,
 			"charge exchange, Dalgarno+Sternberg ApJ Let 257, L87");
 	}
 
@@ -1255,7 +1249,7 @@ void lines()
 	if( atmdat.lgdBaseSourceExists[ipOXYGEN][2] )
 	{
 		linadd(dense.xIonDense[ipHYDROGEN][0]*dense.xIonDense[ipOXYGEN][3]*0.225*3.56e-12*1.34e-11*phycon.sqrte,
-				wlAirVac(5592.),"O 3C",'i',"charge exchange rate, D+S" );
+				5592_air,"O 3C",'i',"charge exchange rate, D+S" );
 	}
 
 	/***********************/
@@ -1264,13 +1258,13 @@ void lines()
 	if( atmdat.lgdBaseSourceExists[ipOXYGEN][2] )
 	{
 		static TransitionProxy lineOIII835;
-		getTransition(LineID("O  3",835.059), lineOIII835);
+		getTransition(LineID("O  3",835.059_vac), lineOIII835);
 
 		/* >>chng 97 may 02, better rec contribution */
 		double rec = LineSave.ipass <= 0 ? 0.0 : GetLineRec(331,835)*emit_frac(lineOIII835);
 
-		PntForLine( 835., "O 3R", &ipnt );
-		lindst(MAX2(0.,rec), 835., "O 3R", ipnt, 't', false, "dielectronic recombination only" );
+		PntForLine( 835_vac, "O 3R", &ipnt );
+		lindst(MAX2(0.,rec), 835_vac, "O 3R", ipnt, 't', false, "dielectronic recombination only" );
 	}
 
 	/***********************/
@@ -1278,7 +1272,7 @@ void lines()
 	/*********************/
 	if( atmdat.lgdBaseSourceExists[ipOXYGEN][3] )
 	{
-		linadd(ionbal.PhotoRate_Shell[ipOXYGEN][2][1][0]*dense.xIonDense[ipOXYGEN][2]*0.43*1.42e-11,1401,"O 4H",'i',
+		linadd(ionbal.PhotoRate_Shell[ipOXYGEN][2][1][0]*dense.xIonDense[ipOXYGEN][2]*0.43*1.42e-11,1401_vac,"O 4H",'i',
 				"inner shell photoionization, relaxation" );
 	}
 
@@ -1288,12 +1282,12 @@ void lines()
 	if( atmdat.lgdBaseSourceExists[ipOXYGEN][3] )
 	{
 		static TransitionProxy lineOIV789;
-		getTransition(LineID("O  4",790.201), lineOIV789);
+		getTransition(LineID("O  4",790.201_vac), lineOIV789);
 
 		/* >>chng 97 may 02, better rec contribution */
 		double rec = LineSave.ipass <= 0 ? 0.0 : GetLineRec(378,789)*emit_frac(lineOIV789);
-		PntForLine( 789., "O 4R", &ipnt );
-		lindst(MAX2(0.,rec), 789., "O 4R", ipnt, 't', false, "dielectronic recombination only" );
+		PntForLine( 789_vac, "O 4R", &ipnt );
+		lindst(MAX2(0.,rec), 789_vac, "O 4R", ipnt, 't', false, "dielectronic recombination only" );
 	}
 
 	/***********************/
@@ -1302,13 +1296,13 @@ void lines()
 	if( atmdat.lgdBaseSourceExists[ipOXYGEN][4] )
 	{
 		static TransitionProxy lineOV630;
-		getTransition(LineID("O  5",629.732), lineOV630);
+		getTransition(LineID("O  5",629.732_vac), lineOV630);
 
 		/* >>chng 97 may 02, better rec contribution */
 		double rec = LineSave.ipass <= 0 ? 0.0 : GetLineRec(466,630)*emit_frac(lineOV630);
 
-		PntForLine( 630., "O 5R", &ipnt );
-		lindst(MAX2(0.,rec), 630., "O 5R", ipnt, 't', false,
+		PntForLine( 630_vac, "O 5R", &ipnt );
+		lindst(MAX2(0.,rec), 630_vac, "O 5R", ipnt, 't', false,
 			"dielectronic recombination only" );
 	}
 
@@ -1320,7 +1314,7 @@ void lines()
 	if( LineSave.ipass > 0 )
 		LineSave.lines[LineSave.nsum].SumLineZero();
 	/* optional sum of certain emission lines, set with "print sum" */
-	linadd(sum/radius.dVeffAper,0,"Stoy",'i' ,
+	linadd(sum/radius.dVeffAper,0_vac,"Stoy",'i' ,
 		"Stoy method energy sum");
 
 	/* >>chng 06 jan 03, confirm that number of lines never changes once we have
@@ -1379,7 +1373,7 @@ STATIC void lines_iron_Ka()
 		fprintf( ioQQQ, "   lines_iron_Ka called\n" );
 	}
 
-	linadd(fe.fegrain*1.03e-8,1.75,"FeKG",'i' ,
+	linadd(fe.fegrain*1.03e-8,1.75_vac,"FeKG",'i' ,
 		"grain production of cold iron");
 
 	if( trace.lgTrace )

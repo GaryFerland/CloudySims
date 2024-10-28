@@ -140,7 +140,7 @@ TransitionList::iterator findTrans_byQuantNumb(
  * \return	pointer to transition in species list of transitions. If no match is
  * 		found, return value is past the end of the entire list.
  */
-TransitionList::iterator findTrans_byWLAng( string speciesLabel, const double wl_Ang,
+TransitionList::iterator findTrans_byWLAng( string speciesLabel, const t_wavl& wl_Ang,
 			double &wl_err );
 
 

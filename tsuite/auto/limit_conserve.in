@@ -126,7 +126,7 @@ monitor line "Q(H)" 4861.32A 0.6617
 ## >>chng 13 jul 24, wl from 1216 to 1215.68A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 1215.68A to 1215.67A, update Rydberg constant
 ## >>chng 23 jun 27, from -4.653 to -4.628, update Fe+ model to Smyth+19
-monitor line "H  1" luminosity 1215.67A -4.628
+monitor line "H  1" 1215.67A luminosity -4.628
 ##
 ## >>chng 01 may 10, from 26.7 to 28.19 ct network change
 ## >>chng 02 nov 20, change to luminosity
@@ -150,7 +150,7 @@ monitor line "H  1" luminosity 1215.67A -4.628
 ## >>chng 15 jun 03, from -5.25 to -5.122, exact LTE H2 cooling (not big model)
 ## >>chng 16 mar 26, from -5.122 to -5.145, merge branch feii, new bands logic
 ## >>chng 23 jul 06, from -5.145 to -5.168, update Fe+ model to Smyth+19
-monitor line "Si 2" luminosity 34.8046m -5.168
+monitor line "Si 2" 34.8046m luminosity -5.168
 ##
 ## >>chng 01 jun 15, from 18.2 to 19.25 full H ct network
 ## >>chng 02 apr 03, from 19.25 to 14.09, bound compton

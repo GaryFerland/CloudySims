@@ -697,11 +697,11 @@ void iso_radiative_recomb_effective( long ipISO, long nelem )
 				if( (( L_(ipLo) == L_(ipHi) + 1 ) || ( L_(ipHi) == L_(ipLo) + 1 )) )
 				{	
 					double EnergyInRydbergs = iso_sp[ipISO][nelem].fb[ipLo].xIsoLevNIonRyd - iso_sp[ipISO][nelem].fb[ipHi].xIsoLevNIonRyd;
-					realnum wavelength = (realnum)(RYDLAM/MAX2(1E-8,EnergyInRydbergs));
+					t_wavl twav = t_vac(RYDLAM/MAX2(1E-8,EnergyInRydbergs));
 					double emissivity = iso_sp[ipISO][nelem].fb[ipHi].RadEffec * iso_sp[ipISO][nelem].BranchRatio[ipHi][ipLo] * EN1RYD * EnergyInRydbergs;
 					double sigma_emiss = 0., SigmaBranchRatio = 0.;
 
-					if( ( emissivity > 2.E-29 ) && ( wavelength < 1.E6 ) && (N_(ipHi)<=5) )
+					if( ( emissivity > 2.E-29 ) && ( twav.wavlVac() < 1.E6 ) && (N_(ipHi)<=5) )
 					{
 						SigmaBranchRatio = iso_sp[ipISO][nelem].BranchRatio[ipHi][ipLo] * sqrt(
 							pow2( (double)iso_sp[ipISO][nelem].ex[ipHi][ipLo].Error[IPRAD] ) +
@@ -713,7 +713,7 @@ void iso_radiative_recomb_effective( long ipISO, long nelem )
 
 						/* \todo 2 make this a trace option */
 						dprintf( ioQQQ, "%li\t%li\t", ipHi, ipLo );
-						prt_wl( ioQQQ, wavelength );
+						twav.prt_wl(ioQQQ);
 						fprintf( ioQQQ, "\t%e\t%e\t%e\t%e\t%e\t%e\n", 
 							emissivity,
 							sigma_emiss,

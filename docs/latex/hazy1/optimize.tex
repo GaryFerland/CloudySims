@@ -293,7 +293,7 @@ optimize luminosity 34.8
 This commands allows you to optimize an observed continuum flux or surface brightness at an
 arbitrary wavelength. Note that both the keywords \cdCommand{continuum} and
 \cdCommand{flux} need to be present on the command line. The first parameter
-must be the wavelength or frequency of the observation. The syntax for this
+must be the vacuum wavelength or frequency of the observation. The syntax for this
 parameter is exactly the same as for the \cdCommand{set nFnu add} command
 described in Section~\ref{sec:set:nfnu:add}. The code will implicitly behave
 as if a \cdCommand{set nFnu add} command had been given to add the requested
@@ -330,7 +330,7 @@ command line.
 A continuum flux can be specified as an upper limit by entering
 $<$ anywhere on the line after column 4.
 
-For wavelengths longer than 1~mm this command is counted in the
+For wavelengths longer than 1\,mm this command is counted in the
 absolute flux category, for shorter wavelengths in the photometry category (see
 Section~\ref{sec:conv:criteria}). This distinction is useful so that you can
 use a radio continuum flux measurement (e.g.\ at 6~cm) as a replacement for

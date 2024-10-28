@@ -8,7 +8,7 @@ class LinSv;
 
 LinSv *linadd(
   double xInten,
-  realnum wavelength,
+  t_wavl wavelength,
   const char *chLab,
   char chInfo ,	
   const char *chComment );
@@ -31,7 +31,7 @@ void outline_base_bin(bool lgTransStackLine, long int ip, double phots, realnum 
 \param *chComment string explaining line 
 */
 void lindst(double xInten,
-  realnum wavelength, 
+  t_wavl wavelength, 
   const char *chLab, 
   long int ipnt, 
   char chInfo, 
@@ -52,7 +52,7 @@ void lindst(double xInten,
 void lindst(double dampXvel,
   double damp,
   double xInten,
-  realnum wavelength,
+  t_wavl wavelength,
   const char *chLab,
   long int ipnt,
   char chInfo,
@@ -97,7 +97,7 @@ double emergent_line(
 \param *ipnt this is array index on the f, not c scale,
    for the continuum cell holding the line
 */
-void PntForLine(double wavelength, 
+void PntForLine(t_wavl wavelength, 
   const char *chLabel, 
   long int *ipnt);
 
@@ -112,12 +112,12 @@ double GetGF(double eina,
 
 /** S2Aul convert line strength S into transition probability Aul
 \param S line strength
-\param waveAng wavelength in Angstrom
+\param waveAng vacuum wavelength in Angstrom
 \param gup statistical weight of the upper level
 \param transType transition type, "E1", "M1", "E2", etc.
 */
 double S2Aul(double S,
-	     double EnergyAng,
+	     double waveAng,
 	     double gup,
 	     const string& transType);
 
@@ -141,19 +141,6 @@ double abscf(double gf,
 
 /** setting true will use low-density Lyman branching ratios */
 #define LOWDEN_LYMAN 0
-
-/**wlAirVac compute wavelength in air or vacuum given hardcoded air wavelengths,
- * option set by parse option PRINT WAVELENGTH VACUUM
- * returns wavelength in air or vac, depending on this flag
- \param wlAir - air wavelength
- */
-realnum wlAirVac( double wlAir );
-
-/**RefIndex calculates the index of refraction of air using the line energy in wavenumbers,
- * used to convert vacuum wavelengths to air wavelengths. 
- \param EnergyWN - energy in wavenumbers
- */
-double RefIndex(double EnergyWN);
 
 
 /**WavlenErrorGet - given the real wavelength in A for a line
@@ -197,13 +184,13 @@ const TransitionProxy FndLineHt(long int *level);
 /**set_xIntensity: compute gross and net number of emitted line photons */
 void set_xIntensity( const TransitionProxy &t );
 
-/**wn2ang convert energy in wavenumbers to walength in Angstrom
+/**wn2angVac convert energy in wavenumbers to vacuum wavelength in angstrom
  \param fenergyWN energy in wavenumbers, cm^-1
- \return wavelength in Angstrom
+ \return vacuum wavelength in angstrom
 */
-inline double wn2ang( double fenergyWN )
+inline double wn2angVac( double fenergyWN )
 {
-	return safe_div( 1e+8, fenergyWN * RefIndex( fenergyWN ) );
+	return safe_div( 1e+8, fenergyWN );
 }
 
 #endif /* LINES_SERVICE_H_ */

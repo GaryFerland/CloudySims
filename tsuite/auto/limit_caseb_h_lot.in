@@ -32,7 +32,7 @@ save results "limit_caseb_h_lot.rlt" last
 save monitors "limit_caseb_h_lot.asr" last
 #
 ## >>chng 13 nov 22, from 0 to 0, collapsed branch merge r8609
-monitor Case B H-like element hydrogen  005 range 1000 40000A
+monitor Case B H-like element hydrogen  0.20 range 1000 vacuum 4.00m air
 
 # limit_caseb_h_lot.in
 # class limit 

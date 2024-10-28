@@ -420,7 +420,7 @@ STATIC void GetOptLineInt(Parser &p)
 		optimize.lineids.emplace_back( line );
 
 		/* get the error associated with specified significant figures */
-		optimize.errorwave.emplace_back( WavlenErrorGet(line.wave, LineSave.sig_figs ) );
+		optimize.errorwave.emplace_back( WavlenErrorGet(line.wavlVac(), LineSave.sig_figs ) );
 
 		/* next get the observed intensity */
 		realnum xLineInt = realnum(p.FFmtRead());
@@ -482,8 +482,8 @@ STATIC void GetOptLineInt(Parser &p)
 
 		for( long i=0; i < long(optimize.xLineInt_Obs.size()); i++ )
 		{
-			fprintf( ioQQQ, " %s ", optimize.lineids[i].chLabel.c_str() );
-			prt_wl( ioQQQ, optimize.lineids[i].wave );
+			fprintf( ioQQQ, " %s ", optimize.lineids[i].chLabel().c_str() );
+			optimize.lineids[i].twav().prt_wl(ioQQQ);
 
 			fprintf( ioQQQ, " %10.2e%10.2e\n", 
 				optimize.xLineInt_Obs[i], 

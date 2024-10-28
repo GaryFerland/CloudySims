@@ -404,7 +404,7 @@ STATIC void SaveSpeciesLines( FILE *ioPUN, const vector<genericState> &speciesLi
 			else
 			{
 				fprintf( ioPUN, "\t" );
-				prt_wl( ioPUN, realnum( tr->WLAng() ) );
+				tr->twav().prt_wl(ioPUN);
 			}
 
 			fprintf( ioPUN,"\t%li", ipLo);
@@ -468,10 +468,10 @@ void SaveSpeciesOptDep( const long int ipPun, const string &speciesLabel )
 			continue;
 
 		fprintf( save.params[ipPun].ipPnunit,
-			"%i\t%i\t%.5e\t%.5e\n",
+			"%i\t%i\t%s\t%.5e\n",
 			(*tr).ipHi()+1,
 			(*tr).ipLo()+1,
-			(*tr).WLAng(),
+			(*tr).twav().sprt_wl().c_str(),
 			(*tr).Emis().TauIn() * SQRTPI );
 	}
 }

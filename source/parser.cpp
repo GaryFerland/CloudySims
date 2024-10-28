@@ -29,6 +29,17 @@ typedef std::map<string,double> symtab;
 STATIC bool ParseExpr(deque<Token> &chTokens, vector<double> &valstack,
 	const symtab &tab);
 
+// test if the keyword in "read" matches the string in "expected"
+// abbreviations are allowed, but a minimum of nmin characters must be typed
+// nmin must be at least 4 characters, unless "expected" is shorter
+STATIC bool matchKey(const string& read, const string& expected, size_t nmin = 4)
+{
+	nmin = min(max(nmin, 4), expected.size());
+	if( read.size() < nmin )
+		return false;
+	return ( read == expected.substr(0, read.size()) );
+}
+
 const char *Parser::nWord(const char *chKey) const
 {
 	return ::nWord(chKey, m_card.c_str());
@@ -46,6 +57,31 @@ void Parser::skip_whitespace()
 {
 	while (!at_end() && isspace(current()))
 		++m_off;
+}
+bool Parser::nMatchSkip(const string& chKey, size_t nmin)
+{
+	auto m_old = m_off; // remember in case we need to rewind
+	// first skip trailing junk
+	while( !at_end() && !isSeparatorChar(current()) )
+		++m_off;
+	// now skip separators, there must be at least one
+	size_t nsep = 0;
+	while( !at_end() && isSeparatorChar(current()) )
+	{
+		++nsep;
+		++m_off;
+	}
+	// now read the keyword until the next boundary char
+	string read;
+	while( !at_end() && !isSeparatorChar(current()) )
+		read.push_back(m_card[m_off++]);
+	bool lgMatch = matchKey(read, chKey, nmin);
+	if( nsep > 0 && lgMatch )
+		return true;
+	else {
+		m_off = m_old;
+		return false;
+	}
 }
 void Parser::newlineProcess(void)
 {
@@ -65,7 +101,7 @@ void Parser::newlineProcess(void)
 /*nWord determine whether match to a keyword occurs on command line,
  * return value is 0 if no match, and position of match within string if hit */
 const char *nWord(const char *chKey, 
-	    const char *chCard)
+				  const char *chCard)
 {
 	DEBUG_ENTRY( "nWord()" );
 
@@ -140,6 +176,11 @@ bool isBoundaryChar(char c)
 		return isspace(c) ? true : false ;
 	else 	// Words are strings starting with A-Z, a-z or _
 		return (! isalpha(c) ) && c != '_';
+}
+
+bool isSeparatorChar(char c)
+{
+	return ( isblank(c) || c == '=' || c == '_' || c == ',' );
 }
 
 bool Parser::isComment(void) const
@@ -393,7 +434,7 @@ NORETURN void Parser::NoNumb(const char * chDesc) const
 	cdEXIT(EXIT_FAILURE);
  }
 
-double Parser::getWaveOpt()
+t_wavl Parser::getWaveOpt()
 {
 	double val = FFmtRead();
 	/* check for optional micron or cm units, else interpret as Angstroms */
@@ -414,11 +455,19 @@ double Parser::getWaveOpt()
 		val *= 1e8;
 		++m_off;
 	}
-	return val;
+	/* check if wavelength type is entered, this is optional */
+	wl_type type;
+	if( nMatchSkip("AIR") )
+		type = WL_AIR;
+	else if( nMatchSkip("VACUUM") )
+		type = WL_VACUUM;
+	else
+		type = WL_NATIVE;
+	return t_wavl(val, type);
 }
-double Parser::getWave()
+t_wavl Parser::getWave()
 {
-	double val = getWaveOpt();
+	auto val = getWaveOpt();
 	if( lgEOL() )
 	{
 		NoNumb("wavelength");
@@ -624,84 +673,13 @@ string Parser::getFirstChunkRaw(long nchar)
 LineID Parser::getLineID(bool lgAtStart)
 {
 	DEBUG_ENTRY( "Parser::getLineID()" );
+
+	DataParser d;
+	d.setline(m_card_raw);
+	d.setposLine(m_off);
 	LineID line;
-	if( !lgAtStart || m_card_raw[0] == '\"' )
-	{
-		if( GetQuote( line.chLabel ) != 0 )
-		{
-			fprintf( ioQQQ, "getLineID found invalid quoted string:\n" );
-			showLocation();
-			cdEXIT(EXIT_FAILURE);
-		}
-	}
-	else
-	{	 
-		/* order on line is label (col 1-4), wavelength */
-		line.chLabel = getFirstChunkRaw(4);
-		// relax rule for whitespace in between tokens: if label
-		// is shorter than 4 chars, wavelength may start in 5th column
-		if( !isspace(m_card[3]) && !isspace(m_card[4]) )
-		{
-			fprintf( ioQQQ, "getLineID found junk after line label:\n" );
-			showLocation();
-			cdEXIT(EXIT_FAILURE);
-		}
-	}
-	trimTrailingWhiteSpace( line.chLabel );
-
-	// Normalize common error "H 1 " or "H 1" for "H  1"
-	if ( line.chLabel.size() == 3 || line.chLabel.size() == 4 )
-	{
-		if ( line.chLabel[1] == ' ' &&
-			  ( line.chLabel.size() == 3 || line.chLabel[3] == ' ') )
-		{
-			fprintf(ioQQQ,"WARNING: read \"%s\" as spectrum\n",line.chLabel.c_str());
-			if (line.chLabel.size() == 3)
-				line.chLabel += line.chLabel[2];
-			else
-				line.chLabel[3] = line.chLabel[2];
-			line.chLabel[2] = ' ';
-			fprintf(ioQQQ,"Assuming required spectrum is \"%s\"\n",line.chLabel.c_str());
-		}
-	}
-
-	/* now get wavelength */
-	line.wave = (realnum)getWave();
-
-	/* scan for optional parameters */
-	if( nMatch("INDE") )
-	{
-		line.indLo = (int)FFmtRead();
-		if( lgEOL() )
-			NoNumb("lower level index");
-		if( line.indLo <= 0 )
-		{
-			fprintf( ioQQQ, "getLineID found invalid lower level index:\n" );
-			showLocation();
-			cdEXIT(EXIT_FAILURE);
-		}
-		line.indHi = (int)FFmtRead();
-		if( lgEOL() )
-			NoNumb("upper level index");
-		if( line.indHi <= line.indLo )
-		{
-			fprintf( ioQQQ, "getLineID found invalid upper level index:\n" );
-			showLocation();
-			cdEXIT(EXIT_FAILURE);
-		}
-	}
-	else if( nMatch("ELOW") )
-	{
-		line.ELo = FFmtRead();
-		if( lgEOL() )
-			NoNumb("lower level energy");
-		if( line.ELo <= 0_r )
-		{
-			fprintf( ioQQQ, "getLineID found invalid lower level energy:\n" );
-			showLocation();
-			cdEXIT(EXIT_FAILURE);
-		}
-	}
+	d.getLineID(line, lgAtStart);
+	m_off = d.getposLine();
 	return line;
 }
 
@@ -713,7 +691,7 @@ LineID Parser::getLineID(bool lgAtStart)
 // http://eli.thegreenplace.net/2010/01/02/top-down-operator-precedence-parsing/
 
 STATIC bool ParseNumber(deque<Token> &chTokens, vector<double> &valstack,
-	const symtab &tab)
+						const symtab &tab)
 {
 	DEBUG_ENTRY( "ParseNumber()" );
 	if ( chTokens.size() < 1)
@@ -1381,17 +1359,22 @@ bool DataParser::getline()
 	return !p_lgEOF;
 }
 
-void DataParser::getLineID(LineID& line)
+void DataParser::getLineID(LineID& line, bool lgAtStart)
 {
 	DEBUG_ENTRY( "DataParser::getLineID()" );
 
-	if( p_pos() > 0 )
+	if( lgAtStart && p_pos() > 0 )
 		errorAbort("the line ID must be the first item on the line");
 	p_replaceSep();
 
-	line = LineID();
-	if( p_line[0] == '\"' )
-		getQuote(line.chLabel);
+	string chLabel;
+	if( !lgAtStart || p_line[0] == '\"' )
+	{
+		// skip to the first double quote on the line starting from the current position
+		auto p = p_line.substr(p_pos()).find('\"') + p_pos();
+		p_pos(p);
+		getQuote(chLabel);
+	}
 	else
 	{
 		p_pos(min(p_line.length(), 4));
@@ -1400,30 +1383,31 @@ void DataParser::getLineID(LineID& line)
 		// relax rule for whitespace in between tokens: if label
 		// is shorter than 4 chars, wavelength may start in 5th column
 		if( !isspace(p_line[3]) && !isspace(p_line[4]) )
-			errorAbort("found junk after line label");
-		line.chLabel = p_line.substr(0,4);
+			errorAbort("found unrecognized input after line label");
+		chLabel = p_line.substr(0,4);
 	}
-	trimTrailingWhiteSpace( line.chLabel );
+	trimTrailingWhiteSpace(chLabel);
 
 	// Normalize common error "H 1 " or "H 1" for "H  1"
-	if( line.chLabel.size() == 3 || line.chLabel.size() == 4 )
+	if( chLabel.size() == 3 || chLabel.size() == 4 )
 	{
-		if( line.chLabel[1] == ' ' &&
-		    ( line.chLabel.size() == 3 || line.chLabel[3] == ' ' ) )
+		if( chLabel[1] == ' ' &&
+		    ( chLabel.size() == 3 || chLabel[3] == ' ' ) )
 		{
 			ostringstream oss;
-			oss << "read \"" << line.chLabel << "\" as spectrum, ";
-			if( line.chLabel.size() == 3 )
-				line.chLabel += line.chLabel[2];
+			oss << "read \"" << chLabel << "\" as spectrum, ";
+			if( chLabel.size() == 3 )
+				chLabel += chLabel[2];
 			else
-				line.chLabel[3] = line.chLabel[2];
-			line.chLabel[2] = ' ';
-			oss << "assuming required spectrum is \"" << line.chLabel << "\"";
+				chLabel[3] = chLabel[2];
+			chLabel[2] = ' ';
+			oss << "assuming required spectrum is \"" << chLabel << "\"";
 			warning(oss.str());
 		}
 	}
 
-	p_ls >> line.wave;
+	realnum wave;
+	p_ls >> wave;
 	if( p_ls.fail() )
 		errorAbort("failed to read wavelength");
 
@@ -1435,38 +1419,56 @@ void DataParser::getLineID(LineID& line)
 		else if( c == 'M' )
 		{
 			(void)p_ls.get();
-			line.wave *= 1.e4;
+			wave *= 1.e4;
 		}
 		else if( c == 'C' )
 		{
 			(void)p_ls.get();
-			line.wave *= 1.e8;
+			wave *= 1.e8;
 		}
 	}
 
 	string key;
+	bool key_set = false;
+	wl_type type = WL_NATIVE;
+	auto cur = p_pos();
 	if( getKeywordOptional(key) )
 	{
-		if( key.substr(0,4) == "INDE" )
+		if( matchKey(key, "AIR") )
+			type = WL_AIR;
+		else if( matchKey(key, "VACUUM") )
+			type = WL_VACUUM;
+		else
+			key_set = true;
+	}
+
+	int indLo = -1, indHi = -1;
+	realnum ELo = -1_r;
+	if( !key_set )
+		cur = p_pos();
+	if( key_set || getKeywordOptional(key) )
+	{
+		if( matchKey(key, "INDEX") )
 		{
-			getToken(line.indLo);
-			if( line.indLo <= 0 )
+			getToken(indLo);
+			if( indLo <= 0 )
 				errorAbort("invalid lower level index");
-			getToken(line.indHi);
-			if( line.indHi <= line.indLo )
+			getToken(indHi);
+			if( indHi <= indLo )
 				errorAbort("invalid upper level index");
 		}
-		else if( key == "ELOW" )
+		else if( matchKey(key, "ELOW") )
 		{
-			getToken(line.ELo);
-			if( line.ELo < 0_r )
+			getToken(ELo);
+			if( ELo < 0_r )
 				errorAbort("invalid lower level energy");
 		}
 		else
 		{
-			errorAbort("keyword not recognized");
+			p_pos(cur);
 		}
 	}
+	line = LineID(chLabel, t_wavl(wave, type), indLo, indHi, ELo);
 }
 
 bool DataParser::lgEODMarker() const
@@ -1492,7 +1494,9 @@ NORETURN void DataParser::errorAbort(const string& msg, FILE *io)
 	// this is OK since we abort immediately afterwards
 	p_ls.clear();
 	size_t p_ptr = p_pos();
-	fprintf(ioQQQ, "\n %s:%ld:%ld: PROBLEM ERROR: %s\n", p_filename.c_str(), p_nr, p_ptr, msg.c_str());
+	if( p_filename.length() > 0 )
+		fprintf(ioQQQ, "\n %s:%ld:%ld: PROBLEM ERROR: ", p_filename.c_str(), p_nr, p_ptr);
+	fprintf(ioQQQ, "%s\n", msg.c_str());
 	p_showLocation(p_ptr, io);
 	cdEXIT(EXIT_FAILURE);
 }
@@ -1507,7 +1511,9 @@ void DataParser::warning(const string& msg, FILE *io)
 	// always return -1 if an error flag is set...
 	p_ls.clear();
 	size_t p_ptr = p_pos();
-	fprintf(ioQQQ, "\n %s:%ld:%ld: WARNING: %s\n", p_filename.c_str(), p_nr, p_ptr, msg.c_str());
+	if( p_filename.length() > 0 )
+		fprintf(ioQQQ, "\n %s:%ld:%ld: WARNING: ", p_filename.c_str(), p_nr, p_ptr);
+	fprintf(ioQQQ, "%s\n", msg.c_str());
 	p_showLocation(p_ptr, io);
 	// restore state flags to initial state
 	p_ls.flags(f);

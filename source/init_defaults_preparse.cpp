@@ -511,8 +511,8 @@ void InitDefaultsPreparse( void )
 	StopCalc.lgStop21cm = false;
 	/* stop when absolute value of velocity falls below this */
 	StopCalc.StopVelocity = 0.;
-	/* number of stop line commands entered */
-	StopCalc.nstpl = 0;
+	/* erase stop line commands entered */
+	StopCalc.sle.clear();
 
 	/* initialize some variables for the optimizer */
 	optimize.nIterOptim = 400;

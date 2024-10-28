@@ -51,11 +51,7 @@ void parse_save_line(Parser &p,
 
 	chHeader << "#depth";
 	for( size_t i=0; i < linelist[ipPun]->lineids.size(); i++ )
-	{
-		string chTemp;
-		sprt_wl( chTemp, linelist[ipPun]->lineids[i].wave );
-		chHeader << "\t" << linelist[ipPun]->lineids[i].chLabel << " " << chTemp;
-	}
+		chHeader << "\t" << linelist[ipPun]->lineids[i].chLabel() << " " << linelist[ipPun]->lineids[i].twav().sprt_wl();
 	chHeader << endl;
 }
 
@@ -81,7 +77,7 @@ void save_line(FILE * ioPUN, /* the file we will write to */
 			if( linelist[ipPun]->ipLine[i] <= 0 )
 			{
 				// missed line - ignore if H2 line since large model may be off
-				if( !h2.lgEnabled && linelist[ipPun]->lineids[i].chLabel == "H2" )
+				if( !h2.lgEnabled && linelist[ipPun]->lineids[i].chLabel() == "H2" )
 				{
 					if( linelist[ipPun]->lgMustPrintFirstTime )
 					{

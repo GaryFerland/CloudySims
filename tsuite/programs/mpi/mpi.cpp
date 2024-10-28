@@ -619,7 +619,7 @@ int main( int argc, char *argv[] )
 					grid.pred[n+nLines] = log10(MAX2(1e-30,relative) );
 				}
 				/* next the FeII continuum */
-				if( cdLine( "inci", 1215 , &relative , &absolute )<=0 )
+				if( cdLine( "inci", 1215_vac , &relative , &absolute )<=0 )
 				{
 					fprintf(stderr,"did not find incident continuum\n");
 					fprintf(ioDATA,"did not find incident continuum\n");

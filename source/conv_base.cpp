@@ -1279,7 +1279,7 @@ void UpdateUTAs()
 				if( DEBUG_LOC /*&& UTALines[i].nelem==ipIRON+1 && (UTALines[i].IonStg==15||UTALines[i].IonStg==14)*/ )
 				{
 					fprintf(ioQQQ,"DEBUG UTA %3i %3i %.3f %.2e %.2e %.2e\n",
-						(*UTALines[i].Hi()).nelem() , (*UTALines[i].Hi()).IonStg() , UTALines[i].WLAng() ,
+						(*UTALines[i].Hi()).nelem() , (*UTALines[i].Hi()).IonStg() , UTALines[i].WLangVac() ,
 						rateone, UTALines[i].Coll().heat(), 
 						UTALines[i].Coll().heat()*dense.xIonDense[(*UTALines[i].Hi()).nelem()-1][(*UTALines[i].Hi()).IonStg()-1] );
 				}

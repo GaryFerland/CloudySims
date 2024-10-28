@@ -20,7 +20,7 @@ falls below \TEMPSTOPDEFAULT, the default lowest-allowed kinetic temperature.
 This
 choice of lowest temperature was made with optical emission lines in mind.
 Setting another outer limit is not necessary unless molecules or lines with
-very low ionization and excitation potentials (i.e., the [C II] or [O I]
+very low ionization and excitation potentials (e.g., the [\cii] or [\oi]
 far infrared lines) are of interest.
 You lower
 the stopping temperature with the \cdCommand{stop temperature} command.
@@ -75,10 +75,10 @@ default of \TEMPSTOPDEFAULT.
 This occurs very near the hydrogen \hplus\ - \hO\ ionization front.
 Optical and UV lines form at higher temperatures so the calculation would
 include all contributors to the optical/UV spectrum.
-Lines such as [C II]
-158$\mu$ or [Si~II] 34.8$\mu$ form in cool neutral gas,
+Lines such as [\cii]
+158\,$\mu$m or [\ion{Si}{2}] 34.8\,$\mu$m form in cool neutral gas,
 so these lines would become
-stronger if the calculation went more deeply, into cold neutral gas.
+stronger if the calculation went more deeply into cold neutral gas.
 
 {\setverbatimfontsize{\tiny}
 \begin{verbatim}
@@ -130,7 +130,7 @@ sets the thickness or outer radius of the cloud.
 This stops a calculation at a specified visual extinction $A_V$.
 The value
 is the extinction in magnitudes at the isophotal wavelength of the $V$ filter
-(5500\AA ).
+(5500\,\AA).
 The number is the linear extinction in magnitudes unless it
 is negative, when it is interpreted as the log of the extinction.
 Note
@@ -290,7 +290,7 @@ of the heavy elements are greatly enhanced.
 This commands allows you to stop the calculation when an observed continuum
 flux or surface brightness at an arbitrary wavelength is reached. Note that
 both the keywords \cdCommand{continuum} and \cdCommand{flux} need to be
-present on the command line. The first parameter must be the wavelength or
+present on the command line. The first parameter must be the vacuum wavelength or
 frequency of the observation. The second must be the flux or surface
 brightness. The syntax for these parameters is exactly the same as for the
 \cdCommand{optimize continuum flux} command described in
@@ -381,7 +381,7 @@ it is greater than zero and the log of the fraction if it is $\le 0$.
 The default is an electron fraction of $-10^{37}$~cm$^{-3}$.
 (The negative sign is not a typo.)
 
-\section{Stop line "C  2" 157.6m reaches 0.2 rel to  "O  3" 5006.84}
+\section{Stop line "C~~2" 157.636m 0.2 rel to  "O~~3" 5006.84}
 
 The calculation will stop when the emission line with the label given
 within the first pair of quotes and the wavelength given by
@@ -389,9 +389,9 @@ the first number
 exceeds an intensity given by the second number, relative to an optional
 second emission line.
 In this example the calculation will stop when the
-intensity of [C II] 158 $\mu $m reaches 0.2 relative to [O III] $\lambda$5006.84.
+intensity of [\cii] 157.636\,$\mu$m reaches 0.2 relative to [\oiii] $\lambda$5006.84.
 If a second
-optional line is not entered it will be H$\beta^{30}$.\footnote{The scaling of the line intensities can be changed with the
+optional line is not entered it will be H$\beta$.\footnote{The scaling of the line intensities can be changed with the
 \cdCommand{normalize}
 command.
 That command can change both the
@@ -416,30 +416,39 @@ Intrinsic intensities are used by default.
 Emergent intensities will be used if the keyword
 \cdCommand{emergent} appears on the command line.
 
-The line label and wavelength should be entered exactly as it appears
-in the emission-line output.
+The line label and wavelength should be entered exactly as is discussed
+in Section~\ref{sec:SpecifySpectralLines} with the added note that the label
+should always be enclosed in double quotes since it will never start in the
+first column.
 The line label within the quotes must have
 the same number of spaces as in the output.
 ``C~2'' and ``C~~2'' are not the same (the first has only one space
 and the second is correct with two spaces).
-The wavelength is assumed to be in Angstroms if no letter
+The wavelength is assumed to be in angstrom if no letter
 follows it.
-The wavelength can be changed to microns or centimeters by immediately
+The wavelength can be changed to micron or centimeter by immediately
 following the wavelength with 'm' or 'c' so that
-the [\cii ] $157.6\micron$ would be written as ``157.6m''.
+the wavelength of the [\cii ] $157.636\,\micron$ line would be written as ``157.636m''.
+If the keyword \cdCommand{air} or \cdCommand{vacuum} is used, it will {\em only}
+affect the wavelength immediately preceding it, so in this example:
+\begin{verbatim}
+stop line "c  2" 157.636m air 0.002 rel to "o  3" 5008.24 vacuum
+\end{verbatim}
+the wavelength of the [\cii] line will be assumed to be in air, while the wavelength
+of the [\oiii] line will be assumed to be in vacuum.
 
-Up to 10 different \cdCommand{stop line} commands may be entered.
+There is no limit to the number of \cdCommand{stop line} commands that may be entered.
 If more than one
-\cdCommand{stop line} command is entered then the code
-will stop when any limit is reached.
+\cdCommand{stop line} command is entered, the code
+will stop as soon as one of the conditions is met.
 
 \section{Stop mass 32.98}
 
 The calculation will stop when the total mass of the computed structure
 exceeds the quantity entered.  If the inner radius is specified (the
-luminosity case) then the entered number is the log of the mass in gm.
+luminosity case) then the entered number is the log of the mass in gram.
 If the inner radius is not specified (the intensity case) then it is the
-log of the mass per unit area, gm cm$^{-2}$.
+log of the mass per unit area, g cm$^{-2}$.
 
 At the current time no attempt is made to make the computed mass exactly
 equal to the entered number.
@@ -635,7 +644,7 @@ if $> 10$ or if the \cdCommand{linear} keyword appears.
 The default value is $T_{low} =$~\TEMPSTOPDEFAULT.
 Gas cooler than this produces little
 optical emission, but may be a strong emitter of infrared lines such as
-the [C II] 158 $\mu$m or the [O I]$^3P$ lines.
+the [\cii] 158 $\mu$m or the [\oi] $^3$P lines.
 The lowest temperature allowed,
 $T_{low}$, should be adjusted with this command
 so that the excitation potential

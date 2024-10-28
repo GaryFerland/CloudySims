@@ -70,8 +70,7 @@ void lines_hydro(void)
 	ASSERT( !dense.lgElmtOn[ipHELIUM] || iso_sp[ipH_LIKE][ipHELIUM].n_HighestResolved_max >= 3 );
 
 	i = StuffComment( "H-like iso-sequence" );
-	linadd( 0., (realnum)i , "####", 'i',
-		" start H -like iso sequence ");
+	linadd( 0., t_vac(i), "####", 'i', " start H -like iso sequence ");
 
 	/*fprintf(ioQQQ," debugg\t%.2e\t%.2e\t%.2e\n", 
 		radius.drad,
@@ -79,16 +78,16 @@ void lines_hydro(void)
 		iso_sp[ipH_LIKE][ipHYDROGEN].cLya_cool);*/
 
 	/* >>chng 95 jun 25 changed from info to cooling to pick this up in primal.in   */
-	linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHYDROGEN].cLya_cool),1215.67,"Cool",'i',
+	linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHYDROGEN].cLya_cool),1215.67_vac,"Cool",'i',
 		"collisionally excited La cooling ");
 
-	linadd(MAX2(0.,-iso_sp[ipH_LIKE][ipHYDROGEN].cLya_cool),1215.67,"Heat",'i',
+	linadd(MAX2(0.,-iso_sp[ipH_LIKE][ipHYDROGEN].cLya_cool),1215.67_vac,"Heat",'i',
 		"  collisionally de-excited La heating ");
 
-	linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHYDROGEN].cLyrest_cool),960,"Crst",'i',
+	linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHYDROGEN].cLyrest_cool),960_vac,"Crst",'i',
 		"  cooling due to n>2 Lyman lines ");
 
-	linadd(MAX2(0.,-iso_sp[ipH_LIKE][ipHYDROGEN].cLyrest_cool),960,"Hrst",'i',
+	linadd(MAX2(0.,-iso_sp[ipH_LIKE][ipHYDROGEN].cLyrest_cool),960_vac,"Hrst",'i',
 		"  heating due to n>2 Lyman lines ");
 
 	linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHYDROGEN].cBal_cool),Hbeta_WavLen,"Crst",'i',
@@ -97,10 +96,10 @@ void lines_hydro(void)
 	linadd(MAX2(0.,-iso_sp[ipH_LIKE][ipHYDROGEN].cBal_cool),Hbeta_WavLen,"Hrst",'i',
 		"  heating due to n>3 Balmer lines ");
 
-	linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHYDROGEN].cRest_cool),0,"Crst",'i',
+	linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHYDROGEN].cRest_cool),0_vac,"Crst",'i',
 		"  cooling due to higher Paschen lines ");
 
-	linadd(MAX2(0.,-iso_sp[ipH_LIKE][ipHYDROGEN].cRest_cool),0,"Hrst",'i',
+	linadd(MAX2(0.,-iso_sp[ipH_LIKE][ipHYDROGEN].cRest_cool),0_vac,"Hrst",'i',
 		"  heating due to higher Paschen lines ");
 
 	/* remember largest fractional ionization of H due to secondaries */
@@ -113,30 +112,30 @@ void lines_hydro(void)
 	hydro.HCollIonMax = 
 		(realnum)MAX2( hydro.HCollIonMax , hydro.H_ion_frac_collis );
 
-	linadd(secondaries.x12tot*iso_sp[ipH_LIKE][ipHYDROGEN].st[ipH1s].Pop()*1.634e-11,1215.67,"LA X" ,'i',
+	linadd(secondaries.x12tot*iso_sp[ipH_LIKE][ipHYDROGEN].st[ipH1s].Pop()*1.634e-11,1215.67_vac,"LA X" ,'i',
 		"Lya contribution from suprathermal secondaries from ground ");
 
-	linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHYDROGEN].coll_ion),0,"CION",'c',
+	linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHYDROGEN].coll_ion),0_vac,"CION",'c',
 		"collision ionization cooling of hydrogen ");
 
-	linadd(MAX2(-iso_sp[ipH_LIKE][ipHYDROGEN].coll_ion,0.),0,"3bHt",'h',
+	linadd(MAX2(-iso_sp[ipH_LIKE][ipHYDROGEN].coll_ion,0.),0_vac,"3bHt",'h',
 		"  this is the heating due to 3-body recombination ");
 
 	if( dense.lgElmtOn[ipHELIUM] )
 	{
-		linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHELIUM].coll_ion),0,"He2C",'c',
+		linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHELIUM].coll_ion),0_vac,"He2C",'c',
 			   "collision ionization cooling of He+ ");
 
-		linadd(MAX2(-iso_sp[ipH_LIKE][ipHELIUM].coll_ion,0.),0,"He2H",'h',
+		linadd(MAX2(-iso_sp[ipH_LIKE][ipHELIUM].coll_ion,0.),0_vac,"He2H",'h',
 			   "  this is the heating due to 3-body recombination onto He+");
 	}
 
 	fixit("why is there a zero here?");
-	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].st[ipH2p].Pop()*0.*iso_sp[ipH_LIKE][ipHYDROGEN].ex[ipH2p][ipH1s].pestrk*1.634e-11,1215.67,"Strk",'i',
+	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].st[ipH2p].Pop()*0.*iso_sp[ipH_LIKE][ipHYDROGEN].ex[ipH2p][ipH1s].pestrk*1.634e-11,1215.67_vac,"Strk",'i',
 	  "  Stark broadening contribution to line ");
 
 	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].st[ipH3s].Pop()*iso_sp[ipH_LIKE][ipHYDROGEN].ex[ipH3s][ipH2p].pestrk*3.025e-12,
-	  6562.80,"Strk",'i',
+	  6562.80_air,"Strk",'i',
 	  "  Stark broadening contribution to line ");
 
 	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].st[ipH4s].Pop()*iso_sp[ipH_LIKE][ipHYDROGEN].ex[ipH4s][ipH2p].pestrk*4.084e-12,
@@ -144,7 +143,7 @@ void lines_hydro(void)
 	  "Stark broadening contribution to line ");
 
 	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].st[ipH4p].Pop()*iso_sp[ipH_LIKE][ipHYDROGEN].ex[ipH4p][ipH3s].pestrk*1.059e-12,
-	  18751,"Strk",'i',
+	  18751_air,"Strk",'i',
 		   " Stark broadening contribution to line ");
 
 	/* pestrk[5,4] is A[4,5]*pest[4,5] 
@@ -152,7 +151,7 @@ void lines_hydro(void)
 	if( iso_sp[ipH_LIKE][ipHYDROGEN].n_HighestResolved_max >= 5 )
 	{
 		long ip5p = iso_sp[ipH_LIKE][ipHYDROGEN].QN2Index(5, 1, 2);
-		linadd(iso_sp[ipH_LIKE][ipHYDROGEN].st[ip5p].Pop()*iso_sp[ipH_LIKE][ipHYDROGEN].ex[ip5p][ipH4s].pestrk*4.900e-13,40512,"Strk",'i',
+		linadd(iso_sp[ipH_LIKE][ipHYDROGEN].st[ip5p].Pop()*iso_sp[ipH_LIKE][ipHYDROGEN].ex[ip5p][ipH4s].pestrk*4.900e-13,40512_air,"Strk",'i',
 			"Stark broadening part of line");
 	}
 	/* this can fail if RT_line_all never updates the ots rates, a logic error,
@@ -160,18 +159,18 @@ void lines_hydro(void)
 	ASSERT( LineSave.ipass  <1 ||
 		iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).Emis().ots()>= 0.);
 
-	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).Emis().ots()*iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).EnergyErg(), 1215.67,"Dest",'i',
+	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).Emis().ots()*iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).EnergyErg(), 1215.67_vac,"Dest",'i',
 		"  portion of line lost due to absorp by background opacity ");
 
 	/* portion of line lost due to absorb by background opacity */
-	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH3p,ipH2s).Emis().ots()*iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH3p,ipH2s).EnergyErg(), 6562.80,"Dest",'i',
+	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH3p,ipH2s).Emis().ots()*iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH3p,ipH2s).EnergyErg(), 6562.80_air,"Dest",'i',
 		"Ha destroyed by background opacity");
 
 	/* portion of line lost due to absorp by background opacity */
 	if( iso_sp[ipH_LIKE][ipHYDROGEN].n_HighestResolved_max >= 5 )
 	{
 		long ip5p = iso_sp[ipH_LIKE][ipHYDROGEN].QN2Index(5, 1, 2);
-		linadd(iso_sp[ipH_LIKE][ipHYDROGEN].trans(ip5p,ipH4s).Emis().ots()*iso_sp[ipH_LIKE][ipHYDROGEN].trans(ip5p,ipH4s).EnergyErg(),40516, "Dest",'i',
+		linadd(iso_sp[ipH_LIKE][ipHYDROGEN].trans(ip5p,ipH4s).Emis().ots()*iso_sp[ipH_LIKE][ipHYDROGEN].trans(ip5p,ipH4s).EnergyErg(),40516_air, "Dest",'i',
 			"portion of line lost due to absorb by background opacity");
 	}
 
@@ -182,14 +181,14 @@ void lines_hydro(void)
 
 	/* portion of line lost due to absorb by background opacity */
 	if( iso_sp[ipH_LIKE][ipHYDROGEN].numLevels_max > ipH4p )
-		linadd(iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH4p,ipH3s).Emis().ots()*iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH4p,ipH3s).EnergyErg() ,18751, "Dest",'i',
+		linadd(iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH4p,ipH3s).Emis().ots()*iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH4p,ipH3s).EnergyErg() ,18751_air, "Dest",'i',
 			"portion of line lost due to absorb by background opacity");
 
 	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].st[ipH2p].Pop()*iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).Emis().Aul()*
-		hydro.dstfe2lya*iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).EnergyErg() , 1215.67 , "Fe 2" , 'i',
+		hydro.dstfe2lya*iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).EnergyErg() , 1215.67_vac , "Fe 2" , 'i',
 		"Ly-alpha destroyed by overlap with FeII " );
 
-	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].RadRec_caseB*dense.xIonDense[ipHYDROGEN][1]*dense.eden * 1.64e-11,1215.67,"Ca B",'i',
+	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].RadRec_caseB*dense.xIonDense[ipHYDROGEN][1]*dense.eden * 1.64e-11,1215.67_vac,"Ca B",'i',
 		" simple high-density case b intensity of Ly-alpha, no two photon ");
 
 	/* these entries only work correctly if the APERTURE command is not in effect */
@@ -228,7 +227,7 @@ void lines_hydro(void)
 			caseb = 0.;
 		}
 		/* >>chng 02 nov 05, better approximation for Lya for temperature of first zone */
-		linadd( caseb/radius.dVeffAper*geometry.covgeo , 1215.67 , "Q(H)" , 'i',
+		linadd( caseb/radius.dVeffAper*geometry.covgeo , 1215.67_vac , "Q(H)" , 'i',
 			"Ly-alpha from Q(H), high-dens lim, specified covering factor" );
 	}
 
@@ -363,7 +362,7 @@ void lines_hydro(void)
 		em = 2.03e-20/(phycon.te70*phycon.te10*phycon.te03);
 		em *= dense.xIonDense[ipHELIUM][2]*dense.eden;
 
-		lindst(em,-1640,"CaBo",
+		lindst(em,-1640_vac,"CaBo",
 			1,'i',false,
 			" old prediction of He II 1640, Case B at low densities");
 
@@ -372,7 +371,7 @@ void lines_hydro(void)
 		em = 2.52e-20/(pow(phycon.te,1.05881));
 		em *= dense.xIonDense[ipHELIUM][2]*dense.eden;
 
-		lindst(em,-4685.64,"CaBo",	1,'i',false,
+		lindst(em,-4685.64_air,"CaBo",	1,'i',false,
 			   " old prediction of He II 4686, Case B at low densities");
 	}
 
@@ -442,7 +441,7 @@ void lines_hydro(void)
 							 */
 							realnum Enerwn = realnum(hydro_energy(nelem, ipLo, -1, -1, -1) -
 										 hydro_energy(nelem, ipHi, -1, -1, -1));
-							realnum wl = (realnum)wn2ang( double(Enerwn) );
+							t_wavl wl = t_vac(wn2angVac(double(Enerwn)));
 							atmdat.WaveLengthCaseB[nelem][ipHi][ipLo] = wl;
 							long ip = ipoint( Enerwn*WAVNRYD );
 							lindst(case_b_Intensity,wl,chLab,ip,'i',false," case a or case b from Hummer & Storey tables" );
@@ -470,8 +469,8 @@ void lines_hydro(void)
 						iso_comment_tran_levels( ipISO, nelem, (*tnu).ipLo, (*tnu).ipHi );
 				}
 				linadd(	tnu->AulTotal * tnu->E2nu * EN1RYD * (*tnu->Pop),
-					2. * wn2ang( iso_sp[ipH_LIKE][nelem].trans( (*tnu).ipHi, (*tnu).ipLo ).EnergyWN() ),
-					chLabel.c_str(), 'r', tpc_comment.c_str() );
+						t_vac(2. * wn2angVac( iso_sp[ipH_LIKE][nelem].trans( (*tnu).ipHi, (*tnu).ipLo ).EnergyWN() )),
+						chLabel.c_str(), 'r', tpc_comment.c_str() );
 			}
 
 			/* NB NB - low and high must be in this order so that all balmer, paschen,
@@ -533,7 +532,8 @@ void lines_hydro(void)
 					{
 						comment_trans = iso_comment_tran_levels( ipISO, nelem, ipLo, ipHi );
 					}
-					if( ipHi==1 && ipLo==0 && fp_equal(iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo).WLAng(), 1.e8_r/iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo).EnergyWN()) )
+					if( ipHi==1 && ipLo==0 && fp_equal(iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo).WLangVac(),
+													   1.e8_r/iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo).EnergyWN()) )
 					{
 						string chSpecies = chIonLbl(nelem+1, nelem+1-ipISO);
 						string chLabel = chSpecies + " M1";

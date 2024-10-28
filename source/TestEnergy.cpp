@@ -116,11 +116,11 @@ namespace {
 		CHECK( fp_equal( E.keV(), EVRYD/1.e3 ) );
 		CHECK( fp_equal( E.MeV(), EVRYD/1.e6 ) );
 		CHECK( fp_equal( E.WN(), RYD_INF ) );
-		CHECK( fp_equal( E.cm(), RYDLAM/1.e8 ) );
-		CHECK( fp_equal( E.mm(), RYDLAM/1.e7 ) );
-		CHECK( fp_equal( E.micron(), RYDLAM/1.e4 ) );
-		CHECK( fp_equal( E.nm(), RYDLAM/1.e1 ) );
-		CHECK( fp_equal( E.Angstrom(), RYDLAM ) );
+		CHECK( fp_equal( E.cmVac(), RYDLAM/1.e8 ) );
+		CHECK( fp_equal( E.mmVac(), RYDLAM/1.e7 ) );
+		CHECK( fp_equal( E.micronVac(), RYDLAM/1.e4 ) );
+		CHECK( fp_equal( E.nmVac(), RYDLAM/1.e1 ) );
+		CHECK( fp_equal( E.angstromVac(), RYDLAM ) );
 		CHECK( fp_equal( E.Hz(), FR1RYD ) );
 		CHECK( fp_equal( E.kHz(), FR1RYD/1.e3 ) );
 		CHECK( fp_equal( E.MHz(), FR1RYD/1.e6 ) );

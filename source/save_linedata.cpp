@@ -281,7 +281,7 @@ void Save1LineData(
 	/* the wavelength */
 	if( strcmp( save.chConSavEnr[save.ipConPun], "labl" )== 0 )
 	{
-		prt_wl( ioPUN , t.WLAng() );
+		t.twav().prt_wl(ioPUN);
 	}
 	else
 	{

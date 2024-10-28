@@ -607,9 +607,8 @@ void diatomics::init(void)
 	for( TransitionList::iterator tr = trans.begin(); tr != trans.end(); ++tr )
 	{
 		(*tr).EnergyWN() = (realnum)((*(*tr).Hi()).energy().WN() - (*(*tr).Lo()).energy().WN());
-		/*wavelength of transition in Angstroms */
-		if( (*tr).EnergyWN() > SMALLFLOAT)
-			(*tr).WLAng() = (realnum)(1.e8f/(*tr).EnergyWN() / RefIndex( (*tr).EnergyWN() ) );
+		/*wavelength of transition in angstrom */
+		(*tr).WLangVac() = (realnum)wn2angVac((*tr).EnergyWN());
 
 		(*tr).Coll().col_str() = 0.;
 	}
