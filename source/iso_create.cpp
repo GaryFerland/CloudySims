@@ -308,14 +308,13 @@ void iso_create()
 
 						if( rfield.isEnergyBound(Energy(EnergyWN, "cm^-1")) )
 						{
-							/* make following an air wavelength */
-							iso_sp[ipISO][nelem].trans(ipHi,ipLo).WLAng() = 
-								(realnum) wn2ang( double( iso_sp[ipISO][nelem].trans(ipHi,ipLo).EnergyWN() ) );
-							ASSERT(iso_sp[ipISO][nelem].trans(ipHi,ipLo).WLAng() > 0.);
+							iso_sp[ipISO][nelem].trans(ipHi,ipLo).WLangVac() = 
+								wn2angVac( double( iso_sp[ipISO][nelem].trans(ipHi,ipLo).EnergyWN() ) );
+							ASSERT(iso_sp[ipISO][nelem].trans(ipHi,ipLo).WLangVac() > 0.);
 						}
 						else
 						{
-							iso_sp[ipISO][nelem].trans(ipHi,ipLo).WLAng() = 1.e30_r;
+							iso_sp[ipISO][nelem].trans(ipHi,ipLo).WLangVac() = 1.e30_r;
 						}
 					}
 				}
@@ -1430,7 +1429,7 @@ STATIC void FillExtraLymanLine( const TransitionList::iterator& t, long ipISO, l
 
 	/* transition energy in various units:*/
 	(*t).EnergyWN() = (realnum)(Enerwn);
-	(*t).WLAng() = (realnum) wn2ang( Enerwn );
+	(*t).WLangVac() = wn2angVac( Enerwn );
 
 	(*(*t).Hi()).energy().set( Enerwn, "cm^-1" );
 
@@ -1804,11 +1803,11 @@ STATIC void iso_satellite( void )
 					/* Lines to 1s2s have roughly energy of parent Ly-alpha.  So lines to 1snL will have an energy
 					 * smaller by the difference between nL and 2s energies.  Therefore, the following has
 					 * energy of parent Ly-alpha MINUS the difference between daughter level and daughter n=2 level. */
-					(*tr).WLAng() = (realnum)(RYDLAM/
+					(*tr).WLangVac() = (realnum)(RYDLAM/
 						((iso_sp[ipISO-1][nelem].fb[0].xIsoLevNIonRyd - iso_sp[ipISO-1][nelem].fb[1].xIsoLevNIonRyd) -
 						 (iso_sp[ipISO][nelem].fb[1].xIsoLevNIonRyd- iso_sp[ipISO][nelem].fb[i].xIsoLevNIonRyd)) );
 
-					(*tr).EnergyWN() = 1.e8f / (*tr).WLAng();
+					(*tr).EnergyWN() = 1.e8f / (*tr).WLangVac();
 
 					(*tr).Emis().iRedisFun() = ipCRDW;
 					/* this is not the usual nelem, is it atomic not C scale. */

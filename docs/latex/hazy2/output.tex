@@ -1244,7 +1244,7 @@ geometry dependence.
 
 The following is an example of the emission-line output.
 The first column indicates the species and the second is the wavelength.
-``A'' indicates Angstroms and ``m'' indicates microns.
+``A'' indicates angstrom and ``m'' indicates micron.
 The third column is the log of the intensity [erg cm$^{-2}$ s$^{-1}$] or luminosity [erg s$^{-1}$]
 depending on which case was used.
 The last column is the intensity of the line relative to the normalization line, H$\beta$ by default.
@@ -1269,8 +1269,8 @@ Fe 6      5097.82A  -19.193    0.0024
 
 \subsection{Air vs vacuum wavelengths}
 The emission line wavelengths follow the convention that vacuum wavelengths
-are used for $\lambda < 2000$\AA\ and STP air wavelengths are used
-for $\lambda \ge 2000$\AA.
+are used for $\lambda_{\rm vac} \le 2000$\,\AA\ and STP air wavelengths are used
+for $\lambda_{\rm vac} > 2000$\,\AA.
 The \cdCommand{print line vacuum} command tells the code use use vacuum wavelengths throughout.
 The continuum is always reported in vacuum wavelengths to avoid 
 a discontinuity at 2000\AA.
@@ -1414,7 +1414,7 @@ ionization correction factors, or other effects,
 would upset the measurement
 of the helium abundance of the model nebula.
 This is followed by the longest
-wavelength in centimeters ``Lthin'' at which the nebula is optically thin.
+wavelength in centimeter ``Lthin'' at which the nebula is optically thin.
 Generally the largest FIR opacity source is bremsstrahlung and the number
 will be $10^{30}$ if the nebula is optically thin across the full continuum.
 The number ``itr/zn'' is the average number of iterations needed to converge

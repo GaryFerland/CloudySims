@@ -69,7 +69,8 @@ original models, it is allowed to use either a frequency or wavelength grid in
 arbitrary units. The same holds for the dependent variable, which may either
 be a flux per frequency or wavelength unit. Both the dependent and independent
 variable should be entered as linear quantities, so logarithmic units like
-magnitudes are not supported. With this amount of freedom, the code needs to
+magnitudes are not supported. Wavelengths are assumed to be in vacuum.
+With this amount of freedom, the code needs to
 know how to convert these variables to \Cloudy's internal units. This is
 defines on the next 4 lines. The next line should contain either
 \cdVariable{nu} to state that the file contains a frequency grid, or

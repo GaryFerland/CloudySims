@@ -458,7 +458,7 @@ temperature and ionization structure of the cloud.  The ``continuum'' save
 file will show the incident and total continuum.  We included the keywords
 \cdCommand{units microns} to give the spectrum
 as a function of the wavelength in
-microns.
+micron.
 The default would have been the photon energy in Rydbergs.
 Other options are available.
 
@@ -504,7 +504,7 @@ The first column of the overview file gives the distance
 from the center of the central star to a point in the cloud.
 Another column gives the gas temperature.
 Figure \ref{fig:PN_temperature} shows the kinetic temperature as a function of radius.
-The first column of the continuum file gives the wavelength in microns.
+The first column of the continuum file gives the wavelength in micron.
 Column seven gives the total emission.  Make a plot showing the emission
 as a function of wavelength.  Both axes will probably need to be logs due
 to the large dynamic range.
@@ -523,7 +523,7 @@ The spectrum is shown in Figure \ref{fig:PN_spectrum}.
 \includegraphics[clip=on,width=0.8\columnwidth,height=0.8\textheight,keepaspectratio]{PN_spectrum}
 \end{center}
 \caption{The spectrum of a planetary nebula.
-The $x$-axis is the wavelength in microns.
+The $x$-axis is the wavelength in micron.
 The $y$-axis is $\nu L_\nu \rm{[erg\ s^{-1}]}$.
 The large bump peaking at $\sim 30$\micron\ is
 due to thermal dust emission.
@@ -650,7 +650,7 @@ The predicted radiation field is shown in Figure \ref{fig:BLR_spectrum}.
 \end{center}
 \caption{The spectrum of a single broad emission-line
 cloud in an active nucleus.
-The $x$-axis is the wavelength in microns.
+The $x$-axis is the wavelength in micron.
 The $y$-axis is $\nu f_\nu [\erg\, \pscm\, \ps]$.}
 \label{fig:BLR_spectrum}
 \end{figure}
@@ -1623,7 +1623,7 @@ from the file given in the second pair of quotes and save the predicted
 intensity into the first file.
 This is how the results shown in Figure \ref{fig:CIV_equivalent_width}
 were produced.
-The labels in the file must include both the four character
+The labels in the file must include both the four (or more) character
 string that is used in the output and the line wavelength.  They must match
 exactly for the line to be recognized.
 
@@ -1871,10 +1871,10 @@ See the section \cdTerm{Units of the save output} in \Hazy\ 1 for more details.
 
 The emission line wavelengths follow the convention that vacuum wavelengths
 are used for $\lambda < 2000$\AA\ and STP air wavelengths are used
-for $\lambda \ge 2000$\AA.
+for $\lambda \ge 2000$\,\AA.
 The \cdCommand{print line vacuum} command tells the code use use vacuum wavelengths throughout.
 The continuum is always reported in vacuum wavelengths to avoid 
-a discontinuity at 2000\AA.
+a discontinuity at 2000\,\AA.
 
 \subsection{Miscellaneous Helper Commands}
 \label{sec:MiscHelperCommands}
@@ -2111,8 +2111,8 @@ from the shielded face.
 \end{center}
 \caption{The incident (smooth) and emitted spectrum contained in the
 \cdFilename{orion\_hii\_pdr\_pp.con} file.  The
-x-axis is the wavelength in microns and
-the y-axis gives $vf_v$ [\ergpscmps ].  This is produced by the
+x-axis is the wavelength in micron and
+the y-axis gives $\nu f_\nu$ [\ergpscmps ].  This is produced by the
 \cdCommand{save continuum} command.}
 \label{fig:orion_hii_pdr_pp_con}
 \end{figure}

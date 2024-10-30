@@ -11,7 +11,7 @@
 # it is used to confirm that this is the correct file
 # for the current version of the code
 # it is the currnet date, y mm dd
-# search for "bands_continuum" in *.cpp
+# search for "continuum_bands.dat" in *.cpp
 # 
 # VERSION CHANGE LOG
 #
@@ -28,7 +28,7 @@
 # 	TIR, from 3.-1100 to 500-3100 mic, centroid from 550 to 1800 mic 
 # 	NIRa upper bound from 5.0 to 4.0 mic 
 # 	NMIR upper bound from 42.5 to 40 mic
-# 	added TALL 1.0, 1e-6 to 1e4 microns
+# 	added TALL 1.0, 1e-6 to 1e4 micron
 #	series of IRAS bands
 #
 # 6 2 13, add PAH bands
@@ -38,7 +38,10 @@
 # section Continua under "the main emission-line printout" 
 #
 # LINE FORMAT
+#
 # Lines starting with # are comments.
+# These comment lines can occur anywhere within this file.
+#
 # Each line that does not begin with a # must 
 # fully specify an entry into the emission-line stack.
 # The "intensity" of the entry will the the total intensity or luminosity
@@ -51,23 +54,23 @@
 #
 # The first number is the mean wavelength of the band and will appear
 # as the "line wavelength" in the printout.
-# It must be given in microns
+# It must be given in micron.
 #
 # The remaining two numbers are the lower and upper wavelength range
-# for the integration, must be given in microns.
+# for the integration, these must also be given in micron.
+# The first number (the mean wavelength) is treated as a label and is not
+# subject to conversions to air or vacuum wavelengths. The lower and upper
+# limit of the band will be interpreted as vacuum wavelengths.
 # All numbers must be greater than 0 and the third number must be 
 # larger than the second.
+#
+# NB ALL WAVELENGTHS *MUST* BE IN MICRON
 #
 # EXAMPLE
 # LABL wl  wl1  wl2
 # where LABL is the 4 char label that will appear in the emission-line stack
 # wl is the wavelength that will appear in the stack
 # wl1 and wl2 are the lower and upper bounds to the band
-#
-# NB ALL WAVELENGTHS *MUST* BE IN MICRONS
-#
-# Any line with a "#" in col 1 is a comment and totally ignored,
-# These comment lines can occur anywhere within this file.
 #
 # The number of wavelength bands is deduced on the fly by reading this file.
 # There is no limit to the number of bands in this file.
@@ -114,7 +117,7 @@ TFIR 611.25m 122.5m 1100.0m
 # this is everything 
 TALL 1.0m 1e-6m 10000.0m
 #
-# Here are the IRAS 1, 2, 3, and 4 bands at 12, 25, 60, and 100 microns.  The definition of these bands come from
+# Here are the IRAS 1, 2, 3, and 4 bands at 12, 25, 60, and 100 micron.  The definition of these bands come from
 #>>refer	cont	band	S.Satyapal	private communication
 # The labeling convention of these bands follows that given in 
 #>>refer	cont	band	Malhotra et al. 2001, ApJ, 561, 766
@@ -124,7 +127,7 @@ F25  25m 19m 30m
 F60  60m 40m 80m
 F100 100m 83m 120m
 #
-# Spitzer MIPS bands at 24, 70, and 160 microns. 
+# Spitzer MIPS bands at 24, 70, and 160 micron. 
 # The documentation can be found here:
 # http://irsa.ipac.caltech.edu/data/SPITZER/docs/mips/mipsinstrumenthandbook/6/#_Toc288032270
 # See Rieke et al. 2004, ApJS, 154, 25.
@@ -133,7 +136,7 @@ MIPS  24m  20.8m  26.1m
 MIPS  70m  61.0m  80.0m
 MIPS 160m 140.0m 174.0m
 #
-# Spitzer IRAC bands 1, 2, 3, and 4 at 3.6, 4.5, 5.8, and 8.0 microns. 
+# Spitzer IRAC bands 1, 2, 3, and 4 at 3.6, 4.5, 5.8, and 8.0 micron. 
 # The documentation can be found here:
 # http://irsa.ipac.caltech.edu/data/SPITZER/docs/irac/iracinstrumenthandbook/6/#_Toc288480947
 # See Hora et al. 2008, PASP, 120, 1233.
@@ -160,23 +163,23 @@ PAC3 160m 130m 198m
 # subject to error in the postprocessing.  This may no longer work if the continuum
 # binning is changed in the continuum_mesh.dat file 
 # 
-# 3.3 microns
+# 3.3 micron
 PAH  3.30m 3.25m 3.35m
 PAHC 3.23m 3.20m 3.25m
 PAHC 3.37m 3.35m 3.40m
-# 6.2 microns
+# 6.2 micron
 PAH  6.2m 5.9m 6.4m
 PAHC 5.65m 5.4m 5.9m
-# 7.9 microns
+# 7.9 micron
 PAH  7.9m 7.4m 8.4m
 PAHC 6.9m 6.4m 7.4m
-# 11.3 microns
+# 11.3 micron
 PAH  11.3m 11.1m 11.5m
 PAHC 10.9m 10.7m 11.1m
-# 11.8 microns
+# 11.8 micron
 PAH  11.8m 11.6m 12.3m
 PAHC 12.65m 12.3m 13.0m
-# 13.3 microns
+# 13.3 micron
 PAH  13.3m 12.9m 13.7m
 PAHC 14.1m 13.7m 14.5m
 # this is a test - the Balmer continuum 

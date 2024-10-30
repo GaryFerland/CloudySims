@@ -85,10 +85,10 @@ struct t_continuum : public module {
 	realnum fbeta;
 
 	/** these are number, labels, and bounds of continuum bands
-	 * they are specified in continuum_bands.ini in the data dir */
+	 * they are specified in continuum_bands.dat in the data dir */
 	long int nContBand;
 	vector<string> chContBandLabels;
-	vector<realnum> ContBandWavelength;
+	vector<t_wavl> ContBandWavelength;
 	vector<long> ipContBandLow, ipContBandHi;
 	/** these are fractions of first and last bin to include in the 
 	 * band */

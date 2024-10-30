@@ -295,7 +295,7 @@ void PrtComment(void)
 	/* now find total Hbeta */
 	/* >>chng from "totl" Hbeta which was a special entry, to "H  1" Hbeta, which 
 	 * is the general case */
-	if( cdLine( "H  1",wlAirVac(Hbeta_WavLen),&HBeta,&absint)<=0 )
+	if( cdLine( "H  1",Hbeta_WavLen,&HBeta,&absint)<=0 )
 	{
 		fprintf( ioQQQ, " NOTE Did not find H  1 H-beta - set intensity to unity, "
 			"will not check on importance of H 1 pumping.\n" );
@@ -1170,7 +1170,7 @@ void PrtComment(void)
 
 	/* get all negative lines, check if line absorption significant heat source
 	 * this is used in "final" for energy budget print out */
-	if( cdLine("Line",0,&SumNeg,&absint)<=0 )
+	if( cdLine("Line",0_vac,&SumNeg,&absint)<=0 )
 	{
 		fprintf( ioQQQ, " did not get sumneg cdLine\n" );
 		ShowMe();
@@ -1178,7 +1178,7 @@ void PrtComment(void)
 	}
 
 	/* this is total heating */
-	if( cdLine("TotH",0,&GetHeat,&absint)<=0 )
+	if( cdLine("TotH",0_vac,&GetHeat,&absint)<=0 )
 	{
 		fprintf( ioQQQ, " did not get GetHeat cdLine\n" );
 		ShowMe();
@@ -1388,7 +1388,7 @@ void PrtComment(void)
 
 	/* check whether Fe II destruction of La was important - entry into lines stack 
 	 * is in prt_lines_hydro.c */
-	if( cdLine("Fe 2",1215.67,&fedest,&absint)<=0 )
+	if( cdLine("Fe 2",1215.67_vac,&fedest,&absint)<=0 )
 	{
 		fprintf( ioQQQ, " Did not find Fe II Lya\n" );
 		ShowMe();
@@ -1396,7 +1396,7 @@ void PrtComment(void)
 	}
 
 	/* find total Lya for comparison */
-	if( cdLine("H  1",1215.67,&relhm,&absint)<=0 )
+	if( cdLine("H  1",1215.67_vac,&relhm,&absint)<=0 )
 	{
 		fprintf( ioQQQ, " Did not find Lya\n" );
 		ShowMe();
@@ -1420,7 +1420,7 @@ void PrtComment(void)
 		}
 	}
 
-	if( cdLine("H-CT",6562.80,&relhm,&absint)<=0 )
+	if( cdLine("H-CT",6562.80_air,&relhm,&absint)<=0 )
 	{
 		fprintf( ioQQQ, " Comment did not find H-CT H-alpha\n" );
 		ShowMe();
@@ -2726,7 +2726,7 @@ void PrtComment(void)
 	/* this was the number 1 fed through the line integrators,
 	 * the number 1e-10 is sent to linadd in lineset1 as follows:*/
 	/*linadd( 1.e-10 , 1 , "Unit" , 'i' );*/
-	i = cdLine( "Unit" , 1 , &rate , &absint );
+	i = cdLine( "Unit" , 1_vac , &rate , &absint );
 	ASSERT( i> 0 );
 
 	/* this is now the linear vol, rel to inner radius */

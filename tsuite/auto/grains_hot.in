@@ -63,6 +63,8 @@ monitor line luminosity "GraD" 0 -4.559
 #monitor line luminosity "FeKa" 1.78 -3.832
 ## >>chng 24 jan 09, from -3.832 to -5.748, resolve 1 electron Ly doublets, FeKa replaced by sum of j-resolved and M1 transitions
 monitor line luminosity "Blnd" 1.77982 -5.748
+##
+monitor line luminosity "FeKG" 1.75 -3.935
 #
 # grains_hot.in
 # class limit 

@@ -1,42 +1,79 @@
 # these are the monitors for the func_trans_lumi - func_trans_lumi_read_scale pair of files
 monitor temperature "H+" 7784
-monitor line luminosity "nInu" 122.4m     32.1251
-monitor line luminosity "nInu" 60.8322m   33.0324
-monitor line luminosity "nInu" 41.2152m   33.5403
-monitor line luminosity "nInu" 30.8695m   33.9178
-monitor line luminosity "nInu" 24.7829m   34.2042
-monitor line luminosity "nInu" 24.2998m   34.2302
-monitor line luminosity "nInu" 22.8302m   34.3083
-monitor line luminosity "nInu" 21.4199m   34.3907
-monitor line luminosity "nInu" 21.1235m   34.4124
-monitor line luminosity "nInu" 19.6199m   34.5078
-monitor line luminosity "nInu" 17.6534m   34.6422
-monitor line luminosity "nInu" 17.37m     34.6639
-monitor line luminosity "nInu" 15.6901m   34.7984
-monitor line luminosity "nInu" 14.6036m   34.8894
-monitor line luminosity "nInu" 12.43m     35.1018
-monitor line luminosity "nInu" 11.40m     35.2145
-monitor line luminosity "nInu" 10.46m     35.3271
-monitor line luminosity "nInu" 9.48002m   35.4528
-monitor line luminosity "nInu" 9.32488m   35.4744
-monitor line luminosity "nInu" 8.21035m   35.6390
-monitor line luminosity "nInu" 7.580m     35.7429
-monitor line luminosity "nInu" 7.05026m   35.8381
-monitor line luminosity "nInu" 4.11370m   36.5384
-monitor line luminosity "nInu" 2.32440m   37.2751
-monitor line luminosity "nInu" 1.64313m   37.7210
-monitor line luminosity "nInu" 1.48022m   37.8536
-monitor line luminosity "nInu" 1.43649m   37.8920
-monitor line luminosity "nInu" 1.11867m   38.2114
-monitor line luminosity "nInu"  8329.68A  38.5880
-monitor line luminosity "nInu"  8078.61A  38.6259
-monitor line luminosity "nInu"  6209.66A  38.9569
-monitor line luminosity "nInu"  4885.36A  39.2553
-monitor line luminosity "nInu"  3704.34A  39.5942
-monitor line luminosity "nInu"  3587.67A  39.6305
-monitor line luminosity "nInu"  2392.03A  40.1130
-monitor line luminosity "nInu"  2071.34A  40.2774
-monitor line luminosity "nInu"  2052.68A  40.2887
+## >>chng 24 oct 05, wl from 122.4m to 122.367m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 122.367m     32.1251
+## >>chng 24 oct 05, wl from 60.8322m to 60.8157m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 60.8157m   33.0324
+## >>chng 24 oct 05, wl from 41.2152m to 41.2039m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 41.2039m   33.5403
+## >>chng 24 oct 05, wl from 30.8695m to 30.8611m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 30.8611m   33.9178
+## >>chng 24 oct 05, wl from 24.7829m to 24.7761m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 24.7761m   34.2042
+## >>chng 24 oct 05, wl from 24.2998m to 24.2932m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 24.2932m   34.2302
+## >>chng 24 oct 05, wl from 22.8302m to 22.8240m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 22.8240m   34.3083
+## >>chng 24 oct 05, wl from 21.4199m to 21.4141m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 21.4141m   34.3907
+## >>chng 24 oct 05, wl from 21.1235m to 21.1177m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 21.1177m   34.4124
+## >>chng 24 oct 05, wl from 19.6199m to 19.6146m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 19.6146m   34.5078
+## >>chng 24 oct 05, wl from 17.6534m to 17.6486m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 17.6486m   34.6422
+## >>chng 24 oct 05, wl from 17.37m to 17.3653m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 17.3653m     34.6639
+## >>chng 24 oct 05, wl from 15.6901m to 15.6859m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 15.6859m   34.7984
+## >>chng 24 oct 05, wl from 14.6036m to 14.5997m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 14.5997m   34.8894
+## >>chng 24 oct 05, wl from 12.43m to 12.4266m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 12.4266m     35.1018
+## >>chng 24 oct 05, wl from 11.40m to 11.3969m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 11.3969m     35.2145
+## >>chng 24 oct 05, wl from 10.46m to 10.4572m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 10.4572m     35.3271
+## >>chng 24 oct 05, wl from 9.48002m to 9.47744m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 9.47744m   35.4528
+## >>chng 24 oct 05, wl from 9.32488m to 9.32234m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 9.32234m   35.4744
+## >>chng 24 oct 05, wl from 8.21035m to 8.20812m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 8.20812m   35.6390
+## >>chng 24 oct 05, wl from 7.580m to 7.57793m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 7.57793m     35.7429
+## >>chng 24 oct 05, wl from 7.05026m to 7.04834m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 7.04834m   35.8381
+## >>chng 24 oct 05, wl from 4.11370m to 4.11258m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 4.11258m   36.5384
+## >>chng 24 oct 05, wl from 2.32440m to 2.32377m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 2.32377m   37.2751
+## >>chng 24 oct 05, wl from 1.64313m to 1.64268m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 1.64268m   37.7210
+## >>chng 24 oct 05, wl from 1.48022m to 1.47981m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 1.47981m   37.8536
+## >>chng 24 oct 05, wl from 1.43649m to 1.43610m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 1.43610m   37.8920
+## >>chng 24 oct 05, wl from 1.11867m to 1.11836m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 1.11836m   38.2114
+## >>chng 24 oct 05, wl from 8329.68A to 8327.39A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  8327.39A  38.5880
+## >>chng 24 oct 05, wl from 8078.61A to 8076.39A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  8076.39A  38.6259
+## >>chng 24 oct 05, wl from 6209.66A to 6207.94A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  6207.94A  38.9569
+## >>chng 24 oct 05, wl from 4885.36A to 4884.00A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  4884.00A  39.2553
+## >>chng 24 oct 05, wl from 3704.34A to 3703.28A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  3703.28A  39.5942
+## >>chng 24 oct 05, wl from 3587.67A to 3586.64A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  3586.64A  39.6305
+## >>chng 24 oct 05, wl from 2392.03A to 2391.30A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  2391.30A  40.1130
+## >>chng 24 oct 05, wl from 2071.34A to 2070.68A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  2070.68A  40.2774
+## >>chng 24 oct 05, wl from 2052.68A to 2052.02A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  2052.02A  40.2887
 monitor line luminosity "nInu"  1793.44A  40.4380
 monitor line luminosity "nInu"  1585.12A  40.5762
 monitor line luminosity "nInu"  1458.33A  40.6649

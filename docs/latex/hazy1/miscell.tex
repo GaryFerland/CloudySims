@@ -814,7 +814,7 @@ as described in section \ref{sec:save_cont_no_isotropic_option},
 as well as the fluxes through the bands described in
 Section~\ref{Hazy2-sec:Radiation-field-integrated-over-wavelengths}
 \cdSectionTitle{\refname{Hazy2-sec:Radiation-field-integrated-over-wavelengths}},
-and defined in the file ``data/continuum\_bands.ini''.
+and defined in the file \cdFilename{data/continuum\_bands.dat}.
 It has no effect on the continua reported in time-dependent
 integrations.
 
@@ -857,6 +857,9 @@ Pumping of the \hi\ 21 cm line by L$\alpha $ is treated
 as in \citet{Deguchi1985}.
 This turns off the process.
 All three keywords must match.
+
+Note that the text \cdCommand{21cm} is interpreted as a keyword and not as a precise wavelength
+of the line.
 
 \subsection{No OTS [options]}
 \begin{description}
@@ -1146,9 +1149,13 @@ tested.
 \item[The range option]  The keyword \cdCommand{range}
 tells the code to only check the
 monitored values over a restricted wavelength range.
-The wavelengths of
-the lines are stored in Angstroms so the range must be given in
-the same units.
+The wavelengths can be entered in the standard \Cloudy\ format.
+Interpretation as air or vacuum wavelengths can be forced by appending the optional keyword
+\cdCommand{air} or \cdCommand{vacuum} directly behind the wavelength. Note that the keyword
+only applies to the wavelength directly preceding it, so it needs to be repeated, as shown below.
+\begin{verbatim}
+monitor Case B H-like hydrogen 0.15 range 1000A vacuum to 4.00m air
+\end{verbatim}
 This was added as a way to exclude the intensities of
 unobservable MIR - FIR lines.  These lines come from higher levels in the
 atom and generally have a larger error due to the finite size of the model.
@@ -1511,6 +1518,9 @@ it is $\le 10$.
 It will be linear if the keyword \cdCommand{linear} appears.
 The last number is the relative error.
 
+Note that the text \cdCommand{21cm} is interpreted as a keyword and not as a precise wavelength
+of the line.
+
 \subsection{Monitor grain temperature index 2, temperature  234}
 
 If no element name appears but the keyword \cdCommand{grains}
@@ -1575,12 +1585,15 @@ and can be selected with the keyword \cdCommand{excitation}.
 The gas kinetic temperature is used if the keyword \cdCommand{kinetic} appears.
 A frequency-independent source function is assumed if the keyword \cdCommand{constant} appears.
 
+Note that the text \cdCommand{21cm} is interpreted as a keyword and not as a precise wavelength
+of the line.
+
 \subsection{Set 12C13C -3.2 -- DEPRECATED}
 
 This command has been deprecated.
 Use \cdCommand{element carbon isotopes} instead.
 
-\subsection{Set blend [ "Custom" ] [ 4622.23 ] [ quiet ]}
+\subsection{Set blend [ ``Custom'' ] [ 4622.23 [ air \OR{} vacuum ] ] [ quiet ]}
 
 With this command you can define a custom blend of lines. In order to identify
 the blend, you need to enter a label between double quotes and a wavelength.
@@ -1588,7 +1601,15 @@ If the label is omitted, it will default to ``Blnd''. If it is too long, it
 will be truncated to \LabelLenMax\ characters. If the wavelength is omitted,
 it will default to the $g_k A_{ki}$-averaged wavelength of the blend
 components. The latter is only meaningful if the blend components are all from
-the same ion, which in general need not be the case.
+the same ion, which in general need not be the case. If the wavelength is
+specified on the command line, you can add an optional keyword \cdCommand{air}
+or \cdCommand{vacuum} to indicate whether the specified wavelength is in air
+or vacuum. This keyword needs to be typed immediately after the wavelength,
+with at least one space between the wavelength and the keyword. If the keyword
+is omitted, the wavelength type will be assumed to be the same as the one used
+in the main output. Note that this keyword only applies to the wavelength of
+the blend itself and is not used for the individual blend components. How to
+enter these components is described below.
 
 Each emission line included in the blend is entered on its own line. This list
 begins on the line after the \cdCommand{set blend} command and continues until
@@ -2408,14 +2429,14 @@ are always the sum of the reflected plus transmitted incident continuum.
 \subsection{Set nFnu add 300 micron}
 \label{sec:set:nfnu:add}
 
-You can also add custom wavelengths or frequencies at which the \emph{nFnu}
+You can also add custom vacuum wavelengths or frequencies at which the \emph{nFnu}
 and \emph{nInu} entries in the emission-line printout are evaluated. You can
 do that by adding one \cdCommand{set nFnu add} command for each point. You can
 enter as many as you like. Each line must contain a number and a unit to identify
 the wavelength or frequency. Adding the unit is mandatory. The following keywords
 are supported: \cdCommand{eV}, \cdCommand{keV}, \cdCommand{MeV},
 \cdCommand{Hz}, \cdCommand{kHz}, \cdCommand{MHz}, \cdCommand{GHz},
-\cdCommand{Angstrom}, \cdCommand{nm}, \cdCommand{micron}, \cdCommand{mm},
+\cdCommand{angstrom}, \cdCommand{nm}, \cdCommand{micron}, \cdCommand{mm},
 \cdCommand{cm} or \cdCommand{centimeter}, 
 \cdCommand{wavenumbers}, \cdCommand{erg}, \cdCommand{ryd}, \cdCommand{K} or
 \cdCommand{Kelvin}.
@@ -2431,12 +2452,6 @@ set nFnu add 4200 angstrom
 This controls the number of steps in the heating-cooling map that results
 from either the \cdCommand{map} or \cdCommand{save map} commands.  Normally about 20 steps are
 taken between the lowest and highest temperatures.
-
-\subsection{Set numerical derivatives}
-
-This tells the code to use numerical rather than analytic derivatives
-of the heating and cooling functions.
-The default is to use the analytic derivatives.
 
 \subsection{Set PAH option}
 \label{sec:CommandSetPahOption}
@@ -2647,7 +2662,7 @@ of the species pseudo-continuum reported with the
 Section \ref{sec:SaveSpeciesContinuum}.
 The species must be specified in double quotations, followed
 by three numbers: the short and long wavelength limits
-(both in \AA ) and the number of logarithmic bins to
+(vacuum wavelengths, both in angstrom) and the number of logarithmic bins to
 divide this into.
 All three numbers must be specified.
 The default are lower and upper wavelength limits of
@@ -2659,8 +2674,8 @@ For example,
 set species "Fe+" continuum 3000 5000 200
 \end{verbatim}
 %
-would accumulate the Fe~{\sc ii} emission from 3000 \AA{}
-to 5000 \AA{} in 200 logarithmic bins.
+would accumulate the Fe~{\sc ii} emission from 3000\,\AA{}
+to 5000\,\AA{} in 200 logarithmic bins.
 
 
 \subsection{Set temperature [floor, convergence]}

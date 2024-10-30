@@ -282,7 +282,7 @@ STATIC void FindStrongestLineLabels( void )
 
 	ASSERT( LineSave.ipass==1 );
 
-	while( rfield.anumax(j_min) < RYDLAM/LineSave.lines[LineSave.SortWL[0]].wavelength() )
+	while( rfield.anumax(j_min) < RYDLAM/LineSave.lines[LineSave.SortWL[0]].wavlVac() )
 		j_min++;
 
 	for( j=0; j<rfield.nflux; j++ )
@@ -293,12 +293,12 @@ STATIC void FindStrongestLineLabels( void )
 			continue;
 		}
 
-		ASSERT( LineSave.lines[LineSave.SortWL[low_index]].wavelength() != 0. );
+		ASSERT( LineSave.lines[LineSave.SortWL[low_index]].wavlVac() != 0. );
 
-		while( RYDLAM/LineSave.lines[LineSave.SortWL[low_index]].wavelength() < rfield.anumin(j) && low_index < LineSave.nsum-1 )
+		while( RYDLAM/LineSave.lines[LineSave.SortWL[low_index]].wavlVac() < rfield.anumin(j) && low_index < LineSave.nsum-1 )
 		{
 			low_index++;
-			if( LineSave.lines[LineSave.SortWL[low_index]].wavelength() == 0. )
+			if( LineSave.lines[LineSave.SortWL[low_index]].wavlVac() == 0. )
 			{
 				// hit the end of real wavelengths.  Pad rest of labels with spaces
 				for( long j1=j; j1<rfield.nflux; j1++ )
@@ -308,12 +308,12 @@ STATIC void FindStrongestLineLabels( void )
 		}
 
 		high_index = low_index;
-		ASSERT( LineSave.lines[LineSave.SortWL[high_index]].wavelength() != 0. );
+		ASSERT( LineSave.lines[LineSave.SortWL[high_index]].wavlVac() != 0. );
 
-		while( RYDLAM/LineSave.lines[LineSave.SortWL[high_index]].wavelength() < rfield.anumax(j) && high_index < LineSave.nsum-1 )
+		while( RYDLAM/LineSave.lines[LineSave.SortWL[high_index]].wavlVac() < rfield.anumax(j) && high_index < LineSave.nsum-1 )
 		{
 			high_index++;
-			if( LineSave.lines[LineSave.SortWL[high_index]].wavelength() == 0. )
+			if( LineSave.lines[LineSave.SortWL[high_index]].wavlVac() == 0. )
 			{
 				high_index--;
 				break;
@@ -322,10 +322,10 @@ STATIC void FindStrongestLineLabels( void )
 		// while loop found first one greater than j bin, decrement again to get back into j bin
 		high_index--;
 
-		ASSERT( LineSave.lines[LineSave.SortWL[low_index]].wavelength() > 0. );
-		ASSERT( LineSave.lines[LineSave.SortWL[high_index]].wavelength() > 0. );
-		ASSERT( RYDLAM/LineSave.lines[LineSave.SortWL[low_index]].wavelength() >= rfield.anumin(j) );
-		ASSERT( RYDLAM/LineSave.lines[LineSave.SortWL[high_index]].wavelength() <= rfield.anumax(j) );
+		ASSERT( LineSave.lines[LineSave.SortWL[low_index]].wavlVac() > 0. );
+		ASSERT( LineSave.lines[LineSave.SortWL[high_index]].wavlVac() > 0. );
+		ASSERT( RYDLAM/LineSave.lines[LineSave.SortWL[low_index]].wavlVac() >= rfield.anumin(j) );
+		ASSERT( RYDLAM/LineSave.lines[LineSave.SortWL[high_index]].wavlVac() <= rfield.anumax(j) );
 
 		MaxFlux = 0.;
 		ipMaxFlux = 0;
@@ -697,7 +697,8 @@ void SaveDo(
 								ipHi = tr->Tran().ipHi();
 								fprintf( save.params[ipPun].ipPnunit,"%s\t%i\t%i\t",
 										dBaseSpecies[ipSpecies].chLabel,ipLo+1,ipHi+1);
-								fprintf( save.params[ipPun].ipPnunit,"%.5e\t%.5e",tr->Tran().WLAng() , tr->Tran().Emis().Aul() );
+								fprintf( save.params[ipPun].ipPnunit,"%s\t%.5e",tr->Tran().twav().sprt_wl().c_str(),
+										 tr->Tran().Emis().Aul() );
 								fprintf( save.params[ipPun].ipPnunit,"\n");
 							}
 							// temperature scale
@@ -2074,28 +2075,21 @@ void SaveDo(
 							/* print element name, nuclear charge */
 							fprintf( save.params[ipPun].ipPnunit, "%li\t%s", 
 								nelem+1 , elementnames.chElementSym[nelem] );
-							/*prt_wl print floating wavelength in Angstroms, in output format */
+							/*prt_wl print wavelength in output format */
 							fprintf( save.params[ipPun].ipPnunit, "\t" );
-							prt_wl( save.params[ipPun].ipPnunit , 
-								iso_sp[ipHE_LIKE][nelem].trans(ipHe2p1P,ipHe1s1S).WLAng() );
+							iso_sp[ipHE_LIKE][nelem].trans(ipHe2p1P,ipHe1s1S).twav().prt_wl(save.params[ipPun].ipPnunit);
 							fprintf( save.params[ipPun].ipPnunit, "\t" );
-							prt_wl( save.params[ipPun].ipPnunit , 
-								iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P1,ipHe1s1S).WLAng() );
+							iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P1,ipHe1s1S).twav().prt_wl(save.params[ipPun].ipPnunit);
 							fprintf( save.params[ipPun].ipPnunit, "\t" );
-							prt_wl( save.params[ipPun].ipPnunit , 
-								iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P2,ipHe1s1S).WLAng() );
+							iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P2,ipHe1s1S).twav().prt_wl(save.params[ipPun].ipPnunit);
 							fprintf( save.params[ipPun].ipPnunit, "\t" );
-							prt_wl( save.params[ipPun].ipPnunit , 
-								iso_sp[ipHE_LIKE][nelem].trans(ipHe2s3S,ipHe1s1S).WLAng() );
+							iso_sp[ipHE_LIKE][nelem].trans(ipHe2s3S,ipHe1s1S).twav().prt_wl(save.params[ipPun].ipPnunit);
 							fprintf( save.params[ipPun].ipPnunit, "\t" );
-							prt_wl( save.params[ipPun].ipPnunit , 
-								iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P2,ipHe2s3S).WLAng() );
+							iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P2,ipHe2s3S).twav().prt_wl(save.params[ipPun].ipPnunit);
 							fprintf( save.params[ipPun].ipPnunit, "\t" );
-							prt_wl( save.params[ipPun].ipPnunit , 
-								iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P1,ipHe2s3S).WLAng() );
+							iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P1,ipHe2s3S).twav().prt_wl(save.params[ipPun].ipPnunit);
 							fprintf( save.params[ipPun].ipPnunit, "\t" );
-							prt_wl( save.params[ipPun].ipPnunit , 
-								iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P0,ipHe2s3S).WLAng() );
+							iso_sp[ipHE_LIKE][nelem].trans(ipHe2p3P0,ipHe2s3S).twav().prt_wl(save.params[ipPun].ipPnunit);
 							fprintf( save.params[ipPun].ipPnunit, "\n"); 
 						}
 					}
@@ -2245,7 +2239,7 @@ void SaveDo(
 									continue;
 
 								double relI,absI,PrtQuantity;
-								double WV = iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).WLAng();
+								t_wavl WV = iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).twav();
 
 								if (cdLine("H  1",WV,&relI,&absI) == 0)
 									continue;
@@ -2255,35 +2249,36 @@ void SaveDo(
 								else
 									PrtQuantity = relI;
 
+								string wavlStr = iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).twav().sprt_wl();
 
 								if (ipHi< iso_sp[ipH_LIKE][ipHYDROGEN].numLevels_local - iso_sp[ipH_LIKE][ipHYDROGEN].nCollapsed_local )
 									/* print resolved levels */
-									fprintf(save.params[ipPun].ipPnunit, "%li\t%li\t%li\t%li\t%7.6g\t%.2e\t%.4e\t\n",
+									fprintf(save.params[ipPun].ipPnunit, "%li\t%li\t%li\t%li\t%s\t%.2e\t%.4e\t\n",
 											iso_sp[ipH_LIKE][ipHYDROGEN].st[ipHi].n(),
 											iso_sp[ipH_LIKE][ipHYDROGEN].st[ipHi].l(),
 											iso_sp[ipH_LIKE][ipHYDROGEN].st[ipLo].n(),
 											iso_sp[ipH_LIKE][ipHYDROGEN].st[ipLo].l(),
-											iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).WLAng(),
+											wavlStr.c_str(),
 											iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).Emis().TauTot()*SQRTPI/flin,
 											PrtQuantity);
 								else if (ipLo<iso_sp[ipH_LIKE][ipHYDROGEN].numLevels_local- iso_sp[ipH_LIKE][ipHYDROGEN].nCollapsed_local)
 										/* print collapsed to resolved */
-									fprintf(save.params[ipPun].ipPnunit, "%li\t%i\t%li\t%li\t%7.6g\t%.2e\t%.4e\t\n",
+									fprintf(save.params[ipPun].ipPnunit, "%li\t%i\t%li\t%li\t%s\t%.2e\t%.4e\t\n",
 											iso_sp[ipH_LIKE][ipHYDROGEN].st[ipHi].n(),
 											-1,
 											iso_sp[ipH_LIKE][ipHYDROGEN].st[ipLo].n(),
 											iso_sp[ipH_LIKE][ipHYDROGEN].st[ipLo].l(),
-											iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).WLAng(),
+											wavlStr.c_str(),
 											iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).Emis().TauTot()*SQRTPI/flin,
 											PrtQuantity);
 								else
 									/* print collapsed to collapsed */
-									fprintf(save.params[ipPun].ipPnunit, "%li\t%i\t%li\t%i\t%7.6g\t%.2e\t%.4e\t\n",
+									fprintf(save.params[ipPun].ipPnunit, "%li\t%i\t%li\t%i\t%s\t%.2e\t%.4e\t\n",
 											iso_sp[ipH_LIKE][ipHYDROGEN].st[ipHi].n(),
 											-1,
 											iso_sp[ipH_LIKE][ipHYDROGEN].st[ipLo].n(),
 											-1,
-											iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).WLAng(),
+											wavlStr.c_str(),
 											iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipHi,ipLo).Emis().TauTot()*SQRTPI/flin,
 											PrtQuantity);
 
@@ -2558,14 +2553,10 @@ void SaveDo(
 						{
 							fprintf( save.params[ipPun].ipPnunit,
 								"%.5e", radius.depth_mid_zone );
-
 							fprintf( save.params[ipPun].ipPnunit,
-								"\t%s ",
-								specline.chLabel.c_str() );
-							string chTemp;
-							sprt_wl( chTemp, specline.wave );
+									 "\t%s ", specline.chLabel().c_str() );
 							fprintf( save.params[ipPun].ipPnunit,
-								"%s", chTemp.c_str() );
+									 "%s", specline.twav().sprt_wl().c_str() );
 
 							double lower = 0.,
 							       upper = 0.,
@@ -2623,12 +2614,12 @@ void SaveDo(
 					/* save out all lines with energies */
 					for( j=0; j < LineSave.nsum; j++ )
 					{
-						if( LineSave.lines[j].wavelength() > 0. && 
+						if( LineSave.lines[j].wavlVac() > 0. && 
 							LineSave.lines[j].SumLine(0) > 0. )
 						{
 							/* line energy, in units set with units option */
 							fprintf( save.params[ipPun].ipPnunit, "%12.5e", 
-										AnuUnit((realnum)RYDLAM/LineSave.lines[j].wavelength()) );
+										AnuUnit((realnum)RYDLAM/LineSave.lines[j].wavlVac()) );
 							/* line label */
 							fprintf( save.params[ipPun].ipPnunit, "\t");
 							LineSave.lines[j].prt(save.params[ipPun].ipPnunit);
@@ -2683,26 +2674,28 @@ void SaveDo(
 					const int NLINE_H2 = 30; 
 					/* the number of lines which are not H2 */
 					const int NLINE_NOTH_H2 = 5; 
-					/* the labels and wavelengths for the lines that are not H2 */
+					/* the labels and air wavelengths in angstrom for the lines that are not H2 */
 					char chLabel[NLINE_NOTH_H2][NCHLAB]=
 					{ "C  2", "O  1", "O  1", "C  1", "C  1" };
-					double Wl[NLINE_NOTH_H2]=
-					{ 157.636 , 63.1679 , 145.495, 609.590 , 370.269 };
-					/* these are wavelengths in microns, conv to Angstroms before call */
+					t_wavl Wl[NLINE_NOTH_H2]=
+					{ 157.636e4_air, 63.1679e4_air, 145.495e4_air, 609.590e4_air, 370.269e4_air };
+					/* these are air wavelengths in angstrom */
 					/* >>chng 05 sep 06, many of following wavelengths updated to agree
 					 * with output - apparently not updated when energies changed */
-					double Wl_H2[NLINE_H2]=
-					{2.12125,
-					 28.2111, 17.0302, 12.2753, 9.66228, 8.02285, 6.90763, 6.10690, 5.50968, 5.05174, 4.69333,
-					 4.40859, 4.17994, 3.99506, 3.84506, 3.72267, 3.62518, 3.54662, 3.48542, 3.43693, 3.40323,
-					 3.38030, 3.36779, 3.36496, 3.37126, 3.38638, 3.41019, 3.44280, 3.54241, 3.60100};
+					t_wavl Wl_H2[NLINE_H2]=
+					{2.12125e4_air,
+					 28.2111e4_air, 17.0302e4_air, 12.2753e4_air, 9.66228e4_air, 8.02285e4_air, 6.90763e4_air,
+					 6.10690e4_air, 5.50968e4_air, 5.05174e4_air, 4.69333e4_air, 4.40859e4_air, 4.17994e4_air,
+					 3.99506e4_air, 3.84506e4_air, 3.72267e4_air, 3.62518e4_air, 3.54662e4_air, 3.48542e4_air,
+					 3.43693e4_air, 3.40323e4_air, 3.38030e4_air, 3.36779e4_air, 3.36496e4_air, 3.37126e4_air,
+					 3.38638e4_air, 3.41019e4_air, 3.44280e4_air, 3.54241e4_air, 3.60100e4_air};
 					/* print a header for the lines */
 					for( n=0; n<NLINE_NOTH_H2; ++n )
 					{
 						prt_line_inlist( save.params[ipPun].ipPnunit, chLabel[n], Wl[n] );
 						/* get the line, non positive return says didn't find it */
 						/* arguments are 4-char label, wavelength, return log total intensity, linear rel inten */
-						if( cdLine( chLabel[n] , (realnum)(Wl[n]*1e4) , &rel, &absval ) <= 0 )
+						if( cdLine( chLabel[n], Wl[n], &rel, &absval ) <= 0 )
 						{
 							fprintf(save.params[ipPun].ipPnunit, " did not find\n");
 						}
@@ -2722,9 +2715,9 @@ void SaveDo(
 							"lines where X goes from 0 to 29\n\n");
 						for( n=0; n<NLINE_H2; ++n )
 						{
-							prt_line_inlist( save.params[ipPun].ipPnunit,   "H2  ", Wl_H2[n] );
+							prt_line_inlist( save.params[ipPun].ipPnunit, "H2  ", Wl_H2[n] );
 							/* get the line, non positive return says didn't find it */
-							if( cdLine( "H2" , (realnum)(Wl_H2[n]*1e4) , &rel, &absval ) <= 0 )
+							if( cdLine( "H2", Wl_H2[n], &rel, &absval ) <= 0 )
 							{
 								fprintf(save.params[ipPun].ipPnunit, " did not find\n");
 							}
@@ -2863,7 +2856,7 @@ void SaveDo(
 						double relative , absolute, PrtQuantity;
 						if( cdLine(save.LineList[ipPun][j], &relative , &absolute , LineType) <= 0 )
 						{
-							if( !h2.lgEnabled && save.LineList[ipPun][j].chLabel == "H2" )
+							if( !h2.lgEnabled && save.LineList[ipPun][j].chLabel() == "H2" )
 							{
 								static bool lgMustPrintFirstTime = true;
 								if( lgMustPrintFirstTime )
@@ -2899,10 +2892,8 @@ void SaveDo(
 							if( save.lgLineListRatio[ipPun] && is_odd(j) )
 								fprintf( save.params[ipPun].ipPnunit , "/" );
 
-							fprintf( save.params[ipPun].ipPnunit, "%s ", save.LineList[ipPun][j].chLabel.c_str() );
-							string chTemp;
-							sprt_wl( chTemp, save.LineList[ipPun][j].wave );
-							fprintf( save.params[ipPun].ipPnunit, "%s ", chTemp.c_str() );
+							fprintf(save.params[ipPun].ipPnunit, "%s ", save.LineList[ipPun][j].chLabel().c_str());
+							fprintf(save.params[ipPun].ipPnunit, "%s ", save.LineList[ipPun][j].twav().sprt_wl().c_str());
 						}
 
 						/* if taking ratio print every other line as ratio
@@ -3923,10 +3914,10 @@ void Save1Line( const TransitionProxy& t , FILE * ioPUN , realnum xLimit  , long
 			fprintf( ioPUN, "%-*.*s\t",CHARS_SPECIES, CHARS_SPECIES, chIonLbl(t).c_str());
 
 			/* print wavelengths, either line in main printout labels, 
-			 * or in various units in exponential notation - prt_wl is in prt.c */
-			if( strcmp( save.chConSavEnr[save.ipConPun], "labl" )== 0 )
+			 * or in various units in exponential notation */
+			if( strcmp( save.chConSavEnr[save.ipConPun], "labl" ) == 0 )
 			{
-				prt_wl( ioPUN , t.WLAng() );
+				t.twav().prt_wl(ioPUN);
 			}
 			else
 			{

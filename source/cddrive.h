@@ -209,7 +209,7 @@ void cdNotes(FILE*);
  * this also IS NOT the standard C convention for success or failure */
  
 long int cdLine(const string& chLabel, 
-				realnum wavelength, 
+				t_wavl wavelength, 
 				double *relint, 
 				double *absint,
 				// 0 is intrinsic,
@@ -303,7 +303,7 @@ double cdH2_colden( long iVib , long iRot );
 */
 void cdEmis(
 	const char *chLabel,
-	realnum wavelength, 
+	t_wavl wavelength, 
 	double *emiss,
 	bool lgEmergent );
 

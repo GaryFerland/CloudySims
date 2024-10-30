@@ -24,7 +24,7 @@ save species lines ".lin" "Fe+" last
 save species continuum units microns ".fe2con" "Fe+" last
 save species column density ".fe2col" "Fe+[:]" last
 save species densities ".lev" "Fe+[:]" last
-save species bands ".fe2b" "FeII_bands.ini" "Fe+" last
+save species bands ".fe2b" "FeII_bands.dat" "Fe+" last
 save overview ".ovr" last
 save dr ".dr" last
 save convergence reason ".cvr"
@@ -350,7 +350,8 @@ monitor line intensity "Fe 2b" 4855 6.129 error 0.1
 ## >>chng 16 aug 17, from 5.754 to 5.937, bugfix at r11237
 ## >>chng 21 nov 02, from 5.937 to 5.889, fix bug with overresolving CS in isoseq
 ## >>chng 23 jun 27, from 5.889 to 5.767, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 4971 5.767 error 0.1
+## >>chng 24 oct 03, from 5.767 to 6.41, reinterpret species band edges as vacuum wl
+monitor line intensity "Fe 2b" 4971 6.41 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 6.702, Move FeII to Stout
 ## >>chng 16 aug 17, from 6.702 to 6.845, bugfix at r11237
@@ -393,7 +394,8 @@ monitor line intensity "Fe 2b" 7445 6.862 error 0.1
 ## >>chng 14 jul 08, from 1.01 to 5.235, Move FeII to Stout
 ## >>chng 16 aug 17, from 5.235 to 5.313, bugfix at r11237
 ## >>chng 23 jun 27, from 5.313 to 4.724, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 7785 4.724 error 0.1
+## >>chng 24 oct 03, from 4.724 to 4.562, reinterpret species band edges as vacuum wl
+monitor line intensity "Fe 2b" 7785 4.562 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 6.002, Move FeII to Stout
 ## >>chng 23 jun 27, from 6.002 to 5.362, update Fe+ model to Smyth+19
