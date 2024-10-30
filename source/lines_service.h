@@ -188,9 +188,9 @@ void set_xIntensity( const TransitionProxy &t );
  \param fenergyWN energy in wavenumbers, cm^-1
  \return vacuum wavelength in angstrom
 */
-inline double wn2angVac( double fenergyWN )
+inline realnum wn2angVac( double fenergyWN )
 {
-	return safe_div( 1e+8, fenergyWN );
+	return safe_div( 1e+8_r, realnum(fenergyWN) );
 }
 
 #endif /* LINES_SERVICE_H_ */

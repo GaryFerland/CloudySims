@@ -469,7 +469,7 @@ void lines_hydro(void)
 						iso_comment_tran_levels( ipISO, nelem, (*tnu).ipLo, (*tnu).ipHi );
 				}
 				linadd(	tnu->AulTotal * tnu->E2nu * EN1RYD * (*tnu->Pop),
-						t_vac(2. * wn2angVac( iso_sp[ipH_LIKE][nelem].trans( (*tnu).ipHi, (*tnu).ipLo ).EnergyWN() )),
+						t_vac(2_r * wn2angVac( iso_sp[ipH_LIKE][nelem].trans( (*tnu).ipHi, (*tnu).ipLo ).EnergyWN() )),
 						chLabel.c_str(), 'r', tpc_comment.c_str() );
 			}
 

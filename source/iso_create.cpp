@@ -309,7 +309,7 @@ void iso_create()
 						if( rfield.isEnergyBound(Energy(EnergyWN, "cm^-1")) )
 						{
 							iso_sp[ipISO][nelem].trans(ipHi,ipLo).WLangVac() = 
-								(realnum) wn2angVac( double( iso_sp[ipISO][nelem].trans(ipHi,ipLo).EnergyWN() ) );
+								wn2angVac( double( iso_sp[ipISO][nelem].trans(ipHi,ipLo).EnergyWN() ) );
 							ASSERT(iso_sp[ipISO][nelem].trans(ipHi,ipLo).WLangVac() > 0.);
 						}
 						else
@@ -1429,7 +1429,7 @@ STATIC void FillExtraLymanLine( const TransitionList::iterator& t, long ipISO, l
 
 	/* transition energy in various units:*/
 	(*t).EnergyWN() = (realnum)(Enerwn);
-	(*t).WLangVac() = (realnum) wn2angVac( Enerwn );
+	(*t).WLangVac() = wn2angVac( Enerwn );
 
 	(*(*t).Hi()).energy().set( Enerwn, "cm^-1" );
 

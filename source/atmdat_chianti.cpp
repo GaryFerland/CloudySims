@@ -337,7 +337,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		tr->EnergyWN() = fenergyWN;
 		if( rfield.isEnergyBound( Energy( fenergyWN, "cm^-1" ) ) )
 		{
-			tr->WLangVac() = (realnum) wn2angVac( fenergyWN );
+			tr->WLangVac() = wn2angVac( fenergyWN );
 			dBaseSpecies[intNS].maxWN = MAX2(dBaseSpecies[intNS].maxWN,tr->EnergyWN());
 		}
 		else
@@ -1111,7 +1111,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 
 		if( rfield.isEnergyBound( Energy( fenergyWN, "cm^-1" ) ) )
 		{
-			tr->WLangVac() = (realnum) wn2angVac( fenergyWN );
+			tr->WLangVac() = wn2angVac( fenergyWN );
 			dBaseSpecies[intNS].maxWN = MAX2(dBaseSpecies[intNS].maxWN,fenergyWN);
 		}
 		else
@@ -1367,7 +1367,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 			tr->EnergyWN() = fenergyWN;
 			if( rfield.isEnergyBound( Energy( fenergyWN, "cm^-1" ) ) )
 			{
-				tr->WLangVac() = (realnum) wn2angVac( fenergyWN );
+				tr->WLangVac() = wn2angVac( fenergyWN );
 				tr->Emis().gf() = (realnum)GetGF(tr->Emis().Aul(), tr->EnergyWN(), tr->Hi()->g());
 			}
 			else

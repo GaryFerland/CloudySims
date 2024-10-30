@@ -299,7 +299,7 @@ void LinSv::setBlendWavl()
 			sum_wn_den += weight;
 			sum_wn_num += weight * tr.EnergyWN();
 		}
-		double wl = 0.;
+		realnum wl = 0_r;
 		if( sum_wn_den > 0. )
 			sum_wn_num /= sum_wn_den;
 		if( sum_wn_num > 0. )
