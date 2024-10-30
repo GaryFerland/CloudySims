@@ -50,7 +50,7 @@ void ParseBackgrd(Parser &p)
 	strcpy( rfield.chSpNorm[p.m_nqh], "FLUX" );
 	/* this is an isotropic radiation field */
 	rfield.lgBeamed[p.m_nqh] = false;
-	rfield.Illumination[p.m_nqh] = Illuminate::ISOTROPIC;
+	rfield.Illumination[p.m_nqh] = Illumination::SYMMETRIC;
 
 	/* this will be the redshift */
 	z = p.FFmtRead();

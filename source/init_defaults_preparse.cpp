@@ -634,7 +634,7 @@ void InitDefaultsPreparse( void )
 		/* most continua enter as a beam rather than isotropic */
 		rfield.lgBeamed[i] = true;
 		// default is radiation from the "illuminated" face
-		rfield.Illumination[i] = Illuminate::FORWARD;
+		rfield.Illumination[i] = Illumination::FORWARD;
 		// optical depth = normal optical depth * this scale factor,
 		// is 1 / cos theta
 		rfield.OpticalDepthScaleFactor[i] = 1.;

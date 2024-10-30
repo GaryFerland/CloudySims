@@ -41,7 +41,7 @@ void vary_input(bool *lgLimOK,
 		// check if the keyword _LOG is present; the optimizer may not work
 		// correctly if it is not optimizing logarithmic quantities.
 		//
-		// exceptions are the commands ILLUMINATE and RATIO since they vary
+		// exceptions are the commands ILLUMINATION and RATIO since they vary
 		// quantities of order unity anyway, and the commands DLAW and FUDGE
 		// since they are entirely defined by the user.
 		//

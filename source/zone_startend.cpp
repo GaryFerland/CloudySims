@@ -154,7 +154,7 @@ void ZoneStart(const char *chMode)
 		  * when ZoneDone called */
 
 		/* this will be the optical thickness of the next zone
-		 * AngleIllumRadian is 1/COS(theta), is usually 1, reset with illuminate command,
+		 * AngleIllumRadian is 1/COS(theta), is usually 1, reset with illumination command,
 		 * option for illumination of slab at an angle */
 
 		/* radius.dRNeff is next dr with filling factor, this will only be
