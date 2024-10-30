@@ -1486,7 +1486,7 @@ STATIC void read_UTA_lines()
 				/* wavelength in Angstroms */
 				double fenergyWN = 1e8/EnergyAng;
 				UTALines.back().EnergyWN() = fenergyWN;
-				UTALines.back().WLangVac() = (realnum) wn2angVac( fenergyWN );
+				UTALines.back().WLangVac() = wn2angVac( fenergyWN );
 
 				/* store branching ratio for autoionization */
 				double frac_ioniz = Aauto/(Aul + Aauto);
