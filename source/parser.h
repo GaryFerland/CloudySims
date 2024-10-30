@@ -806,8 +806,8 @@ void ParseTrace(Parser &p);
 /*ParseExtinguish parse the extinguish command */
 void ParseExtinguish( Parser &p );
 
-/*ParseIlluminate parse the illuminate command */
-void ParseIlluminate( Parser &p );
+/*ParseIllumination parse the illumination command */
+void ParseIllumination( Parser &p );
 
 /*ParseCaseB - parse the Case B command */
 void ParseCaseB(Parser &p );

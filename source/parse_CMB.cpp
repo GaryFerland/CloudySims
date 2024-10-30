@@ -40,7 +40,7 @@ void ParseCMB(double z,
 	rfield.totpow[*nqh] = rlogl;
 	/* this is an isotropic radiation field */
 	rfield.lgBeamed[*nqh] = false;
-	rfield.Illumination[*nqh] = Illuminate::ISOTROPIC;
+	rfield.Illumination[*nqh] = Illumination::SYMMETRIC;
 
 	++rfield.nShape;
 	++*nqh;

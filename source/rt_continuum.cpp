@@ -157,7 +157,7 @@ void RT_continuum(void)
 	rfield.EnergyDiffCont = 0.;
 
 	// attenuation of flux by optical depths IN THIS ZONE 
-	// DirectionalCosin is 1/COS(theta), is usually 1, reset with illuminate command,
+	// DirectionalCosin is 1/COS(theta), is usually 1, reset with illumination command,
 	// option for illumination of slab at an angle 
 	double fac = radius.drad_x_fillfac*geometry.DirectionalCosin;
 	for( long i=0; i < rfield.nflux; i++ )

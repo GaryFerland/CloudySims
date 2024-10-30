@@ -390,7 +390,7 @@ void IterStart()
 		 * since tau in is 1e-20, e2 is 0.9999, and so some H ots
 		 * these were not here at all - changed to dr/2 */
 		/* attenuation of flux by optical depths IN THIS ZONE 
-		 * DirectionalCosin is 1/COS(theta), is usually 1, reset with illuminate command,
+		 * DirectionalCosin is 1/COS(theta), is usually 1, reset with illumination command,
 		 * option for illumination of slab at an angle */
 		/* >>chng 04 oct 09, from drad to radius.drad_x_fillfac - include fill fac, PvH */
 		opac.ExpZone[i] = sexp(opac.opacity_abs[i]*radius.drad_x_fillfac/2.*geometry.DirectionalCosin);
@@ -1067,7 +1067,7 @@ void IterRestart(void)
 		 * since tau in is 1e-20, e2 is 0.9999, and so some H ots
 		 * these were not here at all*/
 		/* attenuation of flux by optical depths IN THIS ZONE 
-		 * DirectionalCosin is 1/COS(theta), is usually 1, reset with illuminate command,
+		 * DirectionalCosin is 1/COS(theta), is usually 1, reset with illumination command,
 		 * option for illumination of slab at an angle */
 		opac.ExpZone[i] = sexp(opac.opacity_abs[i]*radius.drad/2.*geometry.DirectionalCosin);
 

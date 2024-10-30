@@ -268,8 +268,7 @@ void ParseCommands(void)
 		{"HIGH",ParseConvHighT},
 		/* approach equilibrium from high te */
 		{"HYDROGEN",ParseHydrogen},
-		{"ILLUMINATION",ParseIlluminate},
-		// illuminate command
+		{"ILLUMINATION",ParseIllumination},
 		{"INIT",ParseInitCount},
 		{"INTENSITY",ParseIntensity},
 		{"INTERPOLATE",ParseInterp},
