@@ -166,9 +166,6 @@ STATIC void prme(
 		return;
 	}
 
-	if( (*t.Lo()).ColDen() <= 0. )
-		return;
-
 	/* print optical depth if greater than lower limit, or significantly negative
 	 * PrtTauFnt is threshold for printing it
 	 * */
