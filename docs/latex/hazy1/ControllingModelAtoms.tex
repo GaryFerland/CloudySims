@@ -913,14 +913,15 @@ and the number of collapsed levels.
 \subsubsection{Setting the number of levels with keywords}
 
 If no numbers occur then we look for a keyword to specify preset sizes.
-The code will use the smaller of either the preset size or the current size.
 
-\emph{The H-like iso sequence.}
-
-The keyword
-\cdCommand{large} or \cdCommand{small}
-specifies either 40 or 5 resolved levels.
-Ten collapsed levels are used for the \cdCommand{small} option.
+The keyword \cdCommand{large} specifies a preset size of 40 resolved and 10
+collapsed levels. The code will make sure that the model atom uses the larger
+of either the preset size or the current size (i.e., it sets a minimum size).
+The keyword \cdCommand{small} specifies a preset size of 5 resolved levels
+(for the H-like sequence) or 3 resolved levels (for the He-like sequence) and
+10 collapsed levels. The code will make sure that the model atom uses the
+smaller of either the preset size or the current size (i.e., it sets a maximum
+size).
 
 The following would set the full H-like isoelectronic
 sequence to a small number of levels, then reset hydrogen, helium,
@@ -932,17 +933,13 @@ database H-like levels large element helium
 database H-like levels large element iron
 \end{verbatim}
 
-\emph{The He-like iso sequence.}
-If no number appears on the command, but the keyword \cdCommand{large} or
-\cdCommand{small} does,
-then the number of levels will be large enough to extend
-to either $n = 40$ or 3.
 Actually, the atoms are
-coded so that there is no limit to the number of levels that
-can be included, other than the memory and computer time requirements
-(which can be substantial for large model atoms).
+coded so that the number of levels can be made even larger than discussed above.
+However, the memory and computer time requirements
+will be substantial for large model atoms, so in most cases that will
+set the upper limit to the size you can model.
 
-Use the \cdCommand{database xx-like levels print} to confirm that you are using
+Use the \cdCommand{database xx-like levels print} command to confirm that you are using
 the expected number of levels.
 
 {\it A word of caution.} Using a small model atom for He-like species (and
@@ -963,10 +960,10 @@ database H-like levels large
 \end{verbatim}
 will set all \LIMELM\ hydrogenic atoms to a large number of levels.
 This would
-require roughly half a gigabyte of memory for the H-like sequence alone,
+require at least 12 gigabyte of memory for the H-like sequence alone,
 and would be very slow on today's computers.
-It is best to set only the
-most important elements to large levels.
+It is best to only use large model atoms for the
+most important elements.
 
 \subsection{Database H-like \OR{} He-like Lyman options}
 
