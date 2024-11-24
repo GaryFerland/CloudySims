@@ -377,8 +377,8 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 				/* no number, so check for either large or small */
 				if( p.nMatch("LARG") )
 				{
-					// set up model atom to use at least RREC_MAXN resolved and 10 collapsed levels
-					MinLevelsCollapsed = 10;
+					// set up model atom to use at least RREC_MAXN resolved and 160 collapsed levels
+					MinLevelsCollapsed = 160;
 					MaxLevelsCollapsed = INT_MAX;
 					/* includes all levels with tabulated rec coefficient */
 					MinLevelsResolved = RREC_MAXN;
