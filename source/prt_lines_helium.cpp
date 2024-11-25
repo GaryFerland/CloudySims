@@ -278,6 +278,8 @@ void lines_helium()
 							"total emission in He-like lines, use wgt average of three line wavelengths " );
 					setup_multiplet( lineHe1, multiplet );
 					multiplet.resize( 0 );
+					if( false && LineSave.ipass > 0 )
+						lineHe1->prt_blend();
 				}
 			}
 			for( long ipLo=ipHe2p3P2+1; ipLo < nLoop-1; ipLo++ )
