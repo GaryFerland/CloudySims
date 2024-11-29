@@ -32,6 +32,9 @@ void Junk(qStateProxy st)
 
 	st.status() = LEVEL_ACTIVE;
 
+	/** index of the level in the original input file (fortran scale) */
+	st.ipOrg() = -1;
+
 	return;
 }
 

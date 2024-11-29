@@ -60,7 +60,21 @@ void LineStackCreate()
 	LineSave.ipass = 0;
 	lines();
 	/* has to be positive */
-	ASSERT( LineSave.nsum > 0);
+	ASSERT( LineSave.nsum > 0 );
+
+	/* make sure level index is initialized for all assocated transitions */
+	for( long i=0; i < LineSave.nsum; i++ )
+	{
+		auto tr = LineSave.lines[i].getTransition();
+		if( tr.associated() )
+		{
+			if( tr.Lo()->ipOrg() < 0 )
+				tr.Lo()->ipOrg() = tr.ipLo()+1;
+			if( tr.Hi()->ipOrg() < 0 )
+				tr.Hi()->ipOrg() = tr.ipHi()+1;
+		}
+	}
+
 	/* in the future calls to lines will result in integrations */
 	LineSave.ipass = 1;
 

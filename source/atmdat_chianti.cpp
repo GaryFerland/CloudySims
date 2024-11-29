@@ -299,6 +299,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 
 		dBaseStates[intNS][i].energy().set(nrg,"cm^-1");
 		dBaseStates[intNS][i].g() = stwt;
+		dBaseStates[intNS][i].ipOrg() = oldindex;
 	}
 
 	/* allocate the Transition array*/
@@ -1084,11 +1085,12 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 
 		if( DEBUGSTATE )
 		{
-			fprintf(ioQQQ,"<%s>\t%li\t%li\t",dBaseSpecies[intNS].chLabel,ipLevFile+1,ipLevNew+1);
+			fprintf(ioQQQ,"<%s>\t%li\t%li\t%g\n",dBaseSpecies[intNS].chLabel,ipLevFile+1,ipLevNew+1,i->first);
 		}
 
 		dBaseStates[intNS][ipLevNew].g() = dBaseStatesStwt.at(i->second);
 		dBaseStates[intNS][ipLevNew].energy().set(i->first,"cm^-1");
+		dBaseStates[intNS][ipLevNew].ipOrg() = ipLevFile+1;
 
 		if( DEBUGSTATE )
 		{

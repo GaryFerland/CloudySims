@@ -53,6 +53,7 @@ class qList
 	vector<double> m_NCrit;
 	vector<long> m_S;
 	vector<long> m_v;
+	vector<int> m_ipOrg;
 	vector<enum level_status> m_status;
 	realnum m_width;
 	friend class qStateProxy;
@@ -101,6 +102,7 @@ private:
 		m_NCrit.resize(i);
 		m_S.resize(i);
 		m_v.resize(i);
+		m_ipOrg.resize(i);
 		m_status.resize(i);
 		for (size_t n=old_size; n<i; ++n)
 		{
@@ -263,6 +265,10 @@ public:
 	{
 		return m_list->m_v[m_index];
 	}
+	int &ipOrg() const
+	{
+		return m_list->m_ipOrg[m_index];
+	}
 	realnum &j() const
 	{
 		return m_list->m_j[m_index];
@@ -360,6 +366,10 @@ public:
 	long v() const
 	{
 		return m_list->m_v[m_index];
+	}
+	int ipOrg() const
+	{
+		return m_list->m_ipOrg[m_index];
 	}
 	realnum j() const
 	{
