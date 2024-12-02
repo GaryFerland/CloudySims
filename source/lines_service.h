@@ -6,6 +6,41 @@
 
 class LinSv;
 
+/** linadd - Add line to line stack, but don't transfer it
+ *
+ * This version of the function must be used with the 'Inwd' parts of
+ * transferred lines.  See Issue #491 for problems that led to its inception.
+ *
+ * \param xInten [in] - local line emissivity, no filling factor
+ * \param xIntenIsoBkg [in] - as above, but corrected for isotropic continua
+ * \param wavelength [in] - line wavelength
+ * \param chLab [in] - line label, e.g., 'Fe26'
+ * \param chInfo [in] - line type: 'i' info, 'c' cooling, 'h' heating, 'r' recomb
+ * \param chComment [in] - line comment, shown on output of 'save line labels'
+ *
+ * \returns A pointer to the newly added line on the line stack.
+ */
+LinSv *linadd(
+  double xInten,
+  double xIntenIsoBkg,
+  t_wavl wavelength,
+  const char *chLab,
+  char chInfo,
+  const char *chComment );
+
+/** linadd - Add line to line stack, but don't transfer it
+ *
+ * The original version of the function, uses the local emissivity as the value
+ * corrected for isotropic continua.  For limitations to its use, see Issue #491.
+ *
+ * \param xInten [in] - local line emissivity, no filling factor
+ * \param wavelength [in] - line wavelength
+ * \param chLab [in] - line label, e.g., 'Fe26'
+ * \param chInfo [in] - line type: 'i' info, 'c' cooling, 'h' heating, 'r' recomb
+ * \param chComment [in] - line comment, shown on output of 'save line labels'
+ *
+ * \returns A pointer to the newly added line on the line stack.
+ */
 LinSv *linadd(
   double xInten,
   t_wavl wavelength,

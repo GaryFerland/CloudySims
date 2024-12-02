@@ -285,6 +285,20 @@ void LinSv::makeBlend(const char* chLabel,const t_wavl& wavelength1, const realn
 	}
 }
 
+void LinSv::prt_blend() const
+{
+	if( ! isBlend() )
+		return;
+	fprintf( ioQQQ, "DEBUG BLEND '%s':\n", label().c_str() );
+	for(size_t j=0; j<m_component.size(); ++j)
+	{
+		long id = m_component[j];
+		fprintf( ioQQQ, "  %ld '%s' %.4e\n",
+			id, LineSave.lines[id].label().c_str(),
+			LineSave.lines[id].SumLine( 0 ) );
+	}
+}
+
 void LinSv::setBlendWavl()
 {
 	if( LineSave.ipass == 0 && isBlend() )

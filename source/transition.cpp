@@ -323,7 +323,9 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	string chLabel;
 	double xIntensity,
 		other,
-		xIntensity_in;
+		xIntensity_in,
+		xObsIntensity,
+		xObsIntensity_in;
 		
 	/* routine to use line array data to generate input
 	 * for emission line array */
@@ -346,6 +348,7 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 			chLabel = chIonLbl(t);
 		}
 		xIntensity = 0.;
+		xObsIntensity = 0.;
 	}
 	else
 	{
@@ -356,6 +359,7 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 		/* total line intensity or luminosity 
 		 * these may not be defined in initial calls so define here */
 		xIntensity = t.Emis().xIntensity() + extra.v;
+		xObsIntensity = t.Emis().xObsIntensity() + extra.v;
 	}
 
 	/* initial counting case, where ipass == -1, just ignored above, call linadd below */
@@ -379,11 +383,12 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	/* inward part of line - do not move this away from previous lines
 	 * since xIntensity is used here */
 	xIntensity_in = xIntensity*t.Emis().FracInwd();
+	xObsIntensity_in = xObsIntensity*t.Emis().FracInwd();
 	ASSERT( xIntensity_in>=0. );
 	if( lgIsM1Line(t) )	
-		linadd(xIntensity_in,t.twav(),"Inwd M1",'i',chComment);
+		linadd(xIntensity_in,xObsIntensity_in,t.twav(),"Inwd M1",'i',chComment);
 	else
-		linadd(xIntensity_in,t.twav(),"Inwd",'i',chComment);
+		linadd(xIntensity_in,xObsIntensity_in,t.twav(),"Inwd",'i',chComment);
 	
 	/* cooling part of line */
 	other = t.Coll().cool();

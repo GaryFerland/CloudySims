@@ -425,8 +425,27 @@ STATIC LinSv* lincom(
 /*linadd enter lines into the line storage array, called once per zone for each line*/
 LinSv *linadd(
   double xEmiss,	/* xEmiss - local emissivity per unit vol, no fill fac */
-  t_wavl wavelength,	/* realnum wavelength */
-  const char *chLab,/* string label for ion */
+  double xEmissIsoBkg,	/* xEmiss - local emissivity per unit vol, no fill fac, corrected for isotropic continua */
+  t_wavl wavelength,	/* wavelength */
+  const char *chLab,    /* string label for ion */
+  char chInfo,		/* character type of entry for line - given below */
+			/* 'c' cooling, 'h' heating, 'i' info only, 'r' recom line, 't' transferred line */
+  const char *chComment )
+{
+	DEBUG_ENTRY( "linadd()" );
+
+	// Values added to get common interface with lindst
+	const long int ipnt = LONG_MAX;
+
+	return lincom( xEmiss, xEmissIsoBkg, wavelength, chLab, ipnt, chInfo, chComment, true, TransitionProxy() );
+}
+
+
+/*linadd enter lines into the line storage array, called once per zone for each line*/
+LinSv *linadd(
+  double xEmiss,	/* xEmiss - local emissivity per unit vol, no fill fac */
+  t_wavl wavelength,	/* wavelength */
+  const char *chLab,	/* string label for ion */
   char chInfo,		/* character type of entry for line - given below */
 			/* 'c' cooling, 'h' heating, 'i' info only, 'r' recom line, 't' transferred line */
   const char *chComment )
@@ -941,7 +960,7 @@ void set_xIntensity( const TransitionProxy& t )
 
 	t.Emis().xObsIntensity() = nphot * t.EnergyErg();
 
-	if( 0 && t.chLabel() == "Fe24                3068.00m" )
+	if( 0 && t.chLabel() == "H  1                4861.32A" )
 	{
 		fprintf(ioQQQ,
 			"\"%s\"\t%.4e\t%.4e\t%.4e\t%.4e\t%.4e\t%.4e\t%.4e\t%.4e\t%.4e\n",

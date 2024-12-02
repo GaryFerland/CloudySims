@@ -333,6 +333,9 @@ public:
 			m_emslin[1] = m_emslin[0];
 	}
 
+	/** prt_blend - print to .out blend components and their intensities */
+	void prt_blend() const;
+
 	/** the vacuum wavelength of the line */
 	realnum wavlVac() const
 	{
