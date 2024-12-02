@@ -87,7 +87,8 @@ void prt_LineLabels(
 			auto tr = LineSave.lines[i].getTransition();
 			if( tr.associated() )
 			{
-				fprintf(ioOUT, "index=%d, %d ", tr.ipLo()+1, tr.ipHi()+1);
+				ASSERT( tr.Lo()->ipOrg() >= 0 && tr.Hi()->ipOrg() >= 0 );
+				fprintf(ioOUT, "index=%d, %d ", tr.Lo()->ipOrg(), tr.Hi()->ipOrg());
 				fprintf(ioOUT, "Elow=%.7g   ", tr.Lo()->energy().WN());
 			}
 			fprintf(ioOUT, "%s" , comment.substr(j).c_str());

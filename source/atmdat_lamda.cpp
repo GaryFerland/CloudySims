@@ -176,6 +176,7 @@ void atmdat_LAMDA_readin( long intNS, const string& chEFilename )
 		}
 		dBaseStates[intNS][ipLev].energy().set(fenergy,"cm^-1");
 		dBaseStates[intNS][ipLev].g() = fstatwt;
+		dBaseStates[intNS][ipLev].ipOrg() = index;
 
 		if( ipLev > 0 )
 		{

@@ -427,7 +427,7 @@ long t_LineSave::findline(const LineID& line)
 			{
 				auto tr = lines[*pos].getTransition();
 				if( tr.associated() )
-					lgMatch = ( line.indLo() == tr.ipLo()+1 && line.indHi() == tr.ipHi()+1 );
+					lgMatch = ( line.indLo() == tr.Lo()->ipOrg() && line.indHi() == tr.Hi()->ipOrg() );
 				else
 					lgMatch = false;
 			}
@@ -559,7 +559,7 @@ long t_LineSave::findline(const LineID& line)
 		if( line.indLo() > 0 && line.indHi() > 0 )
 		{
 			auto tr = lines[j].getTransition();
-			if( !tr.associated() || line.indLo() != tr.ipLo()+1 || line.indHi() != tr.ipHi()+1 )
+			if( !tr.associated() || line.indLo() != tr.Lo()->ipOrg() || line.indHi() != tr.Hi()->ipOrg() )
 				continue;
 		}
 		if( line.ELo() >= 0_r )
