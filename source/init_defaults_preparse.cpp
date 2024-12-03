@@ -263,11 +263,10 @@ void InitDefaultsPreparse( void )
 
 	abund.lgAbTaON = false;
 
-	/* option to turn off an element */
 	for( nelem=0; nelem < LIMELM; nelem++ )
 	{
 		/* option to have abundances from table */
-		abund.lgAbunTabl[nelem] = false;
+		abund.AbunTab[nelem].clear();
 	}
 
 	/* threshold for faintest heating cooling to save with save heating or 
