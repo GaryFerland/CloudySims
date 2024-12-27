@@ -22,6 +22,10 @@
 # Comment: Implement Christophe Morisset's request to emit bare numbers for
 #	   release tags.  Simplify logic along the way.
 #
+# Updated: Dec 27, 2024
+# Author: P.A.M. van Hoof
+# Comment: Handle working copies in a detached state correctly (see PR #497)
+#
 
 is_repo=`git rev-parse --is-inside-work-tree 2>&1 | grep true`
 if [[ $is_repo != 'true' ]]; then
@@ -46,7 +50,7 @@ else
 	# This branch is for development.
 	#
 	sha1=`git log --oneline | head -n 1 | awk '{print $1}'`
-	branch=`git branch | grep '^\*' | awk '{ print $2 }'`
+	branch=`git branch | grep '^\*' | sed 's/(HEAD//' | awk '{ print $2 }'`
 	branch=`echo $branch | sed 's/(no//'`
 	[[ -z "`git status -s -uno`" ]] && modified="" || modified="-modified"
 	
