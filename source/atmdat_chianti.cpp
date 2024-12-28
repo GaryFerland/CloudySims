@@ -1085,7 +1085,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 
 		if( DEBUGSTATE )
 		{
-			fprintf(ioQQQ,"<%s>\t%li\t%li\t%g\n",dBaseSpecies[intNS].chLabel,ipLevFile+1,ipLevNew+1,i->first);
+			fprintf(ioQQQ,"<%s>\t%li\t%li\t",dBaseSpecies[intNS].chLabel,ipLevFile+1,ipLevNew+1);
 		}
 
 		dBaseStates[intNS][ipLevNew].g() = dBaseStatesStwt.at(i->second);

@@ -324,9 +324,9 @@ bool AbundChange( )
 		lgChange = true;
 		for( long nelem=1; nelem < LIMELM; nelem++ )
 		{
-			if( abund.lgAbunTabl[nelem] )
+			if( abund.AbunTab[nelem].nvals() > 0 )
 			{
-				double abun = AbundancesTable(radius.Radius,radius.depth,nelem+1)*
+				double abun = abund.AbunTab[nelem].tabval(radius.Radius,radius.depth)*
 				  dense.gas_phase[ipHYDROGEN];
 
 				double hold = abun/dense.gas_phase[nelem];
