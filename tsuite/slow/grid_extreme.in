@@ -46,7 +46,7 @@ end of average
 ## >>chng 16 dec 15, val 102 from 4.7765 to 4.7538, fix bug on Percival and Richard h-like collisions
 ## >>chng 19 jun 28, val 102 from 4.7538 to 4.7758, reintegrate iso_collisions branch
 ## >>chng 19 jul 14, val 104 from 4.3362 to 4.3194 reintegrate iso_collisions branch
-monitor temperature grid ".dat" "H+"
+monitor temperature grid "grid_extreme.dat" "H+"
 #
 # grid_extreme.in limits
 # Figs 17&18 of 2013RMxAA..49..137F
