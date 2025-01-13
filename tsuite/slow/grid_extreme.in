@@ -1,4 +1,5 @@
 title exercise full range of density, temperature
+set save prefix "grid_extreme"
 # 
 element lithium off
 element berylium off
@@ -10,8 +11,10 @@ cosmic rays background linear 0.1266
 cmb
 iterate
 # 
-blackbody 6 
+# SED is 1e6 K BB with low energy density
+blackbody 6
 energy density 6 vary
+# do not run in parallel so we have good performance statistics
 grid 1 6 1 sequential
 # -8 18 
 hden 2 vary
@@ -29,11 +32,11 @@ normalize to "Q(H)" 4861.32A
 # 
 # the normalizing line is not defined on the emergent line stack
 print lines emergent off
-save performance no hash "grid_extreme.per"
-save grid no hash "grid_extreme.grd" last 
-save overview last no hash "grid_extreme.ovr" last 
-save monitors last no hash "grid_extreme.asr" last 
-save average "grid_extreme.avr" last 
+save performance no hash ".per"
+save grid no hash ".grd" last 
+save overview last no hash ".ovr" last 
+save monitors last no hash ".asr" last 
+save average ".avr" last 
 temperature hydrogen 2
 end of average
 # 
@@ -43,7 +46,9 @@ end of average
 ## >>chng 16 dec 15, val 102 from 4.7765 to 4.7538, fix bug on Percival and Richard h-like collisions
 ## >>chng 19 jun 28, val 102 from 4.7538 to 4.7758, reintegrate iso_collisions branch
 ## >>chng 19 jul 14, val 104 from 4.3362 to 4.3194 reintegrate iso_collisions branch
-monitor temperature grid "grid_extreme.dat" "H+"
+monitor temperature grid ".dat" "H+"
 #
 # grid_extreme.in limits
+# Figs 17&18 of 2013RMxAA..49..137F
+
  
