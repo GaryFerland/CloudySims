@@ -86,7 +86,8 @@ monitor line luminosity "Si 2" 34.8046m  -1.743
 ## >>chng 15 may 29, from -0.6086 to -0.5647, double optical depth, iterate to convergence
 ## >>chng 20 aug 03, from -0.5647 to -0.6633, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -0.6633 to -0.7449, LAMDA update
-monitor eden -0.7449
+## >>chng 25 jan 15, from -0.7449 to -0.7065, GS removes destabalizing reactions, updates others to current UMIST
+monitor eden -0.7065
 ##
 ## >>chng 08 dec 08, from 9 to 4.214, upper limit -> equals (r2515)
 ## >>chng 08 dec 13, from 4.214 to 9.777, merging newsolvers branch

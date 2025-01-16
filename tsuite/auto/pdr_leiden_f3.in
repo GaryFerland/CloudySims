@@ -65,7 +65,8 @@ monitor "H2O " 538.142m line intensity -7.196
 ## >>chng 21 sep 11, from -6.155 to -6.441, LAMDA update
 ## >>chng 23 mar 17, from -6.441 to -6.532, add SiS and Lamda model"
 ## >>chng 23 may 15, from -6.532 to -6.596, GS updates 21 reactions to UMIST 2012
-monitor "HNC " 1652.90m  line intensity -6.596 
+## >>chng 25 jan 15, from -6.596 to -6.555, GS removes destabalizing reactions, updates others to current UMIST
+monitor "HNC " 1652.90m  line intensity -6.555 
 ## >>chng 10 aug 21, from -9.86 to -7.004, add these lines
 ## >>chng 11 nov 16, from -7.004 to -7.063, adjust newmole monitors
 ## >>chng 12 jun 07, from -7.063 to -7.638, vib_evap fix
@@ -159,7 +160,8 @@ monitor "CO  " 325.137m  -6.108 line intensity
 ## >>chng 21 nov 04, from -7.011 to -7.065, update mole co data
 ## >>chng 23 mar 17, from -7.065 to -7.342, add SiS and Lamda model"
 ## >>chng 23 may 15, from -7.342 to -7.073, GS updates 21 reactions to UMIST 2012
-monitor "CN  " 880.858m  -7.073  line intensity
+## >>chng 25 jan 15, from -7.073 to -7.275, GS removes destabalizing reactions, updates others to current UMIST
+monitor "CN  " 880.858m  -7.275  line intensity
 ## 
 monitor H2 column density 21.927 error 0.1
 ## 
@@ -233,7 +235,8 @@ monitor column density H2+  9.22 error 0.1
 ## >>chng 12 jun 07, from 12.87 to 12.93, bugfix, no satur'n in grn_photo
 ## >>chng 23 mar 17, from 12.93 to 12.98, add SiS and Lamda model"
 ## >>chng 23 may 15, from 12.98 to 12.93, GS updates 21 reactions to UMIST 2012
-monitor column density H3+  12.93 error 0.1
+## >>chng 25 jan 15, from 12.93 to 12.98, GS removes destabalizing reactions, updates others to current UMIST
+monitor column density H3+  12.98 error 0.1
 ## 
 monitor column density H2g  21.90 error 0.1
 ## 

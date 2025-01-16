@@ -424,7 +424,8 @@ monitor O2 column density 17.56 error 0.2
 ## >>chng 04 sep 10, from 15.09 to 15.18 rewrite ion solver, full mtrx
 ## >>chng 05 aug 24, from 15.18 to 15.25, NA update CO cr ion rate
 ## >>chng 12 apr 09, from 15.25 to 15.71, update CR backbround to Indriolo+07, ~8x larger
-monitor SiO column density 15.71 error 0.20 
+## >>chng 25 jan 15, from 15.71 to 15.9, GS removes destabalizing reactions, updates others to current UMIST
+monitor SiO column density 15.9 error 0.20 
 ## 
 ## >>chng 04 may 19, from 14.30 to 14.25, NA add few moles, lots reactions
 ## >>chng 04 may 29, from 14.25 to 13.93, NA update H chem
@@ -655,7 +656,8 @@ monitor column density "SiN+"      4.17
 ## >>chng 23 may 15, from 6.507 to 6.306, GS updates 21 reactions to UMIST 2012
 monitor column density "SiN"       6.306  
 ## >>chng 21 apr 16, from 11.25 to 12.62, add molecular column densities
-monitor column density "SiOH+"     12.62
+## >>chng 25 jan 15, from 12.62 to 12.71, GS removes destabalizing reactions, updates others to current UMIST
+monitor column density "SiOH+"     12.71
 ## >>chng 21 apr 16, from 10.1 to 13.42, add molecular column densities
 monitor column density "SO+"       13.42  
 ## >>chng 21 apr 16, from 13.18 to 17.06, add molecular column densities

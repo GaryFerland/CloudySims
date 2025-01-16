@@ -275,7 +275,8 @@ monitor niter  >2
 ## >>chng 14 may 31, re-enable as things should be more stable
 ## >>chng 23 may 15, from 737 to 773, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 jul 15, from 773 to 858, GS update UMIST to 2012 and set upper limit on T
-monitor nzone 858
+## >>chng 25 jan 15, from 858 to 738, GS removes destabalizing reactions, updates others to current UMIST
+monitor nzone 738
 ##
 ## >>chng 14 jul 10, from 1.01 to 2.949, Add monitors for WillsNetzerWills FeII Lines
 ## >>chng 16 mar 23, drop WillsNetzerWills FeII Lines

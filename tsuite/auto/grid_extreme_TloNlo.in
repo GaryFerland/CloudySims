@@ -1,5 +1,5 @@
-title slow/grid_extreme highest density lowest temperature
-set save prefix "grid_extreme_TloNhi"
+title slow/grid_extreme lowest density lowest temperature
+set save prefix "grid_extreme_TloNlo"
 # 
 element lithium off
 element berylium off
@@ -15,7 +15,7 @@ iterate
 blackbody 6 
 energy density 1 
 #
-hden 18
+hden -8
 stop zone 1
 # set to constant small thickness
 set dr -10
@@ -31,15 +31,13 @@ normalize to "Q(H)" 4861.32A
 print lines emergent off
 save performance no hash ".per"
 save monitors ".rlt"
-monitor temperature "H+" 30.3
-## >>chng 25 jan 15, from 22.44 to 7.652, first run
-monitor column density H2g  7.652 error 0.1
-## >>chng 25 jan 15, from -3.45 to -0.3484, add new monitors
-monitor molecular fraction H2 -0.3484
-## >>chng 25 jan 15, from -3.45 to -16.21, add new monitors
-monitor ionization fraction hydrogen 2 -16.21 
+## >>chng 25 jan 15, from 30.3 to 3.227e+06, first run
+monitor temperature "H+" 3.227e+06
+## >>chng 25 jan 15, from -3.45 to 0, add new monitors
+monitor ionization fraction hydrogen 2 0 
 ## >>chng 25 jan 15, from 27 to 16, GS removes destabalizing reactions, updates others to current UMIST
-monitor itrzn 16
+## >>chng 25 jan 15, from 16 to 3, first run
+monitor itrzn 3
 #
 # one of the four corners of grid_extreme, 
 # Figs 17&18 of 2013RMxAA..49..137F
