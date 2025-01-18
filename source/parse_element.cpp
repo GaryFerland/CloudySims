@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParseElement parse options on element command */
 #include "cddefines.h"
@@ -20,7 +20,6 @@ void ParseElement( Parser &p)
 	 * so that we can retain state if turned back on  */
 	static bool lgFirst = true;
 	static long levels[NISO][LIMELM];
-	bool lgEnd;
 
 	bool lgForceLog=false, lgForceLinear=false;
 
@@ -369,7 +368,7 @@ void ParseElement( Parser &p)
 
 	else if( p.nMatch("TABL") )
 	{
-
+		/* read in table of position-dependent abundances for a particular element. */
 		if( !lgElementSet )
 		{
 			fprintf( ioQQQ, 
@@ -377,18 +376,6 @@ void ParseElement( Parser &p)
 			p.PrintLine( ioQQQ );
 			cdEXIT(EXIT_FAILURE);
 		}
-		/* read in table of position-dependent abundances for a particular element. */
-		abund.lgAbunTabl[nelem] = true;
-
-		/* general flag saying this option turned on */
-		abund.lgAbTaON = true;
-
-		/* does the table give depth or radius?  keyword DEPTH
-		 * says it is depth, default is radius */
-		if( p.nMatch("DEPT") )
-			abund.lgAbTaDepth[nelem] = true;
-		else
-			abund.lgAbTaDepth[nelem] = false;
 
 		/* make sure not trying to change hydrogen */
 		if( nelem == ipHYDROGEN )
@@ -398,57 +385,11 @@ void ParseElement( Parser &p)
 			cdEXIT(EXIT_FAILURE);
 		}
 
-		/* read pair giving radius and abundance */
-		p.getline();	  
-		abund.AbTabRad[0][nelem] = (realnum)p.FFmtRead();
-		abund.AbTabFac[0][nelem] = (realnum)p.FFmtRead();
+		/* general flag saying this option turned on */
+		abund.lgAbTaON = true;
 
-		if( p.lgEOL() )
-		{
-			fprintf( ioQQQ, " no pairs entered - cannot interpolate\n" );
-			cdEXIT(EXIT_FAILURE);
-		}
-
-		/* number of points in the table */
-		abund.nAbunTabl = 2;
-
-		lgEnd = false;
-		/* LIMTAB is limit to number of points we can store and is
-		 * set to 500 in abundances */
-		while( !lgEnd && abund.nAbunTabl < LIMTABD )
-		{
-			p.getline();
-			lgEnd = p.m_lgEOF;
-			if( !lgEnd )
-			{
-				lgEnd = p.hasCommand("END");
-			}
-
-			/* lgEnd may have been set within above if, if end line encountered*/
-			if( !lgEnd )
-			{
-				abund.AbTabRad[abund.nAbunTabl-1][nelem] = 
-					(realnum)p.FFmtRead();
-
-				abund.AbTabFac[abund.nAbunTabl-1][nelem] = 
-					(realnum)p.FFmtRead();
-				abund.nAbunTabl += 1;
-			}
-		}
-
-		abund.nAbunTabl -= 1;
-
-		/* now check that radii are in increasing order */
-		for( long i=1; i < abund.nAbunTabl; i++ )
-		{
-			/* the radius values are assumed to be strictly increasing */
-			if( abund.AbTabRad[i][nelem] <= abund.AbTabRad[i-1][nelem] )
-			{
-				fprintf( ioQQQ, "ParseElement: TABLE ELEMENT TABLE radii "
-					"must be in increasing order\n" );
-				cdEXIT(EXIT_FAILURE);
-			}
-		}
+		/* read pairs giving depth/radius and abundance */
+		p.readLaw(abund.AbunTab[nelem]);	  
 	}
 
 	else

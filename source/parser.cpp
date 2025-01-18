@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #include "cddefines.h"
@@ -1142,58 +1142,40 @@ void Parser::readList(vector<string>& list, const char* chName)
 void Parser::readLaw(DepthTable& table)
 {
 	DEBUG_ENTRY( "Parser::readLaw()" );
-	if( nMatch("DEPT") )
-	{
-		table.lgDepth = true;
-	}
-	else
-	{
-		table.lgDepth = false;
-	}
-	if (table.nvals != 0)
+
+	if( table.nvals() != 0 )
 	{
 		fprintf( ioQQQ, " Warning: over-writing existing table\n" );
 		table.clear();
 	}
 
-	getline();
-	table.dist.push_back(FFmtRead());
-	table.val.push_back(FFmtRead());
-	if( lgEOL() )
-	{
-		fprintf( ioQQQ, " No pairs entered - can\'t interpolate.\n Sorry.\n" );
-		cdEXIT(EXIT_FAILURE);
-	}
-	
-	table.nvals = 2;
-	bool lgEnd = false;
+	table.lgDepth = nMatch("DEPT");
 	
 	/* read pairs of numbers until we find line starting with END */
 	/* >>chng 04 jan 27, loop to LIMTABDLAW from LIMTABD, as per
 	 * var definitions, caught by Will Henney */
-	while( !lgEnd )
+	while( true )
 	{
 		getline();
-		lgEnd = m_lgEOF;
-		if( !lgEnd )
-		{
-			lgEnd = hasCommand("END");
-		}
-		
-		if( !lgEnd )
-		{
-			double dist = FFmtRead();
-			double val = FFmtRead();
-			if (lgEOL())
-				NoNumb("radius, value pair on each line");
-			table.dist.push_back( dist );
-			table.val.push_back( val );
-			table.nvals += 1;
-		}
-	}
-	--table.nvals;
 
-	for( long i=1; i < table.nvals; i++ )
+		if( hasCommand("END") || m_lgEOF )
+			break;
+
+		double dist = FFmtRead();
+		double val = FFmtRead();
+		if( lgEOL() )
+			NoNumb("radius, value pair on each line");
+		table.dist.push_back(dist);
+		table.val.push_back(val);
+	}
+
+	if( table.nvals() < 2 )
+	{
+		fprintf( ioQQQ, " Not enough data pairs entered - can\'t interpolate.\n Sorry.\n" );
+		cdEXIT(EXIT_FAILURE);
+	}
+
+	for( long i=1; i < table.nvals(); i++ )
 	{
 		/* the radius values are assumed to be strictly increasing */
 		if( table.dist[i] <= table.dist[i-1] )

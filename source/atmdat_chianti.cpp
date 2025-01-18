@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cddefines.h"
 #include "taulines.h"
@@ -1085,7 +1085,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 
 		if( DEBUGSTATE )
 		{
-			fprintf(ioQQQ,"<%s>\t%li\t%li\t%g\n",dBaseSpecies[intNS].chLabel,ipLevFile+1,ipLevNew+1,i->first);
+			fprintf(ioQQQ,"<%s>\t%li\t%li\t",dBaseSpecies[intNS].chLabel,ipLevFile+1,ipLevNew+1);
 		}
 
 		dBaseStates[intNS][ipLevNew].g() = dBaseStatesStwt.at(i->second);
