@@ -90,7 +90,7 @@ monitor column density O2   16.99 error 0.1
 ## >>chng 13 jun 27, from 16.14 to 16.19, BUGFIX use g-bar for H2-H2 collisions
 ## >>chng 20 jul 21, from 16.19 to 16.33, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from 16.33 to 16.58, update H3+ rates Indriola+ 2012
-## >>chng 25 jan 15, from 16.58 to 16.63, GS removes destabalizing reactions, updates others to current UMIST
+## >>chng 25 jan 15, from 16.58 to 16.63, GS removes destabilizing reactions, updates others to current UMIST
 monitor column density H2O  16.63 error 0.1
 ## >>chng 11 jul 16, from 10 to 13.49, add column density monitors
 ## >>chng 13 dec 18, from 13.49 to 13.42, fixes to Federman shielding
@@ -106,7 +106,7 @@ monitor column density C2   12.55 error 0.1
 monitor column density C3   12.05 error 0.1
 ## >>chng 11 jul 16, from 10 to 16.42, add column density monitors
 ## >>chng 20 aug 03, from 16.42 to 16.48, update H3+ rates Indriola+ 2012
-## >>chng 25 jan 15, from 16.48 to 16.56, GS removes destabalizing reactions, updates others to current UMIST
+## >>chng 25 jan 15, from 16.48 to 16.56, GS removes destabilizing reactions, updates others to current UMIST
 monitor column density SiO  16.56 error 0.1
 ## >>chng 11 jul 16, from 10 to 13.42, add column density monitors
 ## >>chng 20 aug 03, from 13.42 to 13.56, update H3+ rates Indriola+ 2012

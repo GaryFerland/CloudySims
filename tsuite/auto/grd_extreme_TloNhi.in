@@ -38,7 +38,7 @@ monitor column density H2g  7.652 error 0.1
 monitor molecular fraction H2 -0.3484
 ## >>chng 25 jan 15, from -3.45 to -16.21, add new monitors
 monitor ionization fraction hydrogen 2 -16.21 
-## >>chng 25 jan 15, from 27 to 16, GS removes destabalizing reactions, updates others to current UMIST
+## >>chng 25 jan 15, from 27 to 16, GS removes destabilizing reactions, updates others to current UMIST
 monitor itrzn 16
 #
 # one of the four corners of grid_extreme, 

@@ -660,7 +660,7 @@ monitor column density "HS+"       12.72
 ## >>chng 21 nov 04, from 14.38 to 14.65, update mole co data
 ## >>chng 23 mar 17, from 14.65 to 14.54, add SiS and Lamda model"
 ## >>chng 23 may 15, from 14.54 to 13.8, GS updates 21 reactions to UMIST 2012
-## >>chng 25 jan 15, from 13.8 to 13.41, GS removes destabalizing reactions, updates others to current UMIST
+## >>chng 25 jan 15, from 13.8 to 13.41, GS removes destabilizing reactions, updates others to current UMIST
 monitor column density "HS"        13.41  
 ## >>chng 21 apr 16, from 12.49 to 12.59, add molecular column densities
 ## >>chng 21 sep 11, from 12.59 to 12.2, LAMDA update
@@ -699,7 +699,7 @@ monitor column density "NH3+"      12.35
 monitor column density "NH3"       14.81  
 ## >>chng 21 sep 11, from 11.03 to 10.3, LAMDA update
 ## >>chng 21 nov 04, from 10.3 to 11, update mole co data
-## >>chng 25 jan 15, from 11 to 10.96, GS removes destabalizing reactions, updates others to current UMIST
+## >>chng 25 jan 15, from 11 to 10.96, GS removes destabilizing reactions, updates others to current UMIST
 monitor column density "NH4+"      10.96  
 ## >>chng 21 sep 11, from 13.76 to 13.46, LAMDA update
 ## >>chng 21 nov 04, from 13.46 to 13.62, update mole co data
@@ -711,7 +711,7 @@ monitor column density "NS+"       11.37
 ## >>chng 21 sep 11, from 14.72 to 12.88, LAMDA update
 ## >>chng 21 nov 04, from 12.88 to 13.44, update mole co data
 ## >>chng 23 may 15, from 13.44 to 14.08, GS updates 21 reactions to UMIST 2012
-## >>chng 25 jan 15, from 14.08 to 14.03, GS removes destabalizing reactions, updates others to current UMIST
+## >>chng 25 jan 15, from 14.08 to 14.03, GS removes destabilizing reactions, updates others to current UMIST
 monitor column density "NS"        14.03
 ## >>chng 21 sep 11, from 11.9 to 8.152, LAMDA update
 ## >>chng 21 nov 04, from 8.152 to 9.832, update mole co data
@@ -739,7 +739,7 @@ monitor column density "SiN+"      12.61
 ## >>chng 21 nov 04, from 13.75 to 13.62, update mole co data
 ## >>chng 23 mar 17, from 13.62 to 13.07, add SiS and Lamda model"
 ## >>chng 23 may 15, from 13.07 to 13.54, GS updates 21 reactions to UMIST 2012
-## >>chng 25 jan 15, from 13.54 to 13.72, GS removes destabalizing reactions, updates others to current UMIST
+## >>chng 25 jan 15, from 13.54 to 13.72, GS removes destabilizing reactions, updates others to current UMIST
 monitor column density "SiN"       13.72  
 ## >>chng 21 sep 11, from 11.25 to 11.16, LAMDA update
 ## >>chng 21 nov 04, from 11.16 to 11.25, update mole co data
@@ -752,7 +752,7 @@ monitor column density "SO+"       9.981
 ## >>chng 21 nov 04, from 12.88 to 13.09, update mole co data
 ## >>chng 23 mar 17, from 13.09 to 13.04, add SiS and Lamda model"
 ## >>chng 23 may 15, from 13.04 to 12.67, GS updates 21 reactions to UMIST 2012
-## >>chng 25 jan 15, from 12.67 to 12.6, GS removes destabalizing reactions, updates others to current UMIST
+## >>chng 25 jan 15, from 12.67 to 12.6, GS removes destabilizing reactions, updates others to current UMIST
 monitor column density "SO"        12.6  
 monitor "H2O " 538.142m line intensity -8.99
 ## >>chng 13 jul 25, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.

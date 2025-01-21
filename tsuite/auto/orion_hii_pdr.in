@@ -370,7 +370,7 @@ monitor O2 column density 16.7 error 0.2
 ## >>chng 11 dec 12, from 9.56 to 9.796, bug-fix for updating grain opacity (r5759)
 ## >>chng 11 dec 21, from 9.796 to 15.87, H column density 1e22 -> 1e23
 ## >>chng 12 apr 09, from 15.87 to 16.32, update CR backbround to Indriolo+07, ~8x larger
-## >>chng 25 jan 15, from 16.32 to 16.52, GS removes destabalizing reactions, updates others to current UMIST
+## >>chng 25 jan 15, from 16.32 to 16.52, GS removes destabilizing reactions, updates others to current UMIST
 monitor SiO column density 16.52 error 0.25
 ## 
 ## >>chng 04 may 19, from 15.60 to 15.43, NA add several moles, reactions
@@ -873,7 +873,7 @@ monitor column density "HNO"       7.186
 ## >>chng 21 sep 11, from 11.73 to 11.79, LAMDA update
 monitor column density "HS+"       11.79  
 ## >>chng 21 apr 16, from 14.71 to 11.88, add molecular column densities
-## >>chng 25 jan 15, from 11.88 to 11.84, GS removes destabalizing reactions, updates others to current UMIST
+## >>chng 25 jan 15, from 11.88 to 11.84, GS removes destabilizing reactions, updates others to current UMIST
 monitor column density "HS"        11.84  
 ## >>chng 21 apr 16, from 12.49 to 10.83, add molecular column densities
 monitor column density "N2+"       10.83  
@@ -934,7 +934,7 @@ monitor column density "SiN+"      7.452
 monitor column density "SiN"       11.51  
 ## >>chng 21 apr 16, from 11.25 to 11.98, add molecular column densities
 ## >>chng 21 sep 11, from 11.98 to 12.08, LAMDA update
-## >>chng 25 jan 15, from 12.08 to 12.25, GS removes destabalizing reactions, updates others to current UMIST
+## >>chng 25 jan 15, from 12.08 to 12.25, GS removes destabilizing reactions, updates others to current UMIST
 monitor column density "SiOH+"     12.25
 ## >>chng 21 apr 16, from 10.1 to 12.34, add molecular column densities
 ## >>chng 21 sep 11, from 12.34 to 12.46, LAMDA update

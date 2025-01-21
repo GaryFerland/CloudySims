@@ -30,7 +30,7 @@ save dominant rates "coll_t3.molh" "H"
 #
 # commands giving the monitors    =========
 ## >>chng 15 nov 13, from -12.9 to -7.149, add this monitor
-## >>chng 25 jan 15, from -7.149 to -7.129, GS removes destabalizing reactions, updates others to current UMIST
+## >>chng 25 jan 15, from -7.149 to -7.129, GS removes destabilizing reactions, updates others to current UMIST
 monitor ctot -7.129
 ## 
 ## >>chng 08 aug 18, from -15.18 to -14.04 add CRs
