@@ -21,9 +21,9 @@
  Some of the ionic emission data is from a reprocessed version of XXXX of CHIANTI. CHIANTI is a collaborative project involving the NRL (USA), the
       Universities of Florence (Italy) and Cambridge (UK), and George Mason University (USA). These papers describe Chianti:
         Dere K. P., et al., A&AS, 125, 149 (1997) [http://adsabs.harvard.edu/abs/1997A%26AS..125..149D]
-		Dere, K. P., et al., APJ, 268, 52 (2023) [https://ui.adsabs.harvard.edu/abs/2023ApJS..268...52D]
-	  This paper describes the reprocessed version of Chianti used:
-		Gunasekera, C. M., et al., RNAAS, 7, 246, (2023) [https://ui.adsabs.harvard.edu/abs/2023RNAAS...7..246G]
+        Dere, K. P., et al., APJ, 268, 52 (2023) [https://ui.adsabs.harvard.edu/abs/2023ApJS..268...52D]
+      This paper describes the reprocessed version of Chianti used:
+        Gunasekera, C. M., et al., Astronomy, 1, 255. (2022) [https://ui.adsabs.harvard.edu/abs/2022Astro...1..255G]
  Much of the H_2 data is from this web site: http://molat.obspm.fr/index.php?page=pages/Molecules/H2/H2can94.php. These data are
       described in:
         Abgrall H. et al., Can. J. Phys., 72, 856 (1994) [http://adsabs.harvard.edu/abs/1994CaJPh..72..856A]
