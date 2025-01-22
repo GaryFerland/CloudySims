@@ -10,7 +10,7 @@
  Cloudy is a research project that involves the creative efforts of many people.  It should be cited as follows:
    "Calculations were performed with version XXXX of Cloudy (last described by Chatzikos et al. 2023 and Gunasekera et al. 2023)."
 
- The reference is:
+ The reference are:
    M. Chatzikos, S. Bianchi, F. Camilloni, P. Chakraborty, C. M. Gunasekera,
    F. Guzmán, J. S. Milby, A. Sarkar, G. Shaw, P. A. M. van Hoof, G. J. Ferland
    2023, RMxAA, 59, 327, doi:10.22201/ia.01851101p.2023.59.02.12
