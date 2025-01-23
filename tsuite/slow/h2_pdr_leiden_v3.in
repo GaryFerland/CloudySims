@@ -431,8 +431,7 @@ monitor "HCS+" 1755.88m  -9.782 line intensity
 ## >>chng 13 dec 18, from -7.633 to -7.665, fixes to Federman shielding
 ## >>chng 21 sep 11, from -7.665 to -7.569, LAMDA update
 ## >>chng 23 may 15, from -7.569 to -7.641, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from -7.641 to -7.591, GS updates chemistry
-monitor "CS  " 3058.86m  -7.591 line intensity
+monitor "CS  " 3058.86m  -7.641 line intensity
 ## >>chng 13 jun 27, from -7.288 to -7.138, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 20 jul 21, from -7.138 to -7.16, update DR H2 diss as per  2020RNAAS...4...78S

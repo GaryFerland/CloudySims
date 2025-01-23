@@ -563,8 +563,7 @@ monitor column density "COgrn"     6.155
 monitor column density "CS+"       9.485  
 ## >>chng 21 apr 16, from 16.89 to 16.39, add molecular column densities
 ## >>chng 23 may 15, from 16.39 to 16.12, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from 16.12 to 16.4, GS updates chemistry
-monitor column density "CS"        16.4  
+monitor column density "CS"        16.12  
 ## >>chng 21 apr 16, from 12.001to 12.0392, new monitor added
 ## >>chng 21 apr 16, from 12.04 to 12.33, add molecular column densities
 monitor column density "H2Cl+"     12.33  
@@ -591,8 +590,7 @@ monitor column density "HCNH+"     8.922
 monitor column density "HCO+"      14.65  
 ## >>chng 21 apr 16, from 13.96 to 13.66, add molecular column densities
 ## >>chng 23 may 15, from 13.66 to 13.47, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from 13.47 to 13.66, GS updates chemistry
-monitor column density "HCS+"      13.66 
+monitor column density "HCS+"      13.47 
 ## >>chng 21 apr 16, from 15.85 to 10.93, add molecular column densities
 ## >>chng 21 sep 11, from 10.93 to 10.69, LAMDA update
 ## >>chng 21 nov 04, from 10.69 to 10.81, update mole co data
@@ -639,8 +637,7 @@ monitor column density "NS"        9.742
 monitor column density "OCN"       8.13  
 ## >>chng 21 apr 16, from 10.98 to 15.03, add molecular column densities
 ## >>chng 23 may 15, from 15.03 to 15.52, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from 15.52 to 15.04, GS updates chemistry
-monitor column density "OCS"       15.04  
+monitor column density "OCS"       15.52  
 ## >>chng 21 apr 16, from 10.33 to 10.65, add molecular column densities
 monitor column density "OH+"       10.65  
 ## >>chng 21 apr 16, from 14.95 to 2.606, add molecular column densities
@@ -729,13 +726,11 @@ monitor "HNC " 1652.90m  line intensity -8.272
 ## >>chng 13 sep 17, from -6.264 to -6.242, D chem off by default
 ## >>chng 20 aug 03, from -6.242 to -6.153, update H3+ rates Indriola+ 2012
 ## >>chng 23 may 15, from -6.153 to -6.307, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from -6.307 to -6.148, GS updates chemistry
-monitor "HCS+" 1755.88m  -6.148 line intensity
+monitor "HCS+" 1755.88m  -6.307 line intensity
 ## >>chng 13 jun 27, from -7.453 to -5.7, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 23 may 15, from -5.7 to -5.767, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from -5.767 to -5.704, GS updates chemistry
-monitor "CS  " 3058.86m  -5.704 line intensity
+monitor "CS  " 3058.86m  -5.767 line intensity
 ## >>chng 13 jun 27, from -7.288 to -5.381, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 15 aug 03, from -5.381 to -5.402, update LAMDA to 2015

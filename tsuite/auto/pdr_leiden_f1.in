@@ -258,9 +258,7 @@ monitor OH column density 13.93 error 0.1
 ## >>chng 21 sep 11, from 14.99 to 14.95, LAMDA update
 ## >>chng 21 nov 04, from 14.95 to 15.02, update mole co data
 ## >>chng 23 may 15, from 15.02 to 14.89, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from 14.89 to 14.72, GS updates chemistry
-## >>chng 24 jun 08, from 14.72 to 14.83, GS rm 3 TiO reactions
-monitor SiO column density 14.83 error 0.1
+monitor SiO column density 14.89 error 0.1
 ## 
 ## >>chng 05 sep 30, add these 5
 monitor column density H2+  11.72 error 0.1
@@ -410,8 +408,7 @@ monitor column density "HNC"       15.12
 ## >>chng 21 sep 11, from 12.26 to 10.8, LAMDA update
 ## >>chng 21 nov 04, from 10.8 to 12.07, update mole co data
 ## >>chng 23 may 15, from 12.07 to 11.76, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from 11.76 to 11.91, GS updates chemistry
-monitor column density "HNO"       11.91  
+monitor column density "HNO"       11.76  
 ## >>chng 21 nov 04, from 12.97 to 12.86, update mole co data
 ## >>chng 23 may 15, from 12.86 to 12.68, GS updates 21 reactions to UMIST 2012
 monitor column density "HS+"       12.68  
@@ -436,8 +433,7 @@ monitor column density "N2H+"      13.88
 ## >>chng 21 sep 11, from 11.03 to 8.993, LAMDA update
 ## >>chng 21 nov 04, from 8.993 to 10.68, update mole co data
 ## >>chng 23 may 15, from 10.68 to 10.57, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from 10.57 to 10.62, GS updates chemistry
-monitor column density "N2O"       10.62
+monitor column density "N2O"       10.57
 ## >>chng 21 sep 11, from 15.58 to 14.47, LAMDA update
 ## >>chng 21 nov 04, from 14.47 to 15.43, update mole co data
 ## >>chng 23 may 15, from 15.43 to 15.36, GS updates 21 reactions to UMIST 2012
@@ -474,14 +470,12 @@ monitor column density "NS"        14.02
 ## >>chng 21 sep 11, from 11.9 to 8.036, LAMDA update
 ## >>chng 21 nov 04, from 8.036 to 9.699, update mole co data
 ## >>chng 23 may 15, from 9.699 to 9.494, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from 9.494 to 9.553, GS updates chemistry
-monitor column density "OCN"       9.553  
+monitor column density "OCN"       9.494  
 ## >>chng 21 sep 11, from 10.98 to 10.62, LAMDA update
 ## >>chng 21 nov 04, from 10.62 to 11.95, update mole co data
 ## >>chng 23 mar 17, from 11.95 to 11.88, add SiS and Lamda model"
 ## >>chng 23 may 15, from 11.88 to 13.27, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from 13.27 to 11.41, GS updates chemistry
-monitor column density "OCS"       11.41  
+monitor column density "OCS"       13.27  
 monitor column density "OH+"       10.331  
 ## >>chng 23 may 15, from 14.95 to 14.87, GS updates 21 reactions to UMIST 2012
 monitor column density "OHgrn"     14.87  
@@ -504,9 +498,7 @@ monitor column density "SiN"       13.72
 ## >>chng 21 sep 11, from 11.25 to 11.16, LAMDA update
 ## >>chng 21 nov 04, from 11.16 to 11.25, update mole co data
 ## >>chng 23 may 15, from 11.25 to 11.13, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from 11.13 to 11.25, GS updates chemistry
-## >>chng 24 jun 08, from 11.25 to 11.16, GS rm 3 TiO reactions
-monitor column density "SiOH+"     11.16
+monitor column density "SiOH+"     11.13
 ## >>chng 21 sep 11, from 10.1 to 10.05, LAMDA update
 ## >>chng 23 may 15, from 10.05 to 9.981, GS updates 21 reactions to UMIST 2012
 monitor column density "SO+"       9.981  
