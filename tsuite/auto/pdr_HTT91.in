@@ -254,9 +254,7 @@ monitor column density C3   9.139
 ## >>chng 14 aug 28, from 8.781 to 8.761, EleyRideal H2 formation
 ## >>chng 20 aug 03, from 8.761 to 8.81, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from 8.81 to 8.836, further update to McCall CR-related rate
-## >>chng 24 apr 21, from 8.836 to 8.552, GS updates chemistry
-## >>chng 24 jun 08, from 8.552 to 8.683, GS rm 3 TiO reactions
-monitor column density SiO  8.683
+monitor column density SiO  8.836
 ## >>chng 11 jul 15, from 10 to 12.38, add column densities
 ## >>chng 11 nov 16, from 12.38 to 12.36, adjust newmole monitors
 ## >>chng 12 apr 09, from 12.36 to 13.23, update CR backbround to Indriolo+07, ~8x larger

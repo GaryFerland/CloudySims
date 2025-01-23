@@ -572,14 +572,12 @@ monitor "HNC " 1652.90m  line intensity -8.336
 ## >>chng 21 sep 11, from -7.164 to -6.99, LAMDA update
 ## >>chng 21 nov 04, from -6.99 to -7.073, update co mole data
 ## >>chng 23 may 15, from -7.073 to -7.271, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from -7.271 to -7.133, GS updates chemistry
-monitor "HCS+" 1755.88m  -7.133 line intensity
+monitor "HCS+" 1755.88m  -7.271 line intensity
 ## >>chng 13 jun 27, from -7.453 to -5.829, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 20 jul 21, from -5.829 to -5.802, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 23 may 15, from -5.802 to -5.867, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from -5.867 to -5.785, GS updates chemistry
-monitor "CS  " 3058.86m  -5.785 line intensity
+monitor "CS  " 3058.86m  -5.867 line intensity
 ## >>chng 13 jun 27, from -7.288 to -5.431, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 20 jul 21, from -5.431 to -5.456, update DR H2 diss as per  2020RNAAS...4...78S
