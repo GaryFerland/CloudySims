@@ -286,11 +286,13 @@ monitor nzone 988
 ## >>chng 23 may 15, from -6.101 to -6.794, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 jul 15, from -6.794 to -6.499, GS update UMIST to 2012 and set upper limit on T
 ## >>chng 23 jul 15, adjust wavelength from 1179.49m to 1179.48m
-monitor "SiS " 1179.48m -6.499 line intensity
+## >>chng 25 jan 15, from -6.499 to -5.858, GS removes destabilizing reactions, updates others to current UMIST
+monitor "SiS " 1179.48m -5.858 line intensity
 ## >>chng 23 feb 25 GS add to test new SiS chemistry, model of internal structure#
 ## >>chng 23 may 15, from -6.117 to -6.705, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 jul 15, from -6.705 to -6.481, GS update UMIST to 2012 and set upper limit on T
-monitor "SiS " 1270.17m -6.481 line intensity
+## >>chng 25 jan 15, from -6.481 to -5.906, GS removes destabilizing reactions, updates others to current UMIST
+monitor "SiS " 1270.17m -5.906 line intensity
 # 
 # pdr_leiden_f4.in
 # class pdr 
