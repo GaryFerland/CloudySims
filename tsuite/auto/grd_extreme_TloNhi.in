@@ -30,7 +30,7 @@ normalize to "Q(H)" 4861.32A
 # the normalizing line is not defined on the emergent line stack
 print lines emergent off
 save performance no hash ".per"
-save monitors ".rlt"
+save monitors last ".asr"
 monitor temperature "H+" 30.3
 ## >>chng 25 jan 15, from 22.44 to 7.652, first run
 monitor column density H2g  7.652 error 0.1
