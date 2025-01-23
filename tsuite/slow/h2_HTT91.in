@@ -169,7 +169,9 @@ monitor column density C3   9.28 error 0.1
 ## >>chng 14 dec 04, from 8.673 to 8.759, fix double-counting of big-H2 Solomon rate
 ## >>chng 20 aug 03, from 8.759 to 8.812, update H3+ rates Indriola+ 2012
 ## >>chng 23 may 15, from 8.812 to 8.852, GS updates 21 reactions to UMIST 2012
-monitor column density SiO  8.852 error 0.1
+## >>chng 24 apr 21, from 8.852 to 8.56, GS updates chemistry
+## >>chng 24 jun 08, from 8.56 to 8.695, GS rm 3 TiO reactions
+monitor column density SiO  8.695 error 0.1
 ## >>chng 11 jul 16, from 10 to 12.31, add column density monitors
 ## >>chng 12 apr 09, from 12.31 to 13.11, update backbround CR to Indiolo_07 (8x larger)
 ## >>chng 13 nov 03, from 13.11 to 13.15, update H2 - C II 158m collision

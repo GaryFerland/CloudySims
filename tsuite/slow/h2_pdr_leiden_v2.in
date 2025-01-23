@@ -167,6 +167,8 @@ monitor column density C3   9.756 error 0.1
 ## >>chng 21 sep 11, from 13.69 to 14.08, LAMDA update
 ## >>chng 21 nov 04, from 14.08 to 14.01, update co mole data
 ## >>chng 23 may 15, from 14.01 to 13.9, GS updates 21 reactions to UMIST 2012
+## >>chng 24 apr 21, from 13.9 to 13.86, GS updates chemistry
+## >>chng 24 jun 08, from 13.86 to 13.9, GS rm 3 TiO reactions
 monitor column density CN   13.9 error 0.1
 ## >>chng 11 jul 16, from 10 to 14.1, add column density monitors
 ## >>chng 16 mar 21, from 14.1 to 14.18, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)

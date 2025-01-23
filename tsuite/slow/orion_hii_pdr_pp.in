@@ -261,7 +261,9 @@ monitor "O2" column density 17.87 error 0.2
 ## >>chng 12 apr 09, from 17.5 to 17.79, update backbround CR to Indiolo_07 (8x larger)
 ## >>chng 12 jun 08, from 17.79 to 17.65, Updates to grain chemistry
 ## >>chng 20 aug 03, from 17.65 to 17.74, update H3+ rates Indriola+ 2012
-monitor "SiO" column density 17.74 error 0.25
+## >>chng 24 apr 21, from 17.74 to 17.47, GS updates chemistry
+## >>chng 24 jun 08, from 17.47 to 17.72, GS rm 3 TiO reactions
+monitor "SiO" column density 17.72 error 0.25
 ## 
 ## >>chng 05 mar 22, from 15.94 to 15.88, NA update CO chem net
 ## >>chng 05 mar 25, from 15.88 to 15.79, renorm H pops in level solver
@@ -281,7 +283,8 @@ monitor "SiO" column density 17.74 error 0.25
 ## >>chng 12 jun 08, from 14.97 to 14.83, Updates to grain chemistry
 ## >>chng 20 aug 03, from 14.83 to 15, update H3+ rates Indriola+ 2012
 ## >>chng 23 may 15, from 15 to 14.95, GS updates 21 reactions to UMIST 2012
-monitor "OH" column density 14.95 error 0.1 
+## >>chng 24 apr 21, from 14.95 to 15.01, GS updates chemistry
+monitor "OH" column density 15.01 error 0.1 
 ##
 ## >>chng 05 mar 22, from -4.10 to -4.06, NA update CO chem net
 ## >>chng 05 dec 08, from -4.10 to -4.31 update to Elwert Solomon rate
@@ -544,7 +547,8 @@ monitor "^13CO" 906.599m  -4.446 line intensity
 ## >>chng 21 sep 11, from -4.407 to -4.492, LAMDA update
 ## >>chng 21 sep 15, from -4.492 to -4.414, go back to unresolved model
 ## >>chng 23 may 15, from -4.414 to -4.467, GS updates 21 reactions to UMIST 2012
-monitor "CN  " 880.858m  -4.467  line intensity
+## >>chng 24 apr 21, from -4.467 to -4.445, GS updates chemistry
+monitor "CN  " 880.858m  -4.445  line intensity
 # orion_hii_pdr_pp.in
 # class hii pdr  
 # ========================================

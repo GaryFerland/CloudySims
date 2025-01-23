@@ -128,7 +128,9 @@ monitor column density H2+  9.22 error 0.1
 ## >>chng 06 apr 15, from 12.33 to 12.29 NA added N2H+ to the chemistry
 ## >>chng 08 feb 20, from 12.29 to 12.34, grain charge transfer changes in ion_solver and iso*
 ## >>chng 20 aug 03, from 12.34 to 12.05, update H3+ rates Indriola+ 2012
-monitor column density H3+  12.05 error 0.1
+## >>chng 24 apr 21, from 12.05 to 12.01, GS updates chemistry
+## >>chng 24 jun 08, from 12.01 to 12.06, GS rm 3 TiO reactions
+monitor column density H3+  12.06 error 0.1
 ## 
 monitor column density H2g  21.90 error 0.1
 ## 
@@ -237,7 +239,9 @@ monitor nzone 628
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
 ## >>chng 15 aug 03, from -6.767 to -6.829, update LAMDA to 2015
 ## >>chng 20 aug 03, from -6.829 to -6.794, update H3+ rates Indriola+ 2012
-monitor "H2O " 538.142m line intensity -6.794
+## >>chng 24 apr 21, from -6.794 to -6.704, GS updates chemistry
+## >>chng 24 jun 08, from -6.704 to -6.789, GS rm 3 TiO reactions
+monitor "H2O " 538.142m line intensity -6.789
 ## >>chng 13 jun 27, from -7.357 to -7.823, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -7.823 to -8.127, LAMDA update
@@ -249,12 +253,15 @@ monitor "HNC " 1652.90m  line intensity -8.127
 ## >>chng 20 aug 03, from -9.465 to -9.435, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -9.435 to -9.369, LAMDA update
 ## >>chng 23 may 15, from -9.369 to -9.632, GS updates 21 reactions to UMIST 2012
-monitor "HCS+" 1755.88m  -9.632 line intensity
+## >>chng 24 apr 21, from -9.632 to -9.594, GS updates chemistry
+## >>chng 24 jun 08, from -9.594 to -9.409, GS rm 3 TiO reactions
+monitor "HCS+" 1755.88m  -9.409 line intensity
 ## >>chng 13 jun 27, from -7.453 to -7.546, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -7.546 to -7.47, LAMDA update
 ## >>chng 23 may 15, from -7.47 to -7.564, GS updates 21 reactions to UMIST 2012
-monitor "CS  " 3058.86m  -7.564 line intensity
+## >>chng 24 apr 21, from -7.564 to -7.5, GS updates chemistry
+monitor "CS  " 3058.86m  -7.5 line intensity
 ## >>chng 13 jun 27, from -7.288 to -7.109, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 monitor "CO  " 2600.05m  -7.109 line intensity
