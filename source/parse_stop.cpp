@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParseStop parse the stop command */
 #include "cddefines.h"
@@ -768,66 +768,30 @@ void ParseStop(Parser &p)
 	 * have linear option - don't want to trigger on that */
 	else if( p.nMatch("LINE") )
 	{
-		string chLabel;
+		StopLineEntry sle1;
 		/* first line wavelength, then intensity relative to Hbeta for stop
 		 * if third number is entered, it is wl of line in denominator */
 
-		/* get label for the line - must do this first so we clear the label string before
-		 * trying to read the wavelength */
-		if (p.GetQuote( chLabel ))
-			p.StringError();
-
-		/* copy first four char of label into caps, and null terminate*/
-		strncpy( StopCalc.chStopLabel1[StopCalc.nstpl], chLabel.c_str() , NCHLAB-1 );
-		StopCalc.chStopLabel1[StopCalc.nstpl][NCHLAB-1] = 0;
-		trimTrailingWhiteSpace( StopCalc.chStopLabel1[StopCalc.nstpl] );
-
+		/* get ID for the first line */
+		sle1.line1 = p.getLineID(false);
 		// default intrinsic intensity, accept emergent
-		StopCalc.nEmergent[StopCalc.nstpl] = 0;
-		if( p.nMatch("EMER") )
-			StopCalc.nEmergent[StopCalc.nstpl] = 1;
-
-		/* get line wavelength */
-		StopCalc.StopLineWl1[StopCalc.nstpl] = (realnum)p.getWave();
-
+		sle1.nEmergent = ( p.nMatch("EMER") ) ? 1 : 0;
 		/* get relative intensity */
-		StopCalc.stpint[StopCalc.nstpl] = (realnum)p.FFmtRead();
+		sle1.StopRatio = (realnum)p.FFmtRead();
 		if( p.lgEOL() )
+			p.NoNumb("relative intensity");
+
+		/* check for second line - use Hbeta if not specified */
+		if( p.getRawTail().find('\"') != string::npos )
 		{
-			fprintf( ioQQQ, " There MUST be a relative intensity  entered "
-				"for first line in STOP LINE command.  Sorry.\n" );
-			cdEXIT(EXIT_FAILURE);
-		}
-
-		/* check for second line - use Hbeta is not specified */
-
-		/* get label for the line - must do this first so we clear the label string before
-		 * trying to read the wavelength */
-		
-		j = p.GetQuote( chLabel );
-
-		if( j != 0 )
-		{
-			/* no line label, normalization line will be H beta */
-			strncpy( StopCalc.chStopLabel2[StopCalc.nstpl], "H  1" , NCHLAB-1 );
-			StopCalc.chStopLabel2[StopCalc.nstpl][NCHLAB-1] = 0;
-			trimTrailingWhiteSpace( StopCalc.chStopLabel2[StopCalc.nstpl] );
-			StopCalc.StopLineWl2[StopCalc.nstpl] = Hbeta_WavLen;
+			sle1.line2 = p.getLineID(false);
 		}
 		else
 		{
-			/* copy first four char of label into caps, and null terminate*/
-			strncpy( StopCalc.chStopLabel2[StopCalc.nstpl], chLabel.c_str() , NCHLAB-1 );
-			StopCalc.chStopLabel2[StopCalc.nstpl][NCHLAB-1] = 0;
-			trimTrailingWhiteSpace( StopCalc.chStopLabel2[StopCalc.nstpl] );
-
-			/* wavelength of second line, may be absent and so zero -
-			 * we will use Hbeta if not specified */
-			StopCalc.StopLineWl2[StopCalc.nstpl] = (realnum)p.getWaveOpt();
-
+			/* no line label, normalization line will be H beta */
+			sle1.line2 = LineID("H  1", Hbeta_WavLen);
 		}
-		/* increment number of stop lines commands entered */
-		StopCalc.nstpl = MIN2(StopCalc.nstpl+1,MXSTPL-1);
+		StopCalc.sle.emplace_back(sle1);
 	}
 
 	/* oops! no keyword that we could find */

@@ -126,7 +126,7 @@ monitor line "Q(H)" 4861.32A 0.6617
 ## >>chng 13 jul 24, wl from 1216 to 1215.68A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 1215.68A to 1215.67A, update Rydberg constant
 ## >>chng 23 jun 27, from -4.653 to -4.628, update Fe+ model to Smyth+19
-monitor line "H  1" luminosity 1215.67A -4.628
+monitor line "H  1" 1215.67A luminosity -4.628
 ##
 ## >>chng 01 may 10, from 26.7 to 28.19 ct network change
 ## >>chng 02 nov 20, change to luminosity
@@ -150,7 +150,7 @@ monitor line "H  1" luminosity 1215.67A -4.628
 ## >>chng 15 jun 03, from -5.25 to -5.122, exact LTE H2 cooling (not big model)
 ## >>chng 16 mar 26, from -5.122 to -5.145, merge branch feii, new bands logic
 ## >>chng 23 jul 06, from -5.145 to -5.168, update Fe+ model to Smyth+19
-monitor line "Si 2" luminosity 34.8046m -5.168
+monitor line "Si 2" 34.8046m luminosity -5.168
 ##
 ## >>chng 01 jun 15, from 18.2 to 19.25 full H ct network
 ## >>chng 02 apr 03, from 19.25 to 14.09, bound compton
@@ -489,8 +489,7 @@ monitor pressure error < 0.003 ##this is ratio of std dev to mean
 ## >>chng 12 mar 09, from 625 to 654, several renorms due to mid 5960s revisions
 ## >>chng 14 mar 26, from 654 to 624, Move oxygen data to stout and chianti files
 ## >>chng 21 nov 04, from 624 to 741, update mole co data
-## >>chng 24 apr 21, from 741 to 863, GS updates chemistry
-monitor nzone 863
+monitor nzone 741
 ##
 ## >>chng 03 aug 28, from 25 to 20 Nick Abel co fix, let go to end
 ## >>chng 03 dec 08, from < 20 to < 15, chng zones, ots
@@ -516,8 +515,7 @@ monitor nzone 863
 ## >>chng 11 jul 12, from 35.93 to 36.40, enable fit to Badnell DR suppression
 ## >>chng 13 nov 05, from 36.4 to 18.12, convergence branch changes
 ## >>chng 14 apr 07, from 18.12 to 14.32, move H/C out of ConvBase loop
-## >>chng 24 jun 08, from 14.32 to 11.66, GS rm 3 TiO reactions
-monitor itrzn 11.66
+monitor itrzn 14.32
 ##
 # limit_conserve.in
 # class hii pdr  

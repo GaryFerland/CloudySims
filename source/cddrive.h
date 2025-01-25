@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef CDDRIVE_H_
@@ -209,7 +209,7 @@ void cdNotes(FILE*);
  * this also IS NOT the standard C convention for success or failure */
  
 long int cdLine(const string& chLabel, 
-				realnum wavelength, 
+				t_wavl wavelength, 
 				double *relint, 
 				double *absint,
 				// 0 is intrinsic,
@@ -303,7 +303,7 @@ double cdH2_colden( long iVib , long iRot );
 */
 void cdEmis(
 	const char *chLabel,
-	realnum wavelength, 
+	t_wavl wavelength, 
 	double *emiss,
 	bool lgEmergent );
 

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*prtmet print all line optical depths at end of iteration */
 #include "cddefines.h"
@@ -165,9 +165,6 @@ STATIC void prme(
 		/* line is not transferred */
 		return;
 	}
-
-	if( (*t.Lo()).ColDen() <= 0. )
-		return;
 
 	/* print optical depth if greater than lower limit, or significantly negative
 	 * PrtTauFnt is threshold for printing it

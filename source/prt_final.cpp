@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*PrtFinal create PrtFinal pages of printout, emission line intensities, etc */
 /*StuffComment routine to stuff comments into the stack of comments, def in lines.h */
@@ -115,7 +115,7 @@ STATIC void PrintSpectrum ()
 	/* get space for array of indices for lines, for possible sorting */
 	ipSortLines.resize(LineSave.nsum );
 
-	ASSERT( LineSave.ipNormWavL >= 0 );
+	ASSERT( LineSave.ipNormLine >= 0 && LineSave.ipNormLine < LineSave.nsum );
 
 	/* option to also print usual first two sets of line arrays 
 	 * but for two sets of cumulative arrays for time-dependent sims too */
@@ -134,19 +134,17 @@ STATIC void PrintSpectrum ()
 			continue;
 
 		/* this is the intensity of the line spectrum will be normalized to */
-		snorm = LineSave.lines[LineSave.ipNormWavL].SumLine(ipEmType);
+		snorm = LineSave.lines[LineSave.ipNormLine].SumLine(ipEmType);
 
 		/* check that this line has positive intensity */
-		if( ((snorm <= SMALLDOUBLE ) || (LineSave.ipNormWavL < 0)) || (LineSave.ipNormWavL > LineSave.nsum) )
+		if( snorm <= SMALLDOUBLE )
 		{
-			string wl_str;
-			sprt_wl( wl_str, LineSave.lines[LineSave.ipNormWavL].wavelength() );
 			fprintf(ioQQQ,
 				"\n\n"
-				" >>PROBLEM Normalization line (\"%s\" %s) has small or zero intensity, its value was %.2e and its intensity was set to 1.\n"
-				" >>Please consider using another normalization line (this is set with the NORMALIZE command).\n",
-				LineSave.lines[LineSave.ipNormWavL].chALab(), wl_str.c_str(), snorm);
-			fprintf( ioQQQ, " >>The relative intensities will be meaningless, and many lines may appear too faint.\n" );
+				" >>PROBLEM Normalization line (%s) has small or zero intensity, its value was %.2e and its intensity was set to 1.\n"
+				" >>Please consider using another normalization line (this is set with the NORMALIZE command).\n"
+				" >>The relative intensities will be meaningless, and many lines may appear too faint.\n",
+					LineSave.NormLine.twav().sprt_wl().c_str(), snorm);
 			snorm = 1.;
 		}
 		for( i=0; i < LineSave.nsum; i++ )
@@ -299,14 +297,14 @@ STATIC void PrintSpectrum ()
 			if( prt.lgSortLineWavelength )
 			{
 				/* first check if wavelength range specified */
-				if( prt.wlSort1 >-0.1 )
+				if( prt.wlSort1.wavlVac() > -0.1 )
 				{
 					j = 0;
 					/* skip over those lines not desired */
 					for( i=0; i<iprnt; ++i )
 					{
-						realnum wavelength=LineSave.lines[Slines[i]].wavelength();
-						if( wavelength>= prt.wlSort1 && wavelength<= prt.wlSort2 )
+						realnum wavelength = LineSave.lines[Slines[i]].wavlVac();
+						if( wavelength >= prt.wlSort1.wavlVac() && wavelength <= prt.wlSort2.wavlVac() )
 						{
 							if( j!=i )
 							{
@@ -325,7 +323,7 @@ STATIC void PrintSpectrum ()
 				vector<realnum> wavelength(iprnt);
 				for( i=0; i<iprnt; ++i )
 				{
-					wavelength[i] = LineSave.lines[Slines[i]].wavelength();
+					wavelength[i] = LineSave.lines[Slines[i]].wavlVac();
 				}
 
 				/*spsort netlib routine to sort array returning sorted indices */
@@ -422,7 +420,7 @@ STATIC void PrintSpectrum ()
 					/*fprintf( ioQQQ, "1111222223333333444444444      " ); */
 					/* this string was set in */
 					fprintf( ioQQQ, "%s",LineSave.chHoldComments[
-							 (int)LineSave.lines[Slines[ipLin]].wavelength()].c_str() ); 
+							 (int)LineSave.lines[Slines[ipLin]].wavlVac()].c_str() ); 
 				}
 				else
 				{
@@ -832,7 +830,7 @@ void PrtFinal(void)
 	{
 		static const int NWLH = 21;
 		/* list of all H case b lines */
-		realnum wlh[NWLH] = { 6562.80e0f, Hbeta_WavLen, 4340.46e0f, 4101.73e0f, 1.87510e4f, 1.28180e4f,
+		realnum wlh[NWLH] = { 6562.80e0f, 4861.32e0f, 4340.46e0f, 4101.73e0f, 1.87510e4f, 1.28180e4f,
 						  1.09380e4f, 1.00493e4f, 2.62513e4f, 2.16551e4f, 1.94454e4f, 7.45777e4f,
 						  4.65247e4f, 3.73951e4f, 4.05113e4f, 7.45777e4f, 3.29607e4f, 1215.67e0f,
 						  1025.72e0f, 972.537e0f, 949.743e0f };
@@ -850,10 +848,10 @@ void PrtFinal(void)
 				/* this logic must be kept parallel with which H lines are
 				 * added as case B in lines_hydro - any automatic hosing of
 				 * case b would kill both H I and He II */
-				errorwave = WavlenErrorGet( LineSave.lines[i].wavelength(), LineSave.sig_figs );
+				errorwave = WavlenErrorGet( LineSave.lines[i].wavlVac(), LineSave.sig_figs );
 				for( j=0; j<NWLH; ++j )
 				{
-					if( fabs(LineSave.lines[i].wavelength()-wlh[j] ) <= errorwave )
+					if( fabs(LineSave.lines[i].wavlVac()-wlh[j] ) <= errorwave )
 					{
 						LineSave.lines[i].SumLineZero();
 						break;
@@ -880,10 +878,10 @@ void PrtFinal(void)
 				/* this logic must be kept parallel with which H lines are
 				 * added as case B in lines_hydro - any automatic hosing of
 				 * case b would kill both H I and He II */
-				errorwave = WavlenErrorGet( LineSave.lines[i].wavelength(), LineSave.sig_figs );
+				errorwave = WavlenErrorGet( LineSave.lines[i].wavlVac(), LineSave.sig_figs );
 				for( j=0; j<NWLHE; ++j )
 				{
-					if( fabs(LineSave.lines[i].wavelength()-wlhe[j] ) <= errorwave )
+					if( fabs(LineSave.lines[i].wavlVac()-wlhe[j] ) <= errorwave )
 					{
 						LineSave.lines[i].SumLineZero();
 						break;
@@ -899,12 +897,12 @@ void PrtFinal(void)
 
 	/* find apparent helium abundance, will not find these if helium is turned off */
 
-	if( cdLine("H  1",wlAirVac(Hbeta_WavLen),&hbeta,&absint)<=0 )
+	if( cdLine("H  1",Hbeta_WavLen,&hbeta,&absint)<=0 )
 	{
 		if( dense.lgElmtOn[ipHYDROGEN] )
 		{
 			/* this is a major logical error if hydrogen is turned on */
-			fprintf( ioQQQ, " PrtFinal could not find H  1  %.2f with cdLine.\n", Hbeta_WavLen );
+			fprintf( ioQQQ, " PrtFinal could not find H  1 %s with cdLine.\n", Hbeta_WavLen.sprt_wl().c_str() );
 			cdEXIT(EXIT_FAILURE);
 		}
 		else
@@ -918,7 +916,7 @@ void PrtFinal(void)
 	{
 		/* get HeI 5876 triplet */
 		/* >>chng 06 may 15, changed this so that it works for up to six sig figs. */
-		if( cdLine("Blnd",wlAirVac(5875.66),&he5876,&absint)<=0 )
+		if( cdLine("Blnd",5875.66_air,&he5876,&absint)<=0 )
 		{
 			/* 06 aug 28, from numLevels_max to _local. */
 			if( iso_sp[ipHE_LIKE][ipHELIUM].numLevels_local >= 14 )
@@ -931,7 +929,7 @@ void PrtFinal(void)
 
 		/* get HeII 4686 */
 		/* >>chng 06 may 15, changed this so that it works for up to six sig figs. */
-		if( cdLine("He 2",wlAirVac(4685.68),&he4686,&absint)<=0 )
+		if( cdLine("He 2",4685.68_air,&he4686,&absint)<=0 )
 		{
 			/* 06 aug 28, from numLevels_max to _local. */
 			if( iso_sp[ipH_LIKE][ipHELIUM].numLevels_local > 5 )
@@ -974,7 +972,7 @@ void PrtFinal(void)
 	{
 		double o4363, o4959, o5007;
 
-		if( cdLine("O  3",wlAirVac(4958.91),&o4959,&absint)<=0 )
+		if( cdLine("O  3",4958.91_air,&o4959,&absint)<=0 )
 		{
 			if( dense.lgElmtOn[ipOXYGEN] )
 			{
@@ -984,7 +982,7 @@ void PrtFinal(void)
 			}
 		}
 
-		if( cdLine("O  3",wlAirVac(5006.84),&o5007,&absint)<=0 )
+		if( cdLine("O  3",5006.84_air,&o5007,&absint)<=0 )
 		{
 			if( dense.lgElmtOn[ipOXYGEN] )
 			{
@@ -993,7 +991,7 @@ void PrtFinal(void)
 			}
 		}
 
-		if( cdLine("O  3",wlAirVac(4363.21),&o4363,&absint)<=0 )
+		if( cdLine("O  3",4363.21_air,&o4363,&absint)<=0 )
 		{
 			if( dense.lgElmtOn[ipOXYGEN] )
 			{
@@ -1058,7 +1056,7 @@ void PrtFinal(void)
 	if( geometry.iEmissPower == 2 )
 	{
 		/* find temperature from Balmer continuum */
-		if( cdLine("Bac",3646.,&bacobs,&absint)<=0 )
+		if( cdLine("Bac",3646_air,&bacobs,&absint)<=0 )
 		{
 			fprintf( ioQQQ, " PrtFinal could not find Bac 3646 with cdLine.\n" );
 			cdEXIT(EXIT_FAILURE);
@@ -1120,16 +1118,16 @@ void PrtFinal(void)
 	if( geometry.iEmissPower == 2 )
 	{
 		/* find temperature from optically thin Balmer continuum and case B H-beta */
-		if( cdLine("thin",3646.,&bacthn,&absint)<=0 )
+		if( cdLine("thin",3646_air,&bacthn,&absint)<=0 )
 		{
 			fprintf( ioQQQ, " PrtFinal could not find thin 3646 with cdLine.\n" );
 			cdEXIT(EXIT_FAILURE);
 		}
 
 		/* >>chng 06 may 15, changed this so that it works for up to six sig figs. */
-		if( cdLine("Ca B",wlAirVac(Hbeta_WavLen),&hbcab,&absint)<=0 )
+		if( cdLine("Ca B",Hbeta_WavLen,&hbcab,&absint)<=0 )
 		{
-			fprintf( ioQQQ, " PrtFinal could not find Ca B %.2f with cdLine.\n", Hbeta_WavLen );
+			fprintf( ioQQQ, " PrtFinal could not find Ca B %s with cdLine.\n", Hbeta_WavLen.sprt_wl().c_str() );
 			cdEXIT(EXIT_FAILURE);
 		}
 

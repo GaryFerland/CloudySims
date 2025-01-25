@@ -51,7 +51,8 @@ monitor CO column density 17.81 error 0.1
 ## >>chng 10 jun 17, from 15.18 to 15, fix botches due to recent dBase cooling changes
 ## >>chng 16 mar 21, from 15 to 14.96, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from 14.96 to 15.02, update H3+ rates Indriola+ 2012
-monitor O2 column density 15.02 error 0.1
+## >>chng 25 jan 15, from 15.02 to 14.94, GS removes destabilizing reactions, updates others to current UMIST
+monitor O2 column density 14.94 error 0.1
 ## >>chng 08 feb 20, from 12.94 to 13.00, grain charge transfer changes in ion_solver and iso*
 ## >>chng 10 jun 17, from 13 to 13.07, fix botches due to recent dBase cooling changes
 ## >>chng 20 aug 03, from 13.07 to 13.17, update H3+ rates Indriola+ 2012
@@ -59,8 +60,8 @@ monitor OH column density 13.17 error 0.1
 ## 
 ## >>chng 05 aug 03, from 15.52 to 15.57, NA update CO, H chem net
 ## >>chng 08 feb 20, from 15.57 to 15.45, grain charge transfer changes in ion_solver and iso*
-## >>chng 24 apr 21, from 15.45 to 15.38, GS updates chemistry
-monitor SiO column density 15.38 error 0.1
+## >>chng 25 jan 15, from 15.45 to 15.84, GS removes destabilizing reactions, updates others to current UMIST
+monitor SiO column density 15.84 error 0.1
 ##
 ## >>chng 04 oct 14, from 885 to 975, PvH clean up grain elec phys, incr err
 ## >>chng 04 dec 08, from 975 to 6575, co-ion feedback, check converg
@@ -178,9 +179,7 @@ monitor nzone 818
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
 ## >>chng 15 aug 03, from -6.199 to -6.252, update LAMDA to 2015
 ## >>chng 20 aug 03, from -6.252 to -6.205, update H3+ rates Indriola+ 2012
-## >>chng 24 apr 21, from -6.205 to -6.126, GS updates chemistry
-## >>chng 24 jun 08, from -6.126 to -6.21, GS rm 3 TiO reactions
-monitor "H2O " 538.142m line intensity -6.21
+monitor "H2O " 538.142m line intensity -6.205
 ## >>chng 13 jun 27, from -7.357 to -7.758, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 15 mar 07, from -7.758 to -7.778, merging newmesh branch
@@ -214,12 +213,14 @@ monitor "CO  " 650.074m  -5.823 line intensity
 ## >>chng 13 jun 27, from -6.485 to -5.878, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -5.878 to -5.906, Move oxygen data to stout and chianti files
-monitor "CO  " 520.089m  -5.906 line intensity
+## >>chng 25 jan 15, from -5.906 to -5.962, GS removes destabilizing reactions, updates others to current UMIST
+monitor "CO  " 520.089m  -5.962 line intensity
 ## >>chng 13 jun 27, from -6.954 to -6.337, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -6.337 to -6.396, Move oxygen data to stout and chianti files
 ## >>chng 20 aug 03, from -6.396 to -6.429, update H3+ rates Indriola+ 2012
-monitor "CO  " 433.438m  -6.429 line intensity
+## >>chng 25 jan 15, from -6.429 to -6.497, GS removes destabilizing reactions, updates others to current UMIST
+monitor "CO  " 433.438m  -6.497 line intensity
 ## >>chng 13 jun 27, from -7.48 to -7.069, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from -7.069 to -7.112, C to external databases

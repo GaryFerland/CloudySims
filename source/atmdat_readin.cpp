@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*atmdat_readin read in some data files, but only if this is very first call, 
  * called by Cloudy */
@@ -1213,7 +1213,7 @@ STATIC void ReadBadnellAIData(const string& fnam,      // filename containing th
 			double WavNum = edif*RYD_INF;
 
 			/* wavelength in Angstroms */
-			UTA.back().WLAng() = (realnum)(1e8/WavNum);
+			UTA.back().WLangVac() = (realnum)(1e8/WavNum);
 			UTA.back().EnergyWN() = (realnum)WavNum;
 
 			/* store branching ratio for autoionization */
@@ -1486,7 +1486,7 @@ STATIC void read_UTA_lines()
 				/* wavelength in Angstroms */
 				double fenergyWN = 1e8/EnergyAng;
 				UTALines.back().EnergyWN() = fenergyWN;
-				UTALines.back().WLAng() = (realnum) wn2ang( fenergyWN );
+				UTALines.back().WLangVac() = wn2angVac( fenergyWN );
 
 				/* store branching ratio for autoionization */
 				double frac_ioniz = Aauto/(Aul + Aauto);
@@ -1623,7 +1623,7 @@ STATIC void read_UTA_lines()
 					(*UTALines.back().Hi()).g() = (realnum)i3;
 					(*UTALines.back().Lo()).g() = (realnum)i2;
 
-					UTALines.back().WLAng() = (realnum)f1;
+					UTALines.back().WLangVac() = (realnum)f1;
 					UTALines.back().EnergyWN() = 1.e8f/(realnum)f1;
 					// print transitions contributing to 15.5A UTA feature
 #					if 0
@@ -1704,7 +1704,7 @@ STATIC void read_UTA_lines()
 			dprintf( ioQQQ, "%5ld %s wavl %7.3f glo %2g gup %2g Aul %.2e gf %.2e ai branch %.3f\n",
 				 (long)iu,
 				 chLab.c_str(),
-				 UTALines[iu].WLAng(),
+				 UTALines[iu].WLangVac(),
 				 (*UTALines[iu].Lo()).g(),
 				 (*UTALines[iu].Hi()).g(),
 				 UTALines[iu].Emis().Aul(),

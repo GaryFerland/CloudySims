@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cddefines.h"
 #include "predcont.h"
@@ -12,6 +12,8 @@ t_PredCont::t_PredCont()
 	/* >>>chng 99 mar 23, adjusted energies so that wavelength line list is
 	 * the same as it was in C90 - small changes were caused by going over
 	 * to proper Rydberg constant */
+	/* if wavelength units are used here (e.g., "A" or "cm") the numbers
+	 * will always be interpreted as vacuum wavelengths */
 
 	p_val.reserve(100);
 

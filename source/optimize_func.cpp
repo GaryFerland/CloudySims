@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*optimize_func actual function called during evaluation of optimization run */
 #include "cddefines.h"
@@ -136,14 +136,14 @@ chi2_type optimize_func(const realnum param[],
 			chi2_cat[i] = 0.0;
 		}
 
-		if( LineSave.ipNormWavL < 0 )
+		if( LineSave.ipNormLine < 0 )
 		{
 			fprintf( ioQQQ, 
 				" Normalization line array index is bad.  What has gone wrong?\n" );
 			cdEXIT(EXIT_FAILURE);
 		}
 
-		if( (snorm = LineSave.lines[LineSave.ipNormWavL].SumLine(optimize.nEmergent)) == 0. )
+		if( (snorm = LineSave.lines[LineSave.ipNormLine].SumLine(optimize.nEmergent)) == 0. )
 		{
 			fprintf( ioQQQ, "\n\n PROBLEM Normalization line has zero intensity.  What has gone wrong?\n" );
 			fprintf( ioQQQ, " Is spectrum normalized to a species that does not exist?\n" );
@@ -294,9 +294,9 @@ chi2_type optimize_func(const realnum param[],
 		if( optimize.lgOptLum )
 		{
 			++nfound;
-			if( LineSave.lines[LineSave.ipNormWavL].SumLine(optimize.nOptLum) > 0.f )
+			if( LineSave.lines[LineSave.ipNormLine].SumLine(optimize.nOptLum) > 0.f )
 			{
-				predin = log10(LineSave.lines[LineSave.ipNormWavL].SumLine(optimize.nOptLum) *
+				predin = log10(LineSave.lines[LineSave.ipNormLine].SumLine(optimize.nOptLum) *
 						radius.Conv2PrtInten);
 				help = exp10(predin-(chi2_type)optimize.optint);
 				chi1 = chi2_func(help,1.,(chi2_type)optimize.optier);
@@ -311,7 +311,7 @@ chi2_type optimize_func(const realnum param[],
 			chi2_cat[cat] += chi1;
 
 			fprintf( ioQQQ, " ");
-			LineSave.lines[LineSave.ipNormWavL].prt(ioQQQ);
+			LineSave.lines[LineSave.ipNormLine].prt(ioQQQ);
 
 			fprintf( ioQQQ, "%12.5f%12.5f%12.5f%12.2e Line intensity\n", 
 			  predin,
@@ -337,7 +337,7 @@ chi2_type optimize_func(const realnum param[],
 			const char* catstr;
 			// treat radio continuum flux as absolute flux so that it can be used
 			// as a more accurate replacement of the normalization line intensity
-			if( optimize.ContEner[k].mm() <= 1. )
+			if( optimize.ContEner[k].mmVac() <= 1. )
 			{
 				cat = 5;
 				catstr = "Photometry";

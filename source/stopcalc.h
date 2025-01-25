@@ -1,19 +1,35 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef STOPCALC_H_
 #define STOPCALC_H_
 
-class Flux;
+#include "lines.h"
 
-/** maximum number of stop line commands */
-const int MXSTPL = 10;
+class Flux;
 
 /** this is the stopping column density that is "default" - if still at
  * this value then stop column is not used */
 const realnum COLUMN_INIT = 1e30f;
 
 const int nCHREASONSTOP = 100;
+
+struct StopLineEntry {
+	/** ID for first line in stop line command */
+	LineID line1;
+	/** ID for second line in stop line command, usually Hbeta */
+	LineID line2;
+	/** pointer to first line in line stack */
+	long int ipStopLine1;
+	/** pointer to second line in line stack */
+	long int ipStopLine2;
+	/** should emergent intensity be used? */
+	int nEmergent;
+	/** intensity ratio used as stopping criterion */
+	realnum StopRatio;
+
+	StopLineEntry() : ipStopLine1(-1), ipStopLine2(-1), nEmergent(-1), StopRatio(0_r) {}
+};
 
 /** stopcalc.h */
 struct t_StopCalc {
@@ -91,30 +107,8 @@ struct t_StopCalc {
 	/** stopping electron density, set with stop eden command */
 	realnum StopElecDensity;
 
-	/** MXSTPL (above, equal to 10) is maximum number of stop line commands 
-	 *
-	 * parameters for stop line command
-	 * LineStopWl - line wavelength for stop line command
-	 * ipStopLin1 is pointer to first line of pair in stack of lines 
-	 * ipStopLin2 is pointer to second line of pair in stack of lines, 
-	 * usually Hbeta.  initially holds wavelength, converted to pointer in 
-	 * iter_startend.cpp
-	 */
-	realnum stpint[MXSTPL];
-
-	/** line indices for first and second lines in stop line command */
-	long int ipStopLin1[MXSTPL], 
-	  ipStopLin2[MXSTPL];
-	/** number of stop line commands entered, 0 if none */
-	long int nstpl;
-
-	realnum StopLineWl1[MXSTPL],
-		StopLineWl2[MXSTPL];
-
-	/** line labels */
-	char chStopLabel1[MXSTPL][NCHLAB] ,
-		chStopLabel2[MXSTPL][NCHLAB];
-	int nEmergent[MXSTPL];
+	/** parameters for stop line command */
+	vector<StopLineEntry> sle;
 
 	/** flag saying to stop at 21cm line optical depth */
 	bool lgStop21cm;

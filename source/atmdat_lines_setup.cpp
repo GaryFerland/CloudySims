@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*lines_setup convert level 1 and level 2 line parameters and pointers into internal form 
  * used by code, line data were read in by atmdat_readin */
@@ -46,7 +46,7 @@ void lines_setup(void)
 			}
 
 			/*now put into standard format */
-			TauLine2[i].WLAng() = wn2ang( double( TauLine2[i].EnergyWN() ) );
+			TauLine2[i].WLangVac() = wn2angVac( double( TauLine2[i].EnergyWN() ) );
 			(*TauLine2[i].Lo()).Pop() = 0.;
 			(*TauLine2[i].Hi()).Pop() = 0.;
 			TauLine2[i].Emis().iRedisFun() = ipPRD;
@@ -164,7 +164,7 @@ void lines_setup(void)
 		}
 
 		/*now put into standard format */
-		HFLines[i].WLAng() = 1.e8f/HFLines[i].EnergyWN();
+		HFLines[i].WLangVac() = 1.e8f/HFLines[i].EnergyWN();
 		(*HFLines[i].Lo()).Pop() = 0.;
 		(*HFLines[i].Hi()).Pop() = 0.;
 		/* change from partial to complete redistribution */

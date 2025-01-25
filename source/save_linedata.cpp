@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*SaveLineData punches selected line data for all lines transferred in code */
 /*Save1LineData save data for one line */
@@ -281,7 +281,7 @@ void Save1LineData(
 	/* the wavelength */
 	if( strcmp( save.chConSavEnr[save.ipConPun], "labl" )== 0 )
 	{
-		prt_wl( ioPUN , t.WLAng() );
+		t.twav().prt_wl(ioPUN);
 	}
 	else
 	{

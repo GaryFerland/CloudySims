@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #include "cddefines.h"
@@ -293,9 +293,7 @@ string TransitionProxy::chLabel() const
 
 	/* NB this function is profoundly slow due to sprintf statement
 	 * also - it cannot be evaluated within a write statement itself*/
-	string chWavLen;
-	sprt_wl(chWavLen, WLAng());
-	return chSpecies + " " + chWavLen;
+	return chSpecies + " " + twav().sprt_wl();
 }
 
 /*PutCS enter a collision strength into an individual line vector */
@@ -325,7 +323,9 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	string chLabel;
 	double xIntensity,
 		other,
-		xIntensity_in;
+		xIntensity_in,
+		xObsIntensity,
+		xObsIntensity_in;
 		
 	/* routine to use line array data to generate input
 	 * for emission line array */
@@ -348,6 +348,7 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 			chLabel = chIonLbl(t);
 		}
 		xIntensity = 0.;
+		xObsIntensity = 0.;
 	}
 	else
 	{
@@ -358,6 +359,7 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 		/* total line intensity or luminosity 
 		 * these may not be defined in initial calls so define here */
 		xIntensity = t.Emis().xIntensity() + extra.v;
+		xObsIntensity = t.Emis().xObsIntensity() + extra.v;
 	}
 
 	/* initial counting case, where ipass == -1, just ignored above, call linadd below */
@@ -381,18 +383,19 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	/* inward part of line - do not move this away from previous lines
 	 * since xIntensity is used here */
 	xIntensity_in = xIntensity*t.Emis().FracInwd();
+	xObsIntensity_in = xObsIntensity*t.Emis().FracInwd();
 	ASSERT( xIntensity_in>=0. );
-	if( lgIsM1Line(t) )
-		linadd(xIntensity_in,t.WLAng(),"Inwd M1",'i',chComment);
+	if( lgIsM1Line(t) )	
+		linadd(xIntensity_in,xObsIntensity_in,t.twav(),"Inwd M1",'i',chComment);
 	else
-		linadd(xIntensity_in,t.WLAng(),"Inwd",'i',chComment);
+		linadd(xIntensity_in,xObsIntensity_in,t.twav(),"Inwd",'i',chComment);
 	
 	/* cooling part of line */
 	other = t.Coll().cool();
 	if( lgIsM1Line(t) )
-		linadd(other,t.WLAng(),"Coll M1",'i',chComment);
+		linadd(other,t.twav(),"Coll M1",'i',chComment);
 	else
-		linadd(other,t.WLAng(),"Coll",'i',chComment);
+		linadd(other,t.twav(),"Coll",'i',chComment);
 	
 	/* fluorescent excited part of line */
 	double radiative_branching;
@@ -421,18 +424,17 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	}
 
 	other = (*t.Lo()).Pop() * t.Emis().pump() * radiative_branching * t.EnergyErg();
-        if( lgIsM1Line(t) )
-		linadd(other,t.WLAng(),"Pump M1",'i',chComment);
+	if( lgIsM1Line(t) )
+		linadd(other,t.twav(),"Pump M1",'i',chComment);
 	else
-		linadd(other,t.WLAng(),"Pump",'i',chComment);
-		
+		linadd(other,t.twav(),"Pump",'i',chComment);
 
 	/* heating part of line */
 	other = t.Coll().heat();
 	if( lgIsM1Line(t) )
-		linadd(other,t.WLAng(),"Heat M1",'i',chComment);
+		linadd(other,t.twav(),"Heat M1",'i',chComment);
 	else
-		linadd(other,t.WLAng(),"Heat",'i',chComment);
+		linadd(other,t.twav(),"Heat",'i',chComment);
 
 	return;
 }
@@ -461,7 +463,7 @@ void TransitionProxy::Junk() const
 	DEBUG_ENTRY( "TransitionProxy::Junk()" );
 
 		/* wavelength, usually in A, used for printout */
-	WLAng() = -FLT_MAX;
+	WLangVac() = -FLT_MAX;
 
 	/* transition energy in wavenumbers */
 	EnergyWN() = -FLT_MAX;

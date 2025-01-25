@@ -1,9 +1,7 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*SetPrintLineCol set some parameters for the main line block & wl format */
 /*prt_LineLabels save all labels and wavelengths for emission line array */
-/*sprt_wl write wavelength to string - must be kept parallel with prt_wl */
-/*prt_wl - print floating wavelength in Angstroms, in output format */
 /* prt_line print the line label, followed by the line wl, and the wavelength of the closest match, if given */
 /* prt_line_inlist print line suitable for output list, label not enclosed in quotation marks */
 #include "cddefines.h"
@@ -11,6 +9,7 @@
 #include "prt.h"
 #include "generic_state.h"
 #include "save.h"
+#include "lines_service.h"
 
 t_prt prt;
 t_line_col prt_linecol;
@@ -39,76 +38,6 @@ void SetPrintLineCol ()
 	return;
 }
 
-
-
-/*prt_wl print floating wavelength in Angstroms, in output format */
-void prt_wl( FILE *ioOUT , realnum wl )
-{
-	DEBUG_ENTRY( "prt_wl()" );
-
-	string chString;
-	sprt_wl( chString , wl );
-
-	fprintf(ioOUT, "%.*s", LineSave.wl_length, chString.c_str() );
-	return;
-}
-
-/* write wavelength to string */
-void sprt_wl( string& chString , realnum wl )
-{
-	string chUnits;
-
-	DEBUG_ENTRY( "sprt_wl()" );
-
-	/* print in A unless > 1e4, then use microns */
-	if( wl > 1e8 )
-	{
-		/* centimeters */
-		chUnits = "c";
-		wl /= 1e8;
-	}
-	else if( wl > 1e4 )
-	{
-		/* microns */
-		chUnits = "m";
-		wl /= 1e4;
-	}
-	else if( wl == 0. )
-	{
-		chUnits = " ";
-	}
-	else
-	{
-		/* Angstroms units */
-		chUnits = "A";
-	}
-
-	ostringstream oss;
-	/* want total of LineSave.sig_figs sig figs */
-	if( wl==0. )
-	{
-		oss << setw(LineSave.wl_length-1) << 0;
-	}
-	else
-	{
-		int n = LineSave.sig_figs - 1 - (int)log10(wl);
-		if( n > 0 )
-		{
-			oss << fixed << setw(LineSave.sig_figs+1) << setprecision(n) << wl;
-		}
-		else if (wl < (realnum)INT_MAX)
-		{
-			oss << setw(LineSave.sig_figs+1) << (int)wl;
-		}
-		else
-		{
-			oss << setw(LineSave.sig_figs+1) << "*";
-		}
-	}
-	chString = oss.str() + chUnits;
-	return;
-}
-
 /*prt_LineLabels save all labels and wavelengths for emission line array */
 void prt_LineLabels(
 	/* io file handle */
@@ -127,7 +56,7 @@ void prt_LineLabels(
 	{
 		if( LineSave.lines[i].isSeparator() )
 		{
-			fprintf(ioOUT,"####\t%s",LineSave.chHoldComments[(int)LineSave.lines[i].wavelength()].c_str()); 
+			fprintf(ioOUT,"####\t%s",LineSave.chHoldComments[(int)LineSave.lines[i].wavlVac()].c_str()); 
 		}
 		else
 		{
@@ -158,7 +87,8 @@ void prt_LineLabels(
 			auto tr = LineSave.lines[i].getTransition();
 			if( tr.associated() )
 			{
-				fprintf(ioOUT, "index=%d, %d ", tr.ipLo()+1, tr.ipHi()+1);
+				ASSERT( tr.Lo()->ipOrg() >= 0 && tr.Hi()->ipOrg() >= 0 );
+				fprintf(ioOUT, "index=%d, %d ", tr.Lo()->ipOrg(), tr.Hi()->ipOrg());
 				fprintf(ioOUT, "Elow=%.7g   ", tr.Lo()->energy().WN());
 			}
 			fprintf(ioOUT, "%s" , comment.substr(j).c_str());
@@ -172,23 +102,17 @@ void prt_LineLabels(
  * 		followed, if given, by the wavelength of the closest line of the same label */
 void prt_line_err( FILE *ioOUT, const LineID& line )
 {
-	fprintf( ioOUT, "with label (between quotes) \"%s\" and wavelength ", line.chLabel.c_str() );
-	prt_wl ( ioOUT, line.wave );
+	fprintf( ioOUT, "with label (between quotes) \"%s\" and wavelength ", line.chLabel().c_str() );
+	line.twav().prt_wl(ioOUT);
 	fprintf( ioOUT, ".\n" );
 	return;
 }
-void prt_line_err( FILE *ioOUT, const string& label, realnum wvlng )
-{
-	prt_line_err( ioOUT, LineID(label, wvlng) );
-}
-
 
 /* prt_line_inlist print line suitable for output list, label not enclosed in quotation marks */
-void prt_line_inlist ( FILE *ioOUT, const char *label, realnum wvlng )
+void prt_line_inlist ( FILE *ioOUT, const char *label, t_wavl twav )
 {
 	fprintf( ioOUT, "%-*s\t", NCHLAB-1, label );
-	prt_wl ( ioOUT, wvlng );
-
+	twav.prt_wl(ioOUT);
 	return;
 }
 

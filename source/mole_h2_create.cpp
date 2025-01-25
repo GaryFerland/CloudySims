@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*H2_Create create variables for the H2 molecule, called by ContCreatePointers after continuum
  * mesh has been set up */
@@ -607,9 +607,8 @@ void diatomics::init(void)
 	for( TransitionList::iterator tr = trans.begin(); tr != trans.end(); ++tr )
 	{
 		(*tr).EnergyWN() = (realnum)((*(*tr).Hi()).energy().WN() - (*(*tr).Lo()).energy().WN());
-		/*wavelength of transition in Angstroms */
-		if( (*tr).EnergyWN() > SMALLFLOAT)
-			(*tr).WLAng() = (realnum)(1.e8f/(*tr).EnergyWN() / RefIndex( (*tr).EnergyWN() ) );
+		/*wavelength of transition in angstrom */
+		(*tr).WLangVac() = wn2angVac((*tr).EnergyWN());
 
 		(*tr).Coll().col_str() = 0.;
 	}

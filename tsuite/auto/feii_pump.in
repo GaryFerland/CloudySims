@@ -23,7 +23,7 @@ save overview ".ovr"
 save performance ".per"
 save monitors ".asr"
 save species continuum ".con" "Fe+" units microns last  
-save species bands ".fe2b" "FeII_bands.ini" "Fe+" last
+save species bands ".fe2b" "FeII_bands.dat" "Fe+" last
 #
 # commands giving the monitors    =========
 ## >>chng 07 oct 12, all reset when Case B & itration added

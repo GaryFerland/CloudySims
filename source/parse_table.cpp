@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParseTable parse the table read command */
 /*lines_table invoked by table lines command, check if we can find all lines in a given list */
@@ -329,7 +329,7 @@ void ParseTable(Parser &p)
 
 		/* this is an isotropic radiation field */
 		rfield.lgBeamed[p.m_nqh] = false;
-		rfield.Illumination[p.m_nqh] = Illuminate::ISOTROPIC;
+		rfield.Illumination[p.m_nqh] = Illumination::SYMMETRIC;
 
 		/* this will be flux density at some frequency on the table.  the numbers
 		 * are per Hz and sr so must multiply by 4 pi
@@ -397,7 +397,7 @@ void ParseTable(Parser &p)
 
 		/* this is an isotropic radiation field */
 		rfield.lgBeamed[p.m_nqh] = false;
-		rfield.Illumination[p.m_nqh] = Illuminate::ISOTROPIC;
+		rfield.Illumination[p.m_nqh] = Illumination::SYMMETRIC;
 
 		++p.m_nqh;
 	}
@@ -464,7 +464,7 @@ void ParseTable(Parser &p)
 
 		/* this is an isotropic radiation field */
 		rfield.lgBeamed[p.m_nqh] = false;
-		rfield.Illumination[p.m_nqh] = Illuminate::ISOTROPIC;
+		rfield.Illumination[p.m_nqh] = Illumination::SYMMETRIC;
 
 		++p.m_nqh;
 	}
@@ -515,7 +515,7 @@ void ParseTable(Parser &p)
 
 		/* this is an isotropic radiation field */
 		rfield.lgBeamed[p.m_nqh] = false;
-		rfield.Illumination[p.m_nqh] = Illuminate::ISOTROPIC;
+		rfield.Illumination[p.m_nqh] = Illumination::SYMMETRIC;
 
 		/* this will be flux density at 1 Ryd
 		 * >>chng 96 dec 18, from 1 Ryd to H mass Rydberg
@@ -581,7 +581,7 @@ void ParseTable(Parser &p)
 
 		/* this is an isotropic radiation field */
 		rfield.lgBeamed[p.m_nqh] = false;
-		rfield.Illumination[p.m_nqh] = Illuminate::ISOTROPIC;
+		rfield.Illumination[p.m_nqh] = Illumination::SYMMETRIC;
 
 		/* continuum normalization given by flux density at first point,
 		 * must set energy a bit higher to make sure it is within energy bounds
@@ -813,7 +813,7 @@ void ParseTable(Parser &p)
 			strcpy( rfield.chRSpec[p.m_nqh], "SQCM" );
 			strcpy( rfield.chSpNorm[p.m_nqh], "FLUX" );
 			// rfield.lgBeamed[p.m_nqh] = false;
-			// rfield.Illumination[p.m_nqh] = Illuminate::ISOTROPIC;
+			// rfield.Illumination[p.m_nqh] = Illumination::SYMMETRIC;
 		 
 			rfield.range[p.m_nqh][0] = rfield.tNu[rfield.nShape][0].Ryd();
 			double fmax = -70.;

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cddefines.h"
 #include "lines.h"
@@ -9,7 +9,7 @@
 
 /* >>chng 21 april 7, H I wl from 4861.33A to 4861.34A, replacing average energy with np energies*/
 /* >>chng 21 august 18, H I wl from 4861.34A to 4861.32A, revert to H energies computed by Peter van Hoof*/
-const realnum Hbeta_WavLen = 4861.32f;
+const t_wavl Hbeta_WavLen = 4861.32_air;
 
 t_LineSave LineSave;
 /* these are the definitions of the line save arrays in lines.h */
@@ -18,22 +18,31 @@ void t_LineSave::zero()
 {
 	DEBUG_ENTRY( "t_LineSave::zero()" );
 
-	/* index within the line in the line stack 
+	/* index of the line within the line stack 
 	 * default is Hbeta total - the third line in the stack
 	 * 0th is a zero for sanity, 1st is unit, 2nd is a comment */
 	/* >>chng 02 apr 22 from 2 to 3 since added unit at 1 */
 	/* >>chng 06 mar 11, from 3 to -1 will now set to "H  1" 4861 */
-	ipNormWavL = -1;
-	WavLNorm = Hbeta_WavLen;
-	lgNormSet = false;
+	ipNormLine = -1;
+	NormLine = LineID("H  1", Hbeta_WavLen);
 	sig_figs = sig_figs_max;
-
-	/* the label for the normalization line */
-	strcpy( chNormLab, "    " );
-
 	/* The scale factor for the normalization line */
 	ScaleNormLine = 1.;
+}
 
+void t_LineSave::init(long index, char chSumTyp, const char *chComment, const char *label,
+					  bool lgAdd, t_wavl wavelength, const TransitionProxy& tr)
+{
+	auto wavl = wavelength.wavlVac();
+	if (!lgAdd)
+	{
+		// number of lines OK, set parameters for first pass
+		// negative wavelength means it is just label, possibly not correct
+		wavl = fabs(wavl);
+	}
+
+	m_wavelength[index] = wavl;
+	lines[index].init(index,chSumTyp,chComment,label,tr);
 }
 
 void LinSv::prt(FILE* ioPUN) const
@@ -47,10 +56,7 @@ string LinSv::label() const
 	DEBUG_ENTRY( "LinSv::label()" );
 	string val = chALab();
 	val.resize( NCHLAB-1, ' ' );
-	val += " ";
-	string buf;
-	sprt_wl(buf, wavelength());
-	val += buf;
+	val += " " + twav().sprt_wl();
 	return val;
 }
 
@@ -209,40 +215,36 @@ void LinSv::addComponent(const LineID& line)
 		long id = LineSave.findline(line);
 		if (id <= 0)
 		{
-			fprintf( ioQQQ, "ERROR: line blend component \"%s\" %.3f was not found.\n",
-					 line.chLabel.c_str(), line.wave );
+			fprintf( ioQQQ, "ERROR: line blend component %s was not found.\n",
+					 line.str().c_str() );
 			cdEXIT( EXIT_FAILURE );
 		}
 		if (LineSave.lines[id].LineType() != 't')
 		{
-			fprintf( ioQQQ, "ERROR: line blend component \"%s\" %.3f does not have type 't'.\n",
-					 line.chLabel.c_str(), line.wave );
+			fprintf( ioQQQ, "ERROR: line blend component %s does not have type 't'.\n",
+					 line.str().c_str() );
 			cdEXIT( EXIT_FAILURE );
 		}
 		auto tr = LineSave.lines[id].getTransition();
 		if (!tr.associated())
 		{
-			fprintf( ioQQQ, "ERROR: line blend component \"%s\" %.3f is not associated with a transition.\n",
-					 line.chLabel.c_str(), line.wave );
+			fprintf( ioQQQ, "ERROR: line blend component %s is not associated with a transition.\n",
+					 line.str().c_str() );
 			cdEXIT( EXIT_FAILURE );
 		}
 		addComponentID(id);
 	}
 }
-void LinSv::addComponent(const string& species,const double wavelength1)
-{
-	addComponent(LineID(species, wlAirVac(wavelength1)));
-}
 
 // Automatically generate blend for specified species, at wavelength +/- width
-void LinSv::makeBlend(const char* chLabel,const double wavelength1, const double width)
+void LinSv::makeBlend(const char* chLabel,const t_wavl& wavelength1, const realnum width)
 {
 	DEBUG_ENTRY("LinSv::makeBlend()");
 	if ( LineSave.ipass == 0 )
 	{
-		realnum wlo = wlAirVac(wavelength1-width),
-			whi = wlAirVac(wavelength1+width);
-			
+		realnum wlo = wavelength1.wavlVac()-width;
+		realnum whi = wavelength1.wavlVac()+width;
+
 		/* check that chLabel[4] is null - supposed to be 4 char + end */
 		if( strlen(chLabel) > NCHLAB-1 )
 		{
@@ -271,8 +273,8 @@ void LinSv::makeBlend(const char* chLabel,const double wavelength1, const double
 			/* use pre-capitalized version of label to be like input chLineLabel */
 			const char *chCaps = LineSave.lines[j].chCLab();
 
-			if (LineSave.wavelength(j) >= wlo && 
-				 LineSave.wavelength(j) <= whi &&
+			if (LineSave.wavlVac(j) >= wlo && 
+				 LineSave.wavlVac(j) <= whi &&
 			    strcmp(chCaps,chCARD.c_str()) == 0)
 			{
 				addComponentID(j);
@@ -280,6 +282,20 @@ void LinSv::makeBlend(const char* chLabel,const double wavelength1, const double
 							LineSave.lines[j].label().c_str() );
 			}
 		}
+	}
+}
+
+void LinSv::prt_blend() const
+{
+	if( ! isBlend() )
+		return;
+	fprintf( ioQQQ, "DEBUG BLEND '%s':\n", label().c_str() );
+	for(size_t j=0; j<m_component.size(); ++j)
+	{
+		long id = m_component[j];
+		fprintf( ioQQQ, "  %ld '%s' %.4e\n",
+			id, LineSave.lines[id].label().c_str(),
+			LineSave.lines[id].SumLine( 0 ) );
 	}
 }
 
@@ -297,13 +313,13 @@ void LinSv::setBlendWavl()
 			sum_wn_den += weight;
 			sum_wn_num += weight * tr.EnergyWN();
 		}
-		double wl = 0.;
+		realnum wl = 0_r;
 		if( sum_wn_den > 0. )
 			sum_wn_num /= sum_wn_den;
 		if( sum_wn_num > 0. )
-			wl = wn2ang( sum_wn_num );
+			wl = wn2angVac( sum_wn_num );
 
-		LineSave.resetWavelength( m_index, wl );
+		LineSave.resetWavlVac( m_index, wl );
 	}
 }
 
@@ -317,7 +333,7 @@ static bool wavelength_compare (long a, long b)
 	LinSv* a1 = &LineSave.lines[a];
 	LinSv* b1 = &LineSave.lines[b];
 	/* comparison is b-a so we get inverse wavelength order (increasing energy order) */
-	if( b1->wavelength() < a1->wavelength() )
+	if( b1->wavlVac() < a1->wavlVac() )
 		return true;
 	else 
 		return false;
@@ -326,7 +342,7 @@ static bool wavelength_compare (long a, long b)
 static bool wavelength_compare_realnum (size_t a, realnum wavelength)
 {
 	/* comparison is b-a so we get inverse wavelength order (increasing energy order) */
-	if( wavelength < LineSave.wavelength(a) )
+	if( wavelength < LineSave.wavlVac(a) )
 		return true;
 	else 
 		return false;
@@ -353,17 +369,17 @@ long t_LineSave::findline(const LineID& line)
 
 	bool lgDEBUG = false;
 	
-	if( line.chLabel.length() > NCHLAB-1 )
+	if( line.chLabel().length() > NCHLAB-1 )
 	{
 		fprintf( ioQQQ, " findline called with insane chLabel (between quotes) \"%s\","
 				 " must be no more than %d characters long.\n",
-				 line.chLabel.c_str(), NCHLAB-1 );
+				 line.chLabel().c_str(), NCHLAB-1 );
 		return -2;
 	}
  
 	// make static to avoid constant allocation and deallocation of memory for this var
 	static string chCARD;
-	chCARD = line.chLabel;
+	chCARD = line.chLabel();
 
 	/* make sure chLabel is all caps */
 	caps(chCARD);/* convert to caps */
@@ -383,7 +399,7 @@ long t_LineSave::findline(const LineID& line)
 	 * FLT_EPSILON*wavelength to broaden bounds enough to allow for
 	 * cancellation error
 	 */
-	realnum errorwave = WavlenErrorGet( line.wave, LineSave.sig_figs ) + FLT_EPSILON*line.wave, 
+	realnum errorwave = WavlenErrorGet( line.wavlVac(), LineSave.sig_figs ) + FLT_EPSILON*line.wavlVac(), 
 		smallest_error=BIGFLOAT,
 		smallest_error_w_correct_label=BIGFLOAT;
 
@@ -392,19 +408,17 @@ long t_LineSave::findline(const LineID& line)
 	// lines will not yet be sorted
 	if (ipass == 1)
 	{
-		string wlbuf;
 		// Need to search for lines within allowed band, and plausible confusions
 
 		// Find position in list of lines
 		vector<size_t>::iterator first =
 			lower_bound(SortWL.begin(),SortWL.end(),
-						line.wave+errorwave, wavelength_compare_realnum);
+						line.wavlVac()+errorwave, wavelength_compare_realnum);
 
 		// first is now first line below upper limit
 		if (first == SortWL.end())
 		{
-			sprt_wl(wlbuf,line.wave);
-			fprintf(ioQQQ,"Didn't find anything at %s\n",wlbuf.c_str());
+			fprintf(ioQQQ,"Didn't find anything at %s\n",line.twav().sprt_wl().c_str());
 			cdEXIT(EXIT_FAILURE);
 		}
 
@@ -412,7 +426,7 @@ long t_LineSave::findline(const LineID& line)
 		vector<size_t>::iterator second;
 		for(second=first; second != SortWL.end(); ++second)
 		{
-			if (wavelength(*second) < line.wave-errorwave)
+			if (wavlVac(*second) < line.wavlVac()-errorwave)
 				break;
 		}
 
@@ -423,35 +437,34 @@ long t_LineSave::findline(const LineID& line)
 		{
 			bool lgMatch = ( strcmp(lines[*pos].chCLab(),chCARD.c_str()) == 0 );
 			// do line disambiguation, if requested...
-			if( lgMatch && line.indLo > 0 && line.indHi > 0 )
+			if( lgMatch && line.indLo() > 0 && line.indHi() > 0 )
 			{
 				auto tr = lines[*pos].getTransition();
 				if( tr.associated() )
-					lgMatch = ( line.indLo == tr.ipLo()+1 && line.indHi == tr.ipHi()+1 );
+					lgMatch = ( line.indLo() == tr.Lo()->ipOrg() && line.indHi() == tr.Hi()->ipOrg() );
 				else
 					lgMatch = false;
 			}
-			if( lgMatch && line.ELo >= 0_r )
+			if( lgMatch && line.ELo() >= 0_r )
 			{
 				auto tr = lines[*pos].getTransition();
 				if( tr.associated() )
-					lgMatch = ( fabs(tr.Lo()->energy().WN()-line.ELo) <= 1.e-6_r*line.ELo );
+					lgMatch = ( fabs(tr.Lo()->energy().WN()-line.ELo()) <= 1.e-6_r*line.ELo() );
 				else
 					lgMatch = false;
 			}
 			if ( lgMatch )
 			{
 				++nmatch;
-				realnum dwl = wavelength(*pos)-line.wave;
+				realnum dwl = wavlVac(*pos)-line.wavlVac();
 				if ( nmatch >= 2 )
 				{
 					if ( nmatch == 2 )
 					{
-						sprt_wl(wlbuf,line.wave);
-						fprintf(ioQQQ,"WARNING: multiple matching lines found in search for \"%s\" %s\n",
-								line.chLabel.c_str(),wlbuf.c_str());
+						fprintf(ioQQQ,"WARNING: multiple matching lines found in search for %s\n",
+								line.str().c_str());
 						fprintf(ioQQQ,"WARNING: match 1 is \"%s\" (dwl=%gA)\n",
-								lines[*found].biglabel().c_str(),wavelength(*found)-line.wave);
+								lines[*found].biglabel().c_str(),wavlVac(*found)-line.wavlVac());
 					}
 					fprintf(ioQQQ,"WARNING: match %d is \"%s\" (dwl=%gA)\n",
 							nmatch, lines[*pos].biglabel().c_str(),dwl);
@@ -459,7 +472,7 @@ long t_LineSave::findline(const LineID& line)
 				if ( found == SortWL.end() )
 				{
 					found = pos;
-					dbest = fabs(wavelength(*pos)-line.wave);
+					dbest = fabs(wavlVac(*pos)-line.wavlVac());
 				}
 				else if ( fabs(dwl) < dbest )
 				{
@@ -476,21 +489,19 @@ long t_LineSave::findline(const LineID& line)
 		}
 
 		// do this case first as output below would be confusing when line disambiguation is used
-		if( ( line.indLo > 0 && line.indHi > 0 ) || line.ELo >= 0_r )
+		if( ( line.indLo() > 0 && line.indHi() > 0 ) || line.ELo() >= 0_r )
 		{
-			fprintf(ioQQQ, "PROBLEM: Line disambiguation was requested, but line was not found: \"%s\" ",
-					line.chLabel.c_str());
-			prt_wl(ioQQQ, line.wave);
-			if( line.indLo > 0 && line.indHi > 0 )
-				fprintf(ioQQQ, " index=%d, %d", line.indLo, line.indHi);
-			if( line.ELo >= 0_r )
-				fprintf(ioQQQ, " Elow=%g", line.ELo);
+			fprintf(ioQQQ, "PROBLEM: Line disambiguation was requested, but line was not found: %s ",
+					line.str().c_str());
+			if( line.indLo() > 0 && line.indHi() > 0 )
+				fprintf(ioQQQ, " index=%d, %d", line.indLo(), line.indHi());
+			if( line.ELo() >= 0_r )
+				fprintf(ioQQQ, " Elow=%g", line.ELo());
 			fprintf(ioQQQ, "\nCheck the SAVE LINE LABELS output to find the correct match.\n");
 			return -4;
 		}
 
-		sprt_wl(wlbuf,line.wave);
-		fprintf(ioQQQ,"WARNING: no exact matching lines found for \"%s\" %s\n",line.chLabel.c_str(),wlbuf.c_str());
+		fprintf(ioQQQ,"WARNING: no exact matching lines found for %s\n",line.str().c_str());
 		for (vector<size_t>::iterator pos = first; pos != second; ++pos)
 		{
 			fprintf(ioQQQ,"WARNING: Line with incorrect label found close \"%s\"\n",
@@ -501,8 +512,8 @@ long t_LineSave::findline(const LineID& line)
 		realnum besterror = 0.;
 		for (;;)
 		{
-			realnum errordown = wavelength(*(first-1))-line.wave;
-			realnum errorup = line.wave - (second == SortWL.end() ? 0.0 : wavelength(*second)) ;
+			realnum errordown = wavlVac(*(first-1))-line.wavlVac();
+			realnum errorup = line.wavlVac() - (second == SortWL.end() ? 0.0 : wavlVac(*second)) ;
 			realnum error = 0.;
 			vector<size_t>::iterator next;
 			if ( errordown < errorup || second == SortWL.end())
@@ -534,14 +545,13 @@ long t_LineSave::findline(const LineID& line)
 			if (best != SortWL.end() && error > 100.*besterror)
 				break;
 			// Assume this is clearly unmatched
-			if (error > 0.01*line.wave)
+			if (error > 0.01*line.wavlVac())
 				break;
 		}
 		if (best != SortWL.end())
 			return *best;
 
-		sprt_wl(wlbuf,line.wave);
-		fprintf(ioQQQ,"PROBLEM: no matching line found in search for \"%s\" %s\n",line.chLabel.c_str(),wlbuf.c_str());
+		fprintf(ioQQQ,"PROBLEM: no matching line found in search for %s\n",line.str().c_str());
 		cdEXIT(EXIT_FAILURE);
 	}
 
@@ -555,21 +565,21 @@ long t_LineSave::findline(const LineID& line)
 	
 	for( j=1; j < nsum; j++ )
 	{
-		realnum current_error = (realnum)fabs(wavelength(j)-line.wave);
+		realnum current_error = (realnum)fabs(wavlVac(j)-line.wavlVac());
 		/* use pre-capitalized version of label to be like input chLineLabel */
 		const char *chCaps = lines[j].chCLab();
 
 		// do line disambiguation, if requested...
-		if( line.indLo > 0 && line.indHi > 0 )
+		if( line.indLo() > 0 && line.indHi() > 0 )
 		{
 			auto tr = lines[j].getTransition();
-			if( !tr.associated() || line.indLo != tr.ipLo()+1 || line.indHi != tr.ipHi()+1 )
+			if( !tr.associated() || line.indLo() != tr.Lo()->ipOrg() || line.indHi() != tr.Hi()->ipOrg() )
 				continue;
 		}
-		if( line.ELo >= 0_r )
+		if( line.ELo() >= 0_r )
 		{
 			auto tr = lines[j].getTransition();
-			if( !tr.associated() || fabs(tr.Lo()->energy().WN()-line.ELo) > 1.e-6_r*line.ELo )
+			if( !tr.associated() || fabs(tr.Lo()->energy().WN()-line.ELo()) > 1.e-6_r*line.ELo() )
 				continue;
 		}
 
@@ -588,15 +598,15 @@ long t_LineSave::findline(const LineID& line)
 
 		/* check wavelength and chLabel for a match */
 		if( lgDEBUG && (current_error <= errorwave || 
-				fp_equal( line.wave + errorwave, wavelength(j) ) ||
-				fp_equal( line.wave - errorwave, wavelength(j) ))  
+			   fp_equal( line.wavlVac() + errorwave, wavlVac(j) ) ||
+			   fp_equal( line.wavlVac() - errorwave, wavlVac(j) ))  
 		    && strcmp(chCaps,chCARD.c_str()) == 0 )
 		{
 			/* match, so set emiss to emissivity in line */
 			/* and announce success by returning line index within stack */
 			printf("Matched %s %15.8g %ld %18.11g %s\n",
-					 chCaps,line.wave,j,wavelength(j),
-					 lines[j].biglabel().c_str());
+				   chCaps,line.wavlVac(),j,wavlVac(j),
+				   lines[j].biglabel().c_str());
 		}
 	}
 
@@ -605,15 +615,14 @@ long t_LineSave::findline(const LineID& line)
 		smallest_error_w_correct_label > errorwave )
 	{
 		// do this case first as output below would be confusing when line disambiguation is used
-		if( ( line.indLo > 0 && line.indHi > 0 ) || line.ELo >= 0_r )
+		if( ( line.indLo() > 0 && line.indHi() > 0 ) || line.ELo() >= 0_r )
 		{
-			fprintf(ioQQQ, "PROBLEM: Line disambiguation was requested, but line was not found: \"%s\" ",
-					line.chLabel.c_str());
-			prt_wl(ioQQQ, line.wave);
-			if( line.indLo > 0 && line.indHi > 0 )
-				fprintf(ioQQQ, " index=%d, %d", line.indLo, line.indHi);
-			if( line.ELo >= 0_r )
-				fprintf(ioQQQ, " Elow=%g", line.ELo);
+			fprintf(ioQQQ, "PROBLEM: Line disambiguation was requested, but line was not found: %s ",
+					line.str().c_str());
+			if( line.indLo() > 0 && line.indHi() > 0 )
+				fprintf(ioQQQ, " index=%d, %d", line.indLo(), line.indHi());
+			if( line.ELo() >= 0_r )
+				fprintf(ioQQQ, " Elow=%g", line.ELo());
 			fprintf(ioQQQ, "\nCheck the SAVE LINE LABELS output to find the correct match.\n");
 			return -5;
 		}
@@ -621,7 +630,7 @@ long t_LineSave::findline(const LineID& line)
 		/* >>chng 05 dec 21, report closest line if we did not find exact match, note that
 		 * exact match returns above, where we will return negative number of lines in stack */
 		fprintf( ioQQQ," PROBLEM findline did not find line " );
-		prt_line_err( ioQQQ, chCARD.c_str(), line.wave );
+		prt_line_err( ioQQQ, line );
 		if( index_of_closest >= 0 )
 		{
 			fprintf( ioQQQ,"  The closest line (any label) was   \"%s\"\n", 

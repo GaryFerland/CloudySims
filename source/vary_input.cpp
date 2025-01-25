@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*vary_input sets input lines to feed into cloudy in optimization runs */
 #include "cddefines.h"
@@ -41,7 +41,7 @@ void vary_input(bool *lgLimOK,
 		// check if the keyword _LOG is present; the optimizer may not work
 		// correctly if it is not optimizing logarithmic quantities.
 		//
-		// exceptions are the commands ILLUMINATE and RATIO since they vary
+		// exceptions are the commands ILLUMINATION and RATIO since they vary
 		// quantities of order unity anyway, and the commands DLAW and FUDGE
 		// since they are entirely defined by the user.
 		//

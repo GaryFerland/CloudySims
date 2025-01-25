@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef ATMDAT_H_
@@ -353,10 +353,10 @@ struct t_atmdat : public module {
 	 * first dimension is atomic number of C scale, H is 0
 	 * next two are upper and lower configurations on physics 
 	 * scale - Lya is 2-1, Lyb is 3-1, Ha is 3-2, etc */
-	realnum WaveLengthCaseB[8][25][24];
+	t_wavl WaveLengthCaseB[8][25][24];
 
 	/** wavelengths for HeI case b */
-	vector<realnum> CaseBWlHeI;
+	vector<t_wavl> CaseBWlHeI;
 
 	const long nDefaultPhotoLevelsFe;
 	/** Default number of non-iron levels when not using the coronal command */

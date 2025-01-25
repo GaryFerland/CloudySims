@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #include "cddefines.h"
@@ -165,23 +165,23 @@ double Energy::get(const char *unit) const
 	}
 	else if( isSameUnit(unit,ENERGY_CM) )
 	{
-		return cm();
+		return cmVac();
 	}
 	else if( isSameUnit(unit,ENERGY_MM) )
 	{
-		return mm();
+		return mmVac();
 	}
 	else if( isSameUnit(unit,ENERGY_MICRON) )
 	{
-		return micron();
+		return micronVac();
 	}
 	else if( isSameUnit(unit,ENERGY_NM) )
 	{
-		return nm();
+		return nmVac();
 	}
 	else if( isSameUnit(unit,ENERGY_A) )
 	{
-		return Angstrom();
+		return angstromVac();
 	}
 	else if( isSameUnit(unit,ENERGY_HZ) )
 	{

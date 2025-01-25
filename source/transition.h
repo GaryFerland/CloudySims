@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef TRANSITION_H_
@@ -72,8 +72,9 @@ public:
 	}
 	CollisionProxy Coll() const;
 
-	/** wavelength, usually in Angstroms, used for printout, can be any units */
-	realnum &WLAng() const;
+	/** vacuum wavelength, in angstrom */
+	realnum &WLangVac() const;
+	t_wavl twav() const;
 
 	/** transition energy in degrees kelvin*/
 	realnum EnergyK() const
@@ -90,12 +91,6 @@ public:
 	{
 		return WAVNRYD*EnergyWN();
 	}
-	/** vacuum wavelength in Angstroms */
-	realnum EnergyAng() const
-	{
-		return 1e8f/EnergyWN();
-	}
-
 
 	/** transition energy in wavenumbers */
 	realnum &EnergyWN() const;
@@ -171,8 +166,9 @@ public:
 	}
 	CollisionProxy Coll() const;
 
-	/** wavelength, usually in Angstroms, used for printout, can be any units */
-	realnum WLAng() const;
+	/** vacuum wavelength, in angstrom */
+	realnum WLangVac() const;
+	t_wavl twav() const;
 
 	/** transition energy in degrees kelvin*/
 	realnum EnergyK() const
@@ -189,12 +185,6 @@ public:
 	{
 		return WAVNRYD*EnergyWN();
 	}
-	/** vacuum wavelength in Angstroms */
-	realnum EnergyAng() const
-	{
-		return 1e8f/EnergyWN();
-	}
-
 
 	/** transition energy in wavenumbers */
 	realnum EnergyWN() const;
@@ -222,7 +212,7 @@ class TransitionListImpl
 	vector<int> ipHi, ipLo;
 	vector<long> ipCont;
 	CollisionList Coll;
-	vector<realnum> EnergyWN, WLAng;
+	vector<realnum> EnergyWN, WLangVac;
 	vector<string> chComment;
 	// DO NOT IMPLEMENT
 	TransitionListImpl(const TransitionListImpl&);
@@ -380,7 +370,7 @@ inline void TransitionListImpl::resize(size_t newsize)
 	ipCont.resize(newsize);
 	Coll.resize(newsize);
 	EnergyWN.resize(newsize);
-	WLAng.resize(newsize);
+	WLangVac.resize(newsize);
 	ipEmis.resize(newsize,-1);
 	chComment.resize(newsize);
 }
@@ -391,7 +381,7 @@ inline void TransitionListImpl::reserve(size_t newsize)
 	ipCont.reserve(newsize);
 	Coll.reserve(newsize);
 	EnergyWN.reserve(newsize);
-	WLAng.reserve(newsize);
+	WLangVac.reserve(newsize);
 	ipEmis.reserve(newsize);
 }
 inline void TransitionProxy::copy(const TransitionProxy& other) const
@@ -401,7 +391,7 @@ inline void TransitionProxy::copy(const TransitionProxy& other) const
 	m_list->ipCont[m_index] = other.m_list->ipCont[other.m_index];
 	m_list->Coll[m_index].copy(other.m_list->Coll[other.m_index]);
 	m_list->EnergyWN[m_index] = other.m_list->EnergyWN[other.m_index];
-	m_list->WLAng[m_index] = other.m_list->WLAng[other.m_index];
+	m_list->WLangVac[m_index] = other.m_list->WLangVac[other.m_index];
 	if (other.m_list->ipEmis[other.m_index] == -1)
 	{
 		m_list->ipEmis[m_index] = -1;
@@ -453,14 +443,22 @@ inline CollisionProxy TransitionProxy::Coll() const
 {
 	return m_list->Coll[m_index];
 }
-/** wavelength, usually in Angstroms, used for printout, can be any units */
-inline  realnum &TransitionProxy::WLAng() const
+/** vacuum wavelength, in angstrom */
+inline realnum &TransitionProxy::WLangVac() const
 {
-	return m_list->WLAng[m_index];
+	return m_list->WLangVac[m_index];
 }
-inline  realnum TransitionConstProxy::WLAng() const
+inline realnum TransitionConstProxy::WLangVac() const
 {
-	return m_list->WLAng[m_index];
+	return m_list->WLangVac[m_index];
+}
+inline t_wavl TransitionProxy::twav() const
+{
+	return t_vac(WLangVac());
+}
+inline t_wavl TransitionConstProxy::twav() const
+{
+	return t_vac(WLangVac());
 }
 /** transition energy in wavenumbers */
 inline realnum &TransitionProxy::EnergyWN() const
@@ -530,14 +528,6 @@ inline realnum TransitionProxy::width() const
 {
 	return m_list->width();
 }
-
-/** enter lines into the line storage array, called once per zone for each line
-\param xInten xInten - local emissivity per unit vol, no fill fac
-\param wavelength lam integer wavelength
-\param *chLab string label for ion
-\param chInfo character type of entry for line - 'c' cooling, 'h' heating, 'i' info only, 'r' recom line
-\param *chComment string explaining line 
-*/
 
 /**PutLine enter local line intensity into the intensity stack for eventual printout 
 \param *t transition structure for line

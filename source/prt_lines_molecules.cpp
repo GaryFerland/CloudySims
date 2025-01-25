@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*lines_molecules put energetics, H, and He lines into line intensity stack */
 #include "cddefines.h"
@@ -22,19 +22,17 @@ void lines_molecules(void)
 
 	/* molecules */
 	i = StuffComment( "molecules" );
-	linadd( 0., (realnum)i , "####", 'i',
-		"  molecules");
-
+	linadd( 0., t_vac(i), "####", 'i', "  molecules");
 
 	/* >>refer	H2	rot	Lepp, S., & Shull, J.M., 1983, ApJ, 270, 578-582
 	 * roughly two microns */
-	linadd(CoolHeavy.h2line,20000.,"H2 l",'c', 
+	linadd(CoolHeavy.h2line,20000_air,"H2 l",'c', 
 		   "cooling due H2 rotation lines from simple model" );
 	/* remember largest fraction of H2 cooling for possible comment */
 	hmi.h2line_cool_frac = (realnum)MAX2( CoolHeavy.h2line/thermal.ctot , hmi.h2line_cool_frac );
 
 	/* HD rotation cooling */
-	linadd(CoolHeavy.HD,0,"HDro",'c',
+	linadd(CoolHeavy.HD,0_vac,"HDro",'c',
 		"HD rotation cooling");
 
 	/* molecular hydrogen heating */
@@ -44,7 +42,7 @@ void lines_molecules(void)
 	/* largest fraction of heating due to photo dissoc of H2+ */
 	hmi.h2pmax = MAX2(hmi.h2pmax,(realnum)(safe_div(thermal.heating(0,16),thermal.htot,0.0)));
 
-	linadd(hmi.HeatH2Dish_used,0,"H2dH",'h',
+	linadd(hmi.HeatH2Dish_used,0_vac,"H2dH",'h',
 		"heating by H2 dissociation by photons and cosmic rays");
 
 	/*remember largest fraction of heating due to H2 vib deexcitation */	
@@ -53,22 +51,22 @@ void lines_molecules(void)
 	/*remember largest fraction of cooling due to H2 cooling */
 	hmi.CoolH2DexcMax = MAX2(safe_div(-(realnum)hmi.HeatH2Dexc_used,(realnum)thermal.htot,(realnum)0.0f),hmi.CoolH2DexcMax);
 
-	linadd( MAX2(0.,hmi.HeatH2Dexc_used),0,"H2vH",'h',
+	linadd( MAX2(0.,hmi.HeatH2Dexc_used),0_vac,"H2vH",'h',
 		"heating by coll deexcit of vib-excited H2");
 
-	linadd( MAX2(0.,-hmi.HeatH2Dexc_used) ,0,"H2vC",'c',
+	linadd( MAX2(0.,-hmi.HeatH2Dexc_used) ,0_vac,"H2vC",'c',
 		" cooling by coll deexcit of vib-excited H2");
 
 	/* line emission by vib-excited H2 */
 	if( h2.lgEnabled )
 	{
 
-		linadd( 0. ,0,"H2 v",'i',
+		linadd( 0. ,0_vac,"H2 v",'i',
 			"  when large molecule is turned on do not print this simple estimate  line emission by vib-excited H2 ");
 	}
 	else
 	{
-		linadd( findspecieslocal("H2*")->den*2e-7*4.17e-12,0,"H2 v",'i',
+		linadd( findspecieslocal("H2*")->den*2e-7*4.17e-12,0_vac,"H2 v",'i',
 			" H2 vib-excited lines from Tielens & Hollenbach 1985");
 	}
 
@@ -77,40 +75,40 @@ void lines_molecules(void)
 	for( diatom_iter diatom = diatoms.begin(); diatom != diatoms.end(); ++diatom )
 		(*diatom)->H2_LinesAdd();
 
-	linadd(hmi.hmicol,0,"H-FB",'c',
+	linadd(hmi.hmicol,0_vac,"H-FB",'c',
 		"	 neg H ion free-bound emission, H + e -> H- + hnu ");
 
-	linadd(CoolHeavy.brems_cool_hminus,0,"H-FF",'i',
+	linadd(CoolHeavy.brems_cool_hminus,0_vac,"H-FF",'i',
 		" neg H ion free-free emission ");
 
 	/* H-alpha produced by H- mutual neutralization */
-	linadd(mole.findrate("H-,H+=>H,H")*3.032e-12,6562.80,"H-CT",'i',
+	linadd(mole.findrate("H-,H+=>H,H")*3.032e-12,6562.80_air,"H-CT",'i',
 		"  H-alpha produced by H- mutual neutralization ");
 
 	/* remember total heating */
 	hmi.hmitot += hmi.hmihet*radius.dVeffAper;
 
-	linadd(MAX2(0.,hmi.hmihet),0,"H- H",'h',
+	linadd(MAX2(0.,hmi.hmihet),0_vac,"H- H",'h',
 		"  H- heating ");
 
-	linadd(MAX2(0.,-hmi.hmihet),0,"H-Hc",'c',
+	linadd(MAX2(0.,-hmi.hmihet),0_vac,"H-Hc",'c',
 		"  induced H- cooling ");
 
-	linadd(CoolHeavy.H2PlsCool,0,"H2+ ",'c',
+	linadd(CoolHeavy.H2PlsCool,0_vac,"H2+ ",'c',
 		"  H+ + H => H2+ + photon continuum cooling ");
 
-	linadd(hmi.h2plus_heat,0,"H2+p",'h',
+	linadd(hmi.h2plus_heat,0_vac,"H2+p",'h',
 		"  H2+ photo dissoc heating ");
 
 	linadd(MAX2(3.27e-12+phycon.te*BOLTZMANN,0.)*dense.xIonDense[ipHYDROGEN][1]*dense.xIonDense[ipHELIUM][0]*1e-20+
-	  (1.76e-11+phycon.te*BOLTZMANN)*dense.xIonDense[ipHYDROGEN][0]*dense.xIonDense[ipHELIUM][1]*1e-16,0,"HEH+",'i'	,
+	  (1.76e-11+phycon.te*BOLTZMANN)*dense.xIonDense[ipHYDROGEN][0]*dense.xIonDense[ipHELIUM][1]*1e-16,0_vac,"HEH+",'i'	,
 	  "  HeH+ formation cooling ");
 
 	/* carbon monoxide heating */
 	co.codtot += co.CODissHeat*(realnum)radius.dVeffAper;
 	co.codfrc = (realnum)MAX2(safe_div((double)co.CODissHeat,thermal.htot,0.0),co.codfrc);
 
-	linadd(co.CODissHeat,0,"COdh",'h',
+	linadd(co.CODissHeat,0_vac,"COdh",'h',
 		"  carbon monoxide co photodissociation ");
 
 	return;

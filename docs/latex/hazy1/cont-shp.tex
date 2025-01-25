@@ -51,9 +51,9 @@ The beam is assumed to enter the slab normal to
 the surface, unless this is changed with the
 \cdCommand{illumination angle} command.
 Other commands, including
-\cdCommand{background}, \cdCommand{CMB},
+\cdCommand{background}, \cdCommand{CMB}, % \cdCommand{blackbody STE},
 \cdCommand{table HM96}, \cdCommand{table HM05},
-\cdCommand{table HM12}, and \cdCommand{table ISM},
+\cdCommand{table HM12}, \cdCommand{table KS19}, and \cdCommand{table ISM},
 generate continua that are isotropic.
 Each shape command will indicate whether the SED is isotropic or beamed.
 
@@ -329,6 +329,8 @@ of the radiation field.
 This is a quick way to check that ionization and
 level populations go to strict thermodynamic equilibrium in the high
 radiation-density limit.
+% The blackbody radiation field in the STE limit
+% is assumed to be isotropic.
 
 This is an intensity command.
 
@@ -967,7 +969,7 @@ $\nu$(Ryd)& log $(F_\nu$)& slope\\
 This radiation field differs from the \citet{Mathews1987} SED
 only in that the continuum is assumed to have a sub-millimeter break at
 10 microns.
-For wavelengths longer than 10 microns the continuum is assumed
+For wavelengths longer than 10\,$\mu$m the continuum is assumed
 to have a slope $f_\nu\propto \nu^{+2.5}$,
 appropriate for a self-absorbed synchrotron
 continuum (\citealp{Rybicki1979}).
@@ -986,7 +988,7 @@ by entering the keyword \cdCommand{break}
 followed by a number specifying the energy of the break.  The number is
 interpreted as the log of the energy in Rydbergs if it is negative and as
 linear Rydbergs if positive.  It is interpreted as the linear wavelength
-of the break in microns if the keyword \cdCommand{microns} also appears.
+of the break in micron if the keyword \cdCommand{micron} also appears.
 If no number appears, but the keywords \cdCommand{no break} does,
 then a break at the low-energy
 limit of the code (\emm ) is assumed.
@@ -995,7 +997,7 @@ equivalent ways of generating a continuum with a break at 10 microns;
 \begin{verbatim}
 table AGN break .00912  # energy in Ryd
 table AGN break -2.04   # log of energy in Ryd
-table AGN break 10 microns # wavelength in microns
+table AGN break 10 micron # wavelength in micron
 table AGN no break      # no sub-millimeter break
 \end{verbatim}
 Note that the nature of the SED in AGN is still an open question.  The
@@ -1050,10 +1052,10 @@ This is an intensity command.
 \caption[ISM radiation field]
 {\label{fig:ISM_background}The SED produced by the \cdCommand{table ISM} command is the lighter
 line.
-The infrared cirrus is the peak at $\lambda \sim  100\, \micron $ and starlight
+The infrared cirrus is the peak at $\lambda \sim  100\,\micron$ and starlight
 dominates at shorter wavelengths.
 The points just shortward of the Lyman
-limit ($0.0912 \micron$) are interpolated---actually it is thought that interstellar
+limit ($0.0912\,\micron$) are interpolated---actually it is thought that interstellar
 extinction removes most of this continuum.
 The dashed line shows the
 interpolated SED and the solid line shows the effects of absorption
@@ -1164,7 +1166,7 @@ extinguish column = 22 leak=0
 This radiation field is isotropic.
 This is an intensity command.
 
-\subsection{Table KS18 redshift 2.21 [factor=-1] [Q=18]}
+\subsection{Table KS19 redshift 2.21 [factor=-1] [Q=18]}
 
 This enters the \citet{KhaireSrianand2019} extragalactic background radiation
 at any redshift $0 \le z \le 15$. It works very similar to the

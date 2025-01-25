@@ -18,10 +18,12 @@
         JPL: Pickett H. M. et al., JQSRT, 60, 883 (1998). [http://adsabs.harvard.edu/abs/1998JQSRT..60..883P]
         CDMS: Mueller H. S. et al., A&A 370, L49 (2001). [http://adsabs.harvard.edu/abs/2001A%26A...370L..49M]
               Mueller H. S. et al., J. Mol. Struct. 742, 215 (2005). [http://adsabs.harvard.edu/abs/2005JMoSt.742..215M]
- Some of the ionic emission data is from version XXXX of CHIANTI. CHIANTI is a collaborative project involving the NRL (USA), the
+ Some of the ionic emission data is from a reprocessed version of XXXX of CHIANTI. CHIANTI is a collaborative project involving the NRL (USA), the
       Universities of Florence (Italy) and Cambridge (UK), and George Mason University (USA). These papers describe Chianti:
         Dere K. P., et al., A&AS, 125, 149 (1997) [http://adsabs.harvard.edu/abs/1997A%26AS..125..149D]
-        Landi E., et al., ApJ, 744, 99 (2012) [http://adsabs.harvard.edu/abs/2012ApJ...744...99L]
+        Dere, K. P., et al., APJ, 268, 52 (2023) [https://ui.adsabs.harvard.edu/abs/2023ApJS..268...52D]
+      This paper describes the reprocessed version of Chianti used:
+        Gunasekera, C. M., et al., Astronomy, 1, 255. (2022) [https://ui.adsabs.harvard.edu/abs/2022Astro...1..255G]
  Much of the H_2 data is from this web site: http://molat.obspm.fr/index.php?page=pages/Molecules/H2/H2can94.php. These data are
       described in:
         Abgrall H. et al., Can. J. Phys., 72, 856 (1994) [http://adsabs.harvard.edu/abs/1994CaJPh..72..856A]

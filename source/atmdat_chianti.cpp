@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cddefines.h"
 #include "taulines.h"
@@ -299,6 +299,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 
 		dBaseStates[intNS][i].energy().set(nrg,"cm^-1");
 		dBaseStates[intNS][i].g() = stwt;
+		dBaseStates[intNS][i].ipOrg() = oldindex;
 	}
 
 	/* allocate the Transition array*/
@@ -337,11 +338,11 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		tr->EnergyWN() = fenergyWN;
 		if( rfield.isEnergyBound( Energy( fenergyWN, "cm^-1" ) ) )
 		{
-			tr->WLAng() = (realnum) wn2ang( fenergyWN );
+			tr->WLangVac() = wn2angVac( fenergyWN );
 			dBaseSpecies[intNS].maxWN = MAX2(dBaseSpecies[intNS].maxWN,tr->EnergyWN());
 		}
 		else
-			tr->WLAng() = 1e30;
+			tr->WLangVac() = 1e30;
 	}
 
 	/******************************************************
@@ -489,7 +490,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		{
 			if( tr->EnergyWN() > ENERGY_MIN_WN )
 			{
-				tr->Emis().Aul() += S2Aul(tpData, tr->EnergyAng(), tr->Hi()->g(), transType);
+				tr->Emis().Aul() += S2Aul(tpData, tr->WLangVac(), tr->Hi()->g(), transType);
 				tr->Emis().gf() = (realnum)GetGF(tr->Emis().Aul(), tr->EnergyWN(), tr->Hi()->g());
 			}
 		}
@@ -1089,6 +1090,7 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 
 		dBaseStates[intNS][ipLevNew].g() = dBaseStatesStwt.at(i->second);
 		dBaseStates[intNS][ipLevNew].energy().set(i->first,"cm^-1");
+		dBaseStates[intNS][ipLevNew].ipOrg() = ipLevFile+1;
 
 		if( DEBUGSTATE )
 		{
@@ -1111,11 +1113,11 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 
 		if( rfield.isEnergyBound( Energy( fenergyWN, "cm^-1" ) ) )
 		{
-			tr->WLAng() = (realnum) wn2ang( fenergyWN );
+			tr->WLangVac() = wn2angVac( fenergyWN );
 			dBaseSpecies[intNS].maxWN = MAX2(dBaseSpecies[intNS].maxWN,fenergyWN);
 		}
 		else
-			tr->WLAng() = 1e30;
+			tr->WLangVac() = 1e30;
 	}
 
 	/************************************************************************/
@@ -1367,11 +1369,11 @@ void atmdat_CHIANTI_readin( long intNS, const string& chPrefix )
 			tr->EnergyWN() = fenergyWN;
 			if( rfield.isEnergyBound( Energy( fenergyWN, "cm^-1" ) ) )
 			{
-				tr->WLAng() = (realnum) wn2ang( fenergyWN );
+				tr->WLangVac() = wn2angVac( fenergyWN );
 				tr->Emis().gf() = (realnum)GetGF(tr->Emis().Aul(), tr->EnergyWN(), tr->Hi()->g());
 			}
 			else
-				tr->WLAng() = 1e30;
+				tr->WLangVac() = 1e30;
 
 			tr->setComment( db_comment_tran_levels() );
 		}

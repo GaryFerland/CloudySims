@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*HeatSum evaluate heating and secondary ionization for current conditions */
 /*HeatZero is called by ConvBase */
@@ -15,7 +15,6 @@
 #include "hmi.h"
 #include "ionbal.h"
 #include "phycon.h"
-#include "numderiv.h"
 #include "grainvar.h"
 #include "deuterium.h"
 #include "mole.h"
@@ -511,16 +510,12 @@ void HeatSum( void )
 		HeatingHi;
 	long ipISO,
 		ns;
-	static long int nhit=0, 
-	  nzSave=0;
 	double photo_heat_2lev_atoms,
 		photo_heat_ISO_atoms ,
 		photo_heat_UTA ,
 		OtherHeat , 
 		oldfac, 
 		save[NDIM];
-	static double oldheat=0., 
-	  oldtemp=0.;
 
 	realnum SaveOxygen1 , SaveCarbon1;
 
@@ -977,30 +972,6 @@ void HeatSum( void )
 
 	if( PRT_DERIV )
 		fprintf(ioQQQ,"DEBUG dhdt  5 %.3e \n", thermal.dHeatdT);
-
-	/* possibility of getting empirical heating derivative
-	 * normally false, set true with 'set numerical derivatives' command */
-	if( NumDeriv.lgNumDeriv )
-	{
-		if( ((nzone > 2 && nzone == nzSave) && 
-		     ! fp_equal( oldtemp, phycon.te )) && nhit > 4 )
-		{
-			/* hnit is number of tries on this zone - use to stop numerical problems
-			 * do not evaluate numerical derivative until well into solution */
-			double deriv = (oldheat - thermal.htot)/(oldtemp - phycon.te);
-			thermal.dHeatdT = deriv;
-		}
-
-		/* this happens when new zone starts */
-		if( nzone != nzSave )
-		{
-			nhit = 0;
-		}
-		nzSave = nzone;
-		nhit += 1;
-		oldheat = thermal.htot;
-		oldtemp = phycon.te;
-	}
 
 	if( trace.lgTrace && trace.lgHeatBug )
 	{

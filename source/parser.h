@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef PARSER_H_
@@ -28,6 +28,7 @@ struct CloudyCommand {
 };
 
 bool isBoundaryChar(char c);
+bool isSeparatorChar(char c);
 
 class Symbol {
 public:
@@ -173,15 +174,16 @@ public:
 		}
 		return i>0;
 	}
-	bool GetRange(const char *chKey, double *val1, double *val2)
+	bool GetRange(const char* chKey, t_wavl& val1, t_wavl& val2)
 	{
 		int i = nMatch1(chKey);
-		if (i > 0) {
+		if( i > 0 )
+		{
 			m_off = i-1;
-			*val1 = FFmtRead();
-			*val2 = FFmtRead();
+			val1 = getWaveOpt();
+			val2 = getWaveOpt();
 		}
-		return i>0;
+		return ( i > 0 );
 	}
 	bool nMatchErase(const char *chKey)
 	{
@@ -201,6 +203,11 @@ public:
 		}		
 		return found;
 	}
+	// returns true if a given key is found as the first key after the current position
+	// there must be at least one separator character in front of the key as well as
+	// after the key. chKey must contain the full keyword, but abbreviation to nmin
+	// chars is supported.
+	bool nMatchSkip(const string& chKey, size_t nmin = 4);
 	bool hasCommand(const string& s2);
 	bool peekNextCommand(const string& s2);
 	bool Command(const char *name, OptionParser doOpts)
@@ -234,8 +241,8 @@ public:
 		return m_card_raw.substr(m_off);
 	}
 	void help(FILE *fp) const;
-	double getWave();
-	double getWaveOpt();
+	t_wavl getWave();
+	t_wavl getWaveOpt();
 	LineID getLineID(bool lgAtStart=true);
 	Symbol getSymbol();
 	int getElement();
@@ -441,7 +448,7 @@ public:
 		if( p_ls.fail() )
 			return false;
 		else if( !isspace(p_ls.peek()) && !p_ls.eof() )
-			errorAbort("found trailing junk after token");
+			errorAbort("found unrecognized input after token");
 		else
 			return true;
 	}
@@ -485,7 +492,7 @@ public:
 		if( p_ls.fail() )
 			return false;
 		else if( !isspace(p_ls.peek()) && !p_ls.eof() )
-			errorAbort("found trailing junk after token");
+			errorAbort("found unrecognized input after token");
 		else
 			return true;
 	}
@@ -509,9 +516,11 @@ public:
 			errorAbort("failed to read a keyword");
 	}
 	// read line label plus wavelength
-	void getLineID(LineID& line);
+	void getLineID(LineID& line, bool lgAtStart=true);
+	// get the current position on the line
+	long getposLine() { return p_pos(); }
 	// skip to a specified position on the line
-	void skipTo(size_t p)
+	void setposLine(size_t p)
 	{
 		if( p < p_pos() )
 			errorAbort("skipping to requested position failed");
@@ -523,7 +532,7 @@ public:
 		auto cp = p_pos();
 		auto p = p_line.substr(cp).find(s);
 		if( p != string::npos )
-			skipTo(cp + p + s.length());
+			setposLine(cp + p + s.length());
 		else
 		{
 			ostringstream oss;
@@ -543,7 +552,7 @@ public:
 	void checkEOL()
 	{
 		if( !lgEOL() )
-			errorAbort("found trailing junk at the end of this line");
+			errorAbort("found unrecognized input at the end of this line");
 	}
 	// returns true if the end of the file is reached
 	bool lgEOF() const { return p_lgEOF; }
@@ -806,8 +815,8 @@ void ParseTrace(Parser &p);
 /*ParseExtinguish parse the extinguish command */
 void ParseExtinguish( Parser &p );
 
-/*ParseIlluminate parse the illuminate command */
-void ParseIlluminate( Parser &p );
+/*ParseIllumination parse the illumination command */
+void ParseIllumination( Parser &p );
 
 /*ParseCaseB - parse the Case B command */
 void ParseCaseB(Parser &p );

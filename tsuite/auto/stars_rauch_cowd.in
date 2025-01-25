@@ -31,79 +31,120 @@ save continuum last "stars_rauch_cowd.con" units angstrom
 save monitors last "stars_rauch_cowd.asr"
 #
 # commands giving the monitors    =========
-monitor line luminosity "nInu" 10.00c  18.4523
-monitor line luminosity "nInu" 3.400c  19.8592
-monitor line luminosity "nInu" 350.0m  25.8191
-monitor line luminosity "nInu" 122.4m  27.1869
+## >>chng 24 oct 05, wl from 10.00c to 9.99728c, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 9.99728c  18.4523
+## >>chng 24 oct 05, wl from 3.400c to 3.39907c, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 3.39907c  19.8592
+## >>chng 24 oct 05, wl from 350.0m to 349.905m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 349.905m  25.8191
+## >>chng 24 oct 05, wl from 122.4m to 122.367m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 122.367m  27.1869
 ## >>chng 13 jul 25, wl from 60.83m to 60.8322m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 60.8322m  28.0988
+## >>chng 24 oct 05, wl from 60.8322m to 60.8157m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 60.8157m  28.0988
 ## >>chng 13 jul 25, wl from 41.22m to 41.2152m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 41.2152m  28.6069
+## >>chng 24 oct 05, wl from 41.2152m to 41.2039m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 41.2039m  28.6069
 ## >>chng 13 jul 25, wl from 30.87m to 30.8695m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 30.8695m  28.9847
+## >>chng 24 oct 05, wl from 30.8695m to 30.8611m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 30.8611m  28.9847
 ## >>chng 13 jul 25, wl from 24.78m to 24.7829m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 24.7829m  29.2713
+## >>chng 24 oct 05, wl from 24.7829m to 24.7761m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 24.7761m  29.2713
 ## >>chng 13 jul 25, wl from 24.30m to 24.2998m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 24.2998m  29.2973
+## >>chng 24 oct 05, wl from 24.2998m to 24.2932m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 24.2932m  29.2973
 ## >>chng 13 jul 25, wl from 22.83m to 22.8302m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 22.8302m  29.3755
+## >>chng 24 oct 05, wl from 22.8302m to 22.8240m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 22.8240m  29.3755
 ## >>chng 13 jul 25, wl from 21.42m to 21.4199m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 21.4199m  29.4601
+## >>chng 24 oct 05, wl from 21.4199m to 21.4141m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 21.4141m  29.4601
 ## >>chng 13 jul 25, wl from 21.12m to 21.1235m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 21.1235m  29.4797
+## >>chng 24 oct 05, wl from 21.1235m to 21.1177m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 21.1177m  29.4797
 ## >>chng 13 jul 25, wl from 19.62m to 19.6199m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 19.6199m  29.5709
+## >>chng 24 oct 05, wl from 19.6199m to 19.6146m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 19.6146m  29.5709
 ## >>chng 13 jul 25, wl from 17.65m to 17.6534m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 17.6534m  29.7142
-monitor line luminosity "nInu" 17.37m  29.7337
+## >>chng 24 oct 05, wl from 17.6534m to 17.6486m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 17.6486m  29.7142
+## >>chng 24 oct 05, wl from 17.37m to 17.3653m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 17.3653m  29.7337
 ## >>chng 13 jul 25, wl from 15.69m to 15.6901m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 15.6901m  29.8640
+## >>chng 24 oct 05, wl from 15.6901m to 15.6859m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 15.6859m  29.8640
 ## >>chng 13 jul 25, wl from 14.60m to 14.6036m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 14.6036m  29.9552
-monitor line luminosity "nInu" 12.43m  30.1701
-monitor line luminosity "nInu" 11.40m  30.2808
-monitor line luminosity "nInu" 10.46m  30.3916
+## >>chng 24 oct 05, wl from 14.6036m to 14.5997m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 14.5997m  29.9552
+## >>chng 24 oct 05, wl from 12.43m to 12.4266m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 12.4266m  30.1701
+## >>chng 24 oct 05, wl from 11.40m to 11.3969m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 11.3969m  30.2808
+## >>chng 24 oct 05, wl from 10.46m to 10.4572m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 10.4572m  30.3916
 ## >>chng 13 jul 25, wl from 9.480m to 9.48002m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 9.48002m  30.5218
+## >>chng 24 oct 05, wl from 9.48002m to 9.47744m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 9.47744m  30.5218
 ## >>chng 13 jul 25, wl from 9.325m to 9.32488m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 9.32488m  30.5414
+## >>chng 24 oct 05, wl from 9.32488m to 9.32234m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 9.32234m  30.5414
 ## >>chng 13 jul 25, wl from 8.210m to 8.21035m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 8.21035m  30.7107
-monitor line luminosity "nInu" 7.580m  30.8150
+## >>chng 24 oct 05, wl from 8.21035m to 8.20812m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 8.20812m  30.7107
+## >>chng 24 oct 05, wl from 7.580m to 7.57793m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 7.57793m  30.8150
 ## >>chng 13 jul 25, wl from 7.050m to 7.05026m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 7.05026m  30.9061
+## >>chng 24 oct 05, wl from 7.05026m to 7.04834m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 7.04834m  30.9061
 ## >>chng 13 jul 25, wl from 4.114m to 4.11370m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 4.11370m  31.6096
+## >>chng 24 oct 05, wl from 4.11370m to 4.11258m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 4.11258m  31.6096
 ## >>chng 13 jul 25, wl from 2.324m to 2.32440m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 2.32440m  32.3522
+## >>chng 24 oct 05, wl from 2.32440m to 2.32377m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 2.32377m  32.3522
 ## >>chng 13 jul 25, wl from 1.643m to 1.64313m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 1.64313m  32.8016
+## >>chng 24 oct 05, wl from 1.64313m to 1.64268m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 1.64268m  32.8016
 ## >>chng 13 jul 25, wl from 1.480m to 1.48022m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 1.48022m  32.9384
+## >>chng 24 oct 05, wl from 1.48022m to 1.47981m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 1.47981m  32.9384
 ## >>chng 13 jul 25, wl from 1.436m to 1.43649m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 1.43649m  32.9774
+## >>chng 24 oct 05, wl from 1.43649m to 1.43610m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 1.43610m  32.9774
 ## >>chng 13 jul 25, wl from 1.119m to 1.11867m, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu" 1.11867m  33.3031
+## >>chng 24 oct 05, wl from 1.11867m to 1.11836m, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu" 1.11836m  33.3031
 ## >>chng 13 jul 25, wl from 8330A to 8329.68A, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu"  8329.68A  33.6874
+## >>chng 24 oct 05, wl from 8329.68A to 8327.39A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  8327.39A  33.6874
 ## >>chng 13 jul 25, wl from 8079A to 8078.61A, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu"  8078.61A  33.7265
+## >>chng 24 oct 05, wl from 8078.61A to 8076.39A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  8076.39A  33.7265
 ## >>chng 13 jul 25, wl from 6210A to 6209.66A, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu"  6209.66A  34.0717
+## >>chng 24 oct 05, wl from 6209.66A to 6207.94A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  6207.94A  34.0717
 ## >>chng 13 jul 25, wl from 4885A to 4885.36A, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu"  4885.36A  34.3844
+## >>chng 24 oct 05, wl from 4885.36A to 4884.00A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  4884.00A  34.3844
 ## >>chng 13 jul 25, wl from 3704A to 3704.34A, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu"  3704.34A  34.7426
+## >>chng 24 oct 05, wl from 3704.34A to 3703.28A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  3703.28A  34.7426
 ## >>chng 13 jul 25, wl from 3588A to 3587.67A, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu"  3587.67A  34.7882
+## >>chng 24 oct 05, wl from 3587.67A to 3586.64A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  3586.64A  34.7882
 ## >>chng 13 jul 25, wl from 2430A to 2430.05A, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu"  2430.05A  35.2963
+## >>chng 24 oct 05, wl from 2430.05A to 2429.31A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  2429.31A  35.2963
 ## >>chng 13 jul 25, wl from 2392A to 2392.03A, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu"  2392.03A  35.3158
+## >>chng 24 oct 05, wl from 2392.03A to 2391.30A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  2391.30A  35.3158
 ## >>chng 13 jul 25, wl from 2071A to 2071.34A, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu"  2071.34A  35.5047
+## >>chng 24 oct 05, wl from 2071.34A to 2070.68A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  2070.68A  35.5047
 ## >>chng 13 jul 25, wl from 2053A to 2052.68A, increased wl precision to 6 sig. fig.
-monitor line luminosity "nInu"  2052.68A  35.5177
+## >>chng 24 oct 05, wl from 2052.68A to 2052.02A, reinterpret PredCont wl as vacuum
+monitor line luminosity "nInu"  2052.02A  35.5177
 ## >>chng 13 jul 25, wl from 1793A to 1793.44A, increased wl precision to 6 sig. fig.
 monitor line luminosity "nInu"  1793.44A  35.6937
 ## >>chng 13 jul 25, wl from 1585A to 1585.12A, increased wl precision to 6 sig. fig.

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParseStop parse the stop command */
 #include "cddefines.h"
@@ -8,26 +8,31 @@
 #include "input.h"
 #include "parser.h"
 
-void ParseIlluminate(Parser &p)
+void ParseIllumination(Parser &p)
 {
-	DEBUG_ENTRY( "ParseIlluminate()" );
+	DEBUG_ENTRY( "ParseIllumination()" );
 
 	if( rfield.nShape < 1 )
 	{
-		fprintf(ioQQQ,"PROBLEM the illuminate command has come before any "
+		fprintf(ioQQQ,"PROBLEM the illumination command has come before any "
 			"radiation field shape commands.\nThis must come after the field"
 			" is specified.\nSorry.\n");
 		cdEXIT(EXIT_FAILURE);
 	}
 
-	rfield.Illumination[rfield.nShape-1] = Illuminate::FORWARD;// default
-	// use chCard()+4 to make sure the command ILLUMINATE itself is not picked up
+	rfield.Illumination[rfield.nShape-1] = Illumination::FORWARD;// default
 	if( p.nMatch( "FORW" ) )
-		rfield.Illumination[rfield.nShape-1] = Illuminate::FORWARD;
+		rfield.Illumination[rfield.nShape-1] = Illumination::FORWARD;
 	else if( p.nMatch( "REVE" ) )
-		rfield.Illumination[rfield.nShape-1] = Illuminate::REVERSE;
+	{
+		rfield.Illumination[rfield.nShape-1] = Illumination::REVERSE;
+		fprintf(ioQQQ, " Caution: the ILLUMINATION REVERSE command has not been implemented and has no effect.\n");
+	}
 	else if( p.nMatch( "SYMM" ) )
-		rfield.Illumination[rfield.nShape-1] = Illuminate::ISOTROPIC;
+	{
+		rfield.Illumination[rfield.nShape-1] = Illumination::SYMMETRIC;
+		fprintf(ioQQQ, " Caution: the ILLUMINATION SYMMETRIC command has not been implemented and has no effect.\n");
+	}
 
 	// isotropic case
 	if( p.nMatch( "ISOT" ) )
@@ -72,25 +77,25 @@ void ParseIlluminate(Parser &p)
 			optimize.nvarxt[optimize.nparm] = 1;
 			if( p.nMatch( "RADI" ) )
 			{
-				strcpy( optimize.chVarFmt[optimize.nparm], "ILLUMINATE %f RADIAN" );
+				strcpy( optimize.chVarFmt[optimize.nparm], "ILLUMINATION %f RADIAN" );
 				optimize.vparm[0][optimize.nparm] = (realnum)AngleIllumRadian;
 				optimize.varang[optimize.nparm][0] = 0.f;
 				optimize.varang[optimize.nparm][1] = realnum(PI/2.);
 			}
 			else
 			{
-				strcpy( optimize.chVarFmt[optimize.nparm], "ILLUMINATE %f" );
+				strcpy( optimize.chVarFmt[optimize.nparm], "ILLUMINATION %f" );
 				optimize.vparm[0][optimize.nparm] = (realnum)(AngleIllumRadian*RADIAN);
 				optimize.varang[optimize.nparm][0] = 0.f;
 				optimize.varang[optimize.nparm][1] = 90.f;
 			}
 
-			if( rfield.Illumination[rfield.nShape-1] == Illuminate::FORWARD )
+			if( rfield.Illumination[rfield.nShape-1] == Illumination::FORWARD )
 				strcat( optimize.chVarFmt[optimize.nparm], " FORWARD" );
-			else if( rfield.Illumination[rfield.nShape-1] == Illuminate::REVERSE )
+			else if( rfield.Illumination[rfield.nShape-1] == Illumination::REVERSE )
 				strcat( optimize.chVarFmt[optimize.nparm], " REVERSE" );
-			else if( rfield.Illumination[rfield.nShape-1] == Illuminate::ISOTROPIC )
-				strcat( optimize.chVarFmt[optimize.nparm], " ISOTROPIC" );
+			else if( rfield.Illumination[rfield.nShape-1] == Illumination::SYMMETRIC )
+				strcat( optimize.chVarFmt[optimize.nparm], " SYMMETRIC" );
 
 			optimize.lgOptimizeAsLinear[optimize.nparm] = true;
 			/* pointer to where to write */

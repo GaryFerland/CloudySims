@@ -10,18 +10,17 @@
 # printout with line label "Fe 2b",
 # They will have a wavelength given by the first number on the following lines.
 # The second pair of numbers are bounds for summing over the
-# predicted FeII emission spectrum.
+# predicted FeII emission spectrum. These bounds generally have no physical
+# meaning but rather are "ad hoc" definitions.
 # Lines are included if their wavelengths are ge lower, le upper bounds
-# these are all vacuum wavelengths.
+# the bounds are taken to be vacuum wavelengths.
 #
 # The number of wavelength bands is deduced on the fly by reading this file
 # and stored as FillnBands.
 # There is no limit to the number of bands in this file.
 #
-# The first number should be entered as an integer because
-# it will be converted to an
-# integer in the printout.  The remaining numbers are floats.
-# All numbers must be greater than 0 and the third number must be 
+# All numbers below are read as floats.
+# They must be greater than 0 and the third number must be 
 # larger than the second.
 #
 # Any line with a "#" in col 1 is a comment and totally ignored,

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParseTest parse the test command */
 #include "cddefines.h"
@@ -209,10 +209,7 @@ void ParseTest(Parser &p)
 
 		/* >>chng 02 apr 19, from 0.7258 to 0.946, due to adding Lyman cont depth */
 		/* >>chng 07 oct 22, from 0.946  to 1.108, resolve l-levels of h-like sequence */
-		ostringstream wavlen;
-		wavlen << setprecision( LineSave.sig_figs ) << Hbeta_WavLen;	 
-
-		StuffCommand( "MONITOR LINE \"CA B\"" + wavlen.str() + " 1.108", p, lgPrintTest );
+		StuffCommand( "MONITOR LINE \"CA B\" " + Hbeta_WavLen.sprt_wl() + " 1.108", p, lgPrintTest );
 		ParseMonitorResults(p);
 
 		/* >>chng 02 apr 19, from 2.4603 to 3.25, due to adding Lyman cont depth 
@@ -225,7 +222,8 @@ void ParseTest(Parser &p)
 		/* >>chng 15 may 14, from 2.961 to 3.275, CollisSuppres, final version from Dragan Nikolic */
 		/* >>chng 15 oct 14, from 3.275 to 3.063, CollisSuppres, corrected version from Nikolic */
 		/* >>chng 16 dec 20, from 3.063 to 3.207, add secondary autoionization to DR suppression */
-		StuffCommand( "MONITOR LINE \"O  3\" 5006.84 3.207", p, lgPrintTest );
+		t_wavl o3wav = 5006.84_air;
+		StuffCommand( "MONITOR LINE \"O  3\" " + o3wav.sprt_wl() + " 3.207", p, lgPrintTest );
 		ParseMonitorResults(p);
 
 		StuffCommand( "MONITOR HTOT -15.019", p, lgPrintTest );

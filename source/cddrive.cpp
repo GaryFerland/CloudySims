@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*cdDrive main routine to call cloudy under all circumstances) */
 /*cdReasonGeo write why the model stopped and type of geometry on io file */
@@ -510,12 +510,12 @@ void cdPrintCommands( FILE * ioOUT )
  *
  ************************************************************************/
 
-/** cdEms obtain the local emissivity for a line, for the last computed zone */
+/** cdEmis obtain the local emissivity for a line, for the last computed zone */
 
 
 void cdEmis(
 	const char *chLabel,
-	realnum wavelength, 
+	t_wavl wavelength, 
 	/* the vol emissivity of this line in last computed zone */
 	double *emiss ,
 	// intrinsic or emergent
@@ -1032,7 +1032,7 @@ long debugLine( realnum wavelength )
 	{
 		/* check wavelength and chLabel for a match */
 		/* if( fabs(LineSave.lines[j].wavelength- wavelength)/MAX2(DELTA,wavelength) < errorwave ) */
-		if( fabs(LineSave.lines[j].wavelength()-wavelength) < errorwave )
+		if( fabs(LineSave.lines[j].wavlVac()-wavelength) < errorwave )
 		{
 			LineSave.lines[j].prt(stdout);
 			printf("\n");
@@ -1054,7 +1054,7 @@ long debugLine( realnum wavelength )
 long int cdLine(
 	const string& chLabel, 
 	/* wavelength of line in angstroms, not format printed by code */
-	realnum wavelength, 
+	t_wavl wavelength, 
 	/* linear intensity relative to normalization line*/
 	double *relint, 
 	/* log of luminosity or intensity of line */
@@ -1122,13 +1122,13 @@ void cdLine_ip(long int ipLine,
 	{
 		return;
 	}
-	ASSERT( LineSave.ipNormWavL >= 0 );
+	ASSERT( LineSave.ipNormLine >= 0 );
 	ASSERT( LineSave.nsum > 0 );
 
 	/* does the normalization line have a positive intensity */
-	if( LineSave.lines[LineSave.ipNormWavL].SumLine(LineType) > 0. )
+	if( LineSave.lines[LineSave.ipNormLine].SumLine(LineType) > 0. )
 		*relint = LineSave.lines[ipLine].SumLine(LineType)/
-			LineSave.lines[LineSave.ipNormWavL].SumLine(LineType)*
+			LineSave.lines[LineSave.ipNormLine].SumLine(LineType)*
 			LineSave.ScaleNormLine;
 
 	/* return log of current line intensity if it is positive */
@@ -1698,6 +1698,12 @@ int cdRead( const string& chInputLine ) /* the string containing the command */
 		if( factor <= 0. )
 			factor = exp10(factor);
 		rfield.setResolutionScaleFactor(factor);
+	}
+
+	/* option to print vacuum wavelengths */
+	if( p.hasCommand("PRINT") && p.nMatch("LINE") && p.nMatch("VACUUM") )
+	{
+		prt.lgPrintLineAirWavelengths = false;
 	}
 
 	/* if the command is an init command, process it immediately

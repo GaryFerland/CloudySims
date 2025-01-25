@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ZoneEnd last routine called after all zone calculations, before iter_end_check,
  * upon exit radiation field is for outer edge of current zone */
@@ -154,7 +154,7 @@ void ZoneStart(const char *chMode)
 		  * when ZoneDone called */
 
 		/* this will be the optical thickness of the next zone
-		 * AngleIllumRadian is 1/COS(theta), is usually 1, reset with illuminate command,
+		 * AngleIllumRadian is 1/COS(theta), is usually 1, reset with illumination command,
 		 * option for illumination of slab at an angle */
 
 		/* radius.dRNeff is next dr with filling factor, this will only be

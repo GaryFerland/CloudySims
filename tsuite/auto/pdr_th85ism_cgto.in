@@ -213,8 +213,8 @@ monitor O2 column density 12.84 error 0.2
 ## >>chng 21 sep 11, from 14.26 to 13.7, LAMDA update
 ## >>chng 21 nov 04, from 13.7 to 14.1, update mole co data
 ## >>chng 23 may 15, from 14.1 to 12.76, GS updates 21 reactions to UMIST 2012
-## >>chng 24 jun 08, from 12.76 to 12.93, GS rm 3 TiO reactions
-monitor SiO column density 12.93 error 0.20 
+## >>chng 25 jan 15, from 12.76 to 12.89, GS removes destabilizing reactions, updates others to current UMIST
+monitor SiO column density 12.89 error 0.20 
 ## 
 ## >>chng 05 mar 25, from 13.45 to 13.57 renorm H pops in level solver, inc err
 ## >>chng 05 jul 05, from 13.57 to 13.96 turn on Cl 

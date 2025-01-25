@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParseSave parse the save command */
 /*SaveFilesInit initialize save file pointers, called from cdInit */
@@ -1291,7 +1291,7 @@ void ParseSave(Parser& p)
 			"#depth cm\tTemp K\tHtot erg/cm3/s\tCtot erg/cm3/s\tAdve Htot erg/cm3/s\theat fracs\n" );
 	}
 
-	else if( p.nMatch("HELI") &&!( p.nMatch("IONI")))
+	else if( p.nMatch("HELI") && !p.nMatch("IONI") )
 	{
 		/* save helium & helium-like iso sequence, but not save helium ionization rate
 		 * save helium line wavelengths */
@@ -1328,7 +1328,7 @@ void ParseSave(Parser& p)
 		}
 
 		/* save information on 21 cm excitation processes - accept either keyword 21cm or 21 cm */
-		else if( p.nMatch("21 CM") ||p.nMatch("21CM"))
+		else if( p.nMatch("21 CM") || p.nMatch("21CM") )
 		{
 			/* save information about 21 cm line */
 			strcpy( save.chSave[save.nsave], "21CM" );
@@ -1544,10 +1544,8 @@ void ParseSave(Parser& p)
 				else
 					sncatf( chHeader, "\t" );
 				sncatf( chHeader,
-					 "%s ", save.LineList[save.nsave][j].chLabel.c_str() );
-				string chTemp;
-				sprt_wl( chTemp, save.LineList[save.nsave][j].wave );
-				sncatf( chHeader, "%s", chTemp.c_str() );
+						"%s ", save.LineList[save.nsave][j].chLabel().c_str() );
+				sncatf( chHeader, "%s", save.LineList[save.nsave][j].twav().sprt_wl().c_str() );
 			}
 		}
 		sncatf( chHeader, "\n" );
@@ -1784,10 +1782,8 @@ void ParseSave(Parser& p)
 				for( long int j=0; j<save.nLineList[save.nsave]; ++j )
 				{
 					sncatf( chHeader, "%s ",
-						save.LineList[save.nsave][j].chLabel.c_str() );
-					string chTemp;
-					sprt_wl( chTemp, save.LineList[save.nsave][j].wave );
-					sncatf( chHeader, "%s", chTemp.c_str() );
+							save.LineList[save.nsave][j].chLabel().c_str() );
+					sncatf( chHeader, "%s", save.LineList[save.nsave][j].twav().sprt_wl().c_str() );
 					if( j != save.nLineList[save.nsave] )
 					{
 						sncatf( chHeader, "\t" );

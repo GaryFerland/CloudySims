@@ -370,9 +370,8 @@ monitor O2 column density 16.7 error 0.2
 ## >>chng 11 dec 12, from 9.56 to 9.796, bug-fix for updating grain opacity (r5759)
 ## >>chng 11 dec 21, from 9.796 to 15.87, H column density 1e22 -> 1e23
 ## >>chng 12 apr 09, from 15.87 to 16.32, update CR backbround to Indriolo+07, ~8x larger
-## >>chng 24 apr 21, from 16.32 to 16.08, GS updates chemistry
-## >>chng 24 jun 08, from 16.08 to 16.34, GS rm 3 TiO reactions
-monitor SiO column density 16.34 error 0.25
+## >>chng 25 jan 15, from 16.32 to 16.52, GS removes destabilizing reactions, updates others to current UMIST
+monitor SiO column density 16.52 error 0.25
 ## 
 ## >>chng 04 may 19, from 15.60 to 15.43, NA add several moles, reactions
 ## >>chng 04 may 29, from 15.43 to 15.28, NA update H chem
@@ -832,9 +831,7 @@ monitor column density "CS+"       10.3
 ## >>chng 21 apr 16, from 16.89 to 17.04, add molecular column densities
 ## >>chng 21 sep 11, from 17.04 to 16.96, LAMDA update
 ## >>chng 23 may 15, from 16.96 to 16.79, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from 16.79 to 16.95, GS updates chemistry
-## >>chng 24 oct 24, from 16.95 to 16.77, merge master
-monitor column density "CS"        16.77  
+monitor column density "CS"        16.79  
 ## >>chng 21 apr 16, from 12.001to 12.0392, new monitor added
 ## >>chng 21 apr 16, from 12.04 to 12.32, add molecular column densities
 monitor column density "H2Cl+"     12.32  
@@ -844,8 +841,6 @@ monitor column density "H2Cl+"     12.32
 monitor column density "H2O+"      11.03  
 ## >>chng 21 apr 16, from 14.05 to 16.46, add molecular column densities
 ## >>chng 23 may 15, from 16.46 to 16.4, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from 16.4 to 16.46, GS updates chemistry
-## >>chng 24 oct 24, from 16.46 to 16.4, merge master
 monitor column density "H2O"       16.4  
 ## >>chng 21 apr 16, from 11.41 to 12.91, add molecular column densities
 ## >>chng 21 sep 11, from 12.91 to 12.98, LAMDA update
@@ -867,8 +862,6 @@ monitor column density "HCO+"      13.56
 ## >>chng 21 apr 16, from 13.96 to 13.16, add molecular column densities
 ## >>chng 21 sep 11, from 13.16 to 13.24, LAMDA update
 ## >>chng 23 may 15, from 13.24 to 13.08, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from 13.08 to 13.2, GS updates chemistry
-## >>chng 24 oct 24, from 13.2 to 13.08, merge master
 monitor column density "HCS+"      13.08 
 ## >>chng 21 apr 16, from 15.85 to 14.56, add molecular column densities
 ## >>chng 21 sep 11, from 14.56 to 14.13, LAMDA update
@@ -880,7 +873,8 @@ monitor column density "HNO"       7.186
 ## >>chng 21 sep 11, from 11.73 to 11.79, LAMDA update
 monitor column density "HS+"       11.79  
 ## >>chng 21 apr 16, from 14.71 to 11.88, add molecular column densities
-monitor column density "HS"        11.88  
+## >>chng 25 jan 15, from 11.88 to 11.84, GS removes destabilizing reactions, updates others to current UMIST
+monitor column density "HS"        11.84  
 ## >>chng 21 apr 16, from 12.49 to 10.83, add molecular column densities
 monitor column density "N2+"       10.83  
 ## >>chng 21 apr 16, from 17.44 to 18.31, add molecular column densities
@@ -889,10 +883,7 @@ monitor column density "N2"        18.31
 ## >>chng 21 sep 11, from 13.03 to 13.11, LAMDA update
 monitor column density "N2H+"      13.11
 ## >>chng 21 apr 16, from 11.03 to 8.465, add molecular column densities
-## >>chng 24 jun 08, from 8.465 to 8.419, GS rm 3 TiO reactions
-## >>chng 24 oct 24, from 8.419 to 8.461, merge master
-## >>chng 24 oct 24, from 8.419 to 8.473, merge master
-monitor column density "N2O"       8.473
+monitor column density "N2O"       8.465
 ## >>chng 21 apr 16, from 15.58 to 12.58, add molecular column densities
 monitor column density "NH"        12.58  
 ## >>chng 21 apr 16, from 10.34 to 9.975, add molecular column densities
@@ -922,8 +913,6 @@ monitor column density "NS"        12.01
 monitor column density "OCN"       7.017  
 ## >>chng 21 apr 16, from 10.98 to 16.82, add molecular column densities
 ## >>chng 23 may 15, from 16.82 to 16.9, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from 16.9 to 16.82, GS updates chemistry
-## >>chng 24 oct 24, from 16.82 to 16.9, merge master
 monitor column density "OCS"       16.9  
 ## >>chng 21 apr 16, from 10.33 to 11.39, add molecular column densities
 ## >>chng 23 sep 08, from 11.39 to 11.52, fix SQRTPI in Lya destprob
@@ -945,9 +934,8 @@ monitor column density "SiN+"      7.452
 monitor column density "SiN"       11.51  
 ## >>chng 21 apr 16, from 11.25 to 11.98, add molecular column densities
 ## >>chng 21 sep 11, from 11.98 to 12.08, LAMDA update
-## >>chng 24 apr 21, from 12.08 to 12.34, GS updates chemistry
-## >>chng 24 jun 08, from 12.34 to 12.08, GS rm 3 TiO reactions
-monitor column density "SiOH+"     12.08
+## >>chng 25 jan 15, from 12.08 to 12.25, GS removes destabilizing reactions, updates others to current UMIST
+monitor column density "SiOH+"     12.25
 ## >>chng 21 apr 16, from 10.1 to 12.34, add molecular column densities
 ## >>chng 21 sep 11, from 12.34 to 12.46, LAMDA update
 monitor column density "SO+"       12.46  
@@ -1017,8 +1005,6 @@ monitor "HNC " 1652.90m  line intensity -4.88
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -6.302 to -6.227, LAMDA update
 ## >>chng 23 may 15, from -6.227 to -6.377, GS updates 21 reactions to UMIST 2012
-## >>chng 24 apr 21, from -6.377 to -6.257, GS updates chemistry
-## >>chng 24 oct 24, from -6.257 to -6.377, merge master
 monitor "HCS+" 1755.88m  -6.377 line intensity
 ## >>chng 13 jun 27, from -7.453 to -4.903, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.

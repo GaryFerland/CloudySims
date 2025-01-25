@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef TAULINES_H_
@@ -140,7 +140,7 @@ TransitionList::iterator findTrans_byQuantNumb(
  * \return	pointer to transition in species list of transitions. If no match is
  * 		found, return value is past the end of the entire list.
  */
-TransitionList::iterator findTrans_byWLAng( string speciesLabel, const double wl_Ang,
+TransitionList::iterator findTrans_byWLAng( string speciesLabel, const t_wavl& wl_Ang,
 			double &wl_err );
 
 

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*InitDefaultsPreparse initialization at start of simulation, called from cloudy
 * before parser, sets initial values of quantities changed by parser 
@@ -263,11 +263,10 @@ void InitDefaultsPreparse( void )
 
 	abund.lgAbTaON = false;
 
-	/* option to turn off an element */
 	for( nelem=0; nelem < LIMELM; nelem++ )
 	{
 		/* option to have abundances from table */
-		abund.lgAbunTabl[nelem] = false;
+		abund.AbunTab[nelem].clear();
 	}
 
 	/* threshold for faintest heating cooling to save with save heating or 
@@ -511,8 +510,8 @@ void InitDefaultsPreparse( void )
 	StopCalc.lgStop21cm = false;
 	/* stop when absolute value of velocity falls below this */
 	StopCalc.StopVelocity = 0.;
-	/* number of stop line commands entered */
-	StopCalc.nstpl = 0;
+	/* erase stop line commands entered */
+	StopCalc.sle.clear();
 
 	/* initialize some variables for the optimizer */
 	optimize.nIterOptim = 400;
@@ -634,7 +633,7 @@ void InitDefaultsPreparse( void )
 		/* most continua enter as a beam rather than isotropic */
 		rfield.lgBeamed[i] = true;
 		// default is radiation from the "illuminated" face
-		rfield.Illumination[i] = Illuminate::FORWARD;
+		rfield.Illumination[i] = Illumination::FORWARD;
 		// optical depth = normal optical depth * this scale factor,
 		// is 1 / cos theta
 		rfield.OpticalDepthScaleFactor[i] = 1.;
