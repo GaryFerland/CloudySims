@@ -198,7 +198,8 @@ monitor column density "CS+"       4.3
 ## >>chng 21 apr 16, from 16.89 to 10.15, add molecular column densities
 ## >>chng 21 sep 11, from 10.15 to 10.58, LAMDA update
 ## >>chng 23 may 15, from 10.58 to 10.5, GS updates 21 reactions to UMIST 2012
-monitor column density "CS"        10.5  
+## >>chng 24 apr 21, from 10.5 to 10.56, GS updates chemistry
+monitor column density "CS"        10.56  
 ## >>chng 21 apr 16, from 12.001to 12.0392, new monitor added
 ## >>chng 21 apr 16, from 12.04 to 4.479, add molecular column densities
 ## >>chng 21 sep 11, from 4.479 to 4.423, LAMDA update
@@ -260,7 +261,8 @@ monitor column density "NH2"       8.499
 ## >>chng 21 apr 16, from 12.45 to 5.9, add molecular column densities
 monitor column density "NH3+"      5.9
 ## >>chng 21 apr 16, from 14.86 to 8.008, add molecular column densities
-monitor column density "NH3"       8.008  
+## >>chng 24 apr 21, from 8.008 to 8.061, GS updates chemistry
+monitor column density "NH3"       8.061  
 ## >>chng 21 apr 16, from 11.03 to 4.058, add molecular column densities
 ## >>chng 21 sep 11, from 4.058 to 4.099, LAMDA update
 monitor column density "NH4+"      4.099  
@@ -281,7 +283,8 @@ monitor column density "OCN"       4.079
 ## >>chng 21 apr 16, from 10.98 to 7.292, add molecular column densities
 ## >>chng 21 sep 11, from 7.292 to 8.688, LAMDA update
 ## >>chng 23 may 15, from 8.688 to 9.637, GS updates 21 reactions to UMIST 2012
-monitor column density "OCS"       9.637  
+## >>chng 24 apr 21, from 9.637 to 8.674, GS updates chemistry
+monitor column density "OCS"       8.674  
 ## >>chng 21 apr 16, from 10.33 to 4.638, add molecular column densities
 monitor column density "OH+"       4.638  
 ## >>chng 21 apr 16, from 14.95 to -3.37, add molecular column densities
@@ -350,7 +353,8 @@ monitor eden 4.524
 ## >>chng 16 dec 16, error from 0.1 to 0.15 to pass gcc 6.2.0 compiler sim
 ## >>chng 17 may 26, from 3.521 to 3.80, average of gcc/cloudy9 llvm/mac
 ## >>chng 24 jan 09, from 3.8 to 4.319, resolve 1 electron Ly doublets
-monitor itrzn 4.319 error 0.15
+## >>chng 24 oct 24, from 4.319 to 3.596, merge master
+monitor itrzn 3.596 error 0.15
 ## 
 ## >>chng 04 may 19, from <70 to <90 NA update CO mole, addit moles
 ## >>chng 05 dec 22, from 90 to 60 (41), rationalize zone asserts
