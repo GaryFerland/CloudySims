@@ -105,7 +105,8 @@ monitor OH column density 14.74 error 0.1
 ## >>chng 20 aug 03, from 15.11 to 15.28, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from 15.28 to 15.32, further update to McCall CR-related rate
 ## >>chng 25 jan 15, from 15.32 to 15.64, GS removes destabilizing reactions, updates others to current UMIST
-monitor SiO column density 15.64 error 0.1
+## >>chng 25 jan 26, from 15.64 to 15.5, merge master updated cham"
+monitor SiO column density 15.5 error 0.1
 ## 
 ## >>chng 05 jun 26, from 97.3 to 107.6 make Federman chem the default
 ## >>chng 09 oct 05, from 107.6 to 360, [NI] pumping changes
@@ -144,7 +145,8 @@ monitor column density H2*  14.81 error 0.1
 ## >>chng 14 jan 05, from 10.29 to 10.37, N to external databases
 ## >>chng 14 jun 11, from 10.37 to 10.3, BUGFIX 14 jan 05, N to external databases, did not include N I, Mg II excited state photo
 ## >>chng 17 feb 10, from 10.3 to 10.26, default size of N 1 model atom set to 50
-monitor column density HeH+ 10.26 error 0.1
+## >>chng 25 jan 26, from 10.26 to 10.14, merge master updated cham"
+monitor column density HeH+ 10.14 error 0.1
 ## 
 ## >>chng 06 nov 28, add these lines
 ## >>chng 09 oct 05, from -3.841 to -3.73, [NI] pumping changes

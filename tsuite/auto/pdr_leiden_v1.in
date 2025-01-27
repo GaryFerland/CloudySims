@@ -89,7 +89,8 @@ monitor "OH" column density 13.84 error 0.1
 ## >>chng 21 nov 04, from 14.86 to 14.92, update mole co data
 ## >>chng 23 may 15, from 14.92 to 14.76, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 15, from 14.76 to 14.94, GS removes destabilizing reactions, updates others to current UMIST
-monitor "SiO" column density 14.94 error 0.1
+## >>chng 25 jan 26, from 14.94 to 14.89, merge master updated cham"
+monitor "SiO" column density 14.89 error 0.1
 ## 
 ## >>chng 05 mar 22, from 17.96 to 18.03, NA update CO chem net
 ## >>chng 05 mar 27, from 18.03 to 17.98, fix typo in above
@@ -200,7 +201,8 @@ monitor temperature "H"   27.9327 error 0.050
 ##
 ## >>chng 21 sep 11, from 38.02 to 36.28, LAMDA update
 ## >>chng 21 nov 04, from 36.28 to 38.24, update mole co data
-monitor temperature "H+"  38.24 error 0.050
+## >>chng 25 jan 26, from 38.24 to 34.32, merge master updated cham"
+monitor temperature "H+"  34.32 error 0.050
 ##
 monitor temperature "H2"  12.0758 error 0.050
 ##
@@ -258,7 +260,8 @@ monitor nzone 767 error 0.01
 ## >>chng 20 aug 03, from -9.559 to -9.517, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -9.517 to -9.46, LAMDA update
 ## >>chng 21 nov 04, from -9.46 to -9.523, update mole co data
-monitor "H2O " 538.142m line intensity -9.523
+## >>chng 25 jan 26, from -9.523 to -9.565, merge master updated cham"
+monitor "H2O " 538.142m line intensity -9.565
 ## >>chng 13 jun 27, from -7.357 to -7.824, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from -7.824 to -7.866, C to external databases

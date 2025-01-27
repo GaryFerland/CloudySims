@@ -263,7 +263,8 @@ monitor "O2" column density 17.87 error 0.2
 ## >>chng 20 aug 03, from 17.65 to 17.74, update H3+ rates Indriola+ 2012
 ## >>chng 24 apr 21, from 17.74 to 17.47, GS updates chemistry
 ## >>chng 24 jun 08, from 17.47 to 17.72, GS rm 3 TiO reactions
-monitor "SiO" column density 17.72 error 0.25
+## >>chng 25 jan 26, from 17.72 to 17.85, master merg
+monitor "SiO" column density 17.85 error 0.25
 ## 
 ## >>chng 05 mar 22, from 15.94 to 15.88, NA update CO chem net
 ## >>chng 05 mar 25, from 15.88 to 15.79, renorm H pops in level solver

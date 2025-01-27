@@ -29,11 +29,13 @@
 ## >> 23 may 15, from 1.4385 to 1.4823, GS updates 21 reactions to UMIST 2012
 ## >> 24 jun 08, from 1.4823 to 1.4464, GS rm reactions to get this sim to converge on clang++
 ## >> 24 oct 24, from 1.4464 to 1.4823, merge master
-1.4823
+## >> 24 oct 24, from 1.4823 to 1.4497, merge master
+1.4497
 ## >> 23 may 15, from 1.4419 to 1.4829 GS updates 21 reactions to UMIST 2012
 ## >> 24 jun 08, from 1.4829 to 1.4484, GS rm reactions to get this sim to converge on clang++
 ## >> 24 oct 24, from 1.4484 to 1.4823, merge master
-1.4823
+## >> 25 jan 26, from 1.4823 to 1.4489, merge master
+1.4489
 5.9812
 5.9812
 5.9812
@@ -89,7 +91,8 @@
 3.7292
 ## >>chng 24 apr 08, from 3.4226 to 3.6126, update Si-rates from UDfA2006 to UDfA2012
 ## >>chng 24 oct 24, from 3.6126 to 3.4216, update Si-rates from UDfA2006 to UDfA2012
-3.4216
+## >>chng 25 jan 26, from 3.4216 to 3.6114, update Si-rates from UDfA2006 to UDfA2012
+3.6114
 5.9811
 5.9811
 5.9811

@@ -112,7 +112,8 @@ monitor line luminosity "blnd"  1402 3.311 ##total O IV] 1402
 ## >>chng 16 aug 07, from 5.432 to 5.467, Fran bug fix
 ## >>chng 19 jun 28, from 5.467 to 5.488, reintegrate iso_collisions branch
 ## >>chng 19 jul 30, from 5.488 to 5.523, split He I 2 ^3P_J
-monitor line luminosity "blnd" 1549 5.523 ##total of sum of both C IV comp
+## >>chng 25 jan 26, from 5.523 to 5.503, slow drift
+monitor line luminosity "blnd" 1549 5.503 ##total of sum of both C IV comp
 ## 
 ## >>chng 09 jun 28, from 1 to 5.323, check convergence of outward Hb
 ## >>chng 11 jul 12, from 5.323 to 5.351, enable fit to Badnell DR suppression
@@ -236,7 +237,8 @@ monitor line luminosity "Blnd" 1888 5.976 ##total of sum of Si III] 1892+
 ## >>chng 16 aug 07, from 5.491 to 5.562, Fran bug fix
 ## >>chng 19 jun 28, from 5.562 to 5.6, reintegrate iso_collisions branch
 ## >>chng 19 jul 30, from 5.6 to 5.631, split He I 2 ^3P_J
-monitor line luminosity "Blnd"  1860 5.631 ##total sum of both Al III comp
+## >>chng 25 jan 26, from 5.621 to 5.610, slow drift
+monitor line luminosity "Blnd"  1860 5.610 ##total sum of both Al III comp
 ##
 ##total C II] 2324.69+2328.12
 ## >>chng 03 sep 07, from 5.686 to 5.709, ? ?

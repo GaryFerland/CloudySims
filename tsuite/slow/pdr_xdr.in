@@ -85,7 +85,8 @@ monitor column density H2*  15.89 error 0.1
 ## >>chng 11 nov 16, from 12.28 to 12.17, adjust newmole monitors
 ## >>chng 14 mar 26, from 12.17 to 12.08, move O to external databases
 ## >>chng 16 apr 26, from 12.08 to 12.01, replace \"case B\" with \"Database H-like Lyman pumping off\"
-monitor column density HeH+ 12.01 error 0.1
+## >>chng 25 jan 26, from 12.01 to 11.67, master merg
+monitor column density HeH+ 11.67 error 0.1
 ## >>chng 11 jul 22, from 10 to 16.06, first run
 ## >>chng 12 jun 08, from 16.06 to 16, Updates to grain chemistry
 ## >>chng 14 mar 26, from 16 to 15.96, move O to external databases

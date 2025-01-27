@@ -282,7 +282,8 @@ monitor column density H2*  14.00 error 0.1
 ## 
 ## >>chng 05 dec 08, from 8.35 to 8.06, update to Elwert Solomon rate
 ## >>chng 12 jul 01, from 8.06 to 8.011, update Badnell DR to 13-electron iso sequence
-monitor column density HeH+ 8.011  error 0.1
+## >>chng 25 jan 26, from 8.011 to 7.918, merge master updated cham"
+monitor column density HeH+ 7.918  error 0.1
 ## 
 ## >>chng 21 apr 11 add all remaining molecules with N(x) > 1e10 cm-2
 ## >>chng 21 sep 11, from 10.51 to 9.844, LAMDA update
@@ -481,7 +482,8 @@ monitor column density "OCN"       9.553
 ## >>chng 23 mar 17, from 11.95 to 11.88, add SiS and Lamda model"
 ## >>chng 23 may 15, from 11.88 to 13.27, GS updates 21 reactions to UMIST 2012
 ## >>chng 24 apr 21, from 13.27 to 11.41, GS updates chemistry
-monitor column density "OCS"       11.41  
+## >>chng 25 jan 26, from 11.41 to 11.32, merge master updated cham"
+monitor column density "OCS"       11.32  
 monitor column density "OH+"       10.331  
 ## >>chng 23 may 15, from 14.95 to 14.87, GS updates 21 reactions to UMIST 2012
 monitor column density "OHgrn"     14.87  

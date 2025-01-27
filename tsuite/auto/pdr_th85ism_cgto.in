@@ -214,7 +214,8 @@ monitor O2 column density 12.84 error 0.2
 ## >>chng 21 nov 04, from 13.7 to 14.1, update mole co data
 ## >>chng 23 may 15, from 14.1 to 12.76, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 15, from 12.76 to 12.89, GS removes destabilizing reactions, updates others to current UMIST
-monitor SiO column density 12.89 error 0.20 
+## >>chng 25 jan 26, from 12.89 to 13.14, merge master updated cham"
+monitor SiO column density 13.14 error 0.20 
 ## 
 ## >>chng 05 mar 25, from 13.45 to 13.57 renorm H pops in level solver, inc err
 ## >>chng 05 jul 05, from 13.57 to 13.96 turn on Cl 
@@ -252,7 +253,8 @@ monitor column density H2*  16.15 error 0.1
 ## >>chng 12 apr 09, from 7.859 to 8.756, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 12 aug 06, from 8.756 to 8.704, bugfix - include Pelec_esc in several places
 ## >>chng 16 apr 26, from 8.704 to 8.655, replace \"case B\" with \"Database H-like Lyman pumping off\"
-monitor column density HeH+ 8.655 error 0.1
+## >>chng 25 jan 26, from 8.655 to 8.292, merge master updated cham"
+monitor column density HeH+ 8.292 error 0.1
 ## 
 ##
 ## >>chng 05 jul 06, from 900 to 950

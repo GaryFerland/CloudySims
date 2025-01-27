@@ -725,7 +725,8 @@ monitor column density "OCN"       9.688
 ## >>chng 23 mar 17, from 11.99 to 11.91, add SiS and Lamda model"
 ## >>chng 23 may 15, from 11.91 to 13.27, GS updates 21 reactions to UMIST 2012
 ## >>chng 24 apr 21, from 13.27 to 11.42, GS updates chemistry
-monitor column density "OCS"       11.42  
+## >>chng 25 jan 26, from 11.42 to 11.33, merge master updated cham"
+monitor column density "OCS"       11.33  
 monitor column density "OH+"       10.331  
 ## >>chng 23 may 15, from 14.95 to 14.86, GS updates 21 reactions to UMIST 2012
 monitor column density "OHgrn"     14.86  

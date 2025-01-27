@@ -109,7 +109,8 @@ monitor H2O column density 16.7 error 0.1
 ## >>chng 12 aug 21, from 23.62 to 37.39, fix CRPHOT botches and HD crash
 ## >>chng 13 aug 20, from 37.39 to 29.16, enable D chem by default
 ## >>chng 13 sep 17, from 29.16 to 38.44, D chem off by default
-monitor "H+" temperature 38.44
+## >>chng 25 jan 26, from 38.44 to 32.24, merge master updated cham"
+monitor "H+" temperature 32.24
 ## 
 ## >>chng 05 mar 25, from 9.06 to 9.63 renorm H pops in level solver
 ## >>chng 05 jun 26, from 9.63 to 10.10, make Federman chem the default

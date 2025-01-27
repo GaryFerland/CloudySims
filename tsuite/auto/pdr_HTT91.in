@@ -208,7 +208,8 @@ monitor temperature "H2" 39.06
 ## >>chng 13 nov 22, from 11.13 to 11.25, collapsed branch merge r8609
 ## >>chng 13 dec 09, from 11.25 to 11.13, force nfine to nfine_malloc
 ## >>chng 16 apr 26, from 11.13 to 11.07, replace \"case B\" with \"Database H-like Lyman pumping off\"
-monitor column density HeH+ 11.07 error 0.1
+## >>chng 25 jan 26, from 11.07 to 10.99, merge master updated cham"
+monitor column density HeH+ 10.99 error 0.1
 ##
 ## >>chng 11 jul 15 add following molecular column densities
 ## >>chng 11 jul 15, from 10 to 10.72, add column densities

@@ -383,7 +383,8 @@ monitor H2 column density 26.58 error 0.15
 ## >>chng 16 aug 07, from -6.725 to -6.83, Marios bug fixes
 ## >>chng 18 feb 20, updated spectral label from "He 1" 5875.64A to "Blnd" 5877.29A, update He-like triplet labels and wl
 ## >>chng 18 mar 06, wl from 5877.29A to 5875.66A, adjust multiplet Blend WL for refraction index
-monitor line luminosity "Blnd" 5875.66A -6.83
+## >>chng 25 jan 26, from -6.83 to -6.796, merge master updated cham"
+monitor line luminosity "Blnd" 5875.66A -6.796
 ##
 ## >>chng 01 may 07, from 1.111 to 1.046, chng in he+ H ct rate
 ## >>chng 02 apr 03, from 1.046 to 1.135 bound compton
@@ -446,7 +447,8 @@ monitor temperature "H+" 1.657 error 0.1
 ## >>chng 13 sep 17, from 3.423 to 3.326, D chem off by default
 ## >>chng 13 nov 19, from 3.326 to 3.372, fix CT bug in mole_eval_balance
 ## >>chng 15 jun 03, from 3.372 to 2.441, exact LTE H2 cooling (not big model)
-monitor temperature "He+" 2.441
+## >>chng 25 jan 26, from 2.441 to 2.476, merge master updated cham"
+monitor temperature "He+" 2.476
 ##
 ## >>chng 05 sep 15, add this assert, eden for last zone
 ## >>chng 05 dec 08, from -0.661 to -0.748, update to Elwert Solomon rate

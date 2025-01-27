@@ -101,7 +101,8 @@ monitor OH column density 14.73 error 0.1
 ## >>chng 20 aug 03, from 15.05 to 15.27, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from 15.27 to 15.31, further update to McCall CR-related rates from r14260
 ## >>chng 25 jan 15, from 15.31 to 15.63, GS removes destabilizing reactions, updates others to current UMIST
-monitor SiO column density 15.63 error 0.1
+## >>chng 25 jan 26, from 15.63 to 15.49, master merg
+monitor SiO column density 15.49 error 0.1
 ## 
 ## >>chng 11 jul 16, add these
 ## >>chng 11 jul 16, from 10 to 13.64, add column density monitors
@@ -132,7 +133,8 @@ monitor column density H2*  14.88 error 0.1
 ## >>chng 14 jan 05, from 10.29 to 10.37, N to external databases
 ## >>chng 14 jun 11, from 10.37 to 10.29, BUGFIX 14 jan 05, N to external databases, did not include N I, Mg II excited state photoa
 ## >>chng 16 apr 26, from 10.29 to 10.24, replace \"case B\" with \"Database H-like Lyman pumping off\"
-monitor column density HeH+ 10.24 error 0.1
+## >>chng 25 jan 26, from 10.24 to 10.1, master merg
+monitor column density HeH+ 10.1 error 0.1
 ## >>chng 11 jul 16, from 10 to 14.81, add column density monitors
 ## >>chng 11 dec 12, from 14.81 to 14.71, bug-fix for updating grain opacity (r5759)
 ## >>chng 12 jul 01, from 14.71 to 14.76, update Badnell DR to 13-electron iso sequence
@@ -158,7 +160,8 @@ monitor column density C2   12.62 error 0.1
 ## >>chng 21 nov 04, from 9.852 to 10.16, update co mole data
 ## >>chng 23 may 15, from 10.16 to 9.673, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 15, from 9.673 to 9.756, GS removes destabilizing reactions, updates others to current UMIST
-monitor column density C3   9.756 error 0.1
+## >>chng 25 jan 26, from 9.756 to 9.702, master merg
+monitor column density C3   9.702 error 0.1
 ## >>chng 11 jul 16, from 10 to 13.51, add column density monitors
 ## >>chng 11 dec 12, from 13.51 to 13.46, bug-fix for updating grain opacity (r5759)
 ## >>chng 12 aug 21, from 13.46 to 13.5, fix CRPHOT botches and HD crash
@@ -439,7 +442,8 @@ monitor "CO  " 866.727m  -8.175 line intensity
 ## >>chng 21 nov 04, from -10.21 to -9.964, update co mole data
 ## >>chng 23 may 15, from -9.964 to -9.845, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 15, from -9.845 to -9.944, GS removes destabilizing reactions, updates others to current UMIST
-monitor "CO  " 650.074m  -9.944 line intensity
+## >>chng 25 jan 26, from -9.944 to -9.902, master merg
+monitor "CO  " 650.074m  -9.902 line intensity
 ## >>chng 13 jun 27, from -6.485 to -11.63, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 13 oct 30, from -11.63 to -11.76, change H2/HD secondary scale factors

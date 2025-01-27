@@ -80,7 +80,8 @@ monitor column density H2*  13.63 error 0.1
 ## >>chng 13 dec 18, from 2.473 to 2.396, fixes to Federman shielding
 ## >>chng 14 dec 04, from 2.396 to 2.226, fix double-counting of big-H2 Solomon rate
 ## >>chng 16 mar 21, from 2.226 to 2.352, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
-monitor column density HeH+ 2.352 error 0.1
+## >>chng 25 jan 26, from 2.352 to 2.5, master merg
+monitor column density HeH+ 2.5 error 0.1
 ## >>chng 11 jul 16, from 10 to 16.47, add column density monitors
 ## >>chng 13 jun 27, from 16.47 to 16.54, BUGFIX use g-bar for H2-H2 collisions
 ## >>chng 20 jul 21, from 16.54 to 16.83, update DR H2 diss as per  2020RNAAS...4...78S

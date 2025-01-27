@@ -67,7 +67,8 @@ monitor OH column density 13.17 error 0.1
 ## >>chng 05 sep 08, from 15.52 to 15.56, first run in 2 mo
 ## >>chng 08 feb 20, bugfix r1803, from 15.56 to 15.45
 ## >>chng 25 jan 15, from 15.45 to 15.83, GS removes destabilizing reactions, updates others to current UMIST
-monitor SiO column density 15.83 error 0.1
+## >>chng 25 jan 26, from 15.83 to 15.72, master merg
+monitor SiO column density 15.72 error 0.1
 ## 
 ## >>chng 11 jul 16, add these
 ## >>chng 11 jul 16, from 10 to 12.02, add column density monitors
@@ -108,7 +109,8 @@ monitor column density H2*  16.35 error 0.1
 ## >>chng 14 jan 05, from 7.833 to 7.612, N to external databases
 ## >>chng 14 dec 04, from 7.612 to 7.546, fix double-counting of big-H2 Solomon rate
 ## >>chng 17 feb 10, from 7.546 to 7.779, default size of N 1 model atom set to 50
-monitor column density HeH+ 7.779 error 0.1
+## >>chng 25 jan 26, from 7.779 to 7.833, master merg
+monitor column density HeH+ 7.833 error 0.1
 ## >>chng 11 jul 16, from 10 to 15.19, add column density monitors
 ## >>chng 20 jul 21, from 15.19 to 15.27, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from 15.27 to 15.38, update H3+ rates Indriola+ 2012

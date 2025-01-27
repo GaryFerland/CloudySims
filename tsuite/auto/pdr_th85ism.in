@@ -290,7 +290,8 @@ monitor ionization Silicon 2 -0.724 err 0.1
 ## >>chng 05 aug 03, from -8.55 to -8.51, NA update CO, H chem net
 ## >>chng 11 nov 16, from -8.51 to -8.594, adjust newmole monitors
 ## >>chng 12 apr 09, from -8.594 to -7.704, update CR backbround to Indriolo+07, ~8x larger
-monitor ionization helium 2 -7.704 err 0.1
+## >>chng 25 jan 26, from -7.704 to -7.747, merge master updated cham"
+monitor ionization helium 2 -7.747 err 0.1
 ##
 ## >>chng 03 aug 28, from -0.053 to -2.690 Nick Abel fix CO, greater depth
 ## >>chng 03 sep 29, from -2.690 to -1.094 change stop to Av
@@ -462,7 +463,8 @@ monitor column density H2*  16.24 error 0.1
 ## >>chng 11 nov 16, from 7.99 to 7.847, adjust newmole monitors
 ## >>chng 12 apr 09, from 7.847 to 8.745, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 14 aug 28, from 8.745 to 8.687, EleyRideal H2 formation
-monitor column density HeH+ 8.687 error 0.1
+## >>chng 25 jan 26, from 8.687 to 8.377, merge master updated cham"
+monitor column density HeH+ 8.377 error 0.1
 ## 
 ## >>chng 21 apr 11 add all remaining molecules with N(x) > 1e10 cm-2
 ## >>chng 21 apr 16, from 10.51 to 10.13, add molecular column densities
