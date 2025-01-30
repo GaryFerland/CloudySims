@@ -87,7 +87,8 @@ monitor ionization Silicon   1 -0.466 error 0.15
 ## >>chng 13 nov 19, from -1.144 to -0.9445, fix CT bug in mole_eval_balance
 ## >>chng 23 mar 17, from -0.9445 to -2.565, add SiS and Lamda model"
 ## >>chng 23 jul 15, from -2.565 to -4.054, GS update UMIST to 2012 and set upper limit on T
-monitor ionization Sulphur   2 -4.054 error 0.15
+## >>chng 25 jan 15, from -4.054 to -3.384, GS removes destabilizing reactions, updates others to current UMIST
+monitor ionization Sulphur   2 -3.384 error 0.15
 ##
 ## >>chng 13 feb 01, from -3.838 to -3.927, BUGFIX, largely undo r6703
 ## >>chng 13 feb 10, from -3.927 to -3.773, H2,e-=>H-,H update
@@ -122,7 +123,8 @@ monitor "H2O " 538.142m line intensity -18.33
 ## >>chng 23 mar 17, from -18.87 to -20.75, add SiS and Lamda model"
 ## >>chng 23 may 15, from -20.75 to -20.71, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 jul 15, from -20.71 to -20.63, GS update UMIST to 2012 and set upper limit on T
-monitor "HCS+" 1755.88m  -20.63 line intensity
+## >>chng 25 jan 15, from -20.63 to -19.95, GS removes destabilizing reactions, updates others to current UMIST
+monitor "HCS+" 1755.88m  -19.95 line intensity
 ## >>chng 13 jun 27, from -7.453 to -16.48, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 19, from -16.48 to -15.26, fix CT bug in mole_eval_balance
@@ -131,7 +133,8 @@ monitor "HCS+" 1755.88m  -20.63 line intensity
 ## >>chng 23 mar 17, from -15.3 to -17.3, add SiS and Lamda model"
 ## >>chng 23 may 15, from -17.3 to -17.25, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 jul 15, from -17.25 to -18, GS update UMIST to 2012 and set upper limit on T
-monitor "CS  " 3058.86m  -18 line intensity
+## >>chng 25 jan 15, from -18 to -17.3, GS removes destabilizing reactions, updates others to current UMIST
+monitor "CS  " 3058.86m  -17.3 line intensity
 ## >>chng 13 jun 27, from -7.288 to -14.2, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 19, from -14.2 to -13.52, fix CT bug in mole_eval_balance

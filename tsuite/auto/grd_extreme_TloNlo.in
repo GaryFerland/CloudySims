@@ -1,5 +1,5 @@
-title exercise full range of density, temperature
-set save prefix "grid_extreme"
+title slow/grid_extreme lowest density lowest temperature
+set save prefix "grd_extreme_TloNlo"
 # 
 element lithium off
 element berylium off
@@ -12,13 +12,10 @@ cmb
 iterate
 # 
 # SED is 1e6 K BB with low energy density
-blackbody 6
-energy density 6 vary
-# do not run in parallel so we have good performance statistics
-grid 1 6 1 sequential
-# -8 18 
-hden 2 vary
-grid -8 18 1
+blackbody 6 
+energy density 1 
+#
+hden -8
 stop zone 1
 # set to constant small thickness
 set dr -10
@@ -33,22 +30,15 @@ normalize to "Q(H)" 4861.32A
 # the normalizing line is not defined on the emergent line stack
 print lines emergent off
 save performance no hash ".per"
-save grid no hash ".grd" last 
-save overview last no hash ".ovr" last 
-save monitors last no hash ".asr" last 
-save average ".avr" last 
-temperature hydrogen 2
-end of average
-# 
-## >>chng 11 apr 26, val 21 from 4.1377 to 3.159, update Ar iso seq recom rates
-## >>chng 14 apr 07, val 49 from 3.6671 to 3.6863, update of Gaunt free-free factors
-## >>chng 16 nov 16, val 103 from 4.4320 to 4.4076, merging RydDep branch after fixing some bugs
-## >>chng 16 dec 15, val 102 from 4.7765 to 4.7538, fix bug on Percival and Richard h-like collisions
-## >>chng 19 jun 28, val 102 from 4.7538 to 4.7758, reintegrate iso_collisions branch
-## >>chng 19 jul 14, val 104 from 4.3362 to 4.3194 reintegrate iso_collisions branch
-monitor temperature grid "grid_extreme.dat" "H+"
+save monitors last ".asr"
+## >>chng 25 jan 15, from 30.3 to 3.227e+06, first run
+monitor temperature "H+" 3.227e+06
+## >>chng 25 jan 15, from -3.45 to 0, add new monitors
+monitor ionization fraction hydrogen 2 0 
+## >>chng 25 jan 15, from 27 to 16, GS removes destabilizing reactions, updates others to current UMIST
+## >>chng 25 jan 15, from 16 to 3, first run
+monitor itrzn 3
 #
-# grid_extreme.in limits
+# one of the four corners of grid_extreme, 
 # Figs 17&18 of 2013RMxAA..49..137F
-
  
