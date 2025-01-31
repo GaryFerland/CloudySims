@@ -164,7 +164,8 @@ monitor line "C  3" 977.02 1.31 error 0.1
 ## >>chng 14 jan 05, from 0.0333 to 0.0314, N to external databases
 ## >>chng 17 feb 10, from 0.0314 to 0.0334, default size of N 1 model atom set to 50
 ## >>chng 19 mar 01, from 0.0334 to 0.002, remove recombination, etc, components from blends (#415)
-monitor line "blnd"  5199 0.002
+## >>chng 25 jan 30, from 0.002 to 0.0019, all double results
+monitor line "blnd"  5199 0.0019
 ##
 ## >>chng 06 feb 07, from 3.401 to 3.265 add exp to low-T DR 
 ## >>chng 06 aug 02, from 3.26 to 3.72, update O+2, N+2 CT
