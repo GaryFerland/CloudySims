@@ -67,7 +67,8 @@ monitor line luminosity "C  2" 157.636m -4.489
 ## >>chng 20 aug 03, from -6.062 to -6.144, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -6.144 to -5.854, LAMDA update
 ## >>chng 21 nov 04, from -5.854 to -6.074, update mole co data
-monitor line luminosity "c  1" 370.269m -6.074
+## >>chng 25 jan 26, from -6.074 to -6.131, merge master updated cham"
+monitor line luminosity "c  1" 370.269m -6.131
 ## 
 ## >>chng 06 nov 29, from -6.520 to -6.371, Badnell DR turned on
 ## >>chng 11 jul 12, from -6.371 to -6.407, enable fit to Badnell DR suppression
@@ -77,7 +78,8 @@ monitor line luminosity "c  1" 370.269m -6.074
 ## >>chng 20 aug 03, from -6.325 to -6.404, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -6.404 to -6.129, LAMDA update
 ## >>chng 21 nov 04, from -6.129 to -6.336, update mole co data
-monitor line luminosity "c  1" 609.590m -6.336
+## >>chng 25 jan 26, from -6.336 to -6.391, merge master updated cham"
+monitor line luminosity "c  1" 609.590m -6.391
 ## 
 ## >>chng 14 mar 26, from -5.549 to -5.316, Move oxygen data to stout and chianti files
 ## >>chng 20 aug 03, from -5.316 to -5.336, update H3+ rates Indriola+ 2012

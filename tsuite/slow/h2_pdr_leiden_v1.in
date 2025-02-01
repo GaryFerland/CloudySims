@@ -86,7 +86,8 @@ monitor OH column density 13.83 error 0.1
 ## >>chng 21 nov 04, from 14.87 to 14.92, update co mole data
 ## >>chng 23 may 15, from 14.92 to 14.76, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 15, from 14.76 to 14.95, GS removes destabilizing reactions, updates others to current UMIST
-monitor SiO column density 14.95 error 0.1
+## >>chng 25 jan 26, from 14.95 to 14.91, master merg
+monitor SiO column density 14.91 error 0.1
 ## 
 ## >>chng 05 mar 22, from 17.96 to 18.03, NA update CO chem net
 ## >>chng 05 mar 27, from 18.03 to 17.98, fix typo in above
@@ -227,7 +228,8 @@ monitor H2 column density level 0  0  21.88 error 0.1
 ## >>chng 14 aug 14, from 20.38 to 20.15, botches due to H2-H+ collision changes at low-T in r9436
 ## >>chng 14 dec 04, from 20.15 to 20.2, fix double-counting of big-H2 Solomon rate
 ## >>chng 20 jul 21, from 20.2 to 20.11, update DR H2 diss as per  2020RNAAS...4...78S
-monitor H2 column density level 0  1  20.11 error 0.1
+## >>chng 25 jan 26, from 20.11 to 20.07, master merg
+monitor H2 column density level 0  1  20.07 error 0.1
 ## 
 ## >>chng 05 jul 17, from 17.99 to 16.68 first run in 6 mo
 ## >>chng 11 nov 16, from 16.68 to 15.32, adjust newmole monitors
@@ -541,7 +543,8 @@ monitor "CN  " 880.858m  -11.62  line intensity
 ## >>chng 23 jul 15, from -11.38 to -10.99, GS update UMIST to 2012 and set upper limit on T
 ## >>chng 23 jul 15, adjust wavelength from 5503.08m to 5502.90m
 ## >>chng 25 jan 15, from -10.99 to -9.707, GS removes destabilizing reactions, updates others to current UMIST
-monitor "SiS " 5502.90m -9.707 line intensity
+## >>chng 25 jan 26, from -9.707 to -9.662, master merg
+monitor "SiS " 5502.90m -9.662 line intensity
 # h2_pdr_leiden_v1.in
 # class pdr 
 # ========================================

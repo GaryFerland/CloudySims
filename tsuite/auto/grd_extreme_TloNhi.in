@@ -31,13 +31,15 @@ normalize to "Q(H)" 4861.32A
 print lines emergent off
 save performance no hash ".per"
 save monitors last ".asr"
-monitor temperature "H+" 30.3
+## >>chng 25 jan 26, from 30.3 to 28.18, merge master updated cham"
+monitor temperature "H+" 28.18
 ## >>chng 25 jan 15, from 22.44 to 7.652, first run
 monitor column density H2g  7.652 error 0.1
 ## >>chng 25 jan 15, from -3.45 to -0.3484, add new monitors
 monitor molecular fraction H2 -0.3484
 ## >>chng 25 jan 15, from -3.45 to -16.21, add new monitors
-monitor ionization fraction hydrogen 2 -16.21 
+## >>chng 25 jan 26, from -16.21 to -16.44, merge master updated cham"
+monitor ionization fraction hydrogen 2 -16.44 
 ## >>chng 25 jan 15, from 27 to 16, GS removes destabilizing reactions, updates others to current UMIST
 ## >>chng 25 jan 30, from 16 to 19, all double results
 monitor itrzn 19

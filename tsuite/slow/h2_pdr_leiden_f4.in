@@ -88,7 +88,8 @@ monitor column density H2*  16.24 error 0.1
 ## >>chng 11 jul 16, from 10 to 7.638, add column density monitors
 ## >>chng 11 nov 16, from 7.638 to 7.588, adjust newmole monitors
 ## >>chng 14 dec 04, from 7.588 to 7.531, fix double-counting of big-H2 Solomon rate
-monitor column density HeH+ 7.531 error 0.1
+## >>chng 25 jan 26, from 7.531 to 7.851, master merg
+monitor column density HeH+ 7.851 error 0.1
 ## >>chng 11 jul 16, from 10 to 10.58, add column density monitors
 ## >>chng 11 nov 16, from 10.58 to 11.09, adjust newmole monitors
 ## >>chng 12 jun 08, from 11.09 to 11.57, Updates to grain chemistry
@@ -132,7 +133,8 @@ monitor column density C3   13.89 error 0.1
 ## >>chng 13 feb 01, from 12.94 to 12.85, BUGFIX, largely undo r6703
 ## >>chng 21 apr 10, from 12.85 to 12.89, update chemistry and LAMDA
 ## >>chng 23 may 15, from 12.89 to 13.06, GS updates 21 reactions to UMIST 2012
-monitor column density SiO  13.06 error 0.1
+## >>chng 24 apr 21, from 13.06 to 12.86, GS updates chemistry
+monitor column density SiO  12.86 error 0.1
 ## >>chng 11 jul 16, from 10 to 11.41, add column density monitors
 ## >>chng 11 nov 16, from 11.41 to 11.53, adjust newmole monitors
 ## >>chng 12 jun 08, from 11.53 to 11.63, Updates to grain chemistry

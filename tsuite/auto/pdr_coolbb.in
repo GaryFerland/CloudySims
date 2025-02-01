@@ -59,11 +59,13 @@ monitor set error 0.1
 monitor temperature "H" 56.42
 monitor H2 column density 25.20 
 monitor CO column density 20.89
-monitor "ArH+" column density 7.142
+## >>chng 25 jan 26, from 7.142 to 7.097, merge master updated cham"
+monitor "ArH+" column density 7.097
 ## >>chng 13 jul 15, from -4.459 to -1.652 move to Stout/Chianti for Si, botches are due to improved atomic data
 ## >>chng 20 aug 03, from -1.652 to -1.796, update H3+ rates Indriola+ 2012
 ## >>chng 23 may 15, from -1.796 to -1.743, GS updates 21 reactions to UMIST 2012
-monitor line luminosity "Si 2" 34.8046m  -1.743
+## >>chng 24 jun 08, from -1.743 to -1.793, GS rm 3 TiO reactions
+monitor line luminosity "Si 2" 34.8046m  -1.793
 ##
 ## >>chng 08 feb 20, from -1.123 to -1.475, grain charge transfer changes in ion_solver and iso*
 ## >>chng 08 jun 25, from -1.475 to -1.43 add source/sink to ioniz ladder
@@ -87,7 +89,8 @@ monitor line luminosity "Si 2" 34.8046m  -1.743
 ## >>chng 20 aug 03, from -0.5647 to -0.6633, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -0.6633 to -0.7449, LAMDA update
 ## >>chng 25 jan 15, from -0.7449 to -0.7065, GS removes destabilizing reactions, updates others to current UMIST
-monitor eden -0.7065
+## >>chng 25 jan 26, from -0.7065 to -0.7762, merge master updated cham"
+monitor eden -0.7762
 ##
 ## >>chng 08 dec 08, from 9 to 4.214, upper limit -> equals (r2515)
 ## >>chng 08 dec 13, from 4.214 to 9.777, merging newsolvers branch
@@ -148,7 +151,8 @@ monitor "H2O " 160.466m line intensity -2.023
 ## >>chng 14 jan 05, from -3.772 to -3.713, N to external databases
 ## >>chng 14 mar 26, from -3.713 to -3.761, Move oxygen data to stout and chianti files
 ## >>chng 15 may 29, from -3.761 to -4.2, double optical depth, iterate to convergence
-monitor "HNC " 1652.90m  line intensity -4.2
+## >>chng 25 jan 26, from -4.2 to -4.244, merge master updated cham"
+monitor "HNC " 1652.90m  line intensity -4.244
 ## >>chng 13 jul 19, add this monitor
 ## >>chng 13 jul 24, wl from 178.2m to 178.228m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -2.411 to -2.507, LAMDA update
@@ -317,7 +321,19 @@ monitor "SiO " 238.551m  -2.680  line intensity
 ## >>chng 13 jul 24, wl from 209.8m to 209.779m, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 29, from -2.789 to -2.746, double optical depth, iterate to convergence
 ## >>chng 20 aug 03, from -2.746 to -2.705, update H3+ rates Indriola+ 2012
+## >>chng 24 apr 21, from -2.705 to -2.757, GS updates chemistry
+## >>chng 24 jun 08, from -2.757 to -2.705, GS rm 3 TiO reactions
 monitor "SiO " 209.779m  -2.705  line intensity
+##
+## >>chng 24 apr 21 GS add TiO
+## >>chng 25 jan 26, from 14.05 to 14, merge master updated cham"
+monitor column density "TiO"	14
+##
+## >>chng 24 apr 21 GS add TiO
+monitor column density "TiO2"	15.235
+##
+## >>chng 24 apr 21 GS add TiO
+monitor column density "TiOH+"	10.461
 #
 # pdr_coolbb.in
 # class pdr 

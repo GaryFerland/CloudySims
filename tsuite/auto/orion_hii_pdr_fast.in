@@ -231,7 +231,8 @@ monitor itrzn 9.319
 ## >>chng 20 aug 03, from -8.856 to -8.758, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from -8.758 to -8.718, further update to McCall CR-related rate
 ## >>chng 23 sep 12, from -8.718 to -6.309, update fast.ini
-monitor "H2O " 538.142m line intensity -6.309
+## >>chng 25 jan 26, from -6.309 to -6.333, merge master updated cham"
+monitor "H2O " 538.142m line intensity -6.333
 ## >>chng 13 jun 27, from -7.357 to -9.282, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 14, from -9.282 to -9.312, CollisSuppres, final version from Dragan Nikolic

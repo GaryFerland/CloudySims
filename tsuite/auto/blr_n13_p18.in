@@ -190,7 +190,8 @@ monitor line luminosity "Blnd"  1.08302m 6.107
 ## >>chng 18 mar 06, wl from 5877.29A to 5875.66A, adjust multiplet Blend WL for refraction index
 ## >>chng 19 jun 28, from 5.673 to 5.606, reintegrate iso_collisions branch
 ## >>chng 19 jul 30, from 5.606 to 5.529, split He I 2 ^3P_J
-monitor line luminosity "Blnd"  5875.66A 5.529
+## >>chng 25 jan 26, from 5.529 to 5.549, merge master updated cham"
+monitor line luminosity "Blnd"  5875.66A 5.549
 ## 
 ## >>chng 18 jan 13, from 4.613 to 0.5824, first run
 ## >>chng 18 jun 15, from 0.5824 to 0.6752, modified ion trimming scheme
