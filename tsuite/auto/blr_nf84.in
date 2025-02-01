@@ -518,7 +518,8 @@ monitor temperature "Fe+7" 4.276
 ## >>chng 14 apr 08, from 362 to 381, O excit state photo back in
 ## >>chng 16 mar 24, from 381 to 352, FeII cooling using Stout 80 levels
 ## >>chng 18 jun 20, from 352 to 330, #bugfixes at front face r12134:12136
-monitor nzone 330 
+## >>chng 25 jan 30, from 330 to <380, all double results
+monitor nzone <380 
 ##
 ## >>chng 04 feb 15, from 15 to 12
 ## >>chng 04 sep 25, from 12 to 15, incr temp toler 0.02 to 0.005
@@ -536,7 +537,8 @@ monitor itrzn 13.07
 ## >>chng 09 jul 14, from 7 to 5, reset autocv to 0.2 since 0.1 developed 32/64 bit distinction
 ## >>chng 09 jul 27, from 5 to 3, rm test on outward Hb - will create ticket on problems
 ## >>chng 11 aug 05, from 3 to 4, make PRD redis func for h-like ions; LY_A func is now for H only
-monitor niter 4 
+## >>chng 25 jan 30, from 4 to 3, all double results
+monitor niter < 5 
 ##
 ## >>chng 14 jul 10, from 1.01 to 5.245, Add monitors for WillsNetzerWills FeII Lines
 ## >>chng 16 mar 23, drop WillsNetzerWills FeII Lines
