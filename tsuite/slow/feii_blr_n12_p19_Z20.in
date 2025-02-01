@@ -189,7 +189,9 @@ monitor line luminosity "Blnd"  1860 6.25 ##total sum of both Al III comp
 ## >>chng 14 jul 02, from 4.991 to 5.142, Add monitors for Fe II Bands
 ## >>chng 16 mar 20, from 5.142 to 5.08, change from Werner model to Stout model for Fe+
 ## >>chng 16 aug 17, from 5.08 to 5.183, bugfix at r11237
-monitor line luminosity "blnd"  2326 5.183 err 0.1 ##total C II] 2324.69+2328.12
+## >>chng 25 jan 30, from 5.183 to 5.141, all double included
+## >>chng 25 feb 01, from 5.141 to 5.18, err 0.15 all double included
+monitor line luminosity "blnd"  2326 5.18 err 0.15 ##total C II] 2324.69+2328.12
 ##
 ## >>chng 06 aug 09, from 7.703 to 7.733 Meudon 06, Bowen change
 ## >>chng 06 nov 29, from 7.733 to 7.713, Badnell DR

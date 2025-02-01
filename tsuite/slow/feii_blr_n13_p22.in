@@ -253,8 +253,9 @@ monitor line luminosity "Blnd"  1860 8.886  ##total sum of both Al III comp
 ## >>chng 23 jul 24, from 6.884 to 6.8413, fix all-double botches
 ## >>chng 23 jul 24, err from 0.1 to 0.12, fix all-double botches
 ## >>chng 24 apr 22, from 6.841 to 6.889, Redefine unresolved escape prob. to averaged np-split probabilites
-## >>chng 25 jan 26, from 6.889 to 6.88, Redefine unresolved escape prob. to averaged np-split probabilites
-monitor line luminosity "blnd" 2326 6.88  err 0.15
+## >>chng 25 jan 30, from 6.889 to 6.803, all double included
+## >>chng 25 feb 01, from 6.039 to 6.846, inc err, all double included
+monitor line luminosity "blnd" 2326 6.846  err 0.15
 ##
 ## >>chng 06 aub 06, update O+2 & N+2 CT, from 8.985 to 9.007
 ## >>chng 06 nov 29, from 9.007 to 8.971, Badnell DR

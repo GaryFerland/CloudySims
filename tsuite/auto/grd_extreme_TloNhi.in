@@ -41,7 +41,8 @@ monitor molecular fraction H2 -0.3484
 ## >>chng 25 jan 26, from -16.21 to -16.44, merge master updated cham"
 monitor ionization fraction hydrogen 2 -16.44 
 ## >>chng 25 jan 15, from 27 to 16, GS removes destabilizing reactions, updates others to current UMIST
-monitor itrzn 16
+## >>chng 25 jan 30, from 16 to 19, all double results
+monitor itrzn 19
 #
 # one of the four corners of grid_extreme, 
 # Figs 17&18 of 2013RMxAA..49..137F
