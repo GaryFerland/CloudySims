@@ -127,7 +127,8 @@ monitor line luminosity "Blnd"  1860 8.639 ##total sum of both Al III comp
 ## >>chng 14 apr 08, from 7.473 to 7.418, O excit state photo back on
 ## >>chng 14 jul 02, from 7.418 to 7.558, Add monitors for Fe II Bands
 ## >>chng 25 jan 30, from 7.558 to 7.513, all double included
-monitor line luminosity "blnd"  2326 7.513 err 0.1 ##total C II] 2324.69+2328.12
+## >>chng 25 feb 01, from 7.513 to 7.545, incr err all double included
+monitor line luminosity "blnd"  2326 7.545 err 0.15 ##total C II] 2324.69+2328.12
 ##
 ## >>chng 10 jun 29, from 7.438 to 8.774, init
 ## >>chng 12 oct 22, from 8.774 to 8.737, zone tau in rt_line_one
