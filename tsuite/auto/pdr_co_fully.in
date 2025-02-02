@@ -354,7 +354,8 @@ monitor eden 4.524
 ## >>chng 17 may 26, from 3.521 to 3.80, average of gcc/cloudy9 llvm/mac
 ## >>chng 24 jan 09, from 3.8 to 4.319, resolve 1 electron Ly doublets
 ## >>chng 24 oct 24, from 4.319 to 3.596, merge master
-monitor itrzn 3.596 error 0.15
+## >>chng 25 feb 01, from 4.149 to 3.596, masater with all commits
+monitor itrzn 4.149 error 0.15
 ## 
 ## >>chng 04 may 19, from <70 to <90 NA update CO mole, addit moles
 ## >>chng 05 dec 22, from 90 to 60 (41), rationalize zone asserts
