@@ -64,9 +64,12 @@ int main( void )
 			/*cdNoExec( );*/
 			printf("te %g\n",telog);
 
-			/* input continuum is very faint cosmit background - this
+			/* input continuum is very faint cosmic background - this
 			 * should be negligible */
-			cdRead( "background 0 .0000000001"  );
+			//cdRead( "background 0 .0000000001"  );
+
+			/* must include a source of ionization for chemistry to work*/
+			cdRead( "cosmic ray background -1");
  
 			/* just do the first zone - only want ionization distribution */
 			cdRead( "stop zone 1 "  );
