@@ -1,6 +1,8 @@
 /* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*main program calling cloudy to produce a table giving ionization vs temperature */
+/* Do collisional ionization models over a range of temperature and
+ * produce tables showing ionizaiton fractions vs temperature */
 #include "cddefines.h"
 #include "cddrive.h"
 
@@ -13,7 +15,7 @@ int main( void )
 	try {
 		/* faintest ionization fraction to print */
 #		define FAINT 1e-9
-		/* following is number of ion stages per line */
+		/* following is number of ion stages per line of output */
 #		define NELEM 15
 #		define NMAX 100
 		double xIonSave[NMAX][LIMELM][LIMELM+1] , tesave[NMAX];
@@ -21,13 +23,13 @@ int main( void )
 		double hden ;
 		long int nte , i;
 		long int nelem , ion;
-		/* this is the list of element names used to query code results */
+		/* list of element names used to query code results */
 		char chElementNameShort[LIMELM][5] = { "HYDR" , "HELI" ,
 						       "LITH" , "BERY" , "BORO" , "CARB" , "NITR" , "OXYG" , "FLUO" ,
 						       "NEON" , "SODI" , "MAGN" , "ALUM" , "SILI" , "PHOS" , "SULP" ,
 						       "CHLO" , "ARGO" , "POTA" , "CALC" , "SCAN" , "TITA" , "VANA" ,
 						       "CHRO" , "MANG" , "IRON" , "COBA" , "NICK" , "COPP" , "ZINC" };
-		/* this is the list of element names used to make printout */
+		/* list of element names used to make printout */
 		char chElementName[LIMELM][11] =
 			{ "Hydrogen  " ,"Helium    " ,"Lithium   " ,"Beryllium " ,"Boron     " ,
 			  "Carbon    " ,"Nitrogen  " ,"Oxygen    " ,"Fluorine  " ,"Neon      " ,
@@ -47,12 +49,12 @@ int main( void )
 		fprintf(ioRES,"  log fractional ionization for species with abundances > %.2e\n",
 			FAINT );
 
-		/* the first temperature */
+		/* the log of the lowest and highest temperature */
 		telog = 3.;
 		te_last = 9.;
-		/* the increment in the temperature */
+		/* the increment in the temperature in dex */
 		teinc = 0.1;
-		/* the log of the hydrogen density that will be used */
+		/* the log of the hydrogen density  */
 		hden = 0.;
 
 		nte = 0;
@@ -63,10 +65,6 @@ int main( void )
 			cdTalk(false);
 			/*cdNoExec( );*/
 			printf("te %g\n",telog);
-
-			/* input continuum is very faint cosmic background - this
-			 * should be negligible */
-			//cdRead( "background 0 .0000000001"  );
 
 			/* must include a source of ionization for chemistry to work*/
 			cdRead( "cosmic ray background -1");
