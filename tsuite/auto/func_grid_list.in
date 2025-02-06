@@ -4,6 +4,7 @@ grid list "func_grid_list.dat" linear sequential
 hden 5
 stop zone 1
 iterate 2
+normalize "TALL" 10000.0A
 monitor temperature face grid "func_grid_list.dat"
 ****************
 

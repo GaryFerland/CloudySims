@@ -27,7 +27,7 @@ print h-like departure hydrogen
 ## >>chng 13 jul 30, wl from 4471.47A to 4471.49A, increased wl precision to 6 sig. fig.
 ## >>chng 18 feb 20, updated spectral label from "He 1" 4471.49A to "Blnd" 4472.76A, update He-like triplet labels and wl
 ## >>chng 18 mar 06, wl from 4472.76A to 4471.50A, adjust multiplet Blend WL for refraction index
-normalize to "Blnd" 4471.50A
+normalize to "He 1" 537.030A
 print line faint -2
 save overview "limit_lte_he1_nomole_ste_nocoll.ovr"
 save performance "limit_lte_he1_nomole_ste_nocoll.per"

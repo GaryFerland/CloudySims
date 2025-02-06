@@ -44,7 +44,8 @@ save monitors "igm_z3_thick.asr"
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-monitor line "H  1" 4861.32A 109.9
+## >>chng 25 feb 06, from 109.9 to 0.0074, make STE BB isotropic
+monitor line "H  1" 4861.32A 0.0074
 ##
 monitor "H+" temperature 3000
 ##

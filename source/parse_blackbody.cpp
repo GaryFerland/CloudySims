@@ -109,11 +109,7 @@ void ParseBlackbody(
 
 		if (p.nMatch(" STE") || p.nMatch("STE "))
 		{
-			// uncommenting the following line would make an STE BB field isotropic
-			// doing that currently results in numerous problems in the test suite
-			// this line should be uncommented once this ticket is fixed
-			// https://gitlab.nublado.org/cloudy/cloudy/-/issues/491
-			// rfield.lgBeamed[p.m_nqh] = false;
+			rfield.lgBeamed[p.m_nqh] = false;
 			rfield.Illumination[p.m_nqh] = Illumination::SYMMETRIC;
 		}
 	}

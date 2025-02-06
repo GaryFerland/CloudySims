@@ -65,7 +65,8 @@ monitor "ArH+" column density 7.097
 ## >>chng 20 aug 03, from -1.652 to -1.796, update H3+ rates Indriola+ 2012
 ## >>chng 23 may 15, from -1.796 to -1.743, GS updates 21 reactions to UMIST 2012
 ## >>chng 24 jun 08, from -1.743 to -1.793, GS rm 3 TiO reactions
-monitor line luminosity "Si 2" 34.8046m  -1.793
+## >>chng 25 feb 06, from -1.793 to -1.87, make STE BB isotropic
+monitor line luminosity "Si 2" 34.8046m  -1.87
 ##
 ## >>chng 08 feb 20, from -1.123 to -1.475, grain charge transfer changes in ion_solver and iso*
 ## >>chng 08 jun 25, from -1.475 to -1.43 add source/sink to ioniz ladder
@@ -120,7 +121,8 @@ monitor nzone 452
 ## >>chng 13 jul 19, from -2.066 to -2.321, set number of iterations to 8 for proper convergence of the model
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 29, from -2.321 to -2.676, double optical depth, iterate to convergence
-monitor "H2O " 538.142m line intensity -2.676
+## >>chng 25 feb 06, from -2.676 to -2.797, make STE BB isotropic
+monitor "H2O " 538.142m line intensity -2.797
 ## >>chng 13 jul 19, add this monitor
 ## >>chng 13 jul 24, wl from 212.5m to 212.468m, increased wl precision to 6 sig. fig.
 ## >>chng 13 aug 17, from -1.969 to -2.075, Matt move Cl to Chianti & Stout
@@ -129,7 +131,8 @@ monitor "H2O " 538.142m line intensity -2.676
 ## >>chng 13 sep 15, from -2.113 to -1.973, improve Thomson c.s.
 ## >>chng 13 nov 03, from -1.973 to -2.063, update H2 - C II collision rates
 ## >>chng 15 may 29, from -2.063 to -2.225, double optical depth, iterate to convergence
-monitor "H2O " 212.468m line intensity -2.225 error 0.2
+## >>chng 25 feb 06, from -2.225 to -2.535, make STE BB isotropic
+monitor "H2O " 212.468m line intensity -2.535 error 0.2
 ## 
 ## >>chng 13 jul 19, add this monitor
 ## >>chng 13 jul 24, wl from 160.5m to 160.466m, increased wl precision to 6 sig. fig.
@@ -138,7 +141,8 @@ monitor "H2O " 212.468m line intensity -2.225 error 0.2
 ## >>chng 13 nov 05, from -1.826 to -1.873, convergence branch changes
 ## >>chng 15 may 29, from -1.873 to -2.061, double optical depth, iterate to convergence
 ## >>chng 20 aug 03, from -2.061 to -2.023, update H3+ rates Indriola+ 2012
-monitor "H2O " 160.466m line intensity -2.023
+## >>chng 25 feb 06, from -2.023 to -2.502, make STE BB isotropic
+monitor "H2O " 160.466m line intensity -2.502
 ## >>chng 13 jun 27, from -7.357 to -3.583, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 29, from -3.583 to -3.463, update newly added monitors
 ## >>chng 13 jul 15, from -3.463 to -3.078, move to Stout/Chianti for Si, botches are due to improved atomic data
@@ -152,13 +156,15 @@ monitor "H2O " 160.466m line intensity -2.023
 ## >>chng 14 mar 26, from -3.713 to -3.761, Move oxygen data to stout and chianti files
 ## >>chng 15 may 29, from -3.761 to -4.2, double optical depth, iterate to convergence
 ## >>chng 25 jan 26, from -4.2 to -4.244, merge master updated cham"
-monitor "HNC " 1652.90m  line intensity -4.244
+## >>chng 25 feb 06, from -4.244 to -4.308, make STE BB isotropic
+monitor "HNC " 1652.90m  line intensity -4.308
 ## >>chng 13 jul 19, add this monitor
 ## >>chng 13 jul 24, wl from 178.2m to 178.228m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -2.411 to -2.507, LAMDA update
 ## >>chng 21 nov 04, from -2.507 to -2.466, update mole co data
 ## >>chng 23 may 15, from -2.466 to -2.513, GS updates 21 reactions to UMIST 2012
-monitor "HCN " 178.228m line intensity -2.513
+## >>chng 25 feb 06, from -2.513 to -2.914, make STE BB isotropic
+monitor "HCN " 178.228m line intensity -2.914
 ## >>chng 13 jun 27, from -8.563 to -4.031, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 19, from -4.031 to -4.086, set number of iterations to 8 for proper convergence of the model
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
@@ -176,7 +182,8 @@ monitor "HCS+" 1755.88m  -4.476 line intensity
 ## >>chng 15 mar 07, from -4.617 to -4.662, merging newmesh branch
 ## >>chng 15 apr 28, from -4.662 to -4.623, CollisSuppres change suggested by Dragan Nikolic
 ## >>chng 15 may 29, from -4.623 to -5.047, double optical depth, iterate to convergence
-monitor "CS  " 3058.86m  -5.047 line intensity
+## >>chng 25 feb 06, from -5.047 to -5.151, make STE BB isotropic
+monitor "CS  " 3058.86m  -5.151 line intensity
 ## >>chng 13 jun 27, from -7.288 to -4.068, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 29, from -4.068 to -3.873, update newly added monitors
 ## >>chng 13 jul 15, from -3.873 to -4.122, move to Stout/Chianti for Si, botches are due to improved atomic data
@@ -187,45 +194,52 @@ monitor "CS  " 3058.86m  -5.047 line intensity
 ## >>chng 13 oct 14, from -4.339 to -4.429, update energies, fig bug stout sc 3
 ## >>chng 13 oct 31, from -4.429 to -4.34, sims allowed to wander away over past few weeks
 ## >>chng 15 may 29, from -4.34 to -4.785, double optical depth, iterate to convergence
-monitor "CO  " 2600.05m  -4.785 line intensity
+## >>chng 25 feb 06, from -4.785 to -4.878, make STE BB isotropic
+monitor "CO  " 2600.05m  -4.878 line intensity
 ## >>chng 13 jun 27, from -6.463 to -2.674, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 29, from -2.674 to -3.245, update newly added monitors
 ## >>chng 13 jul 15, from -3.245 to -2.849, move to Stout/Chianti for Si, botches are due to improved atomic data
 ## >>chng 13 jul 19, from -2.849 to -3.480, set number of iterations to 8 for proper convergence of the model
 ## >>chng 13 jul 24, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 29, from -3.48 to -3.895, double optical depth, iterate to convergence
-monitor "CO  " 1300.05m  -3.895 line intensity
+## >>chng 25 feb 06, from -3.895 to -4.006, make STE BB isotropic
+monitor "CO  " 1300.05m  -4.006 line intensity
 ## >>chng 13 jun 27, from -6.149 to -1.932, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 29, from -1.932 to -2.761, update newly added monitors
 ## >>chng 13 jul 15, from -2.761 to -2.828, move to Stout/Chianti for Si, botches are due to improved atomic data
 ## >>chng 13 jul 19, from -2.828 to -2.979, set number of iterations to 8 for proper convergence of the model
 ## >>chng 13 jul 24, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 29, from -2.979 to -3.393, double optical depth, iterate to convergence
-monitor "CO  " 866.727m  -3.393 line intensity
+## >>chng 25 feb 06, from -3.393 to -3.518, make STE BB isotropic
+monitor "CO  " 866.727m  -3.518 line intensity
 ## >>chng 13 jun 27, from -6.177 to -2.401, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 29, from -2.401 to -1.865, update newly added monitors
 ## >>chng 13 jul 15, from -1.865 to -2.096, move to Stout/Chianti for Si, botches are due to improved atomic data
 ## >>chng 13 jul 19, from -2.096 to -2.621, set number of iterations to 8 for proper convergence of the model
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 29, from -2.621 to -3.054, double optical depth, iterate to convergence
-monitor "CO  " 650.074m  -3.054 line intensity
+## >>chng 25 feb 06, from -3.054 to -3.192, make STE BB isotropic
+monitor "CO  " 650.074m  -3.192 line intensity
 ## >>chng 13 jun 27, from -6.485 to -2.368, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 19, from -2.368 to -2.362, set number of iterations to 8 for proper convergence of the model
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 29, from -2.362 to -2.805, double optical depth, iterate to convergence
-monitor "CO  " 520.089m  -2.805 line intensity
+## >>chng 25 feb 06, from -2.805 to -2.957, make STE BB isotropic
+monitor "CO  " 520.089m  -2.957 line intensity
 ## >>chng 13 jun 27, from -6.954 to -2.264, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 19, from -2.264 to -2.154, set number of iterations to 8 for proper convergence of the model
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 29, from -2.154 to -2.616, double optical depth, iterate to convergence
-monitor "CO  " 433.438m  -2.616 line intensity
+## >>chng 25 feb 06, from -2.616 to -2.782, make STE BB isotropic
+monitor "CO  " 433.438m  -2.782 line intensity
 ## >>chng 13 jun 27, from -7.48 to -2.142, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 19, from -2.142 to -1.981, set number of iterations to 8 for proper convergence of the model
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 04, from -1.981 to -1.885, remove Lyman line TauIn hack
 ## >>chng 13 nov 05, from -1.885 to -1.981, convergence branch changes
 ## >>chng 15 may 29, from -1.981 to -2.47, double optical depth, iterate to convergence
-monitor "CO  " 371.549m  -2.47 line intensity
+## >>chng 25 feb 06, from -2.47 to -2.653, make STE BB isotropic
+monitor "CO  " 371.549m  -2.653 line intensity
 ## >>chng 13 jun 27, from -8.049 to -2.029, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 19, from -2.029 to -1.841, set number of iterations to 8 for proper convergence of the model
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
@@ -236,7 +250,8 @@ monitor "CO  " 371.549m  -2.47 line intensity
 ## >>chng 13 oct 31, from -1.351 to -1.784, sims allowed to wander away over past few weeks
 ## >>chng 13 nov 05, from -1.784 to -1.828, convergence branch changes
 ## >>chng 15 may 29, from -1.828 to -2.357, double optical depth, iterate to convergence
-monitor "CO  " 325.137m  -2.357 line intensity
+## >>chng 25 feb 06, from -2.357 to -2.559, make STE BB isotropic
+monitor "CO  " 325.137m  -2.559 line intensity
 ## >>chng 13 jul 19, add this monitor
 ## >>chng 13 jul 24, wl from 260.2m to 260.169m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 19, from -1.597 to -1.541, fix CT bug in mole_eval_balance
@@ -253,7 +268,8 @@ monitor "CO  " 325.137m  -2.357 line intensity
 ## >>chng 15 mar 10, from -1.515 to -1.613, tweak frequency mesh edges
 ## >>chng 15 may 27, from -1.613 to -1.573, PS64 fixes
 ## >>chng 15 may 29, from -1.573 to -2.203, double optical depth, iterate to convergence
-monitor "CO  " 260.169m  -2.203 line intensity
+## >>chng 25 feb 06, from -2.203 to -2.454, make STE BB isotropic
+monitor "CO  " 260.169m  -2.454 line intensity
 ## >>chng 13 jul 19, add this monitor
 ## >>chng 13 jul 24, wl from 216.9m to 216.868m, increased wl precision to 6 sig. fig.
 ## >>chng 13 sep 10, from -1.506 to -1.457, use Flower+00 simple HD cooling
@@ -262,17 +278,20 @@ monitor "CO  " 260.169m  -2.203 line intensity
 ## >>chng 14 may 06, from -1.482 to -1.524, fix K -> Ryd conversions
 ## >>chng 14 jun 11, from -1.524 to -1.483, BUGFIX 14 jan 05, N to external databases, did not include N I, Mg II excited state photo
 ## >>chng 15 may 29, from -1.483 to -2.115, double optical depth, iterate to convergence
-monitor "CO  " 216.868m  -2.115 line intensity
+## >>chng 25 feb 06, from -2.115 to -2.426, make STE BB isotropic
+monitor "CO  " 216.868m  -2.426 line intensity
 ## >>chng 13 jul 19, add this monitor
 ## >>chng 13 jul 24, wl from 185.9m to 185.949m, increased wl precision to 6 sig. fig.
 ## >>chng 13 sep 10, from -1.544 to -1.59, use Flower+00 simple HD cooling
 ## >>chng 13 sep 17, from -1.59 to -1.552, D chem off by default
 ## >>chng 15 may 29, from -1.552 to -2.069, double optical depth, iterate to convergence
-monitor "CO  " 185.949m  -2.069 line intensity
+## >>chng 25 feb 06, from -2.069 to -2.441, make STE BB isotropic
+monitor "CO  " 185.949m  -2.441 line intensity
 ## >>chng 13 jul 19, add this monitor
 ## >>chng 13 jul 24, wl from 144.7m to 144.745m, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 29, from -1.885 to -2.121, double optical depth, iterate to convergence
-monitor "CO  " 144.745m  -2.121 line intensity
+## >>chng 25 feb 06, from -2.121 to -2.583, make STE BB isotropic
+monitor "CO  " 144.745m  -2.583 line intensity
 ## >>chng 13 jul 19, add this monitor
 ## >>chng 13 jul 24, wl from 118.5m to 118.548m, increased wl precision to 6 sig. fig.
 ## >>chng 13 sep 10, from -2.451 to -2.505, use Flower+00 simple HD cooling
@@ -280,7 +299,8 @@ monitor "CO  " 144.745m  -2.121 line intensity
 ## >>chng 14 mar 26, from -2.444 to -2.528, Move oxygen data to stout and chianti files
 ## >>chng 15 may 30, from -2.528 to -2.484, updates after merge from mainline, r10248
 ## >>chng 20 aug 03, from -2.484 to -2.538, update H3+ rates Indriola+ 2012
-monitor "CO  " 118.548m  -2.538 line intensity
+## >>chng 25 feb 06, from -2.538 to -3.048, make STE BB isotropic
+monitor "CO  " 118.548m  -3.048 line intensity
 ## >>chng 13 jul 19, add this monitor
 ## >>chng 13 jul 24, wl from 100.4m to 100.433m, increased wl precision to 6 sig. fig.
 ## >>chng 13 sep 10, from -3.635 to -3.699, use Flower+00 simple HD cooling
@@ -289,14 +309,16 @@ monitor "CO  " 118.548m  -2.538 line intensity
 ## >>chng 15 may 29, from -3.738 to -3.686, double optical depth, iterate to convergence
 ## >>chng 15 jun 04, from -3.686 to -3.62, updates after merge from trunk, r10449
 ## >>chng 20 aug 03, from -3.62 to -3.676, update H3+ rates Indriola+ 2012
-monitor "CO  " 100.433m  -3.676 line intensity
+## >>chng 25 feb 06, from -3.676 to -4.139, make STE BB isotropic
+monitor "CO  " 100.433m  -4.139 line intensity
 ## >>chng 13 jun 27, from -7.522 to -2.884, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 29, from -2.884 to -2.823, update newly added monitors
 ## >>chng 13 jul 15, from -2.823 to -2.897, move to Stout/Chianti for Si, botches are due to improved atomic data
 ## >>chng 13 jul 19, from -2.897 to -3.063, set number of iterations to 8 for proper convergence of the model
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 29, from -3.063 to -3.509, double optical depth, iterate to convergence
-monitor "^13CO" 906.599m  -3.509 line intensity
+## >>chng 25 feb 06, from -3.509 to -3.596, make STE BB isotropic
+monitor "^13CO" 906.599m  -3.596 line intensity
 ## >>chng 13 jun 27, from -8.247 to -2.927, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 29, from -2.927 to -2.967, update newly added monitors
 ## >>chng 13 jul 19, from -2.967 to -3.025, set number of iterations to 8 for proper convergence of the model
@@ -309,21 +331,25 @@ monitor "^13CO" 906.599m  -3.509 line intensity
 ## >>chng 15 may 29, from -3.074 to -3.462, double optical depth, iterate to convergence
 ## >>chng 21 sep 11, from -3.462 to -3.508, LAMDA update
 ## >>chng 21 sep 15, from -3.508 to -3.436, go back to unresolved model
-monitor "CN  " 880.858m  -3.436  line intensity
+## >>chng 25 feb 06, from -3.436 to -3.484, make STE BB isotropic
+monitor "CN  " 880.858m  -3.484  line intensity
 ## >>chng 13 jul 19, add this monitor
 ## >>chng 13 jul 24, wl from 986.1m to 986.129m, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 29, from -3.244 to -3.716, double optical depth, iterate to convergence
-monitor "SiO " 986.129m  -3.716  line intensity
+## >>chng 25 feb 06, from -3.716 to -3.859, make STE BB isotropic
+monitor "SiO " 986.129m  -3.859  line intensity
 ## >>chng 13 jul 19, add this monitor
 ## >>chng 13 jul 24, wl from 238.6m to 238.551m, increased wl precision to 6 sig. fig.
-monitor "SiO " 238.551m  -2.680  line intensity
+## >>chng 25 feb 06, from -2.68 to -3.063, make STE BB isotropic
+monitor "SiO " 238.551m  -3.063  line intensity
 ## >>chng 13 jul 19, add this monitor
 ## >>chng 13 jul 24, wl from 209.8m to 209.779m, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 29, from -2.789 to -2.746, double optical depth, iterate to convergence
 ## >>chng 20 aug 03, from -2.746 to -2.705, update H3+ rates Indriola+ 2012
 ## >>chng 24 apr 21, from -2.705 to -2.757, GS updates chemistry
 ## >>chng 24 jun 08, from -2.757 to -2.705, GS rm 3 TiO reactions
-monitor "SiO " 209.779m  -2.705  line intensity
+## >>chng 25 feb 06, from -2.705 to -3.131, make STE BB isotropic
+monitor "SiO " 209.779m  -3.131  line intensity
 ##
 ## >>chng 24 apr 21 GS add TiO
 ## >>chng 25 jan 26, from 14.05 to 14, merge master updated cham"

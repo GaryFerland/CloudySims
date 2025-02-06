@@ -18,6 +18,7 @@ stop zone 1
 iterate
 #
 # commands controlling output    =========
+normalize "He 1" 537.030A
 print heating
 print populations h-like hydrogen
 print departure coef h-like hydrogen
