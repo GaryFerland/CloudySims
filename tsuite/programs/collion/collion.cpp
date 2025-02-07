@@ -50,8 +50,8 @@ int main( void )
 			FAINT );
 
 		/* the log of the lowest and highest temperature */
-		telog = 3.;
-		te_last = 9.;
+		telog = 0.5;
+		te_last = 9.5;
 		/* the increment in the temperature in dex */
 		teinc = 0.1;
 		/* the log of the hydrogen density  */
@@ -67,7 +67,7 @@ int main( void )
 			printf("te %g\n",telog);
 
 			/* must include a source of ionization for chemistry to work*/
-			cdRead( "cosmic ray background -1");
+			cdRead( "cosmic ray background -6");
  
 			/* just do the first zone - only want ionization distribution */
 			cdRead( "stop zone 1 "  );
@@ -81,7 +81,7 @@ int main( void )
 			cdRead( "set trim -20 "  );
 
 			/* the log of the gas kinetic temperature */
-			sprintf(chLine,"constant temper %f ",telog);
+			sprintf(chLine,"constant temperature log %f ",telog);
 			cdRead( chLine  );
 
 			/* actually call the code */
