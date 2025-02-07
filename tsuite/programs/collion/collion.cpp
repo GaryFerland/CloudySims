@@ -67,7 +67,7 @@ int main( void )
 			printf("te %g\n",telog);
 
 			/* must include a source of ionization for chemistry to work*/
-			cdRead( "cosmic ray background -6");
+			cdRead( "cosmic ray background -7");
  
 			/* just do the first zone - only want ionization distribution */
 			cdRead( "stop zone 1 "  );
