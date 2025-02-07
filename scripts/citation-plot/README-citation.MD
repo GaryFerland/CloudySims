@@ -27,7 +27,4 @@ The script prints:
 - `ads` (install via `pip install ads`)
 - `matplotlib` (install via `pip install matplotlib`)
 
-## License
-This script is provided for internal use and citation tracking within the Cloudy development team.
-
 
