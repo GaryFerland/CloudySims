@@ -343,6 +343,8 @@ monitor itrzn 2.395 error 0.02
 ## >>chng 25 jan 26, from 749 to 738, merge master updated cham"
 monitor nzone 738 error 0.01
 # 
+monitor line luminosity "NH  " 307.565m   -6.965
+monitor column density "NH  " 14.463 
 # pdr_leiden_f3.in
 # class pdr 
 # ========================================

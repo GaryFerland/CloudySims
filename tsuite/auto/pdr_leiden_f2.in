@@ -340,7 +340,9 @@ monitor itrzn 1.916
 ## >>chng 14 jan 05, from 840 to 802, N to external databases
 ## >>chng 14 jun 11, from 802 to 867, BUGFIX 14 jan 05, N to external databases, did not include N I, Mg II excited state photo
 monitor nzone 867
-# 
+#
+monitor line luminosity "NH  " 307.565m   -8.203
+monitor column density "NH  " 12.873 
 # pdr_leiden_f2.in
 # class pdr 
 # ========================================
