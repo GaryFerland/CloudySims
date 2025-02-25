@@ -6,9 +6,9 @@
 #include "version.h"
 #include "service.h"
 
-static const int CLD_MAJOR = 23;
-static const int CLD_MINOR = 1;
-static const int CLD_PATCH = 0;
+static const int CLD_MAJOR = 25;
+static const int CLD_MINOR = 0;
+static const int CLD_BETA = 1;
 
 #ifdef REVISION
 static const char* revision = REVISION;
@@ -38,17 +38,20 @@ t_version::t_version()
 
 		/* NB NB
 		 *
-		 * Check if the given revision is a version number (XX.XX)
+		 * Check if the given revision is a version number (XX.XX or XX.XX_rcY)
 		 */
-		if( firstPart.size() == 5
-		    and isdigit( firstPart[0], std::locale("") )
-		    and isdigit( firstPart[1], std::locale("")  )
-		    and firstPart[2] == '.'
-		    and isdigit( firstPart[3], std::locale("")  )
-		    and isdigit( firstPart[4], std::locale("")  ) )
+		regex vers_expr("^(\\d\\d\\.\\d\\d)(_rc(\\d))?$");
+		smatch what;
+		if( regex_match(firstPart, what, vers_expr) )
 		{
+			if( what.size() != 4 )
+				TotalInsanity();
+
 			lgRelease = true;
-			chVersion = firstPart;
+
+			chVersion = what[1].str();
+			if( what[2].matched )
+				chVersion += " beta " + what[3].str() + " (prerelease)";
 		}
 		else
 		{
@@ -62,7 +65,7 @@ t_version::t_version()
 				else
 					rev_pr += Part[i];
 			}
-			chVersion = "(" + string( rev_pr ) + ")";
+			chVersion = "(" + rev_pr + ")";
 		}
 	}
 	else
@@ -76,8 +79,8 @@ t_version::t_version()
 		if( lgRelease )
 		{
 			oss << setfill('0') << setw(2) << CLD_MAJOR << "." << setw(2) << CLD_MINOR;
-			if( CLD_PATCH > 0 )
-				oss << " (patch level " << CLD_PATCH << ")";
+			if( CLD_BETA > 0 )
+				oss << " beta " << CLD_BETA << " (prerelease)";
 		}
 		else
 		{
