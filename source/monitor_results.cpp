@@ -1422,6 +1422,29 @@ void ParseMonitorResults(Parser &p)
 		lgQuantityLog[nAsserts] = true;
 	}
 
+	/* monitor max number of iterations in a zone, a test of convergence */
+	else if( p.nMatch("ITRM") )
+	{
+		/* this flag will mean number of iterations per zone */
+		chAssertType[nAsserts] = "im";
+		/* say that this is iterations per zone  */
+		chAssertLineLabel[nAsserts] = "itrm" ;
+
+		/* now get quantity */
+		AssertQuantity[nAsserts] = p.FFmtRead();
+		if( p.lgEOL() )
+		{
+			p.NoNumb("max iterations in a zone");
+		}
+		/* wavelength is meaningless */
+		wavelength[nAsserts] = 0;
+
+		/* optional error, default available */
+		AssertError[nAsserts] = p.FFmtRead();
+		if( p.lgEOL() )
+			AssertError[nAsserts] = ErrorDefaultPerformance;
+	}
+
 	/* monitor number of iterations per zone, a test of convergence */
 	else if( p.nMatch("ITRZ") )
 	{
@@ -2028,6 +2051,27 @@ bool lgCheckMonitors(
 			/* this is number of iterations per zone, a test of convergence properties */
 			if( nzone > 0 )
 				PredQuan[i] = (double)(conv.nTotalIoniz-conv.nTotalIoniz_start)/(double)(nzone);
+			else
+				/* something big so monitor will botch. */
+				PredQuan[i] = 1e10;
+
+			if( t_version::Inst().lgRelease )
+				RelError[i] = ForcePass(chAssertLimit[i]);
+			else
+			{
+				/* this is relative error */
+				if (AssertError[i] > 0.)
+					RelError[i] = get_error_ratio( PredQuan[i], AssertQuantity[i] );
+				else
+					RelError[i] = PredQuan[i]- AssertQuantity[i];
+			}
+		}
+
+		else if( chAssertType[i] == "im" )
+		{
+			/* this is max number of iterations in a zone, a test of convergence properties */
+			if( nzone > 0 )
+				PredQuan[i] = (double)(conv.nPres2IonizMax);
 			else
 				/* something big so monitor will botch. */
 				PredQuan[i] = 1e10;

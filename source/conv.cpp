@@ -9,6 +9,7 @@ void t_conv::zero()
 	/* this counts number of times ionize is called by PressureChange, in current zone
 	 * these are reset here, so that we count from first zone not search */
 	nPres2Ioniz = 0;
+	nPres2IonizMax = 0;
 
 	/* clear flag indicating the ionization convergence failures 
 	 * have ever occurred in current zone

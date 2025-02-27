@@ -83,7 +83,7 @@ while( defined( $input = glob("*.in") ) )
 			}
 			if( /botch/ )
 			{
-				if( /itrz/ || /zone/ || /iter/ )
+				if( /itrz/ || /itrm/ || /zone/ || /iter/ )
 				{
 					print PERFORMANCE "$output: $_";
 				}

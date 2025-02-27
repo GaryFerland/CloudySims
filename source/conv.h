@@ -135,6 +135,9 @@ public:
 	/** this will count the number of ionizations in one call from ConvPresTempEdenIoniz*/
 	long int nPres2Ioniz;
 
+	/** this will track the maximum value of nPres2Ioniz in any zone, used as convergence monitor */
+	long int nPres2IonizMax;
+
 	/** first sweep through solvers in this zone. also true is search phase */
 	bool lgFirstSweepThisZone;
 	/** last sweep through solvers in this zone, so update fine opacities */

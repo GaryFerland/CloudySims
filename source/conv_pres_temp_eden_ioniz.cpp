@@ -26,6 +26,7 @@ void ConvPresTempEdenIoniz()
 	/* this will count number of times we call ConvBase in this zone,
 	 * counter is incremented there 
 	 * zero indicates first pass through solvers on this zone */
+	conv.nPres2IonizMax = max(conv.nPres2Ioniz, conv.nPres2IonizMax);
 	conv.nPres2Ioniz = 0;
 	conv.lgFirstSweepThisZone = true;
 	conv.lgLastSweepThisZone = false;
