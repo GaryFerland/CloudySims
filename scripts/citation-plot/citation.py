@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from collections import defaultdict
 
 # Set ADS API token (Replace with your own ADS token)
-ads.config.token = "you-ADS-API-Token"
+ads.config.token = "YOUR_ADS_API_TOKEN`"
 
 # **Step 1: Define Bibcodes for Cloudy Versions**
 bibcode_queries = {
