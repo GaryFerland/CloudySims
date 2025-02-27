@@ -1425,9 +1425,9 @@ void ParseMonitorResults(Parser &p)
 	/* monitor max number of iterations in a zone, a test of convergence */
 	else if( p.nMatch("ITRM") )
 	{
-		/* this flag will mean number of iterations per zone */
+		/* this flag will mean max number of iterations in a zone */
 		chAssertType[nAsserts] = "im";
-		/* say that this is iterations per zone  */
+		/* say that this is max number of iterations */
 		chAssertLineLabel[nAsserts] = "itrm" ;
 
 		/* now get quantity */
@@ -2070,11 +2070,7 @@ bool lgCheckMonitors(
 		else if( chAssertType[i] == "im" )
 		{
 			/* this is max number of iterations in a zone, a test of convergence properties */
-			if( nzone > 0 )
-				PredQuan[i] = (double)(conv.nPres2IonizMax);
-			else
-				/* something big so monitor will botch. */
-				PredQuan[i] = 1e10;
+			PredQuan[i] = (double)conv.nPres2IonizMax;
 
 			if( t_version::Inst().lgRelease )
 				RelError[i] = ForcePass(chAssertLimit[i]);
