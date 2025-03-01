@@ -1161,7 +1161,21 @@ unobservable MIR - FIR lines.  These lines come from higher levels in the
 atom and generally have a larger error due to the finite size of the model.
 \end{description}
 
-\subsection{Monitor column ``species'' 18.9}
+\subsection{Monitor chemistry searches $<$ 3}
+
+This performance monitor checks the convergence properties of the chemistry
+solver. The quantity is the mean step length searches/chemistry step as
+reported in the main output under the header ``Convergence statistics''.
+This monitor will never trip in release code.
+
+\subsection{Monitor chemistry steps $<$ 8}
+
+This performance monitor checks the convergence properties of the chemistry
+solver. The quantity is the mean steps/chemistry solve as reported in the main
+output under the header ``Convergence statistics''.
+This monitor will never trip in release code.
+
+\subsection{Monitor column ''species'' 18.9}
 
 This checks the predicted column density for the molecular species
 included in quotes.
@@ -1330,12 +1344,14 @@ assumed for each grid point.
 This performance monitor checks the convergence properties of a calculation.
 The quantity is the maximum number of calls to \cdRoutine{ConvBase} in any
 given zone and iteration (including the initial search phase).
+This monitor will never trip in release code.
 
 \subsection{Monitor itrzn $<$ 3.5}
 
 This performance monitor checks the convergence properties of a calculation.
 The quantity
 is the number of iterations required to converge each zone.
+This monitor will never trip in release code.
 
 \subsection{Monitor line [Case B] ``H  1'' 4861.33 $<$ 1.01}
 
@@ -1447,6 +1463,7 @@ in the \cdFilename{mpi} test suite. It has no additional parameters.
 
 This checks the number of iterations required in a calculation.
 This is usually an upper limit.
+This monitor will never trip in release code.
 
 \subsection{Monitor nothing 0}
 
@@ -1460,6 +1477,7 @@ for general testing.
 
 This checks how many zones were needed.
 This is usually an upper limit.
+This monitor will never trip in release code.
 
 \subsection{Monitor PRadMax 0.34}
 

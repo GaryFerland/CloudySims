@@ -308,6 +308,14 @@ sub do_field_heuristics
     $_[0] =~ s/{/(/;
     $_[0] =~ s/}/)/;
 	# now do some straight substitutions...
+    if( $_[0] =~ /cstp/ )
+    {
+		$_[0] = "chemistry +steps";
+    }
+    if( $_[0] =~ /csls/ )
+    {
+		$_[0] = "chemistry +searches";
+    }
     if( $_[0] =~ /d Fe/ )
     {
 		$_[0] = "feii +departure";
