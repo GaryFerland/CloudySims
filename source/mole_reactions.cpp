@@ -2775,7 +2775,9 @@ STATIC bool lgReactBalance(const shared_ptr<mole_reaction> &rate)
 	{
 		fprintf(stderr,"Reaction %s charge out of balance by %d\n",
 				  rate->label.c_str(),dcharge);
-		lgOK = false;
+		fprintf(ioQQQ,"Reaction %s charge out of balance by %d\n",
+			rate->label.c_str(),dcharge);
+		  lgOK = false;
 	}
 	
 	for( nNucs_i it = nel.begin(); it != nel.end(); ++it )
@@ -2790,7 +2792,11 @@ STATIC bool lgReactBalance(const shared_ptr<mole_reaction> &rate)
 					  rate->label.c_str(),sign==1?"destroys":"creates",
 					  sign*it->second,
 					  it->first->label().c_str() );
-			lgOK = false;
+			fprintf(ioQQQ,"Error: reaction %s %s %d of element %s\n",
+					rate->label.c_str(),sign==1?"destroys":"creates",
+					sign*it->second,
+					it->first->label().c_str() );
+			  lgOK = false;
 		}
 	}
 	return lgOK;
