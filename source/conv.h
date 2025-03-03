@@ -18,7 +18,7 @@ void ConvIterCheck();
 
 /**ConvInitSolution drive search for initial solution at illuminated face,
  * called by cloudy */
-void ConvInitSolution();
+void ConvInitSolution(double);
 
 /**ConvPresTempEdenIoniz solve for current pressure, calls PressureChange, ConvTempEdenIoniz,
  * called by cloudy */

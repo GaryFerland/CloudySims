@@ -92,7 +92,8 @@
 ## >>chng 24 apr 08, from 3.4226 to 3.6126, update Si-rates from UDfA2006 to UDfA2012
 ## >>chng 24 oct 24, from 3.6126 to 3.4216, update Si-rates from UDfA2006 to UDfA2012
 ## >>chng 25 jan 26, from 3.4216 to 3.6114, update Si-rates from UDfA2006 to UDfA2012
-3.6114
+## >>chng 25 mar 02, from 3.6114 to 3.4216, merge changes from InitialTemp branch
+3.4216
 5.9811
 5.9811
 5.9811

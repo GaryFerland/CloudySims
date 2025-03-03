@@ -2429,6 +2429,7 @@ STATIC void newreact(const char label[], const char fun[], double a, double b, d
 
 	const char *rateLabelPtr = rate->label.c_str();
 	
+	/* conservation check uses data in chem_species.dat */
 	ASSERT(lgReactBalance(rate)); /* Verify rate conserves particles and charge */
 	
 	rate->udfastate = ABSENT;
