@@ -642,7 +642,6 @@ void ConvInitSolution()
 	/* this counts number of times ConvBase is called by PressureChange, in
 	 * current zone these are reset here, so that we count from first zone 
 	 * not search */
-	conv.nPres2IonizMax = max(conv.nPres2Ioniz, conv.nPres2IonizMax);
 	conv.nPres2Ioniz = 0;
 
 	dense.lgEdenBad = false;

@@ -2115,7 +2115,8 @@ bool lgCheckMonitors(
 		else if( chAssertType[i] == "im" )
 		{
 			/* this is max number of iterations in a zone, a test of convergence properties */
-			PredQuan[i] = (double)conv.nPres2IonizMax;
+			/* the last zone has not been included yet in the Max value, so do that here */
+			PredQuan[i] = (double)max(conv.getCounterMax("NPRES2IONIZ"),conv.getCounterZone("NPRES2IONIZ"));
 
 			if( t_version::Inst().lgRelease )
 				RelError[i] = ForcePass(chAssertLimit[i]);

@@ -1109,6 +1109,8 @@ void ConvBase(
 	 * number of calls in this zone so first call is zero
 	 * reset to zero each time ConvPresTempEdenIoniz is called */
 	++conv.nPres2Ioniz;
+	static ConvergenceCounter cctrn = conv.register_("NPRES2IONIZ");
+	++cctrn;
 
 	/* this is abort option set with SET PRES IONIZ command,
 	 * test on nzone since init can take many iterations

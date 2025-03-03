@@ -135,9 +135,6 @@ public:
 	/** this will count the number of ionizations in one call from ConvPresTempEdenIoniz*/
 	long int nPres2Ioniz;
 
-	/** this will track the maximum value of nPres2Ioniz in any zone, used as convergence monitor */
-	long int nPres2IonizMax;
-
 	/** first sweep through solvers in this zone. also true is search phase */
 	bool lgFirstSweepThisZone;
 	/** last sweep through solvers in this zone, so update fine opacities */
@@ -294,6 +291,7 @@ private:
 	// Variables monitoring progress of convergence
 	std::vector<long> m_counters;
 	std::vector<long> m_counters_zone;
+	std::vector<long> m_counters_max;
 	std::vector<string> m_labels;
 public:
 	size_t ntypes(void) const
@@ -309,18 +307,24 @@ public:
 	void resetCounters()
 	{
 		for( size_t i=0; i<m_counters.size(); ++i )
+		{
 			m_counters[i] = 0;
+			m_counters_max[i] = 0;
+		}
 	}
 	void resetCountersZone()
 	{
 		for( size_t i=0; i<m_counters_zone.size(); ++i )
+		{
+			m_counters_max[i] = max(m_counters_max[i], m_counters_zone[i]);
 			m_counters_zone[i] = 0;
+		}
 	}
 	long getCounter( const long type ) const
 	{
 		return m_counters[type];
 	}
-	long getCounter( const string name ) const
+	long getCounter( const string& name ) const
 	{
 		for( size_t i=0; i<m_counters.size(); ++i )
 		{
@@ -332,6 +336,28 @@ public:
 	long getCounterZone( const long type ) const
 	{
 		return m_counters_zone[type];
+	}
+	long getCounterZone( const string& name ) const
+	{
+		for( size_t i=0; i<m_counters.size(); ++i )
+		{
+			if (name == m_labels[i])
+				return m_counters_zone[i];
+		}
+		return 0;
+	}
+	long getCounterMax( const long type ) const
+	{
+		return m_counters_max[type];
+	}
+	long getCounterMax( const string& name ) const
+	{
+		for( size_t i=0; i<m_counters.size(); ++i )
+		{
+			if (name == m_labels[i])
+				return m_counters_max[i];
+		}
+		return 0;
 	}
 	const char* getCounterName( const long type ) const
 	{
