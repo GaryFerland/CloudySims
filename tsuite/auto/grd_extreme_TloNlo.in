@@ -38,7 +38,7 @@ monitor ionization fraction hydrogen 2 0
 ## >>chng 25 jan 15, from 27 to 16, GS removes destabilizing reactions, updates others to current UMIST
 ## >>chng 25 jan 15, from 16 to 3, first run
 monitor itrzn 3
-monitor itrmax < 50
+monitor itrmax < 60
 monitor chemistry steps < 14.0
 monitor chemistry searches < 2
 #
