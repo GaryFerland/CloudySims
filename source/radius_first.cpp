@@ -249,15 +249,17 @@ void radius_first(void)
 		drTabDen = 1.;
 		i = 1;
 		factor = 0.;
-		while( i < 100 && factor < 0.05 && radius.Radius+drTabDen*2.<iterations.StopThickness[0] )
+		while( i++ < 100 && factor < 0.05 && drTabDen*2. < iterations.StopThickness[0] )
 		{
+			if( ( dense.DLW.lgDepth && drTabDen >= dense.DLW.dist.back() ) ||
+				( !dense.DLW.lgDepth && radius.Radius+drTabDen >= dense.DLW.dist.back() ) )
+				break;
 			/* check densities at ever larger dr's, until factor becomes more than 5% */
 			factor = dense.gas_phase[ipHYDROGEN]/
-				dense.DLW.tabval(radius.Radius+drTabDen, drTabDen );
+				dense.DLW.tabval(radius.Radius+drTabDen, drTabDen);
 			/* density change can be positive or negative sign */
 			factor = fabs(factor-1.);
 			drTabDen *= 2.;
-			i += 1;
 		}
 		drTabDen /= 2.;
 	}
