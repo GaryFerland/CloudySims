@@ -98,6 +98,7 @@ ConvergenceCounter t_conv::register_(const string name)
 	size_t newtype = m_counters.size();
 	m_counters.push_back(0);
 	m_counters_zone.push_back(0);
+	m_counters_max.push_back(0);
 	m_labels.push_back(name);
 	return ConvergenceCounter(this, newtype);
 }

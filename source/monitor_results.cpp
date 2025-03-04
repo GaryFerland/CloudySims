@@ -1422,6 +1422,74 @@ void ParseMonitorResults(Parser &p)
 		lgQuantityLog[nAsserts] = true;
 	}
 
+	else if( p.nMatch("CHEM") )
+	{
+		/* monitor mean steps/chemistry solve, a test of convergence */
+		if( p.nMatch("STEP") )
+		{
+			chAssertType[nAsserts] = "cs";
+			chAssertLineLabel[nAsserts] = "cstp" ;
+
+			/* now get quantity */
+			AssertQuantity[nAsserts] = p.FFmtRead();
+			if( p.lgEOL() )
+			{
+				p.NoNumb("mean steps/chemistry solve");
+			}
+		}
+		/* monitor mean step length searches/chemistry step, a test of convergence */
+		else if( p.nMatch("SEAR") )
+		{
+			chAssertType[nAsserts] = "cl";
+			chAssertLineLabel[nAsserts] = "csls" ;
+
+			/* now get quantity */
+			AssertQuantity[nAsserts] = p.FFmtRead();
+			if( p.lgEOL() )
+			{
+				p.NoNumb("mean step length searches/chemistry step");
+			}
+		}
+		else
+		{
+			/* did not recognize a command */
+			fprintf( ioQQQ, " Unrecognized command.  The line image was\n");
+			p.PrintLine(ioQQQ);
+			fprintf( ioQQQ, " The options I know about are: chemistry steps, or chemistry searches\n" );
+			fprintf( ioQQQ, " Sorry.\n" );
+			cdEXIT(EXIT_FAILURE);
+		}
+		/* wavelength is meaningless */
+		wavelength[nAsserts] = 0;
+
+		/* optional error, default available */
+		AssertError[nAsserts] = p.FFmtRead();
+		if( p.lgEOL() )
+			AssertError[nAsserts] = ErrorDefaultPerformance;
+	}
+
+	/* monitor max number of iterations in a zone, a test of convergence */
+	else if( p.nMatch("ITRM") )
+	{
+		/* this flag will mean max number of iterations in a zone */
+		chAssertType[nAsserts] = "im";
+		chAssertLineLabel[nAsserts] = "itrm" ;
+
+		/* now get quantity */
+		AssertQuantity[nAsserts] = p.FFmtRead();
+		if( p.lgEOL() )
+		{
+			p.NoNumb("max iterations in a zone");
+		}
+		/* wavelength is meaningless */
+		wavelength[nAsserts] = 0;
+
+		/* optional error, default available */
+		AssertError[nAsserts] = p.FFmtRead();
+		if( p.lgEOL() )
+			AssertError[nAsserts] = ErrorDefaultPerformance;
+	}
+
 	/* monitor number of iterations per zone, a test of convergence */
 	else if( p.nMatch("ITRZ") )
 	{
@@ -1633,7 +1701,7 @@ void ParseMonitorResults(Parser &p)
 		p.PrintLine(ioQQQ);
 		fprintf( ioQQQ, 
 			"  The options I know about are: ionization, line, departure coefficient, map, column, "
-			"temperature, nzone, csupre, htot, itrz, eden, thickness, niter, \n");
+			"temperature, nzone, csupre, htot, itrz, itrmax, chemistry, eden, thickness, niter, \n");
 		fprintf( ioQQQ, " Sorry.\n" );
 		cdEXIT(EXIT_FAILURE);
 	}
@@ -2031,6 +2099,58 @@ bool lgCheckMonitors(
 			else
 				/* something big so monitor will botch. */
 				PredQuan[i] = 1e10;
+
+			if( t_version::Inst().lgRelease )
+				RelError[i] = ForcePass(chAssertLimit[i]);
+			else
+			{
+				/* this is relative error */
+				if (AssertError[i] > 0.)
+					RelError[i] = get_error_ratio( PredQuan[i], AssertQuantity[i] );
+				else
+					RelError[i] = PredQuan[i]- AssertQuantity[i];
+			}
+		}
+
+		else if( chAssertType[i] == "im" )
+		{
+			/* this is max number of iterations in a zone, a test of convergence properties */
+			/* the last zone has not been included yet in the Max value, so do that here */
+			PredQuan[i] = (double)max(conv.getCounterMax("NPRES2IONIZ"),conv.getCounterZone("NPRES2IONIZ"));
+
+			if( t_version::Inst().lgRelease )
+				RelError[i] = ForcePass(chAssertLimit[i]);
+			else
+			{
+				/* this is relative error */
+				if (AssertError[i] > 0.)
+					RelError[i] = get_error_ratio( PredQuan[i], AssertQuantity[i] );
+				else
+					RelError[i] = PredQuan[i]- AssertQuantity[i];
+			}
+		}
+
+		else if( chAssertType[i] == "cs" )
+		{
+			/* this is mean steps/chemistry solve, a test of convergence properties */
+			PredQuan[i] = (double)conv.getCounter("MOLE_SOLVE_STEPS")/max((double)conv.getCounter("MOLE_SOLVE"),1.0);
+
+			if( t_version::Inst().lgRelease )
+				RelError[i] = ForcePass(chAssertLimit[i]);
+			else
+			{
+				/* this is relative error */
+				if (AssertError[i] > 0.)
+					RelError[i] = get_error_ratio( PredQuan[i], AssertQuantity[i] );
+				else
+					RelError[i] = PredQuan[i]- AssertQuantity[i];
+			}
+		}
+
+		else if( chAssertType[i] == "cl" )
+		{
+			/* this is mean step length searches/chemistry step, a test of convergence properties */
+			PredQuan[i] = (double)conv.getCounter("NEWTON_LOOP")/max((double)conv.getCounter("NEWTON"),1.0);
 
 			if( t_version::Inst().lgRelease )
 				RelError[i] = ForcePass(chAssertLimit[i]);

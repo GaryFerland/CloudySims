@@ -39,6 +39,9 @@ monitor ionization fraction hydrogen 2 0
 ## >>chng 25 jan 15, from 16 to 4, first run
 ## >>chng 25 feb 21, from 4 to <7, include all double makee
 monitor itrzn <7
+monitor itrmax < 20
+monitor chemistry steps < 2
+monitor chemistry searches < 2
 #
 # one of the four corners of grid_extreme, 
 # Figs 17&18 of 2013RMxAA..49..137F

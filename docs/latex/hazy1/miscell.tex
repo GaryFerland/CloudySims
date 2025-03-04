@@ -1161,7 +1161,21 @@ unobservable MIR - FIR lines.  These lines come from higher levels in the
 atom and generally have a larger error due to the finite size of the model.
 \end{description}
 
-\subsection{Monitor column ``species'' 18.9}
+\subsection{Monitor chemistry searches $<$ 3}
+
+This performance monitor checks the convergence properties of the chemistry
+solver. The quantity is the mean step length searches/chemistry step as
+reported in the main output under the header ``Convergence statistics''.
+This monitor will never trip in release code.
+
+\subsection{Monitor chemistry steps $<$ 8}
+
+This performance monitor checks the convergence properties of the chemistry
+solver. The quantity is the mean steps/chemistry solve as reported in the main
+output under the header ``Convergence statistics''.
+This monitor will never trip in release code.
+
+\subsection{Monitor column ''species'' 18.9}
 
 This checks the predicted column density for the molecular species
 included in quotes.
@@ -1286,17 +1300,17 @@ computed zone.
 This is only meaningful if the large \htwo\ molecule has been
 turned on.
 
-\subsection{Monitor Htot -13.2}
-
-This checks that the local heating rate [\ergpccmps ]
-of the last zone is equal to the expected value.
-The argument is the log of the heating rate.
-
 \subsection{Monitor HHeicf -0.013}
 
 This checks the helium---hydrogen ionization correction factor.
 The number is the linear difference between the atomic fractions
 of helium and hydrogen.
+
+\subsection{Monitor Htot -13.2}
+
+This checks that the local heating rate [\ergpccmps ]
+of the last zone is equal to the expected value.
+The argument is the log of the heating rate.
 
 \subsection{Monitor ionization fraction oxygen 3 -3.45, error 0.1, weight =
 radius}
@@ -1325,31 +1339,19 @@ separated by whitespace and/or newlines.
 An optional error may be supplied on the command line. The same error is
 assumed for each grid point.
 
-\subsection{Monitor molecular fraction H2 -3.45, error 0.1}
+\subsection{Monitor itrmax $<$ 20}
 
-This checks the mean molecular fraction.
-The label for a molecule,
-currently only \htwo, must appear somewhere on the line.
-The next number is
-the expected molecular fraction.
-If this number is $\le 0$ it is interpreted
-as a log and as the linear ionization fraction if it is positive.
-The
-average can be with respect to radius or volume.
-The default is an average
-weighted with radius but if the keyword \cdCommand{volume} appears then the average
-will be weighted over volume.
-
-\subsection{Monitor mpi}
-
-This checks that the code is running in MPI mode. The command is used
-in the \cdFilename{mpi} test suite. It has no additional parameters.
+This performance monitor checks the convergence properties of a calculation.
+The quantity is the maximum number of calls to \cdRoutine{ConvBase} in any
+given zone and iteration (including the initial search phase).
+This monitor will never trip in release code.
 
 \subsection{Monitor itrzn $<$ 3.5}
 
 This performance monitor checks the convergence properties of a calculation.
 The quantity
 is the number of iterations required to converge each zone.
+This monitor will never trip in release code.
 
 \subsection{Monitor line [Case B] ``H  1'' 4861.33 $<$ 1.01}
 
@@ -1437,10 +1439,31 @@ monitor line luminosity "Q(H)" 4861 < 38.91
 
 \end{itemize}
 
+\subsection{Monitor molecular fraction H2 -3.45, error 0.1}
+
+This checks the mean molecular fraction.
+The label for a molecule,
+currently only \htwo, must appear somewhere on the line.
+The next number is
+the expected molecular fraction.
+If this number is $\le 0$ it is interpreted
+as a log and as the linear ionization fraction if it is positive.
+The
+average can be with respect to radius or volume.
+The default is an average
+weighted with radius but if the keyword \cdCommand{volume} appears then the average
+will be weighted over volume.
+
+\subsection{Monitor mpi}
+
+This checks that the code is running in MPI mode. The command is used
+in the \cdFilename{mpi} test suite. It has no additional parameters.
+
 \subsection{Monitor niter $<$ 4}
 
 This checks the number of iterations required in a calculation.
 This is usually an upper limit.
+This monitor will never trip in release code.
 
 \subsection{Monitor nothing 0}
 
@@ -1454,6 +1477,11 @@ for general testing.
 
 This checks how many zones were needed.
 This is usually an upper limit.
+This monitor will never trip in release code.
+
+\subsection{Monitor PRadMax 0.34}
+
+The monitored quantity is the maximum ratio of radiation to gas pressure.
 
 \subsection{Monitor pressure error $<$ 0.01}
 
@@ -1461,9 +1489,12 @@ The number is the ratio of the standard deviation of the pressure to
 its mean value.
 It is interpreted as a log if it is negative.
 
-\subsection{Monitor PRadMax 0.34}
+\subsection{Monitor radius 18.2}
 
-The monitored quantity is the maximum ratio of radiation to gas pressure.
+This checks that the outer radius [cm] of the computed model is equal
+to the expected value.
+The radius is the distance from the center of the
+central object to the shielded face of the cloud.
 
 \subsection{Monitor temperature ``species'' 4.02 volume, error 0.01}
 
@@ -1545,13 +1576,6 @@ always averaged over radius.
 \subsection{Monitor temperature at face 11400K}
 
 This checks the temperature at the illuminated face of the cloud.
-
-\subsection{Monitor radius 18.2}
-
-This checks that the outer radius [cm] of the computed model is equal
-to the expected value.
-The radius is the distance from the center of the
-central object to the shielded face of the cloud.
 
 \subsection{Monitor thickness 13.2}
 
