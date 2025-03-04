@@ -232,7 +232,7 @@ STATIC double FindTempChangeFactor(void)
 }
 
 /*ConvInitSolution drive search for initial temperature, for illuminated face */
-void ConvInitSolution()
+void ConvInitSolution(double TeStart)
 {
 	long int i, 
 	  ionlup, 
@@ -304,13 +304,13 @@ void ConvInitSolution()
 	 * this is second or higher iteration, reestablish original temperature
 	 *
 	 *********************************************************************/
-	if( iteration != 1 )
+	if( TeStart > 0. )
 	{
-		/* this is second or higher iteration on multi-iteration model */
+		/* this is second or higher time this routine is called */
 		if( trace.lgTrace || trace.nTrConvg )
 		{
 			fprintf( ioQQQ, " ConvInitSolution called, ITER=%2ld resetting Te to %10.2e\n", 
-				iteration, struc.testr[0] );
+				iteration, TeStart );
 		}
 
 		if( trace.lgTrace || trace.nTrConvg )
@@ -325,8 +325,8 @@ void ConvInitSolution()
 		conv.lgFirstSweepThisZone = true;
 		conv.lgLastSweepThisZone = false;
 
-		/* reset to the zone one temperature from the previous iteration */
-		TempChange( struc.testr[0] , false);
+		/* reset to the starting value supplied in the call */
+		TempChange(TeStart, false);
 
 		/* find current pressure - sets pressure.PresTotlCurr */
 		PresTotCurrent();
