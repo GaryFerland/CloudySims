@@ -1863,8 +1863,10 @@ void mole_create_react( void )
 	read_data("mole_deuterium.dat",parse_base);
 
 	/* 23 mar 01, GS adding TiO */
+	#if 0
 	source = ti;
 	read_data("mole_ti.dat",parse_base);
+	#endif
 	
 	source = misc;
 	read_data("mole_misc.dat",parse_base);

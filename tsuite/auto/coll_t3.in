@@ -99,10 +99,12 @@ monitor eden 2.227 error 0.1
 ## >>chng 24 apr 21 GS add TiO
 ## >>chng 24 jun 08, from 2.277 to 2.222, GS rm 3 TiO reactions
 ## >>chng 25 jan 26, from 2.222 to 2.3, merge master updated cham"
-monitor column density "TiO"	2.3
+## >>chng 25 mar 4 turn off TiO for 25 rc1
+##monitor column density "TiO"	2.3
 ##
 ## >>chng 24 apr 21 GS add TiO
-monitor column density "TiO2"	8.021
+## >>chng 25 mar 4 turn off TiO for 25 rc1
+##monitor column density "TiO2"	8.021
 #
 # coll_t3.in
 # class coronal  
