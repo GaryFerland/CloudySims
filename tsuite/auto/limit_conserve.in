@@ -518,7 +518,8 @@ monitor nzone 759
 ## >>chng 13 nov 05, from 36.4 to 18.12, convergence branch changes
 ## >>chng 14 apr 07, from 18.12 to 14.32, move H/C out of ConvBase loop
 ## >>chng 24 jun 08, from 14.32 to 11.66, GS rm 3 TiO reactions
-monitor itrzn 11.66
+## >>chng 25 mar 4 turn off TiO for 25 rc1 11.66 to 13.93
+monitor itrzn 13.93
 ##
 # limit_conserve.in
 # class hii pdr  
