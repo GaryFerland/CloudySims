@@ -1,4 +1,4 @@
-This lists those who have contributed to the development of Cloudy.  This list is incomplete.
+iThis lists those who have contributed to the development of Cloudy.  This list is incomplete.
 If we have overlooked you please contact Gary Ferland at gary at g dot uky dot edu
 
 - Nick Abel
@@ -12,6 +12,7 @@ If we have overlooked you please contact Gary Ferland at gary at g dot uky dot e
 - Marios Chatzikos
 - Priyanka Chakraborty
 - Steve Cota
+- Maryam Dehghanian
 - Torsten Elwert
 - Andy Fabian
 - Jason Ferguson
