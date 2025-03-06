@@ -324,8 +324,7 @@ monitor CO column density 19.39 error 0.20
 ## >>chng 20 aug 03, from 16.31 to 16.46, update H3+ rates Indriola+ 2012
 ## >>chng 25 jan 26, from 16.4 to 16.44, merge master updated cham"
 ## >>chng 25 mar 04, from 16.4 to 16.44, turn off Ti chemistry for C25 rc1
-## >>chng 25 mar 4 turn off TiO for 25 rc1 16.40 TO 16.42
-monitor H2O column density 16.42 error 0.20
+monitor H2O column density 16.440 error 0.20
 ## 
 ## >>chng 04 may 19, from 20.27 to 19.29, NA add several moles, reactions
 ## >>chng 04 may 29, from 19.29 to 18.85, NA update H chem
