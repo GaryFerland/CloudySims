@@ -43,9 +43,12 @@ monitor ionization fraction hydrogen 2 -16.44
 ## >>chng 25 jan 15, from 27 to 16, GS removes destabilizing reactions, updates others to current UMIST
 ## >>chng 25 jan 30, from 16 to 19, all double results
 monitor itrzn 19
-monitor itrmax < 250
-monitor chemistry steps < 4
-monitor chemistry searches < 5
+## >>chng 25 mar 04, from 250 to 270, turn off Ti chemistry for C25 rc1
+monitor itrmax < 270
+## >>chng 25 mar 05, from 4 to 5, turn off Ti chemistry for RC1
+monitor chemistry steps < 5
+## >>chng 25 mar 05, from 5 to 6, turn off Ti chemistry for RC1
+monitor chemistry searches < 6
 #
 # one of the four corners of grid_extreme, 
 # Figs 17&18 of 2013RMxAA..49..137F
