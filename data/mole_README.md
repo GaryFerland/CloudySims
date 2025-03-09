@@ -10,9 +10,9 @@ readme for molecules
 
 **Example:**
 ```plaintext
-O,C2=>CO,C:hmrate:2.e-10:-.12:0 # UMIST2012, updated on 2023may08,GS .
-OCS,PHOTON=>S,CO:th85rate:3.7e-9:0.:0. # UMIST
-OCS,CRPHOT=>S,CO:crnurate:5360 :0.:0. # UMIST
+    O,C2=>CO,C:hmrate:2.e-10:-.12:0 # UMIST2012, updated on 2023may08,GS .
+    OCS,PHOTON=>S,CO:th85rate:3.7e-9:0.:0. # UMIST
+    OCS,CRPHOT=>S,CO:crnurate:5360 :0.:0. # UMIST
 
 ## 1. Updating Molecular Species
 - Ensure the molecular species is included in the `chem_species.dat` file in the `data` directory. 
