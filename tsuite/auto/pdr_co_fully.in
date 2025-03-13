@@ -120,31 +120,38 @@ monitor column density "H-" 3.402 error 0.1
 ## >>chng 21 apr 11 add all remaining molecules with N(x) > 1e10 cm-2
 ## >>chng 21 apr 16, from 10.51 to 2.715, add molecular column densities
 ## >>chng 21 sep 11, from 2.715 to 2.528, LAMDA update
-monitor column density "C2+"       2.528  
+## >>chng 23 may 15, from 2.528 to 2.388, GS updates 21 reactions to UMIST 2012
+monitor column density "C2+"       2.388  
 ## >>chng 21 apr 16, from 17.01 to 8.428, add molecular column densities
 ## >>chng 21 sep 11, from 8.428 to 8.28, LAMDA update
-monitor column density "C2"        8.28  
+## >>chng 23 may 15, from 8.28 to 7.485, GS updates 21 reactions to UMIST 2012
+monitor column density "C2"        7.485  
 ## >>chng 21 apr 16, from 10.68 to 2.314, add molecular column densities
 ## >>chng 21 sep 11, from 2.314 to 2.132, LAMDA update
-monitor column density "C2H+"      2.132  
+## >>chng 23 may 15, from 2.132 to 1.986, GS updates 21 reactions to UMIST 2012
+monitor column density "C2H+"      1.986  
 ## >>chng 21 apr 16, from 16.17 to 7.72, add molecular column densities
 ## >>chng 21 sep 11, from 7.72 to 6.873, LAMDA update
-monitor column density "C2H"       6.873
+## >>chng 23 may 15, from 6.873 to 6.777, GS updates 21 reactions to UMIST 2012
+monitor column density "C2H"       6.777
 ## >>chng 21 apr 16, from 12.9 to 6.314, add molecular column densities
 ## >>chng 21 sep 11, from 6.314 to 6.217, LAMDA update
 monitor column density "C2H2"      6.217  
 ## >>chng 21 apr 16, from 13.23 to 4.622, add molecular column densities
 ## >>chng 21 sep 11, from 4.622 to 4.454, LAMDA update
-monitor column density "C2H2+"     4.454  
+## >>chng 23 may 15, from 4.454 to 4.314, GS updates 21 reactions to UMIST 2012
+monitor column density "C2H2+"     4.314  
 ## >>chng 21 apr 16, from 10.62 to 3.24, add molecular column densities
 ## >>chng 21 sep 11, from 3.24 to 3.132, LAMDA update
 monitor column density "C2H3+"     3.132  
 ## >>chng 21 apr 16, from 15.46 to 5.857, add molecular column densities
 ## >>chng 21 sep 11, from 5.857 to 5.4, LAMDA update
-monitor column density "C3"        5.4  
+## >>chng 23 may 15, from 5.4 to 6.795, GS updates 21 reactions to UMIST 2012
+monitor column density "C3"        6.795  
 ## >>chng 21 apr 16, from 12.28 to 3.348, add molecular column densities
 ## >>chng 21 sep 11, from 3.348 to 2.909, LAMDA update
-monitor column density "C3H+"      2.909
+## >>chng 23 may 15, from 2.909 to 3.081, GS updates 21 reactions to UMIST 2012
+monitor column density "C3H+"      3.081
 ## >>chng 21 apr 16, from 13.94 to 6.569, add molecular column densities
 ## >>chng 21 sep 11, from 6.569 to 6.454, LAMDA update
 monitor column density "C3H"       6.454  
@@ -190,7 +197,9 @@ monitor column density "COgrn"     -0.4506
 monitor column density "CS+"       4.3  
 ## >>chng 21 apr 16, from 16.89 to 10.15, add molecular column densities
 ## >>chng 21 sep 11, from 10.15 to 10.58, LAMDA update
-monitor column density "CS"        10.58  
+## >>chng 23 may 15, from 10.58 to 10.5, GS updates 21 reactions to UMIST 2012
+## >>chng 24 apr 21, from 10.5 to 10.56, GS updates chemistry
+monitor column density "CS"        10.56  
 ## >>chng 21 apr 16, from 12.001to 12.0392, new monitor added
 ## >>chng 21 apr 16, from 12.04 to 4.479, add molecular column densities
 ## >>chng 21 sep 11, from 4.479 to 4.423, LAMDA update
@@ -218,16 +227,19 @@ monitor column density "HCNH+"     5.569
 monitor column density "HCO+"      7.689  
 ## >>chng 21 apr 16, from 13.96 to 6.998, add molecular column densities
 ## >>chng 21 sep 11, from 6.998 to 7.32, LAMDA update
-monitor column density "HCS+"      7.32 
+## >>chng 23 may 15, from 7.32 to 7.273, GS updates 21 reactions to UMIST 2012
+monitor column density "HCS+"      7.273 
 ## >>chng 21 apr 16, from 15.85 to 9.018, add molecular column densities
 ## >>chng 21 sep 11, from 9.018 to 8.914, LAMDA update
 monitor column density "HNC"       8.914
 ## >>chng 21 apr 16, from 12.26 to 5.854, add molecular column densities
-monitor column density "HNO"       5.854  
+## >>chng 23 may 15, from 5.854 to 5.755, GS updates 21 reactions to UMIST 2012
+monitor column density "HNO"       5.755  
 ## >>chng 21 apr 16, from 12.97 to 6.699, add molecular column densities
 monitor column density "HS+"       6.699  
 ## >>chng 21 apr 16, from 14.71 to 8.328, add molecular column densities
-monitor column density "HS"        8.328  
+## >>chng 23 may 15, from 8.328 to 8.232, GS updates 21 reactions to UMIST 2012
+monitor column density "HS"        8.232  
 ## >>chng 21 apr 16, from 12.49 to 5.613, add molecular column densities
 monitor column density "N2+"       5.613  
 ## >>chng 21 apr 16, from 17.44 to 11.41, add molecular column densities
@@ -236,9 +248,11 @@ monitor column density "N2"        11.41
 ## >>chng 21 sep 11, from 7.216 to 7.254, LAMDA update
 monitor column density "N2H+"      7.254
 ## >>chng 21 apr 16, from 11.03 to 8.199, add molecular column densities
-monitor column density "N2O"       8.199
+## >>chng 23 may 15, from 8.199 to 8.04, GS updates 21 reactions to UMIST 2012
+monitor column density "N2O"       8.04
 ## >>chng 21 apr 16, from 15.58 to 8.729, add molecular column densities
-monitor column density "NH"        8.729  
+## >>chng 23 may 15, from 8.729 to 8.65, GS updates 21 reactions to UMIST 2012
+monitor column density "NH"        8.65  
 ## >>chng 21 apr 16, from 10.34 to 4.012, add molecular column densities
 monitor column density "NH2+"      4.012  
 ## >>chng 21 apr 16, from 14.96 to 8.565, add molecular column densities
@@ -247,40 +261,51 @@ monitor column density "NH2"       8.499
 ## >>chng 21 apr 16, from 12.45 to 5.9, add molecular column densities
 monitor column density "NH3+"      5.9
 ## >>chng 21 apr 16, from 14.86 to 8.008, add molecular column densities
-monitor column density "NH3"       8.008  
+## >>chng 24 apr 21, from 8.008 to 8.061, GS updates chemistry
+monitor column density "NH3"       8.061  
 ## >>chng 21 apr 16, from 11.03 to 4.058, add molecular column densities
 ## >>chng 21 sep 11, from 4.058 to 4.099, LAMDA update
 monitor column density "NH4+"      4.099  
 ## >>chng 21 apr 16, from 13.76 to 9.647, add molecular column densities
-monitor column density "NO"        9.647
+## >>chng 23 may 15, from 9.647 to 9.559, GS updates 21 reactions to UMIST 2012
+monitor column density "NO"        9.559
 ## >>chng 21 apr 16, from 11.47 to 5.296, add molecular column densities
-monitor column density "NS+"       5.296  
+## >>chng 23 may 15, from 5.296 to 5.347, GS updates 21 reactions to UMIST 2012
+monitor column density "NS+"       5.347  
 ## >>chng 21 apr 16, from 14.72 to 7.899, add molecular column densities
 ## >>chng 21 sep 11, from 7.899 to 7.695, LAMDA update
-monitor column density "NS"        7.695
+## >>chng 23 may 15, from 7.695 to 8.646, GS updates 21 reactions to UMIST 2012
+monitor column density "NS"        8.646
 ## >>chng 21 apr 16, from 11.9 to 6.09, add molecular column densities
 ## >>chng 21 sep 11, from 6.09 to 4.151, LAMDA update
-monitor column density "OCN"       4.151  
+## >>chng 23 may 15, from 4.151 to 4.079, GS updates 21 reactions to UMIST 2012
+monitor column density "OCN"       4.079  
 ## >>chng 21 apr 16, from 10.98 to 7.292, add molecular column densities
 ## >>chng 21 sep 11, from 7.292 to 8.688, LAMDA update
-monitor column density "OCS"       8.688  
+## >>chng 23 may 15, from 8.688 to 9.637, GS updates 21 reactions to UMIST 2012
+## >>chng 24 apr 21, from 9.637 to 8.674, GS updates chemistry
+monitor column density "OCS"       8.674  
 ## >>chng 21 apr 16, from 10.33 to 4.638, add molecular column densities
 monitor column density "OH+"       4.638  
 ## >>chng 21 apr 16, from 14.95 to -3.37, add molecular column densities
 monitor column density "OHgrn"     -3.37  
 ## >>chng 21 apr 16, from 12.92 to 5.615, add molecular column densities
 ## >>chng 23 mar 17, from 5.615 to 5.295, add SiS and Lamda model"
-monitor column density "SiH"       5.295  
+## >>chng 23 may 15, from 5.295 to 4.87, GS updates 21 reactions to UMIST 2012
+monitor column density "SiH"       4.87  
 ## >>chng 21 apr 16, from 10.19 to 3.156, add molecular column densities
 monitor column density "SiH2+"     3.156  
 ## >>chng 21 apr 16, from 12.83 to 5.092, add molecular column densities
-monitor column density "SiN+"      5.092  
+## >>chng 23 may 15, from 5.092 to 5.009, GS updates 21 reactions to UMIST 2012
+monitor column density "SiN+"      5.009  
 ## >>chng 21 apr 16, from 13.61 to 5.237, add molecular column densities
 ## >>chng 21 sep 11, from 5.237 to 5.178, LAMDA update
 ## >>chng 23 mar 17, from 5.178 to 4.802, add SiS and Lamda model"
-monitor column density "SiN"       4.802  
+## >>chng 25 jan 15, from 4.802 to 4.876, GS removes destabilizing reactions, updates others to current UMIST
+monitor column density "SiN"       4.876  
 ## >>chng 21 apr 16, from 11.25 to 6.016, add molecular column densities
-monitor column density "SiOH+"     6.016
+## >>chng 25 jan 15, from 6.016 to 5.965, GS removes destabilizing reactions, updates others to current UMIST
+monitor column density "SiOH+"     5.965
 ## >>chng 21 apr 16, from 10.1 to 6.137, add molecular column densities
 ## >>chng 21 sep 11, from 6.137 to 6.083, LAMDA update
 monitor column density "SO+"       6.083  
@@ -327,7 +352,11 @@ monitor eden 4.524
 ## >>chng 15 aug 03, from 3.896 to 3.521, update LAMDA to 2015
 ## >>chng 16 dec 16, error from 0.1 to 0.15 to pass gcc 6.2.0 compiler sim
 ## >>chng 17 may 26, from 3.521 to 3.80, average of gcc/cloudy9 llvm/mac
-monitor itrzn 3.800 error 0.15
+## >>chng 24 jan 09, from 3.8 to 4.319, resolve 1 electron Ly doublets
+## >>chng 24 oct 24, from 4.319 to 3.596, merge master
+## >>chng 25 feb 01, from 4.149 to 3.596, masater with all commits
+## >>chng 25 mar 04, from 4.149 to 3.532, turn off Ti chemistry for C25 rc1
+monitor itrzn 3.532 error 0.15
 ## 
 ## >>chng 04 may 19, from <70 to <90 NA update CO mole, addit moles
 ## >>chng 05 dec 22, from 90 to 60 (41), rationalize zone asserts

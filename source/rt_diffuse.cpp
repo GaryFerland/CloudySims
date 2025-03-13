@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*RT_diffuse evaluate local diffuse emission for this zone,
  * fill in ConEmitLocal[depth][energy] with diffuse emission,
@@ -119,17 +119,20 @@ void RT_diffuse(void)
 						sp->trans(ipHi,ipLo).Emis().xIntensity() = 
 							sp->trans(ipHi,ipLo).Emis().Aul()*
 							sp->st[ipHi].Pop()*
-							sp->trans(ipHi,ipLo).Emis().Pesc() *
+							sp->trans(ipHi,ipLo).Emis().Pesc_total() *
 							sp->trans(ipHi,ipLo).EnergyErg();
-						
-						// Would be better to enable checks (and remove argument) --
-						// present state is to ensure backwards compatibility with previous
-						// unchecked code.
-						// First argument is fraction of line not emitted by scattering --
-						// would be better to do this on the basis of line physics rather than
-						// fiat...
-						const bool lgDoChecks = false;
-						sp->trans(ipHi,ipLo).outline(1.0, lgDoChecks );
+
+						if ( !lgIsLymanLine(sp->trans(ipHi,ipLo)) )
+						{
+							// Would be better to enable checks (and remove argument) --
+							// present state is to ensure backwards compatibility with previous
+							// unchecked code.
+							// First argument is fraction of line not emitted by scattering --
+							// would be better to do this on the basis of line physics rather than
+							// fiat...
+							const bool lgDoChecks = false;
+							sp->trans(ipHi,ipLo).outline(1.0, lgDoChecks );
+						}
 					}
 				}
 
@@ -165,6 +168,29 @@ void RT_diffuse(void)
 				}
 			}
 		}
+	}
+
+	/* Only for H isoseq: Add j-resolved ExtraLymanLinesJ*5 */
+	for( long nelem = ipHYDROGEN; nelem < LIMELM; nelem++ )
+	{
+		const bool lgDoChecks = false;
+		const long ipISO = ipH_LIKE;
+
+		for( long nHi=2; nHi <= iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; nHi++ )
+		{
+			if( ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].ipCont() > 0 )
+			{
+				set_xIntensity( ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]] );
+				ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].outline( 1.0, lgDoChecks );
+			}
+
+			if( ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]].ipCont() > 0 )
+			{
+				set_xIntensity( ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]] );
+				ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]].outline( 1.0, lgDoChecks );
+			}
+		}
+
 	}
 
 	/* add recombination continua for elements heavier than those done with iso seq */

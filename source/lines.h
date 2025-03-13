@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef LINES_H_
@@ -13,17 +13,31 @@ class cdstream;
 
 class LineID
 {
+	string p_chLabel;
+	// the constructors will make sure that this is always a wavelength in vacuum
+	t_wavl p_wave;
+	// the remaining parameters are optional, used for line disambiguation
+	int p_indLo;
+	int p_indHi;
+	realnum p_ELo;
 public:
-	string chLabel;
-	realnum wave;
-	// the remaining parameters are optional
-	int indLo;
-	int indHi;
-	realnum ELo;
-	LineID() : wave(-1_r), indLo(-1), indHi(-1), ELo(-1_r) {}
-	LineID(string lbl, realnum wv) : chLabel(lbl), wave(wv), indLo(-1), indHi(-1), ELo(-1_r) {}
-	LineID(string lbl, realnum wv, realnum e) : chLabel(lbl), wave(wv), indLo(-1), indHi(-1), ELo(e) {}
-	LineID(string lbl, realnum wv, int ilo, int ihi) : chLabel(lbl), wave(wv), indLo(ilo), indHi(ihi), ELo(-1_r) {}
+	LineID() :
+		p_indLo(-1), p_indHi(-1), p_ELo(-1_r) {}
+	LineID(string lbl, t_wavl wv) :
+		p_chLabel(lbl), p_wave(wv), p_indLo(-1), p_indHi(-1), p_ELo(-1_r) {}
+	LineID(string lbl, t_wavl wv, realnum e) :
+		p_chLabel(lbl), p_wave(wv), p_indLo(-1), p_indHi(-1), p_ELo(e) {}
+	LineID(string lbl, t_wavl wv, int ilo, int ihi) :
+		p_chLabel(lbl), p_wave(wv), p_indLo(ilo), p_indHi(ihi), p_ELo(-1_r) {}
+	LineID(string lbl, t_wavl wv, int ilo, int ihi, realnum e) :
+		p_chLabel(lbl), p_wave(wv), p_indLo(ilo), p_indHi(ihi), p_ELo(e) {}
+	string chLabel() const { return p_chLabel; }
+	realnum wavlVac() const { return p_wave.wavlVac(); }
+	t_wavl twav() const { return p_wave; }
+	string str() const { return "\"" + p_chLabel + "\" " + p_wave.sprt_wl(); }
+	int indLo() const { return p_indLo; }
+	int indHi() const { return p_indHi; }
+	realnum ELo() const { return p_ELo; }
 };
 
 /**lines main routine to put emission line intensities into line stack */
@@ -68,6 +82,9 @@ long int StuffComment( const char * chComment );
  * returns 0 if ok, n is n lines not found */
 int lines_table();
 
+/** clear the name of the table read by the table lines command. */
+void clear_lines_table();
+
 class LinSv;
 
 void cdEmis(
@@ -79,7 +96,7 @@ void cdEmis(
 
 static const int NHOLDCOMMENTS = 100;
 
-extern const realnum Hbeta_WavLen;
+extern const t_wavl Hbeta_WavLen;
 
 /** this struc is different from following since they are only pointer here, will be allocated 
  * to form a large array after number of lines is counted, but this is the final form */
@@ -108,11 +125,14 @@ struct t_LineSave : public module {
 	/** holds comment strings associated with various blocks of output lines */
 	string chHoldComments[NHOLDCOMMENTS];
 
-	/** NormWL is array index for emission line on normalize command */
-	long int ipNormWavL;
+	/** normalization line for line ratios in main output */
+	LineID NormLine;
 
-	/** WavLNorm is wavelength of emission line on normalize command */
-	realnum WavLNorm;
+	/** array index for emission line on normalize command */
+	long int ipNormLine;
+
+	/** ScaleNormLine is the scale factor for its appearance */
+	double ScaleNormLine;
 
 	/** number of significant figures for lines
 	 * this affects all aspects of reading and writing lines */
@@ -122,15 +142,6 @@ struct t_LineSave : public module {
 	/** length of string wl not including units
 	 *  typically, sig_figs+2 (dot & unit) */
 	int	wl_length;
-
-	/** ScaleNormLine is the scale factor for its appearance */
-	double ScaleNormLine;
-
-	/** chNormLab is optional label */
-	char chNormLab[NCHLAB];
-
-	/** flag saying whether norm has been set */
-	bool lgNormSet;
 
 	/** save rec coefficient data for recombination lines of C, N, O */
 	realnum RecCoefCNO[4][NRECCOEFCNO];
@@ -151,13 +162,17 @@ struct t_LineSave : public module {
 	
 	void setSortWL();
 	void init(long index, char chSumTyp, const char *chComment, const char *label,
-				 bool lgAdd, realnum wavelength, const TransitionProxy& tr);
-	realnum wavelength(long index)
+			  bool lgAdd, t_wavl wavelength, const TransitionProxy& tr);
+	realnum wavlVac(long index) const
 	{
 		return m_wavelength[index];
 	}
+	t_wavl twav(long index) const
+	{
+		return t_vac(wavlVac(index));
+	}
 
-	void resetWavelength( long index, realnum wl )
+	void resetWavlVac( long index, realnum wl )
 	{
 		m_wavelength[index] = wl;
 	}
@@ -223,11 +238,9 @@ public:
 	{
 		return	m_chSumTyp;
 	}
-	void addComponent(const string& species,const double wavelength);
 	void addComponent(const LineID& line);
 	void addComponentID(long id);
-	void makeBlend(const char* species, const double wavelength, 
-				   const double width);
+	void makeBlend(const char* species, const t_wavl& wavelength, const realnum width);
 	void setBlendWavl();
 
 	const TransitionProxy getComponent(long ind)
@@ -320,10 +333,17 @@ public:
 			m_emslin[1] = m_emslin[0];
 	}
 
-	/** the wavelength of the line */
-	realnum wavelength() const
+	/** prt_blend - print to .out blend components and their intensities */
+	void prt_blend() const;
+
+	/** the vacuum wavelength of the line */
+	realnum wavlVac() const
 	{
-		return LineSave.wavelength(m_index);
+		return LineSave.wavlVac(m_index);
+	}
+	t_wavl twav() const
+	{
+		return LineSave.twav(m_index);
 	}
 
 	/** comment describing the line */
@@ -420,7 +440,7 @@ public:
 
 		if( !isBlend() )
 		{
-			if( m_chSumTyp != 't' || LineSave.wavelength(m_index) <= realnum(0.) )
+			if( m_chSumTyp != 't' || LineSave.wavlVac(m_index) <= 0_r )
 				ASSERT( m_SumLine[ipEmer] == 0. );
 			else
 				ASSERT( m_SumLine[ipIntr] > m_SumLine[ipEmer] ||
@@ -435,19 +455,6 @@ public:
 #endif
 };
 
-inline void t_LineSave::init(long index, char chSumTyp, const char *chComment, const char *label,
-									  bool lgAdd, realnum wavelength, const TransitionProxy& tr)
-{
-	if (!lgAdd)
-	{
-		// number of lines OK, set parameters for first pass
-		// negative wavelength means it is just label, possibly not correct
-		wavelength = fabs(wavelength);
-	}
-	
-	m_wavelength[index] = wavelength;
-	lines[index].init(index,chSumTyp,chComment,label,tr);
-}
 inline void t_LineSave::resize(long nlines)
 {
 	lines.resize(nlines);

@@ -80,7 +80,7 @@ the calculation of conditions in the gas.
 It also does {\em not} affect the spectral energy distribution
 predicted with the \cdCommand{save continuum} commands.
 This will always be integrated over the entire nebula.
-The continuum bands in the file \cdFilename{data/continuum\_bands.ini} are not
+The continuum bands in the file \cdFilename{data/continuum\_bands.dat} are not
 predicted when the \cdCommand{aperture} command is used, for this reason.
 
 This command only affects the line luminosities in the luminosity case.
@@ -365,23 +365,32 @@ a filling factor of unity if a value greater than one is entered.   The
 code will complain (but compute the model) if a filling factor is set in
 a constant pressure model since this makes no physical sense.
 
-\section{Illumination angle 45 deg [radians]}
+\section{Illumination isotropic \OR\ angle 45 deg [radian]}
 
-The plane-parallel slab is illuminated by a beam $\theta $
+This command specifies the orientation of the radiation field with respect
+to the slab that is being illuminated. It applies {\em only}
+to the last radiation field that was specified preceding this command.
+If the keyword \cdCommand{isotropic} is present, it indicates that the
+radiation field is isotropic, i.e.\ coming from all directions.
+Alternatively, if this keyword is absent, you can specify that the
+slab is illuminated by a unidirectional beam at an angle $\theta$
 away from the normal.
-The default is $\theta  = 0$ (normal illumination).
+The default is $\theta = 0$ (illumination perpendicular to the slab).
 The angle is in degrees unless
 the keyword \cdCommand{radian} appears.
 
 The only effect of this command is to cause the beam of incident radiation
-to be attenuated by $\tau n / \cos(\theta )$ where $\tau n$
-is the normal optical depth of the zone.
+to be attenuated by $\tau_{\rm n} / \cos\theta$ where $\tau_{\rm n}$
+is the optical depth of the zone in the direction of the normal.
 The line and diffuse continua optical depth scale, which is
-defined normal to the plane, are not directly affected by this command.
+defined normal to the plane, are not directly affected by this command
+as these are not part of the incident radiation.
 
-\emph{N.B.}  If this is used with the \cdCommand{grid} or
-\cdCommand{vary} options the angle must be given in radians.
-See the discussion of the commands with a \cdCommand{vary} option.
+This command also accepts the optional keywords \cdCommand{forward},
+\cdCommand{reverse}, and \cdCommand{symmetric}, indicating whether the
+the front face, the rear face, or both faces, of the gas are illuminated.
+Illumination from the rear is currently not implemented, so these options
+have no effect and a caution to that effect will be printed.
 
 \section{Radius r(inner)  [r(outer), thickness; parsec; linear]}
 \label{sec:RadiusCommand}

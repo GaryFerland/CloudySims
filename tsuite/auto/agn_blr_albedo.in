@@ -18,7 +18,7 @@ stop total column density = 23.75
 iterate 
 #
 # commands controlling output    =========
-normalize to "FeKa" 1.78
+normalize to "C  6" 33.7360
 print line faint -1
 print lines inward
 # the normalizing line is not defined on the emergent line stack
@@ -34,21 +34,36 @@ save monitors last "agn_blr_albedo.asr"
 # commands giving the monitors    =========
 # must assert the luminosity since change in this 
 # line would appear to change the rest of the spectrum
-monitor line luminosity "FeKa" 1.78 10.070
+#monitor line luminosity "FeKa" 1.78 10.070
+## >>chng 24 jan 09, from 10.07 to 10.02, resolve 1 electron Ly doublets
+## >>chng 24 apr 22, from 10.02 to 9.988, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line luminosity "C  6" 33.7360 9.988
 ## >>chng 21 sep 11, from 26.2 to 27.41, LAMDA update
-monitor line "nFnu" 1000 27.41
-monitor line "nInu" 1000 64.663
+## >>chng 23 nov 24, from 27.41 to 29.700, remove FeKa, FeKH, FeKC, FeK1, FeK2
+## >>chng 24 apr 22, from 29.7 to 31.87, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line "nFnu" 1000 31.87
+## >>chng 23 nov 24, from 64.663 to 72.725, remove FeKa, FeKH, FeKC, FeK1, FeK2
+## >>chng 24 apr 22, from 72.72 to 78.04, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line "nInu" 1000 78.04
 ## >>chng 13 jul 24, wl from 925.1 to 925.144A, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from 26 to 27.23, LAMDA update
-monitor line "nFnu" 925.144A 27.23
+## >>chng 23 nov 24, from 27.23 to 29.525, remove FeKa, FeKH, FeKC, FeK1, FeK2
+## >>chng 24 apr 22, from 29.52 to 31.66, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line "nFnu" 925.144A 31.66
 ## >>chng 13 jul 24, wl from 925.1 to 925.144A, increased wl precision to 6 sig. fig.
-monitor line "nInu" 925.144A 64.05
+## >>chng 23 nov 24, from 64.05 to 72.060, remove FeKa, FeKH, FeKC, FeK1, FeK2
+## >>chng 24 apr 22, from 72.05 to 77.33, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line "nInu" 925.144A 77.33
 ## >>chng 11 sep 15, from 24.8 to 26.51, Chianti for Fe moderate to high ions
-monitor line "nFnu" 897.8 26.51
+## >>chng 23 nov 24, from 26.51 to 29.481, remove FeKa, FeKH, FeKC, FeK1, FeK2
+## >>chng 24 apr 22, from 29.48 to 31.94, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line "nFnu" 897.8 31.94
 ##
 ## >>chng 03 dec 08, from 57.7 to 60.7, chng zoning, ots
 ## >>chng 11 sep 15, from 60.7 to 56.45, Chianti for Fe moderate to high ions
-monitor line "nInu" 897.8 56.45
+## >>chng 23 nov 24, from 56.45 to 62.736, remove FeKa, FeKH, FeKC, FeK1, FeK2
+## >>chng 24 apr 22, from 62.74 to 67.05, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line "nInu" 897.8 67.05
 ##
 ## >>chng 04 sep 30, from 5 to 7, conv_base conv heat cool
 ## >>chng 08 dec 08, from 7 to 4.95, upper limit -> equals (r2515)

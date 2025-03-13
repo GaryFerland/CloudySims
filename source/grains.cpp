@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*grain main routine to converge grains thermal solution */
 #include "cddefines.h"
@@ -790,7 +790,7 @@ STATIC void InitBinAugerData(size_t nd,
 	temp.zero();
 
 	/* this converts gv.bin[nd].elmAbund[nelem] to particle density inside the grain */
-	double norm = gv.bin[nd].cnv_H_pGR/gv.bin[nd].AvVol;
+	double norm = gv.bin[nd].cnv_H_pGR/double(gv.bin[nd].AvVol);
 
 	/* this loop calculates the probability that photoionization occurs in a given shell */
 	for( ns=0; ns < gv.bin[nd].sd.size(); ns++ )
@@ -3665,7 +3665,6 @@ STATIC void GrainIonColl(size_t nd,
 		/* ion will get electron(s) */
 		*ChEn = 0.f;
 		*ChemEn = 0.f;
-		long Zg = gv.bin[nd].chrg(nz).DustZ;
 		double phi_s = phi_s_up[0];
 		do 
 		{
@@ -3676,7 +3675,6 @@ STATIC void GrainIonColl(size_t nd,
 			 * n-electron transfer, a correction for the difference in binding energy is needed */
 			*ChemEn -= (realnum)(phi_s - phi_s_up[0]);
 			--ion;
-			++Zg;
 			phi_s = phi_s_up[save-ion];
 		} while( ion > 0 && rfield.anu(Heavy.ipHeavy[nelem][ion-1]-1) > (realnum)phi_s );
 

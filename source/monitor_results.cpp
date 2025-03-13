@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*InitMonitorResults, this must be called first, done at startup of ParseCommands*/
 /*ParseMonitorResults - parse input stream */
@@ -468,12 +468,12 @@ void ParseMonitorResults(Parser &p)
 		/* this will check a line intensity, get the line id */
 		LineID line = p.getLineID(false);
 
-		blend_iterator b = blends.find(line.chLabel);
+		blend_iterator b = blends.find(line.chLabel());
 		if( 0 && b != blends.end() )
 		{
 			assertBlends[nAsserts] = &(b->second);
 		}
-		else if( line.chLabel.length() > NCHLAB-1 )
+		else if( line.chLabel().length() > NCHLAB-1 )
 		{
 			fprintf( ioQQQ, " The label must be no more than %d char long, between double quotes.\n",
 				NCHLAB-1 );
@@ -484,8 +484,8 @@ void ParseMonitorResults(Parser &p)
 		/* store line into array */
 		lineids[nAsserts] = line;
 		// need these as well because of PrtOneMonitor()
-		chAssertLineLabel[nAsserts] = line.chLabel;
-		wavelength[nAsserts] = line.wave;
+		chAssertLineLabel[nAsserts] = line.chLabel();
+		wavelength[nAsserts] = line.wavlVac();
 
 		/* now get intensity or luminosity - 
 		 * rel intensity is linear and intensity or luminosity are log */
@@ -561,19 +561,20 @@ void ParseMonitorResults(Parser &p)
 		}
 
 		/* range option - to limit check on a certain wavelength range */
-		if( p.GetRange("RANG",&Param[nAsserts][2],&Param[nAsserts][3]) )
+		t_wavl wlLo, wlHi;
+		if( p.GetRange("RANG", wlLo, wlHi) )
 		{
 			if( p.lgEOL() ) 
 			{
-				/* did not get 2 numbers */
-				fprintf(ioQQQ," The monitor Case B range option must have two numbers,"
-					" the lower and upper limit to the wavelengths in Angstroms.\n");
-				fprintf(ioQQQ," There must be a total of three numbers on the line,"
-					" the relative error followed by the lower and upper limits to the "
-					"wavelength in Angstroms.\n");
+				/* did not get all the numbers */
+				fprintf(ioQQQ," The monitor Case B range option must have a total of"
+						" three numbers on the line: the relative error followed by the"
+						" lower and upper limits to the wavelength.\n");
 				cdEXIT(EXIT_FAILURE);
 			}
-			if( Param[nAsserts][2]>Param[nAsserts][3])
+			Param[nAsserts][2] = wlLo.wavlVac();
+			Param[nAsserts][3] = wlHi.wavlVac();
+			if( Param[nAsserts][2] > Param[nAsserts][3] )
 			{
 				/* make sure in increasing order */
 				double sav = Param[nAsserts][3];
@@ -1099,7 +1100,7 @@ void ParseMonitorResults(Parser &p)
 				p.NoNumb("grain index");
 			}
 		
-			if( wavelength[nAsserts] < 1 || wavelength[nAsserts] > LONG_MAX )
+			if( wavelength[nAsserts] < 1 || wavelength[nAsserts] > (realnum)LONG_MAX )
 			{
 				fprintf( ioQQQ, "  Unacceptable grain index.\n");
 				fprintf( ioQQQ, " Sorry.\n" );
@@ -1421,6 +1422,74 @@ void ParseMonitorResults(Parser &p)
 		lgQuantityLog[nAsserts] = true;
 	}
 
+	else if( p.nMatch("CHEM") )
+	{
+		/* monitor mean steps/chemistry solve, a test of convergence */
+		if( p.nMatch("STEP") )
+		{
+			chAssertType[nAsserts] = "cs";
+			chAssertLineLabel[nAsserts] = "cstp" ;
+
+			/* now get quantity */
+			AssertQuantity[nAsserts] = p.FFmtRead();
+			if( p.lgEOL() )
+			{
+				p.NoNumb("mean steps/chemistry solve");
+			}
+		}
+		/* monitor mean step length searches/chemistry step, a test of convergence */
+		else if( p.nMatch("SEAR") )
+		{
+			chAssertType[nAsserts] = "cl";
+			chAssertLineLabel[nAsserts] = "csls" ;
+
+			/* now get quantity */
+			AssertQuantity[nAsserts] = p.FFmtRead();
+			if( p.lgEOL() )
+			{
+				p.NoNumb("mean step length searches/chemistry step");
+			}
+		}
+		else
+		{
+			/* did not recognize a command */
+			fprintf( ioQQQ, " Unrecognized command.  The line image was\n");
+			p.PrintLine(ioQQQ);
+			fprintf( ioQQQ, " The options I know about are: chemistry steps, or chemistry searches\n" );
+			fprintf( ioQQQ, " Sorry.\n" );
+			cdEXIT(EXIT_FAILURE);
+		}
+		/* wavelength is meaningless */
+		wavelength[nAsserts] = 0;
+
+		/* optional error, default available */
+		AssertError[nAsserts] = p.FFmtRead();
+		if( p.lgEOL() )
+			AssertError[nAsserts] = ErrorDefaultPerformance;
+	}
+
+	/* monitor max number of iterations in a zone, a test of convergence */
+	else if( p.nMatch("ITRM") )
+	{
+		/* this flag will mean max number of iterations in a zone */
+		chAssertType[nAsserts] = "im";
+		chAssertLineLabel[nAsserts] = "itrm" ;
+
+		/* now get quantity */
+		AssertQuantity[nAsserts] = p.FFmtRead();
+		if( p.lgEOL() )
+		{
+			p.NoNumb("max iterations in a zone");
+		}
+		/* wavelength is meaningless */
+		wavelength[nAsserts] = 0;
+
+		/* optional error, default available */
+		AssertError[nAsserts] = p.FFmtRead();
+		if( p.lgEOL() )
+			AssertError[nAsserts] = ErrorDefaultPerformance;
+	}
+
 	/* monitor number of iterations per zone, a test of convergence */
 	else if( p.nMatch("ITRZ") )
 	{
@@ -1632,7 +1701,7 @@ void ParseMonitorResults(Parser &p)
 		p.PrintLine(ioQQQ);
 		fprintf( ioQQQ, 
 			"  The options I know about are: ionization, line, departure coefficient, map, column, "
-			"temperature, nzone, csupre, htot, itrz, eden, thickness, niter, \n");
+			"temperature, nzone, csupre, htot, itrz, itrmax, chemistry, eden, thickness, niter, \n");
 		fprintf( ioQQQ, " Sorry.\n" );
 		cdEXIT(EXIT_FAILURE);
 	}
@@ -1750,11 +1819,11 @@ bool lgCheckMonitors(
 				 * differences so that we can disambiguate below */
 
 				/* change chLabel to all caps */
-				strcpy(chFind, lineids[i].chLabel.c_str());
+				strcpy(chFind, lineids[i].chLabel().c_str());
 				caps(chFind);
 
 				/* get the error associated with specified significant figures */
-				errorwave = WavlenErrorGet( lineids[i].wave, LineSave.sig_figs );
+				errorwave = WavlenErrorGet( lineids[i].wavlVac(), LineSave.sig_figs );
 
 				/* go through rest of line stack to look for close matches */
 				for( j=1; j < LineSave.nsum; j++ )
@@ -1772,7 +1841,7 @@ bool lgCheckMonitors(
 					 * So here we will find any lines within 1.5 Angstroms
 					 * of the 
 					 * asserted wavelength.  check wavelength and chLabel for a match */
-					if( fabs(LineSave.lines[j].wavelength()-lineids[i].wave) < 3.f*errorwave )
+					if( fabs(LineSave.lines[j].wavlVac()-lineids[i].wavlVac()) < 3.f*errorwave )
 					{
 						/* now see if labels agree */
 						if( strcmp(chCaps,chFind) == 0 )
@@ -1834,7 +1903,7 @@ bool lgCheckMonitors(
 
 			double relint_cb = 0.,
 				absint_cb = 0.;
-			if( cdLine( "Ca B", lineids[i].wave, &relint_cb, &absint_cb, iLineType[i] ) <= 0 )
+			if( cdLine( "Ca B", lineids[i].twav(), &relint_cb, &absint_cb, iLineType[i] ) <= 0 )
 			{
 				fprintf( ioMONITOR, " monitor error: lgCheckMonitors could not find line ");
 				prt_line_err( ioMONITOR, lineids[i] );
@@ -2043,6 +2112,58 @@ bool lgCheckMonitors(
 			}
 		}
 
+		else if( chAssertType[i] == "im" )
+		{
+			/* this is max number of iterations in a zone, a test of convergence properties */
+			/* the last zone has not been included yet in the Max value, so do that here */
+			PredQuan[i] = (double)max(conv.getCounterMax("NPRES2IONIZ"),conv.getCounterZone("NPRES2IONIZ"));
+
+			if( t_version::Inst().lgRelease )
+				RelError[i] = ForcePass(chAssertLimit[i]);
+			else
+			{
+				/* this is relative error */
+				if (AssertError[i] > 0.)
+					RelError[i] = get_error_ratio( PredQuan[i], AssertQuantity[i] );
+				else
+					RelError[i] = PredQuan[i]- AssertQuantity[i];
+			}
+		}
+
+		else if( chAssertType[i] == "cs" )
+		{
+			/* this is mean steps/chemistry solve, a test of convergence properties */
+			PredQuan[i] = (double)conv.getCounter("MOLE_SOLVE_STEPS")/max((double)conv.getCounter("MOLE_SOLVE"),1.0);
+
+			if( t_version::Inst().lgRelease )
+				RelError[i] = ForcePass(chAssertLimit[i]);
+			else
+			{
+				/* this is relative error */
+				if (AssertError[i] > 0.)
+					RelError[i] = get_error_ratio( PredQuan[i], AssertQuantity[i] );
+				else
+					RelError[i] = PredQuan[i]- AssertQuantity[i];
+			}
+		}
+
+		else if( chAssertType[i] == "cl" )
+		{
+			/* this is mean step length searches/chemistry step, a test of convergence properties */
+			PredQuan[i] = (double)conv.getCounter("NEWTON_LOOP")/max((double)conv.getCounter("NEWTON"),1.0);
+
+			if( t_version::Inst().lgRelease )
+				RelError[i] = ForcePass(chAssertLimit[i]);
+			else
+			{
+				/* this is relative error */
+				if (AssertError[i] > 0.)
+					RelError[i] = get_error_ratio( PredQuan[i], AssertQuantity[i] );
+				else
+					RelError[i] = PredQuan[i]- AssertQuantity[i];
+			}
+		}
+
 		else if( chAssertType[i] == "e " )
 		{
 			/* this is electron density of the last zone */
@@ -2187,9 +2308,9 @@ bool lgCheckMonitors(
 					for( long int ipHi=ipLo+1; ipHi< MIN2(25,nHighestPrinted); ++ipHi )
 					{
 						/* monitor the line */
-						realnum wl = atmdat.WaveLengthCaseB[nelemCaseB][ipHi][ipLo];
+						t_wavl wl = atmdat.WaveLengthCaseB[nelemCaseB][ipHi][ipLo];
 						/* range option to restrict wavelength coverage */
-						if( wl < Param[i][2] || wl > Param[i][3] )
+						if( wl.wavlVac() < Param[i][2] || wl.wavlVac() > Param[i][3] )
 							continue;
 
 						double relint, absint, CBrelint, CBabsint;
@@ -2245,7 +2366,7 @@ bool lgCheckMonitors(
 							}
 							fprintf(ioMONITOR," %s %3li %3li ", 
 								chElemLabelCaseB.c_str() , ipHi , ipLo );
-							prt_wl(ioMONITOR, wl );
+							wl.prt_wl(ioMONITOR);
 							fprintf(ioMONITOR," %.2e %.2e %10.3f", 
 								log10(absint) , log10(CBabsint) , error );
 						}
@@ -2283,9 +2404,9 @@ bool lgCheckMonitors(
 				for( unsigned int ipLine=0; ipLine< atmdat.CaseBWlHeI.size(); ++ipLine )
 				{
 					/* monitor the line */
-					realnum wl = atmdat.CaseBWlHeI[ipLine];
+					t_wavl wl = atmdat.CaseBWlHeI[ipLine];
 					/* range option to restrict wavelength coverage */
-					if( wl < Param[i][2] || wl > Param[i][3] )
+					if( wl.wavlVac() < Param[i][2] || wl.wavlVac() > Param[i][3] )
 						continue;
 					double relint , absint,CBrelint , CBabsint;
 					cdLine( chAssertLineLabel[i], wl, &CBrelint, &CBabsint, iLineType[i] );
@@ -2336,7 +2457,7 @@ bool lgCheckMonitors(
 						{
 							fprintf( ioMONITOR, " ChkMonitor botch>>");
 						}
-						prt_wl(ioMONITOR, wl );
+						wl.prt_wl(ioMONITOR);
 						fprintf(ioMONITOR," %.2e %.2e %10.3f", 
 							absint , CBabsint , error );
 					}
@@ -2807,24 +2928,24 @@ bool lgCheckMonitors(
 
 			LineSave.sig_figs = LineSave.sig_figs_max;
 
-			fprintf( ioMONITOR, "=============Line Disambiguation============================================================\n" );
-			fprintf( ioMONITOR, "                  Wavelengths                 ||                  Intensities               \n" );
-			fprintf( ioMONITOR, "Label     line     match1   match2   match3   ||   asserted     match1     match2     match3\n" );
+			fprintf( ioMONITOR, "=======================Line Disambiguation============================================================\n" );
+			fprintf( ioMONITOR, "                            Wavelengths                 ||                  Intensities               \n" );
+			fprintf( ioMONITOR, "Label               line     match1   match2   match3   ||   asserted     match1     match2     match3\n" );
 
 			for( i=0; i<nAsserts; ++i )
 			{
 				if( ipDisambiguate[i][1] > 0 )
 				{
 					fprintf( ioMONITOR , "%-*s ", NCHLAB-1, chAssertLineLabel[i].c_str() );
-					prt_wl( ioMONITOR , wavelength[i] );
+					t_vac(wavelength[i]).prt_wl(ioMONITOR);
 					fprintf( ioMONITOR , " " );
-					prt_wl( ioMONITOR , LineSave.lines[ipDisambiguate[i][0]].wavelength() );
+					LineSave.lines[ipDisambiguate[i][0]].twav().prt_wl(ioMONITOR);
 					fprintf( ioMONITOR , " " );
-					prt_wl( ioMONITOR , LineSave.lines[ipDisambiguate[i][1]].wavelength() );
+					LineSave.lines[ipDisambiguate[i][1]].twav().prt_wl(ioMONITOR);
 					fprintf( ioMONITOR , " " );
 					if( ipDisambiguate[i][2] > 0 )
 					{
-						prt_wl( ioMONITOR , LineSave.lines[ipDisambiguate[i][2]].wavelength() );
+						LineSave.lines[ipDisambiguate[i][2]].twav().prt_wl(ioMONITOR);
 						cdLine_ip( ipDisambiguate[i][2], &relint2, &absint1, iLineType[i] );
 					}
 					else
@@ -3025,7 +3146,7 @@ void PrtOneMonitor( FILE *ioMONITOR, const string& chAssertType, const string& c
 	/* special formatting for the emission lines */
 	if( chAssertType == "Ll"  || chAssertType == "Lr" || chAssertType == "Lb" )
 	{
-		prt_wl( ioMONITOR , wavelength );
+		t_vac(wavelength).prt_wl(ioMONITOR);
 	}
 	else
 	{

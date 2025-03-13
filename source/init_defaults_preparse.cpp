@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*InitDefaultsPreparse initialization at start of simulation, called from cloudy
 * before parser, sets initial values of quantities changed by parser 
@@ -55,9 +55,9 @@ void InitDefaultsPreparse( void )
 	/* option to turn off collisional ionization with "no collisional ionization" cmmnd */
 	atmdat.lgCollIonOn = true;
 
-	// default, Chianti not on, but if on use hybrid, do not print
+	// default, use Chianti, use Chianti-level2 hybrid, do not print
 	atmdat.lgChiantiOn = true;
-	atmdat.lgChiantiHybrid = true;
+	atmdat.lgChiantiLvl2Hybrid = true;
 	atmdat.lgChiantiPrint = false;
 	//Use gbar to fill in dBase transitions if they lack collision strengths
 	atmdat.lgGbarOn = true;
@@ -87,10 +87,10 @@ void InitDefaultsPreparse( void )
 	/* nStoutMaxLevelsFe and nStoutMaxLevels are defaulted to 100 and 50 respectively if
 	 * the coronal command is used. See parse_coronal.cpp */
 
-	/* Stout on by default, optional printout off */
+	/* Stout on by default, use level2 OP hybrid,  optional printout off */
 	atmdat.lgStoutOn = true;
 	atmdat.lgStoutPrint = false;
-	atmdat.lgStoutHybrid = true;
+	atmdat.lgStoutLvl2Hybrid = true;
 
 	/* Lamda on by default, optional printout off */
 	atmdat.lgLamdaOn = true;
@@ -269,11 +269,10 @@ void InitDefaultsPreparse( void )
 
 	abund.lgAbTaON = false;
 
-	/* option to turn off an element */
 	for( nelem=0; nelem < LIMELM; nelem++ )
 	{
 		/* option to have abundances from table */
-		abund.lgAbunTabl[nelem] = false;
+		abund.AbunTab[nelem].clear();
 	}
 
 	/* threshold for faintest heating cooling to save with save heating or 
@@ -517,8 +516,8 @@ void InitDefaultsPreparse( void )
 	StopCalc.lgStop21cm = false;
 	/* stop when absolute value of velocity falls below this */
 	StopCalc.StopVelocity = 0.;
-	/* number of stop line commands entered */
-	StopCalc.nstpl = 0;
+	/* erase stop line commands entered */
+	StopCalc.sle.clear();
 
 	/* initialize some variables for the optimizer */
 	optimize.nIterOptim = 400;
@@ -640,7 +639,7 @@ void InitDefaultsPreparse( void )
 		/* most continua enter as a beam rather than isotropic */
 		rfield.lgBeamed[i] = true;
 		// default is radiation from the "illuminated" face
-		rfield.Illumination[i] = Illuminate::FORWARD;
+		rfield.Illumination[i] = Illumination::FORWARD;
 		// optical depth = normal optical depth * this scale factor,
 		// is 1 / cos theta
 		rfield.OpticalDepthScaleFactor[i] = 1.;
@@ -655,9 +654,6 @@ void InitDefaultsPreparse( void )
 		rfield.lgSphericalDilution[i] = false;
 		rfield.ncont[i] = 0;
 	}
-
-	/* line overlap opacity, turn off with no fine opacity command */
-	rfield.lgOpacityFine = true;
 
 	pseudoContDef.wlLo = 1000.;
 	pseudoContDef.wlHi = 7000.;
@@ -701,6 +697,8 @@ void InitDefaultsPreparse( void )
 	}
 
 	gv.clear();
+
+	clear_lines_table();
 
 	return;
 }

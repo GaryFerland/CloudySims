@@ -727,17 +727,6 @@ The line transfer arrays are permanently injured by the
 Subsequent runs with the same core load in a grid will still have
 the line optical depths disabled.
 
-\subsection{No fine opacities}
-
-The code uses a fine continuum and opacity grid to automatically account
-for line overlap.
-Figure 20 of \citet{Shaw2005} shows an example of this
-fine mesh.
-Multi-grid techniques are used to propagate this fine mesh back
-onto the coarse mesh that is used to evaluate photo rates.
-This fine grid
-can be turned off using this command.
-
 \subsection{No free free}
 
 Free-free heating, cooling, and emission are turned off with this command.
@@ -790,9 +779,9 @@ like \citet{Weingartner2001a}.
 
 \subsection{No induced processes}
 
-This turns off induced recombination and its cooling, stimulated
+This turns off all processes involving the photon occupation number, including induced recombination and its cooling, stimulated
 two-photon emission and absorption (\citealp{Bottorff2006}), continuum
-fluorescent excitation, and stimulated emission of all lines.
+fluorescent excitation, photoexcitation, and stimulated emission of all lines.
 
 \subsection{No ionization reevaluation}
 
@@ -825,7 +814,7 @@ as described in section \ref{sec:save_cont_no_isotropic_option},
 as well as the fluxes through the bands described in
 Section~\ref{Hazy2-sec:Radiation-field-integrated-over-wavelengths}
 \cdSectionTitle{\refname{Hazy2-sec:Radiation-field-integrated-over-wavelengths}},
-and defined in the file ``data/continuum\_bands.ini''.
+and defined in the file \cdFilename{data/continuum\_bands.dat}.
 It has no effect on the continua reported in time-dependent
 integrations.
 
@@ -868,6 +857,9 @@ Pumping of the \hi\ 21 cm line by L$\alpha $ is treated
 as in \citet{Deguchi1985}.
 This turns off the process.
 All three keywords must match.
+
+Note that the text \cdCommand{21cm} is interpreted as a keyword and not as a precise wavelength
+of the line.
 
 \subsection{No OTS [options]}
 \begin{description}
@@ -1157,15 +1149,33 @@ tested.
 \item[The range option]  The keyword \cdCommand{range}
 tells the code to only check the
 monitored values over a restricted wavelength range.
-The wavelengths of
-the lines are stored in Angstroms so the range must be given in
-the same units.
+The wavelengths can be entered in the standard \Cloudy\ format.
+Interpretation as air or vacuum wavelengths can be forced by appending the optional keyword
+\cdCommand{air} or \cdCommand{vacuum} directly behind the wavelength. Note that the keyword
+only applies to the wavelength directly preceding it, so it needs to be repeated, as shown below.
+\begin{verbatim}
+monitor Case B H-like hydrogen 0.15 range 1000A vacuum to 4.00m air
+\end{verbatim}
 This was added as a way to exclude the intensities of
 unobservable MIR - FIR lines.  These lines come from higher levels in the
 atom and generally have a larger error due to the finite size of the model.
 \end{description}
 
-\subsection{Monitor column ``species'' 18.9}
+\subsection{Monitor chemistry searches $<$ 3}
+
+This performance monitor checks the convergence properties of the chemistry
+solver. The quantity is the mean step length searches/chemistry step as
+reported in the main output under the header ``Convergence statistics''.
+This monitor will never trip in release code.
+
+\subsection{Monitor chemistry steps $<$ 8}
+
+This performance monitor checks the convergence properties of the chemistry
+solver. The quantity is the mean steps/chemistry solve as reported in the main
+output under the header ``Convergence statistics''.
+This monitor will never trip in release code.
+
+\subsection{Monitor column ''species'' 18.9}
 
 This checks the predicted column density for the molecular species
 included in quotes.
@@ -1290,17 +1300,17 @@ computed zone.
 This is only meaningful if the large \htwo\ molecule has been
 turned on.
 
-\subsection{Monitor Htot -13.2}
-
-This checks that the local heating rate [\ergpccmps ]
-of the last zone is equal to the expected value.
-The argument is the log of the heating rate.
-
 \subsection{Monitor HHeicf -0.013}
 
 This checks the helium---hydrogen ionization correction factor.
 The number is the linear difference between the atomic fractions
 of helium and hydrogen.
+
+\subsection{Monitor Htot -13.2}
+
+This checks that the local heating rate [\ergpccmps ]
+of the last zone is equal to the expected value.
+The argument is the log of the heating rate.
 
 \subsection{Monitor ionization fraction oxygen 3 -3.45, error 0.1, weight =
 radius}
@@ -1329,31 +1339,19 @@ separated by whitespace and/or newlines.
 An optional error may be supplied on the command line. The same error is
 assumed for each grid point.
 
-\subsection{Monitor molecular fraction H2 -3.45, error 0.1}
+\subsection{Monitor itrmax $<$ 20}
 
-This checks the mean molecular fraction.
-The label for a molecule,
-currently only \htwo, must appear somewhere on the line.
-The next number is
-the expected molecular fraction.
-If this number is $\le 0$ it is interpreted
-as a log and as the linear ionization fraction if it is positive.
-The
-average can be with respect to radius or volume.
-The default is an average
-weighted with radius but if the keyword \cdCommand{volume} appears then the average
-will be weighted over volume.
-
-\subsection{Monitor mpi}
-
-This checks that the code is running in MPI mode. The command is used
-in the \cdFilename{mpi} test suite. It has no additional parameters.
+This performance monitor checks the convergence properties of a calculation.
+The quantity is the maximum number of calls to \cdRoutine{ConvBase} in any
+given zone and iteration (including the initial search phase).
+This monitor will never trip in release code.
 
 \subsection{Monitor itrzn $<$ 3.5}
 
 This performance monitor checks the convergence properties of a calculation.
 The quantity
 is the number of iterations required to converge each zone.
+This monitor will never trip in release code.
 
 \subsection{Monitor line [Case B] ``H  1'' 4861.33 $<$ 1.01}
 
@@ -1441,10 +1439,31 @@ monitor line luminosity "Q(H)" 4861 < 38.91
 
 \end{itemize}
 
+\subsection{Monitor molecular fraction H2 -3.45, error 0.1}
+
+This checks the mean molecular fraction.
+The label for a molecule,
+currently only \htwo, must appear somewhere on the line.
+The next number is
+the expected molecular fraction.
+If this number is $\le 0$ it is interpreted
+as a log and as the linear ionization fraction if it is positive.
+The
+average can be with respect to radius or volume.
+The default is an average
+weighted with radius but if the keyword \cdCommand{volume} appears then the average
+will be weighted over volume.
+
+\subsection{Monitor mpi}
+
+This checks that the code is running in MPI mode. The command is used
+in the \cdFilename{mpi} test suite. It has no additional parameters.
+
 \subsection{Monitor niter $<$ 4}
 
 This checks the number of iterations required in a calculation.
 This is usually an upper limit.
+This monitor will never trip in release code.
 
 \subsection{Monitor nothing 0}
 
@@ -1458,6 +1477,11 @@ for general testing.
 
 This checks how many zones were needed.
 This is usually an upper limit.
+This monitor will never trip in release code.
+
+\subsection{Monitor PRadMax 0.34}
+
+The monitored quantity is the maximum ratio of radiation to gas pressure.
 
 \subsection{Monitor pressure error $<$ 0.01}
 
@@ -1465,9 +1489,12 @@ The number is the ratio of the standard deviation of the pressure to
 its mean value.
 It is interpreted as a log if it is negative.
 
-\subsection{Monitor PRadMax 0.34}
+\subsection{Monitor radius 18.2}
 
-The monitored quantity is the maximum ratio of radiation to gas pressure.
+This checks that the outer radius [cm] of the computed model is equal
+to the expected value.
+The radius is the distance from the center of the
+central object to the shielded face of the cloud.
 
 \subsection{Monitor temperature ``species'' 4.02 volume, error 0.01}
 
@@ -1522,6 +1549,9 @@ it is $\le 10$.
 It will be linear if the keyword \cdCommand{linear} appears.
 The last number is the relative error.
 
+Note that the text \cdCommand{21cm} is interpreted as a keyword and not as a precise wavelength
+of the line.
+
 \subsection{Monitor grain temperature index 2, temperature  234}
 
 If no element name appears but the keyword \cdCommand{grains}
@@ -1546,13 +1576,6 @@ always averaged over radius.
 \subsection{Monitor temperature at face 11400K}
 
 This checks the temperature at the illuminated face of the cloud.
-
-\subsection{Monitor radius 18.2}
-
-This checks that the outer radius [cm] of the computed model is equal
-to the expected value.
-The radius is the distance from the center of the
-central object to the shielded face of the cloud.
 
 \subsection{Monitor thickness 13.2}
 
@@ -1586,12 +1609,15 @@ and can be selected with the keyword \cdCommand{excitation}.
 The gas kinetic temperature is used if the keyword \cdCommand{kinetic} appears.
 A frequency-independent source function is assumed if the keyword \cdCommand{constant} appears.
 
+Note that the text \cdCommand{21cm} is interpreted as a keyword and not as a precise wavelength
+of the line.
+
 \subsection{Set 12C13C -3.2 -- DEPRECATED}
 
 This command has been deprecated.
 Use \cdCommand{element carbon isotopes} instead.
 
-\subsection{Set blend [ "Custom" ] [ 4622.23 ] [ quiet ]}
+\subsection{Set blend [ ``Custom'' ] [ 4622.23 [ air \OR{} vacuum ] ] [ quiet ]}
 
 With this command you can define a custom blend of lines. In order to identify
 the blend, you need to enter a label between double quotes and a wavelength.
@@ -1599,7 +1625,15 @@ If the label is omitted, it will default to ``Blnd''. If it is too long, it
 will be truncated to \LabelLenMax\ characters. If the wavelength is omitted,
 it will default to the $g_k A_{ki}$-averaged wavelength of the blend
 components. The latter is only meaningful if the blend components are all from
-the same ion, which in general need not be the case.
+the same ion, which in general need not be the case. If the wavelength is
+specified on the command line, you can add an optional keyword \cdCommand{air}
+or \cdCommand{vacuum} to indicate whether the specified wavelength is in air
+or vacuum. This keyword needs to be typed immediately after the wavelength,
+with at least one space between the wavelength and the keyword. If the keyword
+is omitted, the wavelength type will be assumed to be the same as the one used
+in the main output. Note that this keyword only applies to the wavelength of
+the blend itself and is not used for the individual blend components. How to
+enter these components is described below.
 
 Each emission line included in the blend is entered on its own line. This list
 begins on the line after the \cdCommand{set blend} command and continues until
@@ -2419,14 +2453,14 @@ are always the sum of the reflected plus transmitted incident continuum.
 \subsection{Set nFnu add 300 micron}
 \label{sec:set:nfnu:add}
 
-You can also add custom wavelengths or frequencies at which the \emph{nFnu}
+You can also add custom vacuum wavelengths or frequencies at which the \emph{nFnu}
 and \emph{nInu} entries in the emission-line printout are evaluated. You can
 do that by adding one \cdCommand{set nFnu add} command for each point. You can
 enter as many as you like. Each line must contain a number and a unit to identify
 the wavelength or frequency. Adding the unit is mandatory. The following keywords
 are supported: \cdCommand{eV}, \cdCommand{keV}, \cdCommand{MeV},
 \cdCommand{Hz}, \cdCommand{kHz}, \cdCommand{MHz}, \cdCommand{GHz},
-\cdCommand{Angstrom}, \cdCommand{nm}, \cdCommand{micron}, \cdCommand{mm},
+\cdCommand{angstrom}, \cdCommand{nm}, \cdCommand{micron}, \cdCommand{mm},
 \cdCommand{cm} or \cdCommand{centimeter}, 
 \cdCommand{wavenumbers}, \cdCommand{erg}, \cdCommand{ryd}, \cdCommand{K} or
 \cdCommand{Kelvin}.
@@ -2442,12 +2476,6 @@ set nFnu add 4200 angstrom
 This controls the number of steps in the heating-cooling map that results
 from either the \cdCommand{map} or \cdCommand{save map} commands.  Normally about 20 steps are
 taken between the lowest and highest temperatures.
-
-\subsection{Set numerical derivatives}
-
-This tells the code to use numerical rather than analytic derivatives
-of the heating and cooling functions.
-The default is to use the analytic derivatives.
 
 \subsection{Set PAH option}
 \label{sec:CommandSetPahOption}
@@ -2658,7 +2686,7 @@ of the species pseudo-continuum reported with the
 Section \ref{sec:SaveSpeciesContinuum}.
 The species must be specified in double quotations, followed
 by three numbers: the short and long wavelength limits
-(both in \AA ) and the number of logarithmic bins to
+(vacuum wavelengths, both in angstrom) and the number of logarithmic bins to
 divide this into.
 All three numbers must be specified.
 The default are lower and upper wavelength limits of
@@ -2670,8 +2698,8 @@ For example,
 set species "Fe+" continuum 3000 5000 200
 \end{verbatim}
 %
-would accumulate the Fe~{\sc ii} emission from 3000 \AA{}
-to 5000 \AA{} in 200 logarithmic bins.
+would accumulate the Fe~{\sc ii} emission from 3000\,\AA{}
+to 5000\,\AA{} in 200 logarithmic bins.
 
 
 \subsection{Set temperature [floor, convergence]}

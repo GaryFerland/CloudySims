@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*IterStart set and save values of many variables at start of iteration after initial temperature set*/
 /*IterRestart restart iteration */
@@ -390,7 +390,7 @@ void IterStart()
 		 * since tau in is 1e-20, e2 is 0.9999, and so some H ots
 		 * these were not here at all - changed to dr/2 */
 		/* attenuation of flux by optical depths IN THIS ZONE 
-		 * DirectionalCosin is 1/COS(theta), is usually 1, reset with illuminate command,
+		 * DirectionalCosin is 1/COS(theta), is usually 1, reset with illumination command,
 		 * option for illumination of slab at an angle */
 		/* >>chng 04 oct 09, from drad to radius.drad_x_fillfac - include fill fac, PvH */
 		opac.ExpZone[i] = sexp(opac.opacity_abs[i]*radius.drad_x_fillfac/2.*geometry.DirectionalCosin);
@@ -448,6 +448,31 @@ void IterStart()
 			for( qList::iterator st = mole.species[i].levels->begin(); st != mole.species[i].levels->end(); ++st )
 			{
 				(*st).ColDen() = 0.;	
+			}
+		}
+	}
+
+	ipISO = ipH_LIKE;
+	for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+	{
+		if( dense.lgElmtOn[nelem] )
+		{
+			for( long nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
+			{
+				ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].Lo()->ColDen() = 0.;
+				ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]].Lo()->ColDen() = 0.;
+			}
+		}
+	}
+
+	ipISO = ipHE_LIKE;
+	for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+	{
+		if( dense.lgElmtOn[nelem] )
+		{
+			for(long ipHi = iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
+			{
+				ExtraLymanLinesHeLike[nelem][ipExtraLymanLinesHeLike[nelem][ipHi]].Lo()->ColDen() = 0.;
 			}
 		}
 	}
@@ -560,82 +585,56 @@ void IterStart()
 	hmi.h2dtot = 0.;
 	timesc.sound = 0.;
 
-	string label;
-	realnum	wvlng;
-
-	if( LineSave.lgNormSet )
-	{
-		label = LineSave.chNormLab;
-		wvlng = LineSave.WavLNorm;
-	}
-	else
-	{
-		label = "H  1";
-		wvlng = Hbeta_WavLen;
-	}
-	LineSave.ipNormWavL = LineSave.findline( LineID(label, wvlng) );
-	if( LineSave.ipNormWavL < 0 )
+	LineSave.ipNormLine = LineSave.findline(LineSave.NormLine);
+	if( LineSave.ipNormLine < 0 )
 	{
 		/* did not find the line if return is negative */
 		fprintf( ioQQQ, "PROBLEM could not find the normalisation line.\n");
-		fprintf( ioQQQ, "IterStart could not find the line \t" );
-		prt_line_err( ioQQQ,  label, wvlng );
+		fprintf( ioQQQ, "IterStart could not find the line: %s", LineSave.NormLine.str().c_str() );
 		fprintf( ioQQQ, "Please check the emission line output to find the correct line identification.\n");
 		fprintf( ioQQQ, "Sorry.\n");
-		LineSave.ipNormWavL = 0;
+		LineSave.ipNormLine = 0;
 		fprintf( ioQQQ, "Setting normalisation line to first line in stack, and proceeding.\n");
 	}
 
 	/* set up stop line command on first iteration 
-	 * find index for lines and save for future iterations 
-	 * StopCalc.nstpl is zero (false) if no stop line commands entered */
-	if( iteration == 1 && StopCalc.nstpl )
+	 * find index for lines and save for future iterations */
+	if( iteration == 1 )
 	{
-		/* nstpl is number of stop line commands, 0 if none entered */
-		for( long int nStopLine=0; nStopLine < StopCalc.nstpl; nStopLine++ )
+		for( auto& p : StopCalc.sle )
 		{
 			double relint, absint ;
 
 			/* returns array index for line in array stack if we found the line, 
 			 * return negative of total number of lines as debugging aid if line not found */
-			StopCalc.ipStopLin1[nStopLine] = cdLine( StopCalc.chStopLabel1[nStopLine], 
-				/* wavelength of line in angstroms, not format printed by code */
-				StopCalc.StopLineWl1[nStopLine], &relint, &absint );
+			p.ipStopLine1 = cdLine( p.line1, &relint, &absint );
 
-			if( StopCalc.ipStopLin1[nStopLine]<0 )
+			if( p.ipStopLine1 < 0 )
 			{
 				fprintf( ioQQQ, 
 					" IterStart could not find first line in STOP LINE command, line number %ld: ",
-					StopCalc.ipStopLin1[nStopLine] );
-				prt_line_err( ioQQQ, StopCalc.chStopLabel1[nStopLine],
-						 StopCalc.StopLineWl1[nStopLine] );
+						 p.ipStopLine1 );
+				prt_line_err( ioQQQ, p.line1 );
 				cdEXIT(EXIT_FAILURE);
 			}
 
-			StopCalc.ipStopLin2[nStopLine] = cdLine( StopCalc.chStopLabel2[nStopLine], 
-				/* wavelength of line in angstroms, not format printed by code */
-				StopCalc.StopLineWl2[nStopLine], &relint, &absint );
+			p.ipStopLine2 = cdLine( p.line2, &relint, &absint );
 
-			if( StopCalc.ipStopLin2[nStopLine] < 0 )
+			if( p.ipStopLine2 < 0 )
 			{
 				fprintf( ioQQQ, 
 					" IterStart could not find second line in STOP LINE command, line number %ld: ", 
-					StopCalc.ipStopLin2[nStopLine] );
-				prt_line_err( ioQQQ, StopCalc.chStopLabel2[nStopLine],
-						 StopCalc.StopLineWl2[nStopLine] );
+						 p.ipStopLine2 );
+				prt_line_err( ioQQQ, p.line2 );
 				cdEXIT(EXIT_FAILURE);
 			}
 
 			if( trace.lgTrace )
 			{
-				fprintf( ioQQQ, 
-					" stop line 1 is number %5ld label is %s\n", 
-					StopCalc.ipStopLin1[nStopLine], 
-							LineSave.lines[StopCalc.ipStopLin1[nStopLine]].label().c_str());
-				fprintf( ioQQQ, 
-					" stop line 2 is number %5ld label is %s\n", 
-				  StopCalc.ipStopLin2[nStopLine], 
-							LineSave.lines[StopCalc.ipStopLin2[nStopLine]].label().c_str());
+				fprintf( ioQQQ, " stop line 1 is number %5ld label is %s\n", 
+						 p.ipStopLine1, LineSave.lines[p.ipStopLine1].label().c_str() );
+				fprintf( ioQQQ, " stop line 2 is number %5ld label is %s\n", 
+						 p.ipStopLine2, LineSave.lines[p.ipStopLine2].label().c_str() );
 			}
 		}
 	}
@@ -1042,7 +1041,7 @@ void IterRestart(void)
 		 * since tau in is 1e-20, e2 is 0.9999, and so some H ots
 		 * these were not here at all*/
 		/* attenuation of flux by optical depths IN THIS ZONE 
-		 * DirectionalCosin is 1/COS(theta), is usually 1, reset with illuminate command,
+		 * DirectionalCosin is 1/COS(theta), is usually 1, reset with illumination command,
 		 * option for illumination of slab at an angle */
 		opac.ExpZone[i] = sexp(opac.opacity_abs[i]*radius.drad/2.*geometry.DirectionalCosin);
 

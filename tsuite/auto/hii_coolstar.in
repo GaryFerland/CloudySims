@@ -128,7 +128,9 @@ monitor line "Ca B" 1.87510m 0.380
 ## >>chng 15 may 27, from 9.5 to 10.11, PS64 fixes
 ## >>chng 16 oct 21, from 10.11 to 10.59, new l-changing rates from Hlike_HS87 reintegration
 ## >>chng 18 feb 13, wl from 0 to 2431.34A, update two-photon wl
-monitor line "H  1" 2431.34A 10.59
+## >>chng 24 jan 09, wl from 2431.34A to 2431.35A, resolve 1 electron Ly doublets
+## >>chng 24 oct 01, wl from 2431.35A to 2430.61A, treat H I two-photon cont. wl as vacuum
+monitor line "H  1" 2430.61A 10.59
 ##
 ## >>chng 13 jul 25, wl from 5876 to 5875.61A, increased wl precision to 6 sig. fig.
 ## >>chng 13 jul 30, wl from 5875.61A to 5875.64A, increased wl precision to 6 sig. fig.
@@ -222,7 +224,8 @@ monitor line "Blnd" 6720 0.7149
 ## >>chng 13 mar 04, from 0.3834 to 0.2735, botches after updating S  3, S  4 wavelengths
 ## >>chng 13 jul 25, wl from 18.71m to 18.7078m, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 14, from 0.2735 to 0.2325, update S2+ - S+ DR to Badnell+ 2015 ApJ
-monitor line "S  3"  18.7078m 0.2325
+## >>chng 23 may 11, from 0.2325 to 0.209, update RR DR to 2022 Badnell wor
+monitor line "S  3"  18.7078m 0.209
 ##
 ## >>chng 00 sep 12 from 0.655 to 0.954, cs change in s3
 ## >>chng 04 jun 21, from 0.954 to 0.900, norm to totl 4861
@@ -233,7 +236,8 @@ monitor line "S  3"  18.7078m 0.2325
 ## >>chng 13 mar 04, from 0.7828 to 0.4458, botches after updating S  3, S  4 wavelengths
 ## >>chng 13 jul 25, wl from 33.47m to 33.4704m, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 14, from 0.4458 to 0.3789, update S2+ - S+ DR to Badnell+ 2015 ApJ
-monitor line "S  3"  33.4704m 0.3789
+## >>chng 23 may 11, from 0.3789 to 0.3406, update RR DR to 2022 Badnell wor
+monitor line "S  3"  33.4704m 0.3406
 ##
 ## >>chng 00 mar 22 after cont pump, widflx changes, from 0.451 to 0.422
 ## >>chng 00 sep 12 from 0.422 to 0.355, cs change in s3
@@ -242,7 +246,8 @@ monitor line "S  3"  33.4704m 0.3789
 ## >>chng 13 mar 04, from 0.3114 to 0.269, botches after updating S  3, S  4 wavelengths
 ## >>chng 13 jul 25, wl from 9531 to 9530.62A, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 14, from 0.269 to 0.2317, update S2+ - S+ DR to Badnell+ 2015 ApJ
-monitor line "S  3"  9530.62A 0.2317
+## >>chng 23 may 11, from 0.2317 to 0.2099, update RR DR to 2022 Badnell wor
+monitor line "S  3"  9530.62A 0.2099
 ##
 ## >>chng 00 mar 22 after cont pump, widflx changes, from 4.54 to 4.26
 ## >>chng 04 jun 14, from 4.26 to 4.45 dlow drift up

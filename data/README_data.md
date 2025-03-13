@@ -113,8 +113,8 @@ They are added by including an **init** command that names one of the following
 files.
 
 * **c84.ini** - makes code behave more like version 84  
-* **fast.ini** - this includes several commands that make the code run faster,
-at the expense of a less accurate simulation  
+* **fast.ini** - this includes a command that disables elements to make the code 
+run faster, at the expense of a less accurate simulation  
 * **honly.ini** - hydrogen only init file  
 * **hheonly.ini** - init file for H, He only  
 * **ism.ini** - turns off level 2 lines and only includes prominent elements
@@ -127,7 +127,7 @@ PDR models given in Roellig et al.
 
 ### FeII bands in the output
 
-The data file _FeII\_bands.ini_ is used to specify a series of FeII bands that
+The data file _FeII\_bands.dat_ is used to specify a series of FeII bands that
 are entered into the main emission line output.
 These bands are described further in the dat file and in the part of Hazy where
 FeII is discussed.
@@ -135,7 +135,7 @@ FeII is discussed.
 
 ### Continuum bands in the output
 
-The data file _continuum\_bands.ini_ is used to define a series of wavelength
+The data file _continuum\_bands.dat_ is used to define a series of wavelength
 bands.
 Each band has a lower and upper wavelength and the code will integrate all
 emission over these bands.

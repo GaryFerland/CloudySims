@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #include "cddefines.h"
@@ -6,9 +6,9 @@
 #include "version.h"
 #include "service.h"
 
-static const int CLD_MAJOR = 21;
+static const int CLD_MAJOR = 25;
 static const int CLD_MINOR = 0;
-static const int CLD_PATCH = 0;
+static const int CLD_BETA = 1;
 
 #ifdef REVISION
 static const char* revision = REVISION;
@@ -16,16 +16,17 @@ static const char* revision = REVISION;
 static const char* revision = "rev_not_set";
 #endif
 
-static const string release_branch = "release";
 
 t_version::t_version()
 {
 	static const char chMonth[12][4] =
 		{ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 
-	// REVISION is a dash-delimited string; it may consist of the branch name,
-	// followed by a tag, or by a git SHA1 commit string, and a modification
-	// identifier
+	// REVISION may consist of:
+	// - the version number (the tag on git sans the initial 'c')
+	// - the branch name followed by a git SHA1 commit string, and a
+	//   modification identifier
+	// - the empty string
 
 	if( strcmp( revision, "" ) != 0 && strcmp( revision, "rev_not_set" ) != 0 )
 	{
@@ -33,25 +34,44 @@ t_version::t_version()
 		string rev = revision;
 		Split( rev, "-", Part, SPM_RELAX );
 
-		if( Part[ 0 ] == release_branch )
-		{
-			lgRelease = true;
-			Part.erase( Part.begin() );
-		}
+		string firstPart( Part[0] );
 
-		string rev_pr = "";
-		for( size_t i = 0 ; i < Part.size(); i++ )
+		/* NB NB
+		 *
+		 * Check if the given revision is a version number (XX.XX or XX.XX_rcY)
+		 */
+		regex vers_expr("^(\\d\\d\\.\\d\\d)(_rc(\\d))?$");
+		smatch what;
+		if( regex_match(firstPart, what, vers_expr) )
 		{
-			if( i < Part.size()-1 )
-				rev_pr += Part[i] + ", ";
-			else
-				rev_pr += Part[i];
+			if( what.size() != 4 )
+				TotalInsanity();
+
+			lgRelease = true;
+
+			chVersion = what[1].str();
+			if( what[2].matched )
+				chVersion += " beta " + what[3].str() + " (prerelease)";
 		}
-		chVersion = "(" + string( rev_pr ) + ")";
+		else
+		{
+			lgRelease = false;
+
+			string rev_pr = "";
+			for( size_t i = 0 ; i < Part.size(); i++ )
+			{
+				if( i < Part.size()-1 )
+					rev_pr += Part[i] + ", ";
+				else
+					rev_pr += Part[i];
+			}
+			chVersion = "(" + rev_pr + ")";
+		}
 	}
 	else
 	{
-		// create a default version string in case the code is not versioned with git
+		// create a default version string in case the code is
+		// not versioned with git -- probably a tarball release
 
 		lgRelease = true;
 
@@ -59,8 +79,8 @@ t_version::t_version()
 		if( lgRelease )
 		{
 			oss << setfill('0') << setw(2) << CLD_MAJOR << "." << setw(2) << CLD_MINOR;
-			if( CLD_PATCH > 0 )
-				oss << " (patch level " << CLD_PATCH << ")";
+			if( CLD_BETA > 0 )
+				oss << " beta " << CLD_BETA << " (prerelease)";
 		}
 		else
 		{

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*RT_tau_inc increment optical depths once per zone, called after radius_increment */
 #include "cddefines.h"
@@ -50,22 +50,18 @@ void RT_tau_inc(void)
 	ASSERT( !conv.lgFirstSweepThisZone );
 	conv.lgLastSweepThisZone = true;
 	RT_fine_clear();
-	RT_line_all( RT_line_one_fine );
+	RT_line_all( RT_line_one_fine, true );
 
-	/* rfield.lgOpacityFine flag set false with no fine opacities command 
-	 * tests show that always evaluating this changes fast run of
+	/* tests show that always evaluating this changes fast run of
 	 * pn_paris from 26.7 sec to 35.1 sec 
 	 * but must always update fine opacities since used for transmission */
-	if( rfield.lgOpacityFine )
+	/* increment the fine opacity array */
+	for( long i=0; i<rfield.nfine; ++i )
 	{
-		/* increment the fine opacity array */
-		for( long i=0; i<rfield.nfine; ++i )
-		{
-			realnum tauzone = rfield.fine_opac_zone[i]*(realnum)radius.drad_x_fillfac;
-			rfield.fine_opt_depth[i] += tauzone;
-		}
-		rfield.trans_coef_total_stale = true;
+		realnum tauzone = rfield.fine_opac_zone[i]*(realnum)radius.drad_x_fillfac;
+		rfield.fine_opt_depth[i] += tauzone;
 	}
+	rfield.trans_coef_total_stale = true;
 
 	/* this may have updated some escape/destruction rates - force update
 	 * to all cooling lines */
@@ -133,17 +129,35 @@ void RT_tau_inc(void)
 							DopplerWidth[nelem] );
 					}
 				}
-				/* these are the extra Lyman lines, use all lines so
-				 * totals are correct as attribution may change */
-				for( long ipHi=2; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
-				{
-					TransitionList::iterator tr = ExtraLymanLines[ipISO][nelem].begin()+ipExtraLymanLines[ipISO][nelem][ipHi];
-					(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
 
-					/* actually do the work */
-					RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, ipHi,
-						DopplerWidth[nelem] );
+				if( ipISO == ipH_LIKE )
+				{
+					for( long nHi=2; nHi <= iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; nHi++ )
+					{
+						TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][nHi];
+						(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
+						RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, nHi,
+							DopplerWidth[nelem] );
+
+						tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][nHi];
+						(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
+						RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, nHi,
+							DopplerWidth[nelem] );
+					}
 				}
+				else if( ipISO == ipHE_LIKE )
+				{
+					for( long ipHi=2; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
+					{
+						TransitionList::iterator tr = ExtraLymanLinesHeLike[nelem].begin()+ipExtraLymanLinesHeLike[nelem][ipHi];
+						(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
+
+						RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, ipHi,
+							DopplerWidth[nelem] );
+					}
+				}
+				else
+					TotalInsanity();
 			}
 		}
 	}

@@ -81,6 +81,7 @@ the system until some stopping criterion is met.
 The command \cdCommand{stop time when temperature below [value]}
 tells the code to stop when the lowest temperature falls
 below the specified value.
+The is a reasonable simulation of a constant pressure cooling flow.
 
 As an example, the following input script evolves a parcel of gas
 as it cools isobarically from X-ray temperatures.
@@ -102,7 +103,7 @@ set cumulative mass
 set trimming off
 set save prefix "cp-cool-1keV"
 save time dependent   ".tim"  no hash
-save continuum units Angstroms ".concum" cumulative
+save continuum units angstrom ".concum" cumulative
 \end{verbatim}
 
 \begin{figure}

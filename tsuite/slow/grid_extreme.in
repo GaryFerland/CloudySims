@@ -1,17 +1,21 @@
 title exercise full range of density, temperature
+set save prefix "grid_extreme"
 # 
 element lithium off
 element berylium off
 element boron off
-element limit -7 off
+## >>chng 23 11 20 include all elements to keep expanded chemistry stable`
+## element limit -7 off
 ## >>chng 12 apr 09, scale factor will result in CR rate for that meeting
 ## old value maintained to keep history
 cosmic rays background linear 0.1266
 cmb
 iterate
 # 
-blackbody 6 
+# SED is 1e6 K BB with low energy density
+blackbody 6
 energy density 6 vary
+# do not run in parallel so we have good performance statistics
 grid 1 6 1 sequential
 # -8 18 
 hden 2 vary
@@ -29,11 +33,11 @@ normalize to "Q(H)" 4861.32A
 # 
 # the normalizing line is not defined on the emergent line stack
 print lines emergent off
-save performance no hash "grid_extreme.per"
-save grid no hash "grid_extreme.grd" last 
-save overview last no hash "grid_extreme.ovr" last 
-save monitors last no hash "grid_extreme.asr" last 
-save average "grid_extreme.avr" last 
+save performance no hash ".per"
+save grid no hash ".grd" last 
+save overview last no hash ".ovr" last 
+save monitors last no hash ".asr" last 
+save average ".avr" last 
 temperature hydrogen 2
 end of average
 # 
@@ -46,4 +50,6 @@ end of average
 monitor temperature grid "grid_extreme.dat" "H+"
 #
 # grid_extreme.in limits
+# Figs 17&18 of 2013RMxAA..49..137F
+
  

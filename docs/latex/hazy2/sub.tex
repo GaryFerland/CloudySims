@@ -489,7 +489,7 @@ in the data directory of the distribution files.  They have names
 \cdFilename{LineList*.dat}.  You can use these as examples to create your own files.
 
 The first argument to routine \cdRoutine{cdGetLineList} is the name of the file
-containing the line list.  If a null string is passed (``'') then
+containing the line list.  If a null string is passed ('''') then
 \cdFilename{LineList\_BLR.dat} is used.
 
 \cdRoutine{cdInit} must be called before \cdRoutine{cdGetLineList} is called.
@@ -498,10 +498,10 @@ is called, and finally, the actual grid of calculations begins.  The
 predicted intensities of a set of lines are then extracted by calling
 \cdRoutine{cdLine}.
 
-The second and third parameters are a pair of vectors that are defined
+The second parameter is a vector that is defined
 by the calling program.
-When the routine \cdRoutine{cdGetLineList} is called it uses these
-vectors to store the labels and wavelengths.  The function returns
+When the routine \cdRoutine{cdGetLineList} is called it uses this
+vector to store the line identifications.  The function returns
 the number of lines in the list.  If problems occurred then $-1$ is returned.
 
 The following shows an example of getting the lines from
@@ -519,6 +519,7 @@ vector<LineID> lineids;
 /* initialize the code */
 cdInit();
 /* get list of lines from a line list included in the distribution */
+long nLines;
 if( (nLines=cdGetLineList("LineList_NLR.dat",lineids)) < 0 )
 {
     /* this is the error exit - could not obtain the lines */
@@ -532,9 +533,10 @@ if( cdDrive() )
 /* now print the predicted emission line intensities */
 for( long n=0; n < nLines; ++n )
 {
+    double relative, absolute;
     if( cdLine( lineids[n], &relative, &absolute ) < 0 )
     {
-        fprintf(stderr,"did not find %s %g\n",lineids[n].chLabel.c_str(),lineids[n].wave);
+        fprintf(stderr,"did not find %s\n",lineids[n].str().c_str());
     }
     print("%.3e\n", relative);
 }
@@ -692,15 +694,26 @@ The following is an example.
 double relint, absint;
 long nType = 0;
 
-if( cdLine( "H  1", 4861.33, &relint, &absint, nType ) < 0 )
+if( cdLine( "H  1", 4861.32_air, &relint, &absint, nType ) < 0 )
+    printf("did not find this line\n");
+// alternate forms
+realnum wlHbeta = 4861.32_r;
+if( cdLine( "H  1", t_air(wlHbeta), &relint, &absint, nType ) < 0 )
+    printf("did not find this line\n");
+t_wavl twHbeta = 4861.32_air;
+if( cdLine( "H  1", twHbeta, &relint, &absint, nType ) < 0 )
     printf("did not find this line\n");
 \end{verbatim}
 
 The first argument in the call is the line label, the
 string (upper or lower case) used by the code to identify
 the line in the main emission-line printout.  The second variable gives
-the wavelength of the line in Angstroms.  Both of these must exactly match
-the label and wavelength used by \Cloudy\ to identify the line
+the wavelength of the line in angstrom. An extension ``\_air'' or ``\_vac''
+should be appended to the literal number to indicate whether it is an air or vacuum
+wavelength. If you are using variables, you can use the syntax ``t\_air(var)'' or
+``t\_vac(var)'' instead, or use a variable of type t\_wavl.
+Both the label and wavelength must exactly match
+the ones used by \Cloudy\ to identify the line
 (see the chapter \cdSectionTitle{Lines} for a full description).
 The third variable (\cdVariable{relint} in the above
 example) is a double-precision pointer to the relative intensity of the
@@ -746,10 +759,10 @@ double relint, absint;
 long nType = 0;
 
 // example using lower and upper level index
-if( cdLine( LineID("H  1", 46524.7, 11, 23), &relint, &absint, nType ) < 0 )
+if( cdLine( LineID("H  1", 46524.7_air, 11, 23), &relint, &absint, nType ) < 0 )
     printf("did not find this line\n");
 // same line, but using lower level energy (in cm^-1) instead
-if( cdLine( LineID("H  1", 46524.7, 105291.6), &relint, &absint, nType ) < 0 )
+if( cdLine( LineID("H  1", 46524.7_air, 105291.6), &relint, &absint, nType ) < 0 )
     printf("did not find this line\n");
 \end{verbatim}
 

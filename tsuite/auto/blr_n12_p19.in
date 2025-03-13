@@ -31,6 +31,20 @@ save dr "blr_n12_p19.dr" last
 # commands giving the monitors    =========
 ##
 ## strong blr lines
+## >>chng 23 sep 18 add this monitor
+monitor line luminosity "He 2" 1640.41A 6.8005
+## >>chng 23 sep 18 add this monitor
+monitor line luminosity "He 2" 4685.68A 5.9296
+## >>chng 23 sep 18 add this monitor
+## >>chng 24 apr 22, from 7.438 to 7.472, Redefine unresolved escape prob. to averaged np-split probabilites
+## >>chng 25 jan 30, from 7.472 to 7.492, all double results
+monitor line luminosity "He 2" 303.784A 7.492
+## >>chng 23 sep 18 add this monitor
+monitor helium 1 ionization -0.0005 error 0.1
+## >>chng 23 sep 18 add this monitor
+monitor helium 2 ionization -2.9201 error 0.1
+## >>chng 23 sep 18 add this monitor
+monitor helium 3 ionization -4.4067 error 0.1
 ## >>chng 06 jul 18, from 7.757 to 7.780, RP major upgrade VS coll strengths
 ## >>chng 06 aug 09, from 7.780 to 7.808 Meudon 06, Bowen change
 ## >>chng 07 oct 22, from 7.808 to 7.785, resolve l-levels of h-like sequence
@@ -57,7 +71,8 @@ monitor line luminosity "H  1"  1215.67A 7.779 ##total Hydrogen Lyman-alpha 1215
 ## >>chng 13 sep 12, from 5.074 to 5.046, database Mg
 ## >>chng 16 aug 07, from 5.046 to 5.113, Fran bug fix
 ## >>chng 19 jul 30, from 5.113 to 5.154, split He I 2 ^3P_J
-monitor line luminosity "Blnd" 1397 5.154 ##total of sum of both Si IV comp
+## >>chng 24 apr 22, from 5.154 to 5.125, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line luminosity "Blnd" 1397 5.125 ##total of sum of both Si IV comp
 ##
 ## >>chng 06 aug 09, from 3.145 to 3.301 Meudon 06, Bowen change
 ## >>chng 06 nov 29, from 3.301 to 3.347, Badnell DR turned on
@@ -78,7 +93,8 @@ monitor line luminosity "Blnd" 1397 5.154 ##total of sum of both Si IV comp
 ## >>chng 16 dec 20, from 3.3 to 3.277, add secondary autoionization to DR suppression
 ## >>chng 19 jun 28, from 3.277 to 3.309, reintegrate iso_collisions branch
 ## >>chng 19 jul 30, from 3.309 to 3.345, split He I 2 ^3P_J
-monitor line luminosity "blnd"  1402 3.345 ##total O IV] 1402 
+## >>chng 24 apr 22, from 3.345 to 3.311, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line luminosity "blnd"  1402 3.311 ##total O IV] 1402 
 ##
 ## >>chng 06 aug 09, from 5.392 to 5.515 Meudon 06, Bowen change
 ## >>chng 06 nov 29, from 5.515 to 5.485, Badnell DR turned on
@@ -97,7 +113,8 @@ monitor line luminosity "blnd"  1402 3.345 ##total O IV] 1402
 ## >>chng 16 aug 07, from 5.432 to 5.467, Fran bug fix
 ## >>chng 19 jun 28, from 5.467 to 5.488, reintegrate iso_collisions branch
 ## >>chng 19 jul 30, from 5.488 to 5.523, split He I 2 ^3P_J
-monitor line luminosity "blnd" 1549 5.523 ##total of sum of both C IV comp
+## >>chng 25 jan 30, from 5.523 to 5.497, all double results
+monitor line luminosity "blnd" 1549 5.497 ##total of sum of both C IV comp
 ## 
 ## >>chng 09 jun 28, from 1 to 5.323, check convergence of outward Hb
 ## >>chng 11 jul 12, from 5.323 to 5.351, enable fit to Badnell DR suppression
@@ -163,7 +180,8 @@ monitor line luminosity "he 2"  1640.41A 6.803 ##total He II Balmer-alpha 1640
 ## >>chng 19 mar 01, from 4.497 to 4.47, remove recombination, etc, components from blends (#415)
 ## >>chng 19 jun 28, from 4.47 to 4.494, reintegrate iso_collisions branch
 ## >>chng 19 jul 30, from 4.494 to 4.53, split He I 2 ^3P_J
-monitor line luminosity "blnd"  1666 4.53 ##total O III] 1666
+## >>chng 24 apr 22, from 4.53 to 4.506, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line luminosity "blnd"  1666 4.506 ##total O III] 1666
 ## 
 ## >>chng 05 mar 12, from 4.511 to 4.482, RP merge He-like code
 ## >>chng 06 jul 18, from 4.482 to 4.531, RP major upgrade VS coll strengths
@@ -179,7 +197,8 @@ monitor line luminosity "blnd"  1666 4.53 ##total O III] 1666
 ## >>chng 16 mar 24, from 4.512 to 4.532, FeII cooling using Stout 80 levels
 ## >>chng 16 aug 07, from 4.532 to 4.599, Fran bug fix
 ## >>chng 19 jul 30, from 4.599 to 4.639, split He I 2 ^3P_J
-monitor line luminosity "blnd" 1909 4.639 ##total of sum of CIII] 1908.73+
+## >>chng 24 apr 22, from 4.639 to 4.618, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line luminosity "blnd" 1909 4.618 ##total of sum of CIII] 1908.73+
 ## 
 ## >>chng 05 mar 12, from 6.384 to 6.333, RP merge He-like code
 ## >>chng 06 jul 18, from 6.333 to 6.429, RP major upgrade VS coll strengths
@@ -199,7 +218,8 @@ monitor line luminosity "blnd" 1909 4.639 ##total of sum of CIII] 1908.73+
 ## >>chng 16 aug 07, from 5.833 to 5.928, Fran bug fix
 ## >>chng 19 jun 28, from 5.928 to 5.959, reintegrate iso_collisions branch
 ## >>chng 19 jul 30, from 5.959 to 5.997, split He I 2 ^3P_J
-monitor line luminosity "Blnd" 1888 5.997 ##total of sum of Si III] 1892+
+## >>chng 24 apr 22, from 5.997 to 5.976, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line luminosity "Blnd" 1888 5.976 ##total of sum of Si III] 1892+
 ## 
 ## >>chng 05 mar 12, from 5.590 to 5.562, RP merge He-like code
 ## >>chng 06 jul 18, from 5.562 to 5.634, RP major upgrade VS coll strengths
@@ -218,7 +238,8 @@ monitor line luminosity "Blnd" 1888 5.997 ##total of sum of Si III] 1892+
 ## >>chng 16 aug 07, from 5.491 to 5.562, Fran bug fix
 ## >>chng 19 jun 28, from 5.562 to 5.6, reintegrate iso_collisions branch
 ## >>chng 19 jul 30, from 5.6 to 5.631, split He I 2 ^3P_J
-monitor line luminosity "Blnd"  1860 5.631 ##total sum of both Al III comp
+## >>chng 25 jan 30, from 5.631 to 5.608, all double results
+monitor line luminosity "Blnd"  1860 5.608 ##total sum of both Al III comp
 ##
 ##total C II] 2324.69+2328.12
 ## >>chng 03 sep 07, from 5.686 to 5.709, ? ?

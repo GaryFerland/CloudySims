@@ -19,7 +19,7 @@ database he-like resolved levels 30
 database he-like collapsed levels 70
 database he-like gbar vriens
 constant temper 4
-case b no photoionzation no pdest 
+case b hummer no photoionzation no pdest 
 no scattering escape
 no induced processes
 iterate

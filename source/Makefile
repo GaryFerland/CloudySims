@@ -56,8 +56,6 @@ CXXDEPEND = $(DEFCXX)
 CAPABILITIES := $(shell $(SRCDIR)/capabilities.pl $(CXX))
 PRECOMPILE := $(filter precompile,$(CAPABILITIES))
 VECTORIZE := $(filter vectorize,$(CAPABILITIES))
-NOPIE := $(filter -no-pie,$(CAPABILITIES))
-FNOPIE := $(filter -fno-pie,$(CAPABILITIES))
 NATIVE := $(filter native,$(CAPABILITIES))
 DYNAMIC := $(filter dynamic,$(CAPABILITIES))
 DEMANGLE := $(filter demangle%,$(CAPABILITIES))
@@ -66,9 +64,6 @@ RPATH := $(filter rpath=%,$(CAPABILITIES))
 # DEP_GOALS will be an empty string for targets that don't need dependencies
 NODEP_GOALS = clean distclean data
 DEP_GOALS = ${filter-out ${NODEP_GOALS},${MAKECMDGOALS}}
-
-CXXFLAGS += $(NOPIE) $(FNOPIE)
-LDFLAGS += $(NOPIE) $(FNOPIE)
 
 # the default target does need dependencies
 ifeq (${MAKECMDGOALS},)
@@ -79,8 +74,11 @@ ifeq ($(VECTORIZE),vectorize)
   OPT += -ftree-vectorize
 endif
 
+# prevent using native optimizations for valgrind runs as valgrind may not support all hardware instructions
 ifeq ($(NATIVE),native)
-  OPT += -march=native
+  ifeq ($(filter -DVALGRIND,$(CXXFLAGS)),)
+    OPT += -march=native
+  endif
 endif
 
 ifeq ($(DYNAMIC),dynamic)

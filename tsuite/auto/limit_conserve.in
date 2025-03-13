@@ -125,7 +125,8 @@ monitor line "Q(H)" 4861.32A 0.6617
 ## >>chng 12 jul 01, from -4.63 to -4.653, update Badnell DR to 13-electron iso sequence
 ## >>chng 13 jul 24, wl from 1216 to 1215.68A, increased wl precision to 6 sig. fig.
 ## >>chng 17 may 26, wl from 1215.68A to 1215.67A, update Rydberg constant
-monitor line "H  1" luminosity 1215.67A -4.653
+## >>chng 23 jun 27, from -4.653 to -4.628, update Fe+ model to Smyth+19
+monitor line "H  1" 1215.67A luminosity -4.628
 ##
 ## >>chng 01 may 10, from 26.7 to 28.19 ct network change
 ## >>chng 02 nov 20, change to luminosity
@@ -148,7 +149,8 @@ monitor line "H  1" luminosity 1215.67A -4.653
 ## >>chng 15 may 30, from -5.222 to -5.25, updates after merge from mainline, r10248
 ## >>chng 15 jun 03, from -5.25 to -5.122, exact LTE H2 cooling (not big model)
 ## >>chng 16 mar 26, from -5.122 to -5.145, merge branch feii, new bands logic
-monitor line "Si 2" luminosity 34.8046m -5.145
+## >>chng 23 jul 06, from -5.145 to -5.168, update Fe+ model to Smyth+19
+monitor line "Si 2" 34.8046m luminosity -5.168
 ##
 ## >>chng 01 jun 15, from 18.2 to 19.25 full H ct network
 ## >>chng 02 apr 03, from 19.25 to 14.09, bound compton
@@ -201,7 +203,8 @@ monitor line luminosity "c  1" 609.590m -5.975 error 0.1
 ## >>chng 06 feb 07, from -5.66 to -5.59, add exp to low-T DR 
 ## >>chng 12 nov 08, from -5.59 to -5.637, fix e-,H2 dissociation rate
 ## >>chng 15 jun 03, from -5.637 to -5.75, exact LTE H2 cooling (not big model)
-monitor line luminosity "blnd" 9850 -5.75 error 0.1 ## ci line
+## >>chng 23 jun 27, from -5.75 to -5.671, update Fe+ model to Smyth+19
+monitor line luminosity "blnd" 9850 -5.671 error 0.1 ## ci line
 ##
 ## >>chng 01 may 10, from 5.15 to 5.425 ct network change
 ## >>chng 02 apr 03, from 5.425 to 6.12 bound compton
@@ -405,7 +408,8 @@ monitor line luminosity "toth" 0   -4.337
 ## >>chng 04 jun 08, from 3.775 to 3.617 change chemistry, thickness
 ## >>chng 05 aug 03, from 3.617 to 3.599 NA update CO, H chem net
 ## >>chng 05 dec 05, from -3.60 to -3.85, chng Z for stability
-monitor temperature "H+" 3.85 error 0.1
+## >>chng 23 jun 27, from 3.85 to 3.889, update Fe+ model to Smyth+19
+monitor temperature "H+" 3.889 error 0.1
 ##
 ## >>chng 02 jun 10, from 3.545 to 3.563, slow drift up 
 ## >>chng 03 aug 28, from 3.563 to 3.624 Nick Abel co fix, let go to end
@@ -485,7 +489,9 @@ monitor pressure error < 0.003 ##this is ratio of std dev to mean
 ## >>chng 12 mar 09, from 625 to 654, several renorms due to mid 5960s revisions
 ## >>chng 14 mar 26, from 654 to 624, Move oxygen data to stout and chianti files
 ## >>chng 21 nov 04, from 624 to 741, update mole co data
-monitor nzone 741
+## >>chng 24 apr 21, from 741 to 863, GS updates chemistry
+## >>chng 25 mar 04, from 863 to 759, turn off Ti chemistry for C25 rc1
+monitor nzone 759
 ##
 ## >>chng 03 aug 28, from 25 to 20 Nick Abel co fix, let go to end
 ## >>chng 03 dec 08, from < 20 to < 15, chng zones, ots
@@ -511,7 +517,9 @@ monitor nzone 741
 ## >>chng 11 jul 12, from 35.93 to 36.40, enable fit to Badnell DR suppression
 ## >>chng 13 nov 05, from 36.4 to 18.12, convergence branch changes
 ## >>chng 14 apr 07, from 18.12 to 14.32, move H/C out of ConvBase loop
-monitor itrzn 14.32
+## >>chng 24 jun 08, from 14.32 to 11.66, GS rm 3 TiO reactions
+## >>chng 25 mar 4 turn off TiO for 25 rc1 11.66 to 13.93
+monitor itrzn 13.93
 ##
 # limit_conserve.in
 # class hii pdr  

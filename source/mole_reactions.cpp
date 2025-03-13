@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cdstd.h"
 #include "cddefines.h"
@@ -207,14 +207,26 @@ namespace {
 	else
 		return 0.;
 	}
+	/*hmrate - evalurate UMIST expression for rate coefficient */
 	double hmrate(const mole_reaction *rate) 
 	{
 		double te;
 		
 		DEBUG_ENTRY( "hmrate()" );
+		/* the UMIST equation is
+		 * rate = alpha \times (T/300)^beta \times exp( -gamma/T 
+		 alpha==rate->a; beta== rate->b; gamma==rate->c */  
 		
 		te = phycon.te+noneq_offset(rate);
-		
+		/* UMIST rates are simple temperature power laws that
+	 	 * can become large at the high temperatures Cloudy
+	 	 * may encounter. Do not extrapolate to above T>2.5e3K */ 
+		/* rate-b is the power beta in (T/300)^beta, positive beta
+		 * can diverge at high temperatures */
+		/* THIS CODE MUST BE KEPT PARALLEL WITH HMRATE4 IN MOLE.H */ 
+		if( rate->b > 0.)	
+			te = min(te, 2500.);
+		/* rate->c is gamma in expontntial */
 		if( rate->c < 0. )
 			ASSERT( -rate->c/te < 10. );
 
@@ -1849,11 +1861,12 @@ void mole_create_react( void )
 	
 	source = deuterium;
 	read_data("mole_deuterium.dat",parse_base);
-	
-#if 0
+
+	/* 23 mar 01, GS adding TiO */
+	#if 0
 	source = ti;
 	read_data("mole_ti.dat",parse_base);
-#endif
+	#endif
 	
 	source = misc;
 	read_data("mole_misc.dat",parse_base);
@@ -2418,6 +2431,7 @@ STATIC void newreact(const char label[], const char fun[], double a, double b, d
 
 	const char *rateLabelPtr = rate->label.c_str();
 	
+	/* conservation check uses data in chem_species.dat */
 	ASSERT(lgReactBalance(rate)); /* Verify rate conserves particles and charge */
 	
 	rate->udfastate = ABSENT;
@@ -2763,7 +2777,9 @@ STATIC bool lgReactBalance(const shared_ptr<mole_reaction> &rate)
 	{
 		fprintf(stderr,"Reaction %s charge out of balance by %d\n",
 				  rate->label.c_str(),dcharge);
-		lgOK = false;
+		fprintf(ioQQQ,"Reaction %s charge out of balance by %d\n",
+			rate->label.c_str(),dcharge);
+		  lgOK = false;
 	}
 	
 	for( nNucs_i it = nel.begin(); it != nel.end(); ++it )
@@ -2778,7 +2794,11 @@ STATIC bool lgReactBalance(const shared_ptr<mole_reaction> &rate)
 					  rate->label.c_str(),sign==1?"destroys":"creates",
 					  sign*it->second,
 					  it->first->label().c_str() );
-			lgOK = false;
+			fprintf(ioQQQ,"Error: reaction %s %s %d of element %s\n",
+					rate->label.c_str(),sign==1?"destroys":"creates",
+					sign*it->second,
+					it->first->label().c_str() );
+			  lgOK = false;
 		}
 	}
 	return lgOK;

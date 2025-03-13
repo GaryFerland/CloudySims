@@ -57,7 +57,8 @@ monitor temperature "H+" 4.021
 ## >>chng 08 dec 13, from 278 to 288, merging newsolvers branch
 ## >>chng 09 jan 16, from 288 to 289, average of 10 runs
 ## >>chng 09 may 21, from 289 to 291, average of 32/64 bit runs
-monitor nzone 291
+## >>chng 23 jun 27, from 291 to 274, update Fe+ model to Smyth+19
+monitor nzone 274
 ##
 ## >>chng 03 oct 30, from 12 to 16, zoning changed, many fewer zones,
 ## but more iterations per zone, net was faster

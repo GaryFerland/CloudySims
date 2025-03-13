@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 // >>>>>>>> WARNING: do not #define PHYSCONST_TEMPLATE_H_
@@ -11,7 +11,7 @@
 
 /**\file physconst_template.h \verbatim
  * physical constants used by Cloudy, mostly taken from
- * >>refer	phys	const	CODATA 2018, https://physics.nist.gov/cuu/Constants/
+ * >>refer	phys	const	CODATA 2022, https://physics.nist.gov/cuu/Constants/
  * <BR><BR>
  * NB - these are all printed with the "print constants" command, 
  * which is in parse_print.cpp. Using the NEW_CONSTANT macro guarantees
@@ -23,7 +23,7 @@
  *********************************************************************/
 
 // Define macros for mathematical operations, undefined at foot of file
-// Can be converted back when constexpr() can be relied on (C++11)
+// Can be converted back when constexpr can be relied on to accept sqrt()
 
 #define pow2(a) ((a)*(a))
 #define pow3(a) ((a)*(a)*(a))
@@ -79,41 +79,41 @@ NEW_CONSTANT( RADIAN, 57.29577951308232087679815 );
  *********************************************************************/
 
 /** solar mass in gram
- * >>refer	phys	const	http://pdg.lbl.gov/2019/reviews/rpp2018-rev-astrophysical-constants.pdf */
-NEW_CONSTANT( SOLAR_MASS, 1.98848e33 );
+ * >>refer	phys	const	https://pdg.lbl.gov/2021/reviews/rpp2021-rev-astrophysical-constants.pdf */
+NEW_CONSTANT( SOLAR_MASS, 1.98841e33 );
 
 /** solar luminosity erg s-1
- * >>refer	phys	const	http://pdg.lbl.gov/2019/reviews/rpp2018-rev-astrophysical-constants.pdf */
+ * >>refer	phys	const	https://pdg.lbl.gov/2021/reviews/rpp2021-rev-astrophysical-constants.pdf */
 NEW_CONSTANT( SOLAR_LUMINOSITY, 3.828e33 );
 
 /** luminosity of a star with absolute bolometric magnitude 0, in erg s-1
- * >>refer	phys	const	http://pdg.lbl.gov/2019/reviews/rpp2018-rev-astrophysical-constants.pdf */
+ * >>refer	phys	const	https://pdg.lbl.gov/2021/reviews/rpp2021-rev-astrophysical-constants.pdf */
 NEW_CONSTANT( MBOL_ZERO_LUMINOSITY, 3.0128e35 );
 
 /** astronomical unit, cm, nearly the length of the semimajor
  * axis of the Earth's elliptical orbit around the sun */
-/* >>refer	phys	const	http://pdg.lbl.gov/2019/reviews/rpp2018-rev-astrophysical-constants.pdf */
+/* >>refer	phys	const	https://pdg.lbl.gov/2021/reviews/rpp2021-rev-astrophysical-constants.pdf */
 NEW_CONSTANT( AU, 1.49597870700e13 );
 
 /*********************************************************************
  * fundamental constants go next, eventually rest should be defined  *
- * in terms of these, these are CODATA 2018 values.                  *
+ * in terms of these, these are CODATA 2022 values.                  *
  *********************************************************************/
 
 /** electron mass, gram */
-NEW_CONSTANT( ELECTRON_MASS, 9.1093837015e-28 );
+NEW_CONSTANT( ELECTRON_MASS, 9.1093837139e-28 );
 
 /** electron mass, in u */
-NEW_CONSTANT( ELECTRON_MASS_U, 5.48579909065e-4 );
+NEW_CONSTANT( ELECTRON_MASS_U, 5.485799090441e-4 );
 
 /** proton mass, gram */
-NEW_CONSTANT( PROTON_MASS, 1.67262192369e-24 );
+NEW_CONSTANT( PROTON_MASS, 1.67262192595e-24 );
 
 /** proton mass, in u */
-NEW_CONSTANT( PROTON_MASS_U, 1.007276466621 );
+NEW_CONSTANT( PROTON_MASS_U, 1.0072764665789 );
 
 /** mass of the alpha particle, in u */
-NEW_CONSTANT( ALPHA_MASS_U, 4.001506179127 );
+NEW_CONSTANT( ALPHA_MASS_U, 4.001506179129 );
 
 /** this is the Boltzmann factor, erg/K, exact */
 NEW_CONSTANT( BOLTZMANN, 1.380649e-16 );
@@ -134,7 +134,7 @@ NEW_CONSTANT( GRAV_CONST, 6.67430e-8 );
 NEW_CONSTANT( ELEM_CHARGE, 1.602176634e-19 );
 
 /** infinite mass rydberg constant, in cm^-1 */
-NEW_CONSTANT( RYD_INF, 1.0973731568160e5 );
+NEW_CONSTANT( RYD_INF, 1.0973731568157e5 );
 
 /** ionization potential of real hydrogen atom, in inf mass ryd, based on CODATA 2006,
  * uncertainty 10e-12, calculated by Peter van Hoof */
@@ -149,13 +149,15 @@ NEW_CONSTANT( HE2IONPOT, 3.99963199547 );
 NEW_CONSTANT( HMINUSIONPOT, 0.055432956 );
 
 /** atomic mass unit, gram */
-NEW_CONSTANT( ATOMIC_MASS_UNIT, 1.66053906660e-24 );
+NEW_CONSTANT( ATOMIC_MASS_UNIT, 1.66053906892e-24 );
 
 /*********************************************************************
  * below here should be derived constants                            *
  *                                                                   *
  * NB - explicit values in comments are approximate                  *
  *      and are not maintained !                                     *
+ *                                                                   *
+ * use the PRINT CONSTANTS command to get precise values             *
  *********************************************************************/
 
 /** molar mass constant, g/mol */
@@ -200,7 +202,7 @@ NEW_CONSTANT( SAHA, sqrt(pow3(HION_LTE_POP)) );
 // Need to use explicit constant rather than formula as sqrt() isn't
 // guaranteed to be evaluated at compile-time.  Checked by an ASSERT
 // in t_physconst::t_physconst() in physconst.cpp
-NEW_CONSTANT( SAHA, 4.1413302848114741e-16 );
+NEW_CONSTANT( SAHA, 4.141330276355497e-16 );
 #endif
 
 /** number of ergs per wavenumber, 1.9864e-16 */
@@ -285,7 +287,7 @@ NEW_CONSTANT( MILNE_CONST, SPEEDLIGHT*sqrt(pow3(FINE_STRUCTURE2)*pow3(TE1RYD)/PI
 // Need to use explicit constant rather than formula as sqrt() isn't
 // guaranteed to be evaluated at compile-time.  Checked by an ASSERT
 // in t_physconst::t_physconst() in physconst.cpp
-NEW_CONSTANT( MILNE_CONST, 4.1234755895831189e+11 );
+NEW_CONSTANT( MILNE_CONST, 4.123475589581428e+11 );
 #endif
 
 /** This is the constant used in converting oscillator strengths to As. The formula is
@@ -320,14 +322,14 @@ NEW_CONSTANT( JEANS, PI*BOLTZMANN/(GRAV_CONST*ATOMIC_MASS_UNIT) );
  */
 #ifdef HAVE_CONSTEXPR
 NEW_CONSTANT( FREE_FREE_EMIS,
-	32. * PI * pow(ELEM_CHARGE_ESU, 6.) /
-	(3. * pow3(SPEEDLIGHT) * ELECTRON_MASS * HPLANCK ) *
-	sqrt(2. * PI / (3. * BOLTZMANN * ELECTRON_MASS ) ) );
+			  32. * PI * pow2(pow3(ELEM_CHARGE_ESU)) /
+			  (3. * pow3(SPEEDLIGHT) * ELECTRON_MASS * HPLANCK ) *
+			  sqrt(2. * PI / (3. * BOLTZMANN * ELECTRON_MASS ) ) );
 #else
 // Need to use explicit constant rather than formula as sqrt() isn't
 // guaranteed to be evaluated at compile-time.  Checked by an ASSERT
 // in t_physconst::t_physconst() in physconst.cpp
-NEW_CONSTANT( FREE_FREE_EMIS, 1.0325265080202923e-11 );
+NEW_CONSTANT( FREE_FREE_EMIS, 1.032526505912028e-11 );
 #endif
 
 /* Free-free absorption constant.
@@ -342,13 +344,13 @@ NEW_CONSTANT( FREE_FREE_EMIS, 1.0325265080202923e-11 );
  */
 #ifdef HAVE_CONSTEXPR
 NEW_CONSTANT( FREE_FREE_ABS,
-	 4. * pow(ELEM_CHARGE_ESU, 6.) /
-	(3. * HPLANCK * ELECTRON_MASS * SPEEDLIGHT ) *
-	sqrt(2. * PI / (3. * BOLTZMANN * ELECTRON_MASS ) ) /
-	pow3(SPEEDLIGHT * RYD_INF) );
+			  4. * pow2(pow3(ELEM_CHARGE_ESU)) /
+			  (3. * HPLANCK * ELECTRON_MASS * SPEEDLIGHT ) *
+			  sqrt(2. * PI / (3. * BOLTZMANN * ELECTRON_MASS ) ) /
+			  pow3(SPEEDLIGHT * RYD_INF) );
 #else
 // Need to use explicit constant rather than formula as sqrt() isn't
 // guaranteed to be evaluated at compile-time.  Checked by an ASSERT
 // in t_physconst::t_physconst() in physconst.cpp
-NEW_CONSTANT( FREE_FREE_ABS, 1.0369973575937702e-38 );
+NEW_CONSTANT( FREE_FREE_ABS, 1.036997355477227e-38 );
 #endif

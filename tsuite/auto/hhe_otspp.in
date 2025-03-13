@@ -117,7 +117,8 @@ monitor line "Blnd" 4471.50A  0.0455
 ## >>chng 13 jul 25, wl from 3889 to 3888.63A, increased wl precision to 6 sig. fig.
 ## >>chng 16 aug 07, from 0.0227 to 0.0239, Marios bug fixes
 ## >>chng 21 mar 16, wl from 3888.63A to 3888.64A, update NIST energies
-monitor line "He 1" 3888.64A  0.0239 
+## >>chng 23 sep 08, from 0.0239 to 0.0226, fix SQRTPI in Lya destprob
+monitor line "He 1" 3888.64A  0.0226 
 ## >>chng 13 jul 25, wl from 3889 to 3888.63A, increased wl precision to 6 sig. fig.
 ## >>chng 21 mar 16, wl from 3888.63A to 3888.64A, update NIST energies
 monitor line "Ca B" 3888.64A  0.104 
@@ -162,7 +163,8 @@ monitor hydrogen 2 ionization fraction -0.004
 monitor helium 1 ionization fraction -0.8403
 ##
 ## >>chng 02 dec 11, from -0.026 to -0.049 new hei
-monitor helium 2 ionization fraction -0.049
+## >>chng 23 sep 08, from -0.049 to -0.0705, fix SQRTPI in Lya destprob
+monitor helium 2 ionization fraction -0.0705
 ##
 ## >>chng 02 dec 10, from 0.0428 to 0.0876 HeI 23P A
 ## >>chng 02 dec 13, from 0.0876 to 0.0975, zoning change

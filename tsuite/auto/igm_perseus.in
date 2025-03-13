@@ -23,6 +23,7 @@ iterate to convergence
 print line column
 print line sort wavelength
 print line faint -2
+print line faint off
 #print line sort intensity
 normalize "Fe25" 1.85040A  1
 save overview ".ovr" 
@@ -67,30 +68,37 @@ monitor line luminosity "Fe25"    1.49460A -29.13
 #
 ## >>chng 19 jul 20, -28.03, first run
 ## >>chng 20 aug 25, wl from 1.78177A to 1.77982A, switched from computed to tabulated energies for H and He isoseq
-monitor line luminosity "Fe26"    1.77982A -28.03
+## >>chng 24 feb 07, switched from FeKa to sum of Fe26 j-resolved and M1 transitions
+monitor line luminosity "Blnd"    1.77982A -28.03
+## >>chng 24 feb 07, add monitor
+monitor line luminosity "Fe26"	  1.78344A -28.51
+## >>chng 24 feb 07, add monitor
+monitor line luminosity "Fe26"	  1.77802A -28.21
+## >>chng 24 feb 07, add monitor
+monitor line luminosity "Fe26 M1" 1.78330A -29.79
 #
 ## >>chng 19 jul 20, -28.91, first run
 ## >>chng 20 aug 25, wl from 1.50337A to 1.50273A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 1.50273A to 1.50248A, update NIST energies
 ## >>chng 21 apr 08, wl from 1.50248A to 1.50273A, up 1-e energies to np
-monitor line luminosity "Fe26"    1.50273A -28.91
+monitor line luminosity "Blnd"    1.50273A -28.91
 #
 ## >>chng 19 jul 20, -29.43, first run
 ## >>chng 19 aug 06, from -29.43 to -29.4, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 22, wl from 1.42541A to 1.42505A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 1.42505A to 1.42485A, update NIST energies
 ## >>chng 21 apr 08, wl from 1.42485A to 1.42505A, up 1-e energies to np
-monitor line luminosity "Fe26"    1.42505A -29.4
+monitor line luminosity "Blnd"    1.42505A -29.4
 #
 ## >>chng 19 jul 20, -29.74, first run
 ## >>chng 20 aug 22, wl from 1.39200A to 1.39177A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 1.39177A to 1.39164A, update NIST energies
 ## >>chng 21 apr 08, wl from 1.39164A to 1.39177A, up 1-e energies to np
-monitor line luminosity "Fe26"    1.39177A -29.74
+monitor line luminosity "Blnd"    1.39177A -29.74
 #
 ## >>chng 19 jul 20, -29.98, first run
 ## >>chng 20 aug 22, wl from 1.37451A to 1.37418A, switched from computed to tabulated energies for H and He isoseq
-monitor line luminosity "Fe26"    1.37418A -29.98 
+monitor line luminosity "Blnd"    1.37418A -29.98 
 #
 ****************************
 # agn_erseus.in, hot gas in the Perseus galaxy cluster

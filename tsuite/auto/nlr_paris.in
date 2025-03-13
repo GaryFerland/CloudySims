@@ -475,7 +475,8 @@ monitor line "Blnd" 1397  0.253
 ## >>chng 13 mar 03, from 0.7075 to 0.6416, update atomic models for S II, S III
 ## >>chng 14 dec 14, from 0.6416 to 0.7824, update S2+ - S+ DR to Badnell+ 2015 ApJ
 ## >>chng 19 jul 18, from 0.7824 to 0.826, update SII A to Podobedova, Kelleher,&Wiese 2009, JPCRD, Vol. 3 
-monitor line "Blnd" 6720 0.826
+## >>chng 23 may 11, from 0.826 to 0.8927, update RR DR to 2022 Badnell wor
+monitor line "Blnd" 6720 0.8927
 ##
 ## >>chng 00 oct xx, from 0.093 to 0.113 H- opacity bug, rebin optical continuum
 ## >>chng 02 mar 10, from 0.113 to 0.107, slow drift down
@@ -494,7 +495,8 @@ monitor line "Blnd" 6720 0.826
 ## >>chng 13 mar 03, from 0.0707 to 0.0445, update atomic models for S II, S III
 ## >>chng 14 dec 14, from 0.0445 to 0.0543, update S2+ - S+ DR to Badnell+ 2015 ApJ
 ## >>chng 16 dec 20, from 0.0543 to 0.0569, add secondary autoionization to DR suppression
-monitor line "Blnd" 4074  0.0569
+## >>chng 23 may 11, from 0.0569 to 0.064, update RR DR to 2022 Badnell wor
+monitor line "Blnd" 4074  0.064
 ##
 ## >>chng 00 sep 12, from 1.73 to 1.514, change in s3 cs
 ## >>chng 01 dec 21, from 1.514 to 1.350, inner shell yields

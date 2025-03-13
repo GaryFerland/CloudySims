@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cddefines.h"
 #include "taulines.h"
@@ -21,8 +21,12 @@ vector< multi_arr<CollSplinesArray,3> > AtmolCollSplines;
 vector< StoutCollArray > StoutCollData;
 long int nSpecies;
 qList AnonStates("AnonStates",1);
-multi_arr<int,3> ipExtraLymanLines;
-vector<vector<TransitionList> > ExtraLymanLines;
+multi_arr<int,2> ipExtraLymanLinesHeLike;
+multi_arr<int,2> ipExtraLymanLinesJ05;
+multi_arr<int,2> ipExtraLymanLinesJ15;
+vector<TransitionList> ExtraLymanLinesHeLike;
+vector<TransitionList> ExtraLymanLinesJ05;
+vector<TransitionList> ExtraLymanLinesJ15;
 TransitionList UTALines("UTALines", &AnonStates);
 long int nLevel1;
 TransitionList HFLines("HFLines", &AnonStates);
@@ -88,13 +92,13 @@ TransitionList::iterator findTrans_byQuantNumb( const string speciesLabel,
 	return matchedTrans;
 }
 
-TransitionList::iterator findTrans_byWLAng( string speciesLabel, const double wl_Ang,
+TransitionList::iterator findTrans_byWLAng( string speciesLabel, const t_wavl& wl_Ang,
 			double &wl_err )
 {
 	TransitionList::iterator matchedTrans = AllTransitions.back().end();
 	double dwl = 1e30;
 
-	if( wl_Ang < 0. )
+	if( wl_Ang.wavlVac() < 0. )
 		return matchedTrans;
 
 	for (vector<TransitionList>::iterator it = AllTransitions.begin(); 
@@ -106,9 +110,9 @@ TransitionList::iterator findTrans_byWLAng( string speciesLabel, const double wl
 		for (TransitionList::iterator tr = it->begin();
 			  tr != it->end(); ++tr)
 		{
-			if( fabs( (*tr).WLAng() - wl_Ang ) < dwl )
+			if( fabs( (*tr).WLangVac() - wl_Ang.wavlVac() ) < dwl )
 			{
-				wl_err = (*tr).WLAng() - wl_Ang;
+				wl_err = (*tr).WLangVac() - wl_Ang.wavlVac();
 				dwl = fabs( wl_err );
 				matchedTrans = tr;
 			}

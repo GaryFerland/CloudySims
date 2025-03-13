@@ -1,5 +1,7 @@
 #
 # columns are species label, formation enthalpy at OK in KJ/mol
+# https://webbook.nist.gov/chemistry/form-ser/
+# https://cccbdb.nist.gov/hf0k.asp
 #
 C     	711.2
 O     	246.8
@@ -9,6 +11,7 @@ S     	274.7
 Cl    	119.6
 Ne    	0
 Ar    	0
+Ti	470.0
 C+    	1797.6
 O+    	1560.7
 Si+   	1233
@@ -81,8 +84,10 @@ NS    	263
 NS+   	1119
 SO    	5
 SO+   	1000.7
-SiN   	371.2
+#SiN   	371.2
+SiN	402.5
 SiN+  	0
+SiO2	-320.7
 N2O   	85.5
 HCS+  	1018
 OCS   	-142
@@ -132,14 +137,16 @@ Mg    	146.5
 Mg+   	884.2
 # Lithium compounds
 Li-   	0
-LiH   	0
+# https://cccbdb.nist.gov/hf0k.asp,GS, 20230827
+LiH   	140.8
 LiH+  	0
 # Titanium compounds
-TiH   	0
+TiH   	1508.
 TiH+  	0
 TiH2  	0
 TiH2+ 	0
-TiO   	0
+# https://webbook.nist.gov/chemistry/form-ser/
+TiO   	54.39
 TiO+  	0
 TiO2  	0
 TiC   	0
@@ -162,7 +169,9 @@ TiOH+ 	0
 HTiS+ 	0
 # F compounds
 HF+     0
-HF      0
+HF      -272.5
 H2F+    0
 CF+     0
-SiS	0
+#https://cccbdb.nist.gov/hf0k.asp,GS, 20230827
+SiS	104.7
+HSiS	0

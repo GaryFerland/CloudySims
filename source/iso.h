@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef ISO_H_
@@ -409,13 +409,22 @@ public:
 
 	const char *chISO[NISO];
 
-	/** number of Lyman lines to include only as opacity sources, in each iso seq,
-	 * all now set to 100 in zero.c */
+	/** number of Lyman lines to include only as opacity sources, in He-like ions,
+	 * all now set to 100 in iso.cpp */
 	long int nLyman[NISO],
 		/** max number of levels to consider - probably greater than above */
 		nLyman_max[NISO],
 		/** number of levels actually allocated - probably greater than above */
 		nLyman_alloc[NISO];
+
+	/** number of extra lyman lines for H-like ions
+	 *  to include both as opacity and emission sources,
+	 *  unlike the He-like this spans over the resolved and collapsed as well. */
+	long int nLymanHLike[LIMELM];
+
+	/** default resolution for X-ray observations in eV,
+	 *  the energy difference between j=1/2 and j=3/2 levels */
+	double Resolution;
 
 	/** option to turn off l-mixing collisions */
 	bool lgColl_l_mixing[NISO];
@@ -507,6 +516,8 @@ public:
 	{
 		chISO[ipH_LIKE] = "H-like ";
 		chISO[ipHE_LIKE] = "He-like";
+		/* This is 1/10 of Athena's resolution in eV. */
+		Resolution = 0.25;
 	}
 };
 
@@ -552,6 +563,8 @@ public:
 	multi_arr<double,2> BranchRatio;
 	vector<freeBound> fb;
 	qList st;
+	qList stJ05; /* stJ05 should only be used for H iso-sequence, otherwise need to change iso_assign_quantum_numbers() routine in is_create.cpp */
+	qList stJ15;
 	TransitionList* tr;
 
 	/** Find index given quantum numbers */
@@ -727,4 +740,30 @@ void iso_multiplet_opacities( void );
  */
 string iso_comment_tran_levels( long ipISO, long nelem, long ipLo, long ipHi );
 
+string extraLymanJ_comment_tran_levels( const TransitionProxy &t );
+
+inline bool lgIsLymanLine(const TransitionProxy &t)
+{
+	long ipISO = t.Lo()->nelem() - t.Lo()->IonStg();
+	long nelem = t.Lo()->nelem() - 1;
+	return (ipISO == ipH_LIKE && t.Lo()->n() == 1 && (t.Hi()->n() > iso_sp[ipISO][nelem].n_HighestResolved_local || t.Hi()->l() == 1));
+}
+
+inline bool lgIsLymanLineResolved(const TransitionProxy &t, const TransitionProxy &tJ05, const TransitionProxy &tJ15)
+{
+	double Ediff = tJ15.Hi()->energy().get("eV") - tJ05.Hi()->energy().get("eV");
+	long nelem = t.Lo()->nelem() - 1;
+	return (lgIsLymanLine(t) && Ediff > iso_ctrl.Resolution && nelem > ipHELIUM);
+}
+
+inline bool lgIsLymanLineUnresolved(const TransitionProxy &t)
+{
+	return (lgIsLymanLine(t) && t.Hi()->g() == 6);
+}
+
+inline bool lgIsM1Line(const TransitionProxy &t)
+{
+	long ipISO = t.Lo()->nelem() - t.Lo()->IonStg();
+        return (ipISO == ipH_LIKE && t.Hi()->n() == 2 && t.Lo()->n() == 1 && t.Hi()->l() == 0);
+}
 #endif /* ISO_H_ */

@@ -886,7 +886,8 @@ log of the abundance of the element at that point, by number relative to
 hydrogen.
 The table ends with a line starting with the keyword
 \cdCommand{end}.
-Up to 500 pairs may be entered.
+At least two pairs of data need to be entered to enable interpolation by the code.
+There is no upper limit to the number of pairs that may be entered.
 This command always specifies the absolute
 abundance and not the scale factor.
 
@@ -898,6 +899,7 @@ a function of depth then the composition will be evaluated as a depth of
 $10^{-30}$~cm.  The table must extend to this depth as in the example above.
 
 \section{Fluctuations abundances, period, max, min, phase}
+\label{sec:FluctuationsAbundanceCommand}
 
 This makes the metallicity vary with radius as a sine wave.  This is
 designed to investigate the effects of chemical inhomogeneities upon the
@@ -911,7 +913,7 @@ metallicities over the sine wave and have the same effect as the metals
 scaling factor entered with the \cdCommand{metals} command.
 
 The \cdCommand{fluctuations} command is more fully described in
-the description of the density version.
+Section \ref{sec:FluctuationsDensityCommand} on the density version.
 
 \section{Grains}
 \label{sec:GrainsCommand}
@@ -1827,8 +1829,8 @@ The overall depletion is parameterized by his depletion strength $F_*$, which we
 with the physical limits $0\leq F_* \leq 1$.
 In his model, each element is depleted by an empirically-determined depletion scale factor $D_z$ that
 is related to $F_*$ by his equation 10, the coefficients listed in his Table 4, 
-and the special case of S from Section 9 of his paper.
-\TODO{Gunasekera et al. 2021} give more details and apply
+and the special case of sulphur from Section 9 of his paper.
+\citet{Gunasekera2022, Gunasekera2023} give more details and apply
 these depletions to a model of the Orion Nebula.
 
 \subsubsection{Command syntax}
@@ -1873,7 +1875,7 @@ grid -2 0 0.1
  produce strong lines if left at solar abundances
  \citep{KingdonFerlandFeibelman1995} .  Solar-abundance calcium has a significant
 effect on other lines because of energy balance.
-\TODO{Gunasekera et al. 2021} describe how we deplete elements not considered by Jenkins.
+\citet{Gunasekera2022, Gunasekera2023} describe how we deplete elements not considered by Jenkins.
 Both their updated version of the Jenkins analysis, which includes  missing elements, and our
 version of Jenkins' original file, are available. 
 

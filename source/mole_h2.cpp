@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*H2_ContPoint set the ipCont struc element for the H2 molecule, called by ContCreatePointers */
 /*H2_Accel radiative acceleration due to H2 */
@@ -399,7 +399,7 @@ void diatomics::H2_RTMake( linefunc line_one )
 		 * include self-shielding of line across this zone.  This introduces a dr dependent
 		 * variation in the line pumping rate, which made H2 abundance fluctuate due to
 		 * Solomon process having slight dr-caused mole. */
-		line_one( *tr, false, 0.f, doppler_width ); 
+		line_one( *tr, false, 0.f, doppler_width, true );
 	}
 
 	return;

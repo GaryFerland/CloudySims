@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*CoolSave save coolants */
 #include "cddefines.h"
@@ -61,30 +61,31 @@ void CoolSave(FILE * io, const char chJob[])
 	cset = cool_total*save.WeakHeatCool;
 
 	/* first find all strong lines, both + and - sign */
-	for( i=0, ip=0; i < thermal.ncltot; i++ )
+	for( i=0; i < thermal.ncltot; i++ )
 	{
 		/* NB NB exclude advective cooling from sorting */
 		if( strncmp( thermal.chClntLab[i], "adve", 4 ) == 0 )
+		{
+			csav[i] = 0;
 			continue;
+		}
 
 		if( cool_total>SMALLFLOAT )
-			csav[ip] = (realnum)( safe_div( MAX2(thermal.cooling[i],thermal.heatnt[i]), cool_total, 0. ));
+			csav[i] = (realnum)( safe_div( MAX2(thermal.cooling[i],thermal.heatnt[i]), cool_total, 0. ));
 		else
-			csav[ip] = 0.;
+			csav[i] = 0.;
 		/* save sign to remember if heating or cooling line */
 		if( thermal.heatnt[i] == 0. )
 		{
-			sgnsav[ip] = 1.;
+			sgnsav[i] = 1.;
 		}
 		else
 		{
-			sgnsav[ip] = -1.;
+			sgnsav[i] = -1.;
 		}
-
-		ip += 1;
 	}
 
-	ASSERT( ip == thermal.ncltot-1 );
+	ip = thermal.ncltot;
 
 	/* order strongest to weakest */
 	/* now sort by decreasing importance */
@@ -251,11 +252,11 @@ void CoolSave(FILE * io, const char chJob[])
 		 * as per comment by Yumihiko Tsuzuki */
 		/* begin the print out with zone number, total heating and cooling */
 		fprintf( io, "%.5e\t%.4e\t%.4e\t%.4e\t%.4e", 
-				 radius.depth_mid_zone, 
-				 phycon.te, 
-				 heat_total, 
-				 cool_total,
-		      		 dynamics.Cool() );
+				radius.depth_mid_zone, 
+				phycon.te, 
+				heat_total, 
+				cool_total,
+				dynamics.Cool() );
 
 		/* now print the coolants 
 		 * keep sign of coolant, for strong negative cooling 

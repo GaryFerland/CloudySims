@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*main program to call cloudy to generate a large loc data cube */
 #include "cddefines.h"
@@ -619,7 +619,7 @@ int main( int argc, char *argv[] )
 					grid.pred[n+nLines] = log10(MAX2(1e-30,relative) );
 				}
 				/* next the FeII continuum */
-				if( cdLine( "inci", 1215 , &relative , &absolute )<=0 )
+				if( cdLine( "inci", 1215_vac , &relative , &absolute )<=0 )
 				{
 					fprintf(stderr,"did not find incident continuum\n");
 					fprintf(ioDATA,"did not find incident continuum\n");
@@ -735,7 +735,7 @@ int main( int argc, char *argv[] )
 
 		cdEXIT(exit_type(grid.exit_status));
 	}
-	catch( bad_alloc )
+	catch( bad_alloc& )
 	{
 		fprintf( ioQQQ, " DISASTER - A memory allocation has failed. Most likely your computer "
 			 "ran out of memory.\n Try monitoring the memory use of your run. Bailing out...\n" );

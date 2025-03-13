@@ -510,7 +510,8 @@ monitor line "blnd"  1402      1.467 error 0.1
 ## >>chng 14 mar 26, from 25.53 to 22.66, Move oxygen data to stout and chianti files
 ## >>chng 14 apr 08, from 22.66 to 25.12, O excit state photo back in
 ## >>chng 16 mar 24, from 25.12 to 15.87, FeII cooling using Stout 80 levels
-monitor line "blnd" 2798      15.87
+## >>chng 23 jun 27, from 15.87 to 16.64, update Fe+ model to Smyth+19
+monitor line "blnd" 2798      16.64
 ##
 ## >>chng 01 jul 04, from 1.05 to 0.987 chng diffuse fields
 ## >>chng 02 may 27, from 0.987 0.933 improved brems gaunts
@@ -560,10 +561,11 @@ monitor line "Blnd" 1397      4.254
 ## >>chng 14 apr 08, from 1.025 to 0.9049, O excit state photo back in
 ## >>chng 16 mar 24, from 0.9049 to 4.158, FeII cooling using Stout 80 levels
 ## >>chng 16 aug 07, from 4.158 to 5.357, Fran bug fix
-monitor line "Fe 2c"    0     5.357 error 0.1
+## >>chng 23 jun 27, from 5.357 to 4.856, update Fe+ model to Smyth+19
+monitor line "Fe 2c"    0     4.856 error 0.1
 ##
 ## >>chng 06 jul 18, from 0.102 to 0.0971 RP major upgrade VS coll strengths
-monitor line "FeKa"    1.78      0.0971
+#monitor line "FeKa"    1.78      0.0971
 ##
 ## >>chng 16 mar 24, from -0.019 to -0.0515, FeII cooling using Stout 80 levels
 monitor ionization Hydrogen 1 -0.0515

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2019 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef QUANTUMSTATE_H_
@@ -40,7 +40,7 @@ class qList
 	vector_avx<double> m_Boltzmann;
 	vector<Energy> m_energy;
 	vector<realnum> m_g;
-	vector<long> m_j;
+	vector<realnum> m_j;
 	vector<long> m_J;
 	vector<int> m_IonStg;
 	vector<int> m_nelem;
@@ -53,6 +53,7 @@ class qList
 	vector<double> m_NCrit;
 	vector<long> m_S;
 	vector<long> m_v;
+	vector<int> m_ipOrg;
 	vector<enum level_status> m_status;
 	realnum m_width;
 	friend class qStateProxy;
@@ -101,6 +102,7 @@ private:
 		m_NCrit.resize(i);
 		m_S.resize(i);
 		m_v.resize(i);
+		m_ipOrg.resize(i);
 		m_status.resize(i);
 		for (size_t n=old_size; n<i; ++n)
 		{
@@ -263,7 +265,11 @@ public:
 	{
 		return m_list->m_v[m_index];
 	}
-	long &j() const
+	int &ipOrg() const
+	{
+		return m_list->m_ipOrg[m_index];
+	}
+	realnum &j() const
 	{
 		return m_list->m_j[m_index];
 	}
@@ -361,7 +367,11 @@ public:
 	{
 		return m_list->m_v[m_index];
 	}
-	long j() const
+	int ipOrg() const
+	{
+		return m_list->m_ipOrg[m_index];
+	}
+	realnum j() const
 	{
 		return m_list->m_j[m_index];
 	}
