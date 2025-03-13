@@ -327,13 +327,16 @@ monitor "SiO " 209.779m  -2.705  line intensity
 ##
 ## >>chng 24 apr 21 GS add TiO
 ## >>chng 25 jan 26, from 14.05 to 14, merge master updated cham"
-monitor column density "TiO"	14
+## >>chng 25 mar 4 turn off TiO for 25 rc1
+## monitor column density "TiO"	14
 ##
 ## >>chng 24 apr 21 GS add TiO
-monitor column density "TiO2"	15.235
+## >>chng 25 mar 4 turn off TiO for 25 rc1
+## monitor column density "TiO2"	15.235
 ##
 ## >>chng 24 apr 21 GS add TiO
-monitor column density "TiOH+"	10.461
+## >>chng 25 mar 4 turn off TiO for 25 rc1
+## monitor column density "TiOH+"	10.461
 #
 # pdr_coolbb.in
 # class pdr 
