@@ -920,7 +920,7 @@ void ParseSave(Parser& p)
 			strcpy( save.chSave[save.nsave], "CORA" );
 
 			sncatf( chHeader, 
-				"#Raw Con anu\tflux\totslin\totscon\tConRefIncid\tConEmitReflec\tConInterOut\toutlin\tConEmitOut\tline\tcont\tnLines\n" );
+				"#Raw Con anu\tflux\totslin\totscon\treflin\tConRefIncid\tConEmitReflec\tConInterOut\toutlin\toutlin_noplot\tConEmitOut\tline\tcont\tnLines\n" );
 		}
 
 		else if( p.nMatch("REFL") )
