@@ -692,6 +692,9 @@ void dBase_solve()
 				}
 				else
 					(*tr).Emis().ColOvTot() = 0.;
+
+					
+				(*tr).Emis().ColOvTot() = 1.; 
 				
 				// this is only used for save line printout.  Maybe colliders may be involved, but
 				// this simple approximation of a "collision strength" should be good enough for
