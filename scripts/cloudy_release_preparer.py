@@ -276,31 +276,42 @@ def prep_docs():
     print("\n Checking for remaining TODOs' in latex")
     subprocess.run(["grep", "-r", "--include=\"*.tex\"", "TODO", "."])
 
-    print("\n Compiling Hazy latex files.")
-    try:
-        subprocess.run(["pdflatex", "--version"])
-    except:
-        print("Your system does not have pdflatex. Wait a moment, attempting to install pdflatex...")
-        os_sys = input("What OS system are you using (e.g. mac, linux)? ")
-        if "mac" in os_sys:
-            try:
-                subprocess.run(["brew", "install", "--cask", "mactex"])
-            except:
-                print("Unable to install pdflatex, please install and try again.\nAborting script!")
-                return
-        if "linux" in os_sys:
-            try:
-                subprocess.run(["sudo", "apt", "install", "texlive"])
-            except:
-                print("Unable to install pdflatex, please install and try again.\nAborting script!")
-                return
-        
-    command_args = ["./CompileAll.pl"]
-    print(f"\n Running docs/latex/{command_args[0][2:]}, to creating Hazy pdf files.")
-    subprocess.run(command_args)
+    hazy_pdfs = glob.glob("hazy*.pdf")
+    print(hazy_pdfs)
+    if "hazy1.pdf" in hazy_pdfs and "hazy2.pdf" in hazy_pdfs and "hazy3.pdf" in hazy_pdfs:
+        compile_hazy = input("\n Hazy pdfs found in docs/latex/. Recompile pdfs (y/n)? ")
+    else:
+        compile_hazy = "y"
 
-    # TODO: Replace any old pdf versions of hazy in the top directory with the current version and add them to the branch. 
-    # The original names, as in "hazy1.pdf", must not be changed since cross references rely on them.
+    if compile_hazy.lower() == "y":
+        print("\n Compiling Hazy latex files.")
+        try:
+            subprocess.run(["pdflatex", "--version"])
+        except:
+            print("Your system does not have pdflatex. Wait a moment, attempting to install pdflatex...")
+            os_sys = input("What OS system are you using (e.g. mac, linux)? ")
+            if "mac" in os_sys:
+                try:
+                    subprocess.run(["brew", "install", "--cask", "mactex"])
+                except:
+                    print("Unable to install pdflatex, please install and try again.\nAborting script!")
+                    return
+            if "linux" in os_sys:
+                try:
+                    subprocess.run(["sudo", "apt", "install", "texlive"])
+                except:
+                    print("Unable to install pdflatex, please install and try again.\nAborting script!")
+                    return
+
+        command_args = ["./CompileAll.pl"]
+        print(f"\n Running docs/latex/{command_args[0][2:]}, to creating Hazy pdf files.")
+        subprocess.run(command_args)
+
+        # TODO: Replace any old pdf versions of hazy in the top directory with the current version and add them to the branch. 
+        # The original names, as in "hazy1.pdf", must not be changed since cross references rely on them.
+
+    os.chdir("../")
+    print("Docs directory ready for release.\n")
 
 
 def main():
@@ -321,7 +332,6 @@ def main():
         print("Aborting release prep script!")
         return
 
-
 if __name__ == "__main__":
     main()
 
@@ -330,3 +340,4 @@ if __name__ == "__main__":
     # ii. make the returns 'return -1', otherwise if success 'return 0' 
     #     then give success message of each successful directory at very end, 
     #      or unsuccessful directories at the very end.
+    # iii. once all directories are successfully prepped, the script should make the tarball
