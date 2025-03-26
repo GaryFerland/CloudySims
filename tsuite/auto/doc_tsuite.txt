@@ -69,8 +69,11 @@ func\_grid\_line\_ratios & test generating line ratios in a grid run \\
 func\_grid\_list & test the 'list' keyword on the grid command \\ 
 func\_hotgas\_coolstar & test very soft continuum, very hot gas \\ 
 func\_ion\_increase & test model where ionization increases with depth \\ 
+func\_iso\_large & test large iso sequence model atom \\ 
 func\_LineList\_PDR & check that wavelengths agree at high line precision \\ 
 func\_LineList\_PDR\_H2 & check that wavelengths agree at high line precision \\ 
+func\_LineList\_PDR\_H2\_vacuum & check that wavelengths agree at high line precision \\ 
+func\_LineList\_PDR\_vacuum & check that wavelengths agree at high line precision \\ 
 func\_lines & create output file with list of func\_lines \\ 
 func\_ly\_pump\_scale & test scaling of H lyman-line pumping \\ 
 func\_map & map of heating vs cooling \\ 
@@ -101,6 +104,10 @@ grains\_lte & check that grains equilibriate at correct temp in ste limit \\
 grains\_qheat & cool atomic ISM with Si grain quantum heating \\ 
 grains\_temp & test all grain species temperature \\ 
 grains\_temp\_all & test all grain species temperature \\ 
+grd\_extreme\_THiNhi & slow/grid\_extreme highest density highest temperature \\ 
+grd\_extreme\_ThiNlo & slow/grid\_extreme lowest density highest temperature \\ 
+grd\_extreme\_TloNhi & slow/grid\_extreme highest density lowest temperature \\ 
+grd\_extreme\_TloNlo & slow/grid\_extreme lowest density lowest temperature \\ 
 grid\_coronal & coronal equilibrium \\ 
 grid\_coronal\_grains & coronal equilibrium \\ 
 grid\_coronal\_primal & coronal equilibrium \\ 

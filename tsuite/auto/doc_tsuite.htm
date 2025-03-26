@@ -31,7 +31,7 @@
 <br>iterate 
 <br>#
 <br># commands controlling output    =========
-<br>normalize to "FeKa" 1.78
+<br>normalize to "C  6" 33.7360
 <br>print line faint -1
 <br>print lines inward
 <br># the normalizing line is not defined on the emergent line stack
@@ -412,7 +412,7 @@ significant optical depths
 <br>#
 <br># commands controlling output    =========
 <br>print line column
-<br>normalize "Fe26"      1.77982A 
+<br>normalize "Blnd"      1.77982A 
 <br>save overview ".ovr"
 <br>save performance ".per"
 <br>save continuum ".con" last units kev
@@ -420,9 +420,9 @@ significant optical depths
 <br>save fine continuum ".finA" last units Angstroms range 7.6A to 15A merge 3
 <br>save dr ".dr" last
 <br># this will be the default units, like the printout
-<br>save line optical depths last ".lin"
-<br># this will be the same, in rygbergs
-<br>save line optical depths last ".lin"  units rydberg
+<br>save line optical depths last ".linkev" unit kev
+<br># this will be the same, in angstrom
+<br>save line optical depths last ".lina" -3 units angstrom
 <br>#
 <br># warrm_absorber
 <br># class nlr  
@@ -2199,7 +2199,7 @@ multiplier, given in the save wind output, is nearly unity as a result.
 <br>save overview ".ovr"
 <br>save performance ".per"
 <br>save species continuum ".fe2con" "Fe+" last units microns
-<br>save species bands ".fe2b" "FeII_bands.ini" "Fe+" last
+<br>save species bands ".fe2b" "FeII_bands.dat" "Fe+" last
 <br>#
 <br>#
 <br># feii_hin.in
@@ -2240,7 +2240,7 @@ are all equal to unity.
 <br>save species densities ".lv1" "Fe+[:200]" last
 <br>save species densities ".lv2" "Fe+[201:]" last
 <br>save species continuum ".fe2con" "Fe+" last units microns
-<br>save species bands ".fe2b" "FeII_bands.ini" "Fe+" last
+<br>save species bands ".fe2b" "FeII_bands.dat" "Fe+" last
 <br>#
 <br>#
 <br># feii_hirad.in
@@ -2279,7 +2279,7 @@ are all equal to unity.
 <br>save overview ".ovr"
 <br>save performance ".per"
 <br>save species continuum ".con" "Fe+" units microns last  
-<br>save species bands ".fe2b" "FeII_bands.ini" "Fe+" last
+<br>save species bands ".fe2b" "FeII_bands.dat" "Fe+" last
 <br>#
 <br>#
 <br># feii_pump.in
@@ -2321,7 +2321,7 @@ small value (1 cm) so that full continuum hits atom.
 <br>save species departure last ".dep" "Fe+[:]"
 <br>save species levels last ".lev" "Fe+"
 <br>save species continuum ".fe2con" "Fe+" last units microns
-<br>save species bands ".fe2b" "FeII_bands.ini" "Fe+" last
+<br>save species bands ".fe2b" "FeII_bands.dat" "Fe+" last
 <br>#
 <br># feii_ste.in
 <br># class function 
@@ -2364,7 +2364,7 @@ that the thermal properties of the model FeII atom obey thermodynamics.
 <br>save overview ".ovr"
 <br>save performance ".per"
 <br>save species continuum last ".con" "Fe+" units angstroms
-<br>save species bands ".fe2b" "FeII_bands.ini" "Fe+" last no hash
+<br>save species bands ".fe2b" "FeII_bands.dat" "Fe+" last no hash
 <br>#
 <br>#
 <br># feii_t4n0.in
@@ -2406,7 +2406,7 @@ The model is optically thin, no RT.
 <br>save overview ".ovr"
 <br>save performance ".per"
 <br>save species continuum last ".con" "Fe+" units angstroms
-<br>save species bands ".fe2b" "FeII_bands.ini" "Fe+" last no hash
+<br>save species bands ".fe2b" "FeII_bands.dat" "Fe+" last no hash
 <br>#
 <br>#
 <br># feii_t4n8.in
@@ -2455,7 +2455,7 @@ The model is optically thin, no RT.
 <br>save species densities last ".pop" "Fe+[:]"
 <br>save species optical depth last ".opt" "Fe+"
 <br>save species lines last ".lin" "Fe+"
-<br>save species bands ".fe2b" "FeII_bands.ini" "Fe+"
+<br>save species bands ".fe2b" "FeII_bands.dat" "Fe+"
 <br>save line emissivity ".ems"
 <br>"Fe 2b" 2797
 <br>"InwdBnd" 2797 
@@ -2508,7 +2508,7 @@ This has a finite thickness and so tests the RT, line overlap.
 <br>save overview ".ovr"
 <br>save performance ".per"
 <br>save species continuum last ".con" "Fe+" units angstroms
-<br>save species bands ".fe2b" "FeII_bands.ini" "Fe+" last no hash
+<br>save species bands ".fe2b" "FeII_bands.dat" "Fe+" last no hash
 <br>#
 <br>#
 <br># feii_t4n8_Tayal18.in
@@ -2552,7 +2552,7 @@ The model is optically thin, no RT.
 <br>save overview ".ovr"
 <br>save performance ".per"
 <br>save species continuum last ".con" "Fe+" units angstroms
-<br>save species bands ".fe2b" "FeII_bands.ini" "Fe+" last no hash
+<br>save species bands ".fe2b" "FeII_bands.dat" "Fe+" last no hash
 <br>#
 <br>#
 <br># feii_t4n8_Tayal18.in
@@ -2596,7 +2596,7 @@ The model is optically thin, no RT.
 <br>save overview ".ovr"
 <br>save performance ".per"
 <br>save species continuum last ".con" "Fe+" units angstroms
-<br>save species bands ".fe2b" "FeII_bands.ini" "Fe+" last no hash
+<br>save species bands ".fe2b" "FeII_bands.dat" "Fe+" last no hash
 <br>#
 <br>#
 <br># feii_t4n8_Tayal18.in
@@ -2937,6 +2937,46 @@ with depth.  Most sims have decreasing rather than increasing ionization.
 <p>
 <p>
 <p>
+</p><hr><kbd><h2>func_iso_large.in</h2>  </kbd><h2><I>test large iso sequence model atom
+</I></h2><kbd><br>title test large iso sequence model atom
+<br>#
+<br># commands controlling continuum =========
+<br>blackbody 5e4
+<br>ionization parameter -2
+<br>CMB
+<br>#
+<br># commands for density & abundances =========
+<br>hden = 2.3
+<br>eden = 2.3
+<br>metals .3 log
+<br>#
+<br># commands controlling geometry  =========
+<br>sphere
+<br>stop zone 10
+<br>#
+<br># other commands for details     =========
+<br>database H-like levels large element hydrogen
+<br>database He-like levels large element helium
+<br>#
+<br># commands controlling output    =========
+<br>print every 1
+<br>database H-like levels print
+<br>save performance "func_iso_large.per"
+<br>save dr "func_iso_large.dr"
+<br>save overview "func_iso_large.ovr"
+<br>save line labels "func_iso_large.lbl"
+<br>#
+<br># 
+<br># func_iso_large.in
+<br># class function
+<br># ========================================
+<br># 
+</kbd><p>
+this model tests the large model atoms for the iso sequences.
+the large models are used for H I and He I.
+monitor lines from both low-lying and Rydberg levels to test the full model.
+the lines from Rydberg states as well as the He I 10830 line are ambiguous
+so this also exercises line disambiguation
 </p><hr><kbd><h2>func_LineList_BLR.in</h2>  <br>test
 <br>print line precision 6
 <br>table lines "LineList_BLR.dat"
@@ -2945,21 +2985,52 @@ with depth.  Most sims have decreasing rather than increasing ionization.
 <br>print line precision 6
 <br>table lines "LineList_BLR_Fe2.dat"
 <br>set save prefix "func_LineList_BLR_Fe2"
-<br>save species bands ".fe2b" "FeII_bands.ini" "Fe+" last
-</kbd></p><hr><kbd><h2>func_LineList_He_like.in</h2>  <br>test
+<br>save species bands ".fe2b" "FeII_bands.dat" "Fe+" last
+</kbd></p><hr><kbd><h2>func_LineList_BLR_Fe2_vacuum.in</h2>  <br>test
 <br>print line precision 6
+<br>print lines vacuum
+<br>table lines "LineList_BLR_Fe2.dat"
+<br>set save prefix "func_LineList_BLR_Fe2"
+<br>save species bands ".fe2b" "FeII_bands.dat" "Fe+" last
+</kbd></p><hr><kbd><h2>func_LineList_BLR_vacuum.in</h2>  <br>test
+<br>print line precision 6
+<br>print lines vacuum
+<br>table lines "LineList_BLR.dat"
+</kbd><p>
+</p><hr><kbd><h2>func_LineList_He_like.in</h2>  <br>test
+<br>print line precision 6
+<br>table lines "LineList_He_like.dat"
+</kbd><p>
+</p><hr><kbd><h2>func_LineList_He_like_vacuum.in</h2>  <br>test
+<br>print line precision 6
+<br>print lines vacuum
 <br>table lines "LineList_He_like.dat"
 </kbd><p>
 </p><hr><kbd><h2>func_LineList_HeH.in</h2>  <br>test
 <br>print line precision 6
 <br>table lines "LineList_HeH.dat"
 </kbd><p>
+</p><hr><kbd><h2>func_LineList_HeH_vacuum.in</h2>  <br>test
+<br>print line precision 6
+<br>print lines vacuum
+<br>table lines "LineList_HeH.dat"
+</kbd><p>
 </p><hr><kbd><h2>func_LineList_HII.in</h2>  <br>test
 <br>print line precision 6
 <br>table lines "LineList_HII.dat"
 </kbd><p>
+</p><hr><kbd><h2>func_LineList_HII_vacuum.in</h2>  <br>test
+<br>print line precision 6
+<br>print lines vacuum
+<br>table lines "LineList_HII.dat"
+</kbd><p>
 </p><hr><kbd><h2>func_LineList_NLR.in</h2>  <br>test
 <br>print line precision 6
+<br>table lines "LineList_NLR.dat"
+</kbd><p>
+</p><hr><kbd><h2>func_LineList_NLR_vacuum.in</h2>  <br>test
+<br>print line precision 6
+<br>print lines vacuum
 <br>table lines "LineList_NLR.dat"
 </kbd><p>
 </p><hr><kbd><h2>func_LineList_PDR.in</h2>  </kbd><h2><I>check that wavelengths agree at high line precision
@@ -2975,8 +3046,28 @@ with depth.  Most sims have decreasing rather than increasing ionization.
 <br>print line precision 6
 <br>table lines "LineList_PDR_H2.dat"
 </kbd><p>
+</p><hr><kbd><h2>func_LineList_PDR_H2_vacuum.in</h2>  </kbd><h2><I>check that wavelengths agree at high line precision
+</I></h2><kbd><br>title check that wavelengths agree at high line precision
+<br>test
+<br>database h2
+<br>print line precision 6
+<br>print lines vacuum
+<br>table lines "LineList_PDR_H2.dat"
+</kbd><p>
+</p><hr><kbd><h2>func_LineList_PDR_vacuum.in</h2>  </kbd><h2><I>check that wavelengths agree at high line precision
+</I></h2><kbd><br>title check that wavelengths agree at high line precision
+<br>test
+<br>print line precision 6
+<br>print lines vacuum
+<br>table lines "LineList_PDR.dat"
+</kbd><p>
 </p><hr><kbd><h2>func_LineList_strong.in</h2>  <br>test
 <br>print line precision 6
+<br>table lines "LineList_strong.dat"
+</kbd><p>
+</p><hr><kbd><h2>func_LineList_strong_vacuum.in</h2>  <br>test
+<br>print line precision 6
+<br>print lines vacuum
 <br>table lines "LineList_strong.dat"
 </kbd><p>
 </p><hr><kbd><h2>func_lines.in</h2>  </kbd><h2><I>create output file with list of func_lines
@@ -3151,7 +3242,9 @@ when SET DRMIN is used. Without the SET DRMIN command this sim would need
 <br>stop zone 1
 <br>#
 <br># commands controlling output    =========
-<br>normalize to "o  3"  5006.84 
+<br>#>>chng 23 oct 13 add this command to test somewhere in tsuite
+<br>print lines vacuum
+<br>normalize to "o  3"  5006.84 air
 <br>save overview "func_set_ion.ovr"
 <br>save performance "func_set_ion.per"
 <br>save dr "func_set_ion.dr" 
@@ -3250,7 +3343,7 @@ The option to turn off elements with trivial abundances is used.
 <br>#
 <br># commands controlling geometry  =========
 <br># stop calc at line ratio, the point of this test 
-<br>stop line "c  2" 157.636m reaches 0.002 relative to "o  3"  5006.84 A
+<br>stop line "c  2" 157.636m air reaches 0.002 relative to "o  3" 5008.24 vacuum
 <br>#
 <br># other commands for details     =========
 <br>constant temperature 10000 K
@@ -4071,7 +4164,123 @@ This is a relatively quick test of grains.
 The Orion and ISM silicate and graphitic grains
 are turned on and their equilibrium temperature
 checked. 
-</p><hr><kbd><h2>grid_coronal.in</h2>  </kbd><h2><I>coronal equilibrium
+</p><hr><kbd><h2>grd_extreme_THiNhi.in</h2>  </kbd><h2><I>slow/grid_extreme highest density highest temperature
+</I></h2><kbd><br>title slow/grid_extreme highest density highest temperature
+<br>set save prefix "grd_extreme_THiNhi"
+<br># 
+<br>element lithium off
+<br>element berylium off
+<br>element boron off
+<br>element limit -7 off
+<br>cosmic rays background linear 0.1266
+<br>cmb
+<br>iterate
+<br># 
+<br># SED is 1e6 K BB with low energy density
+<br>blackbody 6 
+<br>energy density 6 
+<br>#
+<br>hden 18
+<br>stop zone 1
+<br># set to constant small thickness
+<br>set dr -10
+<br>normalize to "Q(H)" 4861.32A
+<br># 
+<br># the normalizing line is not defined on the emergent line stack
+<br>print lines emergent off
+<br>save performance no hash ".per"
+<br>#
+<br># one of the four corners of grid_extreme, 
+<br># Figs 17&18 of 2013RMxAA..49..137F
+<br> 
+</kbd></p><hr><kbd><h2>grd_extreme_ThiNlo.in</h2>  </kbd><h2><I>slow/grid_extreme lowest density highest temperature
+</I></h2><kbd><br>title slow/grid_extreme lowest density highest temperature
+<br>set save prefix "grd_extreme_ThiNlo"
+<br># 
+<br>element lithium off
+<br>element berylium off
+<br>element boron off
+<br>element limit -7 off
+<br>cosmic rays background linear 0.1266
+<br>cmb
+<br>iterate
+<br># 
+<br># SED is 1e6 K BB with low energy density
+<br>blackbody 6 
+<br>energy density 6 
+<br>#
+<br>hden -8
+<br>stop zone 1
+<br># set to constant small thickness
+<br>set dr -10
+<br>normalize to "Q(H)" 4861.32A
+<br># 
+<br># the normalizing line is not defined on the emergent line stack
+<br>print lines emergent off
+<br>save performance no hash ".per"
+<br>#
+<br># one of the four corners of grid_extreme, 
+<br># Figs 17&18 of 2013RMxAA..49..137F
+<br> 
+</kbd></p><hr><kbd><h2>grd_extreme_TloNhi.in</h2>  </kbd><h2><I>slow/grid_extreme highest density lowest temperature
+</I></h2><kbd><br>title slow/grid_extreme highest density lowest temperature
+<br>set save prefix "grd_extreme_TloNhi"
+<br># 
+<br>element lithium off
+<br>element berylium off
+<br>element boron off
+<br>element limit -7 off
+<br>cosmic rays background linear 0.1266
+<br>cmb
+<br>iterate
+<br># 
+<br># SED is 1e6 K BB with low energy density
+<br>blackbody 6 
+<br>energy density 1 
+<br>#
+<br>hden 18
+<br>stop zone 1
+<br># set to constant small thickness
+<br>set dr -10
+<br>normalize to "Q(H)" 4861.32A
+<br># 
+<br># the normalizing line is not defined on the emergent line stack
+<br>print lines emergent off
+<br>save performance no hash ".per"
+<br>#
+<br># one of the four corners of grid_extreme, 
+<br># Figs 17&18 of 2013RMxAA..49..137F
+<br> 
+</kbd></p><hr><kbd><h2>grd_extreme_TloNlo.in</h2>  </kbd><h2><I>slow/grid_extreme lowest density lowest temperature
+</I></h2><kbd><br>title slow/grid_extreme lowest density lowest temperature
+<br>set save prefix "grd_extreme_TloNlo"
+<br># 
+<br>element lithium off
+<br>element berylium off
+<br>element boron off
+<br>element limit -7 off
+<br>cosmic rays background linear 0.1266
+<br>cmb
+<br>iterate
+<br># 
+<br># SED is 1e6 K BB with low energy density
+<br>blackbody 6 
+<br>energy density 1 
+<br>#
+<br>hden -8
+<br>stop zone 1
+<br># set to constant small thickness
+<br>set dr -10
+<br>normalize to "Q(H)" 4861.32A
+<br># 
+<br># the normalizing line is not defined on the emergent line stack
+<br>print lines emergent off
+<br>save performance no hash ".per"
+<br>#
+<br># one of the four corners of grid_extreme, 
+<br># Figs 17&18 of 2013RMxAA..49..137F
+<br> 
+</kbd></p><hr><kbd><h2>grid_coronal.in</h2>  </kbd><h2><I>coronal equilibrium
 </I></h2><kbd><br>title coronal equilibrium
 <br>#
 <br># commands controlling continuum =========
@@ -4230,6 +4439,7 @@ and greater execution time.
 This also serves as a test of the full Stout database
 </p><hr><kbd><h2>grid_h2coronal_primal.in</h2>  </kbd><h2><I>coronal equilibrium
 </I></h2><kbd><br>title coronal equilibrium
+<br>set save prefix "grid_h2coronal_primal"
 <br>#
 <br># commands controlling continuum =========
 <br>coronal 4 vary
@@ -4250,8 +4460,8 @@ This also serves as a test of the full Stout database
 <br>#
 <br># commands controlling output    =========
 <br>no blends
-<br>save grid "grid_hcoronal_primal.grd" last no hash
-<br>save cooling "grid_h2coronal_primal.col" last no hash
+<br>save grid ".grd" last no hash
+<br>save cooling ".col" last no hash
 <br># 
 <br># grid_h2coronal_primal.in
 <br># class coronal 
@@ -4469,6 +4679,7 @@ This tests large H2 model in limit of H- formation and Solomon destruction.
 <p>
 </p><hr><kbd><h2>h2_pdr_leiden_f1.in</h2>  </kbd><h2><I>low density and flux model 1 
 </I></h2><kbd><br>title low density and flux model 1 
+<br>set save prefix "h2_pdr_leiden_f1"
 <br>database H2 He collisions new 
 <br>#
 <br># commands controlling continuum =========
@@ -4506,27 +4717,29 @@ This tests large H2 model in limit of H- formation and Solomon destruction.
 <br># saves
 <br># check that all lines are found
 <br>table lines "LineList_PDR_H2.dat"
-<br>save performance "h2_pdr_leiden_f1.per"
-<br>save overview "h2_pdr_leiden_f1.ovr"
-<br>save line emissivity "h2_pdr_leiden_f1.ems" 
+<br>save performance ".per"
+<br>save overview ".ovr"
+<br>save fine optical depths last no hash ".fopt" range 1150 1300 units Angstroms 1
+<br>save save emitted continuum ".econ" range 1150 1300 units angstroms
+<br>save line emissivity ".ems" 
 <br>H2   2.12125m
 <br>CO   650.074m
 <br>C  2 157.636m
 <br>O  1 63.1679m
 <br>Si 2 34.8046m
 <br>end of lines
-<br>save leiden lines "h2_pdr_leiden_f1.lin"
-<br>save leiden "h2_pdr_leiden_f1.lei"
-<br>save dr "h2_pdr_leiden_f1.dr" 
-<br>save molecules "h2_pdr_leiden_f1.mol"
-<br>save grain physical conditions "h2_pdr_leiden_f1.grn"
-<br>save overview "h2_pdr_leiden_f1.ovr"
-<br>save H2 lines "h2_pdr_leiden_f1.h2lin" all
-<br>save H2 column density "h2_pdr_leiden_f1.h2col"
-<br>save H2 populations matrix zone "h2_pdr_leiden_f1.pop"
-<br>save H2 rates "h2_pdr_leiden_f1.rat"
-<br>save dominant rates "h2_pdr_leiden_f1.h2" "H2" 
-<br>save chemistry rates "h2_pdr_leiden_f1.h2d" "H2" destruction
+<br>save leiden lines ".lin"
+<br>save leiden ".lei"
+<br>save dr ".dr" 
+<br>save molecules ".mol"
+<br>save grain physical conditions ".grn"
+<br>save overview ".ovr"
+<br>save H2 lines ".h2lin" all
+<br>save H2 column density ".h2col"
+<br>save H2 populations matrix zone ".pop"
+<br>save H2 rates ".rat"
+<br>save dominant rates ".h2" "H2" 
+<br>save chemistry rates ".h2d" "H2" destruction
 <br>#
 <br>#
 <br># h2_pdr_leiden_f1.in
@@ -5187,7 +5400,7 @@ is not included in the total emission.
 <br>constant temperature 4
 <br>#
 <br># commands controlling output    =========
-<br>normalize to "Blnd" 4471.50A 
+<br>normalize to "Blnd" 4472.76A vacuum
 <br>print lines column  
 <br>print lines column 
 <br>save overview "heatomt10lon.ovr"
@@ -7111,13 +7324,19 @@ the range of ionization parameter on a BPT diagram
 <br>case b hummer no photoionization
 <br>no induced processes (OK)
 <br>constant temperature = 1.e5
+<br># Resolve O 8 Lya doublet
+<br>database h-like lyman extra resolution 0.01
+<br>database h-like oxygen resolved levels 10
+<br>database h-like oxygen collapsed levels 10
 <br>#
 <br># commands controlling output    =========
+<br>print lines sort wavelength
+<br>print lines column
 <br>save overview "hlike_o.ovr"
 <br>save performance "hlike_o.per"
 <br>save results "hlike_o.rlt"
 <br>#
-<br># caseb_o.in
+<br># hlike_o.in
 <br># class limit 
 <br># ========================================
 <br># 
@@ -7325,6 +7544,7 @@ computes intensities corrected for isotropic continua.
 <br>print line column
 <br>print line sort wavelength
 <br>print line faint -2
+<br>print line faint off
 <br>#print line sort intensity
 <br>normalize "Fe25" 1.85040A  1
 <br>save overview ".ovr" 
@@ -7526,7 +7746,7 @@ conditions throughout the depth.
 <br># commands controlling output    =========
 <br># this model has no heavy element molecules, because H2 does not
 <br># really fully form, since Lyman bands are not self-shielded
-<br>normalize to 157.636m "C  2"
+<br>normalize to "C  2" 157.636m
 <br>print line pump
 <br>save performance "ism.per"
 <br>save overview "ism.ovr" last
@@ -7636,7 +7856,7 @@ are disabled so that analytical estimates can be made.
 <br># commands controlling output    =========
 <br># this model has no heavy element molecules, because H2 does not
 <br># really fully form, since Lyman bands are not self-shielded
-<br>normalize to 157.636m "C  2"
+<br>normalize to "C  2" 157.636m
 <br>save performance "ism_grid.per"
 <br>save pressure "ism_grid.pre" last no hash
 <br>save grid "ism_grid.grd" last no hash
@@ -7672,6 +7892,7 @@ HIM - hot ionized medium, n ~ 1e-3 cm-3, calculation DOES NOT
 <p>
 </p><hr><kbd><h2>ism_hot_brems.in</h2>  </kbd><h2><I>generate continuum due to hot ism in high Z,z starburst
 </I></h2><kbd><br>title generate continuum due to hot ism in high Z,z starburst
+<br>set save prefix "ism_hot_brems"
 <br># 
 <br># commands controlling continuum =========
 <br># this sets up coronal equilibrium for temperature and continuum
@@ -7702,13 +7923,13 @@ HIM - hot ionized medium, n ~ 1e-3 cm-3, calculation DOES NOT
 <br># this shortens the printout somewhat
 <br>print line faint 1
 <br># output options
-<br>save performance "ism_hot_brems.per"
-<br>save continuum last "ism_hot_brems.con" no title, units keV
-<br>save sulphur ionization "ism_hot_brems.sul"
-<br>save overview last "ism_hot_brems.ovr"
-<br>save species data sources "ism_hot_brems.dsource"
+<br>save performance ".per"
+<br>save continuum last ".con" no title, units keV
+<br>save sulphur ionization ".sul"
+<br>save overview last ".ovr"
+<br>save dr last ".dr"
+<br>#save species data sources ".dsource"
 <br># this is only to document the problem described above
-<br>save dr last "ism_hot_brems.dr"
 <br>#
 <br># ism_hot_brems.in
 <br># class ism 
@@ -7989,7 +8210,7 @@ The grid is over both density and temperature.
 <br>database h-like resolved levels 30
 <br>database h-like collapsed levels 70
 <br>constant temperature 3e4
-<br>case b no photoionzation no pdest 
+<br>case b hummer no photoionzation no pdest 
 <br>no scattering escape
 <br>no induced processes
 <br>iterate
@@ -8026,7 +8247,7 @@ The grid is over both density and temperature.
 <br>database h-like collapsed levels 70
 <br>database h-like keep fine structure
 <br>constant temper 3.7
-<br>case b no photoionzation no pdest 
+<br>case b hummer no photoionzation no pdest 
 <br>no scattering escape
 <br>no induced processes
 <br>iterate
@@ -8071,7 +8292,7 @@ principal quantum number specifications (30/70 here; 100/1 in table).
 <br>database h-like resolved levels 30
 <br>database h-like collapsed levels 70
 <br>constant temper 4
-<br>case b no photoionzation no pdest 
+<br>case b hummer no photoionzation no pdest 
 <br>no scattering escape
 <br>no induced processes
 <br>iterate
@@ -8117,7 +8338,7 @@ principal quantum number specifications (30/70 here; 100/1 in table).
 <br>database h-like resolved levels 30
 <br>database h-like collapsed levels 70
 <br>constant temperature 3e4
-<br>case b no photoionzation no pdest 
+<br>case b hummer no photoionzation no pdest 
 <br>no scattering escape
 <br>no induced processes
 <br>iterate
@@ -8151,7 +8372,7 @@ principal quantum number specifications (30/70 here; 100/1 in table).
 <br>database h-like resolved levels 30
 <br>database h-like collapsed levels 70
 <br>constant temper 5
-<br>case b no photoionzation no pdest 
+<br>case b hummer no photoionzation no pdest 
 <br>no scattering escape
 <br>no induced processes
 <br>iterate
@@ -8194,6 +8415,7 @@ principal quantum number specifications (30/70 here; 100/1 in table).
 <br># other commands for details     =========
 <br>database h-like resolved levels 30
 <br>database h-like collapsed levels 70
+<br># Hummer option not included here because the population of the excited states will be zero
 <br>case b no photoionzation no pdest 
 <br>no scattering escape
 <br>no induced processes
@@ -8221,7 +8443,7 @@ principal quantum number specifications (30/70 here; 100/1 in table).
 <br>laser 5
 <br>ionization -2
 <br>stop zone 1
-<br>case B hummer
+<br>case B hummer no pdest no photoionization
 <br>print departure hydrogen H-like
 <br>print departure helium H-like
 <br>print line faint -6
@@ -8251,7 +8473,7 @@ principal quantum number specifications (30/70 here; 100/1 in table).
 <br>database h-like resolved levels 30
 <br>database h-like collapsed levels 70
 <br>constant temperature 3e4
-<br>case b no photoionzation no pdest 
+<br>case b hummer no photoionzation no pdest 
 <br>no scattering escape
 <br>no induced processes
 <br>iterate
@@ -8274,7 +8496,7 @@ principal quantum number specifications (30/70 here; 100/1 in table).
 <br>laser 5
 <br>ionization -2
 <br>stop zone 1
-<br>case B hummer
+<br>case B hummer no pdest no photoionization
 <br>print departure hydrogen H-like
 <br>print departure helium H-like
 <br>print line faint -6
@@ -8292,7 +8514,7 @@ principal quantum number specifications (30/70 here; 100/1 in table).
 <br>laser 5
 <br>ionization -2
 <br>stop zone 1
-<br>case B hummer
+<br>case B hummer no pdest no photoionization
 <br>print departure hydrogen H-like
 <br>print departure helium H-like
 <br>print line faint -6
@@ -8310,7 +8532,7 @@ principal quantum number specifications (30/70 here; 100/1 in table).
 <br>laser 5
 <br>ionization -2
 <br>stop zone 1
-<br>case B hummer
+<br>case B hummer no pdest no photoionization
 <br>print departure hydrogen H-like
 <br>print departure helium H-like
 <br>print line faint -6
@@ -8542,7 +8764,7 @@ percent except at the lowest temperature of 5000K.
 <br>database he-like collapsed levels 70
 <br>database he-like gbar vriens
 <br>constant temper 4
-<br>case b no photoionzation no pdest 
+<br>case b hummer no photoionzation no pdest 
 <br>no scattering escape
 <br>no induced processes
 <br>iterate
@@ -8599,7 +8821,7 @@ principal quantum number specifications (30/70 here; 100/1 in table).
 <br>database he-like collapsed levels 70
 <br>database he-like gbar vriens
 <br>constant temper 4
-<br>case b no photoionzation no pdest 
+<br>case b hummer no photoionization no pdest 
 <br>no scattering escape
 <br>no induced processes
 <br>iterate
@@ -8648,7 +8870,7 @@ principal quantum number specifications (30/70 here; 100/1 in table).
 <br>database he-like collapsed levels 70
 <br>database collisions he-like helium Fujimoto
 <br>constant temper 4
-<br>case b no photoionzation no pdest 
+<br>case b hummer no photoionzation no pdest 
 <br>no scattering escape
 <br>no induced processes
 <br>iterate
@@ -8696,7 +8918,7 @@ principal quantum number specifications (30/70 here; 100/1 in table).
 <br>database he-like collapsed levels 70
 <br>database collisions he-like helium van regemorter
 <br>constant temper 4
-<br>case b no photoionzation no pdest 
+<br>case b hummer no photoionzation no pdest 
 <br>no scattering escape
 <br>no induced processes
 <br>iterate
@@ -8744,7 +8966,7 @@ principal quantum number specifications (30/70 here; 100/1 in table).
 <br>database he-like collapsed levels 70
 <br>database collisions he-like helium Vriens  
 <br>constant temper 4
-<br>case b no photoionzation no pdest 
+<br>case b hummer no photoionzation no pdest 
 <br>no scattering escape
 <br>no induced processes
 <br>iterate
@@ -10876,6 +11098,7 @@ metal rich low density nebula surrounding DQ Her (Ferland et al. 1984).
 	ionization at low temperature
 </p><hr><kbd><h2>nova_photos.in</h2>  </kbd><h2><I>dense nova photosphere
 </I></h2><kbd><br>title dense nova photosphere
+<br>set save prefix "nova_photos"
 <br>#
 <br># commands controlling continuum =========
 <br># this is the result of this command
@@ -10896,13 +11119,13 @@ metal rich low density nebula surrounding DQ Her (Ferland et al. 1984).
 <br>#
 <br># commands controlling output    =========
 <br>print line faint -1
-<br>save performance "nova_photos.per"
-<br>save overview "nova_photos.ovr" last
-<br>save convergence reason "nova_photos.cvg" no hash 
-<br>save results "nova_photos.rlt" last
-<br>save dr "nova_photos.dr" last
-<br>save heat "nova_photos.het" last
-<br>save cool "nova_photos.col" last
+<br>save performance ".per"
+<br>save overview ".ovr" last
+<br>save convergence reason ".cvg" no hash
+<br>save results ".rlt" last
+<br>save dr ".dr" last
+<br>save heat ".het" last
+<br>save cool ".col" last
 <br>#
 <br># nova_photos.in
 <br># class nova 
@@ -11048,6 +11271,7 @@ density.  The model optimize_phymir.in is a copy of this file.
 <br>print line optical depths
 <br># want to print line intensities are surface brightness, per arcsec^2
 <br>print lines surface brightness arcsec
+<br>save pressure "orion_hii_open.pre"
 <br>save performance "orion_hii_open.per"
 <br>save overview last "orion_hii_open.ovr"
 <br>save dr last "orion_hii_open.dr"
@@ -11550,7 +11774,7 @@ assumed in their paper.
 <br>turbulence 1.5 km/sec
 <br># 
 <br># commands controlling output    =========
-<br>normalize to 157.636m "C  2" 
+<br>normalize to "C  2" 157.636m 
 <br># uv lines are strongly pumped by stellar continuum, break out contribution
 <br>print line pump
 <br>print line optical depths
@@ -12732,6 +12956,7 @@ which will result in fast fluorescent excitation of the
   
 </p><hr><kbd><h2>pn_fluc.in</h2>  </kbd><h2><I>Paris PN with density fluctuations
 </I></h2><kbd><br>title Paris PN with density fluctuations
+<br>set save prefix "pn_fluc"
 <br>#
 <br># commands for density & abundances =========
 <br>fluctuations 16.5 4 3
@@ -12753,11 +12978,11 @@ which will result in fast fluorescent excitation of the
 <br># other commands for details     =========
 <br>#
 <br># commands controlling output    =========
-<br>save performance "pn_fluc.per"
-<br>save overview last "pn_fluc.ovr"
-<br>save element nitrogen last "pn_fluc.nit"
-<br>save dr last "pn_fluc.dr"
-<br>save results last "pn_fluc.rlt"
+<br>save performance ".per"
+<br>save overview last ".ovr"
+<br>save element nitrogen last ".nit"
+<br>save dr last ".dr"
+<br>save results last ".rlt"
 <br>#
 <br># pn_fluc.in
 <br># class pn function
@@ -12815,6 +13040,7 @@ This is the on-the-spot version of the Paris Planetary Nebula.
 <p>
 </p><hr><kbd><h2>pn_paris.in</h2>  </kbd><h2><I>"Paris meeting PN"
 </I></h2><kbd><br>title "Paris meeting PN"
+<br>set save prefix "pn_paris"
 <br># standard" PN model of the Pequignot Meudon Conference
 <br>#
 <br># commands controlling continuum =========
@@ -12845,20 +13071,20 @@ This is the on-the-spot version of the Paris Planetary Nebula.
 <br>print line optical depths 
 <br>print ages 
 <br>print column densities 
-<br>save performance "pn_paris.per"
-<br>save overview "pn_paris.ovr"
-<br>save transmitted continuum "pn_paris.trn"
-<br>save continuum units microns "pn_paris.con"
-<br>save element carbon  "pn_paris.car"
-<br>save physical conditions "pn_paris.phy"
-<br>save element nitrogen "pn_paris.nit" 
-<br>save dr "pn_paris.dr"
-<br>save temperature "pn_paris.tem"
-<br>save lines emissivity "pn_paris.ems"
+<br>save performance ".per"
+<br>save overview ".ovr"
+<br>save transmitted continuum ".trn"
+<br>save continuum units microns ".con"
+<br>save element carbon  ".car"
+<br>save physical conditions ".phy"
+<br>save element nitrogen ".nit"
+<br>save dr ".dr"
+<br>save temperature ".tem"
+<br>save lines emissivity ".ems"
 <br>h  1 6562.80A
 <br>Blnd  6720
 <br>end of lines
-<br>save averages "pn_paris.avr" last
+<br>save averages ".avr" last
 <br>temperature hydrogen 1 
 <br>end of averagers
 <br>#
@@ -13914,7 +14140,7 @@ table star tlusty obstar metallicity option works.
 <br>optimize tolerance 0.03
 <br>constant temper 4.3 vary
 <br>optimize phymir sequential
-<br>optimize iteration 500
+<br>optimize iteration 750
 <br># the following spectrum was derived by running this sim at hden 5, t=4,
 <br># and T_star=51200
 <br># resulting eden was 5.040 and T=4, which we shall assert that we find
