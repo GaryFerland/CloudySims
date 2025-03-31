@@ -1418,15 +1418,17 @@ void SaveDo(
 					for( j=0;j<rfield.nflux;j = j + save.ncSaveSkip)
 					{
 						fprintf( save.params[ipPun].ipPnunit, 
-							"%.5e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%4.4s\t%4.4s\t",
+							"%.5e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%.3e\t%4.4s\t%4.4s\t",
 						  AnuUnit(rfield.anu(j)), 
 						  rfield.flux[0][j], 
 						  rfield.otslin[j], 
 						  rfield.otscon[j], 
+						  rfield.reflin[0][j],
 						  rfield.ConRefIncid[0][j],
 						  rfield.ConEmitReflec[0][j], 
 						  rfield.ConInterOut[j],
-						  rfield.outlin[0][j]+rfield.outlin_noplot[j], 
+						  rfield.outlin[0][j],
+						  rfield.outlin_noplot[j],
 						  rfield.ConEmitOut[0][j],
 						  rfield.chLineLabel[j].c_str(), 
 						  rfield.chContLabel[j].c_str()
