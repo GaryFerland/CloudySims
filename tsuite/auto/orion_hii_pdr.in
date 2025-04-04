@@ -849,7 +849,8 @@ monitor column density "H2O+"      11.03
 ## >>chng 23 may 15, from 16.46 to 16.4, GS updates 21 reactions to UMIST 2012
 ## >>chng 24 apr 21, from 16.4 to 16.46, GS updates chemistry
 ## >>chng 24 oct 24, from 16.46 to 16.4, merge master
-monitor column density "H2O"       16.4  
+## >>chng 25 apr 04, disable duplicate monitor
+## monitor column density "H2O"       16.4  
 ## >>chng 21 apr 16, from 11.41 to 12.91, add molecular column densities
 ## >>chng 21 sep 11, from 12.91 to 12.98, LAMDA update
 monitor column density "H3O+"      12.98  
