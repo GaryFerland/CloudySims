@@ -950,7 +950,11 @@ STATIC void qheat_init(size_t nd,
 					xx = -xx;
 					sign = -1.;
 				}
-				long ipLo = rfield.ipointC( max(xx,rfield.emm()) );
+				/* the call to min() is needed because in extreme circumstances it can
+				 * happen that ratio*cool1 is so large that -xx > anu(qnflux-1). In that
+				 * case the contribution to phiTilde would not be counted, which can lead
+				 * to spurious failures of the energy conservation test */
+				long ipLo = rfield.ipointC( min(max(xx,rfield.emm()),rfield.anu(i)) );
 				/* for grains in hard X-ray environments, the coarseness of the grid can
 				 * lead to inaccuracies in the integral over phiTilde that would trip the
 				 * sanity check in qheat(), here we correct for the energy mismatch */
