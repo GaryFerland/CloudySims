@@ -70,4 +70,35 @@ namespace {
 			CHECK( fp_equal( powpq(arg1,arg2,arg3), pow(arg1,(double)arg2/(double)arg3), 128 ) );
 		}
 	}
+
+	TEST(TestStripWhitespace)
+	{
+		string s = "  \tH2 ";
+		string t = StripWhitespace(s);
+		CHECK( t == "H2" );
+		s = "  H  2   ";
+		t = StripWhitespace(s);
+		CHECK( t == "H  2" );
+		s = "H  2   ";
+		t = StripWhitespace(s);
+		CHECK( t == "H  2" );
+		s = "  H  2";
+		t = StripWhitespace(s);
+		CHECK( t == "H  2" );
+		s = "H2";
+		t = StripWhitespace(s);
+		CHECK( t == "H2" );
+		s = "  2";
+		t = StripWhitespace(s);
+		CHECK( t == "2" );
+		s = "  2   ";
+		t = StripWhitespace(s);
+		CHECK( t == "2" );
+		s = " ";
+		t = StripWhitespace(s);
+		CHECK( t == "" );
+		s = "";
+		t = StripWhitespace(s);
+		CHECK( t == "" );
+	}
 }
