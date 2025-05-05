@@ -336,8 +336,7 @@ monitor "TiO"                 789.133m   -4.035 line luminosity
 monitor "TiO"                 860.847m   -4.097 line luminosity
 ## >>chng 25 apr 22, from -4.457 to -4.413, GS add Ti chemistry, TiO emission
 monitor "TiO"                 1183.56m   -4.413  line luminosity
-## >>chng 25 may 03, from -20.57 to -20.51, merge MoleUpdate to master
-monitor column density "HNTi"      -20.51   
+monitor column density "HNTi"      -20.568   
 monitor column density "HNTi+"       4.932   
 monitor column density "TiNC+"       7.784   
 monitor column density "TiO"        14.895   
