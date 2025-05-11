@@ -220,12 +220,16 @@ namespace {
 		te = phycon.te+noneq_offset(rate);
 		/* UMIST rates are simple temperature power laws that
 	 	 * can become large at the high temperatures Cloudy
-	 	 * may encounter. Do not extrapolate to above T>2.5e3K */ 
-		/* rate-b is the power beta in (T/300)^beta, positive beta
-		 * can diverge at high temperatures */
-		/* THIS CODE MUST BE KEPT PARALLEL WITH HMRATE4 IN MOLE.H */ 
-		if( rate->b > 0.)	
-			te = min(te, 2500.);
+	 	 * may encounter.  Similarly they were not intended for very low temperatures.
+		 * Do not extrapolate rates far from the ~100 kK temperatures
+		 * rate-b is the power beta in (T/300)^beta, positive beta
+		 * can diverge at high temperatures
+		 * THIS CODE MUST BE KEPT PARALLEL WITH HMRATE4 IN MOLE.H */ 
+		if (rate->b >0.)	
+			te = min(te, 5000.);
+		if(rate->b <0.)
+			te = max(te, 10.);
+
 		/* rate->c is gamma in expontntial */
 		if( rate->c < 0. )
 			ASSERT( -rate->c/te < 10. );
