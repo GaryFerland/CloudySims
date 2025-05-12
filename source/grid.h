@@ -16,6 +16,9 @@ void grid_do();
 */
 void gridXspec(realnum *, long);
 
+/** GridAllocXSPECData - allocate the memory for grid.Spectra */
+void GridAllocXSPECData();
+
 /**GridRetrieveXSPECData - obtain the correct spectrum for each grid point */
 void GridRetrieveXSPECData(int option);
 

@@ -242,7 +242,8 @@ double RTesc_lya(
 		   which is within a scale factor of the destruction probability. */
 		/* Bug fix on 2023 09 07, change /SQRTPI to *SQRTPI
 		   see Appendix B of Gunasekera et al 2023. */
-		beta = conopc/(rfield.fine_opac_zone[t.Emis().ipFine() + rfield.ipFineConVelShift]*SQRTPI + conopc);
+		double lineopc = rfield.fine_opac_zone[t.Emis().ipFine() + rfield.ipFineConVelShift]*SQRTPI;
+		beta = safe_div(conopc, lineopc+conopc, 1e-10);
 	}
 	else
 	{

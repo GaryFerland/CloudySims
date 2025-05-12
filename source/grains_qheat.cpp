@@ -1751,7 +1751,9 @@ STATIC double TryDoubleStep(vector<double>& u1,
 	cooling2 = log_integral(u1[k-2],p[k-2]*Lambda[k-2],u1[k],p2k*Lambda[k],z[0],z[3],z[2],z[6]);
 
 	/* p[0] is not reliable, so ignore convergence test on cooling on first step */
-	RelErrCool = ( index > 0 ) ? fabs(cooling2-(*cooling))/(*cooling) : 0.;
+	/* on the first few steps it can happen that delu[k] is extremely small and log(u1[k-2]) == log(u1[k])
+	 * in that case *cooling will be zero and calculating RelErrCool would be meaningless (and crash as well) */
+	RelErrCool = ( index > 0 && *cooling > 0. ) ? fabs(cooling2-(*cooling))/(*cooling) : 0.;
 
 //	dprintf( ioQQQ, " TryDoubleStep k %ld p[k-1] %.4e p[k] %.4e p2k %.4e\n",k,p[k-1],p[k],p2k );
 	/* error scales as O(step^3), so this is relative accuracy of p[k] or cooling */

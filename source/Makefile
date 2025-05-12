@@ -12,9 +12,9 @@ STD = -std=c++11
 OPT = -O3 -ftrapping-math -fno-math-errno -fasynchronous-unwind-tables -Wno-deprecated-declarations
 DEBUGOPT = -finline -fasynchronous-unwind-tables
 CXX = $(DEFCXX)
-# -W is the old name for -Wextra, g++ 3.3 only supports the former
-CXXFLAGS = $(STD) $(OPT) -Wall -W -g
 CXXFLAGSEXC = -fnon-call-exceptions
+# -W is the old name for -Wextra, g++ 3.3 only supports the former
+CXXFLAGS = $(STD) $(OPT) -Wall -W -g $(CXXFLAGSEXC)
 LDFLAGS = $(OPT) -Wall -g
 LDLIBS =
 NO_TRAP_FLAGS =
@@ -232,11 +232,16 @@ version.${OBJEXT}: ${main} ${libsource} ${includes}
 DEPCMD := ${CXXDEPEND} ${STD} -MM -MG -DMM ${CXXDEFINES}
 
 cpu.${OBJEXT}: ${SRCDIR}/cpu.cpp ${CLDCONFIG} ${preobjects}
-	${CXX} ${CXXFLAGS} ${CXXFLAGSEXC} -DCLOUDY_ROOT=\"${CIP}\" -c -o $@ $<
+	${CXX} ${CXXFLAGS} -DCLOUDY_ROOT=\"${CIP}\" -c -o $@ $<
 	${SRCDIR}/make_depend.pl "${DEPCMD} $<" ${presource} ${substname} ${CLDCONFIG} ${@:.${OBJEXT}=.d}
 
 # an explicit -O0 is needed for some compilers like icc
 parse_crashdo.${OBJEXT}: ${SRCDIR}/parse_crashdo.cpp ${CLDCONFIG} ${preobjects}
+	${CXX} ${CXXFLAGSNOOPT} ${DEBUGOPT} -c -o $@ $<
+	${SRCDIR}/make_depend.pl "${DEPCMD} $<" ${presource} ${substname} ${CLDCONFIG} ${@:.${OBJEXT}=.d}
+
+# the same goes for random_crash.cpp
+random_crash.${OBJEXT}: ${SRCDIR}/random_crash.cpp ${CLDCONFIG} ${preobjects}
 	${CXX} ${CXXFLAGSNOOPT} ${DEBUGOPT} -c -o $@ $<
 	${SRCDIR}/make_depend.pl "${DEPCMD} $<" ${presource} ${substname} ${CLDCONFIG} ${@:.${OBJEXT}=.d}
 

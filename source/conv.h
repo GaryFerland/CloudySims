@@ -60,7 +60,7 @@ void ConvBase(long loopi);
 void eden_sum();
 
 /**EdenChange - changes electron density and dependent variables */
-void EdenChange( double EdenNew );
+void EdenChange( double EdenNew, bool lgEvalEscProb = true );
 
 class ConvergenceCounter;
 
