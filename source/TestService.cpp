@@ -71,34 +71,87 @@ namespace {
 		}
 	}
 
-	TEST(TestStripWhitespace)
+	TEST(TestTrimTrailingWhiteSpace1)
 	{
 		string s = "  \tH2 ";
-		string t = StripWhitespace(s);
-		CHECK( t == "H2" );
+		trimTrailingWhiteSpace(s);
+		CHECK( s == "  \tH2" );
 		s = "  H  2   ";
-		t = StripWhitespace(s);
-		CHECK( t == "H  2" );
+		trimTrailingWhiteSpace(s);
+		CHECK( s == "  H  2" );
 		s = "H  2   ";
-		t = StripWhitespace(s);
-		CHECK( t == "H  2" );
+		trimTrailingWhiteSpace(s);
+		CHECK( s == "H  2" );
 		s = "  H  2";
-		t = StripWhitespace(s);
-		CHECK( t == "H  2" );
+		trimTrailingWhiteSpace(s);
+		CHECK( s == "  H  2" );
 		s = "H2";
-		t = StripWhitespace(s);
-		CHECK( t == "H2" );
+		trimTrailingWhiteSpace(s);
+		CHECK( s == "H2" );
 		s = "  2";
-		t = StripWhitespace(s);
-		CHECK( t == "2" );
+		trimTrailingWhiteSpace(s);
+		CHECK( s == "  2" );
 		s = "  2   ";
-		t = StripWhitespace(s);
-		CHECK( t == "2" );
+		trimTrailingWhiteSpace(s);
+		CHECK( s == "  2" );
 		s = " ";
-		t = StripWhitespace(s);
-		CHECK( t == "" );
+		trimTrailingWhiteSpace(s);
+		CHECK( s == "" );
 		s = "";
-		t = StripWhitespace(s);
-		CHECK( t == "" );
+		trimTrailingWhiteSpace(s);
+		CHECK( s == "" );
 	}
+
+	int TestString(char* s, const char* src, const char* res)
+	{
+		strncpy(s, src, 10);
+		trimTrailingWhiteSpace(s);
+		return strcmp(s, res);
+	}
+
+	TEST(TestTrimTrailingWhiteSpace2)
+	{
+		char s[10];
+		CHECK( TestString(s, "  \tH2 ", "  \tH2") == 0 );
+		CHECK( TestString(s, "  H  2   ", "  H  2") == 0 );
+		CHECK( TestString(s, "H  2   ", "H  2") == 0 );
+		CHECK( TestString(s, "  H  2", "  H  2") == 0 );
+		CHECK( TestString(s, "H2", "H2") == 0 );
+		CHECK( TestString(s, "  2", "  2") == 0 );
+		CHECK( TestString(s, "  2   ", "  2") == 0 );
+		CHECK( TestString(s, " ", "") == 0 );
+		CHECK( TestString(s, "", "") == 0 );
+	}
+
+	TEST(TestTrimWhiteSpace)
+	{
+		string s = "  \tH2 ";
+		trimWhiteSpace(s);
+		CHECK( s == "H2" );
+		s = "  H  2   ";
+		trimWhiteSpace(s);
+		CHECK( s == "H  2" );
+		s = "H  2   ";
+		trimWhiteSpace(s);
+		CHECK( s == "H  2" );
+		s = "  H  2";
+		trimWhiteSpace(s);
+		CHECK( s == "H  2" );
+		s = "H2";
+		trimWhiteSpace(s);
+		CHECK( s == "H2" );
+		s = "  2";
+		trimWhiteSpace(s);
+		CHECK( s == "2" );
+		s = "  2   ";
+		trimWhiteSpace(s);
+		CHECK( s == "2" );
+		s = " ";
+		trimWhiteSpace(s);
+		CHECK( s == "" );
+		s = "";
+		trimWhiteSpace(s);
+		CHECK( s == "" );
+	}
+
 }

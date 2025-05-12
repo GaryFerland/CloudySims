@@ -872,8 +872,11 @@ void Atom_LevelN::operator()(
 				// this is an atom or ion, so convert to species notation
 				species = makeChemical(nelem, IonStg-1);
 			else
+			{
 				// this is a molecule, so remove spaces but do not touch otherwise
-				species = StripWhitespace(chLabel);
+				species = chLabel;
+				trimWhiteSpace(species);
+			}
 			save.img_matrix.createImage( species, iteration, nzone, nlev,
 							Save_amat, Save_bvec, true );
 
