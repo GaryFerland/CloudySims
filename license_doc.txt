@@ -1,26 +1,21 @@
-Copyright (C) 1978-2025 Gary J. Ferland and others. All rights reserved.
+Creative Commons Attribution 4.0 International (CC BY 4.0)
 
-Redistribution and use of the documentation (all parts of Hazy and the Quick
-Start Guide) in source (LaTeX) and 'compiled' forms (PDF, PostScript, HTML and
-so forth) with or without modification, are permitted provided that the
-following conditions are met:
+Copyright (C) 1978-2025 Gary J. Ferland and others.
 
-   1. Redistributions of source code (LaTeX) must retain the above copyright
-      notice, this list of conditions and the following disclaimer as the
-      first lines of this file unmodified.
+This work (including all parts of Hazy and the Quick Start Guide) is licensed under the Creative Commons Attribution 4.0 International License.
 
-   2. Redistributions in compiled form (converted to PDF, PostScript, XML,
-      HTML and other formats) must reproduce the above copyright notice, this
-      list of conditions and the following disclaimer in the documentation
-      and/or other materials provided with the distribution.
+You are free to:
+  • Share — copy and redistribute the material in any medium or format
+  • Adapt — remix, transform, and build upon the material for any purpose, even commercially.
 
-THIS DOCUMENTATION IS PROVIDED BY THE CLOUDY PROJECT "AS IS" AND ANY EXPRESS
-OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
-EVENT SHALL THE CLOUDY PROJECT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-ARISING IN ANY WAY OUT OF THE USE OF THIS DOCUMENTATION, EVEN IF ADVISED OF
-THE POSSIBILITY OF SUCH DAMAGE.
+Under the following terms:
+  • Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. 
+    You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+
+There are no additional restrictions — You may not apply legal terms or technological measures that legally restrict others from doing anything the license permits.
+
+Full license text: https://creativecommons.org/licenses/by/4.0/legalcode  
+Human-readable summary: https://creativecommons.org/licenses/by/4.0/
+
+Disclaimer:
+This documentation is provided "AS IS", without warranties or conditions of any kind, either express or implied.
