@@ -9,7 +9,7 @@
 // take checksum of aligned buffer
 void VectorHash(const void* key, size_t len, uint32_t seed, void* out);
 // take checksum of an already opened stream
-std::string VHstream(FILE* io);
+std::string VHstream(const std::string& fpath);
 // take checksum of the contents of a string
 std::string VHstring(const std::string& s);
 

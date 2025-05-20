@@ -3,6 +3,7 @@
 #include "cddefines.h"
 #include "vectorize.h"
 #include "container_classes.h"
+#include "service.h"
 #include "thirdparty.h"
 
 inline double polevl(double x, const double coef[], int N);
@@ -4325,7 +4326,7 @@ STATIC uint32 MD5swap( uint32 word );
 STATIC void MD5_Transform (uint32 *digest, const uint32 *in);
 
 //
-// The routines MD5file(), MD5datafile(), MD5datastream(), MD5string() and MD5swap() were written by Peter van Hoof
+// The routines MD5file(), MD5datafile(), MD5string() and MD5swap() were written by Peter van Hoof
 //
 // this version returns the md5sum of a file and is identical to the well known md5sum algorithm
 string MD5file(const char* fnam, access_scheme scheme)
@@ -4353,25 +4354,10 @@ string MD5datafile(const char* fnam, access_scheme scheme)
 
 	fstream ioFile;
 	open_data( ioFile, fnam, mode_r, scheme );
-	return MD5datastream(ioFile);
-}
 
-
-string MD5datastream(fstream& ioFile)
-{
-	DEBUG_ENTRY( "MD5datastream()" );
-
-	// get file size
-	ioFile.seekg( 0, ios::end );
-	streampos fsize = ioFile.tellg();
-	ioFile.seekg( 0, ios::beg );
-
-	// get strings with suitable sizes
 	string line, content;
-	content.reserve(fsize);
-
 	while( getline( ioFile, line ) )
-		if( line[0] != '#' )
+		if( line.length() > 0 && line[0] != '#' )
 			content += line;
 
 	return MD5string( content );

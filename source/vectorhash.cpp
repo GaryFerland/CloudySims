@@ -29,6 +29,7 @@
 #include <string>
 #include <sstream>
 #include <cstdlib>
+#include <filesystem>
 
 #ifdef __SSE2__
 #include <immintrin.h>
@@ -45,6 +46,7 @@
 #endif
 
 using namespace std;
+namespace fs = std::filesystem;
 
 //-----------------------------------------------------------------------------
 // tunable parameters
@@ -93,7 +95,7 @@ inline uint32_t rotl32 ( uint32_t x, int r )
 inline int posix_memalign(void **p, size_t a, size_t s)
 {
 	*p = aligned_alloc(s, a);
-	return ( *p == NULL ) ? errno : 0;
+	return ( *p == nullptr ) ? errno : 0;
 }
 
 inline void posix_memalign_free(void *p)
@@ -105,7 +107,7 @@ inline void posix_memalign_free(void *p)
 inline int posix_memalign(void **p, size_t a, size_t s)
 {
 	*p = _aligned_malloc(s, a);
-	return ( *p == NULL ) ? errno : 0;
+	return ( *p == nullptr ) ? errno : 0;
 }
 
 inline void posix_memalign_free(void *p)
@@ -550,42 +552,45 @@ void VectorHash(const void* key, size_t len, uint32_t seed, void* out)
 
 #endif
 
-string VHstream(FILE* io)
+string VHstream(const string& fpath)
 {
-	if( fseek( io, 0, SEEK_END ) != 0 )
+	fs::path fsp = fpath;
+	error_code ec;
+	auto fsize = fs::file_size(fsp, ec);
+	if( ec.value() != 0 )
 		return string();
-	long fsize = ftell(io);
-	if( fsize < 0 )
+
+	FILE* io = fopen( fpath.c_str(), "r" );
+	if( io == nullptr )
 		return string();
 #if _POSIX_MAPPED_FILES > 0
 	int fd = fileno(io);
-	char* map = (char*)mmap( NULL, fsize, PROT_READ, MAP_SHARED, fd, 0 );
+	char* map = (char*)mmap( nullptr, fsize, PROT_READ, MAP_SHARED, fd, 0 );
 	if( fsize > 0 && map == MAP_FAILED )
-		return string();
+		return fclose(io), string();
 	uint32_t state[vh_nstate];
 	VectorHash( map, fsize, 0xfd4c799d, state );
 	munmap(map, fsize);
 #else
-	if( fseek( io, 0, SEEK_SET ) != 0 )
-		return string();
-	void* map = NULL;
+	void* map = nullptr;
 	if( fsize > 0 )
 	{
 		if( posix_memalign( &map, vh_hwreg_width/8, fsize ) != 0 )
-			return string();
+			return fclose(io), string();
 		if( fread( map, fsize, 1, io ) != 1 )
-			return string();
+			return posix_memalign_free(map), fclose(io), string();
 	}
 	uint32_t state[vh_nstate];
 	VectorHash( map, fsize, 0xfd4c799d, state );
-	if( map != NULL )
-		posix_memalign_free( map );
+	if( map != nullptr )
+		posix_memalign_free(map);
 #endif
 
 	ostringstream hash;
 	for( uint32_t i=0; i < vh_nstate; ++i )
 		hash << hex << setfill('0') << setw(8) << state[i];
 
+	fclose(io);
 	return hash.str();
 }
 

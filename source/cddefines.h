@@ -39,6 +39,7 @@
 #include <cmath>
 #include <cassert>
 #include <cstring>
+#include <cstdint>
 #include <cfloat>
 #include <climits>
 #include <ctime>

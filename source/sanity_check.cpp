@@ -20,7 +20,7 @@
 
 #ifndef NDEBUG
 namespace {
-	class my_Integrand: public std::unary_function<double, double>
+	class my_Integrand
 	{
 	public:
 		double operator() (double x) const

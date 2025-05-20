@@ -835,7 +835,7 @@ MPI_File open_data( const string& fname, int mode, access_scheme scheme, string*
 	return fh;
 }
 
-void check_data( const string& fpath, const string& fname )
+void check_data(const string& fpath, const string& fname)
 {
 	DEBUG_ENTRY( "check_data()" );
 
@@ -845,19 +845,14 @@ void check_data( const string& fpath, const string& fname )
 	// Checksums do not work on Windows because of the different EOL style
 	// Cygwin may or may not be affected too, so we will play safe here...
 #if !defined(_WIN32) && !defined(__CYGWIN__)
-	map<string,string>::const_iterator ptr = cpu.i().checksum_expct.find( fname );
+	map<string,string>::const_iterator ptr = cpu.i().checksum_expct.find(fname);
 	if( ptr != cpu.i().checksum_expct.end() )
 	{
-		FILE* ioFile = sys_fopen( fpath.c_str(), "r" );
-		if( ioFile != NULL )
+		string checksum = VHstream(fpath);
+		if( checksum != ptr->second )
 		{
-			string checksum = VHstream( ioFile );
-			if( checksum != ptr->second )
-			{
-				fprintf( ioQQQ, "NOTE: using modified data in %s.\n", fname.c_str() );
-				++cpu.i().nCSMismatch;
-			}
-			fclose( ioFile );
+			fprintf( ioQQQ, "NOTE: using modified data in %s.\n", fname.c_str() );
+			++cpu.i().nCSMismatch;
 		}
 	}
 #endif

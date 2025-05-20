@@ -83,7 +83,7 @@ void load_balance::init( unsigned int nJobs, unsigned int nCPU )
 			p_jobs[i] = i;
 
 		if( p_ncpu > 1 )
-			random_shuffle( p_jobs.begin(), p_jobs.end(), [](int n){ return int((ran.i63()>>7)%n); } );
+			shuffle( p_jobs.begin(), p_jobs.end(), ran_u32() );
 	}
 	// now broadcast the random sequence to the other ranks...
 	if( lgMPI )
@@ -235,13 +235,13 @@ void process_output()
 					// dest points to an empty file, so generate the complete FITS file now
 					saveFITSfile( dest, save.FITStype[ipPun], save.punarg[ipPun][0],
 								  save.punarg[ipPun][1], save.punarg[ipPun][2] );
-					fseek( dest, 0, SEEK_END );
-					if( ftell(dest)%2880 != 0 )
+					fclose( dest );
+					auto file_size = FileSize(fnam);
+					if( file_size == FS_UNKNOWN || file_size%2880 != 0 )
 					{
 						fprintf( ioQQQ, "PROBLEM - length of %s is not a multiple of 2880 bytes.", fnam.c_str() );
 						fprintf( ioQQQ, "It is therefore not a valid FITS file!\n" );
 					}
-					fclose( dest );
 				}
 			}
 			else if( save.lgSaveToSeparateFiles[ipPun] )
@@ -317,13 +317,9 @@ STATIC void GridGatherOutputParallel(const string& basenam,
 		if( j >= bound[cpu.i().nRANK()] && j < bound[cpu.i().nRANK()+1] )
 		{
 			string gridnam = GridPointPrefix(j) + basenam;
-			FILE* fh = open_data( gridnam, "r", AS_LOCAL_ONLY_TRY );
-			if( fh != NULL )
-			{
-				fseek( fh, 0, SEEK_END );
-				mySize += static_cast<MPI_Offset>( ftell(fh) );
-				fclose(fh);
-			}
+			auto file_size = FileSize(gridnam);
+			if( file_size != FS_UNKNOWN )
+				mySize += static_cast<MPI_Offset>(file_size);
 		}
 	}
 
@@ -403,6 +399,7 @@ STATIC gfstate check_grid_file( const string& fnam, int j, int ipPun )
 	gfstate res;
 
 	string gridnam = GridPointPrefix(j) + fnam;
+	auto filesz = FileSize(gridnam);
 	fstream str;
 
 	if( save.lgFITS[ipPun] )
@@ -415,9 +412,8 @@ STATIC gfstate check_grid_file( const string& fnam, int j, int ipPun )
 		// files with the wrong size (usually 0) are also treated as missing.
 		if( save.lgXSPEC[ipPun] )
 		{
-			size_t blocksz = size_t(rfield.nflux)*sizeof(decltype(grid.Spectra[0][0][0]));
-			open_data( str, gridnam, mode_ab, AS_LOCAL_ONLY_TRY );
-			if( !str.is_open() || size_t(str.tellg()) != blocksz )
+			uintmax_t blocksz = uintmax_t(rfield.nflux)*sizeof(decltype(grid.Spectra[0][0][0]));
+			if( filesz != blocksz )
 				res[FILE_ABSENT] = 1;
 		}
 		return res;
@@ -438,7 +434,7 @@ STATIC gfstate check_grid_file( const string& fnam, int j, int ipPun )
 	if( str.is_open() )
 	{
 		str.seekg( 0, ios_base::end );
-		if( str.good() && str.tellg() > 0 )
+		if( str.good() && filesz > 0 )
 		{
 			// check if the file ends in a newline
 			str.seekg( -1, ios_base::cur );

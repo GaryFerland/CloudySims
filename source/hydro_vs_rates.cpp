@@ -46,7 +46,7 @@ STATIC double hydro_vs_coll_str( long nHi, long gHi, double IP_Ryd_Hi, long nLo,
 STATIC double expe1( double x);
 
 namespace {
-	class my_Integrand : public std::unary_function<double, double> 
+	class my_Integrand
 	{
 	public:
 		long nelem, Collider;
@@ -56,11 +56,11 @@ namespace {
 		double IP_Ryd_Hi, IP_Ryd_Lo;
 		
 		double operator() (double EOverKT) const
-			{
-				double col_str = hydro_vs_coll_str( nHi, gHi, IP_Ryd_Hi, nLo, gLo, IP_Ryd_Lo, 
-					Aul, nelem, Collider, EOverKT * EVRYD * temp/TE1RYD );
-				return exp( -1.*EOverKT ) * col_str;
-			}
+		{
+			double col_str = hydro_vs_coll_str( nHi, gHi, IP_Ryd_Hi, nLo, gLo, IP_Ryd_Lo, 
+												Aul, nelem, Collider, EOverKT * EVRYD * temp/TE1RYD );
+			return exp( -1.*EOverKT ) * col_str;
+		}
 	};
 }
 

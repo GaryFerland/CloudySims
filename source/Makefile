@@ -8,7 +8,7 @@ ifeq ($(DEFCXX),)
   DEFCXX := ${shell which clang++ 2> /dev/null}
 endif
 
-STD = -std=c++11
+STD = -std=c++17
 OPT = -O3 -ftrapping-math -fno-math-errno -fasynchronous-unwind-tables -Wno-deprecated-declarations
 DEBUGOPT = -finline -fasynchronous-unwind-tables
 CXX = $(DEFCXX)
