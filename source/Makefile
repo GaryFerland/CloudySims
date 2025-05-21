@@ -17,6 +17,7 @@ CXXFLAGSEXC = -fnon-call-exceptions
 CXXFLAGS = $(STD) $(OPT) -Wall -W -g $(CXXFLAGSEXC)
 LDFLAGS = $(OPT) -Wall -g
 LDLIBS =
+FSLIB =
 NO_TRAP_FLAGS =
 # this is intended for supplying extra command line parameters, e.g. extra -D flags
 EXTRA = 
@@ -54,12 +55,17 @@ CXXDEPEND = $(DEFCXX)
 
 # check compiler capabilities
 CAPABILITIES := $(shell $(SRCDIR)/capabilities.pl $(CXX))
+FAILURE := $(filter upgrade,$(CAPABILITIES))
+ifneq ($(FAILURE),)
+  $(error $(CAPABILITIES))
+endif
 PRECOMPILE := $(filter precompile,$(CAPABILITIES))
 VECTORIZE := $(filter vectorize,$(CAPABILITIES))
 NATIVE := $(filter native,$(CAPABILITIES))
 DYNAMIC := $(filter dynamic,$(CAPABILITIES))
 DEMANGLE := $(filter demangle%,$(CAPABILITIES))
 RPATH := $(filter rpath=%,$(CAPABILITIES))
+NEEDFSLIB := $(filter need_stdc++fs,$(CAPABILITIES))
 
 # DEP_GOALS will be an empty string for targets that don't need dependencies
 NODEP_GOALS = clean distclean data
@@ -96,6 +102,10 @@ endif
 DEBUG_GOALS = $(filter debug%,$(MAKECMDGOALS))
 ifneq ($(DEBUG_GOALS),)
   OPT = $(DEBUGOPT)
+endif
+
+ifneq ($(NEEDFSLIB),)
+  FSLIB = -lstdc++fs
 endif
 
 CXXDEFINES = ${filter -D%,${CXXFLAGS}}
@@ -188,7 +198,7 @@ debug: default
 default: $(DEFAULT)
 
 cloudy.exe: ${preobjects} maincl.${OBJEXT} libcloudy.${LIBEXT}
-	${CXX} ${LDFLAGS} -o cloudy.exe maincl.${OBJEXT} -L. -lcloudy ${LDLIBS}
+	${CXX} ${LDFLAGS} -o cloudy.exe maincl.${OBJEXT} -L. -lcloudy ${LDLIBS} ${FSLIB}
 
 libcloudy.${LIBEXT}: ${libobjects}
 	ar cr libcloudy.${LIBEXT} $^
@@ -198,7 +208,7 @@ data:
 	cd ${SRCDIR}/../data/cdms+jpl && $(MAKE)
 
 vh128sum.exe: vh128sum.${OBJEXT} vectorhash.${OBJEXT}
-	${CXX} ${LDFLAGS} -o vh128sum.exe vh128sum.${OBJEXT} vectorhash.${OBJEXT}
+	${CXX} ${LDFLAGS} -o vh128sum.exe vh128sum.${OBJEXT} vectorhash.${OBJEXT} ${FSLIB}
 
 testclean:
 	rm -f Test*.${OBJEXT}
