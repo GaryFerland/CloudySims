@@ -25,7 +25,8 @@ SRCDIR = .
 OBJEXT = o
 LIBEXT = a
 
-.PHONY: all default data debug testclean clean distclean debug-test test valgrind-test depend echo-cxx echo-cxxflags
+.PHONY: all default data debug testclean clean distclean debug-test test valgrind-test depend \
+        echo-cxx echo-cxxflags echo-ldlibs
 
 # Default rule comes first -- having this implement 'make all' is standard
 all: default
@@ -106,6 +107,7 @@ endif
 
 ifneq ($(NEEDFSLIB),)
   FSLIB = -lstdc++fs
+  LDLIBS += $(FSLIB)
 endif
 
 CXXDEFINES = ${filter -D%,${CXXFLAGS}}
@@ -198,7 +200,7 @@ debug: default
 default: $(DEFAULT)
 
 cloudy.exe: ${preobjects} maincl.${OBJEXT} libcloudy.${LIBEXT}
-	${CXX} ${LDFLAGS} -o cloudy.exe maincl.${OBJEXT} -L. -lcloudy ${LDLIBS} ${FSLIB}
+	${CXX} ${LDFLAGS} -o cloudy.exe maincl.${OBJEXT} -L. -lcloudy ${LDLIBS}
 
 libcloudy.${LIBEXT}: ${libobjects}
 	ar cr libcloudy.${LIBEXT} $^
@@ -311,6 +313,9 @@ echo-cxx:
 
 echo-cxxflags:
 	@echo "$(CXXFLAGS)"
+
+echo-ldlibs:
+	@echo "${LDLIBS}"
 
 # only include dependencies when we really need them, this prevents unnecessary builds of the dependencies
 # the way we create dependency files is discussed in http://scottmcpeak.com/autodepend/autodepend.html
