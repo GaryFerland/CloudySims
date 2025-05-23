@@ -57,11 +57,11 @@ int main( void )
 				/*cdNoexec( );*/
 
 				/* gas temperature for this calculation */
-				sprintf(chLine,"constant temperature %f", temp);
+				snprintf(chLine,sizeof(chLine),"constant temperature %f", temp);
 				cdRead( chLine );
 
 				/* gas density for this calculation */
-				sprintf(chLine,"hden %f", hden);
+				snprintf(chLine,sizeof(chLine),"hden %f", hden);
 				cdRead( chLine );
 
 				/* only want the first zone */

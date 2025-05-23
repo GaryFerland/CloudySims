@@ -40,7 +40,7 @@ int main( void )
 			/* inputs */
 			cdRead( "title vary density at constant temperature"  );
 
-			sprintf(chLine,"hden %f ",hden);
+			snprintf(chLine,sizeof(chLine),"hden %f ",hden);
 			cdRead( chLine  );
 
 			cdRead( "table agn "  );

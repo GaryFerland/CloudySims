@@ -73,7 +73,7 @@ int main( void )
 			cdRead( "stop zone 1 "  );
 
 			/* the hydrogen density entered as a log */
-			sprintf(chLine,"hden %f ",hden);
+			snprintf(chLine,sizeof(chLine),"hden %f ",hden);
 			cdRead( chLine  );
 
 			/* this says to compute very small stages of ionization - we normally trim up
@@ -81,7 +81,7 @@ int main( void )
 			cdRead( "set trim -20 "  );
 
 			/* the log of the gas kinetic temperature */
-			sprintf(chLine,"constant temperature log %f ",telog);
+			snprintf(chLine,sizeof(chLine),"constant temperature log %f ",telog);
 			cdRead( chLine  );
 
 			/* actually call the code */

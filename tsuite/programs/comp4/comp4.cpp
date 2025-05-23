@@ -44,7 +44,7 @@ int main( void )
 			cdRead("no times " );
 			/* write results to either file1.txt or file2.txt */
 			cdRead("print lines column  " );
-			sprintf(chCard , "punch results column \"file%li.txt\" hide ",i+1);
+			snprintf(chCard ,sizeof(chCard), "punch results column \"file%li.txt\" hide ",i+1);
 			cdRead( chCard );
 			if( cdDrive() )
 				exit_status = ES_FAILURE;
@@ -65,7 +65,7 @@ int main( void )
 			cdRead("no times " );
 			cdRead("print lines column  " );
 			/* write results to either file1.txt or file2.txt */
-			sprintf(chCard , "punch results column \"file%li.txt\" hide ",i+1);
+			snprintf(chCard ,sizeof(chCard), "punch results column \"file%li.txt\" hide ",i+1);
 			if( cdDrive() )
 				exit_status = ES_FAILURE;
 			/* end of the second model */
@@ -84,7 +84,7 @@ int main( void )
 			cdRead( "no times " );
 			cdRead( "print lines column  " );
 			/* write results to either file1.txt or file2.txt */
-			sprintf(chCard , "punch results column \"file%li.txt\" hide ",i+1);
+			snprintf(chCard ,sizeof(chCard), "punch results column \"file%li.txt\" hide ",i+1);
 			/* actually call the code */
 			if( cdDrive() )
 				exit_status = ES_FAILURE;
