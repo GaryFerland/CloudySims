@@ -225,7 +225,7 @@ namespace {
 		 * can diverge at high temperatures */
 		/* THIS CODE MUST BE KEPT PARALLEL WITH HMRATE4 IN MOLE.H */ 
 		if( rate->b > 0.)	
-			te = min(te, 5000.);
+			te = min(te, 2500.);
 		if(rate->b <0.)
 			te = max(te, 10.);
 

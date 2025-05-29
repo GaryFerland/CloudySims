@@ -580,7 +580,7 @@ inline double hmrate4( double a, double b, double c, double te )
 	 * UMIST was designed for.
 	 * THIS CODE MUST BE KEPT PARALLEL WITH HMRATE IN MOLE_REACTIONS.CPP */ 
 	if (b >0.)	
-		te = min(te, 5000.);
+		te = min(te, 2500.);
 	if(b <0.)
 		te = max(te, 10.);
 	if( c < 0. )
