@@ -18,7 +18,8 @@ struct LevelInfo
 	long index;
 	double stwt;
 	string config;
-	LevelInfo(double e, long i, double w, string c) : nrg(e), index(i), stwt(w), config(c) {}
+	bool lgTheo;
+	LevelInfo(double e, long i, double w, string c, bool t) : nrg(e), index(i), stwt(w), config(c), lgTheo(t) {}
 	bool operator< ( const LevelInfo& l ) const
 	{
 		if( nrg < l.nrg )
@@ -159,7 +160,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		}
 
 		d.getToken( index );
-		d.getToken( nrg );
+		bool lgTheo = d.getLvlEnergy( nrg );
 		d.getToken( stwt );
 		if( stwt <= 0. || modf(stwt, &istwt) != 0. )
 			d.errorAbort( "invalid statistical weight" );
@@ -168,7 +169,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 
 		d.checkEOL();
 
-		dBaseStatesOrg.emplace_back(nrg, index, stwt, config);
+		dBaseStatesOrg.emplace_back(nrg, index, stwt, config, lgTheo);
 	}
 
 	if( !lgSentinelReached )
