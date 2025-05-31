@@ -385,17 +385,21 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	xIntensity_in = xIntensity*t.Emis().FracInwd();
 	xObsIntensity_in = xObsIntensity*t.Emis().FracInwd();
 	ASSERT( xIntensity_in>=0. );
-	if( lgIsM1Line(t) )	
-		linadd(xIntensity_in,xObsIntensity_in,t.twav(),"Inwd M1",'i',chComment);
+	if( lgIsM1Line(t) )
+		chLabel = chIonLbl(t) + "Inwd M1";
+		//linadd(xIntensity_in,xObsIntensity_in,t.twav(),"Inwd M1",'i',chComment);
 	else
-		linadd(xIntensity_in,xObsIntensity_in,t.twav(),"Inwd",'i',chComment);
+		chLabel = chIonLbl(t) + "Inwd";
+	linadd(xIntensity_in,xObsIntensity_in,t.twav(),chLabel.c_str(),'i',chComment);
 	
 	/* cooling part of line */
 	other = t.Coll().cool();
 	if( lgIsM1Line(t) )
-		linadd(other,t.twav(),"Coll M1",'i',chComment);
+		chLabel = chIonLbl(t) + "Coll M1";
+		//linadd(other,t.twav(),"Coll M1",'i',chComment);
 	else
-		linadd(other,t.twav(),"Coll",'i',chComment);
+		chLabel = chIonLbl(t) + "Coll";
+	linadd(other,t.twav(),chLabel.c_str(),'i',chComment);
 	
 	/* fluorescent excited part of line */
 	double radiative_branching;
@@ -425,16 +429,20 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 
 	other = (*t.Lo()).Pop() * t.Emis().pump() * radiative_branching * t.EnergyErg();
 	if( lgIsM1Line(t) )
-		linadd(other,t.twav(),"Pump M1",'i',chComment);
+		chLabel = chIonLbl(t) + "Pump M1";
+		//linadd(other,t.twav(),"Pump M1",'i',chComment);
 	else
-		linadd(other,t.twav(),"Pump",'i',chComment);
+		chLabel = chIonLbl(t) + "Pump";
+	linadd(other,t.twav(),chLabel.c_str(),'i',chComment);
 
 	/* heating part of line */
 	other = t.Coll().heat();
 	if( lgIsM1Line(t) )
-		linadd(other,t.twav(),"Heat M1",'i',chComment);
+		chLabel = chIonLbl(t) + "Heat M1";
+		//linadd(other,t.twav(),"Heat M1",'i',chComment);
 	else
-		linadd(other,t.twav(),"Heat",'i',chComment);
+		chLabel = chIonLbl(t) + "Heat";
+	linadd(other,t.twav(),chLabel.c_str(),'i',chComment);
 
 	return;
 }
