@@ -46,7 +46,7 @@ void ConvIterCheck( void )
 
 	double a, total, BeamedIn;
 	long int ipTotal = cdLine( "H  1" , Hbeta_WavLen, &a , &total );
-	long int ipInwd  = cdLine( "H  1Inwd" , Hbeta_WavLen, &a , &BeamedIn );
+	long int ipInwd  = cdLine( "H  1 Inwd" , Hbeta_WavLen, &a , &BeamedIn );
 
 	/* 2014 aug 23, mchatzikos
 	 * when cdLine returned -37 for log of zero intensity, the ratio below evaluated to 0;

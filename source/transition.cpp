@@ -386,19 +386,17 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	xObsIntensity_in = xObsIntensity*t.Emis().FracInwd();
 	ASSERT( xIntensity_in>=0. );
 	if( lgIsM1Line(t) )
-		chLabel = chIonLbl(t) + "Inwd M1";
-		//linadd(xIntensity_in,xObsIntensity_in,t.twav(),"Inwd M1",'i',chComment);
+		chLabel = chIonLbl(t) + " M1 Inwd";
 	else
-		chLabel = chIonLbl(t) + "Inwd";
+		chLabel = chIonLbl(t) + " Inwd";
 	linadd(xIntensity_in,xObsIntensity_in,t.twav(),chLabel.c_str(),'i',chComment);
 	
 	/* cooling part of line */
 	other = t.Coll().cool();
 	if( lgIsM1Line(t) )
-		chLabel = chIonLbl(t) + "Coll M1";
-		//linadd(other,t.twav(),"Coll M1",'i',chComment);
+		chLabel = chIonLbl(t) + " M1 Coll";
 	else
-		chLabel = chIonLbl(t) + "Coll";
+		chLabel = chIonLbl(t) + " Coll";
 	linadd(other,t.twav(),chLabel.c_str(),'i',chComment);
 	
 	/* fluorescent excited part of line */
@@ -429,19 +427,17 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 
 	other = (*t.Lo()).Pop() * t.Emis().pump() * radiative_branching * t.EnergyErg();
 	if( lgIsM1Line(t) )
-		chLabel = chIonLbl(t) + "Pump M1";
-		//linadd(other,t.twav(),"Pump M1",'i',chComment);
+		chLabel = chIonLbl(t) + " M1 Pump";
 	else
-		chLabel = chIonLbl(t) + "Pump";
+		chLabel = chIonLbl(t) + " Pump";
 	linadd(other,t.twav(),chLabel.c_str(),'i',chComment);
 
 	/* heating part of line */
 	other = t.Coll().heat();
 	if( lgIsM1Line(t) )
-		chLabel = chIonLbl(t) + "Heat M1";
-		//linadd(other,t.twav(),"Heat M1",'i',chComment);
+		chLabel = chIonLbl(t) + " M1 Heat";
 	else
-		chLabel = chIonLbl(t) + "Heat";
+		chLabel = chIonLbl(t) + " Heat";
 	linadd(other,t.twav(),chLabel.c_str(),'i',chComment);
 
 	return;

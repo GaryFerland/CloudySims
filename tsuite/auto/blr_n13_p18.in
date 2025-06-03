@@ -69,7 +69,7 @@ monitor line luminosity "H  1"  4861.32A 6.422 ##total of sum of both Si IV comp
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
 ## >>chng 21 nov 02, from 6.446 to 6.419, fix bug with overresolving CS in isoseq
-monitor line luminosity "Inwd" 4861.32A 6.419, 
+monitor line luminosity "H  1 Inwd" 4861.32A 6.419,
 ##
 ##total HeII Balmer-a 1640
 ## >>chng 04 apr 28, from 4.666 to 4.693, He+ - H ct rate update

@@ -285,7 +285,7 @@ void PrtComment(void)
 	}
 
 	/* HBeta is used later in the code to check on line intensities */
-	if( cdLine("H  1Pump",Hbeta_WavLen,&relfl,&absint)<=0 )
+	if( cdLine("H  1 Pump",Hbeta_WavLen,&relfl,&absint)<=0 )
 	{
 		fprintf( ioQQQ, " PROBLEM Did not find Pump H-beta, set to unity\n" );
 		relfl = 1.;

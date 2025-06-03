@@ -81,7 +81,7 @@ Inci  1367   vacuum #  incident continuum at 1367 Angstroms in units of nuF(nu)
 # >>chng 17 may 26, wl from 1215.68 to 1215.67A, update Rydberg constant
 H  1  1215.67A  vacuum #   total Hydrogen Lyman-alpha 1215.67 
 # >>chng 17 may 26, wl from 1215.68 to 1215.67A, update Rydberg constant
-inwd  1215.67A  vacuum #   inward flux of Lyman-alpha
+"H  1 Inwd"  1215.67A  vacuum #   inward flux of Lyman-alpha
 # >>chng 17 may 25, wl from 1215.23 to 1215.13A, up Rydberg constant
 # >>chng 20 aug 22, wl from 1215.13A to 1215.12A, switched from computed to tabulated energies for H and He isoseq
 # >>chng 21 apr 08, wl from 1215.12A to 1215.13A, up 1-e energies to np
@@ -122,7 +122,7 @@ blnd 1549  vacuum #   total of sum of both C IV components
 he 2  1640.41A  vacuum #   total He II Balmer-alpha 1640
 # >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
 # >>chng 21 april 7, wl from 1640.40 to 1640.41A, replacing average energy with np energies
-inwd  1640.41A  vacuum #   inward flux of He II Balmer-alpha 1640
+"He 2 Inwd"  1640.41A  vacuum #   inward flux of He II Balmer-alpha 1640
 o  3  1660.81  vacuum #   total O III] 1660.81
 #inwd  1660.81 vacuum #    inward flux of O III] 1660.81
 o  3  1666.15  vacuum #   total O III] 1666.15
@@ -154,7 +154,7 @@ al 2  2660.35 air #    emission from most forbidden line of multiplet
 mg 2  2795.53 air #    total Mg II 2796 of the doublet
 mg 2  2802.71 air #    total Mg II 2803 of the doublet
 blnd   2798   air #  total of sum of both Mg II components
-inwd  2798   air #  inward flux of sum of both Mg II components
+"Mg 2 Inwd"  2798   air #  inward flux of sum of both Mg II components
 #
 # optical emission lines and continua
 # >>chng 17 may 25, wl from 3203.30 to 3203.04A, up Rydberg constant
@@ -185,7 +185,7 @@ ca b  4471.49  air #   total He I 4471, case B approximation
 he 2  4685.68A  air #   total He II 4686 (Paschen-alpha)
 # >>chng 20 aug 22, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
 # >>chng 21 apr 08, wl from 4685.70 to 4685.68A, up 1-e energies to np
-inwd  4685.68A  air #   inward flux of He II 4686
+"He 2 Inwd"  4685.68A  air #   inward flux of He II 4686
 # >>chng 17 may 26, wl from 4861.36 to 4861.33A, update Rydberg constant
 # >>chng 20 aug 22, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 # >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
@@ -197,7 +197,7 @@ H  1  4861.32A air #   total H-beta 4861
 # >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 # >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 # >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-inwd  4861.32A air #    inward flux of H-beta 4861
+"H  1 Inwd"  4861.32A air #    inward flux of H-beta 4861
 # >>chng 13 aug 01, wl from 5875.61 to 5875.64A, now using middle multiplet wl
 ## >>chng 18 feb 20, updated spectral label from "He 1" 5875.64A to "Blnd" 5877.29A, update He-like triplet labels and wl
 # >>chng 18 mar 06, wl from 5877.29A to 5875.66A, adjust multiplet Blend WL for refraction index

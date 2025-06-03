@@ -35,7 +35,7 @@ monitor line "H  1" 1215.67A 189.4
 ## >>chng 13 jul 25, wl from 1216 to 1215.68A, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, from 143.7 to 155.9, change normalizing line to "H  1" 4861.36A.
 ## >>chng 17 may 26, wl from 1215.68A to 1215.67A, update Rydberg constant
-monitor line "pump" 1215.67A 155.9
+monitor line "H  1 pump" 1215.67A 155.9
 ##
 ## >>chng 07 oct 22, from 26.5 to 30.63, resolve l-levels of h-like sequence
 ## >>chng 13 jul 25, wl from 1026 to 1025.73A, increased wl precision to 6 sig. fig.
@@ -46,7 +46,7 @@ monitor line "H  1" 1025.72A 32.45
 ## >>chng 13 jul 25, wl from 1025.7 to 1025.73A, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, from 28.26 to 30.66, change normalizing line to "H  1" 4861.36A.
 ## >>chng 17 may 25, wl from 1025.73A to 1025.72A, up Rydberg constant
-monitor line "pump" 1025.72A 30.66
+monitor line "H  1 pump" 1025.72A 30.66
 ##
 ## >>chng 07 oct 22, from 1.126 to 0.943, resolve l-levels of h-like sequence
 ## >>chng 13 jul 25, wl from 4861 to 4861.36A, increased wl precision to 6 sig. fig.
@@ -75,7 +75,7 @@ monitor line "Ca B" 4861.32A 1.075
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-monitor line "pump" 4861.32A 0 -0.001
+monitor line "H  1 pump" 4861.32A 0 -0.001
 ##
 ## >>chng 07 oct 22, from 3.28 to 2.42, resolve l-levels of h-like sequence
 ## >>chng 13 jul 25, wl from 6563 to 6562.85A, increased wl precision to 6 sig. fig.
