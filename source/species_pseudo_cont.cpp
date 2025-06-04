@@ -659,18 +659,15 @@ STATIC void addBandsFile( const string &filename )
 class band_emission : public band_cont
 {
 private:
-	string bandLabel,
+	string bandLabel, inwdLabel,
 		comment;
 	vector<bands_file>::iterator bands_it;
 	bool isInitd = false;
 public:
-	const string inwdLabel = "InwdBnd";
-
 	void setup( const string &splab, vector<bands_file>::iterator it )
 	{
 		speciesLabel = splab;
 		species = getSpeciesGeneric( splab );
-		//	printf("species: '%s'\n", species.label().c_str());
 
 		bands_it = it;
 		nBins = bands_it->get_nBands();
@@ -685,12 +682,13 @@ public:
 
 		string spectralLabel;
 		chemical_to_spectral( speciesLabel, spectralLabel );
-		//	printf("spectralLabel = '%s'\n", spectralLabel.c_str());
 		bandLabel = spectralLabel + "b";
+		inwdLabel = bandLabel + " InwdBnd";
 		comment = spectralLabel + " emission in bands defined in " +
 				bands_it->bandFilename();
 		isInitd = true;
 	}
+
 private:
 	void check_index_fatal( const long iband ) const
 	{
@@ -714,6 +712,7 @@ public:
 public:
 	string bandFilename() const { return bands_it->bandFilename(); }
 	string getLabel() const { return bandLabel; }
+	string getInwdLabel() const { return inwdLabel; }
 	t_wavl getWl( const long iband ) const
 	{
 		check_index_fatal( iband );
@@ -962,7 +961,7 @@ void SaveSpeciesBands( const long ipPun, const string &speciesLabel,
 		tot_emiss = LineSave.lines[itot].SumLine(ipEmType) *
 				radius.Conv2PrtInten;
 
-		LineID line_inw( bandsEm.inwdLabel.c_str(), bandsEm.getWl( iband ) );
+		LineID line_inw( bandsEm.getInwdLabel().c_str(), bandsEm.getWl( iband ) );
 		inwd = LineSave.findline(line_inw);
 		inwd_emiss = LineSave.lines[inwd].SumLine(ipEmType) *
 				radius.Conv2PrtInten;
