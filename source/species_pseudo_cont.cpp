@@ -683,7 +683,7 @@ public:
 		string spectralLabel;
 		chemical_to_spectral( speciesLabel, spectralLabel );
 		bandLabel = spectralLabel + "b";
-		inwdLabel = bandLabel + " InwdBnd";
+		inwdLabel = bandLabel + " Inwd";
 		comment = spectralLabel + " emission in bands defined in " +
 				bands_it->bandFilename();
 		isInitd = true;

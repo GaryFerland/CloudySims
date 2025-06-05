@@ -231,127 +231,127 @@ h  1   1.87510m air #   total H Paschen-alpha
 # and the following command is included in the script
 # save species bands "output.txt" "FeII_bands.ini" "Fe+"
 "Fe 2b" 1067     vacuum
-"Fe 2b InwdBnd" 1067   vacuum
+"Fe 2b Inwd" 1067   vacuum
 "Fe 2b" 1120     vacuum
-"Fe 2b InwdBnd" 1120   vacuum
+"Fe 2b Inwd" 1120   vacuum
 "Fe 2b" 1148     vacuum
-"Fe 2b InwdBnd" 1148   vacuum
+"Fe 2b Inwd" 1148   vacuum
 "Fe 2b" 1212     vacuum
-"Fe 2b InwdBnd" 1212   vacuum
+"Fe 2b Inwd" 1212   vacuum
 "Fe 2b" 1270     vacuum
-"Fe 2b InwdBnd" 1270   vacuum
+"Fe 2b Inwd" 1270   vacuum
 "Fe 2b" 1295     vacuum
-"Fe 2b InwdBnd" 1295   vacuum
+"Fe 2b Inwd" 1295   vacuum
 "Fe 2b" 1330     vacuum
-"Fe 2b InwdBnd" 1330   vacuum
+"Fe 2b Inwd" 1330   vacuum
 "Fe 2b" 1365     vacuum
-"Fe 2b InwdBnd" 1365   vacuum
+"Fe 2b Inwd" 1365   vacuum
 "Fe 2b" 1450     vacuum
-"Fe 2b InwdBnd" 1450   vacuum
+"Fe 2b Inwd" 1450   vacuum
 "Fe 2b" 1485     vacuum
-"Fe 2b InwdBnd" 1485   vacuum
+"Fe 2b Inwd" 1485   vacuum
 "Fe 2b" 1550     vacuum
-"Fe 2b InwdBnd" 1550   vacuum
+"Fe 2b Inwd" 1550   vacuum
 "Fe 2b" 1615     vacuum
-"Fe 2b InwdBnd" 1615   vacuum
+"Fe 2b Inwd" 1615   vacuum
 "Fe 2b" 1650     vacuum
-"Fe 2b InwdBnd" 1650   vacuum
+"Fe 2b Inwd" 1650   vacuum
 "Fe 2b" 1670     vacuum
-"Fe 2b InwdBnd" 1670   vacuum
+"Fe 2b Inwd" 1670   vacuum
 "Fe 2b" 1740     vacuum
-"Fe 2b InwdBnd" 1740   vacuum
+"Fe 2b Inwd" 1740   vacuum
 "Fe 2b" 1787     vacuum
-"Fe 2b InwdBnd" 1787   vacuum
+"Fe 2b Inwd" 1787   vacuum
 "Fe 2b" 1822     vacuum
-"Fe 2b InwdBnd" 1822   vacuum
+"Fe 2b Inwd" 1822   vacuum
 "Fe 2b" 1870     vacuum
-"Fe 2b InwdBnd" 1870   vacuum
+"Fe 2b Inwd" 1870   vacuum
 "Fe 2b" 1930     vacuum
-"Fe 2b InwdBnd" 1930   vacuum
+"Fe 2b Inwd" 1930   vacuum
 "Fe 2b" 2090     air
-"Fe 2b InwdBnd" 2090   air
+"Fe 2b Inwd" 2090   air
 "Fe 2b" 2355     air
-"Fe 2b InwdBnd" 2355   air
+"Fe 2b Inwd" 2355   air
 "Fe 2b" 2430     air
-"Fe 2b InwdBnd" 2430   air
+"Fe 2b Inwd" 2430   air
 "Fe 2b" 2445     air
-"Fe 2b InwdBnd" 2445   air
+"Fe 2b Inwd" 2445   air
 "Fe 2b" 2495     air
-"Fe 2b InwdBnd" 2495   air
+"Fe 2b Inwd" 2495   air
 "Fe 2b" 2610     air
-"Fe 2b InwdBnd" 2610   air
+"Fe 2b Inwd" 2610   air
 "Fe 2b" 2695     air
-"Fe 2b InwdBnd" 2695   air
+"Fe 2b Inwd" 2695   air
 "Fe 2b" 2758     air
-"Fe 2b InwdBnd" 2758   air
+"Fe 2b Inwd" 2758   air
 "Fe 2b" 2780     air
-"Fe 2b InwdBnd" 2780   air
+"Fe 2b Inwd" 2780   air
 "Fe 2b" 2797     air
-"Fe 2b InwdBnd" 2797   air
+"Fe 2b Inwd" 2797   air
 "Fe 2b" 2840     air
-"Fe 2b InwdBnd" 2840   air
+"Fe 2b Inwd" 2840   air
 "Fe 2b" 2935     air
-"Fe 2b InwdBnd" 2935   air
+"Fe 2b Inwd" 2935   air
 "Fe 2b" 2960     air
-"Fe 2b InwdBnd" 2960   air
+"Fe 2b Inwd" 2960   air
 "Fe 2b" 3050     air
-"Fe 2b InwdBnd" 3050   air
+"Fe 2b Inwd" 3050   air
 "Fe 2b" 3180     air
-"Fe 2b InwdBnd" 3180   air
+"Fe 2b Inwd" 3180   air
 "Fe 2b" 3250     air
-"Fe 2b InwdBnd" 3250   air
+"Fe 2b Inwd" 3250   air
 "Fe 2b" 3590     air
-"Fe 2b InwdBnd" 3590   air
+"Fe 2b Inwd" 3590   air
 "Fe 2b" 3910     air
-"Fe 2b InwdBnd" 3910   air
+"Fe 2b Inwd" 3910   air
 "Fe 2b" 4060     air
-"Fe 2b InwdBnd" 4060   air
+"Fe 2b Inwd" 4060   air
 "Fe 2b" 4255     air
-"Fe 2b InwdBnd" 4255   air
+"Fe 2b Inwd" 4255   air
 "Fe 2b" 4558     air
-"Fe 2b InwdBnd" 4558   air
+"Fe 2b Inwd" 4558   air
 "Fe 2b" 4600     air
-"Fe 2b InwdBnd" 4600   air
+"Fe 2b Inwd" 4600   air
 "Fe 2b" 4743     air
-"Fe 2b InwdBnd" 4743   air
+"Fe 2b Inwd" 4743   air
 "Fe 2b" 4855     air
-"Fe 2b InwdBnd" 4855   air
+"Fe 2b Inwd" 4855   air
 "Fe 2b" 4920     air
-"Fe 2b InwdBnd" 4920   air
+"Fe 2b Inwd" 4920   air
 "Fe 2b" 4971     air
-"Fe 2b InwdBnd" 4971   air
+"Fe 2b Inwd" 4971   air
 "Fe 2b" 4975     air
-"Fe 2b InwdBnd" 4975   air
+"Fe 2b Inwd" 4975   air
 "Fe 2b" 5070     air
-"Fe 2b InwdBnd" 5070   air
+"Fe 2b Inwd" 5070   air
 "Fe 2b" 5143     air
-"Fe 2b InwdBnd" 5143   air
+"Fe 2b Inwd" 5143   air
 "Fe 2b" 5270     air
-"Fe 2b InwdBnd" 5270   air
+"Fe 2b Inwd" 5270   air
 "Fe 2b" 5318     air
-"Fe 2b InwdBnd" 5318   air
+"Fe 2b Inwd" 5318   air
 "Fe 2b" 5540     air
-"Fe 2b InwdBnd" 5540   air
+"Fe 2b Inwd" 5540   air
 "Fe 2b" 5865     air
-"Fe 2b InwdBnd" 5865   air
+"Fe 2b Inwd" 5865   air
 "Fe 2b" 6265     air
-"Fe 2b InwdBnd" 6265   air
+"Fe 2b Inwd" 6265   air
 "Fe 2b" 6565     air
-"Fe 2b InwdBnd" 6565   air
+"Fe 2b Inwd" 6565   air
 "Fe 2b" 6910     air
-"Fe 2b InwdBnd" 6910   air
+"Fe 2b Inwd" 6910   air
 "Fe 2b" 7445     air
-"Fe 2b InwdBnd" 7445   air
+"Fe 2b Inwd" 7445   air
 "Fe 2b" 7785     air
-"Fe 2b InwdBnd" 7785   air
+"Fe 2b Inwd" 7785   air
 "Fe 2b" 8625     air
-"Fe 2b InwdBnd" 8625   air
+"Fe 2b Inwd" 8625   air
 "Fe 2b" 10325    air
-"Fe 2b InwdBnd" 10325  air
+"Fe 2b Inwd" 10325  air
 "Fe 2b" 18890A   air
-"Fe 2b InwdBnd" 18890A air
+"Fe 2b Inwd" 18890A air
 "Fe 2b" 22000A   air
-"Fe 2b InwdBnd" 22000A air
+"Fe 2b Inwd" 22000A air
 #
 # Some high critical density forbidden lines
 # >>chng 22 jul 09, wl from 3426.03 to 3425.88A, upgrade to Chianti v10
