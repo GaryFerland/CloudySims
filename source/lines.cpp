@@ -80,11 +80,10 @@ bool LinSv::isCat(const char *s) const
 {
 	DEBUG_ENTRY( "LinSv::isCat()" );
 
-	const char* lbl = chALab();
-	while( *s != '\0' )
-		if( *lbl++ != *s++ )
-			return false;
-	return true;
+	string lbl = string(chALab());
+	if (lbl.size() > 4)
+		lbl = lbl.substr(lbl.length()-4);
+	return lbl==string(s);
 }
 
 void LinSv::chALabSet(const char *that)
