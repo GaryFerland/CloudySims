@@ -1,6 +1,8 @@
 title Perseus cluster
 # model of IGM in Perseus galaxy cluster inspired by Hitommi spectroscopy
 set save prefix "igm_perseus"
+# improve continuum resolution and use all levels for Fe23+
+init "XRISM.ini"
 #
 # assume gas is in collisional equilibrium
 coronal 4.6e7K
