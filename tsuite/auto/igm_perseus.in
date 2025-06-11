@@ -14,8 +14,8 @@ stop column density 24.5
 # no scattering escape intensity
 #
 # RAD first since large Li-like abundace, then no-RAD since 3e density is small
-# element iron ionization 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.01 0 0 0
-element iron ionization 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.5 0 0 0
+element iron ionization 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.01 0 0 0
+# element iron ionization 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.5 0 0 0
 # adjust models to get higher accuracy
 database H-like element iron resolved levels 10
 database H-like element iron collapsed levels 50
