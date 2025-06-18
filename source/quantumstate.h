@@ -39,6 +39,7 @@ class qList
 	vector_avx<double> m_ConBoltz;
 	vector_avx<double> m_Boltzmann;
 	vector<Energy> m_energy;
+	vector<bool> m_theory;
 	vector<realnum> m_g;
 	vector<realnum> m_j;
 	vector<long> m_J;
@@ -88,6 +89,7 @@ private:
 		m_ConBoltz.resize(i);
 		m_Boltzmann.resize(i);
 		m_energy.resize(i);
+		m_theory.resize(i);
 		m_g.resize(i);
 		m_IonStg.resize(i);
 		m_j.resize(i);
@@ -197,6 +199,11 @@ public:
 	Energy &energy() const
 	{
 		return m_list->m_energy[m_index];
+	}
+	/** if the energy is theory */
+	vector<bool>::reference theory() const
+	{
+		return m_list->m_theory[m_index];
 	}
 	/** statistical weight [dimensionless] */
 	realnum  &g() const
@@ -310,6 +317,10 @@ public:
 	Energy energy() const
 	{
 		return m_list->m_energy[m_index];
+	}
+	bool theory() const
+	{
+		return m_list->m_theory[m_index];
 	}
 	realnum g() const
 	{

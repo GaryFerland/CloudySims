@@ -1302,6 +1302,8 @@ class t_wavl {
 	realnum p_wavl;
 	/** wavelength type: air, vacuum, or native */
 	wl_type p_type;
+	/** boolean for uncertain wavelengths(rmatrix) */
+	bool p_lgUnc;
 	/** convert wavelength to vacuum, if needed */
 	realnum p_convertWvl() const;
 	/** convert air wavelength to vacuum */
@@ -1311,8 +1313,9 @@ class t_wavl {
 	*/
 	double p_RefIndex(double EnergyWN) const;
 public:
-	t_wavl() : p_wavl(-1_r), p_type(WL_NATIVE) {}
-	t_wavl(realnum w, wl_type t) : p_wavl(w), p_type(t) {}
+	t_wavl() : p_wavl(-1_r), p_type(WL_NATIVE), p_lgUnc(false) {}
+	t_wavl(realnum w, wl_type t) : p_wavl(w), p_type(t), p_lgUnc(false) {}
+	t_wavl(realnum w, wl_type t, bool unc) : p_wavl(w), p_type(t), p_lgUnc(unc) {}
 	/** unary minus */
 	t_wavl operator- () const { return t_wavl(-p_wavl, p_type); }
 	/** gives the vacuum wavelength of the line in angstrom */

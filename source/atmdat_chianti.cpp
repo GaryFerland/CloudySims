@@ -293,6 +293,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		double nrg = dBaseStatesOrg[i].nrg;
 		long oldindex = dBaseStatesOrg[i].index;
 		double stwt = dBaseStatesOrg[i].stwt;
+		bool lgTheory = dBaseStatesOrg[i].lgTheo;
 
 		if( DEBUGSTATE )
 			fprintf( ioQQQ, "<%s>\t%li\t%li\t%.3f\t%.1f\n", dBaseSpecies[intNS].chLabel,
@@ -301,6 +302,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		dBaseStates[intNS][i].energy().set(nrg,"cm^-1");
 		dBaseStates[intNS][i].g() = stwt;
 		dBaseStates[intNS][i].ipOrg() = oldindex;
+		dBaseStates[intNS][i].theory() = lgTheory;
 	}
 
 	/* allocate the Transition array*/

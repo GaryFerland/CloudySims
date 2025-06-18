@@ -151,12 +151,12 @@ struct t_LineSave : public module {
 	/** number of lines allocated in emission line stack
 	 * must not change between iterations or grid points */
 	vector<LinSv> lines;
-	vector<realnum> m_wavelength;
+	vector<t_wavl> m_twav;
 	vector<size_t> SortWL;
 	void clear()
 	{
 		lines.clear();
-		m_wavelength.clear();
+		m_twav.clear();
 	}
 	void resize(long nlines);
 	
@@ -165,16 +165,16 @@ struct t_LineSave : public module {
 			  bool lgAdd, t_wavl wavelength, const TransitionProxy& tr);
 	realnum wavlVac(long index) const
 	{
-		return m_wavelength[index];
+		return m_twav[index].wavlVac();
 	}
 	t_wavl twav(long index) const
 	{
-		return t_vac(wavlVac(index));
+		return m_twav[index];
 	}
 
-	void resetWavlVac( long index, realnum wl )
+	void resetWavlVac( long index, t_wavl wl )
 	{
-		m_wavelength[index] = wl;
+		m_twav[index] = wl;
 	}
 
 	bool lgIsoContSubSignif;
@@ -458,7 +458,7 @@ public:
 inline void t_LineSave::resize(long nlines)
 {
 	lines.resize(nlines);
-	m_wavelength.resize(nlines);
+	m_twav.resize(nlines);
 }
 
 #endif /* LINES_H_ */

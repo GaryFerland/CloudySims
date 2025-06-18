@@ -41,7 +41,11 @@ void t_LineSave::init(long index, char chSumTyp, const char *chComment, const ch
 		wavl = fabs(wavl);
 	}
 
-	m_wavelength[index] = wavl;
+	/*tr may indicate that the wavelength is inaccurate. Use TransitionProx if it is initialized*/
+	if (tr.associated() && fp_equal(wavl, tr.twav().wavlVac()))
+		m_twav[index] = tr.twav();
+	else	
+		m_twav[index] = t_vac(wavl);
 	lines[index].init(index,chSumTyp,chComment,label,tr);
 }
 
@@ -319,7 +323,7 @@ void LinSv::setBlendWavl()
 		if( sum_wn_num > 0. )
 			wl = wn2angVac( sum_wn_num );
 
-		LineSave.resetWavlVac( m_index, wl );
+		LineSave.resetWavlVac( m_index, t_vac(wl) );
 	}
 }
 

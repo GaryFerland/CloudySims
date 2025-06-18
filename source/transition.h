@@ -70,6 +70,11 @@ public:
 	{
 		ASSERT(!hasEmis() || Emis().ipTran() == m_index);
 	}
+	/** Returns true if either energy level is marked as theoretical (r-matrix) */
+	bool theory_wavelength() const
+	{
+		return Hi()->theory() || Lo()->theory();
+	}
 	CollisionProxy Coll() const;
 
 	/** vacuum wavelength, in angstrom */
@@ -163,6 +168,10 @@ public:
 	void check() const
 	{
 		ASSERT(!hasEmis() || Emis().ipTran() == m_index);
+	}
+	bool theory_wavelength() const
+	{
+		return Hi()->theory() || Lo()->theory();
 	}
 	CollisionProxy Coll() const;
 
@@ -454,11 +463,11 @@ inline realnum TransitionConstProxy::WLangVac() const
 }
 inline t_wavl TransitionProxy::twav() const
 {
-	return t_vac(WLangVac());
+	return t_wavl(WLangVac(), WL_VACUUM, theory_wavelength());
 }
 inline t_wavl TransitionConstProxy::twav() const
 {
-	return t_vac(WLangVac());
+	return t_wavl(WLangVac(), WL_VACUUM, theory_wavelength());
 }
 /** transition energy in wavenumbers */
 inline realnum &TransitionProxy::EnergyWN() const
