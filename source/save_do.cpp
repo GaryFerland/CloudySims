@@ -3287,7 +3287,7 @@ void SaveDo(
 				if( ! lgLastOnly )
 				{
 					fprintf( save.params[ipPun].ipPnunit, 
-					  "%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%c\n", 
+					  "%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%.5e\t%c\n", 
 					  /*A 1 #P depth */
 					  radius.depth_mid_zone, 
 					  /*B 2 Perror */
@@ -3308,6 +3308,8 @@ void SaveDo(
 					  pressure.pres_radiation_lines_curr, 
 					  /*I 9 Pinteg subtract continuum rad pres which has already been added on */
 					  pressure.PresInteg - pressure.pinzon, 
+					  /* Pmag magnetic pressure */
+					  magnetic.pressure,
 					  /*J 10 V(wind km/s) wind speed in km/s */
 					  wind.windv/1e5,
 					  /*K cad(km/s) sound speed in km/s */

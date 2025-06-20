@@ -7,6 +7,14 @@
 class module;
 class t_warnings;
 
+/**
+ * Singleton container that tracks all `module` instances.
+ * 
+ * Responsibilities:
+ *  • Stores registered modules in a vector (`m_l`).
+ *  • Provides methods to initialize (`zero()`) and document (`comment()`) each module.
+ *  • Automatically populated via the base class constructor `module::module()`.
+ */
 class module_list : public Singleton<module_list>
 {
 	friend class Singleton<module_list>;
@@ -23,6 +31,11 @@ public:
 	void comment(t_warnings&) const;
 };
 
+/** abstract base class that declares three pure virtual functions:
+	•	zero() — for resetting state.
+	•	comment(t_warnings&) — for writing module-specific output.
+	•	chName() — returns the module’s name as a string.
+	•	Registers itself with a global module_list on construction:*/
 class module
 {
 public:

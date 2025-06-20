@@ -20,7 +20,11 @@ void Magnetic_reinit(void);
 /**Magnetic_evaluate evaluate some parameters to do with magnetic field */
 void Magnetic_evaluate(void);
 
-struct t_magnetic : public module {
+/** class definition, a struct with public inheritance, 
+ * class instantiated at magnetic.cpp,  * "t_magnetic magnetic;"
+ * global declaration here magnetic.h:51 
+ * This is the constructor for class magnetic and is used at code startup*/
+ struct t_magnetic : public module {
 
 	const char *chName() const
 	{

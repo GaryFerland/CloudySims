@@ -2042,7 +2042,7 @@ void ParseSave(Parser& p)
 		strcpy( save.chSave[save.nsave], "PRES" );
 		sncatf( chHeader, 
 			"#P depth\tPerror%%\tPcurrent\tPIn+Pinteg\tPgas(r0)\tPgas\tPram"
-			"\tPrad(line)\tPinteg\tV(wind km/s)\tcad(wind km/s)\tP(mag)\tV(turb km/s)"
+			"\tPrad(line)\tPinteg\tPmag\tV(wind km/s)\tcad(wind km/s)\tP(mag)\tV(turb km/s)"
 			"\tP(turb)\tPgr_Int\tint thin elec\tconv?\n" );
 	}
 

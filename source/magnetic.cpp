@@ -10,7 +10,9 @@
 #include "doppvel.h"
 #include "optimize.h"
 #include "input.h"
+#include "pressure.h"
 #include "wind.h"
+#include "dynamics.h"
 #include "magnetic.h"
 #include "parser.h"
 
@@ -22,6 +24,9 @@ static double Btangl_init;
 /* this is logical var, set in zero, which says whether the magnetic field has been
 	* initialized */
 static bool lgBinitialized;
+
+static double BetaMagnetic;
+static bool lgBetaMagneticSet = false;
 
 /* the current magnetic field */
 static double Btangl_here;
@@ -35,7 +40,7 @@ static double Bpar_here, Btan_here;
 /* this is the gamma power law index, default is 4. / 3. */
 static double gamma_mag;
 
-/*Magnetic_evaluate evaluate some parameters to do with magnetic field */
+/** evaluate some parameters to do with magnetic field */
 void Magnetic_evaluate(void)
 {
 
@@ -53,6 +58,15 @@ void Magnetic_evaluate(void)
 		if( !lgBinitialized )
 		{
 			lgBinitialized = true;
+
+			/* magnetic beta parameter has been set, 
+			 * in time dependent model this should not be reset after
+			 * flow begins */
+			if( lgBetaMagneticSet )
+			{
+				double PressureMagnetic = BetaMagnetic * pressure.PresGasCurr;
+				Btangl_init = sqrt( PressureMagnetic * PI8  );
+			}
 
 			/* set initial tangled field */
 			Btangl_here = Btangl_init;
@@ -124,12 +138,17 @@ void Magnetic_reinit(void)
 {
 	DEBUG_ENTRY( "Magnetic_reinit()" );
 
-	/* this says whether B has been initialized in this run */
-	lgBinitialized = false;
+	/* this says whether B has been initialized in this run 
+	 * only reset B in iterations over a time-static geometry
+	 * for the case of a calculation in which iterations are 
+	 * time steps do not reset B since we inherit upstream value */ 
+	if( !dynamics.lgTimeDependentStatic )
+		lgBinitialized = false;
 	return;
 }
 
-/* t_magnetic::zero initialize magnetic field parameters */
+/** t_magnetic:: initialize magnetic field parameters when coreload created 
+ * called by magnetic class constructor at magnetic.h:27*/
 void t_magnetic::zero(void)
 {
 
@@ -139,6 +158,9 @@ void t_magnetic::zero(void)
 	lgB = false;
 	/* this says whether B has been initialized in this run */
 	lgBinitialized = false;
+	/* option to set megnetic beta parameter */
+	BetaMagnetic = 0.;
+	lgBetaMagneticSet = false;
 	/* the initial tangled and ordered fields */
 	Btangl_init = 0.;
 	Btangl_here = DBL_MAX;
@@ -190,21 +212,39 @@ void ParseMagnet(Parser &p )
 	}
 	else
 	{
-		/* tangled field case */
+		/* tangled field case since ORDERED not specified */
 		lgTangled = true;
-		/* this is the log of the tangled field strength */
-		Btangl_init = p.getNumberCheckAlwaysLog("tangled field");
 
-		/* optional gamma for dependence on pressure */
-		gamma_mag = p.getNumberDefault("field gamma law", 4./3.);
-
-		if( gamma_mag != 0. && gamma_mag <= 1. )
+		/* tangled field can specify beta, gas to magnetic pressures, parameter*/
+		if( p.nMatch("BETA") )
 		{
-			/* impossible value for gamma */
-			fprintf( ioQQQ, 
-				" This value of gamma (%.3e) is impossible.  Must have gamma = 0 or > 1.\n Sorry.\n",
-				gamma_mag );
-			cdEXIT(EXIT_FAILURE);
+			/* the number is the ratio of gas to magnetic pressure, not the field */
+			BetaMagnetic = p.getNumberCheckLogLinNegImplLog("beta magnetic");
+			lgBetaMagneticSet = true;
+			if( BetaMagnetic < 0. )
+			{
+				fprintf( ioQQQ, 
+					" This value of beta (%.3e) is impossible.  Must be >= 0.\n Sorry.\n",
+					BetaMagnetic );
+				cdEXIT(EXIT_FAILURE);
+			}
+		}
+		else
+		{
+			/* this is the log of the tangled field strength */
+			Btangl_init = p.getNumberCheckAlwaysLog("tangled field");
+
+			/* optional gamma for dependence on pressure */
+			gamma_mag = p.getNumberDefault("field gamma law", 4./3.);
+
+			if( gamma_mag != 0. && gamma_mag <= 1. )
+			{
+				/* impossible value for gamma */
+				fprintf( ioQQQ, 
+					" This value of gamma (%.3e) is impossible.  Must have gamma = 0 or > 1.\n Sorry.\n",
+					gamma_mag );
+				cdEXIT(EXIT_FAILURE);
+			}
 		}
 	}
 

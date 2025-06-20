@@ -478,6 +478,15 @@ double Parser::getNumberPlain( const char * )
 {
 	return FFmtRead();
 }
+/** Reads a numerical value from the input and checks for its presence.
+ *
+ * This function attempts to read a double value from the input using FFmtRead().
+ * If the end of line (EOL) is encountered before a number is found, it calls
+ * NoNumb() with the provided description to handle the error.
+ *
+ * @param chDesc A description of the expected number, used in error reporting.
+ * @return The parsed double value from the input.
+ */
 double Parser::getNumberCheck( const char *chDesc )
 {
 	double val = FFmtRead();
@@ -487,6 +496,7 @@ double Parser::getNumberCheck( const char *chDesc )
 	}
 	return val;
 }
+/** parse number if present, else use default */
 double Parser::getNumberDefault( const char *, double fdef )
 {
 	double val = FFmtRead();
@@ -496,6 +506,7 @@ double Parser::getNumberDefault( const char *, double fdef )
 	}
 	return val;
 }
+/** number is log if LOG or <=0 */
 double Parser::getNumberCheckLogLinNegImplLog( const char *chDesc )
 {
 	double val = getNumberCheck(chDesc);
@@ -513,12 +524,14 @@ double Parser::getNumberCheckLogLinNegImplLog( const char *chDesc )
 	}
 	return val;
 }
+/** value is always log */
 double Parser::getNumberCheckAlwaysLog( const char *chDesc )
 {
 	double val = getNumberCheck(chDesc);
 	val = exp10( val);
 	return val;
 }
+/** number is log, check if too large to be linear */
 double Parser::getNumberCheckAlwaysLogLim( const char *chDesc, double flim )
 {
 	double val = getNumberCheck(chDesc);
@@ -532,6 +545,7 @@ double Parser::getNumberCheckAlwaysLogLim( const char *chDesc, double flim )
 	val = exp10( val);
 	return val;
 }
+/** number always log and use default if missing */
 double Parser::getNumberDefaultAlwaysLog( const char *, double fdef )
 {
 	double val = exp10(FFmtRead());
@@ -541,6 +555,7 @@ double Parser::getNumberDefaultAlwaysLog( const char *, double fdef )
 	}
 	return val;
 }
+/** number is log if negative, use default if not specified */
 double Parser::getNumberDefaultNegImplLog( const char *, double fdef )
 {
 	double val = FFmtRead();
@@ -555,9 +570,7 @@ double Parser::getNumberDefaultNegImplLog( const char *, double fdef )
 	return val;
 }
 
-/*FFmtRead scan input line for free format number */
-
-
+/** FFmtRead scan input line for free format number */
 double Parser::FFmtRead(void)
 {
 
