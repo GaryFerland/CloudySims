@@ -167,9 +167,16 @@ details on the datasets that are supported by \Cloudy.
 
 \subsection{Species ``name'' lte}
 
-This option specifies LTE relative populations will be used for the
-species, rather than detailed level balance equations.
+This option specifies LTE level populations will be used for 
+a particular species, rather than solutions to detailed level-balance equations.
+This only sets the level population distribution to Boltzmann factors
+and does not change the ionization of an element.
 
+This only applied to three and more electron species, those we treat with the
+equivalent two-level atom \citep{CloudyRevista2017}.
+One and two electron species are treated with a full collisional radiative model.
+Their level populations are determined as part of the ionization solution and
+it is not possible to specify populations separately.
 
 \section{Database H2 options}
 \label{sec:AtomH2}

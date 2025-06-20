@@ -123,7 +123,7 @@ monitor line luminosity "H  1" 4861.32A 5.598
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-monitor line luminosity "Inwd" 4861.32A 5.539
+monitor line luminosity "H  1 Inwd" 4861.32A 5.539
 ##
 ## >>chng 08 mar 17, from 5.738 to 5.777, r1844 - mostly iso PopOpc and rt_line_one_tauinc changes
 ## >>chng 16 nov 14, from 5.777 to 5.801, Reintegration of RydDep after several bug fixes

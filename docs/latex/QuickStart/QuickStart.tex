@@ -7,6 +7,8 @@
 \input{../head_info}
 \input{../common/macros}
 \input{../variables}
+\usepackage{wrapfig,lipsum,booktabs}
+\usepackage{makecell}
 
 \begin{document}
 %\frontmatter
@@ -75,6 +77,29 @@ by a description of \Hazy, the code's documentation.  This document only
 gives an outline of the code and the commands that drive it.  Sections of
 \Hazy\ that go into greater detail are referenced and should be consulted
 to find out more.
+
+\begin{wraptable}[9]{r}{10cm}
+\vspace{-5mm}
+%\begin{table}
+%\centering
+%\vspace{-5mm}
+\caption{\label{tab:CloudyReleasePapers} Major \Cloudy\ release papers}
+\begin{tabular}{|c c c|}
+\hline
+Version & Year & Citation \\
+\hline
+C$33- 87$ & $1983-1998$ &  
+\citet{1991hbic.book.....F,1993hbic.book.....F,1996hbic.book.....F}+\\
+C90 & 1998 & \citet{ 1998PASP..110..761F} \\
+C13 & 2013 &\citet{2013RMxAA..49..137F}\\
+C17 & 2017 & \citet{CloudyRevista2017}\\
+C23 & 2023 & \makecell{\citet{2023RMxAA..59..327C}\\\citet{gunasekera2023}}\\
+C25-rc1 & 2025 & \citet{2024arXiv241201606G} \\
+\hline
+\end{tabular}
+%\end{table}
+\end{wraptable}
+%%%%%%%%%%%%%%%%%
 
 Osterbrock \& Ferland (2006; hereafter AGN3) give many more details
 about photoionized clouds.

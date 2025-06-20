@@ -142,7 +142,7 @@ monitor line luminosity "H  1" 4861.32A 7.306 error 0.07
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
 ## >>chng 21 nov 02, from 7.307 to 7.225, fix bug with overresolving CS in isoseq
-monitor line luminosity "Inwd" 4861.32A 7.225, 
+monitor line luminosity "H  1 Inwd" 4861.32A 7.225,
 ##
 ## >>chng 08 mar 17, from 7.806 to 7.832, r1844 - mostly iso PopOpc and rt_line_one_tauinc changes
 ## >>chng 09 jan 22, from 7.832 to 7.885, some minor botches as a result of r2655

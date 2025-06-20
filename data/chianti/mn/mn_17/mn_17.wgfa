@@ -1,6 +1,6 @@
-    1    2       1167.760      0.000e+00      1.075e+04 
-    1    3        100.000      2.578e-01      8.594e+10 
-    2    3        109.365      1.188e-01      3.313e+10 
+    1    2      1167.7600      0.000e+00      1.075e+04 
+    1    3       100.0000      2.578e-01      8.594e+10 
+    2    3       109.3650      1.188e-01      3.313e+10 
  -1
 %filename: mn_17.wgfa
 %observed energy levels: Edlen, B., 1983, Phys.Scr., 28, 51
@@ -11,5 +11,5 @@
 %File processed with wgfa_tidy by pryoung on  6-Mar-2019
 
 Reference:
-Chianti  2025-02-06
+Chianti  2025-06-03
  -1

@@ -154,7 +154,7 @@ monitor line luminosity "H  1" 4861.32A 5.881,
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-monitor line luminosity "Inwd" 4861.32A 5.788, 
+monitor line luminosity "H  1 Inwd" 4861.32A 5.788,
 ##
 ## >>chng 06 jul 25, from 6.059 to 5.999 HN update OIII collision data
 ## >>chng 06 aug 09, from 5.999 to 6.024 Meudon 06, Bowen change
