@@ -497,7 +497,7 @@ An example is shown in Figure 10 of \citet{FerlandFabian2009}.
 Magnetic fields are not included by default.
 This specifies the strength
 and geometry of the magnetic field.
-A number, the log of the magnetic field
+A number, always the log of the magnetic field
 strength in Gauss, is the first number on the line.
 The physical effects
 of magnetic fields are discussed in Part 3 of this document.
@@ -514,9 +514,19 @@ The angle is given in degrees by default but the
 \cdCommand{radian} keyword
 will cause it to be radians instead.
 
-In the case of a tangled field the code will look for a second number,
-the index for the gamma-law relation between the magnetic field and the
-gas density.
+The tangled field case is the simplest and has two further options.
+The first number specifies the magnetic field in one of two ways.
+If the keyword \cdCommand{beta} appears then the field is specified in
+terms of a $\beta$ parameter related to the ratio of gas to magnetic field pressures.
+In much of astronomy, $\beta$ is defined as
+\begin{equation}
+\beta \equiv \frac{P_{gas}}{P_{magnetic}}
+\end{equation}
+so a gas-pressure dominated cloud will have a very large $\beta$.
+Plasma physics defines $\beta$ as the inverse, so a strongly magnetized
+region has large $\beta$.
+The optional second number is the index for the gamma-law relation between 
+the magnetic field and the gas density.
 If a second number is not found then an index of $\gamma = 4/3$,
 appropriate for a tangled field, will be assumed.
 This index appears in the relationship
