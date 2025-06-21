@@ -1,4 +1,4 @@
-17 9 5
+17 09 05
 1	0.0	1	"2s2.2p2 3P0"
 2	3692.0	3	"2s2.2p2 3P1"
 3	9045.0	5	"2s2.2p2 3P2"
@@ -589,8 +589,9 @@
 588	[3467452.0454]	9	"2p3.4f1 3F4"
 589	[3468755.933]	5	"2p3.4f1 1D2"
 590	[3473078.8364]	3	"2p3.4d1 1P1"
-*****************
-#Reference:
-#[Theoretical Energy]: ADF04 2025-03-28 clike_jm19#al7.dat	DOI: 10.1051/0004-6361/201936931
-#Experimenta Energy:	NIST,04/31/2025
+**************	[nan]	None	None
+#Reference:	[nan]	None	None
+#ADF04 2025-06-18 p_10.dat	[nan]	None	None
+# [Theoretical Energy] values are from # DOI:10.3390/atoms13050044 (Del Zanna et al. 2025)
+# Experimental Energy values are from NIST,04/31/2025
 #https://gitlab.nublado.org/cloudy/cloudy/-/wikis/StoutData
