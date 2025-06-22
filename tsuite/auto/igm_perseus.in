@@ -13,9 +13,11 @@ hden -1.5
 stop column density 24.5
 # no scattering escape intensity
 #
-# following with turn off RAD effect
+$ RAD occurs with default setup
+# following would turn off RAD effect, included if commented out
 # set UTA off
-# RAD first since large Li-like abundace, then no-RAD since 3e density is small
+# RAD occurs with first ionization since large Li-like abundace, 
+# second has little RAD since 3e density is small
 element iron ionization 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.01 0 0 0
 # element iron ionization 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.5 0 0 0
 # adjust models to get higher accuracy
@@ -146,3 +148,5 @@ monitor line "Blnd"    1.37418A 0.0283
 
 This is inspired by Hitomi observations of the Fe complex in Perseus
 and has been developed by Priyanka Chakraborty as part of her thesis.
+The 1e and 2e resonance lines are optically thick so the 1e Ka doublet
+ratio is not 2:1 and RAD affects one member of the 2d Ka multiplet
