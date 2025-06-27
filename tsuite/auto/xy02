@@ -1,0 +1,1106 @@
+cdRead [0] =trace h-like full helium no print=
+cdRead [0] =trace he-like full no print=
+cdRead [0] =trace heavy no print=
+cdRead [0] =trace convergence esource no print=
+cdRead [0] =test=
+cdRead [0] =no time=
+cdRead [0] =FUDGE= 0.000000=
+cdRead [0] =grid 0 to 1 1 repeat sequential=
+cdRead [0] =iterate 3=
+cdDrive: lgOptimr=1 lgVaryOn=0 lgNoVary=0 # of input lines=11
+ open_data trying to read /Users/maryam/branches/stout-clike/tsuite/auto/blends.ini found F
+ open_data trying to read /Users/maryam/branches/stout-clike/data/blends.ini found T used T
+cdRead [1] =print off hide=
+cdRead [1] =set blend 1912 vacuum quiet=
+cdRead [1] ="Fe 3"      1895.46A  vacuum=
+cdRead [1] ="Fe 3"      1914.06A  vacuum=
+cdRead [1] ="Fe 3"      1926.30A  vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1.78337 vacuum quiet=
+cdRead [1] ="Fe26 M1"   1.78330A  vacuum=
+cdRead [1] ="Fe26"      1.78344A  vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1.77982 vacuum quiet=
+cdRead [1] ="Fe26"      1.77802A  vacuum=
+cdRead [1] ="Fe26 M1"   1.78330A  vacuum=
+cdRead [1] ="Fe26"      1.78344A  vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1.50273 vacuum quiet=
+cdRead [1] ="Fe26"      1.50235A  vacuum=
+cdRead [1] ="Fe26"      1.50350A  vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1.42505 vacuum quiet=
+cdRead [1] ="Fe26"      1.42490A  vacuum=
+cdRead [1] ="Fe26"      1.42534A  vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1.39177 vacuum quiet=
+cdRead [1] ="Fe26"      1.39170A  vacuum=
+cdRead [1] ="Fe26"      1.39191A  vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1.37418 vacuum quiet=
+cdRead [1] ="Fe26"      1.37430A  vacuum=
+cdRead [1] ="Fe26"      1.37442A  vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1.33232 vacuum quiet=
+cdRead [1] ="Zn30"      1.33052A  vacuum=
+cdRead [1] ="Zn30"      1.33595A  vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1400 vacuum quiet=
+cdRead [1] ="Si 4"      1393.75A  vacuum=
+cdRead [1] ="Si 4"      1402.77A  vacuum=
+cdRead [1] ="O  4"     1397.23A   vacuum=
+cdRead [1] ="O  4"     1399.78A   vacuum=
+cdRead [1] ="O  4"     1401.16A   vacuum=
+cdRead [1] ="O  4"     1404.81A   vacuum=
+cdRead [1] ="O  4"     1407.38A   vacuum=
+cdRead [1] =end=
+cdRead [1] =# >>chng 21 april 7, He 2 wl from 1640.40 to 1640.41A, replacing average energy with np energies=
+cdRead [1] =set blend 1650 vacuum quiet=
+cdRead [1] ="O  3"      1660.81A  vacuum=
+cdRead [1] ="O  3"      1666.15A  vacuum=
+cdRead [1] ="He 2"      1640.41A  vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 8446 air quiet=
+cdRead [1] ="O  1" 8446.25        air=
+cdRead [1] ="O  1" 8446.36        air=
+cdRead [1] ="O  1" 8446.76        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1304 vacuum quiet=
+cdRead [1] ="O  1" 1302.17        vacuum=
+cdRead [1] ="O  1" 1304.86        vacuum=
+cdRead [1] ="O  1" 1306.03        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1039 vacuum quiet=
+cdRead [1] ="O  1" 1039.23        vacuum=
+cdRead [1] ="O  1" 1040.94        vacuum=
+cdRead [1] ="O  1" 1041.69        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 4368 air quiet=
+cdRead [1] ="O  1" 4368.19        air=
+cdRead [1] ="O  1" 4368.24        air=
+cdRead [1] ="O  1" 4368.26        air=
+cdRead [1] =end=
+cdRead [1] =set blend 13100 air quiet=
+cdRead [1] ="O  1" 13163.9        air=
+cdRead [1] ="O  1" 13164.9        air=
+cdRead [1] ="O  1" 13165.1        air=
+cdRead [1] =end=
+cdRead [1] =set blend 11300 air quiet=
+cdRead [1] ="O  1" 11286.3        air=
+cdRead [1] ="O  1" 11286.4        air=
+cdRead [1] ="O  1" 11286.9        air=
+cdRead [1] ="O  1" 11287.0        air=
+cdRead [1] ="O  1" 11287.1        air=
+cdRead [1] ="O  1" 11287.3        air=
+cdRead [1] =end=
+cdRead [1] =set blend 29000 air quiet=
+cdRead [1] ="O  1" 28925.1        air=
+cdRead [1] ="O  1" 28927.3        air=
+cdRead [1] ="O  1" 28928.0        air=
+cdRead [1] =end=
+cdRead [1] =set blend 46000 air quiet=
+cdRead [1] ="O  1" 45588.6        air=
+cdRead [1] ="O  1" 45594.0        air=
+cdRead [1] ="O  1" 45595.5        air=
+cdRead [1] ="O  1" 45595.7        air=
+cdRead [1] ="O  1" 45597.2        air=
+cdRead [1] ="O  1" 45597.4        air=
+cdRead [1] =end=
+cdRead [1] =set blend 2798 air quiet=
+cdRead [1] ="Mg 2" 2795.53        air=
+cdRead [1] ="Mg 2" 2802.71        air=
+cdRead [1] =end=
+cdRead [1] =set blend 615 vacuum quiet=
+cdRead [1] ="Mg10" 609.793        vacuum=
+cdRead [1] ="Mg10" 624.941        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 6720 air quiet=
+cdRead [1] ="S  2" 6730.82        air=
+cdRead [1] ="S  2" 6716.44        air=
+cdRead [1] =end=
+cdRead [1] =set blend 4074 air quiet=
+cdRead [1] ="S  2" 4076.35        air=
+cdRead [1] ="S  2" 4068.60        air=
+cdRead [1] =end=
+cdRead [1] =set blend 10330 air quiet=
+cdRead [1] ="S  2" 10336.4        air=
+cdRead [1] ="S  2" 10286.7        air=
+cdRead [1] ="S  2" 10286.7        air=
+cdRead [1] ="S  2" 10320.5        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1256 vacuum quiet=
+cdRead [1] ="S  2" 1250.58        vacuum=
+cdRead [1] ="S  2" 1253.81        vacuum=
+cdRead [1] ="S  2" 1259.52        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1198 vacuum quiet=
+cdRead [1] ="S  3" 1190.20        vacuum=
+cdRead [1] ="S  3" 1194.06        vacuum=
+cdRead [1] ="S  3" 1194.45        vacuum=
+cdRead [1] ="S  3" 1200.97        vacuum=
+cdRead [1] ="S  3" 1201.73        vacuum=
+cdRead [1] ="S  3" 1202.12        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1720 vacuum quiet=
+cdRead [1] ="S  3" 1704.39        vacuum=
+cdRead [1] ="S  3" 1713.11        vacuum=
+cdRead [1] ="S  3" 1728.94        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 3722 air quiet=
+cdRead [1] ="S  3" 3721.63        air=
+cdRead [1] ="S  3" 3797.17        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1406 vacuum quiet=
+cdRead [1] ="S  4" 1404.81        vacuum=
+cdRead [1] ="S  4" 1398.04        vacuum=
+cdRead [1] ="S  4" 1423.84        vacuum=
+cdRead [1] ="S  4" 1416.89        vacuum=
+cdRead [1] ="S  4" 1406.02        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1199 vacuum quiet=
+cdRead [1] ="S  5" 1199.13        vacuum=
+cdRead [1] ="S  5" 1188.28        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 5892 air quiet=
+cdRead [1] ="Na 1" 5889.95        air=
+cdRead [1] ="Na 1" 5895.92        air=
+cdRead [1] =end=
+cdRead [1] =set blend 2665 air quiet=
+cdRead [1] ="Al 2" 2669.15        air=
+cdRead [1] ="Al 2" 2660.35        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1860 vacuum quiet=
+cdRead [1] ="Al 3" 1854.72        vacuum=
+cdRead [1] ="Al 3" 1862.79        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 556 vacuum quiet=
+cdRead [1] ="Al11" 550.031A       vacuum=
+cdRead [1] ="Al11" 568.120A       vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 4725 air quiet=
+cdRead [1] ="Ar 4" 4740.12        air=
+cdRead [1] ="Ar 4" 4711.26        air=
+cdRead [1] =end=
+cdRead [1] =set blend 2860 air quiet=
+cdRead [1] ="Ar 4" 2868.22        air=
+cdRead [1] ="Ar 4" 2853.66        air=
+cdRead [1] =end=
+cdRead [1] =set blend 7250 air quiet=
+cdRead [1] ="Ar 4" 7237.77        air=
+cdRead [1] ="Ar 4" 7332.15        air=
+cdRead [1] ="Ar 4" 7170.70        air=
+cdRead [1] ="Ar 4" 7263.33        air=
+cdRead [1] =end=
+cdRead [1] =set blend 2335 air quiet=
+cdRead [1] ="Si 2" 2334.41        air=
+cdRead [1] ="Si 2" 2328.52        air=
+cdRead [1] ="Si 2" 2350.17        air=
+cdRead [1] ="Si 2" 2344.20        air=
+cdRead [1] ="Si 2" 2334.60        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1888 vacuum quiet=
+cdRead [1] ="Si 3" 1882.71        vacuum=
+cdRead [1] ="Si 3" 1892.03        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1397 vacuum quiet=
+cdRead [1] ="Si 4" 1393.75        vacuum=
+cdRead [1] ="Si 4" 1402.77        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 6.18222 vacuum quiet=
+cdRead [1] ="Si14"  6.18584       vacuum=
+cdRead [1] ="Si14"  6.18043       vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 5.21719 vacuum quiet=
+cdRead [1] ="Si14"  5.21796       vacuum=
+cdRead [1] ="Si14"  5.21682       vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend  2424 air quiet=
+cdRead [1] ="Ne 4"  2421.66       air=
+cdRead [1] ="Ne 4"  2424.28       air=
+cdRead [1] =end=
+cdRead [1] =set blend 4720 air quiet=
+cdRead [1] ="Ne 4"  4714.23       air=
+cdRead [1] ="Ne 4"  4715.64       air=
+cdRead [1] ="Ne 4"  4724.17       air=
+cdRead [1] ="Ne 4"  4725.58       air=
+cdRead [1] =end=
+cdRead [1] =set blend 895 vacuum quiet=
+cdRead [1] ="Ne 7" 887.293A       vacuum=
+cdRead [1] ="Ne 7" 895.191A       vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 774 vacuum quiet=
+cdRead [1] ="Ne 8" 770.428A       vacuum=
+cdRead [1] ="Ne 8" 780.385A       vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 3350 air quiet=
+cdRead [1] ="Cl 3" 3342.80        air=
+cdRead [1] ="Cl 3" 3353.17        air=
+cdRead [1] =end=
+cdRead [1] =set blend 5525 air quiet=
+cdRead [1] ="Cl 3" 5517.71        air=
+cdRead [1] ="Cl 3" 5537.87        air=
+cdRead [1] =end=
+cdRead [1] =set blend 8494 air quiet=
+cdRead [1] ="Cl 3" 8433.66        air=
+cdRead [1] ="Cl 3" 8480.86        air=
+cdRead [1] ="Cl 3" 8500.01        air=
+cdRead [1] ="Cl 3" 8547.96        air=
+cdRead [1] =end=
+cdRead [1] =set blend 8579 air quiet=
+cdRead [1] ="Ca 2" 8662.14        air=
+cdRead [1] ="Ca 2" 8542.09        air=
+cdRead [1] ="Ca 2" 8498.02        air=
+cdRead [1] =end=
+cdRead [1] =set blend 7306 air quiet=
+cdRead [1] ="Ca 2" 7291.47        air=
+cdRead [1] ="Ca 2" 7323.89        air=
+cdRead [1] =end=
+cdRead [1] =set blend 3933 air quiet=
+cdRead [1] ="Ca 2" 3933.66        air=
+cdRead [1] ="Ca 2" 3968.47        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1657 vacuum quiet=
+cdRead [1] ="C  1" 1656.27        vacuum=
+cdRead [1] ="C  1" 1656.93        vacuum=
+cdRead [1] ="C  1" 1657.01        vacuum=
+cdRead [1] ="C  1" 1657.38        vacuum=
+cdRead [1] ="C  1" 1657.91        vacuum=
+cdRead [1] ="C  1" 1658.12        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 9850 air quiet=
+cdRead [1] ="C  1" 9824.13        air=
+cdRead [1] ="C  1" 9850.26        air=
+cdRead [1] =end=
+cdRead [1] =set blend 2326 air quiet=
+cdRead [1] ="C  2" 2324.69        air=
+cdRead [1] ="C  2" 2323.50        air=
+cdRead [1] ="C  2" 2328.12        air=
+cdRead [1] ="C  2" 2326.93        air=
+cdRead [1] ="C  2" 2325.40        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1335 vacuum quiet=
+cdRead [1] ="C  2" 1334.53        vacuum=
+cdRead [1] ="C  2" 1335.66        vacuum=
+cdRead [1] ="C  2" 1335.71        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 6580 air quiet=
+cdRead [1] ="C  2" 6578.05        air=
+cdRead [1] ="C  2" 6582.88        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1909 vacuum quiet=
+cdRead [1] ="C  3" 1908.73        vacuum=
+cdRead [1] ="C  3" 1906.68        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1176 vacuum quiet=
+cdRead [1] ="C  3" 1174.61        vacuum=
+cdRead [1] ="C  3" 1174.93        vacuum=
+cdRead [1] ="C  3" 1175.26        vacuum=
+cdRead [1] ="C  3" 1175.59        vacuum=
+cdRead [1] ="C  3" 1175.71        vacuum=
+cdRead [1] ="C  3" 1175.99        vacuum=
+cdRead [1] ="C  3" 1176.37        vacuum=
+cdRead [1] ="C  3" 1176.77        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1549 vacuum quiet=
+cdRead [1] ="C  4" 1550.77A       vacuum=
+cdRead [1] ="C  4" 1548.19        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 3467 air quiet=
+cdRead [1] ="N  1" 3466.50        air=
+cdRead [1] ="N  1" 3466.54        air=
+cdRead [1] =end=
+cdRead [1] =set blend 5199 air quiet=
+cdRead [1] ="N  1" 5197.90        air=
+cdRead [1] ="N  1" 5200.26        air=
+cdRead [1] =end=
+cdRead [1] =set blend 10403 air quiet=
+cdRead [1] ="N  1" 10397.7        air=
+cdRead [1] ="N  1" 10398.2        air=
+cdRead [1] ="N  1" 10407.2        air=
+cdRead [1] ="N  1" 10407.6        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1085 vacuum quiet=
+cdRead [1] ="N  2" 1083.99        vacuum=
+cdRead [1] ="N  2" 1084.56        vacuum=
+cdRead [1] ="N  2" 1084.58        vacuum=
+cdRead [1] ="N  2" 1085.53        vacuum=
+cdRead [1] ="N  2" 1085.55        vacuum=
+cdRead [1] ="N  2" 1085.70        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 2141 air quiet=
+cdRead [1] ="N  2" 2139.01        air=
+cdRead [1] ="N  2" 2142.77A       air=
+cdRead [1] =end=
+cdRead [1] =set blend 1750 vacuum quiet=
+cdRead [1] ="N  3" 1746.82        vacuum=
+cdRead [1] ="N  3" 1748.65        vacuum=
+cdRead [1] ="N  3" 1749.67        vacuum=
+cdRead [1] ="N  3" 1752.16        vacuum=
+cdRead [1] ="N  3" 1753.99        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 990 vacuum quiet=
+cdRead [1] ="N  3" 989.799        vacuum=
+cdRead [1] ="N  3" 991.511        vacuum=
+cdRead [1] ="N  3" 991.577        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1486 vacuum quiet=
+cdRead [1] ="N  4" 1483.32        vacuum=
+cdRead [1] ="N  4" 1486.50        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1240 vacuum quiet=
+cdRead [1] ="N  5" 1238.82        vacuum=
+cdRead [1] ="N  5" 1242.805       vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 6300 air quiet=
+cdRead [1] ="O  1" 6300.30        air=
+cdRead [1] ="O  1" 6363.78        air=
+cdRead [1] ="O  1" 6391.73        air=
+cdRead [1] =end=
+cdRead [1] =set blend 2471 air quiet=
+cdRead [1] ="O  2" 2470.22        air=
+cdRead [1] ="O  2" 2470.34        air=
+cdRead [1] =end=
+cdRead [1] =set blend 7323 air quiet=
+cdRead [1] ="O  2" 7318.92        air=
+cdRead [1] ="O  2" 7319.99        air=
+cdRead [1] =end=
+cdRead [1] =set blend 7332 air quiet=
+cdRead [1] ="O  2" 7329.67        air=
+cdRead [1] ="O  2" 7330.73        air=
+cdRead [1] =end=
+cdRead [1] =set blend 833 vacuum quiet=
+cdRead [1] ="O  2" 832.758        vacuum=
+cdRead [1] ="O  2" 833.330        vacuum=
+cdRead [1] ="O  2" 834.465        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 3727 air quiet=
+cdRead [1] ="O  2" 3726.03        air=
+cdRead [1] ="O  2" 3728.81        air=
+cdRead [1] =end=
+cdRead [1] =set blend 7325 air quiet=
+cdRead [1] ="O  2" 7318.92        air=
+cdRead [1] ="O  2" 7319.99        air=
+cdRead [1] ="O  2" 7329.67        air=
+cdRead [1] ="O  2" 7330.73        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1666 vacuum quiet=
+cdRead [1] ="O  3" 1666.15        vacuum=
+cdRead [1] ="O  3" 1660.81        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 5007 air quiet=
+cdRead [1] ="O  3" 5006.84        air=
+cdRead [1] ="O  3" 4958.91        air=
+cdRead [1] ="O  3" 4931.23        air=
+cdRead [1] =end=
+cdRead [1] =set blend 835 vacuum quiet=
+cdRead [1] ="O  3" 832.929        vacuum=
+cdRead [1] ="O  3" 833.715        vacuum=
+cdRead [1] ="O  3" 833.749        vacuum=
+cdRead [1] ="O  3" 835.059        vacuum=
+cdRead [1] ="O  3" 835.092        vacuum=
+cdRead [1] ="O  3" 835.289        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1402 vacuum quiet=
+cdRead [1] ="O  4" 1397.23A       vacuum=
+cdRead [1] ="O  4" 1399.78A       vacuum=
+cdRead [1] ="O  4" 1401.16        vacuum=
+cdRead [1] ="O  4" 1404.81A       vacuum=
+cdRead [1] ="O  4" 1407.38        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 789 vacuum quiet=
+cdRead [1] ="O  4" 787.710        vacuum=
+cdRead [1] ="O  4" 790.114        vacuum=
+cdRead [1] ="O  4" 790.201        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1218 vacuum quiet=
+cdRead [1] ="O  5" 1213.81        vacuum=
+cdRead [1] ="O  5" 1218.34        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1035 vacuum quiet=
+cdRead [1] ="O  6" 1031.91        vacuum=
+cdRead [1] ="O  6" 1037.61A       vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 21210 air quiet=
+cdRead [1] ="H2" 21205.7          air=
+cdRead [1] ="H2" 21210.1          air=
+cdRead [1] ="H2" 21212.5          air=
+cdRead [1] =end=
+cdRead [1] =print on=
+cdDrive: calling cloudy
+                                            Cloudy (stout, clike, 83907803, modified)
+                                                         www.nublado.org
+
+                       **************************************23Jul25**************************************
+                       *                                                                                 *
+                       * title test whether the output from a repeated model reproduces exactly          *
+                       * print depart he-like element helium                                             *
+                       * trace h-like full helium no print                                               *
+t_input::readarray returns=trace he-like full no print=
+                       * trace he-like full no print                                                     *
+t_input::readarray returns=trace heavy no print=
+                       * trace heavy no print                                                            *
+t_input::readarray returns=trace convergence esource no print=
+                       * trace convergence esource no print                                              *
+                       * test                                                                            *
+                       * no time                                                                         *
+                       * FUDGE= 0.000000                                                                 *
+                       * grid 0 to 1 1 repeat sequential                                                 *
+                       * iterate 3                                                                       *
+                       *                                                                                 *
+                       ***********************************************************************************
+
+
+
+           9244CellPeak1.00E+00   Lo 3.04e-09=  29.98m   Hi-Con:7.13E+06 Ryd   E(hi):7.35E+06Ryd     E(hi):     100.00 MeV
+           I(nu>1ryd):   2.2974   Average nu:3.035E+00   I( X-ray):   1.4758   I(BalC):   1.8018     Phi(BalmrC):  12.7646
+           phi(1.0-1.8):12.1733   phi(1.8-4.0): 12.066   phi(4.0-20): 11.528   phi(20--):  9.788     Ion pht flx:2.998E+12
+           I(gam ray):   1.1903   phi(gam r):   7.5825   I(Infred):   2.0158   Alf(ox):  -1.4088     Total inten:   2.5628
+           U(1.0----):1.000E-02   U(4.0----):1.146E-03   T(En-Den):3.563E+01   T(Comp):1.323E+07     nuJnu(912A):6.338E+01
+           Occ(FarIR):3.324E-04   Occ(H n=6):2.238E-09   Occ(1Ryd):2.923E-15   Occ(4R):1.495E-17     Occ (Nu-hi):0.000E+00
+           Tbr(FarIR):1.598E-07   Tbr(H n=6):9.803E-06   Tbr(1Ryd):4.614E-10   Tbr(4R):9.460E-12     Tbr (Nu-hi):0.000E+00
+  
+
+ConvInitSolution entered 
+ConvInitSolution doing initial solution with temp=1.00e+04
+  ConvTempEdenIoniz called, entering temp loop using solver vWDB.
+   ConvEdenIoniz called, entering eden loop using solver SECA.
+  0 IonHelium returns;  nzone 0 He0:7.9871e-05 He+:8.4602e-02 He+2:9.1532e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2055e-09 ion:5.5240e-06 rad rec:4.3583e-13 1s Pop:7.9527e-02
+     He+2/He+:Popul smp:1.0819e+01 rec:2.6051e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  0 IonHelium returns;  nzone 0 He0:7.9614e-05 He+:8.4602e-02 He+2:9.1532e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2055e-09 ion:5.5240e-06 rad rec:4.3583e-13 1s Pop:7.9267e-02
+     He+2/He+:Popul smp:1.0819e+01 rec:2.6051e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  0 IonHelium returns;  nzone 0 He0:7.9611e-05 He+:8.4602e-02 He+2:9.1532e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2055e-09 ion:5.5242e-06 rad rec:4.3583e-13 1s Pop:7.9267e-02
+     He+2/He+:Popul smp:1.0819e+01 rec:2.6051e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  0 IonHelium returns;  nzone 0 He0:7.9611e-05 He+:8.4602e-02 He+2:9.1532e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2055e-09 ion:5.5242e-06 rad rec:4.3583e-13 1s Pop:7.9267e-02
+     He+2/He+:Popul smp:1.0819e+01 rec:2.6051e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change H+
+  0 IonHelium returns;  nzone 0 He0:7.9611e-05 He+:8.4602e-02 He+2:9.1532e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2055e-09 ion:5.5242e-06 rad rec:4.3583e-13 1s Pop:7.9267e-02
+     He+2/He+:Popul smp:1.0819e+01 rec:2.6051e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  0 IonHelium returns;  nzone 0 He0:7.9611e-05 He+:8.4602e-02 He+2:9.1532e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2055e-09 ion:5.5242e-06 rad rec:4.3583e-13 1s Pop:7.9267e-02
+     He+2/He+:Popul smp:1.0819e+01 rec:2.6051e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.00 current: 1.1941e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -2.8114e-07 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 0.0000e+00
+    ConvIoniz4 0 heat: 1.00e+00 cool: 1.00e+00  ioniz converged
+   EdenError: eden 1.1941e+04 EdenTrue 1.1951e+04 rel. err. -8.4302e-04
+   ConvEdenIoniz: entry eden 1.1941e+04 -> 1.1941e+04 rel chng 0.00% accuracy -0.08%
+   ConvEdenIoniz returns converged=T reason NONE!!!!!
+  ConvTempEdenIoniz: Te 1.000000e+04 C 4.0959e-16 H 9.6101e-16
+  ConvTempEdenIoniz returns ok.
+  ConvTempEdenIoniz called, entering temp loop using solver vWDB.
+   ConvEdenIoniz called, entering eden loop using solver SECA.
+     eden_sum zn: 0.01 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -2.8114e-07 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 0.0000e+00
+  1 IonHelium returns;  nzone 0 He0:7.9641e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2077e-09 ion:5.5266e-06 rad rec:4.3583e-13 1s Pop:7.9284e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  1 IonHelium returns;  nzone 0 He0:7.9641e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2077e-09 ion:5.5266e-06 rad rec:4.3583e-13 1s Pop:7.9283e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  1 IonHelium returns;  nzone 0 He0:7.9641e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2077e-09 ion:5.5266e-06 rad rec:4.3583e-13 1s Pop:7.9283e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  1 IonHelium returns;  nzone 0 He0:7.9641e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2077e-09 ion:5.5266e-06 rad rec:4.3583e-13 1s Pop:7.9283e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change P+5
+  1 IonHelium returns;  nzone 0 He0:7.9641e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2077e-09 ion:5.5266e-06 rad rec:4.3583e-13 1s Pop:7.9283e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.01 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -2.8137e-07 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 4.9881e+13
+    ConvIoniz4 0 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 0.0000e+00 new 3.6211e-08 OscilOTS F
+     eden_sum zn: 0.02 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -2.8137e-07 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 4.9881e+13
+  2 IonHelium returns;  nzone 0 He0:7.4281e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.1379e+03 rec:5.2077e-09 ion:5.9258e-06 rad rec:4.3583e-13 1s Pop:7.3977e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  2 IonHelium returns;  nzone 0 He0:7.4282e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.1379e+03 rec:5.2077e-09 ion:5.9258e-06 rad rec:4.3583e-13 1s Pop:7.3977e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  2 IonHelium returns;  nzone 0 He0:7.4282e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.1379e+03 rec:5.2077e-09 ion:5.9258e-06 rad rec:4.3583e-13 1s Pop:7.3977e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  2 IonHelium returns;  nzone 0 He0:7.4282e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.1379e+03 rec:5.2077e-09 ion:5.9258e-06 rad rec:4.3583e-13 1s Pop:7.3977e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Mg
+  2 IonHelium returns;  nzone 0 He0:7.4282e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.1379e+03 rec:5.2077e-09 ion:5.9258e-06 rad rec:4.3583e-13 1s Pop:7.3977e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  2 IonHelium returns;  nzone 0 He0:7.4282e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.1379e+03 rec:5.2077e-09 ion:5.9258e-06 rad rec:4.3583e-13 1s Pop:7.3977e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.02 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -2.3546e-07 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 7.3566e+14
+    ConvIoniz4 1 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 3.6211e-08 new 4.4438e-07 OscilOTS F
+     eden_sum zn: 0.03 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -2.3546e-07 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 7.3566e+14
+  3 IonHelium returns;  nzone 0 He0:5.3604e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5775e+03 rec:5.2077e-09 ion:8.2149e-06 rad rec:4.3583e-13 1s Pop:5.3504e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  3 IonHelium returns;  nzone 0 He0:5.3604e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5775e+03 rec:5.2077e-09 ion:8.2149e-06 rad rec:4.3583e-13 1s Pop:5.3504e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Mg
+  3 IonHelium returns;  nzone 0 He0:5.3604e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5775e+03 rec:5.2077e-09 ion:8.2149e-06 rad rec:4.3583e-13 1s Pop:5.3504e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  3 IonHelium returns;  nzone 0 He0:5.3604e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5775e+03 rec:5.2077e-09 ion:8.2149e-06 rad rec:4.3583e-13 1s Pop:5.3504e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.03 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -6.5347e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 1.8599e+15
+    ConvIoniz4 2 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 4.4438e-07 new 3.7003e-07 OscilOTS T
+     eden_sum zn: 0.04 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -6.5347e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 1.8599e+15
+  4 IonHelium returns;  nzone 0 He0:4.8284e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.7514e+03 rec:5.2077e-09 ion:9.1209e-06 rad rec:4.3583e-13 1s Pop:4.8237e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  4 IonHelium returns;  nzone 0 He0:4.8284e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.7514e+03 rec:5.2077e-09 ion:9.1209e-06 rad rec:4.3583e-13 1s Pop:4.8237e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  4 IonHelium returns;  nzone 0 He0:4.8284e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.7514e+03 rec:5.2077e-09 ion:9.1209e-06 rad rec:4.3583e-13 1s Pop:4.8237e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.04 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -2.8426e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 1.2872e+15
+    ConvIoniz4 3 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 3.7003e-07 new 1.2225e-07 OscilOTS T
+     eden_sum zn: 0.05 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -2.8426e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 1.2872e+15
+  5 IonHelium returns;  nzone 0 He0:5.0049e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6897e+03 rec:5.2077e-09 ion:8.7998e-06 rad rec:4.3583e-13 1s Pop:4.9980e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  5 IonHelium returns;  nzone 0 He0:5.0045e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6897e+03 rec:5.2077e-09 ion:8.7998e-06 rad rec:4.3583e-13 1s Pop:4.9980e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  5 IonHelium returns;  nzone 0 He0:5.0045e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6897e+03 rec:5.2077e-09 ion:8.7998e-06 rad rec:4.3583e-13 1s Pop:4.9980e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  5 IonHelium returns;  nzone 0 He0:5.0045e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6897e+03 rec:5.2077e-09 ion:8.7998e-06 rad rec:4.3583e-13 1s Pop:4.9980e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  5 IonHelium returns;  nzone 0 He0:5.0045e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6897e+03 rec:5.2077e-09 ion:8.7998e-06 rad rec:4.3583e-13 1s Pop:4.9980e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.05 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -4.0344e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 4.5205e+14
+    ConvIoniz4 4 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.2225e-07 new 5.8487e-08 OscilOTS T
+     eden_sum zn: 0.06 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -4.0344e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 4.5205e+14
+  6 IonHelium returns;  nzone 0 He0:5.7502e-05 He+:8.4636e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4704e+03 rec:5.2077e-09 ion:7.6575e-06 rad rec:4.3583e-13 1s Pop:5.7363e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  6 IonHelium returns;  nzone 0 He0:5.7502e-05 He+:8.4636e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4704e+03 rec:5.2077e-09 ion:7.6575e-06 rad rec:4.3583e-13 1s Pop:5.7363e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  6 IonHelium returns;  nzone 0 He0:5.7502e-05 He+:8.4636e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4704e+03 rec:5.2077e-09 ion:7.6575e-06 rad rec:4.3583e-13 1s Pop:5.7363e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.06 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -9.4189e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 2.8961e+14
+    ConvIoniz4 5 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 5.8487e-08 new 7.9691e-08 OscilOTS T
+     eden_sum zn: 0.07 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -9.4189e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 2.8961e+14
+  7 IonHelium returns;  nzone 0 He0:6.1465e-05 He+:8.4636e-02 He+2:9.1530e-01
+     He+ /He0:Popul smp:1.3756e+03 rec:5.2077e-09 ion:7.1636e-06 rad rec:4.3583e-13 1s Pop:6.1284e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  7 IonHelium returns;  nzone 0 He0:6.1462e-05 He+:8.4636e-02 He+2:9.1530e-01
+     He+ /He0:Popul smp:1.3756e+03 rec:5.2077e-09 ion:7.1636e-06 rad rec:4.3583e-13 1s Pop:6.1284e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  7 IonHelium returns;  nzone 0 He0:6.1462e-05 He+:8.4636e-02 He+2:9.1530e-01
+     He+ /He0:Popul smp:1.3756e+03 rec:5.2077e-09 ion:7.1636e-06 rad rec:4.3583e-13 1s Pop:6.1284e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  7 IonHelium returns;  nzone 0 He0:6.1462e-05 He+:8.4636e-02 He+2:9.1530e-01
+     He+ /He0:Popul smp:1.3756e+03 rec:5.2077e-09 ion:7.1636e-06 rad rec:4.3583e-13 1s Pop:6.1284e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  7 IonHelium returns;  nzone 0 He0:6.1462e-05 He+:8.4636e-02 He+2:9.1530e-01
+     He+ /He0:Popul smp:1.3756e+03 rec:5.2077e-09 ion:7.1636e-06 rad rec:4.3583e-13 1s Pop:6.1284e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.07 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -1.2511e-07 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 4.8013e+14
+    ConvIoniz4 6 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 7.9691e-08 new 1.6930e-07 OscilOTS T
+     eden_sum zn: 0.08 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -1.2511e-07 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 4.8013e+14
+  8 IonHelium returns;  nzone 0 He0:5.6984e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4837e+03 rec:5.2077e-09 ion:7.7267e-06 rad rec:4.3583e-13 1s Pop:5.6854e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  8 IonHelium returns;  nzone 0 He0:5.6988e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4837e+03 rec:5.2077e-09 ion:7.7267e-06 rad rec:4.3583e-13 1s Pop:5.6854e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  8 IonHelium returns;  nzone 0 He0:5.6988e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4837e+03 rec:5.2077e-09 ion:7.7267e-06 rad rec:4.3583e-13 1s Pop:5.6854e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  8 IonHelium returns;  nzone 0 He0:5.6988e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4837e+03 rec:5.2077e-09 ion:7.7267e-06 rad rec:4.3583e-13 1s Pop:5.6854e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  8 IonHelium returns;  nzone 0 He0:5.6988e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4837e+03 rec:5.2077e-09 ion:7.7267e-06 rad rec:4.3583e-13 1s Pop:5.6854e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.08 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -9.0293e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 8.1753e+14
+    ConvIoniz4 7 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.6930e-07 new 2.1673e-07 OscilOTS T
+     eden_sum zn: 0.09 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -9.0293e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 8.1753e+14
+  9 IonHelium returns;  nzone 0 He0:5.2851e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5999e+03 rec:5.2077e-09 ion:8.3321e-06 rad rec:4.3583e-13 1s Pop:5.2758e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  9 IonHelium returns;  nzone 0 He0:5.2851e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5999e+03 rec:5.2077e-09 ion:8.3321e-06 rad rec:4.3583e-13 1s Pop:5.2758e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  9 IonHelium returns;  nzone 0 He0:5.2851e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5999e+03 rec:5.2077e-09 ion:8.3321e-06 rad rec:4.3583e-13 1s Pop:5.2758e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.09 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -5.9953e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 8.8469e+14
+    ConvIoniz4 8 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 2.1673e-07 new 1.6299e-07 OscilOTS T
+     eden_sum zn: 0.10 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -5.9953e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 8.8469e+14
+  10 IonHelium returns;  nzone 0 He0:5.2311e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6165e+03 rec:5.2077e-09 ion:8.4180e-06 rad rec:4.3583e-13 1s Pop:5.2224e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  10 IonHelium returns;  nzone 0 He0:5.2312e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6165e+03 rec:5.2077e-09 ion:8.4180e-06 rad rec:4.3583e-13 1s Pop:5.2224e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  10 IonHelium returns;  nzone 0 He0:5.2312e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6165e+03 rec:5.2077e-09 ion:8.4180e-06 rad rec:4.3583e-13 1s Pop:5.2224e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  10 IonHelium returns;  nzone 0 He0:5.2312e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6165e+03 rec:5.2077e-09 ion:8.4180e-06 rad rec:4.3583e-13 1s Pop:5.2224e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  10 IonHelium returns;  nzone 0 He0:5.2312e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6165e+03 rec:5.2077e-09 ion:8.4180e-06 rad rec:4.3583e-13 1s Pop:5.2224e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.10 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -5.6127e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.5265e+14
+    ConvIoniz4 9 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.6299e-07 new 1.1336e-07 OscilOTS T
+    ConvIoniz4>>>>>>>>>>exit without converging after 10 tries!!!!
+     eden_sum zn: 0.11 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -5.6127e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.5265e+14
+  11 IonHelium returns;  nzone 0 He0:5.4504e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5515e+03 rec:5.2077e-09 ion:8.0796e-06 rad rec:4.3583e-13 1s Pop:5.4392e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  11 IonHelium returns;  nzone 0 He0:5.4501e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5515e+03 rec:5.2077e-09 ion:8.0796e-06 rad rec:4.3583e-13 1s Pop:5.4392e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  11 IonHelium returns;  nzone 0 He0:5.4501e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5515e+03 rec:5.2077e-09 ion:8.0796e-06 rad rec:4.3583e-13 1s Pop:5.4392e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  11 IonHelium returns;  nzone 0 He0:5.4501e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5515e+03 rec:5.2077e-09 ion:8.0796e-06 rad rec:4.3583e-13 1s Pop:5.4392e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  11 IonHelium returns;  nzone 0 He0:5.4501e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5515e+03 rec:5.2077e-09 ion:8.0796e-06 rad rec:4.3583e-13 1s Pop:5.4392e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.11 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.1849e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 4.9386e+14
+    ConvIoniz4 0 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.1336e-07 new 1.0692e-07 OscilOTS F
+     eden_sum zn: 0.12 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.1849e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 4.9386e+14
+  12 IonHelium returns;  nzone 0 He0:5.6752e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4899e+03 rec:5.2077e-09 ion:7.7591e-06 rad rec:4.3583e-13 1s Pop:5.6618e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  12 IonHelium returns;  nzone 0 He0:5.6750e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4899e+03 rec:5.2077e-09 ion:7.7591e-06 rad rec:4.3583e-13 1s Pop:5.6618e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  12 IonHelium returns;  nzone 0 He0:5.6750e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4899e+03 rec:5.2077e-09 ion:7.7591e-06 rad rec:4.3583e-13 1s Pop:5.6618e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  12 IonHelium returns;  nzone 0 He0:5.6750e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4899e+03 rec:5.2077e-09 ion:7.7591e-06 rad rec:4.3583e-13 1s Pop:5.6618e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  12 IonHelium returns;  nzone 0 He0:5.6750e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4899e+03 rec:5.2077e-09 ion:7.7591e-06 rad rec:4.3583e-13 1s Pop:5.6618e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.12 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -8.8499e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.1154e+14
+    ConvIoniz4 1 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.0692e-07 new 1.3323e-07 OscilOTS F
+     eden_sum zn: 0.13 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -8.8499e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.1154e+14
+  13 IonHelium returns;  nzone 0 He0:5.6455e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4977e+03 rec:5.2077e-09 ion:7.7997e-06 rad rec:4.3583e-13 1s Pop:5.6326e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  13 IonHelium returns;  nzone 0 He0:5.6455e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4977e+03 rec:5.2077e-09 ion:7.7997e-06 rad rec:4.3583e-13 1s Pop:5.6326e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  13 IonHelium returns;  nzone 0 He0:5.6455e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4977e+03 rec:5.2077e-09 ion:7.7997e-06 rad rec:4.3583e-13 1s Pop:5.6326e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  13 IonHelium returns;  nzone 0 He0:5.6455e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4977e+03 rec:5.2077e-09 ion:7.7997e-06 rad rec:4.3583e-13 1s Pop:5.6326e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  13 IonHelium returns;  nzone 0 He0:5.6455e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4977e+03 rec:5.2077e-09 ion:7.7997e-06 rad rec:4.3583e-13 1s Pop:5.6326e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.13 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -8.6288e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.2905e+14
+    ConvIoniz4 2 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.3323e-07 new 1.6021e-07 OscilOTS F
+     eden_sum zn: 0.14 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -8.6288e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.2905e+14
+  14 IonHelium returns;  nzone 0 He0:5.4784e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5434e+03 rec:5.2077e-09 ion:8.0375e-06 rad rec:4.3583e-13 1s Pop:5.4674e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  14 IonHelium returns;  nzone 0 He0:5.4786e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5434e+03 rec:5.2077e-09 ion:8.0375e-06 rad rec:4.3583e-13 1s Pop:5.4674e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  14 IonHelium returns;  nzone 0 He0:5.4786e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5434e+03 rec:5.2077e-09 ion:8.0375e-06 rad rec:4.3583e-13 1s Pop:5.4674e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  14 IonHelium returns;  nzone 0 He0:5.4786e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5434e+03 rec:5.2077e-09 ion:8.0375e-06 rad rec:4.3583e-13 1s Pop:5.4674e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  14 IonHelium returns;  nzone 0 He0:5.4786e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5434e+03 rec:5.2077e-09 ion:8.0375e-06 rad rec:4.3583e-13 1s Pop:5.4674e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.14 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.3930e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 7.0542e+14
+    ConvIoniz4 3 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.6021e-07 new 1.5665e-07 OscilOTS T
+     eden_sum zn: 0.15 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.3930e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 7.0542e+14
+  15 IonHelium returns;  nzone 0 He0:5.3912e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5684e+03 rec:5.2077e-09 ion:8.1677e-06 rad rec:4.3583e-13 1s Pop:5.3810e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  15 IonHelium returns;  nzone 0 He0:5.3913e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5684e+03 rec:5.2077e-09 ion:8.1677e-06 rad rec:4.3583e-13 1s Pop:5.3810e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  15 IonHelium returns;  nzone 0 He0:5.3913e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5684e+03 rec:5.2077e-09 ion:8.1677e-06 rad rec:4.3583e-13 1s Pop:5.3810e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  15 IonHelium returns;  nzone 0 He0:5.3913e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5684e+03 rec:5.2077e-09 ion:8.1677e-06 rad rec:4.3583e-13 1s Pop:5.3810e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  15 IonHelium returns;  nzone 0 He0:5.3913e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5684e+03 rec:5.2077e-09 ion:8.1677e-06 rad rec:4.3583e-13 1s Pop:5.3810e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.15 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -6.7580e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.6640e+14
+    ConvIoniz4 4 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.5665e-07 new 1.3661e-07 OscilOTS T
+     eden_sum zn: 0.16 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -6.7580e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.6640e+14
+  16 IonHelium returns;  nzone 0 He0:5.4342e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5560e+03 rec:5.2077e-09 ion:8.1033e-06 rad rec:4.3583e-13 1s Pop:5.4234e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  16 IonHelium returns;  nzone 0 He0:5.4342e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5560e+03 rec:5.2077e-09 ion:8.1033e-06 rad rec:4.3583e-13 1s Pop:5.4234e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  16 IonHelium returns;  nzone 0 He0:5.4342e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5560e+03 rec:5.2077e-09 ion:8.1033e-06 rad rec:4.3583e-13 1s Pop:5.4234e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  16 IonHelium returns;  nzone 0 He0:5.4342e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5560e+03 rec:5.2077e-09 ion:8.1033e-06 rad rec:4.3583e-13 1s Pop:5.4234e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  16 IonHelium returns;  nzone 0 He0:5.4342e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5560e+03 rec:5.2077e-09 ion:8.1033e-06 rad rec:4.3583e-13 1s Pop:5.4234e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.16 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.0688e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.9119e+14
+    ConvIoniz4 5 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.3661e-07 new 1.2614e-07 OscilOTS T
+     eden_sum zn: 0.17 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.0688e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.9119e+14
+  17 IonHelium returns;  nzone 0 He0:5.5276e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5297e+03 rec:5.2077e-09 ion:7.9663e-06 rad rec:4.3583e-13 1s Pop:5.5158e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  17 IonHelium returns;  nzone 0 He0:5.5275e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5297e+03 rec:5.2077e-09 ion:7.9663e-06 rad rec:4.3583e-13 1s Pop:5.5158e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  17 IonHelium returns;  nzone 0 He0:5.5275e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5297e+03 rec:5.2077e-09 ion:7.9663e-06 rad rec:4.3583e-13 1s Pop:5.5158e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  17 IonHelium returns;  nzone 0 He0:5.5275e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5297e+03 rec:5.2077e-09 ion:7.9663e-06 rad rec:4.3583e-13 1s Pop:5.5158e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  17 IonHelium returns;  nzone 0 He0:5.5275e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5297e+03 rec:5.2077e-09 ion:7.9663e-06 rad rec:4.3583e-13 1s Pop:5.5158e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.17 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.7521e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.6688e+14
+    ConvIoniz4 6 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.2614e-07 new 1.3130e-07 OscilOTS T
+     eden_sum zn: 0.18 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.7521e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.6688e+14
+  18 IonHelium returns;  nzone 0 He0:5.5612e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5204e+03 rec:5.2077e-09 ion:7.9180e-06 rad rec:4.3583e-13 1s Pop:5.5492e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  18 IonHelium returns;  nzone 0 He0:5.5612e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5204e+03 rec:5.2077e-09 ion:7.9180e-06 rad rec:4.3583e-13 1s Pop:5.5492e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  18 IonHelium returns;  nzone 0 He0:5.5612e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5204e+03 rec:5.2077e-09 ion:7.9180e-06 rad rec:4.3583e-13 1s Pop:5.5492e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  18 IonHelium returns;  nzone 0 He0:5.5612e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5204e+03 rec:5.2077e-09 ion:7.9180e-06 rad rec:4.3583e-13 1s Pop:5.5492e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  18 IonHelium returns;  nzone 0 He0:5.5612e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5204e+03 rec:5.2077e-09 ion:7.9180e-06 rad rec:4.3583e-13 1s Pop:5.5492e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.18 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -8.0009e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.9825e+14
+    ConvIoniz4 7 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.3130e-07 new 1.4251e-07 OscilOTS T
+     eden_sum zn: 0.19 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -8.0009e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.9825e+14
+  19 IonHelium returns;  nzone 0 He0:5.5180e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5323e+03 rec:5.2077e-09 ion:7.9800e-06 rad rec:4.3583e-13 1s Pop:5.5065e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  19 IonHelium returns;  nzone 0 He0:5.5181e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5323e+03 rec:5.2077e-09 ion:7.9800e-06 rad rec:4.3583e-13 1s Pop:5.5065e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  19 IonHelium returns;  nzone 0 He0:5.5181e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5323e+03 rec:5.2077e-09 ion:7.9800e-06 rad rec:4.3583e-13 1s Pop:5.5065e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  19 IonHelium returns;  nzone 0 He0:5.5181e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5323e+03 rec:5.2077e-09 ion:7.9800e-06 rad rec:4.3583e-13 1s Pop:5.5065e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  19 IonHelium returns;  nzone 0 He0:5.5181e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5323e+03 rec:5.2077e-09 ion:7.9800e-06 rad rec:4.3583e-13 1s Pop:5.5065e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.19 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.6826e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.3776e+14
+    ConvIoniz4 8 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.4251e-07 new 1.4654e-07 OscilOTS T
+     eden_sum zn: 0.20 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.6826e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.3776e+14
+  20 IonHelium returns;  nzone 0 He0:5.4679e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5464e+03 rec:5.2077e-09 ion:8.0532e-06 rad rec:4.3583e-13 1s Pop:5.4568e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  20 IonHelium returns;  nzone 0 He0:5.4679e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5464e+03 rec:5.2077e-09 ion:8.0532e-06 rad rec:4.3583e-13 1s Pop:5.4568e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  20 IonHelium returns;  nzone 0 He0:5.4679e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5464e+03 rec:5.2077e-09 ion:8.0532e-06 rad rec:4.3583e-13 1s Pop:5.4568e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  20 IonHelium returns;  nzone 0 He0:5.4679e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5464e+03 rec:5.2077e-09 ion:8.0532e-06 rad rec:4.3583e-13 1s Pop:5.4568e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  20 IonHelium returns;  nzone 0 He0:5.4679e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5464e+03 rec:5.2077e-09 ion:8.0532e-06 rad rec:4.3583e-13 1s Pop:5.4568e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.20 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.3149e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.4262e+14
+    ConvIoniz4 9 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.4654e-07 new 1.4136e-07 OscilOTS T
+    ConvIoniz4>>>>>>>>>>exit without converging after 10 tries!!!!
+     eden_sum zn: 0.21 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.3149e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.4262e+14
+  21 IonHelium returns;  nzone 0 He0:5.4621e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5481e+03 rec:5.2077e-09 ion:8.0619e-06 rad rec:4.3583e-13 1s Pop:5.4510e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  21 IonHelium returns;  nzone 0 He0:5.4621e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5481e+03 rec:5.2077e-09 ion:8.0619e-06 rad rec:4.3583e-13 1s Pop:5.4510e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.21 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.2720e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.1849e+14
+    ConvIoniz4 0 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.4136e-07 new 1.3534e-07 OscilOTS F
+     eden_sum zn: 0.22 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.2720e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.1849e+14
+  22 IonHelium returns;  nzone 0 He0:5.4919e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5397e+03 rec:5.2077e-09 ion:8.0181e-06 rad rec:4.3583e-13 1s Pop:5.4805e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  22 IonHelium returns;  nzone 0 He0:5.4918e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5397e+03 rec:5.2077e-09 ion:8.0181e-06 rad rec:4.3583e-13 1s Pop:5.4805e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  22 IonHelium returns;  nzone 0 He0:5.4918e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5397e+03 rec:5.2077e-09 ion:8.0181e-06 rad rec:4.3583e-13 1s Pop:5.4805e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  22 IonHelium returns;  nzone 0 He0:5.4918e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5397e+03 rec:5.2077e-09 ion:8.0181e-06 rad rec:4.3583e-13 1s Pop:5.4805e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  22 IonHelium returns;  nzone 0 He0:5.4918e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5397e+03 rec:5.2077e-09 ion:8.0181e-06 rad rec:4.3583e-13 1s Pop:5.4805e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.22 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.4899e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.9935e+14
+    ConvIoniz4 1 heat: 9.61e-16 cool: 4.10e-16  ioniz converged
+   EdenError: eden 1.1946e+04 EdenTrue 1.1951e+04 rel. err. -4.2785e-04
+   ConvEdenIoniz: entry eden 1.1941e+04 -> 1.1946e+04 rel chng 0.04% accuracy -0.04%
+   ConvEdenIoniz returns converged=T reason NONE!!!!!
+  ConvTempEdenIoniz: Te 1.000000e+04 C 4.0726e-16 H 9.6371e-16
+  ConvTempEdenIoniz returns ok.
+
+ConvInitSolution: end 1st iteration search phase finding Te=1.000e+04
+
+ ConvPresTempEdenIoniz1 entered, will call ConvIoniz to initialize
+ ConvPresTempEdenIoniz1 ConvIoniz found following converged: Pres:F, Temp:T, Eden:T, Ion:T, Pops:T
+
+ ConvPresTempEdenIoniz1 entering main pressure loop.
+  ConvTempEdenIoniz called, entering temp loop using solver vWDB.
+   ConvEdenIoniz called, entering eden loop using solver SECA.
+     eden_sum zn: 0.00 current: 1.1948e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.4899e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.9935e+14
+  23 IonHelium returns;  nzone 0 He0:5.5190e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5324e+03 rec:5.2088e-09 ion:7.9819e-06 rad rec:4.3583e-13 1s Pop:5.5074e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  23 IonHelium returns;  nzone 0 He0:5.5190e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5324e+03 rec:5.2088e-09 ion:7.9819e-06 rad rec:4.3583e-13 1s Pop:5.5074e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  23 IonHelium returns;  nzone 0 He0:5.5190e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5324e+03 rec:5.2088e-09 ion:7.9819e-06 rad rec:4.3583e-13 1s Pop:5.5074e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  23 IonHelium returns;  nzone 0 He0:5.5190e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5324e+03 rec:5.2088e-09 ion:7.9819e-06 rad rec:4.3583e-13 1s Pop:5.5074e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  23 IonHelium returns;  nzone 0 He0:5.5190e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5324e+03 rec:5.2088e-09 ion:7.9819e-06 rad rec:4.3583e-13 1s Pop:5.5074e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.00 current: 1.1948e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.6752e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.0207e+14
+    ConvIoniz4 0 heat: 9.64e-16 cool: 4.07e-16  ioniz no conv: OTSRatChng old 1.3464e-07 new 1.3822e-07 OscilOTS F
+     eden_sum zn: 0.01 current: 1.1948e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.6752e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.0207e+14
+  24 IonHelium returns;  nzone 0 He0:5.5154e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5334e+03 rec:5.2088e-09 ion:7.9871e-06 rad rec:4.3583e-13 1s Pop:5.5039e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  24 IonHelium returns;  nzone 0 He0:5.5154e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5334e+03 rec:5.2088e-09 ion:7.9871e-06 rad rec:4.3583e-13 1s Pop:5.5039e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.01 current: 1.1948e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.6489e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.1712e+14
+    ConvIoniz4 1 heat: 9.64e-16 cool: 4.07e-16  ioniz no conv: OTSRatChng old 1.3822e-07 new 1.4124e-07 OscilOTS F
+     eden_sum zn: 0.02 current: 1.1948e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.6489e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.1712e+14
+  25 IonHelium returns;  nzone 0 He0:5.4959e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5388e+03 rec:5.2088e-09 ion:8.0154e-06 rad rec:4.3583e-13 1s Pop:5.4846e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  25 IonHelium returns;  nzone 0 He0:5.4960e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5388e+03 rec:5.2088e-09 ion:8.0154e-06 rad rec:4.3583e-13 1s Pop:5.4846e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  25 IonHelium returns;  nzone 0 He0:5.4960e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5388e+03 rec:5.2088e-09 ion:8.0154e-06 rad rec:4.3583e-13 1s Pop:5.4846e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  25 IonHelium returns;  nzone 0 He0:5.4960e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5388e+03 rec:5.2088e-09 ion:8.0154e-06 rad rec:4.3583e-13 1s Pop:5.4846e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  25 IonHelium returns;  nzone 0 He0:5.4960e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5388e+03 rec:5.2088e-09 ion:8.0154e-06 rad rec:4.3583e-13 1s Pop:5.4846e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.02 current: 1.1948e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.5059e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.2563e+14
+    ConvIoniz4 2 heat: 9.64e-16 cool: 4.07e-16  ioniz converged
+   EdenError: eden 1.1948e+04 EdenTrue 1.1951e+04 rel. err. -2.1227e-04
+   ConvEdenIoniz: entry eden 1.1946e+04 -> 1.1948e+04 rel chng 0.02% accuracy -0.02%
+   ConvEdenIoniz returns converged=T reason NONE!!!!!
+  ConvTempEdenIoniz: Te 1.000000e+04 C 4.0733e-16 H 9.6391e-16
+  ConvTempEdenIoniz returns ok.
+ ConvPresTempEdenIoniz1 0.02 l:  0 nH:1.0000e+04 ne:1.1948e+04 PCurnt:3.1704e-08 err: 0.000% Te:1.0000e+04 Osc:F
+ PROBLEM findline did not find line with label (between quotes) "O  3" and wavelength 5006.84A.
+  The closest line (any label) was   "O  5                5006.90A "
+  The closest with correct label was "O  3                4587.10A "
+  Error was       419.85107 vs. tolerance    0.0055970289
+
+ERROR: line blend component "O  3" 5006.84A  was not found.
+ [Stop in addComponent at lines.cpp:224, something went wrong]
+ ************************************************** GRID_DELIMIT -- grid

@@ -1,0 +1,1 @@
+m17_p07.in: stellar atmosphere file is not installed

@@ -1,0 +1,4018 @@
+cdRead [0] =trace h-like full helium no print=
+cdRead [0] =trace he-like full no print=
+cdRead [0] =trace heavy no print=
+cdRead [0] =trace convergence esource no print=
+cdRead [0] =test=
+cdRead [0] =no time=
+cdRead [0] =FUDGE= 0.000000=
+cdRead [0] =grid 0 to 1 1 repeat sequential=
+cdRead [0] =iterate 3=
+cdDrive: lgOptimr=1 lgVaryOn=0 lgNoVary=0 # of input lines=11
+ open_data trying to read /Users/maryam/branches/stout-clike/tsuite/auto/blends.ini found F
+ open_data trying to read /Users/maryam/branches/stout-clike/data/blends.ini found T used T
+cdRead [1] =print off hide=
+cdRead [1] =set blend 1912 vacuum quiet=
+cdRead [1] ="Fe 3"      1895.46A  vacuum=
+cdRead [1] ="Fe 3"      1914.06A  vacuum=
+cdRead [1] ="Fe 3"      1926.30A  vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1.78337 vacuum quiet=
+cdRead [1] ="Fe26 M1"   1.78330A  vacuum=
+cdRead [1] ="Fe26"      1.78344A  vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1.77982 vacuum quiet=
+cdRead [1] ="Fe26"      1.77802A  vacuum=
+cdRead [1] ="Fe26 M1"   1.78330A  vacuum=
+cdRead [1] ="Fe26"      1.78344A  vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1.50273 vacuum quiet=
+cdRead [1] ="Fe26"      1.50235A  vacuum=
+cdRead [1] ="Fe26"      1.50350A  vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1.42505 vacuum quiet=
+cdRead [1] ="Fe26"      1.42490A  vacuum=
+cdRead [1] ="Fe26"      1.42534A  vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1.39177 vacuum quiet=
+cdRead [1] ="Fe26"      1.39170A  vacuum=
+cdRead [1] ="Fe26"      1.39191A  vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1.37418 vacuum quiet=
+cdRead [1] ="Fe26"      1.37430A  vacuum=
+cdRead [1] ="Fe26"      1.37442A  vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1.33232 vacuum quiet=
+cdRead [1] ="Zn30"      1.33052A  vacuum=
+cdRead [1] ="Zn30"      1.33595A  vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1400 vacuum quiet=
+cdRead [1] ="Si 4"      1393.75A  vacuum=
+cdRead [1] ="Si 4"      1402.77A  vacuum=
+cdRead [1] ="O  4"     1397.23A   vacuum=
+cdRead [1] ="O  4"     1399.78A   vacuum=
+cdRead [1] ="O  4"     1401.16A   vacuum=
+cdRead [1] ="O  4"     1404.81A   vacuum=
+cdRead [1] ="O  4"     1407.38A   vacuum=
+cdRead [1] =end=
+cdRead [1] =# >>chng 21 april 7, He 2 wl from 1640.40 to 1640.41A, replacing average energy with np energies=
+cdRead [1] =set blend 1650 vacuum quiet=
+cdRead [1] ="O  3"      1660.81A  vacuum=
+cdRead [1] ="O  3"      1666.15A  vacuum=
+cdRead [1] ="He 2"      1640.41A  vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 8446 air quiet=
+cdRead [1] ="O  1" 8446.25        air=
+cdRead [1] ="O  1" 8446.36        air=
+cdRead [1] ="O  1" 8446.76        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1304 vacuum quiet=
+cdRead [1] ="O  1" 1302.17        vacuum=
+cdRead [1] ="O  1" 1304.86        vacuum=
+cdRead [1] ="O  1" 1306.03        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1039 vacuum quiet=
+cdRead [1] ="O  1" 1039.23        vacuum=
+cdRead [1] ="O  1" 1040.94        vacuum=
+cdRead [1] ="O  1" 1041.69        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 4368 air quiet=
+cdRead [1] ="O  1" 4368.19        air=
+cdRead [1] ="O  1" 4368.24        air=
+cdRead [1] ="O  1" 4368.26        air=
+cdRead [1] =end=
+cdRead [1] =set blend 13100 air quiet=
+cdRead [1] ="O  1" 13163.9        air=
+cdRead [1] ="O  1" 13164.9        air=
+cdRead [1] ="O  1" 13165.1        air=
+cdRead [1] =end=
+cdRead [1] =set blend 11300 air quiet=
+cdRead [1] ="O  1" 11286.3        air=
+cdRead [1] ="O  1" 11286.4        air=
+cdRead [1] ="O  1" 11286.9        air=
+cdRead [1] ="O  1" 11287.0        air=
+cdRead [1] ="O  1" 11287.1        air=
+cdRead [1] ="O  1" 11287.3        air=
+cdRead [1] =end=
+cdRead [1] =set blend 29000 air quiet=
+cdRead [1] ="O  1" 28925.1        air=
+cdRead [1] ="O  1" 28927.3        air=
+cdRead [1] ="O  1" 28928.0        air=
+cdRead [1] =end=
+cdRead [1] =set blend 46000 air quiet=
+cdRead [1] ="O  1" 45588.6        air=
+cdRead [1] ="O  1" 45594.0        air=
+cdRead [1] ="O  1" 45595.5        air=
+cdRead [1] ="O  1" 45595.7        air=
+cdRead [1] ="O  1" 45597.2        air=
+cdRead [1] ="O  1" 45597.4        air=
+cdRead [1] =end=
+cdRead [1] =set blend 2798 air quiet=
+cdRead [1] ="Mg 2" 2795.53        air=
+cdRead [1] ="Mg 2" 2802.71        air=
+cdRead [1] =end=
+cdRead [1] =set blend 615 vacuum quiet=
+cdRead [1] ="Mg10" 609.793        vacuum=
+cdRead [1] ="Mg10" 624.941        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 6720 air quiet=
+cdRead [1] ="S  2" 6730.82        air=
+cdRead [1] ="S  2" 6716.44        air=
+cdRead [1] =end=
+cdRead [1] =set blend 4074 air quiet=
+cdRead [1] ="S  2" 4076.35        air=
+cdRead [1] ="S  2" 4068.60        air=
+cdRead [1] =end=
+cdRead [1] =set blend 10330 air quiet=
+cdRead [1] ="S  2" 10336.4        air=
+cdRead [1] ="S  2" 10286.7        air=
+cdRead [1] ="S  2" 10286.7        air=
+cdRead [1] ="S  2" 10320.5        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1256 vacuum quiet=
+cdRead [1] ="S  2" 1250.58        vacuum=
+cdRead [1] ="S  2" 1253.81        vacuum=
+cdRead [1] ="S  2" 1259.52        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1198 vacuum quiet=
+cdRead [1] ="S  3" 1190.20        vacuum=
+cdRead [1] ="S  3" 1194.06        vacuum=
+cdRead [1] ="S  3" 1194.45        vacuum=
+cdRead [1] ="S  3" 1200.97        vacuum=
+cdRead [1] ="S  3" 1201.73        vacuum=
+cdRead [1] ="S  3" 1202.12        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1720 vacuum quiet=
+cdRead [1] ="S  3" 1704.39        vacuum=
+cdRead [1] ="S  3" 1713.11        vacuum=
+cdRead [1] ="S  3" 1728.94        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 3722 air quiet=
+cdRead [1] ="S  3" 3721.63        air=
+cdRead [1] ="S  3" 3797.17        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1406 vacuum quiet=
+cdRead [1] ="S  4" 1404.81        vacuum=
+cdRead [1] ="S  4" 1398.04        vacuum=
+cdRead [1] ="S  4" 1423.84        vacuum=
+cdRead [1] ="S  4" 1416.89        vacuum=
+cdRead [1] ="S  4" 1406.02        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1199 vacuum quiet=
+cdRead [1] ="S  5" 1199.13        vacuum=
+cdRead [1] ="S  5" 1188.28        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 5892 air quiet=
+cdRead [1] ="Na 1" 5889.95        air=
+cdRead [1] ="Na 1" 5895.92        air=
+cdRead [1] =end=
+cdRead [1] =set blend 2665 air quiet=
+cdRead [1] ="Al 2" 2669.15        air=
+cdRead [1] ="Al 2" 2660.35        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1860 vacuum quiet=
+cdRead [1] ="Al 3" 1854.72        vacuum=
+cdRead [1] ="Al 3" 1862.79        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 556 vacuum quiet=
+cdRead [1] ="Al11" 550.031A       vacuum=
+cdRead [1] ="Al11" 568.120A       vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 4725 air quiet=
+cdRead [1] ="Ar 4" 4740.12        air=
+cdRead [1] ="Ar 4" 4711.26        air=
+cdRead [1] =end=
+cdRead [1] =set blend 2860 air quiet=
+cdRead [1] ="Ar 4" 2868.22        air=
+cdRead [1] ="Ar 4" 2853.66        air=
+cdRead [1] =end=
+cdRead [1] =set blend 7250 air quiet=
+cdRead [1] ="Ar 4" 7237.77        air=
+cdRead [1] ="Ar 4" 7332.15        air=
+cdRead [1] ="Ar 4" 7170.70        air=
+cdRead [1] ="Ar 4" 7263.33        air=
+cdRead [1] =end=
+cdRead [1] =set blend 2335 air quiet=
+cdRead [1] ="Si 2" 2334.41        air=
+cdRead [1] ="Si 2" 2328.52        air=
+cdRead [1] ="Si 2" 2350.17        air=
+cdRead [1] ="Si 2" 2344.20        air=
+cdRead [1] ="Si 2" 2334.60        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1888 vacuum quiet=
+cdRead [1] ="Si 3" 1882.71        vacuum=
+cdRead [1] ="Si 3" 1892.03        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1397 vacuum quiet=
+cdRead [1] ="Si 4" 1393.75        vacuum=
+cdRead [1] ="Si 4" 1402.77        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 6.18222 vacuum quiet=
+cdRead [1] ="Si14"  6.18584       vacuum=
+cdRead [1] ="Si14"  6.18043       vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 5.21719 vacuum quiet=
+cdRead [1] ="Si14"  5.21796       vacuum=
+cdRead [1] ="Si14"  5.21682       vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend  2424 air quiet=
+cdRead [1] ="Ne 4"  2421.66       air=
+cdRead [1] ="Ne 4"  2424.28       air=
+cdRead [1] =end=
+cdRead [1] =set blend 4720 air quiet=
+cdRead [1] ="Ne 4"  4714.23       air=
+cdRead [1] ="Ne 4"  4715.64       air=
+cdRead [1] ="Ne 4"  4724.17       air=
+cdRead [1] ="Ne 4"  4725.58       air=
+cdRead [1] =end=
+cdRead [1] =set blend 895 vacuum quiet=
+cdRead [1] ="Ne 7" 887.293A       vacuum=
+cdRead [1] ="Ne 7" 895.191A       vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 774 vacuum quiet=
+cdRead [1] ="Ne 8" 770.428A       vacuum=
+cdRead [1] ="Ne 8" 780.385A       vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 3350 air quiet=
+cdRead [1] ="Cl 3" 3342.80        air=
+cdRead [1] ="Cl 3" 3353.17        air=
+cdRead [1] =end=
+cdRead [1] =set blend 5525 air quiet=
+cdRead [1] ="Cl 3" 5517.71        air=
+cdRead [1] ="Cl 3" 5537.87        air=
+cdRead [1] =end=
+cdRead [1] =set blend 8494 air quiet=
+cdRead [1] ="Cl 3" 8433.66        air=
+cdRead [1] ="Cl 3" 8480.86        air=
+cdRead [1] ="Cl 3" 8500.01        air=
+cdRead [1] ="Cl 3" 8547.96        air=
+cdRead [1] =end=
+cdRead [1] =set blend 8579 air quiet=
+cdRead [1] ="Ca 2" 8662.14        air=
+cdRead [1] ="Ca 2" 8542.09        air=
+cdRead [1] ="Ca 2" 8498.02        air=
+cdRead [1] =end=
+cdRead [1] =set blend 7306 air quiet=
+cdRead [1] ="Ca 2" 7291.47        air=
+cdRead [1] ="Ca 2" 7323.89        air=
+cdRead [1] =end=
+cdRead [1] =set blend 3933 air quiet=
+cdRead [1] ="Ca 2" 3933.66        air=
+cdRead [1] ="Ca 2" 3968.47        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1657 vacuum quiet=
+cdRead [1] ="C  1" 1656.27        vacuum=
+cdRead [1] ="C  1" 1656.93        vacuum=
+cdRead [1] ="C  1" 1657.01        vacuum=
+cdRead [1] ="C  1" 1657.38        vacuum=
+cdRead [1] ="C  1" 1657.91        vacuum=
+cdRead [1] ="C  1" 1658.12        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 9850 air quiet=
+cdRead [1] ="C  1" 9824.13        air=
+cdRead [1] ="C  1" 9850.26        air=
+cdRead [1] =end=
+cdRead [1] =set blend 2326 air quiet=
+cdRead [1] ="C  2" 2324.69        air=
+cdRead [1] ="C  2" 2323.50        air=
+cdRead [1] ="C  2" 2328.12        air=
+cdRead [1] ="C  2" 2326.93        air=
+cdRead [1] ="C  2" 2325.40        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1335 vacuum quiet=
+cdRead [1] ="C  2" 1334.53        vacuum=
+cdRead [1] ="C  2" 1335.66        vacuum=
+cdRead [1] ="C  2" 1335.71        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 6580 air quiet=
+cdRead [1] ="C  2" 6578.05        air=
+cdRead [1] ="C  2" 6582.88        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1909 vacuum quiet=
+cdRead [1] ="C  3" 1908.73        vacuum=
+cdRead [1] ="C  3" 1906.68        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1176 vacuum quiet=
+cdRead [1] ="C  3" 1174.61        vacuum=
+cdRead [1] ="C  3" 1174.93        vacuum=
+cdRead [1] ="C  3" 1175.26        vacuum=
+cdRead [1] ="C  3" 1175.59        vacuum=
+cdRead [1] ="C  3" 1175.71        vacuum=
+cdRead [1] ="C  3" 1175.99        vacuum=
+cdRead [1] ="C  3" 1176.37        vacuum=
+cdRead [1] ="C  3" 1176.77        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1549 vacuum quiet=
+cdRead [1] ="C  4" 1550.77A       vacuum=
+cdRead [1] ="C  4" 1548.19        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 3467 air quiet=
+cdRead [1] ="N  1" 3466.50        air=
+cdRead [1] ="N  1" 3466.54        air=
+cdRead [1] =end=
+cdRead [1] =set blend 5199 air quiet=
+cdRead [1] ="N  1" 5197.90        air=
+cdRead [1] ="N  1" 5200.26        air=
+cdRead [1] =end=
+cdRead [1] =set blend 10403 air quiet=
+cdRead [1] ="N  1" 10397.7        air=
+cdRead [1] ="N  1" 10398.2        air=
+cdRead [1] ="N  1" 10407.2        air=
+cdRead [1] ="N  1" 10407.6        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1085 vacuum quiet=
+cdRead [1] ="N  2" 1083.99        vacuum=
+cdRead [1] ="N  2" 1084.56        vacuum=
+cdRead [1] ="N  2" 1084.58        vacuum=
+cdRead [1] ="N  2" 1085.53        vacuum=
+cdRead [1] ="N  2" 1085.55        vacuum=
+cdRead [1] ="N  2" 1085.70        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 2141 air quiet=
+cdRead [1] ="N  2" 2139.01        air=
+cdRead [1] ="N  2" 2142.77A       air=
+cdRead [1] =end=
+cdRead [1] =set blend 1750 vacuum quiet=
+cdRead [1] ="N  3" 1746.82        vacuum=
+cdRead [1] ="N  3" 1748.65        vacuum=
+cdRead [1] ="N  3" 1749.67        vacuum=
+cdRead [1] ="N  3" 1752.16        vacuum=
+cdRead [1] ="N  3" 1753.99        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 990 vacuum quiet=
+cdRead [1] ="N  3" 989.799        vacuum=
+cdRead [1] ="N  3" 991.511        vacuum=
+cdRead [1] ="N  3" 991.577        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1486 vacuum quiet=
+cdRead [1] ="N  4" 1483.32        vacuum=
+cdRead [1] ="N  4" 1486.50        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1240 vacuum quiet=
+cdRead [1] ="N  5" 1238.82        vacuum=
+cdRead [1] ="N  5" 1242.805       vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 6300 air quiet=
+cdRead [1] ="O  1" 6300.30        air=
+cdRead [1] ="O  1" 6363.78        air=
+cdRead [1] ="O  1" 6391.73        air=
+cdRead [1] =end=
+cdRead [1] =set blend 2471 air quiet=
+cdRead [1] ="O  2" 2470.22        air=
+cdRead [1] ="O  2" 2470.34        air=
+cdRead [1] =end=
+cdRead [1] =set blend 7323 air quiet=
+cdRead [1] ="O  2" 7318.92        air=
+cdRead [1] ="O  2" 7319.99        air=
+cdRead [1] =end=
+cdRead [1] =set blend 7332 air quiet=
+cdRead [1] ="O  2" 7329.67        air=
+cdRead [1] ="O  2" 7330.73        air=
+cdRead [1] =end=
+cdRead [1] =set blend 833 vacuum quiet=
+cdRead [1] ="O  2" 832.758        vacuum=
+cdRead [1] ="O  2" 833.330        vacuum=
+cdRead [1] ="O  2" 834.465        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 3727 air quiet=
+cdRead [1] ="O  2" 3726.03        air=
+cdRead [1] ="O  2" 3728.81        air=
+cdRead [1] =end=
+cdRead [1] =set blend 7325 air quiet=
+cdRead [1] ="O  2" 7318.92        air=
+cdRead [1] ="O  2" 7319.99        air=
+cdRead [1] ="O  2" 7329.67        air=
+cdRead [1] ="O  2" 7330.73        air=
+cdRead [1] =end=
+cdRead [1] =set blend 1666 vacuum quiet=
+cdRead [1] ="O  3" 1666.15        vacuum=
+cdRead [1] ="O  3" 1660.81        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 5007 air quiet=
+cdRead [1] ="O  3" 5006.84        air=
+cdRead [1] ="O  3" 4958.91        air=
+cdRead [1] ="O  3" 4931.23        air=
+cdRead [1] =end=
+cdRead [1] =set blend 835 vacuum quiet=
+cdRead [1] ="O  3" 832.929        vacuum=
+cdRead [1] ="O  3" 833.715        vacuum=
+cdRead [1] ="O  3" 833.749        vacuum=
+cdRead [1] ="O  3" 835.059        vacuum=
+cdRead [1] ="O  3" 835.092        vacuum=
+cdRead [1] ="O  3" 835.289        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1402 vacuum quiet=
+cdRead [1] ="O  4" 1397.23A       vacuum=
+cdRead [1] ="O  4" 1399.78A       vacuum=
+cdRead [1] ="O  4" 1401.16        vacuum=
+cdRead [1] ="O  4" 1404.81A       vacuum=
+cdRead [1] ="O  4" 1407.38        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 789 vacuum quiet=
+cdRead [1] ="O  4" 787.710        vacuum=
+cdRead [1] ="O  4" 790.114        vacuum=
+cdRead [1] ="O  4" 790.201        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1218 vacuum quiet=
+cdRead [1] ="O  5" 1213.81        vacuum=
+cdRead [1] ="O  5" 1218.34        vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 1035 vacuum quiet=
+cdRead [1] ="O  6" 1031.91        vacuum=
+cdRead [1] ="O  6" 1037.61A       vacuum=
+cdRead [1] =end=
+cdRead [1] =set blend 21210 air quiet=
+cdRead [1] ="H2" 21205.7          air=
+cdRead [1] ="H2" 21210.1          air=
+cdRead [1] ="H2" 21212.5          air=
+cdRead [1] =end=
+cdRead [1] =print on=
+cdDrive: calling cloudy
+                                            Cloudy (stout, clike, 83907803, modified)
+                                                         www.nublado.org
+
+                       **************************************23Jul25**************************************
+                       *                                                                                 *
+                       * title test whether the output from a repeated model reproduces exactly          *
+                       * print depart he-like element helium                                             *
+                       * trace h-like full helium no print                                               *
+t_input::readarray returns=trace he-like full no print=
+                       * trace he-like full no print                                                     *
+t_input::readarray returns=trace heavy no print=
+                       * trace heavy no print                                                            *
+t_input::readarray returns=trace convergence esource no print=
+                       * trace convergence esource no print                                              *
+                       * test                                                                            *
+                       * no time                                                                         *
+                       * FUDGE= 0.000000                                                                 *
+                       * grid 0 to 1 1 repeat sequential                                                 *
+                       * iterate 3                                                                       *
+                       *                                                                                 *
+                       ***********************************************************************************
+
+
+
+ca_15 appears multiple times in Stout.ini.
+Skipping the Chianti version of al_8, using Stout version
+Skipping the Chianti version of ar_13, using Stout version
+Skipping the Chianti version of ca_15, using Stout version
+Skipping the Chianti version of cl_12, using Stout version
+Skipping the Chianti version of co_22, using Stout version
+Skipping the Chianti version of cr_19, using Stout version
+Skipping the Chianti version of fe_21, using Stout version
+Skipping the Chianti version of fe_24, using Stout version
+Skipping the Chianti version of k_14, using Stout version
+Skipping the Chianti version of mg_7, using Stout version
+Skipping the Chianti version of mn_20, using Stout version
+Skipping the Chianti version of n_2, using Stout version
+Skipping the Chianti version of na_6, using Stout version
+Skipping the Chianti version of ne_5, using Stout version
+Skipping the Chianti version of ni_23, using Stout version
+Skipping the Chianti version of p_10, using Stout version
+Skipping the Chianti version of s_11, using Stout version
+Skipping the Chianti version of ti_17, using Stout version
+Skipping the Chianti version of zn_25, using Stout version
+<Al 1>	0	0.000	F
+<Al 1>	1	112.061	F
+<Al 1>	2	25347.756	F
+<Al 1>	3	29020.410	F
+<Al 1>	4	29066.960	F
+<Al 1>	5	29142.780	F
+<Al 1>	6	32435.453	F
+<Al 1>	7	32436.796	F
+<Al 1>	8	32949.807	F
+<Al 1>	9	32965.639	F
+<Al 1>	10	37689.407	F
+<Al 1>	11	38929.413	F
+<Al 1>	12	38933.968	F
+<Al 1>	13	40271.978	F
+<Al 1>	14	40277.883	F
+<Al 3>	0	0.000	F
+<Al 3>	1	53682.930	F
+<Al 3>	2	53916.600	F
+<Al 3>	3	113957.000	F
+<Al 3>	4	113960.000	F
+<Al 3>	5	123934.000	F
+<Al 3>	6	141207.000	F
+<Al 3>	7	141269.000	F
+<Al 3>	8	163163.000	F
+<Al 3>	9	163164.000	F
+<Al 3>	10	164598.000	F
+<Al 3>	11	164599.000	F
+<Al 3>	12	167904.000	F
+<Al 3>	13	175639.000	F
+<Al 3>	14	175668.000	F
+<Al 4>	0	0.000	F
+<Al 4>	1	616644.200	F
+<Al 4>	2	618473.900	F
+<Al 4>	3	620060.100	F
+<Al 4>	4	624717.500	F
+<Al 4>	5	671632.500	F
+<Al 4>	6	680859.800	F
+<Al 4>	7	681683.300	F
+<Al 4>	8	682981.800	F
+<Al 4>	9	685728.200	F
+<Al 4>	10	686959.100	F
+<Al 4>	11	687830.500	F
+<Al 4>	12	688309.600	F
+<Al 4>	13	688649.400	F
+<Al 4>	14	714096.900	F
+<Al 6>	0	0.000	F
+<Al 6>	1	2732.000	F
+<Al 6>	2	3829.000	F
+<Al 6>	3	41167.000	F
+<Al 6>	4	88213.000	F
+<Al 6>	5	323002.000	F
+<Al 6>	6	325469.000	F
+<Al 6>	7	326815.000	F
+<Al 6>	8	451396.000	F
+<Al 6>	9	755628.000	F
+<Al 6>	10	894300.000	F
+<Al 6>	11	913112.000	F
+<Al 6>	12	961100.000	F
+<Al 6>	13	961100.001	F
+<Al 6>	14	961100.002	F
+<Al 8>	0	0.000	F
+<Al 8>	1	1710.000	F
+<Al 8>	2	4420.000	F
+<Al 8>	3	46720.000	F
+<Al 8>	4	96260.000	F
+<Al 8>	5	133840.000	F
+<Al 8>	6	262180.000	F
+<Al 8>	7	262270.000	F
+<Al 8>	8	262330.000	F
+<Al 8>	9	309110.000	F
+<Al 8>	10	309110.000	F
+<Al 8>	11	309110.000	F
+<Al 8>	12	397020.000	F
+<Al 8>	13	404200.000	F
+<Al 8>	14	444570.000	F
+<Ar 1>	0	0.000	F
+<Ar 1>	1	93143.760	F
+<Ar 1>	2	93750.598	F
+<Ar 1>	3	94553.665	F
+<Ar 1>	4	95399.828	F
+<Ar 1>	5	104102.099	F
+<Ar 1>	6	105462.760	F
+<Ar 1>	7	105617.270	F
+<Ar 1>	8	106087.260	F
+<Ar 1>	9	106237.552	F
+<Ar 1>	10	107054.272	F
+<Ar 1>	11	107131.709	F
+<Ar 1>	12	107289.700	F
+<Ar 1>	13	107496.417	F
+<Ar 1>	14	108722.619	F
+<Ar13>	0	0.000	F
+<Ar13>	1	9853.400	F
+<Ar13>	2	21841.000	F
+<Ar13>	3	85011.300	F
+<Ar13>	4	162136.000	F
+<Ar13>	5	225918.000	F
+<Ar13>	6	422699.000	F
+<Ar13>	7	423248.000	F
+<Ar13>	8	423969.000	F
+<Ar13>	9	495432.000	F
+<Ar13>	10	495799.000	F
+<Ar13>	11	497055.000	F
+<Ar13>	12	625844.000	F
+<Ar13>	13	628627.000	F
+<Ar13>	14	698669.000	F
+<Ar 2>	0	0.000	F
+<Ar 2>	1	1431.583	F
+<Ar 2>	2	108721.537	F
+<Ar 2>	3	132327.362	F
+<Ar 2>	4	132481.207	F
+<Ar 2>	5	132630.728	F
+<Ar 2>	6	132737.704	F
+<Ar 2>	7	134241.739	F
+<Ar 2>	8	135085.996	F
+<Ar 2>	9	135601.734	F
+<Ar 2>	10	138243.644	F
+<Ar 2>	11	139258.339	F
+<Ar 2>	12	142186.315	F
+<Ar 2>	13	142717.097	F
+<Ar 2>	14	143107.680	F
+<Ar 3>	0	0.000	F
+<Ar 3>	1	1112.170	F
+<Ar 3>	2	1570.230	F
+<Ar 3>	3	14010.000	F
+<Ar 3>	4	33265.700	F
+<Ar 3>	5	113800.520	F
+<Ar 3>	6	114797.380	F
+<Ar 3>	7	115328.000	F
+<Ar 3>	8	144022.380	F
+<Ar 3>	9	144885.460	F
+<Ar 3>	10	144890.680	F
+<Ar 3>	11	144897.520	F
+<Ar 3>	12	144911.270	F
+<Ar 3>	13	156915.518	F
+<Ar 3>	14	156922.557	F
+<Ar 4>	0	0.000	F
+<Ar 4>	1	21090.600	F
+<Ar 4>	2	21219.800	F
+<Ar 4>	3	34854.600	F
+<Ar 4>	4	35032.400	F
+<Ar 4>	5	117563.400	F
+<Ar 4>	6	118515.700	F
+<Ar 4>	7	119043.100	F
+<Ar 4>	8	145921.200	F
+<Ar 4>	9	145999.400	F
+<Ar 4>	10	166356.400	F
+<Ar 4>	11	167444.600	F
+<Ar 4>	12	177832.500	F
+<Ar 4>	13	180682.500	F
+<Ar 4>	14	181031.800	F
+<Ar 5>	0	0.000	F
+<Ar 5>	1	763.236	F
+<Ar 5>	2	2028.760	F
+<Ar 5>	3	16298.660	F
+<Ar 5>	4	37912.400	F
+<Ar 5>	5	84107.000	F
+<Ar 5>	6	121628.700	F
+<Ar 5>	7	121675.000	F
+<Ar 5>	8	121803.100	F
+<Ar 5>	9	141762.600	F
+<Ar 5>	10	141770.500	F
+<Ar 5>	11	141892.600	F
+<Ar 5>	12	154211.400	F
+<Ar 5>	13	191536.800	F
+<Ar 5>	14	195355.700	F
+<Ar 6>	0	0.000	F
+<Ar 6>	1	2207.880	F
+<Ar 6>	2	100157.500	F
+<Ar 6>	3	100957.600	F
+<Ar 6>	4	102191.600	F
+<Ar 6>	5	132462.700	F
+<Ar 6>	6	132574.700	F
+<Ar 6>	7	169803.900	F
+<Ar 6>	8	182182.100	F
+<Ar 6>	9	183577.300	F
+<Ar 6>	10	218595.900	F
+<Ar 6>	11	218655.800	F
+<Ar 6>	12	260068.700	F
+<Ar 6>	13	260272.900	F
+<Ar 6>	14	270511.800	F
+<B  1>	0	0.000	F
+<B  1>	1	15.287	F
+<B  1>	2	28647.430	F
+<B  1>	3	28652.070	F
+<B  1>	4	28658.400	F
+<B  1>	5	40039.691	F
+<B  1>	6	47856.809	F
+<B  1>	7	47857.125	F
+<B  1>	8	48611.866	F
+<B  1>	9	48613.649	F
+<B  1>	10	54767.694	F
+<B  1>	11	54767.839	F
+<B  1>	12	55010.234	F
+<B  1>	13	57786.434	F
+<B  1>	14	57787.068	F
+<B  2>	0	0.000	F
+<B  2>	1	37335.540	F
+<B  2>	2	37341.650	F
+<B  2>	3	37357.800	F
+<B  2>	4	73396.510	F
+<B  2>	5	98911.380	F
+<B  2>	6	98919.870	F
+<B  2>	7	98933.260	F
+<B  2>	8	102362.770	F
+<B  2>	9	127661.190	F
+<B  2>	10	129773.830	F
+<B  2>	11	137622.250	F
+<B  2>	12	143989.950	F
+<B  2>	13	143990.560	F
+<B  2>	14	143994.110	F
+<B  3>	0	0.000	F
+<B  3>	1	48358.335	F
+<B  3>	2	48392.435	F
+<B  3>	3	180201.920	F
+<B  3>	4	192951.230	F
+<B  3>	5	192961.240	F
+<B  3>	6	196068.750	F
+<B  3>	7	196071.670	F
+<B  3>	8	237698.270	F
+<B  3>	9	242829.740	F
+<B  3>	10	242833.650	F
+<B  3>	11	244141.630	F
+<B  3>	12	244142.860	F
+<B  3>	13	244199.120	F
+<B  3>	14	244199.740	F
+<Be 1>	0	0.000	F
+<Be 1>	1	21978.280	F
+<Be 1>	2	21978.925	F
+<Be 1>	3	21981.270	F
+<Be 1>	4	42565.350	F
+<Be 1>	5	52080.940	F
+<Be 1>	6	54677.260	F
+<Be 1>	7	56882.430	F
+<Be 1>	8	58907.450	F
+<Be 1>	9	58907.451	F
+<Be 1>	10	58907.830	F
+<Be 1>	11	59693.650	F
+<Be 1>	12	59695.070	F
+<Be 1>	13	59697.080	F
+<Be 1>	14	60187.340	F
+<Be 2>	0	0.000	F
+<Be 2>	1	31928.744	F
+<Be 2>	2	31935.320	F
+<Be 2>	3	88231.915	F
+<Be 2>	4	96495.360	F
+<Be 2>	5	96497.288	F
+<Be 2>	6	98054.570	F
+<Be 2>	7	98055.100	F
+<Be 2>	8	115464.440	F
+<Be 2>	9	118760.510	F
+<Be 2>	10	118761.320	F
+<Be 2>	11	119421.200	F
+<Be 2>	12	119421.440	F
+<Be 2>	13	119446.590	F
+<Be 2>	14	119446.720	F
+<C  1>	0	0.000	F
+<C  1>	1	16.400	F
+<C  1>	2	43.400	F
+<C  1>	3	10192.630	F
+<C  1>	4	21648.010	F
+<C  1>	5	33735.200	F
+<C  1>	6	60333.430	F
+<C  1>	7	60352.630	F
+<C  1>	8	60393.140	F
+<C  1>	9	61981.820	F
+<C  1>	10	64086.920	F
+<C  1>	11	64089.850	F
+<C  1>	12	64090.950	F
+<C  1>	13	68856.330	F
+<C  1>	14	69689.480	F
+<C  2>	0	0.000	F
+<C  2>	1	63.420	F
+<C  2>	2	43003.300	F
+<C  2>	3	43025.300	F
+<C  2>	4	43053.600	F
+<C  2>	5	74930.100	F
+<C  2>	6	74932.620	F
+<C  2>	7	96493.740	F
+<C  2>	8	110624.170	F
+<C  2>	9	110665.560	F
+<C  2>	10	116537.650	F
+<C  2>	11	131724.370	F
+<C  2>	12	131735.520	F
+<C  2>	13	142027.100	F
+<C  2>	14	145549.270	F
+<C  3>	0	0.000	F
+<C  3>	1	52367.060	F
+<C  3>	2	52390.750	F
+<C  3>	3	52447.110	F
+<C  3>	4	102352.040	F
+<C  3>	5	137425.700	F
+<C  3>	6	137454.400	F
+<C  3>	7	137502.010	F
+<C  3>	8	145876.130	F
+<C  3>	9	182519.880	F
+<C  3>	10	238213.000	F
+<C  3>	11	247170.260	F
+<C  3>	12	258931.290	F
+<C  3>	13	259705.550	F
+<C  3>	14	259711.220	F
+<Ca 1>	0	0.000	F
+<Ca 1>	1	15157.901	F
+<Ca 1>	2	15210.063	F
+<Ca 1>	3	15315.943	F
+<Ca 1>	4	20335.360	F
+<Ca 1>	5	20349.260	F
+<Ca 1>	6	20371.000	F
+<Ca 1>	7	21849.634	F
+<Ca 1>	8	23652.304	F
+<Ca 1>	9	31539.495	F
+<Ca 1>	10	33317.264	F
+<Ca 1>	11	35730.454	F
+<Ca 1>	12	35818.713	F
+<Ca 1>	13	35835.413	F
+<Ca 1>	14	35896.889	F
+<Ca15>	0	0.000	F
+<Ca15>	1	17559.000	F
+<Ca15>	2	35923.000	F
+<Ca15>	3	108600.000	F
+<Ca15>	4	197670.000	F
+<Ca15>	5	275900.000	F
+<Ca15>	6	496680.000	F
+<Ca15>	7	497570.000	F
+<Ca15>	8	500230.000	F
+<Ca15>	9	581730.000	F
+<Ca15>	10	582780.000	F
+<Ca15>	11	585670.000	F
+<Ca15>	12	728880.000	F
+<Ca15>	13	729650.000	F
+<Ca15>	14	814380.000	F
+<Ca 3>	0	0.000	F
+<Ca 3>	1	203373.220	F
+<Ca 3>	2	203851.950	F
+<Ca 3>	3	204842.640	F
+<Ca 3>	4	212310.000	F
+<Ca 3>	5	213379.400	F
+<Ca 3>	6	214334.060	F
+<Ca 3>	7	225826.220	F
+<Ca 3>	8	226333.560	F
+<Ca 3>	9	227388.560	F
+<Ca 3>	10	227432.110	F
+<Ca 3>	11	228413.950	F
+<Ca 3>	12	242547.190	F
+<Ca 3>	13	243930.440	F
+<Ca 3>	14	245611.880	F
+<Ca 4>	0	0.000	F
+<Ca 4>	1	3118.200	F
+<Ca 4>	2	152439.600	F
+<Ca 4>	3	201505.000	F
+<Ca 4>	4	201747.000	F
+<Ca 4>	5	202031.000	F
+<Ca 4>	6	202254.000	F
+<Ca 4>	7	218383.000	F
+<Ca 4>	8	219467.000	F
+<Ca 4>	9	219991.000	F
+<Ca 4>	10	220240.000	F
+<Ca 4>	11	220741.000	F
+<Ca 4>	12	221945.000	F
+<Ca 4>	13	227214.000	F
+<Ca 4>	14	227825.000	F
+<Ca 6>	0	0.000	F
+<Ca 6>	1	26835.100	F
+<Ca 6>	2	27246.600	F
+<Ca 6>	3	44586.700	F
+<Ca 6>	4	45142.700	F
+<Ca 6>	5	155786.500	F
+<Ca 6>	6	157767.500	F
+<Ca 6>	7	158830.500	F
+<Ca 6>	8	193247.000	F
+<Ca 6>	9	193444.800	F
+<Ca 6>	10	222749.700	F
+<Ca 6>	11	224773.300	F
+<Ca 6>	12	233712.800	F
+<Ca 6>	13	294630.000	F
+<Ca 6>	14	297083.000	F
+<Cl 1>	0	0.000	F
+<Cl 1>	1	882.351	F
+<Cl 1>	2	71958.363	F
+<Cl 1>	3	72488.568	F
+<Cl 1>	4	72827.038	F
+<Cl 1>	5	74225.846	F
+<Cl 1>	6	74865.667	F
+<Cl 1>	7	82918.893	F
+<Cl 1>	8	83130.900	F
+<Cl 1>	9	83364.927	F
+<Cl 1>	10	83894.037	F
+<Cl 1>	11	84120.263	F
+<Cl 1>	12	84121.872	F
+<Cl 1>	13	84132.262	F
+<Cl 1>	14	84485.309	F
+<Cl12>	0	0.000	F
+<Cl12>	1	7240.000	F
+<Cl12>	2	16629.000	F
+<Cl12>	3	75530.000	F
+<Cl12>	4	146917.000	F
+<Cl12>	5	206100.000	F
+<Cl12>	6	388179.000	F
+<Cl12>	7	388581.000	F
+<Cl12>	8	388838.000	F
+<Cl12>	9	455399.000	F
+<Cl12>	10	455554.000	F
+<Cl12>	11	456294.000	F
+<Cl12>	12	577110.000	F
+<Cl12>	13	581190.000	F
+<Cl12>	14	644595.000	F
+<Cl 5>	0	0.000	F
+<Cl 5>	1	1490.500	F
+<Cl 5>	2	85592.900	F
+<Cl 5>	3	86128.800	F
+<Cl 5>	4	86973.500	F
+<Cl 5>	5	113233.500	F
+<Cl 5>	6	113305.000	F
+<Cl 5>	7	146645.100	F
+<Cl 5>	8	157931.600	F
+<Cl 5>	9	158893.200	F
+<Cl 5>	10	185863.300	F
+<Cl 5>	11	185891.100	F
+<Cl 5>	12	233349.000	F
+<Cl 5>	13	256311.000	F
+<Cl 5>	14	269577.000	F
+<Cl 6>	0	0.000	F
+<Cl 6>	1	98062.000	F
+<Cl 6>	2	98621.000	F
+<Cl 6>	3	99782.000	F
+<Cl 6>	4	148947.000	F
+<Cl 6>	5	229219.000	F
+<Cl 6>	6	234886.000	F
+<Cl 6>	7	235518.000	F
+<Cl 6>	8	236721.000	F
+<Cl 6>	9	275988.000	F
+<Cl 6>	10	279758.000	F
+<Cl 6>	11	279773.000	F
+<Cl 6>	12	279804.000	F
+<Cl 6>	13	320925.000	F
+<Cl 6>	14	383627.000	F
+<Cl 7>	0	0.000	F
+<Cl 7>	1	122728.000	F
+<Cl 7>	2	124422.000	F
+<Cl 7>	3	289826.000	F
+<Cl 7>	4	289957.000	F
+<Cl 7>	5	461559.000	F
+<Cl 7>	6	506726.000	F
+<Cl 7>	7	507344.000	F
+<Cl 7>	8	566632.000	F
+<Cl 7>	9	566691.000	F
+<Cl 7>	10	580791.000	F
+<Cl 7>	11	580809.000	F
+<Cl 7>	12	644519.000	F
+<Cl 7>	13	665951.000	F
+<Cl 7>	14	666245.000	F
+<Cl 8>	0	0.000	F
+<Cl 8>	1	1684011.000	F
+<Cl 8>	2	1689620.000	F
+<Cl 8>	3	1697386.000	F
+<Cl 8>	4	1704923.000	F
+<Cl 8>	5	1792911.000	F
+<Cl 8>	6	1812209.000	F
+<Cl 8>	7	1813451.000	F
+<Cl 8>	8	1818162.000	F
+<Cl 8>	9	1822925.000	F
+<Cl 8>	10	1828183.000	F
+<Cl 8>	11	1831055.000	F
+<Cl 8>	12	1832128.000	F
+<Cl 8>	13	1833547.000	F
+<Cl 8>	14	1906787.000	F
+<Cl 9>	0	0.000	F
+<Cl 9>	1	13629.000	F
+<Cl 9>	2	553376.000	F
+<Cl 9>	3	1888970.000	F
+<Cl 9>	4	1896589.000	F
+<Cl 9>	5	1901879.000	F
+<Cl 9>	6	1911989.000	F
+<Cl 9>	7	1921079.000	F
+<Cl 9>	8	1959790.000	F
+<Cl 9>	9	1959989.000	F
+<Cl 9>	10	2006280.000	F
+<Cl 9>	11	2008165.000	F
+<Cl 9>	12	2012190.000	F
+<Cl 9>	13	2021301.000	F
+<Cl 9>	14	2024902.000	F
+<Co10>	0	0.000	F
+<Co10>	1	497780.000	F
+<Co10>	2	629430.000	F
+<Co10>	3	1105290.000	F
+<Co10>	4	1123670.000	F
+<Co10>	5	1380190.000	F
+<Co10>	6	1398800.000	F
+<Co10>	7	1525950.000	F
+<Co10>	8	1586870.000	F
+<Co10>	9	1604310.000	F
+<Co11>	0	0.000	F
+<Co11>	1	19345.000	F
+<Co11>	2	313630.000	F
+<Co11>	3	582510.000	F
+<Co11>	4	606420.000	F
+<Co11>	5	613480.000	F
+<Co11>	6	615140.000	F
+<Co11>	7	631680.000	F
+<Co11>	8	1181100.000	F
+<Co11>	9	1189920.000	F
+<Co11>	10	1202070.000	F
+<Co11>	11	1211780.000	F
+<Co11>	12	1226890.000	F
+<Co11>	13	1227710.000	F
+<Co11>	14	1471200.000	F
+<Co12>	0	0.000	F
+<Co12>	1	15820.000	F
+<Co12>	2	17070.000	F
+<Co12>	3	42120.000	F
+<Co12>	4	88880.000	F
+<Co12>	5	306640.000	F
+<Co12>	6	316430.000	F
+<Co12>	7	318280.000	F
+<Co12>	8	390990.000	F
+<Co12>	9	569990.000	F
+<Co12>	10	594040.000	F
+<Co12>	11	602920.000	F
+<Co12>	12	608660.000	F
+<Co12>	13	622130.000	F
+<Co12>	14	630670.000	F
+<Co13>	0	0.000	F
+<Co13>	1	43650.000	F
+<Co13>	2	49690.000	F
+<Co13>	3	79460.000	F
+<Co13>	4	88170.000	F
+<Co13>	5	295160.000	F
+<Co13>	6	307030.000	F
+<Co13>	7	312110.000	F
+<Co13>	8	365530.000	F
+<Co13>	9	368250.000	F
+<Co13>	10	418480.000	F
+<Co13>	11	423290.000	F
+<Co13>	12	547890.000	F
+<Co13>	13	552880.000	F
+<Co13>	14	556820.000	F
+<Co14>	0	0.000	F
+<Co14>	1	11844.000	F
+<Co14>	2	22661.000	F
+<Co14>	3	54921.000	F
+<Co14>	4	101080.000	F
+<Co14>	5	311050.000	F
+<Co14>	6	314880.000	F
+<Co14>	7	357760.000	F
+<Co14>	8	392010.000	F
+<Co14>	9	446180.000	F
+<Co14>	10	472750.000	F
+<Co14>	11	520800.000	F
+<Co14>	12	530230.000	F
+<Co14>	13	536040.000	F
+<Co14>	14	544100.000	F
+<Co15>	0	0.000	F
+<Co15>	1	22979.000	F
+<Co16>	0	0.000	F
+<Co16>	1	249081.000	F
+<Co16>	2	256060.000	F
+<Co16>	3	273414.000	F
+<Co16>	4	376323.000	F
+<Co16>	5	591131.000	F
+<Co16>	6	598840.000	F
+<Co16>	7	603814.000	F
+<Co16>	8	624984.000	F
+<Co16>	9	706420.000	F
+<Co16>	10	724731.000	F
+<Co16>	11	726039.000	F
+<Co16>	12	728136.000	F
+<Co16>	13	812929.000	F
+<Co16>	14	990769.000	F
+<Co18>	0	0.000	F
+<Co18>	1	6477900.000	F
+<Co18>	2	6592400.000	F
+<Co18>	3	7122000.000	F
+<Co18>	4	7210800.000	F
+<Co18>	5	7334600.000	F
+<Co18>	6	7894500.000	F
+<Co18>	7	7932700.000	F
+<Co18>	8	8706000.000	F
+<Co18>	9	8833000.000	F
+<Co18>	10	8965000.000	F
+<Co18>	11	9003000.000	F
+<Co18>	12	9112000.000	F
+<Co18>	13	9797000.000	F
+<Co18>	14	9819000.000	F
+<Co 2>	0	0.000	F
+<Co 2>	1	950.324	F
+<Co 2>	2	1597.197	F
+<Co 2>	3	3350.494	F
+<Co 2>	4	4028.988	F
+<Co 2>	5	4560.789	F
+<Co 2>	6	4950.062	F
+<Co 2>	7	5204.698	F
+<Co 2>	8	9812.860	F
+<Co 2>	9	10708.331	F
+<Co 2>	10	11321.860	F
+<Co 2>	11	11651.277	F
+<Co 2>	12	13260.688	F
+<Co 2>	13	13404.321	F
+<Co 2>	14	13593.288	F
+<Co22>	0	0.000	F
+<Co22>	1	90730.000	F
+<Co22>	2	138250.000	F
+<Co22>	3	281820.000	F
+<Co22>	4	415520.000	F
+<Co22>	5	534760.000	F
+<Co22>	6	833840.000	F
+<Co22>	7	836280.000	F
+<Co22>	8	869510.000	F
+<Co22>	9	987830.000	F
+<Co22>	10	998650.000	F
+<Co22>	11	1020290.000	F
+<Co22>	12	1170450.000	F
+<Co22>	13	1212130.000	F
+<Co22>	14	1356870.000	F
+<Co 3>	0	0.000	F
+<Co 3>	1	841.200	F
+<Co 3>	2	1451.300	F
+<Co 3>	3	1866.800	F
+<Co 3>	4	15201.900	F
+<Co 3>	5	15428.200	F
+<Co 3>	6	15811.400	F
+<Co 3>	7	16977.600	F
+<Co 3>	8	17766.200	F
+<Co 3>	9	20194.900	F
+<Co 3>	10	20918.500	F
+<Co 3>	11	22720.300	F
+<Co 3>	12	23058.800	F
+<Co 3>	13	23434.300	F
+<Co 3>	14	24236.800	F
+<Co 8>	0	0.000	F
+<Co 8>	1	1430.000	F
+<Co 8>	2	3144.000	F
+<Co 8>	3	19624.000	F
+<Co 8>	4	22304.000	F
+<Co 8>	5	22839.000	F
+<Co 8>	6	24055.000	F
+<Co 8>	7	32360.000	F
+<Co 8>	8	74247.000	F
+<Co 8>	9	542430.000	F
+<Co 8>	10	542701.000	F
+<Co 8>	11	544314.000	F
+<Co 8>	12	545834.000	F
+<Co 8>	13	547400.000	F
+<Co 8>	14	548799.000	F
+<Cr10>	0	0.000	F
+<Cr10>	1	37103.000	F
+<Cr10>	2	39450.000	F
+<Cr10>	3	63935.000	F
+<Cr10>	4	67157.000	F
+<Cr10>	5	233890.000	F
+<Cr10>	6	239987.000	F
+<Cr10>	7	242922.000	F
+<Cr10>	8	289637.000	F
+<Cr10>	9	290606.000	F
+<Cr10>	10	333412.000	F
+<Cr10>	11	337370.000	F
+<Cr10>	12	348760.000	F
+<Cr10>	13	432830.000	F
+<Cr10>	14	440870.000	F
+<Cr11>	0	0.000	F
+<Cr11>	1	5536.000	F
+<Cr11>	2	11980.000	F
+<Cr11>	3	36994.000	F
+<Cr11>	4	74980.000	F
+<Cr11>	5	178470.000	F
+<Cr11>	6	242346.000	F
+<Cr11>	7	242456.000	F
+<Cr11>	8	243916.000	F
+<Cr11>	9	278059.000	F
+<Cr11>	10	278394.000	F
+<Cr11>	11	278698.000	F
+<Cr11>	12	306570.000	F
+<Cr11>	13	356424.000	F
+<Cr11>	14	372498.000	F
+<Cr12>	0	0.000	F
+<Cr12>	1	12261.000	F
+<Cr12>	2	192120.000	F
+<Cr12>	3	196911.000	F
+<Cr12>	4	203349.000	F
+<Cr12>	5	254428.000	F
+<Cr12>	6	255566.000	F
+<Cr12>	7	313745.000	F
+<Cr12>	8	333196.000	F
+<Cr12>	9	339251.000	F
+<Cr12>	10	408640.000	F
+<Cr12>	11	409741.000	F
+<Cr12>	12	493437.000	F
+<Cr12>	13	495368.000	F
+<Cr12>	14	504431.000	F
+<Cr15>	0	0.000	F
+<Cr15>	1	4714294.000	F
+<Cr15>	2	4727500.000	F
+<Cr15>	3	4784174.000	F
+<Cr15>	4	4793200.000	F
+<Cr15>	5	4926429.000	F
+<Cr15>	6	4954368.000	F
+<Cr15>	7	4961187.000	F
+<Cr15>	8	4970636.000	F
+<Cr15>	9	4982062.000	F
+<Cr15>	10	5014563.000	F
+<Cr15>	11	5020941.000	F
+<Cr15>	12	5039971.000	F
+<Cr15>	13	5041714.000	F
+<Cr15>	14	5143616.000	F
+<Cr19>	0	0.000	F
+<Cr19>	1	47811.000	F
+<Cr19>	2	82458.000	F
+<Cr19>	3	184600.000	F
+<Cr19>	4	298800.000	F
+<Cr19>	5	403268.000	F
+<Cr19>	6	671520.000	F
+<Cr19>	7	672580.000	F
+<Cr19>	8	686730.000	F
+<Cr19>	9	788830.000	F
+<Cr19>	10	793710.000	F
+<Cr19>	11	804380.000	F
+<Cr19>	12	959570.000	F
+<Cr19>	13	976000.000	F
+<Cr19>	14	1090510.000	F
+<Cr 2>	0	0.000	F
+<Cr 2>	1	11961.810	F
+<Cr 2>	2	12032.580	F
+<Cr 2>	3	12147.820	F
+<Cr 2>	4	12303.860	F
+<Cr 2>	5	12496.440	F
+<Cr 2>	6	19528.250	F
+<Cr 2>	7	19631.170	F
+<Cr 2>	8	19797.880	F
+<Cr 2>	9	20024.010	F
+<Cr 2>	10	20512.060	F
+<Cr 2>	11	20512.100	F
+<Cr 2>	12	20517.830	F
+<Cr 2>	13	20519.330	F
+<Cr 2>	14	21822.520	F
+<Cr 4>	0	0.000	F
+<Cr 4>	1	237.400	F
+<Cr 4>	2	556.400	F
+<Cr 4>	3	945.500	F
+<Cr 4>	4	14059.900	F
+<Cr 4>	5	14177.500	F
+<Cr 4>	6	14472.200	F
+<Cr 4>	7	15053.600	F
+<Cr 4>	8	15402.400	F
+<Cr 4>	9	19439.400	F
+<Cr 4>	10	19520.800	F
+<Cr 4>	11	20651.000	F
+<Cr 4>	12	20665.500	F
+<Cr 4>	13	21066.900	F
+<Cr 4>	14	21321.100	F
+<Cr 5>	0	0.000	F
+<Cr 5>	1	508.200	F
+<Cr 5>	2	1141.700	F
+<Cr 5>	3	13188.000	F
+<Cr 5>	4	15491.800	F
+<Cr 5>	5	15676.600	F
+<Cr 5>	6	16041.000	F
+<Cr 5>	7	22019.200	F
+<Cr 5>	8	51146.400	F
+<Cr 5>	9	167176.400	F
+<Cr 5>	10	167491.000	F
+<Cr 5>	11	168089.500	F
+<Cr 5>	12	171698.100	F
+<Cr 5>	13	226119.800	F
+<Cr 5>	14	228001.800	F
+<Cu 1>	0	0.000	F
+<Cu 1>	1	11202.618	F
+<Cu 1>	2	13245.443	F
+<Cu 1>	3	30535.324	F
+<Cu 1>	4	30783.697	F
+<Cu 1>	5	39018.690	F
+<Cu 1>	6	40114.010	F
+<Cu 1>	7	40909.160	F
+<Cu 1>	8	40943.780	F
+<Cu 1>	9	41153.470	F
+<Cu 1>	10	41562.930	F
+<Cu 1>	11	42302.580	F
+<Cu 1>	12	43137.229	F
+<Cu 1>	13	43514.010	F
+<Cu 1>	14	43726.240	F
+<Cu13>	0	0.000	F
+<Cu13>	1	28560.000	F
+<Cu13>	2	663840.000	F
+<Cu13>	3	690990.000	F
+<Cu13>	4	699480.000	F
+<Cu13>	5	701500.000	F
+<Cu13>	6	724240.000	F
+<Cu14>	0	0.000	F
+<Cu14>	1	23192.000	F
+<Cu14>	2	23897.000	F
+<Cu14>	3	52540.000	F
+<Cu14>	4	107902.000	F
+<Cu14>	5	354570.000	F
+<Cu14>	6	451850.000	F
+<Cu14>	7	648960.000	F
+<Cu14>	8	674230.000	F
+<Cu14>	9	686870.000	F
+<Cu14>	10	710700.000	F
+<Cu14>	11	726770.000	F
+<Cu14>	12	763830.000	F
+<Cu15>	0	0.000	F
+<Cu15>	1	47940.000	F
+<Cu15>	2	57803.000	F
+<Cu15>	3	91106.000	F
+<Cu15>	4	105962.000	F
+<Cu15>	5	337100.000	F
+<Cu15>	6	477800.000	F
+<Cu15>	7	619652.000	F
+<Cu15>	8	626264.000	F
+<Cu15>	9	633300.000	F
+<Cu15>	10	672380.000	F
+<Cu15>	11	675651.000	F
+<Cu15>	12	703573.000	F
+<Cu15>	13	704207.000	F
+<Cu15>	14	735114.000	F
+<Cu16>	0	0.000	F
+<Cu16>	1	18596.700	F
+<Cu16>	2	32730.000	F
+<Cu16>	3	72016.000	F
+<Cu16>	4	123550.000	F
+<Cu16>	5	276430.000	F
+<Cu16>	6	361244.000	F
+<Cu16>	7	361409.000	F
+<Cu16>	8	368118.000	F
+<Cu16>	9	415501.000	F
+<Cu16>	10	417557.000	F
+<Cu16>	11	464200.000	F
+<Cu16>	12	510826.000	F
+<Cu16>	13	534500.000	F
+<Cu16>	14	547335.000	F
+<Cu17>	0	0.000	F
+<Cu17>	1	33239.000	F
+<Cu17>	2	277231.000	F
+<Cu17>	3	291810.000	F
+<Cu17>	4	307708.000	F
+<Cu17>	5	372236.000	F
+<Cu17>	6	377783.000	F
+<Cu17>	7	444759.000	F
+<Cu17>	8	480016.000	F
+<Cu17>	9	490467.000	F
+<Cu17>	10	574180.000	F
+<Cu17>	11	578243.000	F
+<Cu17>	12	725320.000	F
+<Cu17>	13	856728.000	F
+<Cu17>	14	861003.000	F
+<Cu18>	0	0.000	F
+<Cu18>	1	279816.000	F
+<Cu18>	2	289401.000	F
+<Cu18>	3	314753.000	F
+<Cu18>	4	426987.000	F
+<Cu18>	5	664977.000	F
+<Cu18>	6	679710.000	F
+<Cu18>	7	684689.000	F
+<Cu18>	8	715608.000	F
+<Cu18>	9	804139.000	F
+<Cu18>	10	818630.000	F
+<Cu18>	11	820704.000	F
+<Cu18>	12	823970.000	F
+<Cu18>	13	917020.000	F
+<Cu18>	14	1118029.000	F
+<Cu21>	0	0.000	F
+<Cu21>	1	168830.000	F
+<Cu21>	2	1275750.000	F
+<Cu21>	3	8206000.000	F
+<Cu21>	4	8236000.000	F
+<Cu21>	5	8313000.000	F
+<Cu21>	6	8363000.000	F
+<Cu21>	7	8388000.000	F
+<Cu21>	8	8452000.000	F
+<Cu21>	9	8458000.000	F
+<Cu21>	10	8547000.000	F
+<Cu21>	11	8566000.000	F
+<Cu21>	12	8619000.000	F
+<Cu21>	13	8664000.000	F
+<Cu21>	14	8670000.000	F
+<Cu22>	0	0.000	F
+<Cu22>	1	101620.000	F
+<Cu22>	2	151990.000	F
+<Cu22>	3	237950.000	F
+<Cu22>	4	456290.000	F
+<Cu22>	5	1107710.000	F
+<Cu22>	6	1202170.000	F
+<Cu22>	7	1283280.000	F
+<Cu22>	8	1528080.000	F
+<Cu22>	9	2546610.000	F
+<Cu23>	0	0.000	F
+<Cu23>	1	170860.000	F
+<Cu23>	2	230070.000	F
+<Cu23>	3	327900.000	F
+<Cu23>	4	446780.000	F
+<Cu23>	5	900330.000	F
+<Cu23>	6	1011650.000	F
+<Cu23>	7	1036430.000	F
+<Cu23>	8	1249110.000	F
+<Cu23>	9	1283940.000	F
+<Cu23>	10	1427080.000	F
+<Cu23>	11	1485340.000	F
+<Cu23>	12	1646680.000	F
+<Cu23>	13	2316720.000	F
+<Cu23>	14	2492890.000	F
+<Cu24>	0	0.000	F
+<Cu24>	1	132120.000	F
+<Cu24>	2	188430.000	F
+<Cu24>	3	373620.000	F
+<Cu24>	4	519650.000	F
+<Cu24>	5	630917.850	T
+<Cu24>	6	958850.000	F
+<Cu24>	7	968440.000	F
+<Cu24>	8	1018700.000	F
+<Cu24>	9	1147900.000	F
+<Cu24>	10	1164700.000	F
+<Cu24>	11	1196100.000	F
+<Cu24>	12	1335700.000	F
+<Cu24>	13	1404900.000	F
+<Cu24>	14	1573500.000	F
+<Cu25>	0	0.000	F
+<Cu25>	1	191280.000	F
+<Cu25>	2	485730.000	F
+<Cu25>	3	584920.000	F
+<Cu25>	4	662770.000	F
+<Cu25>	5	1513780.000	F
+<F  2>	0	0.000	F
+<F  2>	1	341.000	F
+<F  2>	2	489.900	F
+<F  2>	3	20873.400	F
+<F  2>	4	44918.100	F
+<F  2>	5	164797.880	F
+<F  2>	6	165106.660	F
+<F  3>	0	0.000	F
+<F  3>	1	34087.400	F
+<F  3>	2	34123.200	F
+<F  3>	3	51560.600	F
+<F  3>	4	51561.400	F
+<F  3>	5	151899.700	F
+<F  3>	6	152237.400	F
+<F  3>	7	152410.900	F
+<F  3>	8	210241.700	F
+<F  3>	9	210256.300	F
+<F  3>	10	248261.400	F
+<F  3>	11	266561.850	F
+<F  3>	12	266944.700	F
+<F  3>	13	316709.810	F
+<F  3>	14	316920.990	F
+<F  4>	0	0.000	F
+<F  4>	1	226.000	F
+<F  4>	2	614.000	F
+<F  4>	3	25238.200	F
+<F  4>	4	53541.200	F
+<F  4>	5	74194.700	F
+<F  4>	6	147843.000	F
+<F  4>	7	147888.700	F
+<F  4>	8	147903.500	F
+<F  4>	9	175236.800	F
+<F  4>	10	175241.900	F
+<F  4>	11	175263.900	F
+<F  4>	12	228903.800	F
+<F  4>	13	238296.700	F
+<F  4>	14	257386.500	F
+<F  5>	0	0.000	F
+<F  5>	1	744.500	F
+<F  5>	2	85790.200	F
+<F  5>	3	86043.500	F
+<F  5>	4	86407.000	F
+<F  6>	0	0.000	F
+<F  6>	1	96590.000	F
+<F  6>	2	96850.000	F
+<F  6>	3	97427.000	F
+<F  6>	4	186844.000	F
+<F  6>	5	251336.000	F
+<F  6>	6	251629.000	F
+<F  6>	7	252139.000	F
+<F  6>	8	274602.000	F
+<F  6>	9	340434.000	F
+<F  6>	10	747284.000	F
+<F  6>	11	764392.000	F
+<F  6>	12	787844.000	F
+<F  6>	13	790240.000	F
+<F  6>	14	790312.000	F
+<F  7>	0	0.000	F
+<F  7>	1	112260.000	F
+<F  7>	2	113236.000	F
+<F  7>	3	854621.000	F
+<F  7>	4	885128.000	F
+<F  7>	5	885414.000	F
+<F  7>	6	895619.000	F
+<F  7>	7	895706.000	F
+<F  7>	8	1140432.000	F
+<F  7>	9	1152893.000	F
+<F  7>	10	1153010.000	F
+<F  7>	11	1157249.000	F
+<F  7>	12	1157285.000	F
+<F  7>	13	1157523.000	F
+<F  7>	14	1157523.001	F
+<Fe 1>	0	0.000	F
+<Fe 1>	1	415.933	F
+<Fe 1>	2	704.007	F
+<Fe 1>	3	888.132	F
+<Fe 1>	4	978.074	F
+<Fe 1>	5	6928.268	F
+<Fe 1>	6	7376.764	F
+<Fe 1>	7	7728.060	F
+<Fe 1>	8	7985.785	F
+<Fe 1>	9	8154.714	F
+<Fe 1>	10	11976.239	F
+<Fe 1>	11	12560.934	F
+<Fe 1>	12	12968.554	F
+<Fe 1>	13	17550.181	F
+<Fe 1>	14	17726.988	F
+<Fe 1>	15	17927.382	F
+<Fe 1>	16	18378.186	F
+<Fe 1>	17	19350.891	F
+<Fe 1>	18	19390.168	F
+<Fe 1>	19	19552.478	F
+<Fe 1>	20	19562.439	F
+<Fe 1>	21	19621.006	F
+<Fe 1>	22	19757.032	F
+<Fe 1>	23	19788.251	F
+<Fe 1>	24	19912.495	F
+<Fe 2>	0	0.000	F
+<Fe 2>	1	384.787	F
+<Fe 2>	2	667.683	F
+<Fe 2>	3	862.612	F
+<Fe 2>	4	977.050	F
+<Fe 2>	5	1872.600	F
+<Fe 2>	6	2430.137	F
+<Fe 2>	7	2837.980	F
+<Fe 2>	8	3117.488	F
+<Fe 2>	9	7955.318	F
+<Fe 2>	10	8391.955	F
+<Fe 2>	11	8680.470	F
+<Fe 2>	12	8846.782	F
+<Fe 2>	13	13474.445	F
+<Fe 2>	14	13673.202	F
+<Fe 2>	15	13904.857	F
+<Fe 2>	16	15844.651	F
+<Fe 2>	17	16369.403	F
+<Fe 2>	18	18360.642	F
+<Fe 2>	19	18886.766	F
+<Fe 2>	20	20340.248	F
+<Fe 2>	21	20516.947	F
+<Fe 2>	22	20805.764	F
+<Fe 2>	23	20830.554	F
+<Fe 2>	24	21251.583	F
+<Fe 2>	25	21307.999	F
+<Fe 2>	26	21430.356	F
+<Fe 2>	27	21581.607	F
+<Fe 2>	28	21711.898	F
+<Fe 2>	29	21812.044	F
+<Fe 2>	30	22409.816	F
+<Fe 2>	31	22637.192	F
+<Fe 2>	32	22810.346	F
+<Fe 2>	33	22939.343	F
+<Fe 2>	34	23031.280	F
+<Fe 2>	35	23317.629	F
+<Fe 2>	36	25428.788	F
+<Fe 2>	37	25787.574	F
+<Fe 2>	38	25805.319	F
+<Fe 2>	39	25981.645	F
+<Fe 2>	40	26055.410	F
+<Fe 2>	41	26170.173	F
+<Fe 2>	42	26352.765	F
+<Fe 2>	43	26932.727	F
+<Fe 2>	44	27314.909	F
+<Fe 2>	45	27620.396	F
+<Fe 2>	46	30388.541	F
+<Fe 2>	47	30764.468	F
+<Fe 2>	48	31364.446	F
+<Fe 2>	49	31368.451	F
+<Fe 2>	50	31387.973	F
+<Fe 2>	51	31483.192	F
+<Fe 2>	52	31811.812	F
+<Fe 2>	53	31999.046	F
+<Fe 2>	54	32875.638	F
+<Fe 2>	55	32909.876	F
+<Fe 2>	56	33466.486	F
+<Fe 2>	57	33501.294	F
+<Fe 2>	58	36126.408	F
+<Fe 2>	59	36252.924	F
+<Fe 2>	60	37227.271	F
+<Fe 2>	61	38164.219	F
+<Fe 2>	62	38214.500	F
+<Fe 2>	63	38458.984	F
+<Fe 2>	64	38660.045	F
+<Fe 2>	65	38858.966	F
+<Fe 2>	66	39013.212	F
+<Fe 2>	67	39109.309	F
+<Fe 2>	68	41968.065	F
+<Fe 2>	69	42114.827	F
+<Fe 2>	70	42237.053	F
+<Fe 2>	71	42334.840	F
+<Fe 2>	72	42401.319	F
+<Fe 2>	73	42439.847	F
+<Fe 2>	74	42658.236	F
+<Fe 2>	75	43238.603	F
+<Fe 2>	76	43620.983	F
+<Fe 2>	77	44232.538	F
+<Fe 2>	78	44446.899	F
+<Fe 2>	79	44753.812	F
+<Fe21>	0	0.000	F
+<Fe21>	1	73851.000	F
+<Fe21>	2	117354.000	F
+<Fe21>	3	244561.000	F
+<Fe21>	4	371980.000	F
+<Fe21>	5	486950.000	F
+<Fe21>	6	776690.000	F
+<Fe21>	7	777340.000	F
+<Fe21>	8	803540.000	F
+<Fe21>	9	916330.000	F
+<Fe21>	10	924920.000	F
+<Fe21>	11	942430.000	F
+<Fe21>	12	1095670.000	F
+<Fe21>	13	1127240.000	F
+<Fe21>	14	1261140.000	F
+<Fe21>	15	1646300.000	F
+<Fe21>	16	1735700.000	F
+<Fe21>	17	1740500.000	F
+<Fe21>	18	1817100.000	F
+<Fe21>	19	2048200.000	F
+<Fe21>	20	7698848.392	T
+<Fe21>	21	7708550.816	T
+<Fe21>	22	7808644.610	T
+<Fe21>	23	7835027.773	T
+<Fe21>	24	7876165.269	T
+<Fe24>	0	0.000	F
+<Fe24>	1	391982.000	F
+<Fe24>	2	520765.000	F
+<Fe24>	3	9272500.000	F
+<Fe24>	4	9378200.000	F
+<Fe24>	5	9417100.000	F
+<Fe24>	6	9459000.000	F
+<Fe24>	7	9472600.000	F
+<Fe24>	8	12464400.000	F
+<Fe24>	9	12508900.000	F
+<Fe24>	10	12524900.000	F
+<Fe24>	11	12539200.000	F
+<Fe24>	12	12545200.000	F
+<Fe24>	13	12547600.000	F
+<Fe24>	14	12551600.000	F
+<Fe24>	15	13925450.000	T
+<Fe24>	16	13943400.000	F
+<Fe24>	17	13951600.000	F
+<Fe24>	18	13960500.000	F
+<Fe24>	19	13965300.000	F
+<Fe24>	20	13974627.374	F
+<Fe24>	21	13975914.746	T
+<Fe24>	22	13975923.383	T
+<Fe24>	23	13976698.896	F
+<Fe24>	24	53239600.000	F
+<Fe 3>	0	0.000	F
+<Fe 3>	1	436.200	F
+<Fe 3>	2	738.900	F
+<Fe 3>	3	932.400	F
+<Fe 3>	4	1027.300	F
+<Fe 3>	5	19404.800	F
+<Fe 3>	6	20051.100	F
+<Fe 3>	7	20300.800	F
+<Fe 3>	8	20481.900	F
+<Fe 3>	9	20688.400	F
+<Fe 3>	10	21208.500	F
+<Fe 3>	11	21462.200	F
+<Fe 3>	12	21699.900	F
+<Fe 3>	13	21857.200	F
+<Fe 3>	14	24558.800	F
+<Fe 3>	15	24940.900	F
+<Fe 3>	16	25142.400	F
+<Fe 3>	17	30088.840	F
+<Fe 3>	18	30356.200	F
+<Fe 3>	19	30716.200	F
+<Fe 3>	20	30725.800	F
+<Fe 3>	21	30857.800	F
+<Fe 3>	22	30886.400	F
+<Fe 3>	23	34812.400	F
+<Fe 3>	24	35803.700	F
+<Fe 3>	25	40999.870	F
+<Fe 3>	26	42896.900	F
+<Fe 3>	27	49148.000	F
+<Fe 3>	28	49576.900	F
+<Fe 3>	29	50184.900	F
+<Fe 3>	30	50276.100	F
+<Fe 3>	31	50295.200	F
+<Fe 3>	32	50412.300	F
+<Fe 3>	33	57221.700	F
+<Fe 3>	34	63425.170	F
+<Fe 3>	35	63466.390	F
+<Fe 3>	36	63486.780	F
+<Fe 3>	37	63494.000	F
+<Fe 3>	38	63494.560	F
+<Fe 3>	39	66464.640	F
+<Fe 3>	40	66522.950	F
+<Fe 3>	41	66591.680	F
+<Fe 3>	42	69695.730	F
+<Fe 3>	43	69747.400	F
+<Fe 3>	44	69788.190	F
+<Fe 3>	45	69836.830	F
+<Fe 3>	46	69837.760	F
+<Fe 3>	47	70694.030	F
+<Fe 3>	48	70725.010	F
+<Fe 3>	49	70728.750	F
+<Fe 3>	50	73727.640	F
+<Fe 3>	51	73849.100	F
+<Fe 3>	52	73935.960	F
+<Fe 3>	53	76956.790	F
+<Fe 3>	54	77075.300	F
+<Fe 3>	55	77102.430	F
+<Fe 3>	56	79840.120	F
+<Fe 3>	57	79844.740	F
+<Fe 3>	58	79860.420	F
+<Fe 3>	59	82001.730	F
+<Fe 3>	60	82333.920	F
+<Fe 3>	61	82382.870	F
+<Fe 3>	62	82410.940	F
+<Fe 3>	63	82494.880	F
+<Fe 3>	64	82846.590	F
+<Fe 3>	65	83138.230	F
+<Fe 3>	66	83161.480	F
+<Fe 3>	67	83237.860	F
+<Fe 3>	68	83358.880	F
+<Fe 3>	69	83429.610	F
+<Fe 7>	0	0.000	F
+<Fe 7>	1	1051.500	F
+<Fe 7>	2	2331.500	F
+<Fe 7>	3	17475.500	F
+<Fe 7>	4	20040.300	F
+<Fe 7>	5	20430.100	F
+<Fe 7>	6	21278.600	F
+<Fe 7>	7	28927.300	F
+<Fe 7>	8	67078.300	F
+<Fe 7>	9	341232.000	F
+<Fe 7>	10	341875.000	F
+<Fe 7>	11	343256.000	F
+<Fe 7>	12	347957.000	F
+<Fe 7>	13	391607.000	F
+<Fe 7>	14	398622.000	F
+<Fe 7>	15	398655.000	F
+<Fe 7>	16	398728.000	F
+<Fe 7>	17	398801.000	F
+<Fe 7>	18	399401.000	F
+<Fe 7>	19	408229.000	F
+<Fe 7>	20	408920.000	F
+<Fe 7>	21	409084.000	F
+<Fe 7>	22	409174.000	F
+<Fe 7>	23	409306.000	F
+<Fe 7>	24	421304.000	F
+<Fe 9>	0	0.000	F
+<Fe 9>	1	405772.000	F
+<Fe 9>	2	408315.100	F
+<Fe 9>	3	413669.200	F
+<Fe 9>	4	425809.800	F
+<Fe 9>	5	429310.900	F
+<Fe 9>	6	433818.800	F
+<Fe 9>	7	455612.200	F
+<Fe 9>	8	456752.700	F
+<Fe 9>	9	460616.000	F
+<Fe 9>	10	462616.600	F
+<Fe 9>	11	465828.400	F
+<Fe 9>	12	584546.000	F
+<Fe 9>	13	726734.000	F
+<Fe 9>	14	727560.000	F
+<Fe 9>	15	728935.000	F
+<Fe 9>	16	749871.000	F
+<Fe 9>	17	829256.800	F
+<Fe 9>	18	834302.800	F
+<Fe 9>	19	834577.100	F
+<Fe 9>	20	835066.400	F
+<Fe 9>	21	835698.900	F
+<Fe 9>	22	836516.700	F
+<Fe 9>	23	845142.300	F
+<Fe 9>	24	845760.200	F
+<K  1>	0	0.000	F
+<K  1>	1	12985.186	F
+<K  1>	2	13042.896	F
+<K  1>	3	21026.551	F
+<K  1>	4	21534.680	F
+<K  1>	5	21536.988	F
+<K  1>	6	24701.382	F
+<K  1>	7	24720.139	F
+<K  1>	8	27397.077	F
+<K  1>	9	27398.147	F
+<K  1>	10	27450.710	F
+<K  1>	11	28127.850	F
+<K  1>	12	28127.851	F
+<K  1>	13	28999.270	F
+<K  1>	14	29007.710	F
+<K 10>	0	0.000	F
+<K 10>	1	2399168.000	F
+<K 10>	2	2406855.000	F
+<K 10>	3	2422630.000	F
+<K 10>	4	2430137.000	F
+<K 10>	5	2536246.000	F
+<K 10>	6	2558910.000	F
+<K 10>	7	2559399.000	F
+<K 10>	8	2566499.000	F
+<K 10>	9	2572660.000	F
+<K 10>	10	2582550.000	F
+<K 10>	11	2585190.000	F
+<K 10>	12	2590088.000	F
+<K 10>	13	2590878.000	F
+<K 10>	14	2667264.000	F
+<K 14>	0	0.000	F
+<K 14>	1	13235.000	F
+<K 14>	2	28225.000	F
+<K 14>	3	95921.000	F
+<K 14>	4	178914.000	F
+<K 14>	5	250650.000	F
+<K 14>	6	458754.000	F
+<K 14>	7	459498.000	F
+<K 14>	8	461002.000	F
+<K 14>	9	537402.000	F
+<K 14>	10	538032.000	F
+<K 14>	11	539938.000	F
+<K 14>	12	676460.000	F
+<K 14>	13	677710.000	F
+<K 14>	14	755050.000	F
+<K  2>	0	0.000	F
+<K  2>	1	162502.700	F
+<K  2>	2	163232.200	F
+<K  2>	3	163432.100	F
+<K  2>	4	164492.000	F
+<K  2>	5	164927.900	F
+<K  2>	6	165145.400	F
+<K  2>	7	166457.300	F
+<K  2>	8	170049.200	F
+<K  2>	9	170831.100	F
+<K  2>	10	171522.600	F
+<K  2>	11	179349.200	F
+<K  2>	12	179395.800	F
+<K  2>	13	180392.700	F
+<K  2>	14	180448.900	F
+<K  3>	0	0.000	F
+<K  3>	1	2165.400	F
+<K  3>	2	130610.000	F
+<K  3>	3	183878.000	F
+<K  3>	4	185276.000	F
+<K  3>	5	190917.000	F
+<K  3>	6	192082.000	F
+<K  3>	7	201165.000	F
+<K  3>	8	207421.900	F
+<K  3>	9	208687.800	F
+<K  3>	10	209461.300	F
+<K  3>	11	212725.400	F
+<K  3>	12	214232.300	F
+<K  3>	13	225051.000	F
+<K  3>	14	225084.000	F
+<K  4>	0	0.000	F
+<K  4>	1	1671.700	F
+<K  4>	2	2321.200	F
+<K  4>	3	16384.000	F
+<K  4>	4	38546.300	F
+<K  4>	5	134181.800	F
+<K  4>	6	135658.300	F
+<K  4>	7	136453.000	F
+<K  4>	8	171139.500	F
+<K  4>	9	189952.000	F
+<K  4>	10	191203.000	F
+<K  4>	11	191400.000	F
+<K  4>	12	216387.000	F
+<K  4>	13	225445.000	F
+<K  4>	14	226082.000	F
+<K  7>	0	0.000	F
+<K  7>	1	3134.280	F
+<K  8>	0	0.000	F
+<K  8>	1	128097.000	F
+<K  8>	2	129209.000	F
+<K  8>	3	131582.000	F
+<K  8>	4	192537.000	F
+<K  8>	5	300317.000	F
+<K  8>	6	304820.000	F
+<K  8>	7	306179.000	F
+<K  8>	8	308756.000	F
+<K  8>	9	357590.000	F
+<K  8>	10	368127.000	F
+<K  8>	11	368206.000	F
+<K  8>	12	368337.000	F
+<K  8>	13	419030.000	F
+<K  8>	14	503756.000	F
+<Li 1>	0	0.000	F
+<Li 1>	1	14903.660	F
+<Li 1>	2	14904.000	F
+<Li 1>	3	27206.120	F
+<Li 1>	4	30925.380	F
+<Li 1>	5	30925.381	F
+<Li 1>	6	31283.080	F
+<Li 1>	7	31283.120	F
+<Li 1>	8	35012.060	F
+<Li 1>	9	36469.550	F
+<Li 1>	10	36469.551	F
+<Li 1>	11	36623.380	F
+<Li 1>	12	36623.400	F
+<Li 1>	13	36630.200	F
+<Li 1>	14	36630.201	F
+<Mg 1>	0	0.000	F
+<Mg 1>	1	21850.405	F
+<Mg 1>	2	21870.464	F
+<Mg 1>	3	21911.178	F
+<Mg 1>	4	35051.264	F
+<Mg 1>	5	41197.403	F
+<Mg 1>	6	43503.333	F
+<Mg 1>	7	46403.065	F
+<Mg 1>	8	47841.119	F
+<Mg 1>	9	47844.414	F
+<Mg 1>	10	47851.162	F
+<Mg 1>	11	47957.027	F
+<Mg 1>	12	47957.045	F
+<Mg 1>	13	47957.058	F
+<Mg 1>	14	49346.729	F
+<Mg10>	0	0.000	F
+<Mg10>	1	160015.000	F
+<Mg10>	2	163990.000	F
+<Mg10>	3	1682700.000	F
+<Mg10>	4	1726520.000	F
+<Mg10>	5	1727830.000	F
+<Mg10>	6	1743500.000	F
+<Mg10>	7	1743890.000	F
+<Mg10>	8	2252600.000	F
+<Mg10>	9	2270136.000	F
+<Mg10>	10	2270621.000	F
+<Mg10>	11	2277104.000	F
+<Mg10>	12	2277256.000	F
+<Mg10>	13	2277548.000	F
+<Mg10>	14	2277624.000	F
+<Mg 3>	0	0.000	F
+<Mg 3>	1	425640.300	F
+<Mg 3>	2	426868.100	F
+<Mg 3>	3	427852.100	F
+<Mg 3>	4	431530.000	F
+<Mg 3>	5	467378.500	F
+<Mg 3>	6	474053.200	F
+<Mg 3>	7	474655.000	F
+<Mg 3>	8	475502.900	F
+<Mg 3>	9	477435.700	F
+<Mg 3>	10	478374.500	F
+<Mg 3>	11	478846.100	F
+<Mg 3>	12	479265.300	F
+<Mg 3>	13	479456.000	F
+<Mg 3>	14	496012.100	F
+<Mg 7>	0	0.000	F
+<Mg 7>	1	1107.000	F
+<Mg 7>	2	2924.000	F
+<Mg 7>	3	40948.000	F
+<Mg 7>	4	85153.000	F
+<Mg 7>	5	118100.000	F
+<Mg 7>	6	232853.000	F
+<Mg 7>	7	232957.000	F
+<Mg 7>	8	233024.000	F
+<Mg 7>	9	274897.000	F
+<Mg 7>	10	274904.000	F
+<Mg 7>	11	274947.000	F
+<Mg 7>	12	354401.000	F
+<Mg 7>	13	362117.000	F
+<Mg 7>	14	397153.000	F
+<Mn 1>	0	0.000	F
+<Mn 1>	1	17052.290	F
+<Mn 1>	2	17282.000	F
+<Mn 1>	3	17451.520	F
+<Mn 1>	4	17568.480	F
+<Mn 1>	5	17637.150	F
+<Mn 1>	6	18402.460	F
+<Mn 1>	7	18531.640	F
+<Mn 1>	8	18705.370	F
+<Mn 1>	9	23296.670	F
+<Mn 1>	10	23549.200	F
+<Mn 1>	11	23719.520	F
+<Mn 1>	12	23818.870	F
+<Mn 1>	13	24779.320	F
+<Mn 1>	14	24788.050	F
+<Mn11>	0	0.000	F
+<Mn11>	1	39384.000	F
+<Mn11>	2	42702.000	F
+<Mn11>	3	68945.000	F
+<Mn11>	4	73552.000	F
+<Mn11>	5	253974.000	F
+<Mn11>	6	261683.000	F
+<Mn11>	7	265144.000	F
+<Mn11>	8	314532.000	F
+<Mn11>	9	315881.000	F
+<Mn11>	10	361400.000	F
+<Mn11>	11	365689.000	F
+<Mn11>	12	379093.000	F
+<Mn11>	13	467240.000	F
+<Mn11>	14	476980.000	F
+<Mn12>	0	0.000	F
+<Mn12>	1	7200.000	F
+<Mn12>	2	15010.000	F
+<Mn12>	3	42140.000	F
+<Mn12>	4	82830.000	F
+<Mn12>	5	195900.000	F
+<Mn12>	6	258890.000	F
+<Mn12>	7	264550.000	F
+<Mn12>	8	266610.000	F
+<Mn12>	9	303690.000	F
+<Mn12>	10	303990.000	F
+<Mn12>	11	333970.000	F
+<Mn12>	12	385630.000	F
+<Mn12>	13	404750.000	F
+<Mn12>	14	452420.000	F
+<Mn13>	0	0.000	F
+<Mn13>	1	15295.000	F
+<Mn13>	2	208451.000	F
+<Mn13>	3	214546.000	F
+<Mn13>	4	222463.000	F
+<Mn13>	5	276497.000	F
+<Mn13>	6	278099.000	F
+<Mn13>	7	339001.000	F
+<Mn13>	8	360387.000	F
+<Mn13>	9	367425.000	F
+<Mn13>	10	440725.000	F
+<Mn13>	11	442220.000	F
+<Mn13>	12	534492.000	F
+<Mn13>	13	537263.000	F
+<Mn13>	14	546178.000	F
+<Mn14>	0	0.000	F
+<Mn14>	1	218604.000	F
+<Mn14>	2	223438.000	F
+<Mn14>	3	234905.000	F
+<Mn14>	4	328042.000	F
+<Mn14>	5	518209.000	F
+<Mn14>	6	521074.000	F
+<Mn14>	7	526089.000	F
+<Mn14>	8	539919.000	F
+<Mn14>	9	614024.000	F
+<Mn14>	10	633381.000	F
+<Mn14>	11	634185.000	F
+<Mn14>	12	635446.000	F
+<Mn14>	13	711986.000	F
+<Mn14>	14	866417.000	F
+<Mn16>	0	0.000	F
+<Mn16>	1	5266964.000	F
+<Mn16>	2	5281200.000	F
+<Mn16>	3	5351520.000	F
+<Mn16>	4	5360800.000	F
+<Mn16>	5	5494974.000	F
+<Mn16>	6	5523101.000	F
+<Mn16>	7	5532778.000	F
+<Mn16>	8	5542158.000	F
+<Mn16>	9	5555050.000	F
+<Mn16>	10	5603789.000	F
+<Mn16>	11	5626306.000	F
+<Mn16>	12	5628520.000	F
+<Mn16>	13	5843409.000	F
+<Mn16>	14	5850249.000	F
+<Mn 2>	0	0.000	F
+<Mn 2>	1	9472.993	F
+<Mn 2>	2	14325.866	F
+<Mn 2>	3	14593.835	F
+<Mn 2>	4	14781.205	F
+<Mn 2>	5	14901.203	F
+<Mn 2>	6	14959.876	F
+<Mn 2>	7	27547.260	F
+<Mn 2>	8	27571.250	F
+<Mn 2>	9	27583.590	F
+<Mn 2>	10	27588.530	F
+<Mn 2>	11	27589.360	F
+<Mn 2>	12	29869.420	F
+<Mn 2>	13	29889.534	F
+<Mn 2>	14	29919.444	F
+<Mn 2>	15	29951.434	F
+<Mn 2>	16	30523.710	F
+<Mn 2>	17	30679.510	F
+<Mn 2>	18	30684.960	F
+<Mn 2>	19	30796.060	F
+<Mn 2>	20	31022.200	F
+<Mn 2>	21	31514.710	F
+<Mn 2>	22	31662.040	F
+<Mn 2>	23	31761.210	F
+<Mn 2>	24	32787.900	F
+<Mn 2>	25	32818.440	F
+<Mn 2>	26	32836.740	F
+<Mn 2>	27	32857.270	F
+<Mn 2>	28	32859.150	F
+<Mn 2>	29	33147.710	F
+<Mn 2>	30	33248.660	F
+<Mn 2>	31	33278.730	F
+<Mn 2>	32	34762.098	F
+<Mn 2>	33	34910.770	F
+<Mn 2>	34	35004.790	F
+<Mn 2>	35	36274.620	F
+<Mn 2>	36	36364.640	F
+<Mn 2>	37	36428.220	F
+<Mn 2>	38	37811.880	F
+<Mn 2>	39	37848.225	F
+<Mn 2>	40	37851.490	F
+<Mn 2>	41	38366.232	F
+<Mn 2>	42	38543.122	F
+<Mn 2>	43	38720.260	F
+<Mn 2>	44	38806.691	F
+<Mn20>	0	0.000	F
+<Mn20>	1	59580.000	F
+<Mn20>	2	98650.000	F
+<Mn20>	3	212260.000	F
+<Mn20>	4	333080.000	F
+<Mn20>	5	443060.000	F
+<Mn20>	6	722710.000	F
+<Mn20>	7	723090.000	F
+<Mn20>	8	742940.000	F
+<Mn20>	9	850340.000	F
+<Mn20>	10	856900.000	F
+<Mn20>	11	870580.000	F
+<Mn20>	12	1025510.000	F
+<Mn20>	13	1048880.000	F
+<Mn20>	14	1172570.000	F
+<Mn 5>	0	0.000	F
+<Mn 5>	1	359.000	F
+<Mn 5>	2	835.100	F
+<Mn 5>	3	1412.200	F
+<Mn 5>	4	16434.000	F
+<Mn 5>	5	16594.600	F
+<Mn 5>	6	17048.600	F
+<Mn 5>	7	17892.400	F
+<Mn 5>	8	18398.800	F
+<Mn 5>	9	22918.800	F
+<Mn 5>	10	23081.600	F
+<Mn 5>	11	24630.000	F
+<Mn 5>	12	24670.500	F
+<Mn 5>	13	24974.800	F
+<Mn 5>	14	25333.800	F
+<Mn 6>	0	0.000	F
+<Mn 6>	1	746.000	F
+<Mn 6>	2	1669.000	F
+<Mn 6>	3	15336.000	F
+<Mn 6>	4	17782.000	F
+<Mn 6>	5	18057.000	F
+<Mn 6>	6	18628.000	F
+<Mn 6>	7	25511.000	F
+<Mn 6>	8	59265.000	F
+<Mn 6>	9	250096.600	F
+<Mn 6>	10	250527.000	F
+<Mn 6>	11	251403.000	F
+<Mn 6>	12	255239.700	F
+<Mn 6>	13	319821.200	F
+<Mn 6>	14	321693.500	F
+<N  1>	0	0.000	F
+<N  1>	1	19224.464	F
+<N  1>	2	19233.177	F
+<N  1>	3	28838.920	F
+<N  1>	4	28839.306	F
+<N  1>	5	83284.070	F
+<N  1>	6	83317.830	F
+<N  1>	7	83364.620	F
+<N  1>	8	86137.350	F
+<N  1>	9	86220.510	F
+<N  1>	10	88107.260	F
+<N  1>	11	88151.170	F
+<N  1>	12	88170.570	F
+<N  1>	13	93581.550	F
+<N  1>	14	94770.880	F
+<N  1>	15	94793.490	F
+<N  1>	16	94830.890	F
+<N  1>	17	94881.820	F
+<N  1>	18	95475.310	F
+<N  1>	19	95493.690	F
+<N  1>	20	95532.150	F
+<N  1>	21	96750.840	F
+<N  1>	22	96787.680	F
+<N  1>	23	96864.050	F
+<N  1>	24	97770.180	F
+<N  1>	25	97805.840	F
+<N  1>	26	99663.427	F
+<N  1>	27	99663.912	F
+<N  1>	28	103622.510	F
+<N  1>	29	103667.160	F
+<N  1>	30	103735.480	F
+<N  1>	31	104144.820	F
+<N  1>	32	104221.630	F
+<N  1>	33	104615.470	F
+<N  1>	34	104654.030	F
+<N  1>	35	104664.130	F
+<N  1>	36	104683.060	F
+<N  1>	37	104716.950	F
+<N  1>	38	104765.770	F
+<N  1>	39	104810.360	F
+<N  1>	40	104825.110	F
+<N  1>	41	104859.730	F
+<N  1>	42	104881.350	F
+<N  1>	43	104886.100	F
+<N  1>	44	104984.370	F
+<N  1>	45	104996.270	F
+<N  1>	46	105008.550	F
+<N  1>	47	105017.600	F
+<N  1>	48	105119.880	F
+<N  1>	49	105143.710	F
+<N  2>	0	0.000	F
+<N  2>	1	48.700	F
+<N  2>	2	130.800	F
+<N  2>	3	15316.200	F
+<N  2>	4	32688.800	F
+<N  2>	5	46784.600	F
+<N  2>	6	92237.200	F
+<N  2>	7	92250.300	F
+<N  2>	8	92251.800	F
+<N  2>	9	109216.600	F
+<N  2>	10	109217.600	F
+<N  2>	11	109223.500	F
+<N  2>	12	144187.940	F
+<N  2>	13	148908.590	F
+<N  2>	14	148940.170	F
+<N  4>	0	0.000	F
+<N  4>	1	67209.200	F
+<N  4>	2	67272.300	F
+<N  4>	3	67416.300	F
+<N  4>	4	130693.900	F
+<N  4>	5	175535.400	F
+<N  4>	6	175608.100	F
+<N  4>	7	175732.900	F
+<N  4>	8	188882.500	F
+<N  4>	9	235369.300	F
+<N  4>	10	377284.800	F
+<N  4>	11	388854.600	F
+<N  4>	12	404522.400	F
+<N  4>	13	405971.600	F
+<N  4>	14	405987.500	F
+<N  5>	0	0.000	F
+<N  5>	1	80463.200	F
+<N  5>	2	80721.900	F
+<N  5>	3	456126.600	F
+<N  5>	4	477765.700	F
+<N  5>	5	477842.000	F
+<N  5>	6	484404.300	F
+<N  5>	7	484426.300	F
+<N  5>	8	606348.800	F
+<N  5>	9	615141.000	F
+<N  5>	10	615173.800	F
+<N  5>	11	617916.300	F
+<N  5>	12	617925.500	F
+<N  5>	13	618059.300	F
+<N  5>	14	618064.100	F
+<Na 1>	0	0.000	F
+<Na 1>	1	16956.170	F
+<Na 1>	2	16973.366	F
+<Na 1>	3	25739.999	F
+<Na 1>	4	29172.837	F
+<Na 1>	5	29172.887	F
+<Na 1>	6	30266.990	F
+<Na 1>	7	30272.580	F
+<Na 1>	8	33200.673	F
+<Na 1>	9	34548.729	F
+<Na 1>	10	34548.764	F
+<Na 1>	11	34586.920	F
+<Na 1>	12	34586.921	F
+<Na 1>	13	35040.380	F
+<Na 1>	14	35042.850	F
+<Na 2>	0	0.000	F
+<Na 2>	1	264924.320	F
+<Na 2>	2	265689.620	F
+<Na 2>	3	266281.620	F
+<Na 2>	4	268762.960	F
+<Na 2>	5	293220.330	F
+<Na 2>	6	297248.820	F
+<Na 2>	7	297635.610	F
+<Na 2>	8	298165.440	F
+<Na 2>	9	299189.960	F
+<Na 2>	10	299885.370	F
+<Na 2>	11	300103.920	F
+<Na 2>	12	300387.820	F
+<Na 2>	13	300507.110	F
+<Na 2>	14	308860.800	F
+<Na 6>	0	0.000	F
+<Na 6>	1	694.620	F
+<Na 6>	2	1855.980	F
+<Na 6>	3	35498.000	F
+<Na 6>	4	74414.000	F
+<Na 6>	5	103010.000	F
+<Na 6>	6	204132.000	F
+<Na 6>	7	204223.000	F
+<Na 6>	8	204261.000	F
+<Na 6>	9	241341.000	F
+<Na 6>	10	241341.000	F
+<Na 6>	11	241341.000	F
+<Na 6>	12	312315.000	F
+<Na 6>	13	320589.000	F
+<Na 6>	14	350319.000	F
+<Ne 1>	0	0.000	F
+<Ne 1>	1	134041.840	F
+<Ne 1>	2	134459.287	F
+<Ne 1>	3	134818.641	F
+<Ne 1>	4	135888.717	F
+<Ne 1>	5	148257.790	F
+<Ne 1>	6	149657.039	F
+<Ne 1>	7	149824.222	F
+<Ne 1>	8	150121.592	F
+<Ne 1>	9	150315.861	F
+<Ne 1>	10	150772.112	F
+<Ne 1>	11	150858.508	F
+<Ne 1>	12	150917.431	F
+<Ne 1>	13	151038.452	F
+<Ne 1>	14	152970.733	F
+<Ne 2>	0	0.000	F
+<Ne 2>	1	780.424	F
+<Ne 3>	0	0.000	F
+<Ne 3>	1	642.876	F
+<Ne 3>	2	920.550	F
+<Ne 3>	3	25840.720	F
+<Ne 3>	4	55752.700	F
+<Ne 3>	5	204290.000	F
+<Ne 3>	6	204872.600	F
+<Ne 3>	7	205194.000	F
+<Ne 3>	8	289478.600	F
+<Ne 3>	9	309881.041	F
+<Ne 3>	10	319431.261	F
+<Ne 3>	11	348395.524	F
+<Ne 3>	12	348426.628	F
+<Ne 3>	13	348479.578	F
+<Ne 3>	14	353282.000	F
+<Ne 5>	0	0.000	F
+<Ne 5>	1	411.227	F
+<Ne 5>	2	1109.467	F
+<Ne 5>	3	30290.670	F
+<Ne 5>	4	63915.400	F
+<Ne 5>	5	88399.500	F
+<Ne 5>	6	175832.300	F
+<Ne 5>	7	175902.700	F
+<Ne 5>	8	175925.000	F
+<Ne 5>	9	208151.300	F
+<Ne 5>	10	208153.300	F
+<Ne 5>	11	208185.000	F
+<Ne 5>	12	270552.900	F
+<Ne 5>	13	279371.200	F
+<Ne 5>	14	303819.200	F
+<Ni 1>	0	0.000	F
+<Ni 1>	1	204.787	F
+<Ni 1>	2	879.816	F
+<Ni 1>	3	1332.164	F
+<Ni 1>	4	1713.087	F
+<Ni 1>	5	2216.550	F
+<Ni 1>	6	3409.937	F
+<Ni 1>	7	13521.347	F
+<Ni 1>	8	14728.840	F
+<Ni 1>	9	15609.844	F
+<Ni 1>	10	15734.001	F
+<Ni 1>	11	16017.306	F
+<Ni 1>	12	22102.325	F
+<Ni 1>	13	25753.553	F
+<Ni 1>	14	26665.887	F
+<Ni11>	0	0.000	F
+<Ni11>	1	469310.000	F
+<Ni11>	2	472970.000	F
+<Ni11>	3	480950.000	F
+<Ni11>	4	493250.000	F
+<Ni11>	5	497520.000	F
+<Ni11>	6	504070.000	F
+<Ni11>	7	527470.000	F
+<Ni11>	8	530830.000	F
+<Ni11>	9	534830.000	F
+<Ni11>	10	539180.000	F
+<Ni11>	11	543220.000	F
+<Ni11>	12	673960.000	F
+<Ni11>	13	859654.000	F
+<Ni11>	14	861159.700	F
+<Ni15>	0	0.000	F
+<Ni15>	1	14917.500	F
+<Ni15>	2	27376.500	F
+<Ni15>	3	62852.100	F
+<Ni15>	4	113646.200	F
+<Ni15>	5	247340.200	F
+<Ni15>	6	331295.800	F
+<Ni15>	7	331594.300	F
+<Ni15>	8	336533.600	F
+<Ni15>	9	380777.500	F
+<Ni15>	10	382154.700	F
+<Ni15>	11	383234.500	F
+<Ni15>	12	420854.700	F
+<Ni15>	13	478041.000	F
+<Ni15>	14	494756.200	F
+<Ni23>	0	0.000	F
+<Ni23>	1	109770.000	F
+<Ni23>	2	161922.000	F
+<Ni23>	3	324640.000	F
+<Ni23>	4	463900.000	F
+<Ni23>	5	586890.000	F
+<Ni23>	6	894100.000	F
+<Ni23>	7	900000.000	F
+<Ni23>	8	941400.000	F
+<Ni23>	9	1064900.000	F
+<Ni23>	10	1078350.000	F
+<Ni23>	11	1104750.000	F
+<Ni23>	12	1250470.000	F
+<Ni23>	13	1304640.000	F
+<Ni23>	14	1459700.000	F
+<Ni 3>	0	0.000	F
+<Ni 3>	1	1360.700	F
+<Ni 3>	2	2269.600	F
+<Ni 3>	3	14031.600	F
+<Ni 3>	4	16661.600	F
+<Ni 3>	5	16977.800	F
+<Ni 3>	6	17230.700	F
+<Ni 3>	7	23108.700	F
+<Ni 3>	8	52532.000	F
+<Ni 3>	9	53703.930	F
+<Ni 3>	10	54657.830	F
+<Ni 3>	11	55406.290	F
+<Ni 3>	12	55952.210	F
+<Ni 3>	13	56308.240	F
+<Ni 3>	14	61338.580	F
+<Ni 4>	0	0.000	F
+<Ni 4>	1	1189.700	F
+<Ni 4>	2	2042.500	F
+<Ni 4>	3	2621.100	F
+<Ni 4>	4	18118.600	F
+<Ni 4>	5	18366.800	F
+<Ni 4>	6	18958.400	F
+<Ni 4>	7	19829.600	F
+<Ni 4>	8	20947.600	F
+<Ni 4>	9	23648.900	F
+<Ni 4>	10	24651.400	F
+<Ni 4>	11	26649.100	F
+<Ni 4>	12	27096.500	F
+<Ni 4>	13	27677.600	F
+<Ni 4>	14	28777.700	F
+<Ni 5>	0	0.000	F
+<Ni 5>	1	889.700	F
+<Ni 5>	2	1489.900	F
+<Ni 5>	3	1871.500	F
+<Ni 5>	4	2057.600	F
+<Ni 5>	5	26153.000	F
+<Ni 5>	6	27111.200	F
+<Ni 5>	7	27578.200	F
+<Ni 5>	8	27858.800	F
+<Ni 5>	9	28697.600	F
+<Ni 5>	10	29123.700	F
+<Ni 5>	11	29570.800	F
+<Ni 5>	12	29640.000	F
+<Ni 5>	13	29899.200	F
+<Ni 5>	14	33256.500	F
+<Ni 7>	0	0.000	F
+<Ni 7>	1	279.000	F
+<Ni 7>	2	804.000	F
+<Ni 7>	3	1520.000	F
+<Ni 7>	4	2392.000	F
+<Ni 7>	5	30077.000	F
+<Ni 7>	6	31672.000	F
+<Ni 7>	7	31836.000	F
+<Ni 7>	8	32286.000	F
+<Ni 7>	9	32877.000	F
+<Ni 7>	10	34247.000	F
+<Ni 7>	11	34317.000	F
+<Ni 7>	12	34555.000	F
+<Ni 7>	13	34576.000	F
+<Ni 7>	14	38160.000	F
+<Ni 9>	0	0.000	F
+<Ni 9>	1	1880.000	F
+<Ni 9>	2	4070.000	F
+<Ni 9>	3	21900.000	F
+<Ni 9>	4	27160.000	F
+<Ni 9>	5	35898.000	F
+<Ni 9>	6	601300.000	F
+<Ni 9>	7	604000.000	F
+<Ni 9>	8	608530.000	F
+<Ni 9>	9	640360.000	F
+<Ni 9>	10	661050.000	F
+<Ni 9>	11	664080.000	F
+<Ni 9>	12	667080.000	F
+<Ni 9>	13	709210.000	F
+<Ni 9>	14	711510.000	F
+<O  1>	0	0.000	F
+<O  1>	1	158.265	F
+<O  1>	2	226.977	F
+<O  1>	3	15867.862	F
+<O  1>	4	33792.583	F
+<O  1>	5	73768.200	F
+<O  1>	6	76794.978	F
+<O  1>	7	86625.757	F
+<O  1>	8	86627.778	F
+<O  1>	9	86631.454	F
+<O  1>	10	88630.587	F
+<O  1>	11	88631.146	F
+<O  1>	12	88631.303	F
+<O  1>	13	95476.728	F
+<O  1>	14	96225.049	F
+<O  1>	15	97420.630	F
+<O  1>	16	97420.716	F
+<O  1>	17	97420.839	F
+<O  1>	18	97420.942	F
+<O  1>	19	97420.991	F
+<O  1>	20	97488.378	F
+<O  1>	21	97488.448	F
+<O  1>	22	97488.538	F
+<O  1>	23	99092.968	F
+<O  1>	24	99093.641	F
+<O  1>	25	99094.837	F
+<O  1>	26	99680.968	F
+<O  1>	27	99681.049	F
+<O  1>	28	99681.309	F
+<O  2>	0	0.000	F
+<O  2>	1	26810.550	F
+<O  2>	2	26830.570	F
+<O  2>	3	40468.010	F
+<O  2>	4	40470.000	F
+<O  2>	5	119837.210	F
+<O  2>	6	120000.430	F
+<O  2>	7	120082.860	F
+<O  2>	8	165988.460	F
+<O  2>	9	165996.500	F
+<O  2>	10	185235.281	F
+<O  2>	11	185340.577	F
+<O  2>	12	185499.124	F
+<O  2>	13	188888.543	F
+<O  2>	14	189068.514	F
+<O  3>	0	0.000	F
+<O  3>	1	113.178	F
+<O  3>	2	306.174	F
+<O  3>	3	20273.270	F
+<O  3>	4	43185.740	F
+<O  3>	5	60324.790	F
+<O  3>	6	120025.200	F
+<O  3>	7	120053.400	F
+<O  3>	8	120058.200	F
+<O  3>	9	142381.000	F
+<O  3>	10	142381.800	F
+<O  3>	11	142393.500	F
+<O  3>	12	187054.000	F
+<O  3>	13	197087.700	F
+<O  3>	14	210461.800	F
+<O  5>	0	0.000	F
+<O  5>	1	81942.500	F
+<O  5>	2	82078.600	F
+<O  5>	3	82385.300	F
+<O  5>	4	158797.700	F
+<O  5>	5	213462.500	F
+<O  5>	6	213618.200	F
+<O  5>	7	213887.000	F
+<O  5>	8	231721.400	F
+<O  5>	9	287910.300	F
+<O  5>	10	546972.700	F
+<O  5>	11	561276.400	F
+<O  5>	12	580824.900	F
+<O  5>	13	582806.400	F
+<O  5>	14	582843.100	F
+<P  1>	0	0.000	F
+<P  1>	1	11361.020	F
+<P  1>	2	11376.630	F
+<P  1>	3	18722.710	F
+<P  1>	4	18748.010	F
+<P  1>	5	55939.421	F
+<P  1>	6	56090.626	F
+<P  1>	7	56339.656	F
+<P  1>	8	57876.574	F
+<P  1>	9	58174.366	F
+<P  1>	10	59534.549	F
+<P  1>	11	59715.921	F
+<P  1>	12	59820.371	F
+<P  1>	13	64239.591	F
+<P  1>	14	65156.242	F
+<P 10>	0	0.000	F
+<P 10>	1	3692.000	F
+<P 10>	2	9045.000	F
+<P 10>	3	59690.000	F
+<P 10>	4	119960.000	F
+<P 10>	5	167740.000	F
+<P 10>	6	323201.000	F
+<P 10>	7	323234.000	F
+<P 10>	8	323416.000	F
+<P 10>	9	379910.000	F
+<P 10>	10	379929.000	F
+<P 10>	11	380149.000	F
+<P 10>	12	484750.000	F
+<P 10>	13	490592.000	F
+<P 10>	14	541990.000	F
+<P  2>	0	0.000	F
+<P  2>	1	164.900	F
+<P  2>	2	469.120	F
+<P  2>	3	8882.310	F
+<P  2>	4	21575.630	F
+<P  2>	5	45697.020	F
+<P  2>	6	65251.450	F
+<P  2>	7	65272.350	F
+<P  2>	8	65307.170	F
+<P  2>	9	76764.060	F
+<P  2>	10	76812.330	F
+<P  2>	11	76823.110	F
+<P  2>	12	77710.190	F
+<P  2>	13	86597.550	F
+<P  2>	14	86743.960	F
+<P  3>	0	0.000	F
+<P  3>	1	559.140	F
+<P  3>	2	56921.670	F
+<P  3>	3	57125.980	F
+<P  3>	4	57454.000	F
+<P  3>	5	74916.850	F
+<P  3>	6	74945.860	F
+<P  3>	7	100200.440	F
+<P  4>	0	0.000	F
+<P  4>	1	67918.030	F
+<P  4>	2	68146.480	F
+<P  4>	3	68615.170	F
+<P  4>	4	105190.420	F
+<P  4>	5	158141.820	F
+<P  4>	6	164941.440	F
+<P  4>	7	165185.390	F
+<P  4>	8	165654.040	F
+<P  4>	9	189398.130	F
+<P  4>	10	189398.131	F
+<P  4>	11	189398.132	F
+<P  4>	12	194591.750	F
+<P  4>	13	219153.880	F
+<P  4>	14	226898.140	F
+<P  6>	0	0.000	F
+<P  6>	1	1089844.600	F
+<P  6>	2	1093290.000	F
+<P  6>	3	1097062.100	F
+<P  6>	4	1103116.100	F
+<P  6>	5	1171426.200	F
+<P  6>	6	1185452.000	F
+<P  6>	7	1186645.400	F
+<P  6>	8	1189314.200	F
+<P  6>	9	1193303.400	F
+<P  6>	10	1195616.400	F
+<P  6>	11	1197853.400	F
+<P  6>	12	1197983.400	F
+<P  6>	13	1198998.600	F
+<P  6>	14	1242588.500	F
+<S  1>	0	0.000	F
+<S  1>	1	396.055	F
+<S  1>	2	573.640	F
+<S  1>	3	9238.609	F
+<S  1>	4	22179.954	F
+<S  1>	5	52623.640	F
+<S  1>	6	55330.811	F
+<S  1>	7	63446.065	F
+<S  1>	8	63457.142	F
+<S  1>	9	63475.051	F
+<S  1>	10	64888.964	F
+<S  1>	11	64891.386	F
+<S  1>	12	64892.582	F
+<S  1>	13	67816.351	F
+<S  1>	14	67825.188	F
+<S 11>	0	0.000	F
+<S 11>	1	5208.000	F
+<S 11>	2	12388.100	F
+<S 11>	3	67146.300	F
+<S 11>	4	132929.000	F
+<S 11>	5	186251.000	F
+<S 11>	6	355076.000	F
+<S 11>	7	355350.000	F
+<S 11>	8	355364.000	F
+<S 11>	9	416947.000	F
+<S 11>	10	416986.000	F
+<S 11>	11	417419.000	F
+<S 11>	12	530177.000	F
+<S 11>	13	535220.000	F
+<S 11>	14	592480.000	F
+<S  2>	0	0.000	F
+<S  2>	1	14852.940	F
+<S  2>	2	14884.730	F
+<S  2>	3	24524.830	F
+<S  2>	4	24571.540	F
+<S  2>	5	79395.390	F
+<S  2>	6	79756.830	F
+<S  2>	7	79962.610	F
+<S  2>	8	97890.740	F
+<S  2>	9	97918.860	F
+<S  2>	10	105599.060	F
+<S  2>	11	106044.240	F
+<S  2>	12	109560.690	F
+<S  2>	13	109831.590	F
+<S  2>	14	110177.020	F
+<S  3>	0	0.000	F
+<S  3>	1	298.690	F
+<S  3>	2	833.080	F
+<S  3>	3	11322.700	F
+<S  3>	4	27161.000	F
+<S  3>	5	58671.920	F
+<S  3>	6	84019.300	F
+<S  3>	7	84046.700	F
+<S  3>	8	84099.400	F
+<S  3>	9	98745.300	F
+<S  3>	10	98765.900	F
+<S  3>	11	98772.200	F
+<S  3>	12	104159.700	F
+<S  3>	13	122118.500	F
+<S  3>	14	122404.000	F
+<S  5>	0	0.000	F
+<S  5>	1	83024.000	F
+<S  5>	2	83393.500	F
+<S  5>	3	84155.200	F
+<S  5>	4	127150.700	F
+<S  5>	5	193739.100	F
+<S  5>	6	199967.200	F
+<S  5>	7	200370.600	F
+<S  5>	8	201146.000	F
+<S  5>	9	234941.500	F
+<S  5>	10	234947.100	F
+<S  5>	11	234956.000	F
+<S  5>	12	235350.000	F
+<S  5>	13	270700.400	F
+<S  5>	14	311595.100	F
+<Sc 1>	0	0.000	F
+<Sc 1>	1	168.340	F
+<Sc 1>	2	11519.990	F
+<Sc 1>	3	11557.690	F
+<Sc 1>	4	11610.280	F
+<Sc 1>	5	11677.380	F
+<Sc 1>	6	14926.070	F
+<Sc 1>	7	15041.920	F
+<Sc 1>	8	15672.580	F
+<Sc 1>	9	15756.570	F
+<Sc 1>	10	15881.750	F
+<Sc 1>	11	16009.770	F
+<Sc 1>	12	16021.820	F
+<Sc 1>	13	16022.730	F
+<Sc 1>	14	16026.620	F
+<Sc10>	0	0.000	F
+<Sc10>	1	158177.000	F
+<Sc10>	2	160141.000	F
+<Sc10>	3	164451.000	F
+<Sc10>	4	236610.000	F
+<Sc10>	5	372403.000	F
+<Sc10>	6	375192.000	F
+<Sc10>	7	377805.000	F
+<Sc10>	8	382708.000	F
+<Sc10>	9	440596.000	F
+<Sc10>	10	455897.000	F
+<Sc10>	11	456088.000	F
+<Sc10>	12	456414.000	F
+<Sc10>	13	516087.000	F
+<Sc10>	14	623694.000	F
+<Sc11>	0	0.000	F
+<Sc11>	1	191286.000	F
+<Sc11>	2	197979.000	F
+<Sc11>	3	459429.000	F
+<Sc11>	4	460049.000	F
+<Sc11>	5	977730.000	F
+<Sc11>	6	1051640.000	F
+<Sc11>	7	1053970.000	F
+<Sc11>	8	1148790.000	F
+<Sc11>	9	1149050.000	F
+<Sc11>	10	1182590.000	F
+<Sc11>	11	1182700.000	F
+<Sc11>	12	1382350.000	F
+<Sc11>	13	1418260.000	F
+<Sc11>	14	1419550.000	F
+<Sc12>	0	0.000	F
+<Sc12>	1	3235171.000	F
+<Sc12>	2	3245100.000	F
+<Sc12>	3	3272730.000	F
+<Sc12>	4	3280800.000	F
+<Sc12>	5	3401413.000	F
+<Sc12>	6	3427225.000	F
+<Sc12>	7	3428533.000	F
+<Sc12>	8	3437344.000	F
+<Sc12>	9	3445090.000	F
+<Sc12>	10	3463292.000	F
+<Sc12>	11	3464198.000	F
+<Sc12>	12	3474958.000	F
+<Sc12>	13	3474958.001	F
+<Sc12>	14	3564763.000	F
+<Sc13>	0	0.000	F
+<Sc13>	1	37908.000	F
+<Sc13>	2	763621.000	F
+<Sc13>	3	3513300.000	F
+<Sc13>	4	3530600.000	F
+<Sc13>	5	3547200.000	F
+<Sc13>	6	3554800.000	F
+<Sc13>	7	3574100.000	F
+<Sc13>	8	3619500.000	F
+<Sc13>	9	3620800.000	F
+<Sc13>	10	3718400.000	F
+<Sc13>	11	3961700.000	F
+<Sc13>	12	3968300.000	F
+<Sc13>	13	3968300.001	F
+<Sc13>	14	3974100.000	F
+<Sc14>	0	0.000	F
+<Sc14>	1	31174.000	F
+<Sc14>	2	35351.000	F
+<Sc14>	3	97793.000	F
+<Sc14>	4	195985.000	F
+<Sc14>	5	664483.000	F
+<Sc14>	6	689445.000	F
+<Sc14>	7	704584.000	F
+<Sc14>	8	912990.000	F
+<Sc14>	9	1546620.000	F
+<Sc14>	10	3848500.000	F
+<Sc14>	11	3929400.000	F
+<Sc14>	12	3930800.000	F
+<Sc14>	13	3938200.000	F
+<Sc14>	14	3955700.000	F
+<Sc15>	0	0.000	F
+<Sc15>	1	111200.000	F
+<Sc15>	2	121960.000	F
+<Sc15>	3	184840.000	F
+<Sc15>	4	200450.000	F
+<Sc15>	5	551980.000	F
+<Sc15>	6	577220.000	F
+<Sc15>	7	588360.000	F
+<Sc15>	8	761250.000	F
+<Sc15>	9	763990.000	F
+<Sc15>	10	881890.000	F
+<Sc15>	11	916720.000	F
+<Sc15>	12	951660.000	F
+<Sc15>	13	1441710.000	F
+<Sc15>	14	1482190.000	F
+<Sc16>	0	0.000	F
+<Sc16>	1	22959.000	F
+<Sc16>	2	45026.000	F
+<Sc16>	3	123360.000	F
+<Sc16>	4	218720.000	F
+<Sc16>	5	301400.000	F
+<Sc16>	6	536610.000	F
+<Sc16>	7	537720.000	F
+<Sc16>	8	542030.000	F
+<Sc16>	9	628600.000	F
+<Sc16>	10	630250.000	F
+<Sc16>	11	634430.000	F
+<Sc16>	12	782360.000	F
+<Sc16>	13	785740.000	F
+<Sc16>	14	877000.000	F
+<Sc17>	0	0.000	F
+<Sc17>	1	45637.000	F
+<Sc17>	2	288250.000	F
+<Sc17>	3	306780.000	F
+<Sc17>	4	329320.000	F
+<Sc17>	5	516640.000	F
+<Sc17>	6	520630.000	F
+<Sc17>	7	632370.000	F
+<Sc17>	8	682220.000	F
+<Sc17>	9	694950.000	F
+<Sc17>	10	896920.000	F
+<Sc17>	11	1008090.000	F
+<Sc17>	12	1015250.000	F
+<Sc17>	13	1129040.000	F
+<Sc17>	14	1142540.000	F
+<Sc18>	0	0.000	F
+<Sc18>	1	273200.000	F
+<Sc18>	2	286860.000	F
+<Sc18>	3	321240.000	F
+<Sc18>	4	553440.000	F
+<Sc18>	5	732070.000	F
+<Sc18>	6	754860.000	F
+<Sc18>	7	778400.000	F
+<Sc18>	8	856160.000	F
+<Sc18>	9	1034250.000	F
+<Sc18>	10	5692000.000	F
+<Sc18>	11	5775000.000	F
+<Sc18>	12	5777000.000	F
+<Sc18>	13	6054000.000	F
+<Sc18>	14	6160000.000	F
+<Sc 2>	0	0.000	F
+<Sc 2>	1	67.720	F
+<Sc 2>	2	177.760	F
+<Sc 2>	3	2540.950	F
+<Sc 2>	4	4802.870	F
+<Sc 2>	5	4883.570	F
+<Sc 2>	6	4987.790	F
+<Sc 2>	7	10944.560	F
+<Sc 2>	8	11736.360	F
+<Sc 2>	9	12074.100	F
+<Sc 2>	10	12101.500	F
+<Sc 2>	11	12154.420	F
+<Sc 2>	12	14261.320	F
+<Sc 2>	13	25955.200	F
+<Sc 2>	14	26081.340	F
+<Sc 3>	0	0.000	F
+<Sc 3>	1	197.640	F
+<Sc 3>	2	25539.320	F
+<Sc 3>	3	62104.300	F
+<Sc 3>	4	62578.180	F
+<Sc 3>	5	112257.620	F
+<Sc 3>	6	112302.950	F
+<Sc 3>	7	114862.480	F
+<Sc 3>	8	128107.120	F
+<Sc 3>	9	128283.150	F
+<Sc 3>	10	136873.870	F
+<Sc 3>	11	136874.120	F
+<Sc 3>	12	148130.030	F
+<Sc 3>	13	148150.140	F
+<Sc 3>	14	149194.030	F
+<Sc 4>	0	0.000	F
+<Sc 4>	1	239723.200	F
+<Sc 4>	2	240403.000	F
+<Sc 4>	3	241814.000	F
+<Sc 4>	4	250708.200	F
+<Sc 4>	5	252108.300	F
+<Sc 4>	6	253405.700	F
+<Sc 4>	7	267424.400	F
+<Sc 4>	8	268034.200	F
+<Sc 4>	9	269426.500	F
+<Sc 4>	10	269459.900	F
+<Sc 4>	11	271055.400	F
+<Sc 4>	12	333090.800	F
+<Sc 4>	13	334405.100	F
+<Sc 4>	14	337340.100	F
+<Sc 5>	0	0.000	F
+<Sc 5>	1	4325.600	F
+<Sc 5>	2	174412.000	F
+<Sc 5>	3	233711.100	F
+<Sc 5>	4	233987.000	F
+<Sc 5>	5	234370.500	F
+<Sc 5>	6	234688.400	F
+<Sc 5>	7	253158.300	F
+<Sc 5>	8	254637.100	F
+<Sc 5>	9	254641.600	F
+<Sc 5>	10	255690.700	F
+<Sc 5>	11	256348.400	F
+<Sc 5>	12	257280.900	F
+<Sc 5>	13	263453.100	F
+<Sc 5>	14	264084.900	F
+<Sc 6>	0	0.000	F
+<Sc 6>	1	3346.100	F
+<Sc 6>	2	4457.100	F
+<Sc 6>	3	21393.000	F
+<Sc 6>	4	49224.600	F
+<Sc 6>	5	175346.600	F
+<Sc 6>	6	178202.100	F
+<Sc 6>	7	179784.500	F
+<Sc 6>	8	224470.400	F
+<Sc 6>	9	288026.000	F
+<Sc 6>	10	323226.000	F
+<Sc 6>	11	335099.000	F
+<Sc 6>	12	338435.000	F
+<Sc 6>	13	339807.000	F
+<Sc 6>	14	341955.000	F
+<Sc 7>	0	0.000	F
+<Sc 7>	1	29562.500	F
+<Sc 7>	2	30239.900	F
+<Sc 7>	3	49387.100	F
+<Sc 7>	4	50300.900	F
+<Sc 7>	5	175055.000	F
+<Sc 7>	6	177776.500	F
+<Sc 7>	7	179197.300	F
+<Sc 7>	8	217023.900	F
+<Sc 7>	9	217326.500	F
+<Sc 7>	10	250443.600	F
+<Sc 7>	11	252995.300	F
+<Sc 7>	12	261800.600	F
+<Sc 7>	13	329516.000	F
+<Sc 7>	14	332923.000	F
+<Sc 8>	0	0.000	F
+<Sc 8>	1	2271.900	F
+<Sc 8>	2	5507.700	F
+<Sc 8>	3	25026.900	F
+<Sc 8>	4	54864.400	F
+<Sc 8>	5	179962.300	F
+<Sc 8>	6	180032.700	F
+<Sc 8>	7	180503.600	F
+<Sc 8>	8	207690.900	F
+<Sc 8>	9	207761.000	F
+<Sc 8>	10	207814.400	F
+<Sc 8>	11	228618.300	F
+<Sc 8>	12	272417.400	F
+<Sc 8>	13	281522.100	F
+<Sc 8>	14	319569.000	F
+<Sc 9>	0	0.000	F
+<Sc 9>	1	5761.100	F
+<Si 1>	0	0.000	F
+<Si 1>	1	77.115	F
+<Si 1>	2	223.157	F
+<Si 1>	3	6298.850	F
+<Si 1>	4	15394.370	F
+<Si 1>	5	33326.053	F
+<Si 1>	6	39683.163	F
+<Si 1>	7	39760.285	F
+<Si 1>	8	39955.053	F
+<Si 1>	9	40991.884	F
+<Si 1>	10	45276.188	F
+<Si 1>	11	45293.629	F
+<Si 1>	12	45321.848	F
+<Si 1>	13	47284.061	F
+<Si 1>	14	47351.554	F
+<Si 2>	0	0.000	F
+<Si 2>	1	287.240	F
+<Si 2>	2	42824.290	F
+<Si 2>	3	42932.620	F
+<Si 2>	4	43107.910	F
+<Si 2>	5	55309.350	F
+<Si 2>	6	55325.180	F
+<Si 2>	7	65500.470	F
+<Si 2>	8	76665.350	F
+<Si 2>	9	79338.500	F
+<Si 2>	10	79355.020	F
+<Si 2>	11	81191.340	F
+<Si 2>	12	81251.320	F
+<Si 2>	13	83801.950	F
+<Si 2>	14	84004.260	F
+<Si 3>	0	0.000	F
+<Si 3>	1	52724.690	F
+<Si 3>	2	52853.280	F
+<Si 3>	3	53115.010	F
+<Si 3>	4	82884.410	F
+<Si 3>	5	122214.520	F
+<Si 3>	6	129708.450	F
+<Si 3>	7	129841.970	F
+<Si 3>	8	130100.520	F
+<Si 3>	9	142248.000	F
+<Si 3>	10	142252.000	F
+<Si 3>	11	142257.000	F
+<Si 3>	12	153377.050	F
+<Si 3>	13	153444.230	F
+<Si 3>	14	159069.610	F
+<Si 4>	0	0.000	F
+<Si 4>	1	71287.540	F
+<Si 4>	2	71748.640	F
+<Si 4>	3	160374.410	F
+<Si 4>	4	160375.600	F
+<Si 4>	5	193978.890	F
+<Si 4>	6	218266.860	F
+<Si 4>	7	218428.670	F
+<Si 4>	8	250008.020	F
+<Si 4>	9	250008.140	F
+<Si 4>	10	254127.080	F
+<Si 4>	11	254129.030	F
+<Si 4>	12	265417.950	F
+<Si 4>	13	276503.670	F
+<Si 4>	14	276579.030	F
+<Si 7>	0	0.000	F
+<Si 7>	1	4030.000	F
+<Si 7>	2	5565.000	F
+<Si 7>	3	46569.800	F
+<Si 7>	4	99341.000	F
+<Si 7>	5	363170.000	F
+<Si 7>	6	366786.000	F
+<Si 7>	7	368761.000	F
+<Si 7>	8	505650.000	F
+<Si 7>	9	849057.000	F
+<Si 7>	10	1172470.000	F
+<Si 7>	11	1225150.000	F
+<Si 7>	12	1225150.001	F
+<Si 7>	13	1225150.002	F
+<Si 7>	14	1235890.000	F
+<Si 9>	0	0.000	F
+<Si 9>	1	2545.000	F
+<Si 9>	2	6414.000	F
+<Si 9>	3	52925.900	F
+<Si 9>	4	107799.000	F
+<Si 9>	5	150770.000	F
+<Si 9>	6	292232.000	F
+<Si 9>	7	292296.000	F
+<Si 9>	8	292441.000	F
+<Si 9>	9	344009.000	F
+<Si 9>	10	344075.000	F
+<Si 9>	11	344118.000	F
+<Si 9>	12	440403.000	F
+<Si 9>	13	446942.000	F
+<Si 9>	14	492755.000	F
+<Ti10>	0	0.000	F
+<Ti10>	1	7544.000	F
+<Ti13>	0	0.000	F
+<Ti13>	1	3698153.000	F
+<Ti13>	2	3709200.000	F
+<Ti13>	3	3745238.000	F
+<Ti13>	4	3753600.000	F
+<Ti13>	5	3879444.000	F
+<Ti13>	6	3906203.000	F
+<Ti13>	7	3908849.000	F
+<Ti13>	8	3918095.000	F
+<Ti13>	9	3926887.000	F
+<Ti13>	10	3949910.000	F
+<Ti13>	11	3951159.000	F
+<Ti13>	12	3964847.000	F
+<Ti13>	13	3965425.000	F
+<Ti13>	14	4060030.000	F
+<Ti17>	0	0.000	F
+<Ti17>	1	29658.000	F
+<Ti17>	2	55730.000	F
+<Ti17>	3	140660.000	F
+<Ti17>	4	242180.000	F
+<Ti17>	5	333660.000	F
+<Ti17>	6	578890.000	F
+<Ti17>	7	580110.000	F
+<Ti17>	8	586760.000	F
+<Ti17>	9	678450.000	F
+<Ti17>	10	680910.000	F
+<Ti17>	11	686780.000	F
+<Ti17>	12	838340.000	F
+<Ti17>	13	845140.000	F
+<Ti17>	14	943500.000	F
+<Ti 3>	0	0.000	F
+<Ti 3>	1	184.900	F
+<Ti 3>	2	420.400	F
+<Ti 3>	3	8473.500	F
+<Ti 3>	4	10538.400	F
+<Ti 3>	5	10603.600	F
+<Ti 3>	6	10721.200	F
+<Ti 3>	7	14397.600	F
+<Ti 3>	8	32475.500	F
+<Ti 3>	9	38064.350	F
+<Ti 3>	10	38198.950	F
+<Ti 3>	11	38425.990	F
+<Ti 3>	12	41704.270	F
+<Ti 3>	13	75198.210	F
+<Ti 3>	14	77000.230	F
+<Ti 4>	0	0.000	F
+<Ti 4>	1	382.100	F
+<Ti 4>	2	80388.920	F
+<Ti 4>	3	127921.360	F
+<Ti 4>	4	128739.590	F
+<Ti 4>	5	196804.270	F
+<Ti 4>	6	196889.960	F
+<Ti 4>	7	212407.340	F
+<Ti 4>	8	230608.890	F
+<Ti 4>	9	230924.380	F
+<Ti 4>	10	236135.290	F
+<Ti 4>	11	236142.300	F
+<Ti 4>	12	258838.480	F
+<Ti 4>	13	258877.080	F
+<Ti 4>	14	265847.420	F
+<Ti 5>	0	0.000	F
+<Ti 5>	1	274439.700	F
+<Ti 5>	2	275371.900	F
+<Ti 5>	3	277310.600	F
+<Ti 5>	4	287276.500	F
+<Ti 5>	5	289050.200	F
+<Ti 5>	6	290778.700	F
+<Ti 5>	7	306874.500	F
+<Ti 5>	8	307429.200	F
+<Ti 5>	9	309252.100	F
+<Ti 5>	10	309433.100	F
+<Ti 5>	11	311433.800	F
+<Ti 5>	12	395320.900	F
+<Ti 5>	13	434339.400	F
+<Ti 5>	14	436849.800	F
+<Ti 6>	0	0.000	F
+<Ti 6>	1	5829.000	F
+<Ti 7>	0	0.000	F
+<Ti 7>	1	4534.000	F
+<Ti 7>	2	5888.000	F
+<Ti 7>	3	24130.000	F
+<Ti 7>	4	54801.000	F
+<Ti 7>	5	196266.000	F
+<Ti 7>	6	200059.000	F
+<Ti 7>	7	202202.000	F
+<Ti 7>	8	251214.000	F
+<Ti 7>	9	325261.000	F
+<Ti 7>	10	361904.000	F
+<Ti 7>	11	375235.000	F
+<Ti 7>	12	377614.000	F
+<Ti 7>	13	378872.000	F
+<Ti 7>	14	381808.000	F
+<Ti 8>	0	0.000	F
+<Ti 8>	1	32190.500	F
+<Ti 8>	2	33256.400	F
+<Ti 8>	3	54189.200	F
+<Ti 8>	4	55633.600	F
+<Ti 8>	5	194474.600	F
+<Ti 8>	6	198097.900	F
+<Ti 8>	7	199953.600	F
+<Ti 8>	8	240971.600	F
+<Ti 8>	9	241426.000	F
+<Ti 8>	10	278037.700	F
+<Ti 8>	11	281108.100	F
+<Ti 8>	12	290233.600	F
+<Ti 8>	13	364082.000	F
+<Ti 8>	14	368663.000	F
+<Ti 9>	0	0.000	F
+<Ti 9>	1	3119.000	F
+<Ti 9>	2	7282.000	F
+<Ti 9>	3	28555.000	F
+<Ti 9>	4	61100.000	F
+<Ti 9>	5	145280.000	F
+<Ti 9>	6	200209.000	F
+<Ti 9>	7	200293.000	F
+<Ti 9>	8	201000.000	F
+<Ti 9>	9	230524.000	F
+<Ti 9>	10	230645.000	F
+<Ti 9>	11	230754.000	F
+<Ti 9>	12	254028.000	F
+<Ti 9>	13	299944.000	F
+<Ti 9>	14	311087.000	F
+<V 10>	0	0.000	F
+<V 10>	1	4180.000	F
+<V 10>	2	9421.000	F
+<V 10>	3	32509.000	F
+<V 10>	4	67751.000	F
+<V 10>	5	220984.000	F
+<V 10>	6	221072.000	F
+<V 10>	7	222104.000	F
+<V 10>	8	253936.000	F
+<V 10>	9	254147.000	F
+<V 10>	10	254337.000	F
+<V 10>	11	279969.000	F
+<V 10>	12	327902.000	F
+<V 10>	13	341335.000	F
+<V 10>	14	385790.000	F
+<V 11>	0	0.000	F
+<V 11>	1	9696.000	F
+<V 12>	0	0.000	F
+<V 12>	1	188311.000	F
+<V 12>	2	191509.000	F
+<V 12>	3	198737.000	F
+<V 12>	4	281627.000	F
+<V 12>	5	445775.000	F
+<V 12>	6	446265.000	F
+<V 12>	7	450927.000	F
+<V 12>	8	459478.000	F
+<V 12>	9	525745.000	F
+<V 12>	10	544068.000	F
+<V 12>	11	544493.000	F
+<V 12>	12	545169.000	F
+<V 12>	13	613354.000	F
+<V 12>	14	744314.000	F
+<V 13>	0	0.000	F
+<V 13>	1	225520.000	F
+<V 13>	2	236530.000	F
+<V 13>	3	544700.000	F
+<V 13>	4	545950.000	F
+<V 13>	5	1300490.000	F
+<V 13>	6	1388410.000	F
+<V 13>	7	1392780.000	F
+<V 13>	8	1505900.000	F
+<V 13>	9	1506480.000	F
+<V 13>	10	1549410.000	F
+<V 13>	11	1549620.000	F
+<V 13>	12	1846100.000	F
+<V 13>	13	1889360.000	F
+<V 13>	14	1891430.000	F
+<V 15>	0	0.000	F
+<V 15>	1	58093.000	F
+<V 16>	0	0.000	F
+<V 16>	1	48937.000	F
+<V 16>	2	49970.000	F
+<V 16>	3	121039.000	F
+<V 16>	4	237705.000	F
+<V 16>	5	761824.000	F
+<V 16>	6	798899.000	F
+<V 16>	7	822961.000	F
+<V 16>	8	1045590.000	F
+<V 16>	9	1769360.000	F
+<V 16>	10	4891000.000	F
+<V 16>	11	4980000.000	F
+<V 16>	12	4981000.000	F
+<V 16>	13	4996000.000	F
+<V 16>	14	5012000.000	F
+<V 17>	0	0.000	F
+<V 17>	1	120930.000	F
+<V 17>	2	140260.000	F
+<V 17>	3	211420.000	F
+<V 17>	4	240500.000	F
+<V 17>	5	627560.000	F
+<V 17>	6	666210.000	F
+<V 17>	7	681580.000	F
+<V 17>	8	866880.000	F
+<V 17>	9	872820.000	F
+<V 17>	10	999840.000	F
+<V 17>	11	1038740.000	F
+<V 17>	12	1093200.000	F
+<V 17>	13	1636530.000	F
+<V 17>	14	1698100.000	F
+<V 18>	0	0.000	F
+<V 18>	1	37930.000	F
+<V 18>	2	68174.000	F
+<V 18>	3	160899.000	F
+<V 18>	4	268895.000	F
+<V 18>	5	366930.000	F
+<V 18>	6	623832.000	F
+<V 18>	7	625030.000	F
+<V 18>	8	634940.000	F
+<V 18>	9	731840.000	F
+<V 18>	10	735390.000	F
+<V 18>	11	743339.000	F
+<V 18>	12	897305.000	F
+<V 18>	13	908406.000	F
+<V 18>	14	1014410.000	F
+<V 19>	0	0.000	F
+<V 19>	1	68610.000	F
+<V 19>	2	332180.000	F
+<V 19>	3	361600.000	F
+<V 19>	4	394560.000	F
+<V 19>	5	597590.000	F
+<V 19>	6	605320.000	F
+<V 19>	7	716370.000	F
+<V 19>	8	788850.000	F
+<V 19>	9	802560.000	F
+<V 19>	10	1030850.000	F
+<V 19>	11	1152900.000	F
+<V 19>	12	1166100.000	F
+<V 19>	13	1292800.000	F
+<V 19>	14	1318200.000	F
+<V 20>	0	0.000	F
+<V 20>	1	303100.000	F
+<V 20>	2	322600.000	F
+<V 20>	3	375000.000	F
+<V 20>	4	627500.000	F
+<V 20>	5	820100.000	F
+<V 20>	6	856900.000	F
+<V 20>	7	888600.000	F
+<V 20>	8	982600.000	F
+<V 20>	9	1177600.000	F
+<V 20>	10	6943800.000	F
+<V 20>	11	6964000.000	F
+<V 20>	12	7046600.000	F
+<V 20>	13	7047500.000	F
+<V 20>	14	7052400.000	F
+<V 21>	0	0.000	F
+<V 21>	1	340435.000	F
+<V 21>	2	415935.000	F
+<V 21>	3	7118330.000	F
+<V 21>	4	7212670.000	F
+<V 21>	5	7235050.000	F
+<V 21>	6	7270940.000	F
+<V 21>	7	7277990.000	F
+<V 21>	8	9565060.000	F
+<V 21>	9	9604690.000	F
+<V 21>	10	9614130.000	F
+<V 21>	11	9629250.000	F
+<V 21>	12	9632220.000	F
+<V 21>	13	10688040.000	F
+<V 21>	14	10708280.000	F
+<V  4>	0	0.000	F
+<V  4>	1	325.400	F
+<V  4>	2	734.700	F
+<V  4>	3	10959.300	F
+<V  4>	4	13122.800	F
+<V  4>	5	13239.200	F
+<V  4>	6	13458.300	F
+<V  6>	0	0.000	F
+<V  6>	1	308149.800	F
+<V  6>	2	309394.800	F
+<V  6>	3	311977.900	F
+<V  6>	4	322773.600	F
+<V  6>	5	324958.000	F
+<V  6>	6	327214.900	F
+<V  6>	7	345139.400	F
+<V  6>	8	345516.500	F
+<V  6>	9	347899.900	F
+<V  6>	10	348325.300	F
+<V  6>	11	350644.500	F
+<V  6>	12	445435.600	F
+<V  6>	13	546284.000	F
+<V  6>	14	549298.800	F
+<V  7>	0	0.000	F
+<V  7>	1	7668.000	F
+<V  8>	0	0.000	F
+<V  8>	1	6007.800	F
+<V  8>	2	7579.600	F
+<V  8>	3	27072.000	F
+<V  8>	4	60641.000	F
+<V  8>	5	217486.300	F
+<V  8>	6	222405.600	F
+<V  8>	7	225241.600	F
+<V  8>	8	278200.000	F
+<V  8>	9	416330.000	F
+<V  8>	10	434560.000	F
+<V  8>	11	438300.000	F
+<V  8>	12	440800.000	F
+<V  8>	13	450780.000	F
+<V  8>	14	464380.000	F
+<V  9>	0	0.000	F
+<V  9>	1	34708.000	F
+<V  9>	2	36319.000	F
+<V  9>	3	59028.000	F
+<V  9>	4	61224.000	F
+<V  9>	5	214067.000	F
+<V  9>	6	218814.000	F
+<V  9>	7	221174.000	F
+<V  9>	8	265160.000	F
+<V  9>	9	265835.000	F
+<V  9>	10	305664.000	F
+<V  9>	11	309210.000	F
+<V  9>	12	319184.000	F
+<V  9>	13	398530.000	F
+<V  9>	14	404560.000	F
+<Zn19>	0	0.000	F
+<Zn19>	1	295248.000	F
+<Zn19>	2	306361.000	F
+<Zn19>	3	336699.000	F
+<Zn19>	4	453375.000	F
+<Zn19>	5	702263.000	F
+<Zn19>	6	724451.000	F
+<Zn19>	7	726491.000	F
+<Zn19>	8	763375.000	F
+<Zn19>	9	855309.000	F
+<Zn19>	10	866723.000	F
+<Zn19>	11	869280.000	F
+<Zn19>	12	873355.000	F
+<Zn19>	13	970492.000	F
+<Zn19>	14	1189400.000	F
+<Zn 2>	0	0.000	F
+<Zn 2>	1	48481.000	F
+<Zn 2>	2	49355.040	F
+<Zn 2>	3	62722.450	F
+<Zn 2>	4	65441.640	F
+<Zn 2>	5	88437.150	F
+<Zn 2>	6	96909.740	F
+<Zn 2>	7	96960.400	F
+<Zn 2>	8	101365.900	F
+<Zn 2>	9	101611.400	F
+<Zn 2>	10	103701.600	F
+<Zn 2>	11	105322.700	F
+<Zn 2>	12	106528.800	F
+<Zn 2>	13	106779.900	F
+<Zn 2>	14	106852.400	F
+<Zn25>	0	0.000	F
+<Zn25>	1	157700.000	F
+<Zn25>	2	218054.000	F
+<Zn25>	3	426977.793	T
+<Zn25>	4	577463.702	T
+<Zn25>	5	691060.880	T
+<Zn25>	6	1026180.000	F
+<Zn25>	7	1037336.316	T
+<Zn25>	8	1102461.014	T
+<Zn25>	9	1229961.260	T
+<Zn25>	10	1252030.770	T
+<Zn25>	11	1295000.000	F
+<Zn25>	12	1428120.000	F
+<Zn25>	13	1514890.000	F
+<Zn25>	14	1694949.914	T
+<Zn 4>	0	0.000	F
+<Zn 4>	1	2759.100	F
+           9244CellPeak1.00E+00   Lo 3.04e-09=  29.98m   Hi-Con:7.13E+06 Ryd   E(hi):7.35E+06Ryd     E(hi):     100.00 MeV
+           I(nu>1ryd):   2.2974   Average nu:3.035E+00   I( X-ray):   1.4758   I(BalC):   1.8018     Phi(BalmrC):  12.7646
+           phi(1.0-1.8):12.1733   phi(1.8-4.0): 12.066   phi(4.0-20): 11.528   phi(20--):  9.788     Ion pht flx:2.998E+12
+           I(gam ray):   1.1903   phi(gam r):   7.5825   I(Infred):   2.0158   Alf(ox):  -1.4088     Total inten:   2.5628
+           U(1.0----):1.000E-02   U(4.0----):1.146E-03   T(En-Den):3.563E+01   T(Comp):1.323E+07     nuJnu(912A):6.338E+01
+           Occ(FarIR):3.324E-04   Occ(H n=6):2.238E-09   Occ(1Ryd):2.923E-15   Occ(4R):1.495E-17     Occ (Nu-hi):0.000E+00
+           Tbr(FarIR):1.598E-07   Tbr(H n=6):9.803E-06   Tbr(1Ryd):4.614E-10   Tbr(4R):9.460E-12     Tbr (Nu-hi):0.000E+00
+  
+
+ConvInitSolution entered 
+ConvInitSolution doing initial solution with temp=1.00e+04
+  ConvTempEdenIoniz called, entering temp loop using solver vWDB.
+   ConvEdenIoniz called, entering eden loop using solver SECA.
+  0 IonHelium returns;  nzone 0 He0:7.9871e-05 He+:8.4602e-02 He+2:9.1532e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2055e-09 ion:5.5240e-06 rad rec:4.3583e-13 1s Pop:7.9527e-02
+     He+2/He+:Popul smp:1.0819e+01 rec:2.6051e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  0 IonHelium returns;  nzone 0 He0:7.9614e-05 He+:8.4602e-02 He+2:9.1532e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2055e-09 ion:5.5240e-06 rad rec:4.3583e-13 1s Pop:7.9267e-02
+     He+2/He+:Popul smp:1.0819e+01 rec:2.6051e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  0 IonHelium returns;  nzone 0 He0:7.9611e-05 He+:8.4602e-02 He+2:9.1532e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2055e-09 ion:5.5242e-06 rad rec:4.3583e-13 1s Pop:7.9267e-02
+     He+2/He+:Popul smp:1.0819e+01 rec:2.6051e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  0 IonHelium returns;  nzone 0 He0:7.9611e-05 He+:8.4602e-02 He+2:9.1532e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2055e-09 ion:5.5242e-06 rad rec:4.3583e-13 1s Pop:7.9267e-02
+     He+2/He+:Popul smp:1.0819e+01 rec:2.6051e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change H+
+  0 IonHelium returns;  nzone 0 He0:7.9611e-05 He+:8.4602e-02 He+2:9.1532e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2055e-09 ion:5.5242e-06 rad rec:4.3583e-13 1s Pop:7.9267e-02
+     He+2/He+:Popul smp:1.0819e+01 rec:2.6051e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  0 IonHelium returns;  nzone 0 He0:7.9611e-05 He+:8.4602e-02 He+2:9.1532e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2055e-09 ion:5.5242e-06 rad rec:4.3583e-13 1s Pop:7.9267e-02
+     He+2/He+:Popul smp:1.0819e+01 rec:2.6051e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.00 current: 1.1941e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -2.8114e-07 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 0.0000e+00
+    ConvIoniz4 0 heat: 1.00e+00 cool: 1.00e+00  ioniz converged
+   EdenError: eden 1.1941e+04 EdenTrue 1.1951e+04 rel. err. -8.4302e-04
+   ConvEdenIoniz: entry eden 1.1941e+04 -> 1.1941e+04 rel chng 0.00% accuracy -0.08%
+   ConvEdenIoniz returns converged=T reason NONE!!!!!
+  ConvTempEdenIoniz: Te 1.000000e+04 C 4.0959e-16 H 9.6101e-16
+  ConvTempEdenIoniz returns ok.
+  ConvTempEdenIoniz called, entering temp loop using solver vWDB.
+   ConvEdenIoniz called, entering eden loop using solver SECA.
+     eden_sum zn: 0.01 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -2.8114e-07 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 0.0000e+00
+  1 IonHelium returns;  nzone 0 He0:7.9641e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2077e-09 ion:5.5266e-06 rad rec:4.3583e-13 1s Pop:7.9284e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  1 IonHelium returns;  nzone 0 He0:7.9641e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2077e-09 ion:5.5266e-06 rad rec:4.3583e-13 1s Pop:7.9283e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  1 IonHelium returns;  nzone 0 He0:7.9641e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2077e-09 ion:5.5266e-06 rad rec:4.3583e-13 1s Pop:7.9283e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  1 IonHelium returns;  nzone 0 He0:7.9641e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2077e-09 ion:5.5266e-06 rad rec:4.3583e-13 1s Pop:7.9283e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change P+5
+  1 IonHelium returns;  nzone 0 He0:7.9641e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.0612e+03 rec:5.2077e-09 ion:5.5266e-06 rad rec:4.3583e-13 1s Pop:7.9283e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.01 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -2.8137e-07 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 4.9881e+13
+    ConvIoniz4 0 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 0.0000e+00 new 3.6211e-08 OscilOTS F
+     eden_sum zn: 0.02 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -2.8137e-07 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 4.9881e+13
+  2 IonHelium returns;  nzone 0 He0:7.4281e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.1379e+03 rec:5.2077e-09 ion:5.9258e-06 rad rec:4.3583e-13 1s Pop:7.3977e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  2 IonHelium returns;  nzone 0 He0:7.4282e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.1379e+03 rec:5.2077e-09 ion:5.9258e-06 rad rec:4.3583e-13 1s Pop:7.3977e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  2 IonHelium returns;  nzone 0 He0:7.4282e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.1379e+03 rec:5.2077e-09 ion:5.9258e-06 rad rec:4.3583e-13 1s Pop:7.3977e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  2 IonHelium returns;  nzone 0 He0:7.4282e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.1379e+03 rec:5.2077e-09 ion:5.9258e-06 rad rec:4.3583e-13 1s Pop:7.3977e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Mg
+  2 IonHelium returns;  nzone 0 He0:7.4282e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.1379e+03 rec:5.2077e-09 ion:5.9258e-06 rad rec:4.3583e-13 1s Pop:7.3977e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  2 IonHelium returns;  nzone 0 He0:7.4282e-05 He+:8.4635e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.1379e+03 rec:5.2077e-09 ion:5.9258e-06 rad rec:4.3583e-13 1s Pop:7.3977e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.02 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -2.3546e-07 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 7.3566e+14
+    ConvIoniz4 1 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 3.6211e-08 new 4.4438e-07 OscilOTS F
+     eden_sum zn: 0.03 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -2.3546e-07 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 7.3566e+14
+  3 IonHelium returns;  nzone 0 He0:5.3604e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5775e+03 rec:5.2077e-09 ion:8.2149e-06 rad rec:4.3583e-13 1s Pop:5.3504e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  3 IonHelium returns;  nzone 0 He0:5.3604e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5775e+03 rec:5.2077e-09 ion:8.2149e-06 rad rec:4.3583e-13 1s Pop:5.3504e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Mg
+  3 IonHelium returns;  nzone 0 He0:5.3604e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5775e+03 rec:5.2077e-09 ion:8.2149e-06 rad rec:4.3583e-13 1s Pop:5.3504e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  3 IonHelium returns;  nzone 0 He0:5.3604e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5775e+03 rec:5.2077e-09 ion:8.2149e-06 rad rec:4.3583e-13 1s Pop:5.3504e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.03 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -6.5347e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 1.8599e+15
+    ConvIoniz4 2 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 4.4438e-07 new 3.7003e-07 OscilOTS T
+     eden_sum zn: 0.04 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -6.5347e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 1.8599e+15
+  4 IonHelium returns;  nzone 0 He0:4.8284e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.7514e+03 rec:5.2077e-09 ion:9.1209e-06 rad rec:4.3583e-13 1s Pop:4.8237e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  4 IonHelium returns;  nzone 0 He0:4.8284e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.7514e+03 rec:5.2077e-09 ion:9.1209e-06 rad rec:4.3583e-13 1s Pop:4.8237e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  4 IonHelium returns;  nzone 0 He0:4.8284e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.7514e+03 rec:5.2077e-09 ion:9.1209e-06 rad rec:4.3583e-13 1s Pop:4.8237e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.04 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -2.8426e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 1.2872e+15
+    ConvIoniz4 3 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 3.7003e-07 new 1.2225e-07 OscilOTS T
+     eden_sum zn: 0.05 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -2.8426e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 1.2872e+15
+  5 IonHelium returns;  nzone 0 He0:5.0049e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6897e+03 rec:5.2077e-09 ion:8.7998e-06 rad rec:4.3583e-13 1s Pop:4.9980e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  5 IonHelium returns;  nzone 0 He0:5.0045e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6897e+03 rec:5.2077e-09 ion:8.7998e-06 rad rec:4.3583e-13 1s Pop:4.9980e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  5 IonHelium returns;  nzone 0 He0:5.0045e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6897e+03 rec:5.2077e-09 ion:8.7998e-06 rad rec:4.3583e-13 1s Pop:4.9980e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  5 IonHelium returns;  nzone 0 He0:5.0045e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6897e+03 rec:5.2077e-09 ion:8.7998e-06 rad rec:4.3583e-13 1s Pop:4.9980e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  5 IonHelium returns;  nzone 0 He0:5.0045e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6897e+03 rec:5.2077e-09 ion:8.7998e-06 rad rec:4.3583e-13 1s Pop:4.9980e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.05 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -4.0344e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 4.5205e+14
+    ConvIoniz4 4 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.2225e-07 new 5.8487e-08 OscilOTS T
+     eden_sum zn: 0.06 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -4.0344e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 4.5205e+14
+  6 IonHelium returns;  nzone 0 He0:5.7502e-05 He+:8.4636e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4704e+03 rec:5.2077e-09 ion:7.6575e-06 rad rec:4.3583e-13 1s Pop:5.7363e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  6 IonHelium returns;  nzone 0 He0:5.7502e-05 He+:8.4636e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4704e+03 rec:5.2077e-09 ion:7.6575e-06 rad rec:4.3583e-13 1s Pop:5.7363e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  6 IonHelium returns;  nzone 0 He0:5.7502e-05 He+:8.4636e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4704e+03 rec:5.2077e-09 ion:7.6575e-06 rad rec:4.3583e-13 1s Pop:5.7363e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.06 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -9.4189e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 2.8961e+14
+    ConvIoniz4 5 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 5.8487e-08 new 7.9691e-08 OscilOTS T
+     eden_sum zn: 0.07 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -9.4189e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 2.8961e+14
+  7 IonHelium returns;  nzone 0 He0:6.1465e-05 He+:8.4636e-02 He+2:9.1530e-01
+     He+ /He0:Popul smp:1.3756e+03 rec:5.2077e-09 ion:7.1636e-06 rad rec:4.3583e-13 1s Pop:6.1284e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  7 IonHelium returns;  nzone 0 He0:6.1462e-05 He+:8.4636e-02 He+2:9.1530e-01
+     He+ /He0:Popul smp:1.3756e+03 rec:5.2077e-09 ion:7.1636e-06 rad rec:4.3583e-13 1s Pop:6.1284e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  7 IonHelium returns;  nzone 0 He0:6.1462e-05 He+:8.4636e-02 He+2:9.1530e-01
+     He+ /He0:Popul smp:1.3756e+03 rec:5.2077e-09 ion:7.1636e-06 rad rec:4.3583e-13 1s Pop:6.1284e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  7 IonHelium returns;  nzone 0 He0:6.1462e-05 He+:8.4636e-02 He+2:9.1530e-01
+     He+ /He0:Popul smp:1.3756e+03 rec:5.2077e-09 ion:7.1636e-06 rad rec:4.3583e-13 1s Pop:6.1284e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  7 IonHelium returns;  nzone 0 He0:6.1462e-05 He+:8.4636e-02 He+2:9.1530e-01
+     He+ /He0:Popul smp:1.3756e+03 rec:5.2077e-09 ion:7.1636e-06 rad rec:4.3583e-13 1s Pop:6.1284e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.07 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -1.2511e-07 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 4.8013e+14
+    ConvIoniz4 6 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 7.9691e-08 new 1.6930e-07 OscilOTS T
+     eden_sum zn: 0.08 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -1.2511e-07 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 4.8013e+14
+  8 IonHelium returns;  nzone 0 He0:5.6984e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4837e+03 rec:5.2077e-09 ion:7.7267e-06 rad rec:4.3583e-13 1s Pop:5.6854e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  8 IonHelium returns;  nzone 0 He0:5.6988e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4837e+03 rec:5.2077e-09 ion:7.7267e-06 rad rec:4.3583e-13 1s Pop:5.6854e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  8 IonHelium returns;  nzone 0 He0:5.6988e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4837e+03 rec:5.2077e-09 ion:7.7267e-06 rad rec:4.3583e-13 1s Pop:5.6854e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  8 IonHelium returns;  nzone 0 He0:5.6988e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4837e+03 rec:5.2077e-09 ion:7.7267e-06 rad rec:4.3583e-13 1s Pop:5.6854e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  8 IonHelium returns;  nzone 0 He0:5.6988e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4837e+03 rec:5.2077e-09 ion:7.7267e-06 rad rec:4.3583e-13 1s Pop:5.6854e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.08 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -9.0293e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 8.1753e+14
+    ConvIoniz4 7 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.6930e-07 new 2.1673e-07 OscilOTS T
+     eden_sum zn: 0.09 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -9.0293e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 8.1753e+14
+  9 IonHelium returns;  nzone 0 He0:5.2851e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5999e+03 rec:5.2077e-09 ion:8.3321e-06 rad rec:4.3583e-13 1s Pop:5.2758e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  9 IonHelium returns;  nzone 0 He0:5.2851e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5999e+03 rec:5.2077e-09 ion:8.3321e-06 rad rec:4.3583e-13 1s Pop:5.2758e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  9 IonHelium returns;  nzone 0 He0:5.2851e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5999e+03 rec:5.2077e-09 ion:8.3321e-06 rad rec:4.3583e-13 1s Pop:5.2758e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.09 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -5.9953e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 8.8469e+14
+    ConvIoniz4 8 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 2.1673e-07 new 1.6299e-07 OscilOTS T
+     eden_sum zn: 0.10 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -5.9953e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 8.8469e+14
+  10 IonHelium returns;  nzone 0 He0:5.2311e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6165e+03 rec:5.2077e-09 ion:8.4180e-06 rad rec:4.3583e-13 1s Pop:5.2224e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  10 IonHelium returns;  nzone 0 He0:5.2312e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6165e+03 rec:5.2077e-09 ion:8.4180e-06 rad rec:4.3583e-13 1s Pop:5.2224e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  10 IonHelium returns;  nzone 0 He0:5.2312e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6165e+03 rec:5.2077e-09 ion:8.4180e-06 rad rec:4.3583e-13 1s Pop:5.2224e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  10 IonHelium returns;  nzone 0 He0:5.2312e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6165e+03 rec:5.2077e-09 ion:8.4180e-06 rad rec:4.3583e-13 1s Pop:5.2224e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  10 IonHelium returns;  nzone 0 He0:5.2312e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.6165e+03 rec:5.2077e-09 ion:8.4180e-06 rad rec:4.3583e-13 1s Pop:5.2224e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.10 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -5.6127e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.5265e+14
+    ConvIoniz4 9 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.6299e-07 new 1.1336e-07 OscilOTS T
+    ConvIoniz4>>>>>>>>>>exit without converging after 10 tries!!!!
+     eden_sum zn: 0.11 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -5.6127e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.5265e+14
+  11 IonHelium returns;  nzone 0 He0:5.4504e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5515e+03 rec:5.2077e-09 ion:8.0796e-06 rad rec:4.3583e-13 1s Pop:5.4392e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  11 IonHelium returns;  nzone 0 He0:5.4501e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5515e+03 rec:5.2077e-09 ion:8.0796e-06 rad rec:4.3583e-13 1s Pop:5.4392e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  11 IonHelium returns;  nzone 0 He0:5.4501e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5515e+03 rec:5.2077e-09 ion:8.0796e-06 rad rec:4.3583e-13 1s Pop:5.4392e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  11 IonHelium returns;  nzone 0 He0:5.4501e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5515e+03 rec:5.2077e-09 ion:8.0796e-06 rad rec:4.3583e-13 1s Pop:5.4392e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  11 IonHelium returns;  nzone 0 He0:5.4501e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5515e+03 rec:5.2077e-09 ion:8.0796e-06 rad rec:4.3583e-13 1s Pop:5.4392e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.11 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.1849e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 4.9386e+14
+    ConvIoniz4 0 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.1336e-07 new 1.0692e-07 OscilOTS F
+     eden_sum zn: 0.12 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.1849e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 4.9386e+14
+  12 IonHelium returns;  nzone 0 He0:5.6752e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4899e+03 rec:5.2077e-09 ion:7.7591e-06 rad rec:4.3583e-13 1s Pop:5.6618e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  12 IonHelium returns;  nzone 0 He0:5.6750e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4899e+03 rec:5.2077e-09 ion:7.7591e-06 rad rec:4.3583e-13 1s Pop:5.6618e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  12 IonHelium returns;  nzone 0 He0:5.6750e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4899e+03 rec:5.2077e-09 ion:7.7591e-06 rad rec:4.3583e-13 1s Pop:5.6618e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  12 IonHelium returns;  nzone 0 He0:5.6750e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4899e+03 rec:5.2077e-09 ion:7.7591e-06 rad rec:4.3583e-13 1s Pop:5.6618e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  12 IonHelium returns;  nzone 0 He0:5.6750e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4899e+03 rec:5.2077e-09 ion:7.7591e-06 rad rec:4.3583e-13 1s Pop:5.6618e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.12 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -8.8499e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.1154e+14
+    ConvIoniz4 1 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.0692e-07 new 1.3323e-07 OscilOTS F
+     eden_sum zn: 0.13 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -8.8499e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.1154e+14
+  13 IonHelium returns;  nzone 0 He0:5.6455e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4977e+03 rec:5.2077e-09 ion:7.7997e-06 rad rec:4.3583e-13 1s Pop:5.6326e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  13 IonHelium returns;  nzone 0 He0:5.6455e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4977e+03 rec:5.2077e-09 ion:7.7997e-06 rad rec:4.3583e-13 1s Pop:5.6326e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  13 IonHelium returns;  nzone 0 He0:5.6455e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4977e+03 rec:5.2077e-09 ion:7.7997e-06 rad rec:4.3583e-13 1s Pop:5.6326e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  13 IonHelium returns;  nzone 0 He0:5.6455e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4977e+03 rec:5.2077e-09 ion:7.7997e-06 rad rec:4.3583e-13 1s Pop:5.6326e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  13 IonHelium returns;  nzone 0 He0:5.6455e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.4977e+03 rec:5.2077e-09 ion:7.7997e-06 rad rec:4.3583e-13 1s Pop:5.6326e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.13 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -8.6288e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.2905e+14
+    ConvIoniz4 2 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.3323e-07 new 1.6021e-07 OscilOTS F
+     eden_sum zn: 0.14 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -8.6288e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.2905e+14
+  14 IonHelium returns;  nzone 0 He0:5.4784e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5434e+03 rec:5.2077e-09 ion:8.0375e-06 rad rec:4.3583e-13 1s Pop:5.4674e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  14 IonHelium returns;  nzone 0 He0:5.4786e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5434e+03 rec:5.2077e-09 ion:8.0375e-06 rad rec:4.3583e-13 1s Pop:5.4674e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  14 IonHelium returns;  nzone 0 He0:5.4786e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5434e+03 rec:5.2077e-09 ion:8.0375e-06 rad rec:4.3583e-13 1s Pop:5.4674e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  14 IonHelium returns;  nzone 0 He0:5.4786e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5434e+03 rec:5.2077e-09 ion:8.0375e-06 rad rec:4.3583e-13 1s Pop:5.4674e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  14 IonHelium returns;  nzone 0 He0:5.4786e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5434e+03 rec:5.2077e-09 ion:8.0375e-06 rad rec:4.3583e-13 1s Pop:5.4674e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.14 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.3930e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 7.0542e+14
+    ConvIoniz4 3 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.6021e-07 new 1.5665e-07 OscilOTS T
+     eden_sum zn: 0.15 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.3930e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 7.0542e+14
+  15 IonHelium returns;  nzone 0 He0:5.3912e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5684e+03 rec:5.2077e-09 ion:8.1677e-06 rad rec:4.3583e-13 1s Pop:5.3810e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  15 IonHelium returns;  nzone 0 He0:5.3913e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5684e+03 rec:5.2077e-09 ion:8.1677e-06 rad rec:4.3583e-13 1s Pop:5.3810e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  15 IonHelium returns;  nzone 0 He0:5.3913e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5684e+03 rec:5.2077e-09 ion:8.1677e-06 rad rec:4.3583e-13 1s Pop:5.3810e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  15 IonHelium returns;  nzone 0 He0:5.3913e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5684e+03 rec:5.2077e-09 ion:8.1677e-06 rad rec:4.3583e-13 1s Pop:5.3810e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  15 IonHelium returns;  nzone 0 He0:5.3913e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5684e+03 rec:5.2077e-09 ion:8.1677e-06 rad rec:4.3583e-13 1s Pop:5.3810e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.15 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -6.7580e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.6640e+14
+    ConvIoniz4 4 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.5665e-07 new 1.3661e-07 OscilOTS T
+     eden_sum zn: 0.16 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -6.7580e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.6640e+14
+  16 IonHelium returns;  nzone 0 He0:5.4342e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5560e+03 rec:5.2077e-09 ion:8.1033e-06 rad rec:4.3583e-13 1s Pop:5.4234e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  16 IonHelium returns;  nzone 0 He0:5.4342e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5560e+03 rec:5.2077e-09 ion:8.1033e-06 rad rec:4.3583e-13 1s Pop:5.4234e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  16 IonHelium returns;  nzone 0 He0:5.4342e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5560e+03 rec:5.2077e-09 ion:8.1033e-06 rad rec:4.3583e-13 1s Pop:5.4234e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  16 IonHelium returns;  nzone 0 He0:5.4342e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5560e+03 rec:5.2077e-09 ion:8.1033e-06 rad rec:4.3583e-13 1s Pop:5.4234e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  16 IonHelium returns;  nzone 0 He0:5.4342e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5560e+03 rec:5.2077e-09 ion:8.1033e-06 rad rec:4.3583e-13 1s Pop:5.4234e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.16 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.0688e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.9119e+14
+    ConvIoniz4 5 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.3661e-07 new 1.2614e-07 OscilOTS T
+     eden_sum zn: 0.17 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.0688e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.9119e+14
+  17 IonHelium returns;  nzone 0 He0:5.5276e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5297e+03 rec:5.2077e-09 ion:7.9663e-06 rad rec:4.3583e-13 1s Pop:5.5158e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  17 IonHelium returns;  nzone 0 He0:5.5275e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5297e+03 rec:5.2077e-09 ion:7.9663e-06 rad rec:4.3583e-13 1s Pop:5.5158e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  17 IonHelium returns;  nzone 0 He0:5.5275e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5297e+03 rec:5.2077e-09 ion:7.9663e-06 rad rec:4.3583e-13 1s Pop:5.5158e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  17 IonHelium returns;  nzone 0 He0:5.5275e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5297e+03 rec:5.2077e-09 ion:7.9663e-06 rad rec:4.3583e-13 1s Pop:5.5158e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  17 IonHelium returns;  nzone 0 He0:5.5275e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5297e+03 rec:5.2077e-09 ion:7.9663e-06 rad rec:4.3583e-13 1s Pop:5.5158e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.17 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.7521e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.6688e+14
+    ConvIoniz4 6 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.2614e-07 new 1.3130e-07 OscilOTS T
+     eden_sum zn: 0.18 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.7521e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.6688e+14
+  18 IonHelium returns;  nzone 0 He0:5.5612e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5204e+03 rec:5.2077e-09 ion:7.9180e-06 rad rec:4.3583e-13 1s Pop:5.5492e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  18 IonHelium returns;  nzone 0 He0:5.5612e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5204e+03 rec:5.2077e-09 ion:7.9180e-06 rad rec:4.3583e-13 1s Pop:5.5492e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  18 IonHelium returns;  nzone 0 He0:5.5612e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5204e+03 rec:5.2077e-09 ion:7.9180e-06 rad rec:4.3583e-13 1s Pop:5.5492e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  18 IonHelium returns;  nzone 0 He0:5.5612e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5204e+03 rec:5.2077e-09 ion:7.9180e-06 rad rec:4.3583e-13 1s Pop:5.5492e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  18 IonHelium returns;  nzone 0 He0:5.5612e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5204e+03 rec:5.2077e-09 ion:7.9180e-06 rad rec:4.3583e-13 1s Pop:5.5492e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.18 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -8.0009e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.9825e+14
+    ConvIoniz4 7 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.3130e-07 new 1.4251e-07 OscilOTS T
+     eden_sum zn: 0.19 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -8.0009e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.9825e+14
+  19 IonHelium returns;  nzone 0 He0:5.5180e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5323e+03 rec:5.2077e-09 ion:7.9800e-06 rad rec:4.3583e-13 1s Pop:5.5065e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  19 IonHelium returns;  nzone 0 He0:5.5181e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5323e+03 rec:5.2077e-09 ion:7.9800e-06 rad rec:4.3583e-13 1s Pop:5.5065e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  19 IonHelium returns;  nzone 0 He0:5.5181e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5323e+03 rec:5.2077e-09 ion:7.9800e-06 rad rec:4.3583e-13 1s Pop:5.5065e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  19 IonHelium returns;  nzone 0 He0:5.5181e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5323e+03 rec:5.2077e-09 ion:7.9800e-06 rad rec:4.3583e-13 1s Pop:5.5065e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  19 IonHelium returns;  nzone 0 He0:5.5181e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5323e+03 rec:5.2077e-09 ion:7.9800e-06 rad rec:4.3583e-13 1s Pop:5.5065e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.19 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.6826e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.3776e+14
+    ConvIoniz4 8 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.4251e-07 new 1.4654e-07 OscilOTS T
+     eden_sum zn: 0.20 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.6826e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.3776e+14
+  20 IonHelium returns;  nzone 0 He0:5.4679e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5464e+03 rec:5.2077e-09 ion:8.0532e-06 rad rec:4.3583e-13 1s Pop:5.4568e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  20 IonHelium returns;  nzone 0 He0:5.4679e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5464e+03 rec:5.2077e-09 ion:8.0532e-06 rad rec:4.3583e-13 1s Pop:5.4568e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  20 IonHelium returns;  nzone 0 He0:5.4679e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5464e+03 rec:5.2077e-09 ion:8.0532e-06 rad rec:4.3583e-13 1s Pop:5.4568e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  20 IonHelium returns;  nzone 0 He0:5.4679e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5464e+03 rec:5.2077e-09 ion:8.0532e-06 rad rec:4.3583e-13 1s Pop:5.4568e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  20 IonHelium returns;  nzone 0 He0:5.4679e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5464e+03 rec:5.2077e-09 ion:8.0532e-06 rad rec:4.3583e-13 1s Pop:5.4568e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.20 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.3149e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.4262e+14
+    ConvIoniz4 9 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.4654e-07 new 1.4136e-07 OscilOTS T
+    ConvIoniz4>>>>>>>>>>exit without converging after 10 tries!!!!
+     eden_sum zn: 0.21 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.3149e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.4262e+14
+  21 IonHelium returns;  nzone 0 He0:5.4621e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5481e+03 rec:5.2077e-09 ion:8.0619e-06 rad rec:4.3583e-13 1s Pop:5.4510e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  21 IonHelium returns;  nzone 0 He0:5.4621e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5481e+03 rec:5.2077e-09 ion:8.0619e-06 rad rec:4.3583e-13 1s Pop:5.4510e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.21 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.2720e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.1849e+14
+    ConvIoniz4 0 heat: 9.61e-16 cool: 4.10e-16  ioniz no conv: OTSRatChng old 1.4136e-07 new 1.3534e-07 OscilOTS F
+     eden_sum zn: 0.22 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.2720e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.1849e+14
+  22 IonHelium returns;  nzone 0 He0:5.4919e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5397e+03 rec:5.2077e-09 ion:8.0181e-06 rad rec:4.3583e-13 1s Pop:5.4805e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  22 IonHelium returns;  nzone 0 He0:5.4918e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5397e+03 rec:5.2077e-09 ion:8.0181e-06 rad rec:4.3583e-13 1s Pop:5.4805e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  22 IonHelium returns;  nzone 0 He0:5.4918e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5397e+03 rec:5.2077e-09 ion:8.0181e-06 rad rec:4.3583e-13 1s Pop:5.4805e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  22 IonHelium returns;  nzone 0 He0:5.4918e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5397e+03 rec:5.2077e-09 ion:8.0181e-06 rad rec:4.3583e-13 1s Pop:5.4805e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  22 IonHelium returns;  nzone 0 He0:5.4918e-05 He+:8.4637e-02 He+2:9.1531e-01
+     He+ /He0:Popul smp:1.5397e+03 rec:5.2077e-09 ion:8.0181e-06 rad rec:4.3583e-13 1s Pop:5.4805e-02
+     He+2/He+:Popul smp:1.0815e+01 rec:2.6062e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.22 current: 1.1946e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.4899e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.9935e+14
+    ConvIoniz4 1 heat: 9.61e-16 cool: 4.10e-16  ioniz converged
+   EdenError: eden 1.1946e+04 EdenTrue 1.1951e+04 rel. err. -4.2785e-04
+   ConvEdenIoniz: entry eden 1.1941e+04 -> 1.1946e+04 rel chng 0.04% accuracy -0.04%
+   ConvEdenIoniz returns converged=T reason NONE!!!!!
+  ConvTempEdenIoniz: Te 1.000000e+04 C 4.0726e-16 H 9.6371e-16
+  ConvTempEdenIoniz returns ok.
+
+ConvInitSolution: end 1st iteration search phase finding Te=1.000e+04
+
+ ConvPresTempEdenIoniz1 entered, will call ConvIoniz to initialize
+ ConvPresTempEdenIoniz1 ConvIoniz found following converged: Pres:F, Temp:T, Eden:T, Ion:T, Pops:T
+
+ ConvPresTempEdenIoniz1 entering main pressure loop.
+  ConvTempEdenIoniz called, entering temp loop using solver vWDB.
+   ConvEdenIoniz called, entering eden loop using solver SECA.
+     eden_sum zn: 0.00 current: 1.1948e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.4899e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 5.9935e+14
+  23 IonHelium returns;  nzone 0 He0:5.5190e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5324e+03 rec:5.2088e-09 ion:7.9819e-06 rad rec:4.3583e-13 1s Pop:5.5074e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  23 IonHelium returns;  nzone 0 He0:5.5190e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5324e+03 rec:5.2088e-09 ion:7.9819e-06 rad rec:4.3583e-13 1s Pop:5.5074e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  23 IonHelium returns;  nzone 0 He0:5.5190e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5324e+03 rec:5.2088e-09 ion:7.9819e-06 rad rec:4.3583e-13 1s Pop:5.5074e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  23 IonHelium returns;  nzone 0 He0:5.5190e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5324e+03 rec:5.2088e-09 ion:7.9819e-06 rad rec:4.3583e-13 1s Pop:5.5074e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  23 IonHelium returns;  nzone 0 He0:5.5190e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5324e+03 rec:5.2088e-09 ion:7.9819e-06 rad rec:4.3583e-13 1s Pop:5.5074e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.00 current: 1.1948e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.6752e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.0207e+14
+    ConvIoniz4 0 heat: 9.64e-16 cool: 4.07e-16  ioniz no conv: OTSRatChng old 1.3464e-07 new 1.3822e-07 OscilOTS F
+     eden_sum zn: 0.01 current: 1.1948e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.6752e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.0207e+14
+  24 IonHelium returns;  nzone 0 He0:5.5154e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5334e+03 rec:5.2088e-09 ion:7.9871e-06 rad rec:4.3583e-13 1s Pop:5.5039e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  24 IonHelium returns;  nzone 0 He0:5.5154e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5334e+03 rec:5.2088e-09 ion:7.9871e-06 rad rec:4.3583e-13 1s Pop:5.5039e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.01 current: 1.1948e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.6489e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.1712e+14
+    ConvIoniz4 1 heat: 9.64e-16 cool: 4.07e-16  ioniz no conv: OTSRatChng old 1.3822e-07 new 1.4124e-07 OscilOTS F
+     eden_sum zn: 0.02 current: 1.1948e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.6489e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.1712e+14
+  25 IonHelium returns;  nzone 0 He0:5.4959e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5388e+03 rec:5.2088e-09 ion:8.0154e-06 rad rec:4.3583e-13 1s Pop:5.4846e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  25 IonHelium returns;  nzone 0 He0:5.4960e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5388e+03 rec:5.2088e-09 ion:8.0154e-06 rad rec:4.3583e-13 1s Pop:5.4846e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  25 IonHelium returns;  nzone 0 He0:5.4960e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5388e+03 rec:5.2088e-09 ion:8.0154e-06 rad rec:4.3583e-13 1s Pop:5.4846e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+  25 IonHelium returns;  nzone 0 He0:5.4960e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5388e+03 rec:5.2088e-09 ion:8.0154e-06 rad rec:4.3583e-13 1s Pop:5.4846e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 0 converged? F reason not converged change Ca+
+  25 IonHelium returns;  nzone 0 He0:5.4960e-05 He+:8.4653e-02 He+2:9.1529e-01
+     He+ /He0:Popul smp:1.5388e+03 rec:5.2088e-09 ion:8.0154e-06 rad rec:4.3583e-13 1s Pop:5.4846e-02
+     He+2/He+:Popul smp:1.0812e+01 rec:2.6068e-08 ion:2.8185e-07 rad rec:2.1817e-12
+
+    ConvBase4 ionization driver loop_ion 1 converged? T reason not converged NONE!!!!!
+     eden_sum zn: 0.02 current: 1.1948e+04 new true: 1.1951e+04 ions: 1.1951e+04 mole: -7.5059e-08 grain: 0.0000e+00 extra: 0.0000e+00 LaOTS: 6.2563e+14
+    ConvIoniz4 2 heat: 9.64e-16 cool: 4.07e-16  ioniz converged
+   EdenError: eden 1.1948e+04 EdenTrue 1.1951e+04 rel. err. -2.1227e-04
+   ConvEdenIoniz: entry eden 1.1946e+04 -> 1.1948e+04 rel chng 0.02% accuracy -0.02%
+   ConvEdenIoniz returns converged=T reason NONE!!!!!
+  ConvTempEdenIoniz: Te 1.000000e+04 C 4.0733e-16 H 9.6391e-16
+  ConvTempEdenIoniz returns ok.
+ ConvPresTempEdenIoniz1 0.02 l:  0 nH:1.0000e+04 ne:1.1948e+04 PCurnt:3.1704e-08 err: 0.000% Te:1.0000e+04 Osc:F
+ PROBLEM findline did not find line with label (between quotes) "O  3" and wavelength 5006.84A.
+  The closest line (any label) was   "O  5                5006.90A "
+  The closest with correct label was "O  3                4587.10A "
+  Error was       419.85107 vs. tolerance    0.0055970289
+
+ERROR: line blend component "O  3" 5006.84A  was not found.
+ [Stop in addComponent at lines.cpp:224, something went wrong]
+ ************************************************** GRID_DELIMIT -- grid

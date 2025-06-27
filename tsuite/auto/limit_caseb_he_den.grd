@@ -1,0 +1,4 @@
+#Index	Failure?	Warnings?	Exit code	#rank	#seq	HDEN=%f L	grid parameter string
+000000000	T	F	      premature exit	0	0	2.000000	2.000000
+000000001	T	F	      premature exit	0	1	4.000000	4.000000
+000000002	T	F	      premature exit	0	2	6.000000	6.000000

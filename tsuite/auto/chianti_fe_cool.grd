@@ -1,0 +1,6 @@
+#Index	Failure?	Warnings?	Exit code	#rank	#seq	COROnal e	grid parameter string
+000000000	T	F	      premature exit	0	0	4.000000	4.000000
+000000001	T	F	      premature exit	0	1	4.500000	4.500000
+000000002	T	F	      premature exit	0	2	5.000000	5.000000
+000000003	T	F	      premature exit	0	3	5.500000	5.500000
+000000004	T	F	      premature exit	0	4	6.000000	6.000000
