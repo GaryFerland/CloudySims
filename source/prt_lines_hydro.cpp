@@ -376,7 +376,7 @@ void lines_hydro(void)
 	}
 
 	/* predict case b intensities of hydrogen lines */
-	if( LineSave.ipass <= 0 )
+	if( LineSave.ipass == 0 )
 	{
 		for(nelem=0; nelem<HS_NZ; ++nelem )
 		{

@@ -33,6 +33,10 @@ void t_LineSave::zero()
 void t_LineSave::init(long index, char chSumTyp, const char *chComment, const char *label,
 					  bool lgAdd, t_wavl wavelength, const TransitionProxy& tr)
 {
+	// make sure we have room to store the new entry
+	if( size_t(index) >= size() )
+		resize( size() + 5000 );
+
 	auto wavl = wavelength.wavlVac();
 	if (!lgAdd)
 	{
@@ -207,32 +211,44 @@ void LinSv::addComponentID(long id)
 	}
 }
 
-void LinSv::addComponent(const LineID& line)
+long findComponent(const LineID& line, bool lgQuiet)
 {
-	if ( LineSave.ipass == 0 )
+	long id = LineSave.findline(line, lgQuiet);
+	if (id <= 0)
 	{
-		long id = LineSave.findline(line);
-		if (id <= 0)
+		if (lgQuiet)
+			return -1;
+		else
 		{
 			fprintf( ioQQQ, "ERROR: line blend component %s was not found.\n",
 					 line.str().c_str() );
 			cdEXIT( EXIT_FAILURE );
 		}
-		if (LineSave.lines[id].LineType() != 't')
+	}
+	if (LineSave.lines[id].LineType() != 't')
+	{
+		if (lgQuiet)
+			return -1;
+		else
 		{
 			fprintf( ioQQQ, "ERROR: line blend component %s does not have type 't'.\n",
 					 line.str().c_str() );
 			cdEXIT( EXIT_FAILURE );
 		}
-		auto tr = LineSave.lines[id].getTransition();
-		if (!tr.associated())
+	}
+	auto tr = LineSave.lines[id].getTransition();
+	if (!tr.associated())
+	{
+		if (lgQuiet)
+			return -1;
+		else
 		{
 			fprintf( ioQQQ, "ERROR: line blend component %s is not associated with a transition.\n",
 					 line.str().c_str() );
 			cdEXIT( EXIT_FAILURE );
 		}
-		addComponentID(id);
 	}
+	return id;
 }
 
 // Automatically generate blend for specified species, at wavelength +/- width
@@ -358,7 +374,7 @@ void t_LineSave::setSortWL()
 	stable_sort(SortWL.begin(), SortWL.end(), wavelength_compare);
 }
 
-long t_LineSave::findline(const LineID& line)
+long t_LineSave::findline(const LineID& line, bool lgQuiet)
 {
 	DEBUG_ENTRY( "t_LineSave::findline()" );
 
@@ -367,15 +383,16 @@ long t_LineSave::findline(const LineID& line)
 		return -1;
 
 	bool lgDEBUG = false;
-	
+
 	if( line.chLabel().length() > NCHLAB-1 )
 	{
-		fprintf( ioQQQ, " findline called with insane chLabel (between quotes) \"%s\","
-				 " must be no more than %d characters long.\n",
-				 line.chLabel().c_str(), NCHLAB-1 );
+		if( !lgQuiet )
+			fprintf( ioQQQ, " findline called with insane chLabel (between quotes) \"%s\","
+					 " must be no more than %d characters long.\n",
+					 line.chLabel().c_str(), NCHLAB-1 );
 		return -2;
 	}
- 
+
 	// make static to avoid constant allocation and deallocation of memory for this var
 	static string chCARD;
 	chCARD = line.chLabel();
@@ -417,6 +434,8 @@ long t_LineSave::findline(const LineID& line)
 		// first is now first line below upper limit
 		if (first == SortWL.end())
 		{
+			if( lgQuiet )
+				return -10;
 			fprintf(ioQQQ,"Didn't find anything at %s\n",line.twav().sprt_wl().c_str());
 			cdEXIT(EXIT_FAILURE);
 		}
@@ -460,13 +479,17 @@ long t_LineSave::findline(const LineID& line)
 				{
 					if ( nmatch == 2 )
 					{
-						fprintf(ioQQQ,"WARNING: multiple matching lines found in search for %s\n",
-								line.str().c_str());
-						fprintf(ioQQQ,"WARNING: match 1 is \"%s\" (dwl=%gA)\n",
-								lines[*found].biglabel().c_str(),wavlVac(*found)-line.wavlVac());
+						if( !lgQuiet )
+						{
+							fprintf(ioQQQ,"WARNING: multiple matching lines found in search for %s\n",
+									line.str().c_str());
+							fprintf(ioQQQ,"WARNING: match 1 is \"%s\" (dwl=%gA)\n",
+									lines[*found].biglabel().c_str(),wavlVac(*found)-line.wavlVac());
+						}
 					}
-					fprintf(ioQQQ,"WARNING: match %d is \"%s\" (dwl=%gA)\n",
-							nmatch, lines[*pos].biglabel().c_str(),dwl);
+					if( !lgQuiet )
+						fprintf(ioQQQ,"WARNING: match %d is \"%s\" (dwl=%gA)\n",
+								nmatch, lines[*pos].biglabel().c_str(),dwl);
 				}
 				if ( found == SortWL.end() )
 				{
@@ -490,21 +513,26 @@ long t_LineSave::findline(const LineID& line)
 		// do this case first as output below would be confusing when line disambiguation is used
 		if( ( line.indLo() > 0 && line.indHi() > 0 ) || line.ELo() >= 0_r )
 		{
-			fprintf(ioQQQ, "PROBLEM: Line disambiguation was requested, but line was not found: %s ",
-					line.str().c_str());
-			if( line.indLo() > 0 && line.indHi() > 0 )
-				fprintf(ioQQQ, " index=%d, %d", line.indLo(), line.indHi());
-			if( line.ELo() >= 0_r )
-				fprintf(ioQQQ, " Elow=%g", line.ELo());
-			fprintf(ioQQQ, "\nCheck the SAVE LINE LABELS output to find the correct match.\n");
+			if( !lgQuiet )
+			{
+				fprintf(ioQQQ, "PROBLEM: Line disambiguation was requested, but line was not found: %s ",
+						line.str().c_str());
+				if( line.indLo() > 0 && line.indHi() > 0 )
+					fprintf(ioQQQ, " index=%d, %d", line.indLo(), line.indHi());
+				if( line.ELo() >= 0_r )
+					fprintf(ioQQQ, " Elow=%g", line.ELo());
+				fprintf(ioQQQ, "\nCheck the SAVE LINE LABELS output to find the correct match.\n");
+			}
 			return -4;
 		}
 
-		fprintf(ioQQQ,"WARNING: no exact matching lines found for %s\n",line.str().c_str());
+		if( !lgQuiet )
+			fprintf(ioQQQ,"WARNING: no exact matching lines found for %s\n",line.str().c_str());
 		for (vector<size_t>::iterator pos = first; pos != second; ++pos)
 		{
-			fprintf(ioQQQ,"WARNING: Line with incorrect label found close \"%s\"\n",
-					  lines[*pos].label().c_str());
+			if( !lgQuiet )
+				fprintf(ioQQQ,"WARNING: Line with incorrect label found close \"%s\"\n",
+						lines[*pos].label().c_str());
 		}
 		// Haven't found a match with correct label
 		vector<size_t>::iterator best = SortWL.end();
@@ -533,11 +561,13 @@ long t_LineSave::findline(const LineID& line)
 				{
 					best = next;
 					besterror = error;
-					fprintf(ioQQQ,"Taking best match as \"%s\"\n",lines[*next].label().c_str());
+					if( !lgQuiet )
+						fprintf(ioQQQ,"Taking best match as \"%s\"\n",lines[*next].label().c_str());
 				}
 				else
 				{
-					fprintf(ioQQQ,"Possible ambiguity with \"%s\"\n",lines[*next].label().c_str());
+					if( !lgQuiet )
+						fprintf(ioQQQ,"Possible ambiguity with \"%s\"\n",lines[*next].label().c_str());
 				}
 			}
 			// Assume this is clearly unambiguous
@@ -550,6 +580,8 @@ long t_LineSave::findline(const LineID& line)
 		if (best != SortWL.end())
 			return *best;
 
+		if( lgQuiet )
+			return -11;
 		fprintf(ioQQQ,"PROBLEM: no matching line found in search for %s\n",line.str().c_str());
 		cdEXIT(EXIT_FAILURE);
 	}
@@ -616,39 +648,45 @@ long t_LineSave::findline(const LineID& line)
 		// do this case first as output below would be confusing when line disambiguation is used
 		if( ( line.indLo() > 0 && line.indHi() > 0 ) || line.ELo() >= 0_r )
 		{
-			fprintf(ioQQQ, "PROBLEM: Line disambiguation was requested, but line was not found: %s ",
-					line.str().c_str());
-			if( line.indLo() > 0 && line.indHi() > 0 )
-				fprintf(ioQQQ, " index=%d, %d", line.indLo(), line.indHi());
-			if( line.ELo() >= 0_r )
-				fprintf(ioQQQ, " Elow=%g", line.ELo());
-			fprintf(ioQQQ, "\nCheck the SAVE LINE LABELS output to find the correct match.\n");
+			if( !lgQuiet )
+			{
+				fprintf(ioQQQ, "PROBLEM: Line disambiguation was requested, but line was not found: %s ",
+						line.str().c_str());
+				if( line.indLo() > 0 && line.indHi() > 0 )
+					fprintf(ioQQQ, " index=%d, %d", line.indLo(), line.indHi());
+				if( line.ELo() >= 0_r )
+					fprintf(ioQQQ, " Elow=%g", line.ELo());
+				fprintf(ioQQQ, "\nCheck the SAVE LINE LABELS output to find the correct match.\n");
+			}
 			return -5;
 		}
 
 		/* >>chng 05 dec 21, report closest line if we did not find exact match, note that
 		 * exact match returns above, where we will return negative number of lines in stack */
-		fprintf( ioQQQ," PROBLEM findline did not find line " );
-		prt_line_err( ioQQQ, line );
-		if( index_of_closest >= 0 )
+		if( !lgQuiet )
 		{
-			fprintf( ioQQQ,"  The closest line (any label) was   \"%s\"\n", 
-						lines[index_of_closest].label().c_str() );
-			if( index_of_closest_w_correct_label >= 0 )
+			fprintf( ioQQQ," PROBLEM findline did not find line " );
+			prt_line_err( ioQQQ, line );
+			if( index_of_closest >= 0 )
 			{
-				fprintf( ioQQQ,"  The closest with correct label was \"%s\"\n", 
-							lines[index_of_closest_w_correct_label].label().c_str() );
-				fprintf( ioQQQ,"  Error was %15.8g vs. tolerance %15.8g\n", 
-							smallest_error_w_correct_label, errorwave );
+				fprintf( ioQQQ,"  The closest line (any label) was   \"%s\"\n", 
+						 lines[index_of_closest].label().c_str() );
+				if( index_of_closest_w_correct_label >= 0 )
+				{
+					fprintf( ioQQQ,"  The closest with correct label was \"%s\"\n", 
+							 lines[index_of_closest_w_correct_label].label().c_str() );
+					fprintf( ioQQQ,"  Error was %15.8g vs. tolerance %15.8g\n", 
+							 smallest_error_w_correct_label, errorwave );
+				}
+				else
+					fprintf( ioQQQ,"\n  No line found with label \"%s\".\n", chCARD.c_str() );
+				fprintf( ioQQQ,"\n" );
 			}
 			else
-				fprintf( ioQQQ,"\n  No line found with label \"%s\".\n", chCARD.c_str() );
-			fprintf( ioQQQ,"\n" );
-		}
-		else
-		{
-			fprintf( ioQQQ,".\n PROBLEM No close line was found\n" );
-			TotalInsanity();
+			{
+				fprintf( ioQQQ,".\n PROBLEM No close line was found\n" );
+				TotalInsanity();
+			}
 		}
 		return -3;
 	}

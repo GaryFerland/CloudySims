@@ -1653,12 +1653,13 @@ The blend components need to have type 't' as defined in the \cdCommand{save
   line labels} output and also be associated to a transition. The latter can
 be recognized from the fact that the comment in the \cdCommand{save line
   labels} output has entries for ``index'' and ``Elow''. The custom blends
-will be stored on the line stack and can be used like any other entry on that
+will be stored at the end of the line stack and can be used like any other entry on that
 stack.
 
 If the keyword \cdCommand{quiet} appears on the \cdCommand{set blend} command
-line, and the database model for any of the species in the blend has been
-turned off, the blend will be quietly skipped rather than producing error
+line, and any of the lines included in the blend cannot be found (e.g.,
+because the element has been turned off)
+the blend will be quietly skipped rather than producing error
 messages about missing lines. This is useful if the \cdCommand{set blend}
 command is included in an init file that will be shared between many scripts.
 However, note that the code cannot discriminate between a species that has

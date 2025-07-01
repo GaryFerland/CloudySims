@@ -116,9 +116,8 @@ struct t_LineSave : public module {
 	/** index to number of comments printed within the block of lines */
 	long int nComment;
 
-	/** there are three types of calls to lines() 
-	 * ipass = -1, first call, only count number off lines
-	 * ipass =  0, second pass, save labels and wavelengths
+	/** there are two types of calls to lines() 
+	 * ipass =  0, first pass, save labels and wavelengths
 	 * ipass =  1, integrate intensity*/
 	long int ipass;
 
@@ -146,7 +145,7 @@ struct t_LineSave : public module {
 	/** save rec coefficient data for recombination lines of C, N, O */
 	realnum RecCoefCNO[4][NRECCOEFCNO];
 
-	long findline(const LineID& line);
+	long findline(const LineID& line, bool lgQuiet=false);
 
 	/** number of lines allocated in emission line stack
 	 * must not change between iterations or grid points */
@@ -158,6 +157,7 @@ struct t_LineSave : public module {
 		lines.clear();
 		m_wavelength.clear();
 	}
+	size_t size() const;
 	void resize(long nlines);
 	
 	void setSortWL();
@@ -238,7 +238,6 @@ public:
 	{
 		return	m_chSumTyp;
 	}
-	void addComponent(const LineID& line);
 	void addComponentID(long id);
 	void makeBlend(const char* species, const t_wavl& wavelength, const realnum width);
 	void setBlendWavl();
@@ -455,10 +454,18 @@ public:
 #endif
 };
 
+inline size_t t_LineSave::size() const
+{
+	ASSERT( lines.size() == m_wavelength.size() );
+	return lines.size();
+}
+
 inline void t_LineSave::resize(long nlines)
 {
 	lines.resize(nlines);
 	m_wavelength.resize(nlines);
 }
+
+long findComponent(const LineID& line, bool lgQuiet);
 
 #endif /* LINES_H_ */
