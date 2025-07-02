@@ -591,6 +591,6 @@
 590	[9282045.2203]	9	"2p3.4f1 3F4"
 *****************
 #Reference:
-#[Theoretical Energy]: ADF04 2025-03-28 clike_jm19#al7.dat	DOI: 10.1051/0004-6361/201936931
+#[Theoretical Energy] values are from # DOI:10.3390/atoms13050044 (Del Zanna et al. 2025)
 #Experimenta Energy:	NIST,04/31/2025
 #https://gitlab.nublado.org/cloudy/cloudy/-/wikis/StoutData

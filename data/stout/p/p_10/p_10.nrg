@@ -589,9 +589,8 @@
 588	[3467452.0454]	9	"2p3.4f1 3F4"
 589	[3468755.933]	5	"2p3.4f1 1D2"
 590	[3473078.8364]	3	"2p3.4d1 1P1"
-**************	[nan]	None	None
-#Reference:	[nan]	None	None
-#ADF04 2025-06-18 p_10.dat	[nan]	None	None
+**************	
+#Reference:	
 # [Theoretical Energy] values are from # DOI:10.3390/atoms13050044 (Del Zanna et al. 2025)
 # Experimental Energy values are from NIST,04/31/2025
 #https://gitlab.nublado.org/cloudy/cloudy/-/wikis/StoutData

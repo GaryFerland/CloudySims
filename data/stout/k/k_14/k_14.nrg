@@ -591,6 +591,6 @@
 590	[6011602.0037]	3	"2p3.4d1 1P1"
 **************
 #Reference:	
-# [Energy] values are from # DOI:10.3390/atoms13050044 (Del Zanna et al. 2025)
-# Energy values without brackets are from NIST,04/31/2025
+# [Theoretical Energy] values are from # DOI:10.3390/atoms13050044 (Del Zanna et al. 2025)
+# Experimental Energy values are from NIST,04/31/2025
 #https://gitlab.nublado.org/cloudy/cloudy/-/wikis/StoutData
