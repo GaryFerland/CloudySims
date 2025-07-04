@@ -1453,6 +1453,36 @@ void DataParser::getLineID(LineID& line, bool lgAtStart)
 	line = LineID(chLabel, t_wavl(wave, type), indLo, indHi, ELo);
 }
 
+bool DataParser::getLvlEnergy(double& En)
+{
+	// read a level energy from a data file
+	// experimental energies should be written as a plain number, e.g. 123.456
+	// theoretical energies should be written inbetween square brackets, e.g. [123.456]
+	// the return value is true if the value is theoretical, false otherwise
+
+	p_skipWS();
+	if( p_ls.good() )
+	{
+		bool lgTheo = ( p_ls.peek() == '[' );
+		if( lgTheo )
+		{
+			(void)p_ls.get();
+			getTokenOptionalImpl(p_ls, p_line, En);
+			if( p_ls.fail() )
+				errorAbort("getLvlEnergy failed to read level energy");
+			if( p_ls.peek() == ']' )
+				(void)p_ls.get();
+			else
+				errorAbort("expected character ']' here");
+		}
+		else
+			getToken(En);
+		return lgTheo;
+	}
+	else
+		errorAbort("getLvlEnergy failed to read level energy");
+}
+
 bool DataParser::lgEODMarker() const
 {
 	DEBUG_ENTRY( "DataParser::lgEODMarker()" );

@@ -577,6 +577,7 @@ public:
 
 	/** energy of each level w.r.t. ground, in cm^-1 */
 	map<QNPack, double> Energy;
+	map<QNPack, bool> lgTheoLevel;
 
 	/** ionization potential, in cm^-1 */
 	double IonPot;

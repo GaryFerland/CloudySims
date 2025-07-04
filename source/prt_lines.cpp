@@ -144,7 +144,7 @@ void lines()
 	/* integrate the volume as a sanity check */
 	linadd( 1.e-10 , 1_vac, "Unit" , 'i' , "unit integration placeholder");
 	static long int ipOneAng=-1;
-	if( LineSave.ipass == 0 )
+	if( LineSave.ipass<0 )
 		ipOneAng = ipoint( RYDLAM );
 	lindst( 1.e-10 , 1_vac , "UntD" , ipOneAng , 'i' , false,"unit integration placeholder");
 
@@ -318,9 +318,9 @@ void lines()
 	for( i=0; i < NRECCOEFCNO; i++ )
 	{
 		string chLabel;
-		/* generate label for the line if ipass is 0 - saved in arrays
+		/* generate label for the line if ipass is -1 or 0 - saved in arrays
 		 * so no need to do this during production */
-		if( LineSave.ipass == 0 )
+		if( LineSave.ipass <= 0 )
 		{
 			chLabel = chIonLbl( LineSave.RecCoefCNO[0][i], long(LineSave.RecCoefCNO[0][i]-LineSave.RecCoefCNO[1][i]+1.01) );
 		}
@@ -466,6 +466,55 @@ void lines()
 
 	linadd( 0., t_vac(i), "####", 'i', "miscellaneous");
 
+	/* add blends */
+	for( size_t i=0; i < prt.blend.size(); ++i )
+	{
+		if( prt.blend[i].lgQuiet && LineSave.ipass < 0 )
+		{
+			for( size_t j=0; j < prt.blend[i].component.size(); ++j )
+			{
+				string speciesLabel;
+				long nelem, ion;
+				parsespect(prt.blend[i].component[j].chLabel().c_str(), nelem, ion);
+				if( nelem < 0 || ion <= 0 )
+					// assume molecular species
+					speciesLabel = prt.blend[i].component[j].chLabel();
+				else
+				{
+					char chLabelChemical[10];
+					// NB parsespect() returns nelem on C scale, but ion on fortran scale!
+					makeChemical(chLabelChemical, nelem, ion-1);
+					speciesLabel = chLabelChemical;
+				}
+				vector<genericState> v = matchGeneric( speciesLabel, false );
+				if( v.size() == 1 )
+				{
+					if( v[0].sp->lines == nullptr )
+					{
+						prt.blend[i].lgIgnore = true;
+						break;
+					}
+				}
+				else
+				{
+					prt.blend[i].lgIgnore = true;
+					break;
+				}
+			}
+		}
+		if( !prt.blend[i].lgIgnore )
+		{
+			LinSv *UserBlnd = linadd(0.0,prt.blend[i].wave,prt.blend[i].chLabel.c_str(),'i',"Blend" );
+			if (UserBlnd)
+			{
+				for( size_t j=0; j < prt.blend[i].component.size(); ++j )
+					UserBlnd->addComponent(prt.blend[i].component[j]);
+				if( prt.blend[i].wave.wavlVac() < 0_r )
+					UserBlnd->setBlendWavl();
+			}
+		}
+	}
+
 	/*************Calcium *******************/
 	if( atmdat.lgdBaseSourceExists[ipCALCIUM][1] )
 	{
@@ -486,7 +535,7 @@ void lines()
 		getTransition(LineID("C  1",1657.01_vac), lineCIa);
 		/* >>chng 97 may 02, added better rec coefficient
 		 * C I 1656 recombination, all agents */
-		double rec = LineSave.ipass == 0 ? 0.0 :
+		double rec = LineSave.ipass <= 0 ? 0.0 :
 			GetLineRec(3,1657)*emit_frac(lineCIa);
 		PntForLine( 1656_vac, "C 1R", &ipnt);
 		lindst(rec, 1656_vac, "C 1R", ipnt, 't', false, "recombination" );
@@ -514,7 +563,7 @@ void lines()
 
 		static TransitionProxy lineCIb;
 		getTransition(LineID("C  1",9850.26_air), lineCIb);
-		double rec = LineSave.ipass == 0 ? 0.0 :
+		double rec = LineSave.ipass <= 0 ? 0.0 :
 			volEmis*emit_frac(lineCIb); // 9850.26
 		PntForLine( 9850_air, "C 1R", &ipnt);
 		lindst(rec, 9850_air, "C 1R", ipnt, 't', false, "recombination" );
@@ -536,7 +585,7 @@ void lines()
 
 		/* >>chng 97 may 02, better rec coef */
 		/* >>chng 02 jul 01, add function to return emission probability */
-		double rec = LineSave.ipass == 0 ? 0.0 :
+		double rec = LineSave.ipass <= 0 ? 0.0 :
 			GetLineRec(11,1335)*emit_frac(lineCIIa); // 1335.71
 		PntForLine( 1335_vac, "C 2R", &ipnt);
 		lindst(rec, 1335_vac, "C 2R", ipnt, 't', false, "recombination" );
@@ -572,7 +621,7 @@ void lines()
 		static TransitionProxy lineCIIc;
 		getTransition(LineID("C  2",6578.05_air), lineCIIc);
 		/* C 2 6580 */
-		double rec = LineSave.ipass == 0 ? 0.0 :
+		double rec = LineSave.ipass <= 0 ? 0.0 :
 			GetLineRec(8, 6580 )*emit_frac(lineCIIc);
 		PntForLine( 6580_air, "C 2R", &ipnt);
 		lindst(rec/(1.+dense.eden/1e12), 6580_air, "C 2R", ipnt, 't', false, "recombination" );
@@ -585,7 +634,7 @@ void lines()
 		static TransitionProxy lineCIIIc;
 		getTransition(LineID("C  3",977.020_vac), lineCIIIc);
 		/* >>chng 02 jul 01, add function to compute emission fraction */
-		double rec = LineSave.ipass == 0 ? 0.0 :
+		double rec = LineSave.ipass <= 0 ? 0.0 :
 			GetLineRec(179,977)*emit_frac(lineCIIIc);
 		PntForLine( 977_vac, "C 3R", &ipnt);
 		lindst(rec, 977_vac, "C 3R", ipnt, 't', false, "dielectronic recombination" );
@@ -597,7 +646,7 @@ void lines()
 		static TransitionProxy lineCIII;
 		getTransition(LineID("C  3",1908.73_vac), lineCIII);
 		/* >>chng 02 jul 01, add function to compute emission fraction */
-		double corr =  LineSave.ipass == 0 ? 0.0 :
+		double corr =  LineSave.ipass <= 0 ? 0.0 :
 			emit_frac(lineCIII); // 1908.73
 		fac = dense.eden*dense.xIonDense[ipCARBON][3]/(phycon.te/phycon.te10);
 
@@ -616,7 +665,7 @@ void lines()
 		getTransition(LineID("C  3",1175.71_vac), lineCIIIb);
 		/* >>chng 97 may 02, better rec ocef */
 		/* >>chng 02 jul 01, add function to compute emission fraction */
-		double rec = LineSave.ipass == 0 ? 0.0 :
+		double rec = LineSave.ipass <= 0 ? 0.0 :
 			GetLineRec(178,1176)*emit_frac(lineCIIIb); // 1175.71
 		PntForLine( 1175_vac, "C 3R", &ipnt );
 		lindst(rec, 1175_vac, "C 3R", ipnt, 't', false, "dielectronic recombination" );
@@ -630,7 +679,7 @@ void lines()
 		/* recombination C 4 1549 from C 5
 		 * >>chng 97 may 02, better rec coef */
 		/* >>chng 02 jul 01, add function to compute emission fraction */
-		double rec = LineSave.ipass == 0 ? 0.0 :
+		double rec = LineSave.ipass <= 0 ? 0.0 :
 			GetLineRec(25,1549)*emit_frac(lineCIV); // 1548.19
 		PntForLine( 1549_vac, "C 4R", &ipnt );
 		lindst(rec, 1549_vac, "C 4R", ipnt, 't', false, "recombination" );
@@ -667,7 +716,7 @@ void lines()
 		static TransitionProxy lineNI5199;
 		getTransition(LineID("N  1",5197.90_air), lineNI5199);
 
-		double emit_frac_5197 = LineSave.ipass == 0 ? 0.0 : 
+		double emit_frac_5197 = LineSave.ipass <= 0 ? 0.0 : 
 			emit_frac(lineNI5199); // 5197.90
 
 		// estimate of recombination contribution to intensity of [NI] 5199
@@ -749,7 +798,7 @@ void lines()
 			 * and represents the correction for collisional deexcitation */
 			/*>>chng 05 dec 16, Liu et al. (2000) eqn 1 uses t = Te/10^4 K, not Te so phycon.te30
 			 * is too large: (10^4)^0.3 = 16 - div by 15.8489 - bug caught by Kevin Blagrave */
-			rec = LineSave.ipass == 0 ? 0.0 :
+			rec = LineSave.ipass <= 0 ? 0.0 :
 				emit_frac(lineNII5755)* // 5754.61 *
 				HBeta * 3.19 * phycon.te30 / 15.84893 * 
 				dense.xIonDense[ipNITROGEN][2]/dense.xIonDense[ipHYDROGEN][1];
@@ -770,7 +819,7 @@ void lines()
 		static TransitionProxy lineNII1085;
 		getTransition(LineID("N  2",1085.70_vac), lineNII1085);
 
-		double rec = LineSave.ipass == 0 ? 0.0 :
+		double rec = LineSave.ipass <= 0 ? 0.0 :
 			GetLineRec(201,1085)*emit_frac(lineNII1085); // 1085.70
 		/* Collisional suppression from emit_frac_db of 1085A may not be accurate.
 		 * It is based on the strongest line in the blend.*/
@@ -786,7 +835,7 @@ void lines()
 		static TransitionProxy lineNIIIb;
 		getTransition(LineID("N  3",989.799_vac), lineNIIIb);
 
-		double rec = LineSave.ipass == 0 ? 0.0 :
+		double rec = LineSave.ipass <= 0 ? 0.0 :
 			GetLineRec(216,991)*emit_frac(lineNIIIb); // 989.799
 
 		PntForLine( 990_vac, "N 3R", &ipnt );
@@ -803,7 +852,7 @@ void lines()
 
 		/* >>chng 97 may 02, better expression for dielectronic recombination */
 		/* >>chng 02 jul 01, add function to get emission fraction */
-		double rec = LineSave.ipass == 0 ? 0.0 :
+		double rec = LineSave.ipass <= 0 ? 0.0 :
 			GetLineRec(287,765)*emit_frac(lineNIV765); // 765.147
 
 		/* dielectronic recombination contribution from Nussbaumer and Storey 1984 */
@@ -1212,7 +1261,7 @@ void lines()
 		getTransition(LineID("O  3",835.059_vac), lineOIII835);
 
 		/* >>chng 97 may 02, better rec contribution */
-		double rec = LineSave.ipass == 0 ? 0.0 : GetLineRec(331,835)*emit_frac(lineOIII835);
+		double rec = LineSave.ipass <= 0 ? 0.0 : GetLineRec(331,835)*emit_frac(lineOIII835);
 
 		PntForLine( 835_vac, "O 3R", &ipnt );
 		lindst(MAX2(0.,rec), 835_vac, "O 3R", ipnt, 't', false, "dielectronic recombination only" );
@@ -1236,7 +1285,7 @@ void lines()
 		getTransition(LineID("O  4",790.201_vac), lineOIV789);
 
 		/* >>chng 97 may 02, better rec contribution */
-		double rec = LineSave.ipass == 0 ? 0.0 : GetLineRec(378,789)*emit_frac(lineOIV789);
+		double rec = LineSave.ipass <= 0 ? 0.0 : GetLineRec(378,789)*emit_frac(lineOIV789);
 		PntForLine( 789_vac, "O 4R", &ipnt );
 		lindst(MAX2(0.,rec), 789_vac, "O 4R", ipnt, 't', false, "dielectronic recombination only" );
 	}
@@ -1250,40 +1299,11 @@ void lines()
 		getTransition(LineID("O  5",629.732_vac), lineOV630);
 
 		/* >>chng 97 may 02, better rec contribution */
-		double rec = LineSave.ipass == 0 ? 0.0 : GetLineRec(466,630)*emit_frac(lineOV630);
+		double rec = LineSave.ipass <= 0 ? 0.0 : GetLineRec(466,630)*emit_frac(lineOV630);
 
 		PntForLine( 630_vac, "O 5R", &ipnt );
 		lindst(MAX2(0.,rec), 630_vac, "O 5R", ipnt, 't', false,
 			"dielectronic recombination only" );
-	}
-
-	/* add blends
-	 * NB NB these blends need to be the last entries on the line stack
-	 * so that users can include any other lines in the definition of the blend
-	 * any lines that come later on the stack will not be found by findComponent() */
-	for( size_t i=0; i < prt.blend.size(); ++i )
-	{
-		if( LineSave.ipass == 0 )
-		{
-			for( size_t j=0; j < prt.blend[i].component.size(); ++j )
-			{
-				long id = findComponent(prt.blend[i].component[j], prt.blend[i].lgQuiet);
-				if( prt.blend[i].lgQuiet && id < 0 )
-				{
-					prt.blend[i].lgIgnore = true;
-					break;
-				}
-				prt.blend[i].compID.emplace_back(id);
-			}
-		}
-		if( !prt.blend[i].lgIgnore )
-		{
-			LinSv *UserBlnd = linadd(0.0,prt.blend[i].wave,prt.blend[i].chLabel.c_str(),'i',"Blend" );
-			for( size_t j=0; j < prt.blend[i].compID.size(); ++j )
-				UserBlnd->addComponentID(prt.blend[i].compID[j]);
-			if( prt.blend[i].wave.wavlVac() < 0_r )
-				UserBlnd->setBlendWavl();
-		}
 	}
 
 	/* add up line intensities for certain set of lines,

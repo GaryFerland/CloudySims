@@ -517,6 +517,8 @@ public:
 	}
 	// read line label plus wavelength
 	void getLineID(LineID& line, bool lgAtStart=true);
+	// read (possibly theoretical) level energy
+	bool getLvlEnergy(double& En);
 	// get the current position on the line
 	long getposLine() { return p_pos(); }
 	// skip to a specified position on the line

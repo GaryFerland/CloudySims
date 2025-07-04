@@ -311,7 +311,9 @@ void iso_init_energies()
 				d.getToken(s);
 				d.getToken(j);
 				QNPack ind = QN2ind(n, l, s, 2*j+1);
-				d.getToken(iso_sp[ipISO][nelem].Energy[ind]);
+				/*d.getToken(iso_sp[ipISO][nelem].Energy[ind]);*/
+				bool lgTheo = d.getLvlEnergy(iso_sp[ipISO][nelem].Energy[ind]);
+                                iso_sp[ipISO][nelem].lgTheoLevel[ind] = lgTheo;
 				if( ! d.lgEOL() )
 				{
 					double error;
