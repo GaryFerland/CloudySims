@@ -92,6 +92,37 @@ if( "$string" eq "ParseCrashDo(Parser&)" )
 }
 unlink "tmp_cloudyconfig.cpp";
 unlink "tmp_cloudyconfig.out";
+# test if we need to add -lstdc++fs for C++17 filesystem support
+open FOO, ">tmp_cloudyconfig.cpp";
+print FOO <<'EOH';
+#include <filesystem>
+#include <iostream>
+namespace fs = std::filesystem;
+int main()
+{
+	fs::path ex = "./tmp_cloudyconfig.exe";
+	std::error_code ec;
+	std::cout << "size: " << fs::file_size(ex, ec) << "\n";
+	return 0;
+}
+EOH
+close FOO;
+$ret = system( "$ARGV[0] -std=c++17 -o tmp_cloudyconfig.exe tmp_cloudyconfig.cpp > /dev/null 2>&1" );
+if( $ret != 0 )
+{
+	$ret = system( "$ARGV[0] -std=c++17 -o tmp_cloudyconfig.exe tmp_cloudyconfig.cpp -lstdc++fs > /dev/null 2>&1" );
+	if( $ret == 0 )
+	{
+		$res .= "need_stdc++fs "
+	}
+	else
+	{
+		# Makefile depends on the wording of this error message, it picks up on the word "upgrade"
+		$res = "This compiler ($ARGV[0]) does not support C++17, please upgrade to a newer version\n";
+	}
+}
+unlink "tmp_cloudyconfig.cpp";
+unlink "tmp_cloudyconfig.exe";
 # remove trailing spaces
 $res =~ s/ +$//;
 if( $res ne "" ) {

@@ -8,15 +8,16 @@ ifeq ($(DEFCXX),)
   DEFCXX := ${shell which clang++ 2> /dev/null}
 endif
 
-STD = -std=c++11
+STD = -std=c++17
 OPT = -O3 -ftrapping-math -fno-math-errno -fasynchronous-unwind-tables -Wno-deprecated-declarations
 DEBUGOPT = -finline -fasynchronous-unwind-tables
 CXX = $(DEFCXX)
-# -W is the old name for -Wextra, g++ 3.3 only supports the former
-CXXFLAGS = $(STD) $(OPT) -Wall -W -g
 CXXFLAGSEXC = -fnon-call-exceptions
+# -W is the old name for -Wextra, g++ 3.3 only supports the former
+CXXFLAGS = $(STD) $(OPT) -Wall -W -g $(CXXFLAGSEXC)
 LDFLAGS = $(OPT) -Wall -g
 LDLIBS =
+FSLIB =
 NO_TRAP_FLAGS =
 # this is intended for supplying extra command line parameters, e.g. extra -D flags
 EXTRA = 
@@ -24,7 +25,8 @@ SRCDIR = .
 OBJEXT = o
 LIBEXT = a
 
-.PHONY: all default data debug testclean clean distclean debug-test test valgrind-test depend echo-cxx echo-cxxflags
+.PHONY: all default data debug testclean clean distclean debug-test test valgrind-test depend \
+        echo-cxx echo-cxxflags echo-ldlibs
 
 # Default rule comes first -- having this implement 'make all' is standard
 all: default
@@ -54,12 +56,17 @@ CXXDEPEND = $(DEFCXX)
 
 # check compiler capabilities
 CAPABILITIES := $(shell $(SRCDIR)/capabilities.pl $(CXX))
+FAILURE := $(filter upgrade,$(CAPABILITIES))
+ifneq ($(FAILURE),)
+  $(error $(CAPABILITIES))
+endif
 PRECOMPILE := $(filter precompile,$(CAPABILITIES))
 VECTORIZE := $(filter vectorize,$(CAPABILITIES))
 NATIVE := $(filter native,$(CAPABILITIES))
 DYNAMIC := $(filter dynamic,$(CAPABILITIES))
 DEMANGLE := $(filter demangle%,$(CAPABILITIES))
 RPATH := $(filter rpath=%,$(CAPABILITIES))
+NEEDFSLIB := $(filter need_stdc++fs,$(CAPABILITIES))
 
 # DEP_GOALS will be an empty string for targets that don't need dependencies
 NODEP_GOALS = clean distclean data
@@ -96,6 +103,11 @@ endif
 DEBUG_GOALS = $(filter debug%,$(MAKECMDGOALS))
 ifneq ($(DEBUG_GOALS),)
   OPT = $(DEBUGOPT)
+endif
+
+ifneq ($(NEEDFSLIB),)
+  FSLIB = -lstdc++fs
+  LDLIBS += $(FSLIB)
 endif
 
 CXXDEFINES = ${filter -D%,${CXXFLAGS}}
@@ -198,7 +210,7 @@ data:
 	cd ${SRCDIR}/../data/cdms+jpl && $(MAKE)
 
 vh128sum.exe: vh128sum.${OBJEXT} vectorhash.${OBJEXT}
-	${CXX} ${LDFLAGS} -o vh128sum.exe vh128sum.${OBJEXT} vectorhash.${OBJEXT}
+	${CXX} ${LDFLAGS} -o vh128sum.exe vh128sum.${OBJEXT} vectorhash.${OBJEXT} ${FSLIB}
 
 testclean:
 	rm -f Test*.${OBJEXT}
@@ -232,11 +244,16 @@ version.${OBJEXT}: ${main} ${libsource} ${includes}
 DEPCMD := ${CXXDEPEND} ${STD} -MM -MG -DMM ${CXXDEFINES}
 
 cpu.${OBJEXT}: ${SRCDIR}/cpu.cpp ${CLDCONFIG} ${preobjects}
-	${CXX} ${CXXFLAGS} ${CXXFLAGSEXC} -DCLOUDY_ROOT=\"${CIP}\" -c -o $@ $<
+	${CXX} ${CXXFLAGS} -DCLOUDY_ROOT=\"${CIP}\" -c -o $@ $<
 	${SRCDIR}/make_depend.pl "${DEPCMD} $<" ${presource} ${substname} ${CLDCONFIG} ${@:.${OBJEXT}=.d}
 
 # an explicit -O0 is needed for some compilers like icc
 parse_crashdo.${OBJEXT}: ${SRCDIR}/parse_crashdo.cpp ${CLDCONFIG} ${preobjects}
+	${CXX} ${CXXFLAGSNOOPT} ${DEBUGOPT} -c -o $@ $<
+	${SRCDIR}/make_depend.pl "${DEPCMD} $<" ${presource} ${substname} ${CLDCONFIG} ${@:.${OBJEXT}=.d}
+
+# the same goes for random_crash.cpp
+random_crash.${OBJEXT}: ${SRCDIR}/random_crash.cpp ${CLDCONFIG} ${preobjects}
 	${CXX} ${CXXFLAGSNOOPT} ${DEBUGOPT} -c -o $@ $<
 	${SRCDIR}/make_depend.pl "${DEPCMD} $<" ${presource} ${substname} ${CLDCONFIG} ${@:.${OBJEXT}=.d}
 
@@ -296,6 +313,9 @@ echo-cxx:
 
 echo-cxxflags:
 	@echo "$(CXXFLAGS)"
+
+echo-ldlibs:
+	@echo "${LDLIBS}"
 
 # only include dependencies when we really need them, this prevents unnecessary builds of the dependencies
 # the way we create dependency files is discussed in http://scottmcpeak.com/autodepend/autodepend.html

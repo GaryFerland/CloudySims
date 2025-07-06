@@ -190,12 +190,9 @@ int main( int argc, char *argv[] )
 		{
 			ostringstream oss;
 			oss << ".err" << setfill('0') << setw(2) << n;
-			string slave_output = save.chRedirectPrefix + oss.str();
-			FILE *io = open_data( slave_output, "a" );
-			bool lgEmpty = ( ftell(io) == 0 );
-			fclose( io );
-			if( lgEmpty )
-				remove( slave_output.c_str() );
+			string fnam = save.chRedirectPrefix + oss.str();
+			if( FileSize(fnam) == 0 )
+				remove(fnam.c_str());
 		}
 	}
 

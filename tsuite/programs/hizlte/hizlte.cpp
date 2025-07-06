@@ -50,10 +50,10 @@ int main( void )
 			cdRead( "set dr 0"  );
 			cdRead( "abundances starburst 10 "  );
 
-			sprintf(chLine,"blackbody lte %f ",telog);
+			snprintf(chLine,sizeof(chLine),"blackbody lte %f ",telog);
 			cdRead( chLine  );
 
-			sprintf(chLine,"hden %f ",hden);
+			snprintf(chLine,sizeof(chLine),"hden %f ",hden);
 			cdRead( chLine  );
 			cdRead( "stop zone 1 "  );
 

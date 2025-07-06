@@ -133,7 +133,7 @@ monitor line luminosity "H  1" 4861.32A 7.214 error 0.25
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
 ## >>chng 21 nov 02, from 7.143 to 7.077, fix bug with overresolving CS in isoseq
-monitor line luminosity "Inwd" 4861.32A 7.077 
+monitor line luminosity "H  1 Inwd" 4861.32A 7.077
 ## 
 ## >>chng 06 jul 18, from 7.450 to 7.403, RP major upgrade VS coll strengths
 ## >>chng 06 nov 29, from 7.403 to 7.433, Badnell DR turned on
@@ -288,7 +288,8 @@ monitor niter <6 error 0.01
 ## >>chng 12 nov 28, from 500 to 524, Make HII dr limit symmetric
 ## >>chng 14 mar 26, from 524 to 458, Move oxygen data to stout and chianti files
 ## >>chng 14 apr 08, from 458 to 525, O excit state photo back in
-monitor nzone 525 
+## >>chng 25 may 26, from 525 to 501, adjust Te extrapolation of UMIST
+monitor nzone 501 
 ##
 ## >>chng 14 jul 10, from 1.01 to 6.552, Add monitors for WillsNetzerWills FeII Lines
 ## >>chng 16 mar 23, drop WillsNetzerWills FeII Lines

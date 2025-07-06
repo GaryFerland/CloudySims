@@ -59,8 +59,7 @@ vector<molecule *> groupspecies;
 
 namespace
 {
-	class MoleCmp : public binary_function<const shared_ptr<molecule>,
-										   const shared_ptr<molecule>,bool>
+	class MoleCmp
 	{
 	public:
 		bool operator()(const shared_ptr<molecule> &mol1, 

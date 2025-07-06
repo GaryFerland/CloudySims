@@ -83,7 +83,7 @@ monitor line luminosity "H  1" 4861.32A 4.267,
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-monitor line luminosity "Inwd" 4861.32A 3.966, 
+monitor line luminosity "H  1 Inwd" 4861.32A 3.966,
 ##
 ##total He II Balmer-alpha 1640
 ## >>chng 06 feb 03, from 5.513 to 5.974, guess dr to Badnell mean

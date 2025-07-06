@@ -5,18 +5,21 @@
 -26.7339
 ## >>chng 23 jun 27, from -26.2916 to -26.3119, update Fe+ model to Smyth+19
 -26.3119
-## >>chng 23 jun 27, from -25.9390 to -25.9622, update Fe+ model to Smyth+19
+## >>chng 25 may 25, from -25.9390 to -25.9622, update Fe+ model to Smyth+19
 -25.9622
 -25.6924
 -25.5009
 -25.3214
 ## >>chng 23 jul 15, from -25.1169 to -25.0695, GS updates UMIST to 2012 sets upper limit to T
--25.0695
+## >>chng 25 may 25, from -25.0695 to -25.1312, GS adjust UMIST Te bounds
+-25.1312
 ## >>chng 21 sep 11, from -24.8832 to -24.9155, LAMDA update
 ## >>chng 21 nov 04, from -24.9155 to -24.8915, LAMDA update
 ## >>chng 23 jun 27, from -24.8915 to -24.9138, update Fe+ model to Smyth+19
 ## >>chng 23 jul 15, from -24.9138 to -24.8109, GS updates UMIST to 2012 sets upper limit to T
--24.8109
+## >>chng 23 jul 15, from -25.0695 to -25.1312, GS adjust UMIST Te bounds
+## >>chng 25 may 25, from -24.8109 to -24.9043, GS adjust UMIST Te bounds
+-24.9043
 ## >>chng 23 jul 15, from -24.6011 to -24.6273, GS updates UMIST to 2012 sets upper limit to T
 -24.6273
 -21.8271

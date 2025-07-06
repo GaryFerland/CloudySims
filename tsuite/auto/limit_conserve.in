@@ -491,7 +491,8 @@ monitor pressure error < 0.003 ##this is ratio of std dev to mean
 ## >>chng 21 nov 04, from 624 to 741, update mole co data
 ## >>chng 24 apr 21, from 741 to 863, GS updates chemistry
 ## >>chng 25 mar 04, from 863 to 759, turn off Ti chemistry for C25 rc1
-monitor nzone 759
+## >>chng 25 may 25, from 759 to 797, limit to UMIST Te extrapolation
+monitor nzone 797
 ##
 ## >>chng 03 aug 28, from 25 to 20 Nick Abel co fix, let go to end
 ## >>chng 03 dec 08, from < 20 to < 15, chng zones, ots

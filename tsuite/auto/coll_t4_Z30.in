@@ -31,7 +31,8 @@ monitor CO column density 12.86 errr 0.1
 ## >>chng 13 feb 10, from 7.935 to 7.829, H2,e-=>H-,H update
 ## >>chng 23 may 15, from 7.829 to 7.908, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 jul 15, from 7.908 to 7.632, GS update UMIST to 2012 and set upper limit on T
-monitor H2 column density 7.632 errr 0.1
+## >>chng 25 may 25, from 7.632 to 7.69, limit to UMIST Te extrapolation
+monitor H2 column density 7.69 errr 0.1
 ##
 ## >>chng 12 dec 12, from -2.861 to -4.362, first run
 ## >>chng 13 feb 01, from -4.362 to -4.479, BUGFIX, largely undo r6703
@@ -84,7 +85,8 @@ monitor ionization Oxygen    2 -5.171 error 0.15
 ## >>chng 23 mar 17, from -0.9826 to -0.6859, add SiS and Lamda model"
 ## >>chng 23 jul 15, from -0.6859 to -0.7371, GS update UMIST to 2012 and set upper limit on T
 ## >>chng 25 jan 15, from -0.7371 to -0.8501, GS removes destabilizing reactions, updates others to current UMIST
-monitor ionization Magnesium 1 -0.8501  error 0.1
+## >>chng 25 may 25, from -0.8501 to -0.8041, limit to UMIST Te extrapolation
+monitor ionization Magnesium 1 -0.8041  error 0.1
 ##
 ## >>chng 12 dec 12, from -3.234 to -2.082, first run
 ## >>chng 13 feb 01, from -2.082 to -2.014, BUGFIX, largely undo r6703
@@ -105,7 +107,8 @@ monitor ionization Silicon   1 -0.1905 error 0.15
 ## >>chng 23 may 15, from -3.838 to -3.908, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 jul 15, from -3.908 to -3.528, GS update UMIST to 2012 and set upper limit on T
 ## >>chng 25 jan 15, from -3.528 to -3.274, GS removes destabilizing reactions, updates others to current UMIST
-monitor ionization Sulphur   2 -3.274 error 0.15
+## >>chng 25 may 25, from -3.274 to -3.358, limit to UMIST Te extrapolation
+monitor ionization Sulphur   2 -3.358 error 0.15
 ##
 ## >>chng 12 dec 12, from -3.391 to -3.51, first run
 ## >>chng 13 feb 01, from -3.51 to -3.564, BUGFIX, largely undo r6703

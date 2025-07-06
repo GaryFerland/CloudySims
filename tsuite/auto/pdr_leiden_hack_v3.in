@@ -68,7 +68,8 @@ monitor O2 column density 17.65 error 0.1
 ## >>chng 10 jun 17, from 15.18 to 14.48, fix botches due to recent dBase cooling changes
 ## >>chng 10 aug 25, from 14.48 to 15.36, bugfix r4165 & r4167
 ## >>chng 11 nov 16, from 15.36 to 15.25, adjust newmole monitors
-monitor OH column density 15.25 error 0.2
+## >>chng 25 may 25, from 15.25 to 14.46, limit to UMIST Te extrapolation
+monitor OH column density 14.46 error 0.2
 ## 
 ## >>chng 05 jun 26, from 19.96 to 22.22, make Federman chem the default
 ## >>chng 05 jul 02, from 22.22 to 21.04, A_V zoning was not exact

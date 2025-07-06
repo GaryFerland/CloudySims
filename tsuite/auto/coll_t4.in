@@ -63,7 +63,8 @@ monitor ctot -6.223
 ## >>chng 13 feb 10, from 8.783 to 8.835, H2,e-=>H-,H update
 ## >>chng 21 sep 11, from 8.835 to 8.456, LAMDA update
 ## >>chng 23 jul 15, from 8.456 to 9.472, GS update UMIST to 2012 and set upper limit on T
-monitor CO column density 9.472 errr 0.1
+## >>chng 25 may 25, from 9.472 to 9.423, limit to UMIST Te extrapolation
+monitor CO column density 9.423 errr 0.1
 ## >>chng 12 nov 09, first run
 ## >>chng 13 feb 10, from 7.696 to 7.545, H2,e-=>H-,H update
 ## >>chng 13 nov 19, from 7.545 to 7.459, fix CT bug in mole_eval_balance
@@ -336,7 +337,8 @@ monitor ionization Sulphur   2 -1.479 error 0.15
 ## >>chng 13 feb 10, from -3.441 to -3.488, H2,e-=>H-,H update
 ## >>chng 13 nov 19, from -3.488 to -3.432, fix CT bug in mole_eval_balance
 ## >>chng 23 may 15, from -3.432 to -3.546, GS updates 21 reactions to UMIST 2012
-monitor ionization Argon     2 -3.546 error 0.1 
+## >>chng 25 may 25, from -3.546 to -3.507, limit to UMIST Te extrapolation
+monitor ionization Argon     2 -3.507 error 0.1 
 ##
 ## >>chng 01 jan 31, from -0.860 to -3.564 Fe ct with He+
 ## >>chng 02 jul 19, from -3.564 to -3.603 better two photon

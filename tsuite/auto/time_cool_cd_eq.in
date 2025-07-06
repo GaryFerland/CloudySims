@@ -34,7 +34,8 @@ save cumulative continuum units Angstroms last ".concum"
 save monitors ".asr" last
 #
 # commands giving the asserts    =========
-monitor line luminosity cumulative intrinsic "Fe24"      11.1710A   13.4382
+## >>chng 25 jun 05, wl from 11.1710A to 11.1709A, Increase chianti wavelength decimals from 3 to 4
+monitor line luminosity cumulative intrinsic "Fe24"      11.1709A   13.4382
 ## >>chng 22 jul 09, from 13.78 to 13.76, upgrade to Chianti v10
 monitor line luminosity cumulative intrinsic "Fe17"      15.0130A   13.76
 ## >>chng 22 jul 09, from 13.43 to 13.4, upgrade to Chianti v10
@@ -43,7 +44,8 @@ monitor line luminosity cumulative intrinsic "Fe17"      17.0960A   13.4
 monitor line luminosity cumulative intrinsic "Fe17"      17.0510A   13.55
 monitor line luminosity cumulative intrinsic "O  6"      1031.91A   12.9464
 ## >>chng 22 jul 09, wl from 11.4271A to 11.4260A, upgrade to Chianti v10
-monitor line luminosity cumulative intrinsic "Fe24"      11.4260A   13.1374
+## >>chng 25 jun 05, wl from 11.4260A to 11.4263A, Increase chianti wavelength decimals from 3 to 4
+monitor line luminosity cumulative intrinsic "Fe24"      11.4263A   13.1374
 ## >>chng 22 jul 09, wl from 12.1612A to 12.1610A, upgrade to Chianti v10
 ## >>chng 22 jul 09, from 13.23 to 13.26, upgrade to Chianti v10
 monitor line luminosity cumulative intrinsic "Fe23"      12.1610A   13.26
@@ -100,7 +102,8 @@ monitor line luminosity cumulative intrinsic "O  7"      18.6270A   11.81
 monitor line luminosity cumulative intrinsic "O  7"      21.6020A   12.98
 ## >>chng 19 jun 11, from 12.49 to 12.52, Percival and Richards (1978) used for He-like ions
 ## >>chng 19 jul 24, from 12.52 to 12.49, fix bug on resolving ions excitation on He like
-monitor line luminosity cumulative intrinsic "O  7"      21.8070A   12.49
+## >>chng 25 apr 04, from 12.49 to 12.47, marginal botch in alldouble runs
+monitor line luminosity cumulative intrinsic "O  7"      21.8070A   12.47
 ## >>chng 19 jun 11, from 13.01 to 13.04, Percival and Richards (1978) used for He-like ions
 ## >>chng 19 jul 24, from 13.04 to 13.01, fix bug on resolving ions excitation on He like
 ## >>chng 22 jul 09, from 13.01 to 12.99, upgrade to Chianti v10

@@ -78,10 +78,10 @@ void lines_hydro(void)
 		iso_sp[ipH_LIKE][ipHYDROGEN].cLya_cool);*/
 
 	/* >>chng 95 jun 25 changed from info to cooling to pick this up in primal.in   */
-	linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHYDROGEN].cLya_cool),1215.67_vac,"Cool",'i',
+	linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHYDROGEN].cLya_cool),1215.67_vac,"H  1 Cool",'i',
 		"collisionally excited La cooling ");
 
-	linadd(MAX2(0.,-iso_sp[ipH_LIKE][ipHYDROGEN].cLya_cool),1215.67_vac,"Heat",'i',
+	linadd(MAX2(0.,-iso_sp[ipH_LIKE][ipHYDROGEN].cLya_cool),1215.67_vac,"H  1 Heat",'i',
 		"  collisionally de-excited La heating ");
 
 	linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHYDROGEN].cLyrest_cool),960_vac,"Crst",'i',
@@ -376,7 +376,7 @@ void lines_hydro(void)
 	}
 
 	/* predict case b intensities of hydrogen lines */
-	if( LineSave.ipass <= 0 )
+	if( LineSave.ipass == 0 )
 	{
 		for(nelem=0; nelem<HS_NZ; ++nelem )
 		{

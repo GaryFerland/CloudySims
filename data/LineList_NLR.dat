@@ -66,7 +66,7 @@ Inci     1367 vacuum
 # >>chng 17 may 26, wl from 1215.68 to 1215.67A, update Rydberg constant
 H  1     1215.67A vacuum
 # >>chng 17 may 26, wl from 1215.68 to 1215.67A, update Rydberg constant
-inwd     1215.67A vacuum
+"H  1 Inwd"     1215.67A vacuum
 # >>chng 17 may 25, wl from 1215.23 to 1215.13A, up Rydberg constant
 # >>chng 20 aug 22, wl from 1215.13A to 1215.12A, switched from computed to tabulated energies for H and He isoseq
 # >>chng 21 apr 08, wl from 1215.12A to 1215.13A, up 1-e energies to np
@@ -75,7 +75,7 @@ blnd  1218 vacuum
 N  5  1238.82 vacuum
 N  5  1242.80 vacuum
 blnd  1240 vacuum
-inwd  1239.93 vacuum
+"Mg 2 Inwd"  1239.93 vacuum
 Blnd     1256 vacuum
 si 2  1264.74 vacuum
 blnd  1304 vacuum
@@ -132,7 +132,7 @@ blnd  2665 air
 mg 2     2795.53 air
 mg 2     2802.71 air
 blnd   2798 air
-inwd     2798 air
+"Mg 2 Inwd"     2798 air
 # >>chng 22 jul 09, wl from 2973.20 to 2973.13A, upgrade to Chianti v10
 ne 5  2973.13A air
 # >>chng 17 may 25, wl from 3203.30 to 3203.04A, up Rydberg constant

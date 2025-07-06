@@ -220,19 +220,18 @@ namespace {
 		te = phycon.te+noneq_offset(rate);
 		/* UMIST rates are simple temperature power laws that
 	 	 * can become large at the high temperatures Cloudy
-	 	 * may encounter.  Similarly they were not intended for very low temperatures.
-		 * Do not extrapolate rates far from the ~100 kK temperatures
-		 * rate-b is the power beta in (T/300)^beta, positive beta
-		 * can diverge at high temperatures
-		 * THIS CODE MUST BE KEPT PARALLEL WITH HMRATE4 IN MOLE.H */ 
-		if (rate->b >0.)	
+	 	 * may encounter. Do not extrapolate to above T>5e3K */
+		/* rate-b is the power beta in (T/300)^beta, positive beta
+		 * can diverge at high temperatures */
+		/* THIS CODE MUST BE KEPT PARALLEL WITH HMRATE4 IN MOLE.H */ 
+		if( rate->b > 0.)	
 			te = min(te, 5000.);
 		if(rate->b <0.)
 			te = max(te, 10.);
 
 		/* rate->c is gamma in expontntial */
 		if( rate->c < 0. )
-			ASSERT( -rate->c/te < 10. );
+			te = max(te,10.);
 
 		double r = 1.;
 		if( rate->b != 0. )
@@ -1206,19 +1205,39 @@ namespace {
 			}
 	};
 
+	/**
+	 * @brief Calculates the rate of H2 dissociation in the gas phase.
+	 *
+	 * This function computes the dissociation rate of molecular hydrogen (H2) in the gas phase,
+	 * based on the provided reaction rate data.
+	 *
+	 * @param rate Pointer to a mole_reaction structure containing the reaction parameters.
+	 * NB this is not currently used, hard coded rate in place
+	 * @return The calculated dissociation rate of H2 as a double.
+	 */
 	double rh2g_dis_h2(const mole_reaction *rate)
 	{
 		DEBUG_ENTRY( "rh2g_dis_h2()" );
+		/** resolve ground and excited states when big H2 is enabled,
+		 * use ground dissociation rate here 
+		 */
 		if( h2.lgEnabled && h2.lgEvaluated && hmi.lgH2_Chemistry_BigH2 )
-		{
+		{ 
 			return h2.Average_collH2_dissoc_g;
 		}
 		else
 		{
+			/** GS reports that Palla+83 do not give this reactions. She was not able to find
+			 * the rate fits given in the call to hmrate4 in the literature.
+			 * Does comment mean we derived the rate from detailed balance?
+			 */
 			/* >>refer	H2	chemistry Palla, F., Salpeter, E.E., & Stahler, S.W., 1983, ApJ,271, 632-641 + detailed balance relation */
 			if( ! fp_equal( rate->a, 1. ) )
 			{
-				fprintf( ioQQQ, "invalid parameter for rh2g_dis_h2\n" );
+				/** this clause checked on the rate structure value but we do not
+				 * use the contents of *rate, so this is not needed
+				 */
+				fprintf( ioQQQ, " PROBLEM invalid parameter for rh2g_dis_h2\n" );
 				cdEXIT(EXIT_FAILURE);
 			}
 			return hmrate4(5.5e-29*0.5/(SAHA*3.634e-5)*sqrt(300.),0.5,5.195e4,phycon.te); 

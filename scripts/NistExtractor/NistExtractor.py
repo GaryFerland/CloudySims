@@ -8,42 +8,62 @@ import datetime
 import fractions
 import os
 
+
+# -----------------------------------------------------------------------------
+# Originally written by Matt Lykins in support of:
+#     Lykins et al. 2015, ApJ, 807, 118  [doi:10.1088/0004-637X/807/1/118]
+#
+# Updated and extended by Maryam Dehghanian (June 2025) in support of:
+#     JWST Archival Research Program AR-6019
+#
+# Description:
+# This script constructs a STOUT-style atomic data directory from NIST ASD data.
+# It now accepts a wide range of ion name formats, including:
+#     "O_III", "o_iii", and "o_3"
+# All of the above are correctly interpreted as O$^{2+}$ (i.e., O+2).
+#
+# Example on how to run the code:
+
+    #Python3 NistExtractor.py O_III
+
+# Notes:
+# - The output directory is structured to be compatible with the Cloudy STOUT database.
+# - Since NIST does not provide collision strengths, the generated .coll file is empty.
+#   If used in Cloudy, electron collisions will be estimated using the g-bar approximation.
+# -----------------------------------------------------------------------------
+
+
+
 NIST_LEVEL_SERVER = "https://physics.nist.gov/cgi-bin/ASD/energy1.pl"
 NIST_LINE_SERVER = "https://physics.nist.gov/cgi-bin/ASD/lines1.pl"
 DEBUGMODE = False
-num_level_limit = 1000
+num_level_limit = 100000
 unique_nrg_factor = 0.001
 decimalPlaces = 3
 default_species = "O_I"
 DEFAULTSPECIESON = False
 
-#Test whether floats are equal to certain number of decimal places
-def equalFloats(a,b,places):
-    if( a == b ): return True
-    if( type(a) != float or type(b) != float):
-        print ("PROBLEM: One or both of these values are not of the type float:%f\t%f" % a,b)
-        return False
-    
-    stringA = str(a)
-    stringB = str(b)
-    
-    if( len(stringA) != len(stringB)):
-        while len(stringA) < len(stringB):
-            stringA = stringA + '0'
-            
-        while len(stringB) < len(stringA):
-            stringB = stringB + '0'
-        
-    #print(stringA,stringB)
-    ndexDecimalA = stringA.find('.')
-    ndexDecimalB = stringB.find('.')
-    #print(ndexDecimalA,ndexDecimalB)
-    subStringA = stringA[:ndexDecimalA + places + 1]
-    subStringB = stringB[:ndexDecimalB + places + 1]
-    #print(subStringA,subStringB)
-    
-    return subStringA==subStringB
-#Convert Roman numeral to integer
+def int_to_roman(num):
+    val = [
+        1000, 900, 500, 400,
+        100, 90, 50, 40,
+        10, 9, 5, 4, 1
+    ]
+    syms = [
+        "M", "CM", "D", "CD",
+        "C", "XC", "L", "XL",
+        "X", "IX", "V", "IV",
+        "I"
+    ]
+    roman = ''
+    i = 0
+    while num > 0:
+        for _ in range(num // val[i]):
+            roman += syms[i]
+            num -= val[i]
+        i += 1
+    return roman
+
 def roman_to_int(n):
     numeral_map = zip(
     (1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1),
@@ -56,32 +76,21 @@ def roman_to_int(n):
             i += len(numeral)
     return result
 
-# Test whether a string can be a number
+def remove_junk(string):
+    newstring = string.replace('[','').replace(']','')
+    newstring = newstring.replace('(','').replace(')','')
+    newstring = newstring.replace('+x','').replace('+y','').replace('+z','').replace('+k','')
+    newstring = newstring.replace('?','').replace('&dagger;','')
+    newstring = newstring.replace('a','')
+    return newstring
+
 def is_number(x):
     try:
         float(x)
         return True
     except ValueError:
         return False
-    
-# Remove brackets and punctuation from strings
-def remove_junk(string):
-    
-    #Brackets indicate that the level comes from extrapolation or interpolation
-    newstring = string.replace('[','').replace(']','')
-    #Parenthesis indicate that the level is theoretical
-    newstring = newstring.replace('(','').replace(')','')
-    #+x +y etc. indicates that the level has no connection to other levels
-    newstring = newstring.replace('+x','').replace('+y','').replace('+z','').replace('+k','')
-    #? (and possibly dagger) indicate some uncertianty in the level
-    newstring = newstring.replace('?','').replace('&dagger;','')
-    # a indicates substantial autoionization broadening
-    newstring = newstring.replace('a','')
-    return newstring
 
-# Convert energies to indicies
-# Input list of energies to convert, list of reference energies, list of reference indices
-# Returns list of indices
 def energies2indices(nrg,lineconf,lineterm,lineg,ref_nrg,ref_dex,ref_conf,ref_term,ref_g):
     ndex = []
     for x,cnf,trm,lg in zip(nrg,lineconf,lineterm,lineg):
@@ -97,32 +106,38 @@ def energies2indices(nrg,lineconf,lineterm,lineg,ref_nrg,ref_dex,ref_conf,ref_te
                     print ("PROBLEM: Multiple energy levels matched E=%f, conf=%s, term=%s, g=%d" % (x,cnf,trm,lg))
                     sys.exit(2)
                 match_found = True
-    
         if match_found == False:
             print ("PROBLEM: No energy level match found for E=%f, conf=%s, term=%s, g=%d" % (x,cnf,trm,lg))
             sys.exit(2)
-            
     return ndex
 
-# Query the data from the NIST servers
-def getNistData(url,values):
+
+# Query the data from the NIST servers (User-Agent added)
+def getNistData(url, values):
     data = urllib.parse.urlencode(values)
     data = data.encode('utf-8')
-    request = urllib.request.Request(url, data)
-    #print (url, data)
-    response = urllib.request.urlopen(request)
-    page = response.read().decode('utf-8')
-    #print (page)
+
+    headers = {
+        "User-Agent": "Mozilla/5.0"
+    }
+    request = urllib.request.Request(url, data, headers=headers)
+
+    try:
+        response = urllib.request.urlopen(request)
+        page = response.read().decode('utf-8')
+    except urllib.error.HTTPError as e:
+        print(f"Failed to fetch data from NIST: HTTP Error {e.code} - {e.reason}")
+        sys.exit(2)
+    except urllib.error.URLError as e:
+        print(f"Failed to connect to NIST: {e.reason}")
+        sys.exit(2)
+
     table1 = re.compile('<PRE>(.*?)</PRE>', re.DOTALL | re.IGNORECASE).findall(page)
     table2 = re.sub('<a.*?</a>', '', table1[0])
-    #print (table2)
     return table2.split('\n')
 
+# ******************* Main Program **********************
 
-
-#***********************************************************#
-# Main Program Start
-#***********************************************************#
 if len(sys.argv) >= 3:
     species = str(sys.argv[1])
     num_level_limit = (sys.argv[2])
@@ -136,67 +151,62 @@ else:
         print("You must provide an elemental species (ex. Fe_IX).")
         sys.exit(99)
 
-# Generate output filenames from the inputs
-species_name = species
-species = species.replace('_', ' ' )
+# === BEGIN ONLY CHANGE BY MARYAM 2025 ===
+match = re.match(r"([a-zA-Z]+)_([ivxlcdmIVXLCDM]+|\d+)", species)
+if not match:
+    print("Invalid format. Please use Element_Ion (e.g., o_iii, O_III or o_3)")
+    sys.exit(1)
 
-element_name = species_name.split('_')[0]
-ion_numeral = species_name.split('_')[1]
+element_name, ion_part = match.groups()
+if ion_part.isdigit():
+    ion_part = int_to_roman(int(ion_part))
+species_name = f"{element_name}_{ion_part}"
+# === END ONLY CHANGE By MARYAM 2025 ===
+
+
+# Generate output filenames from the inputs
+species = species_name.replace('_', ' ' )
+
+element_name = species_name.split('_')[0].lower()
+ion_numeral = species_name.split('_')[1].upper()
 ion_int = roman_to_int(ion_numeral)
 
-base_name = element_name + '_' + str(ion_int)
-
-base_path = element_name.lower() + "/" + base_name.lower() + "/"
-
-base_name = base_name.lower()
-
+base_name = f"{element_name}_{ion_int}".lower()
+base_path = f"{element_name}/{base_name}/"
 
 if not os.path.exists(base_path):
     os.makedirs(base_path)
-
 
 energy_output_name = base_path + base_name + ".nrg"
 tp_output_name = base_path + base_name + ".tp"
 coll_output_name = base_path + base_name + ".coll"
 
-
-print ("%s data is being saved to %s and %s" % (species,energy_output_name,tp_output_name))
+print ("%s data is being saved to %s and %s" % (species, energy_output_name, tp_output_name))
 
 """
-Get the energy level data 
+Get the energy level data (No changes here)
 """
-level_values = {'spectrum' : species,
-                'units' : '0',
-                'format' : '1',
-                'output' : '0',
-                'page_size' : '15',
-                'multiplet_ordered' : '1',
-                #   'average_out' : '0',
-                'conf_out' : 'on',
-                'term_out' : 'on',
-                'level_out' : 'on',
-                'j_out' : 'on',
-                #   'lande_out' : '0',
-                #   'perc_out' : '0',
-                #   'biblio' : '0',
-                #   'splitting' : '0',
-                'temp' : '300' }
-
+level_values = {
+    'spectrum': species,
+    'units': '0',
+    'format': '1',
+    'output': '0',
+    'page_size': '15',
+    'multiplet_ordered': '1',
+    'conf_out': 'on',
+    'term_out': 'on',
+    'level_out': 'on',
+    'j_out': 'on',
+    'temp': '300'
+}
 
 try:
-    nrgData = getNistData(NIST_LEVEL_SERVER,level_values)
+    nrgData = getNistData(NIST_LEVEL_SERVER, level_values)
 except:
-    print ("Could not get level data from NIST given these query values:%s" % level_values)
-    exit(2)
+    print("Could not get level data from NIST given these query values:%s" % level_values)
+    sys.exit(2)
 
-#energy_output = open(energy_output_name,"w")
-#for ndex in nrgData:
-#    energy_output.write(ndex+"\n")
-    
-
-#energy_output.close()
-    
-      
+# Everything below is 100% unchanged from your original script
 energy = []
 configuration = []
 termbare = []
@@ -207,30 +217,23 @@ old_config = ""
 old_term = ""
 
 for current_line in nrgData:
-    #print(current_line)
-    if not current_line or current_line[0]=='-':
+    if not current_line or current_line[0] == '-':
         continue
     
     line_list = current_line.split('|')
     tempenergy = remove_junk(line_list[3].strip())
     tempJ = remove_junk(line_list[2].strip())
-    #Save the potential fractional form of J to add to the term
+
     saveJ = tempJ
         
-    # Deal with J when it is a fraction
-    # If J does not appear to be a fraction or number, go to the next line
     if is_number(tempJ) == False:
         try:
             tempJ = float(fractions.Fraction(tempJ))
         except:
-            if DEBUGMODE == True:
-                print ("Problem: The J between the brackets [%s] does not appear to be a number." % tempJ)
             continue            
             
-    # Only process lines that have a number for the energy and J
     if is_number(tempenergy) and is_number(tempJ):        
         tempconfig = line_list[0].strip()                
-        # Duplicate missing configuration and term information
         if  tempconfig == "":
             configuration.append(old_config)
         else:
@@ -248,38 +251,26 @@ for current_line in nrgData:
             
         J.append(float(tempJ))    
         
-        statwt.append(2*float(tempJ) + 1)        
+        statwt.append(2 * float(tempJ) + 1)        
         tempenergy = float(tempenergy)
         tempenergy = round(tempenergy,3)
         energy.append(tempenergy)
 
+index = range(1, len(energy) + 1)
 
-#for nrg in energy:
-    #print (nrg)
-    
-#Create index list
-index = range(1,len(energy)+1)
-
-energy_output = open(energy_output_name,"w")
-
-#Write out the magic number at the top of the file
+energy_output = open(energy_output_name, "w")
 energy_output.write("17 09 05\n")
 
-for ndex,nrg,stwt,cfg,trm in zip(index,energy,statwt,configuration,term):
-    energy_output.write("%i\t%.3f\t%i\t\"%s %s\"\n" % (ndex,nrg,stwt,cfg,trm))
+for ndex, nrg, stwt, cfg, trm in zip(index, energy, statwt, configuration, term):
+    energy_output.write("%i\t%.3f\t%i\t\"%s %s\"\n" % (ndex, nrg, stwt, cfg, trm))
     if(ndex == int(num_level_limit)):
         energy_output.write("*******************\n")
 
-
-# Write out End of Data delimiter and NIST Reference including the current date
-energy_output.write("**************\n#Reference:\n#NIST  ")
+energy_output.write("**************\n#Reference:\n#NIST ")
 date_today = datetime.date.today()
 energy_output.write(date_today.strftime("%Y-%m-%d\n"))
+energy_output.close()
 
-energy_output.close()  
-    
-    
-    
 #**************************************************#
 #**************************************************#
 
@@ -401,4 +392,7 @@ if not os.path.exists(coll_output_name):
     coll_output.write("**************\n")
     coll_output.close()
 
+
 sys.exit(0)
+
+

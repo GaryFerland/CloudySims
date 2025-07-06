@@ -11,11 +11,13 @@
 ## >>chng 21 sep 11, from -25.0497 to -25.1070, LAMDA update
 ## >>chng 21 nov 04, from -25.1070 to -25.0451, LAMDA update
 ## >>chng 23 07 15, from -25.0451 to -24.9545, GS updates UMIST to 2012 sets upper limit to T
--24.9545
+## >>chng 25 may 25 from -25.9545 to -25.0523, GS updates UMIST to 2012 sets upper limit to T
+-25.0523
 ## >>chng 21 sep 11, from -24.9374 to -24.9946, LAMDA update
 ## >>chng 21 nov 04, from -24.9946 to -24.9345, LAMDA update
 ## >>chng 23 may 15, from -24.9345 to -24.7721, GS updates 21 reactions to UMIST 2012
--24.7721
+## >>chng 25 may 25, from -24.7721 to -24.8944, GS updates 21 reactions to UMIST 2012
+-24.8944
 ## >>chng 23 may 15, from -25.0107 to -25.0344, GS updates 21 reactions to UMIST 2012
 -25.0344
 -21.8396

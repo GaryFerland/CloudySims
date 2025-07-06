@@ -38,7 +38,8 @@ monitor line luminosity "He 2" 4685.68A 5.9296
 ## >>chng 23 sep 18 add this monitor
 ## >>chng 24 apr 22, from 7.438 to 7.472, Redefine unresolved escape prob. to averaged np-split probabilites
 ## >>chng 25 jan 30, from 7.472 to 7.492, all double results
-monitor line luminosity "He 2" 303.784A 7.492
+## >>chng 25 may 25, from 7.492 to 7.482, adjust Te limit for extrapolating UMIST
+monitor line luminosity "He 2" 303.784A 7.482
 ## >>chng 23 sep 18 add this monitor
 monitor helium 1 ionization -0.0005 error 0.1
 ## >>chng 23 sep 18 add this monitor
@@ -156,7 +157,7 @@ monitor line luminosity "H  1" 4861.32A 6.907,
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
 ## >>chng 21 nov 02, from 6.952 to 6.884, fix bug with overresolving CS in isoseq
-monitor line luminosity "Inwd" 4861.32A 6.884, 
+monitor line luminosity "H  1 Inwd" 4861.32A 6.884,
 ##
 ## >>chng 08 mar 17, from 6.732 to 6.799, r1844 - mostly iso PopOpc and rt_line_one_tauinc changes
 ## >>chng 08 jun 25, from 6.799 to 6.823 (12.1) add source/sink to ioniz ladder

@@ -275,6 +275,7 @@ const ios_base::openmode UNUSED mode_apb = mode_ap | ios_base::binary;
 
 #include "mpi_utilities.h"
 
+void getFileList(vector<string>& results, const string& pattern);
 FILE* open_data( const string& fname, const string& mode, access_scheme scheme=AS_DEFAULT, string* rpath=nullptr );
 void open_data( fstream& stream, const string& fname, ios_base::openmode mode, access_scheme scheme=AS_DEFAULT,
 				string* rpath=nullptr );
@@ -347,8 +348,26 @@ class t_cpu_i
 
 	vector<string> p_exit_status;
 
-	void getPathList( const string& fname, vector<string>& PathList, access_scheme scheme, bool lgRead ) const;
-	void getchecksums( const string& fname );
+	//* split path into a head and tail
+	//* head: part leading up to the last directory separator, empty if separator absent
+	//* tail: part after the last directory separator, full path if separator absent
+	void p_splitPath( const string& path, string& head, string& tail ) const
+	{
+		auto ptr = path.rfind(p_chDirSeparator);
+		if( ptr != string::npos )
+		{
+			head = path.substr(0, ptr);
+			tail = path.substr(++ptr);
+		}
+		else
+		{
+			head.clear();
+			tail = path;
+		}
+	}
+	void p_getPathList( const string& fname, vector<string>& PathList, access_scheme scheme, bool lgRead ) const;
+	void p_getFileList(vector<string>& results, const string& pattern, bool lgStrip) const;
+	void p_getchecksums( const string& fname );
 public:
 	t_cpu_i();
 
@@ -383,19 +402,14 @@ public:
 	void PrintBacktrace(const string& s, bool lgPrintSeed = true);
 	const string& ExecName() const { return p_ExecName; }
 	const char *host_name() const { return HostName; }
-	void printDataPath() const;
+	void printDataPath(const string& pattern) const;
 	string chDirSeparator() const { return string(1,p_chDirSeparator); }
-	void appendDirSeparator(char *path) const
-	{
-		size_t i = strlen(path);
-		path[i++] = p_chDirSeparator;
-		path[i] = '\0';
-	}
 	bool firstOpen() const { return ( nFileDone == 0 ); }
 	bool foundCSMismatch() const { return ( nCSMismatch > 0 ); }
 	const string& chExitStatus(exit_type s) const { return p_exit_status[s]; }
 
 	void initPath();
+	friend void getFileList(vector<string>& results, const string& pattern);
 	friend FILE* open_data( const string& fname, const string& mode, access_scheme scheme, string* rpath );
 	friend void open_data( fstream& stream, const string& fname, ios_base::openmode mode, access_scheme scheme,
 						   string* rpath );

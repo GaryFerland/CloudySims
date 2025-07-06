@@ -44,11 +44,15 @@ monitor ionization fraction hydrogen 2 -16.44
 ## >>chng 25 jan 30, from 16 to 19, all double results
 monitor itrzn 19
 ## >>chng 25 mar 04, from 250 to 270, turn off Ti chemistry for C25 rc1
-monitor itrmax < 270
+## >>chng 25 may 25, from 270 to 311.9, limit to UMIST Te extrapolation
+## >>chng 25 may 26, from 311.9 to 400, adjust Te extrapolation of UMIST
+monitor itrmax < 400
 ## >>chng 25 mar 05, from 4 to 5, turn off Ti chemistry for RC1
 monitor chemistry steps < 5
 ## >>chng 25 mar 05, from 5 to 6, turn off Ti chemistry for RC1
-monitor chemistry searches < 6
+## >>chng 25 may 25, from 6 to 8, limit to UMIST Te extrapolation
+## >>chng 25 may 26, from 8 to 9, adjust Te extrapolation of UMIST
+monitor chemistry searches < 9
 #
 # one of the four corners of grid_extreme, 
 # Figs 17&18 of 2013RMxAA..49..137F

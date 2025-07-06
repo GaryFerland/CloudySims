@@ -8,6 +8,7 @@
 #include "grainvar.h"
 #include "rfield.h"
 #include "atmdat_adfa.h"
+#include "parser.h"
 #include "grains.h"
 
 /*=======================================================*
@@ -259,6 +260,40 @@ STATIC void anomal(double,/*@out@*/double*,/*@out@*/double*,/*@out@*/double*,/*@
 STATIC void bigk(complex<double>,/*@out@*/complex<double>*);
 STATIC void ritodf(double,double,/*@out@*/double*,/*@out@*/double*);
 STATIC void dftori(/*@out@*/double*,/*@out@*/double*,double,double);
+
+inline bool lgValidXXXFile(const string& fnam, long expected)
+{
+	DataParser d(fnam, ES_NONE);
+	d.getline();
+	long magic;
+	if( !d.getTokenOptional(magic) )
+		return false;
+	return ( magic == expected );
+}
+
+/** check validity of a refractive index file by checking the magic number */
+bool lgValidRfiFile(const string& fnam)
+{
+	return lgValidXXXFile(fnam, MAGIC_RFI);
+}
+
+/** check validity of a mixed medium file by checking the magic number */
+bool lgValidMixFile(const string& fnam)
+{
+	return lgValidXXXFile(fnam, MAGIC_MIX);
+}
+
+/** check validity of a size distribution file by checking the magic number */
+bool lgValidSzdFile(const string& fnam)
+{
+	return lgValidXXXFile(fnam, MAGIC_SZD);
+}
+
+/** check validity of an opacity file by checking the magic number */
+bool lgValidOpcFile(const string& fnam)
+{
+	return lgValidXXXFile(fnam, MAGIC_OPC);
+}
 
 void mie_write_opc(/*@in@*/ const char *rfi_file,
 				   /*@in@*/ const char *szd_file,

@@ -55,7 +55,18 @@ t_version::t_version()
 		}
 		else
 		{
-			lgRelease = false;
+			string pre_release;
+			regex relbranch_expr("^c\\d\\d_branch$");
+			smatch what2;
+			if( regex_match(firstPart, what2, relbranch_expr) )
+			{
+				lgRelease = true;
+				pre_release = ", prerelease";
+			}
+			else
+			{
+				lgRelease = false;
+			}
 
 			string rev_pr = "";
 			for( size_t i = 0 ; i < Part.size(); i++ )
@@ -65,7 +76,7 @@ t_version::t_version()
 				else
 					rev_pr += Part[i];
 			}
-			chVersion = "(" + rev_pr + ")";
+			chVersion = "(" + rev_pr + pre_release + ")";
 		}
 	}
 	else

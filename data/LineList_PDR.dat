@@ -79,7 +79,7 @@ c  2  157.636m air
 #
 # oxygen
 O  1 63.1679m  air
-INWD 63.1679m  air
+"O  1 Inwd" 63.1679m  air
 O  1 145.495m  air
 # 
 # neon

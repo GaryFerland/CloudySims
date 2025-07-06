@@ -33,6 +33,18 @@ void InitEnthalpy();
 
 struct GrainPar;
 
+/** check validity of a refractive index file by checking the magic number */
+bool lgValidRfiFile(const string& fnam);
+
+/** check validity of a mixed medium file by checking the magic number */
+bool lgValidMixFile(const string& fnam);
+
+/** check validity of a size distribution file by checking the magic number */
+bool lgValidSzdFile(const string& fnam);
+
+/** check validity of an opacity file by checking the magic number */
+bool lgValidOpcFile(const string& fnam);
+
 /** mie_write_opc
  \param [in] *rfi_file 
  \param [in] *szd_file 

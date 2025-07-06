@@ -23,7 +23,16 @@
 #include "doppvel.h"
 #include "rt_escprob.h"
 
-/* this sets values of pressure.PresTotlCurr, also calls tfidle */
+/**
+ * @brief Evaluates the current total pressure and related physical quantities in the simulation zone.
+ *
+ * This function computes the total pressure at the current zone, including contributions from gas, ram, turbulent,
+ * magnetic, and radiation (line and continuum) pressures. It also updates related quantities such as radiative
+ * acceleration, enthalpy density, and tracks the dominant contributors to the radiation pressure. The function
+ * manages evaluation frequency based on simulation state and flags, and ensures physical consistency of the results.
+ * 
+ * The function is central to the equation of state calculations in the simulation and is called once per zone.
+ */
 void PresTotCurrent()
 {
 	static long int

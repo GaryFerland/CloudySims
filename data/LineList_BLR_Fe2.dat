@@ -81,7 +81,7 @@ Inci  1367   vacuum #  incident continuum at 1367 Angstroms in units of nuF(nu)
 # >>chng 17 may 26, wl from 1215.68 to 1215.67A, update Rydberg constant
 H  1  1215.67A  vacuum #   total Hydrogen Lyman-alpha 1215.67 
 # >>chng 17 may 26, wl from 1215.68 to 1215.67A, update Rydberg constant
-inwd  1215.67A  vacuum #   inward flux of Lyman-alpha
+"H  1 Inwd"  1215.67A  vacuum #   inward flux of Lyman-alpha
 # >>chng 17 may 25, wl from 1215.23 to 1215.13A, up Rydberg constant
 # >>chng 20 aug 22, wl from 1215.13A to 1215.12A, switched from computed to tabulated energies for H and He isoseq
 # >>chng 21 apr 08, wl from 1215.12A to 1215.13A, up 1-e energies to np
@@ -122,7 +122,7 @@ blnd 1549  vacuum #   total of sum of both C IV components
 he 2  1640.41A  vacuum #   total He II Balmer-alpha 1640
 # >>chng 20 aug 22, wl from 1640.43 to 1640.40A, switched from computed to tabulated energies for H and He isoseq
 # >>chng 21 april 7, wl from 1640.40 to 1640.41A, replacing average energy with np energies
-inwd  1640.41A  vacuum #   inward flux of He II Balmer-alpha 1640
+"He 2 Inwd"  1640.41A  vacuum #   inward flux of He II Balmer-alpha 1640
 o  3  1660.81  vacuum #   total O III] 1660.81
 #inwd  1660.81 vacuum #    inward flux of O III] 1660.81
 o  3  1666.15  vacuum #   total O III] 1666.15
@@ -154,7 +154,7 @@ al 2  2660.35 air #    emission from most forbidden line of multiplet
 mg 2  2795.53 air #    total Mg II 2796 of the doublet
 mg 2  2802.71 air #    total Mg II 2803 of the doublet
 blnd   2798   air #  total of sum of both Mg II components
-inwd  2798   air #  inward flux of sum of both Mg II components
+"Mg 2 Inwd"  2798   air #  inward flux of sum of both Mg II components
 #
 # optical emission lines and continua
 # >>chng 17 may 25, wl from 3203.30 to 3203.04A, up Rydberg constant
@@ -185,7 +185,7 @@ ca b  4471.49  air #   total He I 4471, case B approximation
 he 2  4685.68A  air #   total He II 4686 (Paschen-alpha)
 # >>chng 20 aug 22, wl from 4685.64A to 4685.70A, switched from computed to tabulated energies for H and He isoseq
 # >>chng 21 apr 08, wl from 4685.70 to 4685.68A, up 1-e energies to np
-inwd  4685.68A  air #   inward flux of He II 4686
+"He 2 Inwd"  4685.68A  air #   inward flux of He II 4686
 # >>chng 17 may 26, wl from 4861.36 to 4861.33A, update Rydberg constant
 # >>chng 20 aug 22, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
 # >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
@@ -197,7 +197,7 @@ H  1  4861.32A air #   total H-beta 4861
 # >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 # >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 # >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-inwd  4861.32A air #    inward flux of H-beta 4861
+"H  1 Inwd"  4861.32A air #    inward flux of H-beta 4861
 # >>chng 13 aug 01, wl from 5875.61 to 5875.64A, now using middle multiplet wl
 ## >>chng 18 feb 20, updated spectral label from "He 1" 5875.64A to "Blnd" 5877.29A, update He-like triplet labels and wl
 # >>chng 18 mar 06, wl from 5877.29A to 5875.66A, adjust multiplet Blend WL for refraction index
@@ -231,127 +231,127 @@ h  1   1.87510m air #   total H Paschen-alpha
 # and the following command is included in the script
 # save species bands "output.txt" "FeII_bands.ini" "Fe+"
 "Fe 2b" 1067     vacuum
-"InwdBnd" 1067   vacuum
+"Fe 2b Inwd" 1067   vacuum
 "Fe 2b" 1120     vacuum
-"InwdBnd" 1120   vacuum
+"Fe 2b Inwd" 1120   vacuum
 "Fe 2b" 1148     vacuum
-"InwdBnd" 1148   vacuum
+"Fe 2b Inwd" 1148   vacuum
 "Fe 2b" 1212     vacuum
-"InwdBnd" 1212   vacuum
+"Fe 2b Inwd" 1212   vacuum
 "Fe 2b" 1270     vacuum
-"InwdBnd" 1270   vacuum
+"Fe 2b Inwd" 1270   vacuum
 "Fe 2b" 1295     vacuum
-"InwdBnd" 1295   vacuum
+"Fe 2b Inwd" 1295   vacuum
 "Fe 2b" 1330     vacuum
-"InwdBnd" 1330   vacuum
+"Fe 2b Inwd" 1330   vacuum
 "Fe 2b" 1365     vacuum
-"InwdBnd" 1365   vacuum
+"Fe 2b Inwd" 1365   vacuum
 "Fe 2b" 1450     vacuum
-"InwdBnd" 1450   vacuum
+"Fe 2b Inwd" 1450   vacuum
 "Fe 2b" 1485     vacuum
-"InwdBnd" 1485   vacuum
+"Fe 2b Inwd" 1485   vacuum
 "Fe 2b" 1550     vacuum
-"InwdBnd" 1550   vacuum
+"Fe 2b Inwd" 1550   vacuum
 "Fe 2b" 1615     vacuum
-"InwdBnd" 1615   vacuum
+"Fe 2b Inwd" 1615   vacuum
 "Fe 2b" 1650     vacuum
-"InwdBnd" 1650   vacuum
+"Fe 2b Inwd" 1650   vacuum
 "Fe 2b" 1670     vacuum
-"InwdBnd" 1670   vacuum
+"Fe 2b Inwd" 1670   vacuum
 "Fe 2b" 1740     vacuum
-"InwdBnd" 1740   vacuum
+"Fe 2b Inwd" 1740   vacuum
 "Fe 2b" 1787     vacuum
-"InwdBnd" 1787   vacuum
+"Fe 2b Inwd" 1787   vacuum
 "Fe 2b" 1822     vacuum
-"InwdBnd" 1822   vacuum
+"Fe 2b Inwd" 1822   vacuum
 "Fe 2b" 1870     vacuum
-"InwdBnd" 1870   vacuum
+"Fe 2b Inwd" 1870   vacuum
 "Fe 2b" 1930     vacuum
-"InwdBnd" 1930   vacuum
+"Fe 2b Inwd" 1930   vacuum
 "Fe 2b" 2090     air
-"InwdBnd" 2090   air
+"Fe 2b Inwd" 2090   air
 "Fe 2b" 2355     air
-"InwdBnd" 2355   air
+"Fe 2b Inwd" 2355   air
 "Fe 2b" 2430     air
-"InwdBnd" 2430   air
+"Fe 2b Inwd" 2430   air
 "Fe 2b" 2445     air
-"InwdBnd" 2445   air
+"Fe 2b Inwd" 2445   air
 "Fe 2b" 2495     air
-"InwdBnd" 2495   air
+"Fe 2b Inwd" 2495   air
 "Fe 2b" 2610     air
-"InwdBnd" 2610   air
+"Fe 2b Inwd" 2610   air
 "Fe 2b" 2695     air
-"InwdBnd" 2695   air
+"Fe 2b Inwd" 2695   air
 "Fe 2b" 2758     air
-"InwdBnd" 2758   air
+"Fe 2b Inwd" 2758   air
 "Fe 2b" 2780     air
-"InwdBnd" 2780   air
+"Fe 2b Inwd" 2780   air
 "Fe 2b" 2797     air
-"InwdBnd" 2797   air
+"Fe 2b Inwd" 2797   air
 "Fe 2b" 2840     air
-"InwdBnd" 2840   air
+"Fe 2b Inwd" 2840   air
 "Fe 2b" 2935     air
-"InwdBnd" 2935   air
+"Fe 2b Inwd" 2935   air
 "Fe 2b" 2960     air
-"InwdBnd" 2960   air
+"Fe 2b Inwd" 2960   air
 "Fe 2b" 3050     air
-"InwdBnd" 3050   air
+"Fe 2b Inwd" 3050   air
 "Fe 2b" 3180     air
-"InwdBnd" 3180   air
+"Fe 2b Inwd" 3180   air
 "Fe 2b" 3250     air
-"InwdBnd" 3250   air
+"Fe 2b Inwd" 3250   air
 "Fe 2b" 3590     air
-"InwdBnd" 3590   air
+"Fe 2b Inwd" 3590   air
 "Fe 2b" 3910     air
-"InwdBnd" 3910   air
+"Fe 2b Inwd" 3910   air
 "Fe 2b" 4060     air
-"InwdBnd" 4060   air
+"Fe 2b Inwd" 4060   air
 "Fe 2b" 4255     air
-"InwdBnd" 4255   air
+"Fe 2b Inwd" 4255   air
 "Fe 2b" 4558     air
-"InwdBnd" 4558   air
+"Fe 2b Inwd" 4558   air
 "Fe 2b" 4600     air
-"InwdBnd" 4600   air
+"Fe 2b Inwd" 4600   air
 "Fe 2b" 4743     air
-"InwdBnd" 4743   air
+"Fe 2b Inwd" 4743   air
 "Fe 2b" 4855     air
-"InwdBnd" 4855   air
+"Fe 2b Inwd" 4855   air
 "Fe 2b" 4920     air
-"InwdBnd" 4920   air
+"Fe 2b Inwd" 4920   air
 "Fe 2b" 4971     air
-"InwdBnd" 4971   air
+"Fe 2b Inwd" 4971   air
 "Fe 2b" 4975     air
-"InwdBnd" 4975   air
+"Fe 2b Inwd" 4975   air
 "Fe 2b" 5070     air
-"InwdBnd" 5070   air
+"Fe 2b Inwd" 5070   air
 "Fe 2b" 5143     air
-"InwdBnd" 5143   air
+"Fe 2b Inwd" 5143   air
 "Fe 2b" 5270     air
-"InwdBnd" 5270   air
+"Fe 2b Inwd" 5270   air
 "Fe 2b" 5318     air
-"InwdBnd" 5318   air
+"Fe 2b Inwd" 5318   air
 "Fe 2b" 5540     air
-"InwdBnd" 5540   air
+"Fe 2b Inwd" 5540   air
 "Fe 2b" 5865     air
-"InwdBnd" 5865   air
+"Fe 2b Inwd" 5865   air
 "Fe 2b" 6265     air
-"InwdBnd" 6265   air
+"Fe 2b Inwd" 6265   air
 "Fe 2b" 6565     air
-"InwdBnd" 6565   air
+"Fe 2b Inwd" 6565   air
 "Fe 2b" 6910     air
-"InwdBnd" 6910   air
+"Fe 2b Inwd" 6910   air
 "Fe 2b" 7445     air
-"InwdBnd" 7445   air
+"Fe 2b Inwd" 7445   air
 "Fe 2b" 7785     air
-"InwdBnd" 7785   air
+"Fe 2b Inwd" 7785   air
 "Fe 2b" 8625     air
-"InwdBnd" 8625   air
+"Fe 2b Inwd" 8625   air
 "Fe 2b" 10325    air
-"InwdBnd" 10325  air
+"Fe 2b Inwd" 10325  air
 "Fe 2b" 18890A   air
-"InwdBnd" 18890A air
+"Fe 2b Inwd" 18890A air
 "Fe 2b" 22000A   air
-"InwdBnd" 22000A air
+"Fe 2b Inwd" 22000A air
 #
 # Some high critical density forbidden lines
 # >>chng 22 jul 09, wl from 3426.03 to 3425.88A, upgrade to Chianti v10

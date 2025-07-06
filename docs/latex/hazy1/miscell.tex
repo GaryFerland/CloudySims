@@ -47,33 +47,36 @@ It can be used to update the relevant data files.
 
 \section{Compile stars}
 
-Kevin Volk incorporated several large grids of stellar atmosphere
-continua
+Kevin Volk incorporated several large grids of stellar SEDs
 into \Cloudy\ in the 1990's.
 Peter van Hoof has generalized the treatment
 and made several extensions.
-The \cdCommand{table star} commands use these atmospheres.
-The data files can be very large and ``direct access'' is used to read these
-files quickly.
-The result is that the final files are not portable although
-the code used to read or write them is.
-The process of converting the
-stellar atmosphere files from their original format into a form that can
-be read by \Cloudy\ is referred to as compiling the stellar atmospheres.
-
-The \cdCommand{table star} commands will only function
+The \cdCommand{table star} commands use these SEDs.
+These commands will only function
 if the atmosphere files
 are installed as described on the code's web site.
 This is only done once
-while installing \Cloudy\ although it will have to be
-done again if you ever
-change the continuum energy mesh.
+while installing \Cloudy\ although additional SED grids
+can be added later as well of course.
 This step does not need to be done if
 you don't want to use these stellar atmospheres.
 
-Full instructions on how to download and install the stellar continua
+Full instructions on how to download and install the stellar SED grids
 are given at
 \href{https://gitlab.nublado.org/cloudy/cloudy/-/wikis/StellarAtmospheres}{gitlab.nublado.org/cloudy/cloudy/-/wikis/StellarAtmospheres}.
+
+Some stellar SEDs (e.g., the Rauch SEDs) need to be converted to the
+\Cloudy\ internal format before they can be used.
+The process of converting the
+stellar atmosphere files from their original format into a form that can
+be read by \Cloudy\ is referred to as compiling the stellar atmospheres.
+This can be done with the \cdCommand{compile stars} command.
+Some of these SED files are very large and it is benificial to
+create index files to speed up the reading process. This is also done by
+the \cdCommand{compile stars} command. This command will find all
+SED grid files that are installed on the search path (including
+user-defined grids) and compile them if necessary. Files that have
+already been compiled on a previous occasion will be skipped.
 
 \begin{shaded}
 \section{Compile opacities}
@@ -660,7 +663,7 @@ This turns off all charge transfer interactions.
 \subsection{No collisional ionization}
 
 This turns off collisional ionization from ground states of all atoms
-and ions treated as an equivalent two-level system \citep{2017RMxAA..53..385F}.
+and ions treated as an equivalent two-level system \citep{CloudyRevista2017}.
 Specifically, this disables the collisional ionization rate coefficients computed
 with the \citet{Voronov1997} results.  
 This should only be used in experimental conditions.
@@ -1653,12 +1656,13 @@ The blend components need to have type 't' as defined in the \cdCommand{save
   line labels} output and also be associated to a transition. The latter can
 be recognized from the fact that the comment in the \cdCommand{save line
   labels} output has entries for ``index'' and ``Elow''. The custom blends
-will be stored on the line stack and can be used like any other entry on that
+will be stored at the end of the line stack and can be used like any other entry on that
 stack.
 
 If the keyword \cdCommand{quiet} appears on the \cdCommand{set blend} command
-line, and the database model for any of the species in the blend has been
-turned off, the blend will be quietly skipped rather than producing error
+line, and any of the lines included in the blend cannot be found (e.g.,
+because the element has been turned off)
+the blend will be quietly skipped rather than producing error
 messages about missing lines. This is useful if the \cdCommand{set blend}
 command is included in an init file that will be shared between many scripts.
 However, note that the code cannot discriminate between a species that has

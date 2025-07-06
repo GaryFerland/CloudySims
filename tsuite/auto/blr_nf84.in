@@ -192,7 +192,7 @@ monitor line luminosity "H  1" 4861.32A 6.043,
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-monitor line luminosity "Inwd" 4861.32A 5.961, 
+monitor line luminosity "H  1 Inwd" 4861.32A 5.961,
 ##
 ## >>chng 00 oct 03, from 2.01 to 1.73 rebin opt continuum, H- opac bug
 ## >>chng 01 mar 09, from 1.73 to 2.65 change in H redis

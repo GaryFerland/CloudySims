@@ -61,7 +61,8 @@ monitor CO column density 18.15 error 0.1
 ## >>chng 16 mar 21, from 14.62 to 14.58, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 jul 21, from 14.58 to 14.54, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 25 jan 15, from 14.54 to 14.25, GS removes destabilizing reactions, updates others to current UMIST
-monitor O2 column density 14.25 error 0.1
+## >>chng 25 may 25, from 14.25 to 16.3, change limitts to UMIST Te extrapolation
+monitor O2 column density 16.3 error 0.1
 ##
 ## >>chng 05 jul 02, from 14.24 to 14.21, AV stop was not exact
 ## >>chng 05 sep 08, from 14.21 to 14.07, first run in 2 mo
@@ -91,7 +92,8 @@ monitor OH column density 13.8 error 0.1
 ## >>chng 21 sep 11, from 16.62 to 16.71, LAMDA update
 ## >>chng 23 may 15, from 16.71 to 16.66, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 15, from 16.66 to 17, GS removes destabilizing reactions, updates others to current UMIST
-monitor SiO column density 17 error 0.1
+## >>chng 25 may 25, from 17 to 16.93, change limitts to UMIST Te extrapolation
+monitor SiO column density 16.93 error 0.1
 ## 
 ## >>chng 05 mar 25, from 16.38 to 16.47 renorm H pops in level solver
 ## >>chng 05 jun 19, from 16.47 to 16.42, small chng in chem net
@@ -107,12 +109,14 @@ monitor SiO column density 17 error 0.1
 ## >>chng 21 sep 11, from 16.27 to 16.32, LAMDA update
 ## >>chng 23 may 15, from 16.32 to 16.27, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 15, from 16.27 to 16.43, GS removes destabilizing reactions, updates others to current UMIST
-monitor H2O column density 16.43 error 0.1
+## >>chng 25 may 25, from 16.43 to 16.55, change limitts to UMIST Te extrapolation
+monitor H2O column density 16.55 error 0.1
 ##
 ## >>chng 11 jul 16, add these
 ## >>chng 11 jul 18, from 10 to 12.36, leiden_v3 missed initial update, do not monitor tiny N in hack
 ## >>chng 20 aug 03, from 12.36 to 12.02, update H3+ rates Indriola+ 2012
-monitor column density H3+  12.02 error 0.1
+## >>chng 25 may 25, from 12.02 to 12.19, change limitts to UMIST Te extrapolation
+monitor column density H3+  12.19 error 0.1
 ## >>chng 11 jul 18, from 10 to 9.228, leiden_v3 missed initial update, do not monitor tiny N in hack
 monitor column density H2+  9.228 error 0.1
 ## >>chng 11 jul 18, from 10 to 8.703, leiden_v3 missed initial update, do not monitor tiny N in hack
@@ -138,7 +142,8 @@ monitor column density H2*  13.61 error 0.1
 ## >>chng 16 mar 21, from 2.304 to 2.435, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 jul 21, from 2.435 to 2.376, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 25 jan 26, from 2.376 to 2.667, master merg
-monitor column density HeH+ 2.667 error 0.1
+## >>chng 25 may 25, from 2.667 to 2.609, change limitts to UMIST Te extrapolation
+monitor column density HeH+ 2.609 error 0.1
 ## >>chng 11 jul 18, from 10 to 13.48, leiden_v3 missed initial update, do not monitor tiny N in hack
 ## >>chng 12 jul 01, from 13.48 to 13.52, update Badnell DR to 13-electron iso sequence
 ## >>chng 13 dec 18, from 13.52 to 13.45, fixes to Federman shielding
@@ -158,7 +163,8 @@ monitor column density C3   12.01 error 0.1
 ## >>chng 23 may 15, from 13.5 to 13.41, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 15, from 13.41 to 13.22, GS removes destabilizing reactions, updates others to current UMIST
 ## >>chng 25 jan 26, from 13.22 to 13.29, master merg
-monitor column density CN   13.29 error 0.1
+## >>chng 25 may 25, from 13.29 to 12.97, change limitts to UMIST Te extrapolation
+monitor column density CN   12.97 error 0.1
 ## >>chng 11 jul 18, from 10 to 13.63, leiden_v3 missed initial update, do not monitor tiny N in hack
 ## >>chng 11 nov 16, from 13.63 to 13.67, adjust newmole monitors
 ## >>chng 13 mar 23, from 13.67 to 13.71, improve big h2/chemistry consistency
@@ -431,14 +437,16 @@ monitor "HNC " 1652.90m  line intensity -8.152
 ## >>chng 23 may 15, from -9.62 to -9.846, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 15, from -9.846 to -9.782, GS removes destabilizing reactions, updates others to current UMIST
 ## >>chng 25 jan 26, from -9.782 to -9.623, master merg
-monitor "HCS+" 1755.88m  -9.623 line intensity
+## >>chng 25 may 25, from -9.623 to -9.803, change limitts to UMIST Te extrapolation
+monitor "HCS+" 1755.88m  -9.803 line intensity
 ## >>chng 13 jun 27, from -7.453 to -7.633, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 18, from -7.633 to -7.665, fixes to Federman shielding
 ## >>chng 21 sep 11, from -7.665 to -7.569, LAMDA update
 ## >>chng 23 may 15, from -7.569 to -7.641, GS updates 21 reactions to UMIST 2012
 ## >>chng 24 apr 21, from -7.641 to -7.591, GS updates chemistry
-monitor "CS  " 3058.86m  -7.591 line intensity
+## >>chng 25 may 25, from -7.591 to -7.679, change limitts to UMIST Te extrapolation
+monitor "CS  " 3058.86m  -7.679 line intensity
 ## >>chng 13 jun 27, from -7.288 to -7.138, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 20 jul 21, from -7.138 to -7.16, update DR H2 diss as per  2020RNAAS...4...78S

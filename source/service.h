@@ -102,11 +102,12 @@ void service(double tau, double a, double beta);
 
 /** wr_block: write <len> bytes of data from buffer <*ptr> into open binary FILE* <fdes> */
 inline void wr_block(const void *ptr,
-		     size_t len,
-		     FILE *fdes)
+					 size_t len,
+					 FILE *fdes,
+					 const string& fnam = string())
 {
 	if( fwrite(ptr,len,size_t(1),fdes) != 1 ) {
-		printf( "wr_block: error writing to file\n" );
+		fprintf( ioQQQ, "wr_block: error writing to file %s\n", fnam.c_str() );
 		fclose(fdes);
 		cdEXIT(EXIT_FAILURE);
 	}
@@ -114,21 +115,22 @@ inline void wr_block(const void *ptr,
 
 /** wr_block: write <len> bytes of data from buffer <*ptr> into unformatted file <fnam> */
 inline void wr_block(const void *ptr,
-		     size_t len,
-		     const char *fnam)
+					 size_t len,
+					 const string& fnam)
 {
 	FILE *fdes = open_data( fnam, "wb" );
-	wr_block( ptr, len, fdes );
+	wr_block( ptr, len, fdes, fnam );
 	fclose(fdes);
 }
 
 /** rd_block: read <len> bytes of data into buffer <*ptr> from open binary FILE* <fdes> */
 inline void rd_block(void *ptr,
-		     size_t len,
-		     FILE *fdes)
+					 size_t len,
+					 FILE *fdes,
+					 const string& fnam)
 {
 	if( fread(ptr,len,size_t(1),fdes) != 1 ) {
-		printf( "rd_block: error reading from file\n" );
+		fprintf( ioQQQ, "rd_block: error reading from file %s\n", fnam.c_str() );
 		fclose(fdes);
 		cdEXIT(EXIT_FAILURE);
 	}
@@ -136,12 +138,18 @@ inline void rd_block(void *ptr,
 
 /** rd_block: read <len> bytes of data into buffer <*ptr> from unformatted file <fnam> */
 inline void rd_block(void *ptr,
-		     size_t len,
-		     const char *fnam)
+					 size_t len,
+					 const string& fnam)
 {
 	FILE *fdes = open_data( fnam, "rb", AS_LOCAL_ONLY );
-	rd_block( ptr, len, fdes );
+	rd_block( ptr, len, fdes, fnam );
 	fclose(fdes);
 }
+
+/** the routine FileSize() returns FS_UNKNOWN if the file size could not be determined */
+const uintmax_t FS_UNKNOWN = static_cast<uintmax_t>(-1);
+
+/** FileSize: portable and reliable way to get the size of a file */
+uintmax_t FileSize(const string& fpath);
 
 #endif /* SERVICE_ */

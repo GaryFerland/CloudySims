@@ -62,7 +62,8 @@ monitor "H2" column density 21.914 error 0.1
 ## >>chng 20 aug 03, from 12.65 to 12.82, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from 12.82 to 12.87, further update to McCall CR-related rate
 ## >>chng 23 may 15, from 12.87 to 12.77, GS updates 21 reactions to UMIST 2012
-monitor "O2" column density 12.77 error 0.1
+## >>chng 25 may 25, from 12.77 to 12.99, limit to UMIST Te extrapolation
+monitor "O2" column density 12.99 error 0.1
 ## 
 ## >>chng 05 jul 02, from 15.49 to 15.45, A_V zoning was not exact
 ## >>chng 05 aug 24, from 15.45 to 15.35, NA update CO cr ion rate
@@ -162,7 +163,8 @@ monitor column density "H2+"  11.72 error 0.1
 ## >>chng 20 sep 06, from 14.5 to 14.56, further update to McCall CR-related rate
 ## >>chng 21 sep 11, from 14.56 to 14.47, LAMDA update
 ## >>chng 21 nov 04, from 14.47 to 14.56, update mole co data
-monitor column density "H3+"  14.56 error 0.1
+## >>chng 25 may 25, from 14.56 to 14.61, limit to UMIST Te extrapolation
+monitor column density "H3+"  14.61 error 0.1
 ## 
 monitor column density "H2g"  21.89 error 0.1
 ## 
@@ -285,7 +287,8 @@ monitor "HNC " 1652.90m  line intensity -8.826
 ## >>chng 21 apr 16, from -10.03 to -10.09, remove bad UMIST reaction
 ## >>chng 21 sep 11, from -10.09 to -10.62, LAMDA update
 ## >>chng 21 nov 04, from -10.62 to -9.921, update mole co data
-monitor "HCS+" 1755.88m  -9.921 line intensity
+## >>chng 25 may 25, from -9.921 to -9.774, limit to UMIST Te extrapolation
+monitor "HCS+" 1755.88m  -9.774 line intensity
 ## >>chng 13 jun 27, from -7.453 to -7.867, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from -7.867 to -7.891, C to external databases
@@ -397,7 +400,8 @@ monitor "^13CO" 906.599m  -8.777 line intensity
 ## >>chng 21 sep 15, from -11.84 to -11.57, go back to unresolved model
 ## >>chng 21 nov 04, from -11.57 to -10.19, update mole co data
 ## >>chng 23 may 15, from -10.19 to -11.02, GS updates 21 reactions to UMIST 2012
-monitor "CN  " 880.858m  -11.02  line intensity
+## >>chng 25 may 25, from -11.02 to -10.96, limit to UMIST Te extrapolation
+monitor "CN  " 880.858m  -10.96  line intensity
 #
 # pdr_leiden_v1.in
 # class pdr 

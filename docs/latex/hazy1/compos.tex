@@ -322,6 +322,14 @@ If an element is not included in the file it will not be included in the calcula
 The \cdCommand{abundances} command has a \cdCommand{print} option to report
 grain types and abundances entered for each active element.
 
+\subsection{Abundance available}
+
+You can obtain a list of all the abundance files that are present on the search
+path using the \cdCommand{abundance available} command. This will include
+user-installed abundance files by simply listing all files with names ending with \cdFilename{.abn}.
+It is not possible to check whether these files actually contain a valid abundance table.
+This command will exit immediately after printing the list.
+
 \subsection{Older solar abundances}
 
 The default solar abundances are stored in the file 
@@ -1192,6 +1200,28 @@ The contents of that file will
 determine whether the calculations are size-resolved or not,
 irrespective
 of the keywords \cdCommand{distribution} or \cdCommand{single}.
+
+\subsection{Grains available [rfi, mix, szd, opc]}
+
+The command \cdCommand{grains available} allows you to get a list of all grain
+data files that can be found on the search path. This list will include
+user-defined files. The code will check the magic number in the data files and
+use that as a basic test to mark files that are not correctly formatted.
+The files will be searched simply by looking for a given file name extension, as
+shown below.
+
+There are four types of grain data files, which will each be listed
+separately. The four types are: refractive index files (file name extension:
+\cdFilename{.rfi}), mixed medium files (extension: \cdFilename{.mix}), size
+distribution files (extension: \cdFilename{.szd}), and opacity files
+(extension: \cdFilename{.opc}). You can add the following keywords on the
+command line: \cdCommand{rfi}, \cdCommand{mix}, \cdCommand{szd}, or
+\cdCommand{opc}. This will restrict the search to that specific type. Multiple
+keywords can be entered on the same command line. So, e.g., the command
+\cdCommand{grains available rfi szd} will list all refractive index and size
+distribution files, but no mixed medium or opacity files. If no keywords are
+entered, all four types will be listed. This command will exit immediately
+after printing the list.
 
 \subsection{PAHs}
 \label{sec:GrainPAHcommands}

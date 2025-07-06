@@ -645,9 +645,48 @@ will cause the code to return after printing the zone results on the first
 iteration.
 In both cases the calculation ends during the first iteration.
 
-\section{Print path}
+\section{Print path ["pattern"]}
 
-The path giving the location of the data files will be printed.
+This command has an optional parameter between double quotes. If this
+parameter is omitted, each of the components of the search path will be
+printed, one per line. The search path is discussed in more detail in
+Section~\ref{sec:SearchPath}.
+
+If the optional parameter is included, it will be treated as a regular
+expression to match the names of data files that will be searched along the
+\Cloudy\ search path. The same rules for searching files will be used as
+explained in Section~\ref{sec:ReadingWritingFiles}. The full path to each file
+that matches the pattern will be printed, one per line. A simple example would
+be:
+\begin{verbatim}
+print path "foo.dat"
+\end{verbatim}
+which will print every instance of the file \cdFilename{foo.dat} along the
+search path. \Cloudy\ would use the first match in that list. So this command
+can be useful to figure out which version of a given data file will be used if
+multiple versions are available on the search path, or simply to figure out
+where a given data file is stored. It is also possible to use wildcards in the
+file name. Note that the standard C++ ECMAScript grammar for regular
+expressions will be used, {\em not} the familiar wildcard characters that most
+UNIX shells use. An example would be:
+\begin{verbatim}
+print path ".*ascii"
+\end{verbatim}
+which will produce a list of all the stellar atmosphere grids that you have
+installed on the search path. You can also include subdirectories in the pattern.
+An example would be:
+\begin{verbatim}
+print path "SED/.*sed"
+\end{verbatim}
+which will produce a list of all the SED files installed on the search path.
+Note that ECMAScript wildcards are not supported in the subdirectory part of
+the pattern, e.g. \verb!".*/.*sed"! as a pattern will not work as intended. If
+you need to escape certain characters with a backslash (e.g. \verb!"\."! to
+match a literal dot and not use it as a wildcard character) there is no need
+to escape the backslash itself (i.e., only use a single backslash: \verb!"\."!
+and not \verb!"\\."!). On Windows systems, the backslash \verb!"\"! should be
+used as a directory separator. Multiple \cdCommand{print path} commands can be
+included in the same script.
 
 \section{Print quiet}
 

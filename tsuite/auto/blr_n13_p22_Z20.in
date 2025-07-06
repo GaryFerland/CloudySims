@@ -179,7 +179,7 @@ monitor line luminosity "H  1" 4861.32A 8.413 error 0.15
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-monitor line luminosity "Inwd" 4861.32A 8.324, 
+monitor line luminosity "H  1 Inwd" 4861.32A 8.324,
 ## 
 ## >>chng 06 jul 18, from 9.156 to 9.280, RP major upgrade VS coll strengths
 ## >>chng 07 oct 22, from 9.280 to 9.381, resolve l-levels of h-like sequence

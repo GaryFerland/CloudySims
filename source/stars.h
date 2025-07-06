@@ -38,8 +38,6 @@ struct process_counter
 /** List all the available TABLE STAR <grid> commands by checking installed *.mod files */
 void AtmospheresAvail();
 
-/** AtlasCompile rebin Kurucz stellar models to match energy grid of code */
-bool AtlasCompile(process_counter& pc);
 /** AtlasInterpolate interpolate on atlas model atmospheres, by K Volk */
 long AtlasInterpolate(double val[], /* val[nval] */
 		      long *nval,
@@ -51,7 +49,7 @@ long AtlasInterpolate(double val[], /* val[nval] */
 		      double *Thigh);
 
 /** CoStarCompile rebin costar stellar models to match energy grid of code*/
-bool CoStarCompile(process_counter& pc);
+bool CoStarCompile();
 /** CoStarInterpolate read in and interpolate on Werner grid of PN atmospheres, by K Volk */
 long CoStarInterpolate(double val[], /* requested model parameters */
 		       long *nval,
@@ -64,6 +62,7 @@ long CoStarInterpolate(double val[], /* requested model parameters */
 
 /** GridCompile rebin user supplied stellar models to match energy grid of code */
 bool GridCompile(const string& InName);
+bool GridCompile(const string& fnam, process_counter& pc);
 /** GridInterpolate read in and interpolate on user supplied grid of atmospheres */
 long GridInterpolate(double val[], /* val[nval] */
 		     long *nval,
@@ -73,8 +72,6 @@ long GridInterpolate(double val[], /* val[nval] */
 		     double *Tlow,
 		     double *Thigh);
 
-/** HaardtMadauCompile compile Haardt & Madau SEDs */
-bool HaardtMadauCompile(process_counter& pc);
 /** HaardtMadauInterpolate read in and interpolate on Haardt & Madau SEDs */
 long HaardtMadauInterpolate(double val,
 			    int version,
@@ -82,16 +79,12 @@ long HaardtMadauInterpolate(double val,
 			    double *zlow,
 			    double *zhigh);
 
-/** KhaireSrianandCompile compile Khaire & Srianand SEDs */
-bool KhaireSrianandCompile(process_counter& pc);
 /** KhaireSrianandInterpolate read in and interpolate on Khaire & Srianand SEDs */
 long KhaireSrianandInterpolate(double val,
 			       int Q,
 			       double *zlow,
 			       double *zhigh);
 
-/** Kurucz79Compile rebin Kurucz79 stellar models to match energy grid of code */
-bool Kurucz79Compile(process_counter& pc);
 /** Kurucz79Interpolate read in and interpolate on Kurucz 1979 grid of atmospheres */
 long Kurucz79Interpolate(double val[], /* val[nval] */
 			 long *nval,
@@ -100,8 +93,6 @@ long Kurucz79Interpolate(double val[], /* val[nval] */
 			 double *Tlow,
 			 double *Thigh);
 
-/** MihalasCompile rebin Mihalas stellar models to match energy grid of code */
-bool MihalasCompile(process_counter& pc);
 /** MihalasInterpolate read in and interpolate on Mihalas grid of atmospheres */
 long MihalasInterpolate(double val[], /* val[nval] */
 			long *nval,
@@ -112,7 +103,7 @@ long MihalasInterpolate(double val[], /* val[nval] */
 
 /** RauchCompile create ascii and mod files for Rauch atmospheres
  * return 0 if success, 1 if failure */
-bool RauchCompile(process_counter& pc);
+bool RauchCompile();
 /** RauchInterpolateHydr get one of the Rauch pure hydrogen model atmospheres */
 long RauchInterpolateHydr(double val[], /* val[nval] */
 			  long *nval,
@@ -170,10 +161,8 @@ bool StarburstInitialize(const string& chInName,
 			 const string& chOutName,
 			 sb_mode mode);
 /** StarburstCompile, rebin Starburst99 model output to match energy grid of code */
-bool StarburstCompile(process_counter& pc);
+bool StarburstCompile();
 
-/** TlustyCompile rebin Tlusty OSTAR2002 stellar models to match energy grid of code */
-bool TlustyCompile(process_counter& pc);
 /** TlustyInterpolate get one of the Tlusty OSTAR2002 model atmospheres */
 long TlustyInterpolate(double val[], /* val[nval] */
 		       long *nval,
@@ -184,8 +173,6 @@ long TlustyInterpolate(double val[], /* val[nval] */
 		       double *Tlow,
 		       double *Thigh);
 
-/** WernerCompile rebin Werner stellar atmospheres to match cloudy energy grid */
-bool WernerCompile(process_counter& pc);
 /** WernerInterpolate read in and interpolate on Werner grid of PN atmospheres, by K Volk */
 long WernerInterpolate(double val[], /* val[nval] */
 		       long *nval,
@@ -194,8 +181,6 @@ long WernerInterpolate(double val[], /* val[nval] */
 		       double *Tlow,
 		       double *Thigh);
 
-/** WMBASICCompile rebin WMBASIC stellar models to match energy grid of code */
-bool WMBASICCompile(process_counter& pc);
 /** WMBASICInterpolate read in and interpolate on WMBASIC grid of hot star atmospheres */
 long WMBASICInterpolate(double val[], /* val[nval] */
 			long *nval,

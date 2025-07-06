@@ -2805,20 +2805,16 @@ void CloseSaveFiles( bool lgFinal )
 		 * this means ignoring "no clobber" options */
 		if( save.params[i].ipPnunit != NULL && ( !save.lgNoClobber[i] || lgFinal ) )
 		{
+			fclose( save.params[i].ipPnunit );
+
 			/* Test that any FITS files are the right size! */ 
 			if( save.lgFITS[i] && !save.lgXSPEC[i] )
 			{
-				/* \todo 2 This overflows for file sizes larger (in bytes) than
-				 * a long int can represent (about 2GB on most 2007 systems)  */
-				fseek(save.params[i].ipPnunit, 0, SEEK_END);
-				long file_size = ftell(save.params[i].ipPnunit);
-				if( file_size%2880 )
-				{
-					fprintf( ioQQQ, " PROBLEM  FITS file is wrong size!\n" );
-				}
+				auto file_size = FileSize(save.chFileName[i]);
+				if( file_size == FS_UNKNOWN || file_size%2880 != 0 )
+					fprintf( ioQQQ, " PROBLEM FITS file %s has the wrong size!\n", save.chFileName[i].c_str() );
 			}
 
-			fclose( save.params[i].ipPnunit );
 			save.params[i].ipPnunit = NULL;
 		}
 	}

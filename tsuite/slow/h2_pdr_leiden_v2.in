@@ -77,7 +77,8 @@ monitor CO column density 17.18 error 0.1
 ## >>chng 20 aug 03, from 13.53 to 13.74, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from 13.74 to 13.79, further update to McCall CR-related rates from r14260
 ## >>chng 25 jan 15, from 13.79 to 13.67, GS removes destabilizing reactions, updates others to current UMIST
-monitor O2 column density 13.67 error 0.1
+## >>chng 25 may 25, from 13.67 to 14.81, change limitts to UMIST Te extrapolation
+monitor O2 column density 14.81 error 0.1
 ##
 ## >>chng 06 sep 30, from 14.24 to 14.17, rjrw merge chem, corr several bugs
 ## >>chng 07 jan 10, from 14.17 to 14.43, H3+ to McCall rates
@@ -88,7 +89,8 @@ monitor O2 column density 13.67 error 0.1
 ## >>chng 20 aug 03, from 14.54 to 14.77, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from 14.77 to 14.81, further update to McCall CR-related rates from r14260
 ## >>chng 25 jan 15, from 14.81 to 14.73, GS removes destabilizing reactions, updates others to current UMIST
-monitor OH column density 14.73 error 0.1
+## >>chng 25 may 25, from 14.73 to 14.83, change limitts to UMIST Te extrapolation
+monitor OH column density 14.83 error 0.1
 ##
 ## >>chng 05 jul 17, from 14.91 to 14.83 first run in 6 mo
 ## >>chng 07 jan 10, from 14.83 to 15.06, H3+ to McCall rates
@@ -102,7 +104,8 @@ monitor OH column density 14.73 error 0.1
 ## >>chng 20 sep 06, from 15.27 to 15.31, further update to McCall CR-related rates from r14260
 ## >>chng 25 jan 15, from 15.31 to 15.63, GS removes destabilizing reactions, updates others to current UMIST
 ## >>chng 25 jan 26, from 15.63 to 15.49, master merg
-monitor SiO column density 15.49 error 0.1
+## >>chng 25 may 25, from 15.49 to 15.59, change limitts to UMIST Te extrapolation
+monitor SiO column density 15.59 error 0.1
 ## 
 ## >>chng 11 jul 16, add these
 ## >>chng 11 jul 16, from 10 to 13.64, add column density monitors
@@ -110,7 +113,8 @@ monitor SiO column density 15.49 error 0.1
 ## >>chng 12 jul 01, from 13.58 to 13.64, update Badnell DR to 13-electron iso sequence
 ## >>chng 20 aug 03, from 13.64 to 13.58, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from 13.58 to 13.64, further update to McCall CR-related rates from r14260
-monitor column density H3+  13.64 error 0.1
+## >>chng 25 may 25, from 13.64 to 13.71, change limitts to UMIST Te extrapolation
+monitor column density H3+  13.71 error 0.1
 ## >>chng 11 jul 16, from 10 to 11.62, add column density monitors
 monitor column density H2+  11.62 error 0.1
 ## >>chng 11 jul 16, from 10 to 10.38, add column density monitors
@@ -142,7 +146,8 @@ monitor column density HeH+ 10.1 error 0.1
 ## >>chng 20 jul 21, from 14.8 to 14.84, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from 14.84 to 15.03, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from 15.03 to 15.08, LAMDA update
-monitor column density H2O  15.08 error 0.1
+## >>chng 25 may 25, from 15.08 to 15.19, change limitts to UMIST Te extrapolation
+monitor column density H2O  15.19 error 0.1
 ## >>chng 11 jul 16, from 10 to 14.03, add column density monitors
 ## >>chng 15 mar 07, from 14.03 to 14.07, merging newmesh branch
 ## >>chng 16 mar 21, from 14.07 to 14.16, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
@@ -161,7 +166,8 @@ monitor column density C2   12.62 error 0.1
 ## >>chng 23 may 15, from 10.16 to 9.673, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 15, from 9.673 to 9.756, GS removes destabilizing reactions, updates others to current UMIST
 ## >>chng 25 jan 26, from 9.756 to 9.702, master merg
-monitor column density C3   9.702 error 0.1
+## >>chng 25 may 25, from 9.702 to 9.536, change limitts to UMIST Te extrapolation
+monitor column density C3   9.536 error 0.1
 ## >>chng 11 jul 16, from 10 to 13.51, add column density monitors
 ## >>chng 11 dec 12, from 13.51 to 13.46, bug-fix for updating grain opacity (r5759)
 ## >>chng 12 aug 21, from 13.46 to 13.5, fix CRPHOT botches and HD crash
@@ -172,7 +178,8 @@ monitor column density C3   9.702 error 0.1
 ## >>chng 23 may 15, from 14.01 to 13.9, GS updates 21 reactions to UMIST 2012
 ## >>chng 24 apr 21, from 13.9 to 13.86, GS updates chemistry
 ## >>chng 24 jun 08, from 13.86 to 13.9, GS rm 3 TiO reactions
-monitor column density CN   13.9 error 0.1
+## >>chng 25 may 25, from 13.9 to 13.8, change limitts to UMIST Te extrapolation
+monitor column density CN   13.8 error 0.1
 ## >>chng 11 jul 16, from 10 to 14.1, add column density monitors
 ## >>chng 16 mar 21, from 14.1 to 14.18, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from 14.18 to 14.04, update H3+ rates Indriola+ 2012
@@ -382,7 +389,8 @@ monitor "H2O " 538.142m line intensity -8.337
 ## >>chng 21 sep 11, from -11.31 to -11.81, LAMDA update
 ## >>chng 21 nov 04, from -11.81 to -11.53, update co mole data
 ## >>chng 23 may 15, from -11.53 to -11.61, GS updates 21 reactions to UMIST 2012
-monitor "HNC " 1652.90m  line intensity -11.61
+## >>chng 25 may 25, from -11.61 to -11.69, change limitts to UMIST Te extrapolation
+monitor "HNC " 1652.90m  line intensity -11.69
 ## >>chng 13 jun 27, from -8.563 to -13.53, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 13 oct 30, from -13.53 to -13.57, change H2/HD secondary scale factors
@@ -393,7 +401,8 @@ monitor "HNC " 1652.90m  line intensity -11.61
 ## >>chng 21 sep 11, from -13.61 to -12.37, LAMDA update
 ## >>chng 21 nov 04, from -12.37 to -13.16, update co mole data
 ## >>chng 23 may 15, from -13.16 to -13.21, GS updates 21 reactions to UMIST 2012
-monitor "HCS+" 1755.88m  -13.21 line intensity
+## >>chng 25 may 25, from -13.21 to -13.12, change limitts to UMIST Te extrapolation
+monitor "HCS+" 1755.88m  -13.12 line intensity
 ## >>chng 13 jun 27, from -7.453 to -10.95, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 13 oct 30, from -10.95 to -10.98, change H2/HD secondary scale factors
@@ -503,7 +512,8 @@ monitor "CO  " 325.137m  -14.48 line intensity
 ## >>chng 21 nov 04, from -10.04 to -9.86, update co mole data
 ## >>chng 23 may 15, from -9.86 to -9.773, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 15, from -9.773 to -9.832, GS removes destabilizing reactions, updates others to current UMIST
-monitor "^13CO" 906.599m  -9.832 line intensity
+## >>chng 25 may 25, from -9.832 to -9.791, change limitts to UMIST Te extrapolation
+monitor "^13CO" 906.599m  -9.791 line intensity
 ## >>chng 13 jun 27, from -8.247 to -12.91, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 13 oct 30, from -12.91 to -12.96, change H2/HD secondary scale factors
@@ -517,7 +527,8 @@ monitor "^13CO" 906.599m  -9.832 line intensity
 ## >>chng 21 nov 04, from -12.62 to -12.76, update co mole data
 ## >>chng 23 may 15, from -12.76 to -12.9, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 15, from -12.9 to -12.95, GS removes destabilizing reactions, updates others to current UMIST
-monitor "CN  " 880.858m  -12.95  line intensity
+## >>chng 25 may 25, from -12.95 to -13.01, change limitts to UMIST Te extrapolation
+monitor "CN  " 880.858m  -13.01  line intensity
 #
 # h2_pdr_leiden_v2.in
 # class pdr  
