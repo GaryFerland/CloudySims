@@ -48,10 +48,10 @@ int main( void )
 			cdRead( "# set dielectronic recombination badnell "  );
 			cdRead( "# set dielectronic recombination kludge off "  );
 
-			snprintf(chLine,sizeof(chLine),"phi(h) %f ",flux);
+			sprintf(chLine,"phi(h) %f ",flux);
 			cdRead( chLine  );
 
-			snprintf(chLine,sizeof(chLine),"hden %f ",hden);
+			sprintf(chLine,"hden %f ",hden);
 			cdRead( chLine  );
 
 			/* log of the ionization parameter */

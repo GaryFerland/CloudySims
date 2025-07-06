@@ -37,17 +37,17 @@ if [[ $is_repo != 'true' ]]; then
 	exit 1
 fi
 
-tag=`git describe --tags --abbrev=0 --exact 2> /dev/null`
+tag=`git describe --tags --abbrev=0 2> /dev/null`
 if ! [ -z "$tag" ]; then
 	#
 	# Cloudy version number, sans the initial 'c'.
-	# This branch is for official releases or release candidates.
+	# This branch is for official releases.
 	#
 	tag=`echo $tag | sed -E 's/^(c|C)//'`
 	echo $tag
 else
 	#
-	# This branch is for development and release branches.
+	# This branch is for development.
 	#
 	sha1=`git log --oneline | head -n 1 | awk '{print $1}'`
 	branch=`git branch | grep '^\*' | sed 's/(HEAD//' | awk '{ print $2 }'`

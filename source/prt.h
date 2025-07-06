@@ -126,7 +126,6 @@ struct t_blend {
 	bool lgQuiet;
 	bool lgIgnore;
 	vector<LineID> component;
-	vector<long> compID;
 	t_blend() : chLabel("Blnd"), lgQuiet(false), lgIgnore(false) {}
 };
 

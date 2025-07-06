@@ -19,7 +19,6 @@ while( defined( $input = glob("*") ) ) {
 		 and $ll[1] ne "txt"
 		 and $ll[1] ne "exe"
 		 and $ll[1] ne "pdf"
-		 and $ll[1] ne "sed"
 		 and $ll[1] ne "vsz" ) ) {
 		print "deleting $input...\n";
 		unlink "$input";

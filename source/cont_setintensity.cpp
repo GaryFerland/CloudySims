@@ -666,8 +666,7 @@ void ContSetIntensity()
 		/* if we are in a molecular cloud the current logic could badly fail
 		* do not let electron density fall below 1e-7 of H density */
 		1e-7*dense.gas_phase[ipHYDROGEN];
-	/* do not reevaluate line escape probs since opacities not set up yet */
-	EdenChange( dense.xIonDense[ipHYDROGEN][1] + EdenExtraLocal, false );
+	EdenChange( dense.xIonDense[ipHYDROGEN][1] + EdenExtraLocal );
 
 	/* hydrogen case B recombination coefficient */
 	HCaseBRecCoeff = (-9.9765209 + 0.158607055*phycon.telogn[0] + 0.30112749*
@@ -693,7 +692,7 @@ void ContSetIntensity()
 	do
 	{
 		/* update electron density */
-		EdenChange( newEden, false );
+		EdenChange( newEden );
 		double RatioIoniz = 
 			(CollIoniz*dense.eden+OtherIonization)/(HCaseBRecCoeff*dense.eden);
 		if( RatioIoniz<1e-3 )
@@ -858,7 +857,7 @@ void ContSetIntensity()
 	//ASSERT( dense.xIonDense[ipHYDROGEN][0] >0 && dense.xIonDense[ipHYDROGEN][1]>= 0.);
 
 	/* update electron density */
-	EdenChange( newEden, false );
+	EdenChange( newEden );
 
 	if( dense.eden <= SMALLFLOAT )
 	{
@@ -911,11 +910,11 @@ void ContSetIntensity()
 	dense.eden += EdenHeav;
 
 	/* >>chng 05 jan 05, insure positive eden */
-	EdenChange( MAX2( SMALLFLOAT , dense.eden ), false );
+	EdenChange( MAX2( SMALLFLOAT , dense.eden ) );
 
 	if( dense.EdenSet > 0. )
 	{
-		EdenChange( dense.EdenSet, false );
+		EdenChange( dense.EdenSet );
 	}
 
 	dense.EdenHCorr = dense.eden;
