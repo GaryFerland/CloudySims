@@ -165,26 +165,6 @@ void gridXspec(realnum xc[], long int nInterpVars)
 	return;
 }
 
-/** GridAllocXSPECData - allocate the memory for grid.Spectra */
-void GridAllocXSPECData()
-{
-	DEBUG_ENTRY( "GridAllocXSPECData()" );
-
-	grid.Spectra.reserve(NUM_OUTPUT_TYPES);
-	for( long i1=0; i1 < NUM_OUTPUT_TYPES; i1++ )
-	{
-		if( grid.lgOutputTypeOn[i1] )
-		{
-			grid.Spectra.reserve(i1,grid.totNumModels);
-			for( long i2=0; i2 < grid.totNumModels; i2++ )
-			{
-				grid.Spectra.reserve(i1,i2,rfield.nflux);
-			}
-		}
-	}
-	grid.Spectra.alloc();
-}
-
 /*GridRetrieveXSPECData - obtain the correct spectrum for each grid point */
 void GridRetrieveXSPECData(int option)
 {
@@ -198,7 +178,21 @@ void GridRetrieveXSPECData(int option)
 
 	/* allocate some arrays if first call and save continuum energies. */
 	if( grid.Spectra.empty() )
-		GridAllocXSPECData();
+	{
+		grid.Spectra.reserve(NUM_OUTPUT_TYPES);
+		for( long i1=0; i1 < NUM_OUTPUT_TYPES; i1++ )
+		{
+			if( grid.lgOutputTypeOn[i1] )
+			{
+				grid.Spectra.reserve(i1,grid.totNumModels);
+				for( long i2=0; i2 < grid.totNumModels; i2++ )
+				{
+					grid.Spectra.reserve(i1,i2,rfield.nflux);
+				}
+			}
+		}
+		grid.Spectra.alloc();
+	}
 
 	ASSERT( optimize.nOptimiz >= 0 && optimize.nOptimiz < grid.totNumModels );
 	ASSERT( grid.lgOutputTypeOn[option] );

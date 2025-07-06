@@ -175,7 +175,6 @@ STATIC void PrintSpectrum ()
 		for( i=0; i < LineSave.nsum; i++ )
 		{
 			/* never print unit normalization check, at least in main list */
-			/* these flags are set in isCat */
 			if( LineSave.lines[i].isUnit() || LineSave.lines[i].isUnitD() )
 				lgPrt[i] = false;
 			else if( !prt.lgPrnColl && LineSave.lines[i].isCollisional()  )

@@ -73,11 +73,11 @@ int main( void )
 			cdRead( "stop zone 1 "  );
 
 			/* set the hydrogen density */
-			snprintf(chLine,sizeof(chLine),"hden %f ",hden);
+			sprintf(chLine,"hden %f ",hden);
 			cdRead( chLine  );
 
 			/* sets the gas kinetic temperature */
-			snprintf(chLine,sizeof(chLine),"constant temper %f ",telog);
+			sprintf(chLine,"constant temper %f ",telog);
 			cdRead( chLine  );
 
 			/* identify sources of heating and cooling */

@@ -565,7 +565,10 @@ void lines_continuum(void)
 			{
 				for( long n=0; n < iso_sp[ipISO][nelem].numLevels_max; n++ )
 				{
-					if( LineSave.ipass == 0 )
+					if( LineSave.ipass < 0 )
+						// this pass only counting lines
+						linadd(0.,0_vac,"dumy",'i',"radiative recombination continuum");
+					else if( LineSave.ipass == 0 )
 					{
 						// save wavelength and label
 						/* chIonLbl generates a null terminated 4 char string, of form "C  2"
@@ -597,7 +600,10 @@ void lines_continuum(void)
 		{
 			if(  dense.lgElmtOn[nelem] )
 			{
-				if( LineSave.ipass == 0 )
+				if( LineSave.ipass < 0 )
+					// this pass only counting lines
+					linadd(0.,0_vac,"dumy",'i',"radiative recombination continuum");
+				else if( LineSave.ipass == 0 )
 				{
 					string chLabel = chIonLbl( nelem+1, ion+1 );
 					double wn = RYD_INF * Heavy.Valence_IP_Ryd[nelem][ion];

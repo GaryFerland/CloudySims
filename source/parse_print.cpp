@@ -303,10 +303,8 @@ void ParsePrint(
 	
 	else if( p.nMatch("PATH") )
 	{
-		string pattern;
-		p.GetQuote(pattern);
-		/* print the path, the case where the quoted string is absent will be handled in printDataPath() */
-		cpu.i().printDataPath(pattern);
+		/* print the path */
+		cpu.i().printDataPath();
 	}
 
 	/*else if( p.nMatch("H-LI"))*/
