@@ -168,7 +168,8 @@ monitor "H2O " 538.142m line intensity -21.83
 ## >>chng 21 sep 11, from -26.35 to -26.8, LAMDA update
 ## >>chng 23 may 15, from -26.8 to -26.75, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 jul 15, from -26.75 to -26.82, GS update UMIST to 2012 and set upper limit on T
-monitor "HNC " 1652.90m  line intensity -26.82
+## >>chng 25 jul 11, from -26.82 to -26.78, GS Si chemistry, UMIST 2022
+monitor "HNC " 1652.90m  line intensity -26.78
 ## >>chng 13 jun 27, from -8.563 to -25.51, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 04, from -25.51 to -25.24, fix double-counting of big-H2 Solomon rate
@@ -234,7 +235,8 @@ monitor "^13CO" 906.599m  -21.32 line intensity
 ## >>chng 21 sep 11, from -22.41 to -23.42, LAMDA update
 ## >>chng 21 sep 15, from -23.42 to -22.38, go back to unresolved model
 ## >>chng 23 may 15, from -22.38 to -22.34, GS updates 21 reactions to UMIST 2012
-monitor "CN  " 880.858m  -22.34  line intensity
+## >>chng 25 jul 11, from -22.34 to -22.3, GS Si chemistry, UMIST 2022
+monitor "CN  " 880.858m  -22.3  line intensity
 ## 
 # h2_hminus.in
 # class limit  

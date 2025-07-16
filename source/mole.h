@@ -564,27 +564,42 @@ bool parse_species_label( const char label[], ChemNuclideList &atomsLeftToRight,
 bool parse_species_label( const char mylab[], ChemNuclideList &atomsLeftToRight, vector<int> &numAtoms, string &embellishments,
 	bool &lgExcit, int &charge, bool &lgGas_Phase );
 
-/*HMRATE compile molecular rates using Hollenbach and McKee fits */
-/* #define HMRATE(a,b,c) ( ((b) == 0 && (c) == 0) ? (a) : \
- *	( ((c) == 0) ? (a)*pow(phycon.te/300.,(b)) : \
- *	( ((c)/phycon.te > 50.) ? 0. : ( ((b) == 0) ?  (a)*exp(-(c)/phycon.te) : \
- *					 (a)*pow(phycon.te/300.,(b))*exp(-(c)/phycon.te) ) ) ) ) */
-
-/* hmrate4 is clone of hmrate but takes a, b, c and te as explicit arguments */
+/**
+ * @brief Computes the UMIST rate coefficient for a reaction as a function of temperature.
+ *
+ * This function evaluates the rate coefficient using the UMIST formula:
+ *   k(T) = a * (T/300)^b * exp(-c/T)
+ * with safeguards to prevent extrapolation outside the intended temperature range.
+ *
+ * - For b > 0, temperature is capped at 5000 K to avoid unphysical rates at high T.
+ * - For b < 0 or c < 0, temperature is floored at 10 K to avoid unphysical rates at low T.
+ * - If both b and c are zero, returns a constant rate.
+ *
+ * @param a   Pre-exponential factor (rate coefficient at reference temperature).
+ * @param b   Temperature exponent.
+ * @param c   Activation energy (in temperature units).
+ * @param te  Gas temperature (in Kelvin).
+ * @return    The computed rate coefficient.
+ */
 inline double hmrate4( double a, double b, double c, double te )
 {
 	/* UMIST rates are simple temperature power laws that
 	 * can become large at the high temperatures Cloudy
 	 * may encounter. Similarly they were not intended for very low temperatures.
-	 * Do not extrapolate rates far from the ~100 kK temperatures
-	 * UMIST was designed for.
-	 * THIS CODE MUST BE KEPT PARALLEL WITH HMRATE IN MOLE_REACTIONS.CPP */ 
+	 * Do not extrapolate rates far from the ~100 kK temperatures intended for UMIST */
+
+	 /* b appears as T_300^b so do not want to extrapolate b>0
+	  * to very large T*/
 	if (b >0.)	
 		te = min(te, 5000.);
+	/* similarly b<0 should not go to very low temperatures */
 	if(b <0.)
 		te = max(te, 10.);
+	/* c enters as exp(-c/T) so do not extr*/
 	if( c < 0. )
 		te = max(te,10.);
+
+	/* evaluate the UMIST rate */
 	if( b == 0. && c == 0. )
 		return a;
 	else if( c == 0. )

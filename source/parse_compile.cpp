@@ -421,30 +421,28 @@ void ParseCompile(Parser &p)
 			 *   a new *.idx file will be generated
 			 * - if the *.idx file exists, it will not be touched. */
 
+			/* first handle the files that need an extra step to create the *.ascii file */
+
+			fprintf( ioQQQ, " Looking if any *.ascii files need to be created\n\n" );
+
+			/* do the costar OB stars */
+			lgProblems = lgProblems || CoStarCompile();
+			/* do the rauch PN central stars */
+			lgProblems = lgProblems || RauchCompile();
+			/* do the Starburst99 sample output */
+			lgProblems = lgProblems || StarburstCompile();
+
+			/* now compile the *.ascii files */
+
+			fprintf( ioQQQ, "\n Now compiling the *.ascii files\n\n" );
+
 			process_counter pc;
 
-			/* These are the current Atlas grids */
-			lgProblems = lgProblems || AtlasCompile(pc);
-			/* do the costar OB stars */
-			lgProblems = lgProblems || CoStarCompile(pc);
-			/* legacy Atlas grid - for backward compatibility only */
-			lgProblems = lgProblems || Kurucz79Compile(pc);
-			/* Mihalas grid - for backward compatibility only */
-			lgProblems = lgProblems || MihalasCompile(pc);
-			/* do the rauch PN central stars */
-			lgProblems = lgProblems || RauchCompile(pc);
-			/* do the Starburst99 sample output */
-			lgProblems = lgProblems || StarburstCompile(pc);
-			/* do the Tlusty OSTAR2002 grid */
-			lgProblems = lgProblems || TlustyCompile(pc);
-			/* do the Werner PN central stars - for backward compatibility only */
-			lgProblems = lgProblems || WernerCompile(pc);
-			/* WMBASIC O-star grid by Pauldrach */
-			lgProblems = lgProblems || WMBASICCompile(pc);
-			/* Haardt & Madau galactic background */
-			lgProblems = lgProblems || HaardtMadauCompile(pc);
-			/* Khaire & Srianand galactic background */
-			lgProblems = lgProblems || KhaireSrianandCompile(pc);
+			vector<string> matches;
+			getFileList(matches, ".*\\.ascii");
+			sort(matches.begin(), matches.end());
+			for( const string& fnam : matches )
+				lgProblems = lgProblems || GridCompile(fnam, pc);
 
 			if( pc.nFound == 0 )
 			{

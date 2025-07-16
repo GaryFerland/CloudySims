@@ -188,7 +188,8 @@ monitor line luminosity "grat" 0 2.634
 ## >>chng 04 apr 19, from -0.394 to -0.475, Nick Abel update CO aft Leiden
 ## >>chng 04 jun 30, from -0.475 to -0.526 slow rift up
 ## >>chng 04 jul 17, from -0.526 to -0.461, NA update chem net
-monitor ionization silicon 2 -0.461 error 0.1 
+## >>chng 25 jul 11, from -0.461 to -0.7498, GS Si chemistry, UMIST 2022
+monitor ionization silicon 2 -0.7498 error 0.1 
 ## 
 ## >>chng 04 feb 14, add this, important for H2 and CO dest
 ## >>chng 04 mar 24, from -8.244 to -8.800 small changes, incr err

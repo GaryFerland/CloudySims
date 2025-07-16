@@ -162,7 +162,8 @@ monitor "CO  " 325.137m  -7.026 line intensity
 ## >>chng 21 sep 15, from -8.127 to -7.436, go back to unresolved model
 ## >>chng 21 nov 04, from -7.436 to -7.396, update mole co data
 ## >>chng 23 may 15, from -7.396 to -7.572, GS updates 21 reactions to UMIST 2012
-monitor "CN  " 880.858m  -7.572  line intensity
+## >>chng 25 jul 11, from -7.572 to -7.507, GS Si chemistry, UMIST 2022
+monitor "CN  " 880.858m  -7.507  line intensity
 monitor H2 column density 21.840 error 0.1
 ##
 ## >>chng 05 oct 01, from 17.79 to 17.75, drift down
@@ -289,12 +290,14 @@ monitor nzone 988
 ## >>chng 23 jul 15, from -6.794 to -6.499, GS update UMIST to 2012 and set upper limit on T
 ## >>chng 23 jul 15, adjust wavelength from 1179.49m to 1179.48m
 ## >>chng 25 jan 15, from -6.499 to -5.858, GS removes destabilizing reactions, updates others to current UMIST
-monitor "SiS " 1179.48m -5.858 line intensity
+## >>chng 25 jul 11, from -5.858 to -6.027, GS Si chemistry, UMIST 2022
+monitor "SiS " 1179.48m -6.027 line intensity
 ## >>chng 23 feb 25 GS add to test new SiS chemistry, model of internal structure#
 ## >>chng 23 may 15, from -6.117 to -6.705, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 jul 15, from -6.705 to -6.481, GS update UMIST to 2012 and set upper limit on T
 ## >>chng 25 jan 15, from -6.481 to -5.906, GS removes destabilizing reactions, updates others to current UMIST
-monitor "SiS " 1270.17m -5.906 line intensity
+## >>chng 25 jul 11, from -5.906 to -6.06, GS Si chemistry, UMIST 2022
+monitor "SiS " 1270.17m -6.06 line intensity
 # 
 # pdr_leiden_f4.in
 # class pdr 

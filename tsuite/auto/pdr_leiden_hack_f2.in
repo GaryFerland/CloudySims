@@ -73,7 +73,8 @@ monitor line luminosity "c  1" 370.269m -5.37
 ## >>chng 06 nov 29, from -5.721 to -5.688, Badnell DR turned on
 ## >>chng 13 dec 23, from -5.688 to -5.621, C to external databases
 ## >>chng 20 aug 03, from -5.621 to -5.658, update H3+ rates Indriola+ 2012
-monitor line luminosity "c  1" 609.590m -5.658
+## >>chng 25 jul 05, from -5.658 to -5.704, minor updates to UMIST 2022
+monitor line luminosity "c  1" 609.590m -5.704
 ## 
 ## >>chng 14 mar 26, from -5.371 to -4.793, Move oxygen data to stout and chianti files
 monitor line luminosity "O  1" 63.1679m -4.793
@@ -131,7 +132,8 @@ monitor "CO  " 650.074m  -5.627 line intensity
 ## >>chng 20 aug 03, from -5.848 to -5.797, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -5.797 to -5.839, LAMDA update
 ## >>chng 21 nov 04, from -5.839 to -5.772, update mole co data
-monitor "CO  " 520.089m  -5.772 line intensity
+## >>chng 25 jul 05, from -5.772 to -5.73, minor updates to UMIST 2022
+monitor "CO  " 520.089m  -5.73 line intensity
 ## >>chng 13 jun 27, from -6.954 to -6.238, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -6.238 to -6.175, update H3+ rates Indriola+ 2012

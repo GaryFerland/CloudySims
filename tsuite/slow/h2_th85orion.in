@@ -216,7 +216,8 @@ monitor line luminosity "grat" 0 2.565
 ## >>chng 12 apr 09, from -0.319 to -0.2855, update backbround CR to Indiolo_07 (8x larger)
 ## >>chng 13 feb 01, from -0.2855 to -0.3073, BUGFIX, largely undo r6703
 ## >>chng 20 sep 06, from -0.3073 to -0.3275, further update to McCall CR-related rates from r14260
-monitor ionization silicon 2 -0.3275
+## >>chng 25 jul 11, from -0.3275 to -0.6162, GS Si moles, UMIST2022
+monitor ionization silicon 2 -0.6162
 ##
 ## >>chng 06 mar 02, from -0.448 to -0.317 NA Fe0, Mg0, <-> Si+, S+, C+ ct,
 ## also energy barrier for H + (CH and CH2) reactions
@@ -315,7 +316,8 @@ monitor column density OH   15.03 error 0.1
 ## >>chng 20 jul 21, from 12.31 to 12.27, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from 12.27 to 12.32, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from 12.32 to 12.15, LAMDA update
-monitor column density CN   12.15 error 0.1
+## >>chng 25 jul 11, from 12.15 to 13.21, GS Si moles, UMIST2022
+monitor column density CN   13.21 error 0.1
 ## >>chng 11 jul 16, from 10 to 14.38, add column density monitors
 ## >>chng 12 apr 09, from 14.38 to 14.69, update backbround CR to Indiolo_07 (8x larger)
 ## >>chng 13 aug 05, from 14.69 to 14.65, SDIV->safe_div for H2 Boltzmann ratios
@@ -561,7 +563,8 @@ monitor "H2O " 538.142m line intensity -3.84
 ## >>chng 20 aug 03, from -8.155 to -8.322, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -8.322 to -8.391, LAMDA update
 ## >>chng 21 nov 04, from -8.391 to -8.336, update co mole data
-monitor "HNC " 1652.90m  line intensity -8.336
+## >>chng 25 jul 11, from -8.336 to -7.835, GS Si moles, UMIST2022
+monitor "HNC " 1652.90m  line intensity -7.835
 ## >>chng 13 jun 27, from -8.563 to -7.311, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 27, from -7.311 to -7.331, fix the errors in mole_h2_coll.cpp
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
@@ -631,7 +634,8 @@ monitor "^13CO" 906.599m  -4.427 line intensity
 ## >>chng 20 aug 03, from -7.117 to -7.064, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -7.064 to -7.916, LAMDA update
 ## >>chng 21 sep 15, from -7.916 to -7.23, go back to unresolved model
-monitor "CN  " 880.858m  -7.23  line intensity
+## >>chng 25 jul 11, from -7.23 to -6.154, GS Si moles, UMIST2022
+monitor "CN  " 880.858m  -6.154  line intensity
 ##
 # h2_th85orion.in
 

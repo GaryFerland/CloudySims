@@ -149,14 +149,16 @@ monitor column density HeH+ 2.609 error 0.1
 ## >>chng 13 dec 18, from 13.52 to 13.45, fixes to Federman shielding
 ## >>chng 21 sep 11, from 13.45 to 13.34, LAMDA update
 ## >>chng 23 may 15, from 13.34 to 12.52, GS updates 21 reactions to UMIST 2012
-monitor column density C2   12.52 error 0.1
+## >>chng 25 jul 11, from 12.52 to 12.29, GS Si moles, UMIST2022
+monitor column density C2   12.29 error 0.1
 ## >>chng 11 jul 18, from 10 to 12.47, leiden_v3 missed initial update, do not monitor tiny N in hack
 ## >>chng 13 jun 27, from 12.47 to 12.4, BUGFIX use g-bar for H2-H2 collisions
 ## >>chng 13 dec 18, from 12.4 to 12.34, fixes to Federman shielding
 ## >>chng 21 sep 11, from 12.34 to 11.99, LAMDA update
 ## >>chng 21 nov 04, from 11.99 to 11.95, update co mole data
 ## >>chng 23 may 15, from 11.95 to 12.01, GS updates 21 reactions to UMIST 2012
-monitor column density C3   12.01 error 0.1
+## >>chng 25 jul 11, from 12.01 to 11.84, GS Si moles, UMIST2022
+monitor column density C3   11.84 error 0.1
 ## >>chng 11 jul 18, from 10 to 13.18, leiden_v3 missed initial update, do not monitor tiny N in hack
 ## >>chng 20 jul 21, from 13.18 to 13.08, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 21 sep 11, from 13.08 to 13.5, LAMDA update
@@ -164,14 +166,16 @@ monitor column density C3   12.01 error 0.1
 ## >>chng 25 jan 15, from 13.41 to 13.22, GS removes destabilizing reactions, updates others to current UMIST
 ## >>chng 25 jan 26, from 13.22 to 13.29, master merg
 ## >>chng 25 may 25, from 13.29 to 12.97, change limitts to UMIST Te extrapolation
-monitor column density CN   12.97 error 0.1
+## >>chng 25 jul 11, from 12.97 to 13.53, GS Si moles, UMIST2022
+monitor column density CN   13.53 error 0.1
 ## >>chng 11 jul 18, from 10 to 13.63, leiden_v3 missed initial update, do not monitor tiny N in hack
 ## >>chng 11 nov 16, from 13.63 to 13.67, adjust newmole monitors
 ## >>chng 13 mar 23, from 13.67 to 13.71, improve big h2/chemistry consistency
 ## >>chng 13 jun 27, from 13.71 to 13.66, BUGFIX use g-bar for H2-H2 collisions
 ## >>chng 13 dec 18, from 13.66 to 13.6, fixes to Federman shielding
 ## >>chng 21 nov 04, from 13.6 to 13.52, update co mole data
-monitor column density CH   13.52 error 0.1
+## >>chng 25 jul 11, from 13.52 to 13.23, GS Si moles, UMIST2022
+monitor column density CH   13.23 error 0.1
 ## 
 ## >>chng 05 jun 26, from 13.41 to 18.32, make Federman chem the default
 ## >>chng 05 sep 08, from 18.32 to 44.73, first run in 2 mo
@@ -236,7 +240,8 @@ monitor H2 column density level 0  1  20.05 error 0.1
 ## >>chng 13 mar 23, from 15.17 to 15.12, tighter H2 heat/cool bound
 ## >>chng 13 aug 22, from 15.12 to 15.17, enable D chem in r8030
 ## >>chng 14 mar 26, from 15.17 to 15.11, move O to external databases
-monitor H2 column density level 0  2  15.11 error 0.1
+## >>chng 25 jul 11, from 15.11 to 15.16, GS Si moles, UMIST2022
+monitor H2 column density level 0  2  15.16 error 0.1
 ##
 ## >>chng 05 sep 08, from 16.85 to 13.82, first run in 2 mo
 ## >>chng 05 dec 10, from 13.82 to 13.74 NA increase ices, H2O
@@ -254,7 +259,8 @@ monitor H2 column density level 0  2  15.11 error 0.1
 ## >>chng 16 mar 21, from 14.17 to 14.13, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 jul 21, from 14.13 to 14.06, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 21 sep 11, from 14.06 to 14.17, LAMDA update
-monitor H2 column density level 0  3  14.17 error 0.1
+## >>chng 25 jul 11, from 14.17 to 14.12, GS Si moles, UMIST2022
+monitor H2 column density level 0  3  14.12 error 0.1
 ##
 ## >>chng 05 sep 08, from 15.94 to 14.51, first run in 2 mo
 ## >>chng 07 apr 07, from 14.51 to 14.40, update H2 cr to trip
@@ -282,7 +288,8 @@ monitor H2 column density level 0  4  14.47 error 0.1
 ## >>chng 15 mar 07, from 14.14 to 14.09, merging newmesh branch
 ## >>chng 20 jul 21, from 14.09 to 14.02, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 21 sep 11, from 14.02 to 14.06, LAMDA update
-monitor H2 column density level 0  5  14.06 error 0.1
+## >>chng 25 jul 11, from 14.06 to 14.01, GS Si moles, UMIST2022
+monitor H2 column density level 0  5  14.01 error 0.1
 ##
 ## >>chng 05 sep 08, from 14.52 to 14.15, first run in 2 mo
 ## >>chng 07 apr 07, from 14.15 to 14.05, update H2 cr to trip
@@ -310,7 +317,8 @@ monitor H2 column density level 0  6  14.08 error 0.1
 ## >>chng 13 dec 18, from 13.17 to 13.09, fixes to Federman shielding
 ## >>chng 14 dec 04, from 13.09 to 13.04, fix double-counting of big-H2 Solomon rate
 ## >>chng 20 jul 21, from 13.04 to 12.96, update DR H2 diss as per  2020RNAAS...4...78S
-monitor H2 column density level 0  7  12.96 error 0.1
+## >>chng 25 jul 11, from 12.96 to 12.92, GS Si moles, UMIST2022
+monitor H2 column density level 0  7  12.92 error 0.1
 ##
 ## >>chng 05 sep 08, from 13.63 to 13.22, first run in 2 mo
 ## >>chng 07 apr 07, from 13.22 to 13.12, update H2 cr to trip
@@ -361,7 +369,8 @@ monitor H2 column density level 1  0  10.91 error 0.1
 ## >>chng 13 jun 27, from 12.39 to 12.69, BUGFIX use g-bar for H2-H2 collisions
 ## >>chng 13 dec 18, from 12.69 to 12.59, fixes to Federman shielding
 ## >>chng 20 jul 21, from 12.59 to 12.49, update DR H2 diss as per  2020RNAAS...4...78S
-monitor H2 column density level 1  1  12.49 error 0.1
+## >>chng 25 jul 11, from 12.49 to 12.45, GS Si moles, UMIST2022
+monitor H2 column density level 1  1  12.45 error 0.1
 ##
 ## >>chng 05 sep 08, from 13.50 to 12.43, first run in 2 mo
 ## >>chng 07 apr 07, from 12.43 to 12.33, update H2 cr to trip
@@ -438,7 +447,8 @@ monitor "HNC " 1652.90m  line intensity -8.152
 ## >>chng 25 jan 15, from -9.846 to -9.782, GS removes destabilizing reactions, updates others to current UMIST
 ## >>chng 25 jan 26, from -9.782 to -9.623, master merg
 ## >>chng 25 may 25, from -9.623 to -9.803, change limitts to UMIST Te extrapolation
-monitor "HCS+" 1755.88m  -9.803 line intensity
+## >>chng 25 jul 11, from -9.803 to -9.938, GS Si moles, UMIST2022
+monitor "HCS+" 1755.88m  -9.938 line intensity
 ## >>chng 13 jun 27, from -7.453 to -7.633, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 18, from -7.633 to -7.665, fixes to Federman shielding
@@ -446,7 +456,8 @@ monitor "HCS+" 1755.88m  -9.803 line intensity
 ## >>chng 23 may 15, from -7.569 to -7.641, GS updates 21 reactions to UMIST 2012
 ## >>chng 24 apr 21, from -7.641 to -7.591, GS updates chemistry
 ## >>chng 25 may 25, from -7.591 to -7.679, change limitts to UMIST Te extrapolation
-monitor "CS  " 3058.86m  -7.679 line intensity
+## >>chng 25 jul 11, from -7.679 to -7.761, GS Si moles, UMIST2022
+monitor "CS  " 3058.86m  -7.761 line intensity
 ## >>chng 13 jun 27, from -7.288 to -7.138, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 20 jul 21, from -7.138 to -7.16, update DR H2 diss as per  2020RNAAS...4...78S
@@ -454,37 +465,43 @@ monitor "CO  " 2600.05m  -7.16 line intensity
 ## >>chng 13 jun 27, from -6.463 to -6.276, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 18, from -6.276 to -6.299, fixes to Federman shielding
-monitor "CO  " 1300.05m  -6.299 line intensity
+## >>chng 25 jul 11, from -6.299 to -6.346, GS Si moles, UMIST2022
+monitor "CO  " 1300.05m  -6.346 line intensity
 ## >>chng 13 jun 27, from -6.149 to -5.895, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 18, from -5.895 to -5.93, fixes to Federman shielding
-monitor "CO  " 866.727m  -5.93 line intensity
+## >>chng 25 jul 11, from -5.93 to -5.999, GS Si moles, UMIST2022
+monitor "CO  " 866.727m  -5.999 line intensity
 ## >>chng 13 jun 27, from -6.177 to -5.777, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 27, from -5.777 to -5.801, fix the errors in mole_h2_coll.cpp
 ## >>chng 13 jul 26, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 18, from -5.801 to -5.829, fixes to Federman shielding
 ## >>chng 20 jul 21, from -5.829 to -5.849, update DR H2 diss as per  2020RNAAS...4...78S
-monitor "CO  " 650.074m  -5.849 line intensity
+## >>chng 25 jul 11, from -5.849 to -5.933, GS Si moles, UMIST2022
+monitor "CO  " 650.074m  -5.933 line intensity
 ## >>chng 13 jun 27, from -6.485 to -5.906, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 27, from -5.906 to -5.943, fix the errors in mole_h2_coll.cpp
 ## >>chng 13 jul 26, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 18, from -5.943 to -5.985, fixes to Federman shielding
 ## >>chng 16 mar 21, from -5.985 to -6.005, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
-monitor "CO  " 520.089m  -6.005 line intensity
+## >>chng 25 jul 11, from -6.005 to -6.141, GS Si moles, UMIST2022
+monitor "CO  " 520.089m  -6.141 line intensity
 ## >>chng 13 jun 27, from -6.954 to -6.25, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 27, from -6.25 to -6.296, fix the errors in mole_h2_coll.cpp
 ## >>chng 13 jul 26, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 18, from -6.296 to -6.349, fixes to Federman shielding
 ## >>chng 14 oct 28, from -6.349 to -6.369, relativistic Gaunt factors
 ## >>chng 20 jul 21, from -6.369 to -6.391, update DR H2 diss as per  2020RNAAS...4...78S
-monitor "CO  " 433.438m  -6.391 line intensity
+## >>chng 25 jul 11, from -6.391 to -6.533, GS Si moles, UMIST2022
+monitor "CO  " 433.438m  -6.533 line intensity
 ## >>chng 13 jun 27, from -7.48 to -6.68, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 27, from -6.68 to -6.725, fix the errors in mole_h2_coll.cpp
 ## >>chng 13 jul 26, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 18, from -6.725 to -6.781, fixes to Federman shielding
 ## >>chng 14 mar 26, from -6.781 to -6.805, move O to external databases
 ## >>chng 20 jul 21, from -6.805 to -6.828, update DR H2 diss as per  2020RNAAS...4...78S
-monitor "CO  " 371.549m  -6.828 line intensity
+## >>chng 25 jul 11, from -6.828 to -6.971, GS Si moles, UMIST2022
+monitor "CO  " 371.549m  -6.971 line intensity
 ## >>chng 13 jun 27, from -8.049 to -7.176, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 27, from -7.176 to -7.22, fix the errors in mole_h2_coll.cpp
 ## >>chng 13 jul 26, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
@@ -493,11 +510,13 @@ monitor "CO  " 371.549m  -6.828 line intensity
 ## >>chng 20 jul 21, from -7.308 to -7.332, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 21 nov 04, from -7.332 to -7.378, update co mole data
 ## >>chng 23 may 15, from -7.378 to -7.308, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 325.137m  -7.308 line intensity
+## >>chng 25 jul 11, from -7.308 to -7.483, GS Si moles, UMIST2022
+monitor "CO  " 325.137m  -7.483 line intensity
 ## >>chng 13 jun 27, from -7.522 to -6.773, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 18, from -6.773 to -6.808, fixes to Federman shielding
-monitor "^13CO" 906.599m  -6.808 line intensity
+## >>chng 25 jul 11, from -6.808 to -6.889, GS Si moles, UMIST2022
+monitor "^13CO" 906.599m  -6.889 line intensity
 ## >>chng 13 jun 27, from -8.247 to -8.622, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 27, from -8.622 to -8.65, fix the errors in mole_h2_coll.cpp
 ## >>chng 13 jul 26, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
@@ -506,7 +525,8 @@ monitor "^13CO" 906.599m  -6.808 line intensity
 ## >>chng 21 sep 11, from -8.709 to -9.922, LAMDA update
 ## >>chng 21 sep 15, from -9.922 to -8.768, go back to unresolved model
 ## >>chng 23 may 15, from -8.768 to -8.86, GS updates 21 reactions to UMIST 2012
-monitor "CN  " 880.858m  -8.86  line intensity
+## >>chng 25 jul 11, from -8.86 to -7.528, GS Si moles, UMIST2022
+monitor "CN  " 880.858m  -7.528  line intensity
 # 
 # h2_pdr_leiden_v3.in
 # class pdr 

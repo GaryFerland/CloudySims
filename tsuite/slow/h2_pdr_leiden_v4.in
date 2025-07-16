@@ -62,7 +62,8 @@ monitor O2 column density 15 error 0.1
 ## >>chng 11 nov 16, from 13.06 to 15.18, adjust newmole monitors
 ## >>chng 12 jan 06, from 15.18 to 13.06, several H2 model changes
 ## >>chng 20 aug 03, from 13.06 to 13.17, update H3+ rates Indriola+ 2012
-monitor OH column density 13.17 error 0.1
+## >>chng 25 jul 11, from 13.17 to 13.13, GS Si moles, UMIST2022
+monitor OH column density 13.13 error 0.1
 ##
 ## >>chng 05 sep 08, from 15.52 to 15.56, first run in 2 mo
 ## >>chng 08 feb 20, bugfix r1803, from 15.56 to 15.45
@@ -122,7 +123,8 @@ monitor column density H2O  15.47 error 0.1
 ## >>chng 21 sep 11, from 13.25 to 13.63, LAMDA update
 ## >>chng 21 nov 04, from 13.63 to 13.35, update co mole data
 ## >>chng 23 may 15, from 13.35 to 12.42, GS updates 21 reactions to UMIST 2012
-monitor column density C2   12.42 error 0.1
+## >>chng 25 jul 11, from 12.42 to 12.29, GS Si moles, UMIST2022
+monitor column density C2   12.29 error 0.1
 ## >>chng 11 jul 16, from 10 to 9.498, add column density monitors
 ## >>chng 11 nov 16, from 9.498 to 9.339, adjust newmole monitors
 ## >>chng 12 jan 06, from 9.339 to 9.561, several H2 model changes
@@ -139,7 +141,8 @@ monitor column density C3   9.618 error 0.1
 ## >>chng 12 jan 06, from 13.63 to 12.45, several H2 model changes
 ## >>chng 21 sep 11, from 12.45 to 12.52, LAMDA update
 ## >>chng 23 may 15, from 12.52 to 12.46, GS updates 21 reactions to UMIST 2012
-monitor column density CN   12.46 error 0.1
+## >>chng 25 jul 11, from 12.46 to 13.04, GS Si moles, UMIST2022
+monitor column density CN   13.04 error 0.1
 ## >>chng 11 jul 16, from 10 to 13.49, add column density monitors
 ## >>chng 11 nov 16, from 13.49 to 13.71, adjust newmole monitors
 ## >>chng 12 jan 06, from 13.71 to 13.52, several H2 model changes
@@ -147,7 +150,8 @@ monitor column density CN   12.46 error 0.1
 ## >>chng 20 sep 06, from 13.48 to 13.44, further update to McCall CR-related rates from r14260
 ## >>chng 21 sep 11, from 13.44 to 14.53, LAMDA update
 ## >>chng 21 nov 04, from 14.53 to 13.48, update co mole data
-monitor column density CH   13.48 error 0.1
+## >>chng 25 jul 11, from 13.48 to 13.29, GS Si moles, UMIST2022
+monitor column density CH   13.29 error 0.1
 ##
 ## >>chng 04 oct 14, from 885 to 975, PvH clean up grain elec phys, incr err
 ## >>chng 04 dec 08, from 975 to 6575, co-ion feedback, check converg
@@ -414,7 +418,8 @@ monitor "HNC " 1652.90m  line intensity -8.065
 ## >>chng 16 mar 21, from -10.03 to -9.994, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 21 sep 11, from -9.994 to -9.221, LAMDA update
 ## >>chng 21 nov 04, from -9.221 to -9.892, update co mole data
-monitor "HCS+" 1755.88m  -9.892 line intensity
+## >>chng 25 jul 11, from -9.892 to -9.939, GS Si moles, UMIST2022
+monitor "HCS+" 1755.88m  -9.939 line intensity
 ## >>chng 13 jun 27, from -7.453 to -8.142, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -8.142 to -8.022, LAMDA update
@@ -476,7 +481,8 @@ monitor "^13CO" 906.599m  -6.506 line intensity
 ## >>chng 21 sep 11, from -8.92 to -9.962, LAMDA update
 ## >>chng 21 sep 15, from -9.962 to -8.819, go back to unresolved model
 ## >>chng 21 nov 04, from -8.819 to -8.943, update co mole data
-monitor "CN  " 880.858m  -8.943  line intensity
+## >>chng 25 jul 11, from -8.943 to -8.201, GS Si moles, UMIST2022
+monitor "CN  " 880.858m  -8.201  line intensity
 #
 # h2_pdr_leiden_v4.in
 # class pdr 

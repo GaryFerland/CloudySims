@@ -97,14 +97,16 @@ monitor column density H2O  16.63 error 0.1
 ## >>chng 13 dec 18, from 13.49 to 13.42, fixes to Federman shielding
 ## >>chng 21 sep 11, from 13.42 to 13.3, LAMDA update
 ## >>chng 23 may 15, from 13.3 to 12.55, GS updates 21 reactions to UMIST 2012
-monitor column density C2   12.55 error 0.1
+## >>chng 25 jul 11, from 12.55 to 12.36, GS Si moles, UMIST2022
+monitor column density C2   12.36 error 0.1
 ## >>chng 11 jul 16, from 10 to 12.56, add column density monitors
 ## >>chng 13 feb 01, from 12.56 to 12.48, BUGFIX, largely undo r6703
 ## >>chng 13 dec 18, from 12.48 to 12.38, fixes to Federman shielding
 ## >>chng 21 sep 11, from 12.38 to 12.06, LAMDA update
 ## >>chng 21 nov 04, from 12.06 to 12.01, update co mole data
 ## >>chng 23 may 15, from 12.01 to 12.05, GS updates 21 reactions to UMIST 2012
-monitor column density C3   12.05 error 0.1
+## >>chng 25 jul 11, from 12.05 to 11.91, GS Si moles, UMIST2022
+monitor column density C3   11.91 error 0.1
 ## >>chng 11 jul 16, from 10 to 16.42, add column density monitors
 ## >>chng 20 aug 03, from 16.42 to 16.48, update H3+ rates Indriola+ 2012
 ## >>chng 25 jan 15, from 16.48 to 16.56, GS removes destabilizing reactions, updates others to current UMIST
@@ -115,13 +117,15 @@ monitor column density OH   13.56 error 0.1
 ## >>chng 11 jul 16, from 10 to 12.52, add column density monitors
 ## >>chng 21 sep 11, from 12.52 to 12.44, LAMDA update
 ## >>chng 23 may 15, from 12.44 to 12.38, GS updates 21 reactions to UMIST 2012
-monitor column density CN   12.38 error 0.1
+## >>chng 25 jul 11, from 12.38 to 13.41, GS Si moles, UMIST2022
+monitor column density CN   13.41 error 0.1
 ## >>chng 11 jul 16, from 10 to 13.66, add column density monitors
 ## >>chng 13 feb 01, from 13.66 to 13.71, BUGFIX, largely undo r6703
 ## >>chng 13 jun 27, from 13.71 to 13.66, BUGFIX use g-bar for H2-H2 collisions
 ## >>chng 13 dec 18, from 13.66 to 13.59, fixes to Federman shielding
 ## >>chng 21 nov 04, from 13.59 to 13.52, update co mole data
-monitor column density CH   13.52 error 0.1
+## >>chng 25 jul 11, from 13.52 to 13.28, GS Si moles, UMIST2022
+monitor column density CH   13.28 error 0.1
 ##
 ## these added 05 jan 22
 ## >>chng 05 feb 12, from 21.91 to 21.88 update conv chck
@@ -319,7 +323,8 @@ monitor "H2O " 538.142m line intensity -4.992
 ## >>chng 16 mar 21, from -7.444 to -7.394, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 20 aug 03, from -7.394 to -7.416, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -7.416 to -7.689, LAMDA update
-monitor "HNC " 1652.90m  line intensity -7.689
+## >>chng 25 jul 11, from -7.689 to -7.648, GS Si moles, UMIST2022
+monitor "HNC " 1652.90m  line intensity -7.648
 ## >>chng 13 jun 27, from -8.563 to -8.543, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 26, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 16 mar 21, from -8.543 to -8.453, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
@@ -370,7 +375,8 @@ monitor "^13CO" 906.599m  -5.706 line intensity
 ## >>chng 21 sep 11, from -8.431 to -9.513, LAMDA update
 ## >>chng 21 sep 15, from -9.513 to -8.487, go back to unresolved model
 ## >>chng 23 may 15, from -8.487 to -8.555, GS updates 21 reactions to UMIST 2012
-monitor "CN  " 880.858m  -8.555  line intensity
+## >>chng 25 jul 11, from -8.555 to -7.436, GS Si moles, UMIST2022
+monitor "CN  " 880.858m  -7.436  line intensity
 ##
 # 
 # h2_pdr_leiden_f3.in

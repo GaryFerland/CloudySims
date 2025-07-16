@@ -56,7 +56,8 @@ monitor ionization Helium    2 -12.37 error 0.30
 ## >>chng 23 mar 17, from -3.037 to -2.255, add SiS and Lamda model"
 ## >>chng 23 jul 15, from -2.255 to -5.272, GS update UMIST to 2012 and set upper limit on T
 ## >>chng 25 may 25, from -5.272 to -4.101, limit to UMIST Te extrapolation
-monitor ionization Carbon    2 -4.101 error 0.20
+## >>chng 25 jul 11, from -4.101 to -4.681, GS Si chemistry, UMIST 2022
+monitor ionization Carbon    2 -4.681 error 0.20
 ##
 ## >>chng 13 feb 01, from -2.956 to -3.044, BUGFIX, largely undo r6703
 ## >>chng 13 nov 19, from -3.044 to -3.51, fix CT bug in mole_eval_balance
@@ -75,13 +76,15 @@ monitor ionization Oxygen    2 -4.798 error 0.15
 ## >>chng 13 nov 19, from -1.215 to -1.167, fix CT bug in mole_eval_balance
 ## >>chng 23 jul 15, from -1.167 to -0.6779, GS update UMIST to 2012 and set upper limit on T
 ## >>chng 25 may 25, from -0.6779 to -0.8438, limit to UMIST Te extrapolation
-monitor ionization Magnesium 1 -0.8438  error 0.1
+## >>chng 25 jul 11, from -0.8438 to -0.89, GS Si chemistry, UMIST 2022
+monitor ionization Magnesium 1 -0.89  error 0.1
 ##
 ## >>chng 13 feb 01, from -2.987 to -2.914, BUGFIX, largely undo r6703
 ## >>chng 13 nov 19, from -2.914 to -2.796, fix CT bug in mole_eval_balance
 ## >>chng 23 jul 15, from -2.796 to -1.932, GS update UMIST to 2012 and set upper limit on T
 ## >>chng 25 may 25, from -1.932 to -2.216, limit to UMIST Te extrapolation
-monitor ionization Aluminium 1 -2.216 error 0.1
+## >>chng 25 jul 11, from -2.216 to -2.166, GS Si chemistry, UMIST 2022
+monitor ionization Aluminium 1 -2.166 error 0.1
 ##
 ## >>chng 13 feb 01, from -0.7942 to -0.7013, BUGFIX, largely undo r6703
 ## >>chng 13 feb 10, from -0.7013 to -0.6345, H2,e-=>H-,H update
@@ -89,7 +92,8 @@ monitor ionization Aluminium 1 -2.216 error 0.1
 ## >>chng 23 mar 17, from -0.7128 to -0.8435, add SiS and Lamda model"
 ## >>chng 23 jul 15, from -0.8435 to -0.466, GS update UMIST to 2012 and set upper limit on T
 ## >>chng 25 may 25, from -0.466 to -0.5452, limit to UMIST Te extrapolation
-monitor ionization Silicon   1 -0.5452 error 0.15
+## >>chng 25 jul 11, from -0.5452 to -0.2785, GS Si chemistry, UMIST 2022
+monitor ionization Silicon   1 -0.2785 error 0.15
 ##
 ## >>chng 13 feb 10, from -0.8323 to -1.144, H2,e-=>H-,H update
 ## >>chng 13 nov 19, from -1.144 to -0.9445, fix CT bug in mole_eval_balance
@@ -97,7 +101,8 @@ monitor ionization Silicon   1 -0.5452 error 0.15
 ## >>chng 23 jul 15, from -2.565 to -4.054, GS update UMIST to 2012 and set upper limit on T
 ## >>chng 25 jan 15, from -4.054 to -3.384, GS removes destabilizing reactions, updates others to current UMIST
 ## >>chng 25 may 25, from -3.384 to -3.311, limit to UMIST Te extrapolation
-monitor ionization Sulphur   2 -3.311 error 0.15
+## >>chng 25 jul 11, from -3.311 to -1.706, GS Si chemistry, UMIST 2022
+monitor ionization Sulphur   2 -1.706 error 0.15
 ##
 ## >>chng 13 feb 01, from -3.838 to -3.927, BUGFIX, largely undo r6703
 ## >>chng 13 feb 10, from -3.927 to -3.773, H2,e-=>H-,H update
@@ -138,7 +143,8 @@ monitor "H2O " 538.142m line intensity -18.45
 ## >>chng 23 jul 15, from -20.71 to -20.63, GS update UMIST to 2012 and set upper limit on T
 ## >>chng 25 jan 15, from -20.63 to -19.95, GS removes destabilizing reactions, updates others to current UMIST
 ## >>chng 25 may 25, from -19.95 to -20.13, limit to UMIST Te extrapolation
-monitor "HCS+" 1755.88m  -20.13 line intensity
+## >>chng 25 jul 11, from -20.13 to -18.44, GS Si chemistry, UMIST 2022
+monitor "HCS+" 1755.88m  -18.44 line intensity
 ## >>chng 13 jun 27, from -7.453 to -16.48, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 19, from -16.48 to -15.26, fix CT bug in mole_eval_balance
@@ -149,7 +155,8 @@ monitor "HCS+" 1755.88m  -20.13 line intensity
 ## >>chng 23 jul 15, from -17.25 to -18, GS update UMIST to 2012 and set upper limit on T
 ## >>chng 25 jan 15, from -18 to -17.3, GS removes destabilizing reactions, updates others to current UMIST
 ## >>chng 25 may 25, from -17.3 to -17.53, limit to UMIST Te extrapolation
-monitor "CS  " 3058.86m  -17.53 line intensity
+## >>chng 25 jul 11, from -17.53 to -15.71, GS Si chemistry, UMIST 2022
+monitor "CS  " 3058.86m  -15.71 line intensity
 ## >>chng 13 jun 27, from -7.288 to -14.2, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 19, from -14.2 to -13.52, fix CT bug in mole_eval_balance
