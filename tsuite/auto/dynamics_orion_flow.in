@@ -93,7 +93,8 @@ monitor line "Ca B" 5875.64A 0.127
 ## >>chng 16 aug 07, from 0.0801 to 0.104, Marios bug fixes
 ## >>chng 21 mar 16, wl from 3888.63A to 3888.64A, update NIST energies
 ## >>chng 23 sep 12, from 0.104 to 0.0203, update fast.ini
-monitor line "He 1" 3888.64A 0.0203
+## >>chng 25 jul 16, from 0.0203 to 0.0191, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "He 1" 3888.64A 0.0191
 ## >>chng 13 jul 24, wl from 3889 to 3888.63A, increased wl precision to 6 sig. fig.
 ## >>chng 21 mar 16, wl from 3888.63A to 3888.64A, update NIST energies
 monitor line "Ca B" 3888.64A 0.105
@@ -108,7 +109,8 @@ monitor line "Ca B" 3888.64A 0.105
 monitor line "Blnd" 7065.25A 0.1002
 ## >>chng 13 jul 24, wl from 7065 to 7065.22A, increased wl precision to 6 sig. fig.
 ## >>chng 23 sep 12, from 0.0331 to 0.0364, update fast.ini
-monitor line "Ca B" 7065.22A 0.0364
+## >>chng 25 jul 16, from 0.0364 to 0.0339, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "Ca B" 7065.22A 0.0339
 ##
 ## >>chng 08 apr 30, from 0.913 to 0.842 H, He topoff change
 ## >>chng 13 jul 24, wl from 10830 to 1.08299m, increased wl precision to 6 sig. fig.
@@ -121,7 +123,8 @@ monitor line "Ca B" 7065.22A 0.0364
 ## >>chng 19 jul 30, from 1.156 to 0.714, split He I 2 ^3P_J
 ## >>chng 20 jan 13, from 0.714 to 0.5291, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
 ## >>chng 23 sep 12, from 0.5291 to 0.2482, update fast.ini
-monitor line "Blnd" 1.08302m 0.2482
+## >>chng 25 jul 16, from 0.2482 to 0.2303, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "Blnd" 1.08302m 0.2303
 ##
 ## >>chng 06 mar 11, from 0.241 to 0.263, chng small H from 4 to 5 lev
 ## >>chng 06 nov 29, from 0.263 to 0.221, Badnell DR turned on
@@ -137,7 +140,8 @@ monitor line "blnd" 2326 0.3157 error 0.1
 ## >>chng 15 mar 07, from 0.2746 to 0.3041, merging newmesh branch
 ## >>chng 16 jul 24, from 0.3041 to 0.2221, update C III to 2014A&A...566A.104F
 ## >>chng 23 sep 12, from 0.2221 to 0.354, update fast.ini
-monitor line "blnd" 1909 0.354 error 0.1
+## >>chng 25 jul 16, from 0.354 to 0.2412, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "blnd" 1909 0.2412 error 0.1
 ##
 ## >>chng 05 oct 01, from 0.505 to 0.480, RP update He levels
 ## >>chng 05 dec 20, from 0.480 to 0.516, RP change default helium levels
@@ -145,7 +149,8 @@ monitor line "blnd" 1909 0.354 error 0.1
 ## >>chng 08 apr 30, from 0.449 to 0.497 H, He topoff change
 ## >>chng 10 mar 05, from 0.497 to 0.5436, changes caused by r3848 atomic data update
 ## >>chng 23 sep 12, from 0.5436 to 0.648, update fast.ini
-monitor line "N  2"  6583.45 0.648 error 0.1
+## >>chng 25 jul 16, from 0.648 to 0.5802, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "N  2"  6583.45 0.5802 error 0.1
 ##
 ## >>chng 05 dec 20, from 0.621 to 0.655, RP change default helium levels
 ## >>chng 06 nov 29, from 0.655 to 0.610, Badnell DR turned on
@@ -157,7 +162,8 @@ monitor line "blnd"  3727 0.7334 error 0.1
 ## >>chng 07 dec 06, from 3.871 to 4.133, changes in h-like collisions
 ## >>chng 20 jan 13, from 4.133 to 4.325, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
 ## >>chng 23 sep 12, from 4.325 to 5.535, update fast.ini
-monitor line "o  3"  5006.84 5.535
+## >>chng 25 jul 16, from 5.535 to 6.054, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "o  3"  5006.84 6.054
 ##
 ## >>chng 06 jul 06, from 0.159 to 0.175, update Ne cs, CO chem now
 ## includes dynamics but no cross talk between CO and H2 in H2 part

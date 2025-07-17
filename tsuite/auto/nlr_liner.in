@@ -217,7 +217,8 @@ monitor line "o  3"  5006.84 3.56
 ## >>chng 15 nov 03, from 0.2911 to 0.3069, update O III CS to Storey+14
 ## >>chng 16 aug 07, from 0.3069 to 0.3229, Fran bug fix
 ## >>chng 19 mar 01, change "Blnd" 4363 -> "O  3" 4363.21
-monitor line "O  3"  4363.21 0.3229
+## >>chng 25 jul 16, from 0.3229 to 0.3804, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "O  3"  4363.21 0.3804
 ##
 ## >>chng 04 sep 06, from 0.070 to 0.0655, bug nej Auger
 ## >>chng 13 jul 26, wl from 15.55m to 15.5503m, increased wl precision to 6 sig. fig.

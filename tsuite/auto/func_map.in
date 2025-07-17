@@ -38,7 +38,8 @@ monitor map heating     9313.9 -23.038
 ## >>chng 06 nov 12, from -23.031 to -23.058, NA update [OIV] cs to Tayal 06
 ## >>chng 15 nov 03, from -23.06 to -23.08, update O III CS to Storey+14
 ## >>chng 22 jul 09, from -23.08 to -23.01, upgrade to Chianti v10
-monitor map cooling     9313.9 -23.01 
+## >>chng 25 jul 16, from -23.01 to -22.99, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor map cooling     9313.9 -22.99 
 ## 
 ## >>chng 06 nov 29, from -23.823 to -23.850, Badnell DR turned on
 monitor map heating    90959. -23.850  

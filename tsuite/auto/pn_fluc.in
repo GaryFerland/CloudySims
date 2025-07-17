@@ -88,7 +88,8 @@ monitor line "Blnd" 5875.66A 0.1352
 ## >>chng 18 mar 06, wl from 1.08331m to 1.08302m, adjust multiplet Blend WL for refraction index
 ## >>chng 19 jul 30, from 1.514 to 0.9443, split He I 2 ^3P_J
 ## >>chng 20 jan 13, from 0.9443 to 0.7419, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor line "Blnd" 1.08302m 0.7419
+## >>chng 25 jul 16, from 0.7419 to 0.7069, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "Blnd" 1.08302m 0.7069
 ##
 ## >>chng 05 oct 01, from 0.154 to 0.160, RP update He levels
 ## >>chng 07 oct 22, from 0.160 to 0.115, resolve l-levels of h-like sequence
@@ -106,7 +107,8 @@ monitor line "He 2" 4685.68A 0.1267
 ## >>chng 11 aug 05, from 0.164 to 0.1739, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 13 dec 23, from 0.1739 to 0.1847, C to external databases
 ## >>chng 23 sep 28, from 0.1847 to 0.1937, current npSplit development result
-monitor line "blnd" 2326 0.1937
+## >>chng 25 jul 16, from 0.1937 to 0.1665, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "blnd" 2326 0.1665
 ##
 ## >>chng 00 sep 12, from 1.294 to 1.366 result of change in s3 cs
 ## >>chng 01 may 10, from 1.366 to 1.259, ct network revision
@@ -115,7 +117,8 @@ monitor line "blnd" 2326 0.1937
 ## >>chng 10 mar 14, from 1.53 to 1.391, update As to NIST recommended values
 ## >>chng 11 nov 16, from 1.391 to 1.517, adjust newmole monitors
 ## >>chng 16 jul 24, from 1.517 to 1.175, update C III to 2014A&A...566A.104F
-monitor line "blnd" 1909 1.175 error 0.1
+## >>chng 25 jul 16, from 1.175 to 0.8427, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "blnd" 1909 0.8427 error 0.1
 ##
 ## >>chng 02 may 27, from 1.54 to 1.46, slow drift down
 ## >>chng 02 dec 10, from 1.46 to 1.542, HeI 23P A
@@ -128,7 +131,8 @@ monitor line "blnd" 1909 1.175 error 0.1
 ## >>chng 16 jul 24, from 1.332 to 1.395, update C III to 2014A&A...566A.104F
 ## >>chng 19 mar 01, from 1.395 to 1.323, remove recombination, etc, components from blends (#415)
 ## >>chng 22 jul 09, from 1.323 to 1.39, upgrade to Chianti v10
-monitor line "blnd" 1549 1.39
+## >>chng 25 jul 16, from 1.39 to 1.153, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "blnd" 1549 1.153
 ##
 ## >>chng 00 dec 12, from 0.564 to 0.507, change in [NII] cs
 ## >>chng 01 jul 01, from 0.507 to 0.541, better diffuse fields
@@ -139,23 +143,27 @@ monitor line "blnd" 1549 1.39
 ## >>chng 11 aug 05, from 0.5934 to 0.6289, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 14 jan 05, from 0.6289 to 0.5719, N to external databases
 ## >>chng 15 nov 03, from 0.5719 to 0.5982, update O III CS to Storey+14
-monitor line "N  2"  6583.45 0.5982
+## >>chng 25 jul 16, from 0.5982 to 0.5107, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "N  2"  6583.45 0.5107
 ##
 ## >>chng 05 oct 01, from 0.083 to 0.089, RP update He levels
 ## >>chng 09 feb 23, from 0.089 to 0.08, remove otslin, otscon dampers (PR #84, r2758)
 ## >>chng 11 aug 05, from 0.08 to 0.0876, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 14 mar 26, from 0.0876 to 0.0793, Move oxygen data to stout and chianti files
-monitor line "blnd"  1750 0.0793 error 0.1
+## >>chng 25 jul 16, from 0.0793 to 0.0575, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "blnd"  1750 0.0575 error 0.1
 ##
 ## >>chng 05 oct 01, from 0.053 to 0.0550, RP update He levels
-monitor line "n  3"  57.3238m  0.0550
+## >>chng 25 jul 16, from 0.055 to 0.052, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "n  3"  57.3238m  0.052
 ##
 ## >>chng 06 jul 25, from 0.15 to 0.17 HN update OIII, OII collision data
 ## >>chng 06 nov 29, from 0.17 to 0.186, Badnell DR turned on
 ## >>chng 09 feb 23, from 0.186 to 0.1662, remove otslin, otscon dampers (PR #84, r2758)
 ## >>chng 11 aug 05, from 0.1662 to 0.1435, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 17 jul 30, from 0.1435 to 0.1852, update N IV data to 2017JPhB...50f5203F
-monitor line "blnd" 1486 0.1852 error 0.1
+## >>chng 25 jul 16, from 0.1852 to 0.1676, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "blnd" 1486 0.1676 error 0.1
 ## 
 ## >>chng 06 jul 06, from 0.084 to 0.094, update Ne cs
 ## >>chng 09 feb 23, from 0.094 to 0.0786, remove otslin, otscon dampers (PR #84, r2758)
@@ -178,12 +186,14 @@ monitor line "O  1"  6300.30 0.0786
 ## >>chng 06 jul 25, from 0.877 to 0.971 HN update OIII, OII collision data
 ## >>chng 06 aug 02, from 0.971 to 0.908, update O+2, N+2 CT
 ## >>chng 16 jul 24, from 0.908 to 0.9582, update C III to 2014A&A...566A.104F
-monitor line "blnd"  3727 0.9582
+## >>chng 25 jul 16, from 0.9582 to 0.8462, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "blnd"  3727 0.8462
 ## 
 ## >>chng 04 dec 08, from 16 to 16.8 co-ion feedback, check converg
 ## >>chng 07 nov 29, from 16.8 to 16.0 update DR rates
 ## >>chng 14 mar 26, from 16 to 16.84, Move oxygen data to stout and chianti files
-monitor line "o  3"  5006.84 16.84
+## >>chng 25 jul 16, from 16.84 to 19.34, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "o  3"  5006.84 19.34
 ## 
 ## >>chng 04 dec 08, from 0.138 to 0.145 co-ion feedback, check converg
 ## >>chng 06 jul 25, from 0.145 to 0.152 HN update OIII, OII collision data
@@ -192,7 +202,8 @@ monitor line "o  3"  5006.84 16.84
 ## >>chng 11 aug 05, from 0.1364 to 0.1471, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 16 jul 24, from 0.1471 to 0.1561, update C III to 2014A&A...566A.104F
 ## >>chng 19 mar 01, change "Blnd" 4363 -> "O  3" 4363.21
-monitor line "O  3"  4363.21 0.1561
+## >>chng 25 jul 16, from 0.1561 to 0.1277, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "O  3"  4363.21 0.1277
 ## 
 ## >>chng 14 mar 26, from 0.725 to 0.7686, Move oxygen data to stout and chianti files
 monitor line "O  3" 51.8004m  0.7686
@@ -212,7 +223,8 @@ monitor line "o  4"  25.8863m  1.152
 ## >>chng 06 jul 06, from 0.133 to 0.147, update Ne cs
 ## >>chng 06 aug 09, from 0.147 to 0.161 Meudon 06, Bowen change
 ## >>chng 11 aug 05, from 0.161 to 0.1254, make PRD redis func for h-like ions; LY_A func is now for H only
-monitor line "blnd"  1402  0.1254 error 0.1
+## >>chng 25 jul 16, from 0.1254 to 0.11, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "blnd"  1402  0.11 error 0.1
 ##
 ## >>chng 06 jul 06, from 0.087 to 0.0976, update Ne cs
 ## >>chng 09 feb 23, from 0.0976 to 0.084, remove otslin, otscon dampers (PR #84, r2758)
@@ -245,7 +257,8 @@ monitor line "Ne 3" 15.5509m  1.472
 ## >>chng 13 jul 26, wl from 3869 to 3868.75A, increased wl precision to 6 sig. fig.
 ## >>chng 15 oct 14, from 1.615 to 1.297, update Ne 3 cs to McLaughlin+11
 ## >>chng 15 oct 15, wl from 3868.75A to 3868.76A, update Ne III energies
-monitor line "Ne 3" 3868.76A  1.297
+## >>chng 25 jul 16, from 1.297 to 1.108, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "Ne 3" 3868.76A  1.108
 ##
 ## >>chng 03 dec 08, from 0.448 to 0.480, chng zones, ots
 ## >>chng 06 nov 29, from 0.480 to 0.568 Badnell DR turned on
@@ -270,7 +283,8 @@ monitor line "Ne 5" 3425.88A  0.1909 error 0.1
 ## >>chng 13 jul 24, from 0.2433 to 0.2697, Ne to external databases
 ## >>chng 22 jul 09, wl from 24.2065m to 24.3109m, upgrade to Chianti v10
 ## >>chng 22 jul 09, from 0.2697 to 0.2312, upgrade to Chianti v10
-monitor line "Ne 5" 24.3109m  0.2312
+## >>chng 25 jul 16, wl from 24.3109m to 24.3108m, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "Ne 5" 24.3108m  0.2312
 ##
 ## >>chng 06 nov 24, from 1.55 to 1.37, turn on Badnell RR
 ## >>chng 08 oct 18, from 1.37 to 1.091, include Badnell UTA data
@@ -278,7 +292,8 @@ monitor line "Ne 5" 24.3109m  0.2312
 ## >>chng 12 oct 26, from 1.183 to 0.8152, adjust montiors to this branch
 ## >>chng 20 jan 13, from 0.8152 to 0.8554, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
 ## >>chng 22 jul 09, from 0.8554 to 0.8997, upgrade to Chianti v10
-monitor line "blnd" 2798  0.8997
+## >>chng 25 jul 16, from 0.8997 to 0.7808, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "blnd" 2798  0.7808
 ##
 ## >>chng 03 dec 08, from 0.061 to 0.064, chng zones, ots
 ## >>chng 06 nov 29, from 0.064 to 0.077 Badnell DR turned on
@@ -300,7 +315,8 @@ monitor line "Si 2" 34.8046m  0.0391
 ## >>chng 12 oct 26, from 0.1091 to 0.1144, adjust montiors to this branch
 ## >>chng 15 aug 30, from 0.1144 to 0.1083, update Si II stout to Laha+ 2015
 ## >>chng 19 jul 30, from 0.1083 to 0.1135, split He I 2 ^3P_J
-monitor line "Blnd" 2335  0.1135
+## >>chng 25 jul 16, from 0.1135 to 0.0995, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "Blnd" 2335  0.0995
 ##
 ## >>chng 06 jul 25, from 0.328 to 0.360 HN update OIII, OII collision data
 ## >>chng 06 nov 29, from 0.360 to 0.311 Badnell DR turned on
@@ -308,14 +324,16 @@ monitor line "Blnd" 2335  0.1135
 ## >>chng 11 aug 05, from 0.28 to 0.3224, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 14 mar 26, from 0.3224 to 0.2891, Move oxygen data to stout and chianti files
 ## >>chng 15 nov 16, from 0.2891 to 0.3386, update Si III, 1888 TP now 3x smaller
-monitor line "Blnd" 1888  0.3386 error 0.1
+## >>chng 25 jul 16, from 0.3386 to 0.2559, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "Blnd" 1888  0.2559 error 0.1
 ##
 ## >>chng 00 dec 28, from 0.100 to 0.107, inproved 2-nu RT
 ## >>chng 02 jun 15, from 0.107 to 0.096, slow drift
 ## >>chng 03 dec 08, from 0.096 to 0.113, chng zones, ots
 ## >>chng 06 aug 09, from 0.113 to 0.126 Meudon 06, Bowen change
 ## >>chng 09 feb 23, from 0.126 to 0.1076, remove otslin, otscon dampers (PR #84, r2758)
-monitor line "Blnd" 1397  0.1076 error 0.1
+## >>chng 25 jul 16, from 0.1076 to 0.0808, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "Blnd" 1397  0.0808 error 0.1
 ##
 ## >>chng 02 nov 20, from 0.27 to 0.294, drift up, new he ots diff fields
 ## >>chng 06 aug 09, from 0.294 to 0.279 Meudon 06, Bowen change
@@ -333,7 +351,8 @@ monitor line "Blnd" 1397  0.1076 error 0.1
 ## >>chng 16 dec 20, from 0.1801 to 0.1919, add secondary autoionization to DR suppression
 ## >>chng 19 jul 18, from 0.1919 to 0.2268, update SII A to Podobedova, Kelleher,&Wiese 2009, JPCRD, Vol. 3 
 ## >>chng 23 may 11, from 0.2268 to 0.2414, update RR DR to 2022 Badnell wor
-monitor line "Blnd" 6720  0.2414
+## >>chng 25 jul 16, from 0.2414 to 0.2296, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "Blnd" 6720  0.2296
 ##
 ## >>chng 00 sep 12, from 0.342 to 0.388 result of change in s3 cs
 ## >>chng 06 aug 09, from 0.388 to 0.368 Meudon 06, Bowen change
@@ -359,7 +378,8 @@ monitor line "S  3" 18.7078m  0.2755
 ## >>chng 13 jul 24, wl from 9531 to 9530.62A, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 14, from 1.176 to 1.123, update S2+ - S+ DR to Badnell+ 2015 ApJ
 ## >>chng 18 jan 17, from 1.123 to 1.188, update Badnell RR, DR to http://dx.doi.org/10.1051/0004-6361/201731243
-monitor line "S  3" 9530.62A  1.188
+## >>chng 25 jul 16, from 1.188 to 1.079, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "S  3" 9530.62A  1.079
 ##
 ## >>chng 06 aug 09, from 1.88 to 1.97 Meudon 06, Bowen change
 ## >>chng 06 nov 29, from 1.97 to 2.46 Badnell DR turned on
@@ -367,7 +387,8 @@ monitor line "S  3" 9530.62A  1.188
 ## >>chng 07 nov 29, from 2.24 to 2.44 update DR rates
 ## >>chng 13 jul 24, wl from 10.51m to 10.5076m, increased wl precision to 6 sig. fig.
 ## >>chng 16 dec 20, from 2.44 to 2.298, add secondary autoionization to DR suppression
-monitor line "S  4" 10.5076m  2.298
+## >>chng 25 jul 16, from 2.298 to 2.188, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "S  4" 10.5076m  2.188
 ##
 monitor temperature volume "O" 3.947
 monitor temperature volume "O+" 4.059

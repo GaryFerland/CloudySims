@@ -93,13 +93,15 @@ monitor line luminosity "h  1" 4861.32A 0.676
 ##
 ## >>chng 09 feb 23, from 1.236 to 1.256, remove otslin, otscon dampers (PR #84, r2758)
 ## >>chng 11 jul 12, from 1.256 to 1.279, enable fit to Badnell DR suppression
-monitor line luminositry "o  3"  5006.84 1.279
+## >>chng 25 jul 16, from 1.279 to 1.347, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line luminositry "o  3"  5006.84 1.347
 ##
 ## >>chng 06 nov 29, from -1.115 to -1.126, Badnell DR
 ## >>chng 11 jul 12, from -1.126 to -1.101, enable fit to Badnell DR suppression
 ## >>chng 19 mar 01, change "Blnd" 4363 -> "O  3" 4363.21
 ## >>chng 19 jul 30, from -1.101 to -1.071, split He I 2 ^3P_J
-monitor line luminosity "O  3"  4363.21 -1.071
+## >>chng 25 jul 16, from -1.071 to -1.175, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line luminosity "O  3"  4363.21 -1.175
 ##
 ## >>chng 06 nov 29, from 0.013 to 0.0462, Badnell DR
 ## >>chng 11 jul 12, from 0.0462 to 0.0759, enable fit to Badnell DR suppression
@@ -120,7 +122,8 @@ monitor line luminosity "blnd"  3727 0.7657
 ## >>chng 11 jul 12, from -0.0809 to -0.1305, enable fit to Badnell DR suppression
 ## >>chng 13 feb 01, from -0.1305 to -0.088, BUGFIX, largely undo r6703
 ## >>chng 16 jul 24, from -0.088 to -0.0672, update C III to 2014A&A...566A.104F
-monitor line luminosity "blnd"  7325 -0.0672
+## >>chng 25 jul 16, from -0.0672 to -0.1175, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line luminosity "blnd"  7325 -0.1175
 ##
 ## >>chng 06 oct 02, from -1.678 to -1.579 HM update OI cs to Barklem '06
 ## >>chng 14 mar 26, from -1.579 to -1.558, move O to external databases
@@ -221,7 +224,8 @@ monitor column density C2   14.91 error 0.1
 ## >>chng 23 may 15, from 13.52 to 14.04, GS updates 21 reactions to UMIST 2012
 ## >>chng 24 jun 08, from 14.04 to 14.08, GS rm 3 TiO reactions
 ## >>chng 25 jul 11, from 14.08 to 13.96, GS Si moles, UMIST2022
-monitor column density C3   13.96 error 0.1
+## >>chng 25 jul 16, from 13.96 to 14.02, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor column density C3   14.02 error 0.1
 ## >>chng 11 jul 16, from 10 to 17.35, add column density monitors
 ## >>chng 11 nov 16, from 17.35 to 17.42, adjust newmole monitors
 ## >>chng 12 apr 09, from 17.42 to 17.74, update backbround CR to Indiolo_07 (8x larger)
@@ -286,7 +290,8 @@ monitor line luminosity "CO  " 520.089m  -2.171 error 0.1
 ## >>chng 11 nov 16, from -2.012 to -1.964, adjust newmole monitors
 ## >>chng 12 jan 06, from -1.964 to -2.013, several H2 model changes
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
-monitor line luminosity "CO  " 433.438m  -2.013 error 0.1
+## >>chng 25 jul 16, from -2.013 to -2.058, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line luminosity "CO  " 433.438m  -2.058 error 0.1
 ##
 ## >>chng 05 jul 17, from -2.33 to -2.29 first run in 6 mo
 ## >>chng 06 jun 02, from -2.29 to -2.21, NA refactor chem, bug fix
@@ -316,7 +321,8 @@ monitor line luminosity "CO  " 325.137m  -1.896 error 0.1
 ## >>chng 10 jun 22, from -1.438 to -1.829, fix botches after dBaseLines cooling/heating changes
 ## >>chng 13 jul 24, wl from 289.0m to 289.041m, increased wl precision to 6 sig. fig.
 ## >>chng 20 jul 21, from -1.829 to -1.87, update DR H2 diss as per  2020RNAAS...4...78S
-monitor line luminosity "CO  " 289.041m  -1.87 error 0.1
+## >>chng 25 jul 16, from -1.87 to -1.925, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line luminosity "CO  " 289.041m  -1.925 error 0.1
 ##
 ## >>chng 05 jul 17, from -1.99 to -1.96 first run in 6 mo
 ## >>chng 05 dec 19, from -1.96 to -2.00, stop AV 1000
@@ -338,7 +344,8 @@ monitor line luminosity "CO  " 260.169m  -1.978 error 0.1
 ## >>chng 13 jul 24, wl from 236.5m to 236.549m, increased wl precision to 6 sig. fig.
 ## >>chng 20 jul 21, from -2.07 to -2.146, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from -2.146 to -2.197, update H3+ rates Indriola+ 2012
-monitor line luminosity "CO  " 236.549m  -2.197 error 0.1
+## >>chng 25 jul 16, from -2.197 to -2.253, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line luminosity "CO  " 236.549m  -2.253 error 0.1
 ##
 ## >>chng 05 jul 17, from -2.19 to -2.06 first run in 6 mo
 ## >>chng 05 sep 08, from -2.06 to -1.98, first run in two months
@@ -352,7 +359,8 @@ monitor line luminosity "CO  " 236.549m  -2.197 error 0.1
 ## >>chng 14 mar 26, from -2.441 to -2.491, move O to external databases
 ## >>chng 20 jul 21, from -2.491 to -2.616, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 20 aug 03, from -2.616 to -2.698, update H3+ rates Indriola+ 2012
-monitor line luminosity "CO  " 216.868m  -2.698 error 0.1
+## >>chng 25 jul 16, from -2.698 to -2.789, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line luminosity "CO  " 216.868m  -2.789 error 0.1
 ##
 ## >>chng 05 dec 19, from 1600 to 1400, stop AV 1000
 ## >>chng 08 dec 08, from 1400 to 1266, upper limit -> equals (r2515)
@@ -446,7 +454,8 @@ monitor H2 column density level 0  2  19.15 error 0.1
 ## >>chng 16 dec 29, from 18.24 to 18.29, update H-H2 coll to Lique 2015
 ## >>chng 21 sep 11, from 18.29 to 18.23, LAMDA update
 ## >>chng 23 sep 08, from 18.23 to 18.28, fix SQRTPI in Lya destprob
-monitor H2 column density level 0  3  18.28 error 0.1
+## >>chng 25 jul 16, from 18.28 to 18.23, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor H2 column density level 0  3  18.23 error 0.1
 ##
 ## >>chng 05 feb 12, from 15.54 to 15.58, better H2 conv
 ## >>chng 05 jul 17, from 15.58 to 16.44 first run in 6 mo
@@ -596,7 +605,8 @@ monitor H2 column density level 1  0  14.81 error 0.1
 ## >>chng 13 aug 05, from 15.87 to 15.82, SDIV->safe_div for H2 Boltzmann ratios
 ## >>chng 14 aug 28, from 15.82 to 15.89, EleyRideal H2 formation
 ## >>chng 14 dec 04, from 15.89 to 16.05, fix double-counting of big-H2 Solomon rate
-monitor H2 column density level 1  1  16.05 error 0.1
+## >>chng 25 jul 16, from 16.05 to 16.01, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor H2 column density level 1  1  16.01 error 0.1
 ##
 ## >>chng 05 feb 12, from 14.85 to 14.87, better H2 conv
 ## >>chng 05 jul 17, from 14.87 to 15.34 first run in 6 mo
@@ -700,7 +710,8 @@ monitor "CO  " 371.549m  -1.927 line intensity
 ## >>chng 13 jun 27, from -8.049 to -1.832, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 20 jul 21, from -1.832 to -1.876, update DR H2 diss as per  2020RNAAS...4...78S
-monitor "CO  " 325.137m  -1.876 line intensity
+## >>chng 25 jul 16, from -1.876 to -1.921, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor "CO  " 325.137m  -1.921 line intensity
 ## >>chng 13 jun 27, from -7.522 to -3.014, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -3.014 to -3.044, update H3+ rates Indriola+ 2012

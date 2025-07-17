@@ -137,7 +137,8 @@ monitor line "Blnd" 7065.25A 0.1038
 monitor line "Blnd" 7065.25A 0.1144 emergent
 ##
 ## >>chng 13 jul 26, wl from 7065 to 7065.22A, increased wl precision to 6 sig. fig.
-monitor line "Ca B" 7065.22A 0.0381
+## >>chng 25 jul 16, from 0.0381 to 0.0361, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "Ca B" 7065.22A 0.0361
 ## 
 ## >>chng 13 jul 26, wl from 4471 to 4471.47A, increased wl precision to 6 sig. fig.
 ## >>chng 13 jul 30, wl from 4471.47A to 4471.49A, increased wl precision to 6 sig. fig.
@@ -177,16 +178,19 @@ monitor line "Ca B" 6678.15A 0.0385
 ## >>chng 18 mar 06, wl from 1.08331m to 1.08302m, adjust multiplet Blend WL for refraction index
 ## >>chng 19 jul 30, from 0.5024 to 0.3019, split He I 2 ^3P_J
 ## >>chng 20 jan 13, from 0.3019 to 0.2354, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor line "Blnd" 1.08302m 0.2354
+## >>chng 25 jul 16, from 0.2354 to 0.2197, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "Blnd" 1.08302m 0.2197
 ##
 ## >>chng 18 feb 20, updated spectral label from "He 1" 1.08303m to "Blnd" 1.08331m, update He-like triplet labels and wl
 ## >>chng 18 mar 06, wl from 1.08331m to 1.08302m, adjust multiplet Blend WL for refraction index
 ## >>chng 19 jul 30, from 0.6449 to 0.3892, split He I 2 ^3P_J
 ## >>chng 20 jan 13, from 0.3892 to 0.3034, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor line "Blnd" 1.08302m 0.3034 emergent
+## >>chng 25 jul 16, from 0.3034 to 0.2829, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "Blnd" 1.08302m 0.2829 emergent
 ##
 ## >>chng 13 jul 26, wl from 10830 to 1.08303m, increased wl precision to 6 sig. fig.
-monitor line "Ca B" 1.08303m 1.276
+## >>chng 25 jul 16, from 1.276 to 1.215, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "Ca B" 1.08303m 1.215
 ##
 ## >>chng 05 oct 01, from 0.313 to 0.287, RP update He levels
 ## >>chng 06 nov 29, from 0.287 to 0.244, Badnell DR turned on
@@ -194,7 +198,8 @@ monitor line "blnd" 2326 0.244 error 0.1
 ##
 ## >>chng 10 mar 05, from 0.497 to 0.5488, changes caused by r3848 atomic data update
 ## >>chng 16 jul 24, from 0.5488 to 0.3878, update C III to 2014A&A...566A.104F
-monitor line "blnd" 1909 0.3878 error 0.1
+## >>chng 25 jul 16, from 0.3878 to 0.3245, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "blnd" 1909 0.3245 error 0.1
 ## 
 ## >>chng 06 nov 29, from -15.114 to -15.165, Badnell DR turned on
 ## >>chng 09 jul 14, from -15.165 to -15.357 update NI atomic data
@@ -218,9 +223,11 @@ monitor line "blnd"  5199A luminosity -15.33
 ## >>chng 13 mar 03, from 0.4745 to 0.4969, update atomic models for S II, S III
 ## >>chng 14 jan 05, from 0.4969 to 0.4538, N to external databases
 ## >>chng 15 mar 07, from 0.4538 to 0.4755, merging newmesh branch
-monitor line "N  2"  6583.45 0.4755
+## >>chng 25 jul 16, from 0.4755 to 0.4443, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "N  2"  6583.45 0.4443
 ##
-monitor line "N  2"  6583.45 0.5354 emergent
+## >>chng 25 jul 16, from 0.5354 to 0.4934, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "N  2"  6583.45 0.4934 emergent
 ##
 ## >>chng 09 jun 18, add this
 ## >>chng 10 mar 05, from 0.0384 to 0.0341, changes caused by r3848 atomic data update
@@ -252,7 +259,8 @@ monitor line "O  1"  6300.30A 0.0074 emergent
 ## >>chng 11 jul 12, from 1.273 to 1.178, enable fit to Badnell DR suppression
 ## >>chng 13 feb 01, from 1.178 to 1.304, BUGFIX, largely undo r6703
 ## >>chng 20 jan 13, from 1.304 to 1.372, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor line "blnd"  3727 1.372
+## >>chng 25 jul 16, from 1.372 to 1.264, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "blnd"  3727 1.264
 ##
 ## >>chng 06 jul 25, from 0.348 to 0.401 HN update OIII, OII collision data
 ## >>chng 06 nov 29, from 0.401 to 0.361, Badnell DR turned on
@@ -260,16 +268,19 @@ monitor line "blnd"  3727 1.372
 ## >>chng 11 jul 12, from 0.3084 to 0.2766, enable fit to Badnell DR suppression
 ## >>chng 13 feb 01, from 0.2766 to 0.3062, BUGFIX, largely undo r6703
 ## >>chng 19 jul 30, from 0.3062 to 0.3212, split He I 2 ^3P_J
-monitor line "blnd"  7325 0.3212
+## >>chng 25 jul 16, from 0.3212 to 0.2909, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "blnd"  7325 0.2909
 ##
 ## >>chng 06 nov 29, from 3.585 to 3.814, Badnell DR turned on
 ## >>chng 11 jul 12, from 3.814 to 4.102, enable fit to Badnell DR suppression
 ## >>chng 13 feb 01, from 4.102 to 3.855, BUGFIX, largely undo r6703
 ## >>chng 20 jan 13, from 3.855 to 4.048, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor line "o  3"  5006.84 4.048
+## >>chng 25 jul 16, from 4.048 to 4.603, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "o  3"  5006.84 4.603
 ##
 ## >>chng 20 jan 13, from 3.855 to 4.09, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor line "o  3"  5006.84 4.09 emergent
+## >>chng 25 jul 16, from 4.09 to 4.644, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "o  3"  5006.84 4.644 emergent
 ##
 ## >>chng 06 jul 06, from 0.335 to 0.368, update Ne cs
 ## >>chng 13 jul 26, wl from 12.81m to 12.8101m, increased wl precision to 6 sig. fig.
@@ -339,7 +350,8 @@ monitor line "nFnu"  1.43610m   1.441
 ## >>chng 20 jan 13, from 0.0271 to 0.0258, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
 ## >>chng 23 sep 08, from 0.0258 to 0.054, fix SQRTPI in Lya destprob
 ## >>chng 24 jan 09, from 0.054 to 0.0506, resolve 1 electron Ly doublets
-monitor Pradmax 0.0506
+## >>chng 25 jul 16, from 0.0506 to 0.0546, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor Pradmax 0.0546
 ## 
 ## >>chng 05 oct 01, from 0.0702 to 0.0519, RP update He levels
 ## >>chng 15 mar 07, from 0.0519 to 0.0718, merging newmesh branch

@@ -187,7 +187,8 @@ monitor line "blnd" 2326 0.075
 ## >>chng 10 mar 05, from 0.571 to 0.5995, changes caused by r3848 atomic data update
 ## >>chng 13 mar 03, from 0.5995 to 0.6692, update atomic models for S II, S III
 ## >>chng 14 jan 05, from 0.6692 to 0.6035, N to external databases
-monitor line "N  2"  6583.45 0.6035
+## >>chng 25 jul 16, from 0.6035 to 0.5657, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "N  2"  6583.45 0.5657
 ##
 ## >>chng 00 mar 22 after cont pump, widflx changes, from 1.16 to 1.04
 ## >>chng 00 sep 12 from 1.04 to 0.936, cs change in s3
@@ -216,7 +217,8 @@ monitor line "Ne 2"  12.8101m 0.2961
 ## >>chng 11 jul 12, from 0.63 to 0.5944, enable fit to Badnell DR suppression
 ## >>chng 13 feb 01, from 0.5944 to 0.6213, BUGFIX, largely undo r6703
 ## >>chng 14 dec 14, from 0.6213 to 0.7149, update S2+ - S+ DR to Badnell+ 2015 ApJ
-monitor line "Blnd" 6720 0.7149
+## >>chng 25 jul 16, from 0.7149 to 0.7518, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "Blnd" 6720 0.7518
 ##
 ## >>chng 04 jun 21, from 0.458 to 0.441, norm to totl 4861
 ## >>chng 07 apr 30, from 0.441 to 0.366 log DR average, use mix S DR

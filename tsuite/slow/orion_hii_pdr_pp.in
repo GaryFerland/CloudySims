@@ -116,7 +116,8 @@ monitor line luminosity "h  1" 4861.32A 0.490
 ## >>chng 11 jul 12, from 1.069 to 1.099, enable fit to Badnell DR suppression
 ## >>chng 13 feb 01, from 1.099 to 1.074, BUGFIX, largely undo r6703
 ## >>chng 19 jul 30, from 1.074 to 1.094, split He I 2 ^3P_J
-monitor line luminositry "o  3"  5006.84 1.094
+## >>chng 25 jul 16, from 1.094 to 1.161, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line luminositry "o  3"  5006.84 1.161
 ##
 ## >>chng 05 nov 22, from -1.312 to -1.290 - slow drift?
 ## >>chng 06 nov 29, from -1.290 to -1.257, Badnell DR turned on
@@ -126,7 +127,8 @@ monitor line luminositry "o  3"  5006.84 1.094
 ## >>chng 15 may 12, from -1.226 to -1.252, coll. str. reduced mass scaling
 ## >>chng 19 mar 01, change "Blnd" 4363 -> "O  3" 4363.21
 ## >>chng 19 jul 30, from -1.252 to -1.209, split He I 2 ^3P_J
-monitor line luminosity "O  3"  4363.21 -1.209
+## >>chng 25 jul 16, from -1.209 to -1.292, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line luminosity "O  3"  4363.21 -1.292
 ##
 ## >>chng 06 nov 29, from -0.301 to -0.272, Badnell DR turned on
 ## >>chng 08 apr 03, from -0.272 to -0.292, include 10830 in fine opacity array
@@ -154,7 +156,8 @@ monitor line luminosity "blnd"  5199A  -2.415
 ## >>chng 11 jul 12, from 0.571 to 0.5279, enable fit to Badnell DR suppression
 ## >>chng 13 feb 01, from 0.5279 to 0.5743, BUGFIX, largely undo r6703
 ## >>chng 19 jul 30, from 0.5743 to 0.5955, split He I 2 ^3P_J
-monitor line luminosity "blnd"  3727 0.5955
+## >>chng 25 jul 16, from 0.5955 to 0.5702, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line luminosity "blnd"  3727 0.5702
 ##
 ## >>chng 06 jul 25, from -0.009 to 0.0605 HN update OIII, OII collision data
 ## >>chng 06 nov 29, from 0.0605 to 0.0126, Badnell DR turned on
@@ -164,7 +167,8 @@ monitor line luminosity "blnd"  3727 0.5955
 ## >>chng 11 jul 12, from -0.0461 to -0.0928, enable fit to Badnell DR suppression
 ## >>chng 13 feb 01, from -0.0928 to -0.0462, BUGFIX, largely undo r6703
 ## >>chng 19 jul 30, from -0.0462 to -0.0211, split He I 2 ^3P_J
-monitor line luminosity "blnd"  7325 -0.0211
+## >>chng 25 jul 16, from -0.0211 to -0.0612, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line luminosity "blnd"  7325 -0.0612
 ##
 ## >>chng 06 jul 06, from -1.705 to -1.517, update Ne cs
 ## >>chng 06 aug 25, from -1.517 to -1.714, add mag field and stop col 22, 
@@ -484,7 +488,8 @@ monitor itrzn 8.672
 ## >>chng 20 jan 13, from 0.0163 to 0.0151, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
 ## >>chng 23 sep 08, from 0.0151 to 0.0284, fix SQRTPI in Lya destprob
 ## >>chng 24 feb 04, from 0.0284 to 0.0267, resolve 1 electron Lya doublets
-monitor Pradmax 0.0267
+## >>chng 25 jul 16, from 0.0267 to 0.0283, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor Pradmax 0.0283
 ##
 ## >>chng 13 jun 27, from -8.869 to -3.9, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.

@@ -216,7 +216,8 @@ monitor line "blnd"  7325 0.7995
 ## >>chng 11 aug 05, from 0.27 to 0.2566, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 16 jul 24, from 0.2566 to 0.2733, update C III to 2014A&A...566A.104F
 ## >>chng 20 jan 13, from 0.2733 to 0.2868, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor line "blnd"  1666 0.2868
+## >>chng 25 jul 16, from 0.2868 to 0.2714, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "blnd"  1666 0.2714
 ##
 ## >>chng 01 feb 20, from 6.644 to 4.609, change in def ISM O abundance
 ## >>chng 01 feb 24, change in radiaition pressure, 4.609 to 3.852
@@ -238,7 +239,8 @@ monitor line "o  3"  5006.84 4.176
 ## >>chng 15 nov 03, from 0.291 to 0.3164, update O III CS to Storey+14
 ## >>chng 16 aug 07, from 0.3164 to 0.334, Fran bug fix
 ## >>chng 19 mar 01, change "Blnd" 4363 -> "O  3" 4363.21
-monitor line "O  3"  4363.21 0.334
+## >>chng 25 jul 16, from 0.334 to 0.3963, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "O  3"  4363.21 0.3963
 ##
 ## >>chng 01 feb 24, from 0.259 to 0.236, change in radiaition pressure, 
 ## >>chng 01 nov 08, from 0.236 to 0.224, better P convergence

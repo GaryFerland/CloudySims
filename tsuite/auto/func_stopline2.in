@@ -28,7 +28,8 @@ monitor line "c  2" 157.636m 0.002
 ## >>chng 03 jun 10, from 18.967 to 18.945, larger H atom, chng solomon process
 ## >>chng 08 dec 03, from 18.95 to 18.96, iterate on initial electron density until convergence
 ## >>chng 09 feb 23, from 18.96 to 18.99, remove otslin, otscon dampers (PR #84, r2758)
-monitor thickness 18.99
+## >>chng 25 jul 16, from 18.99 to 19.02, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor thickness 19.02
 ##
 # func_stopline2.in
 # class function 

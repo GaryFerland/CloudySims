@@ -47,7 +47,8 @@ print line faint -2
 ## >>chng 11 jul 12, from 5.085 to 5.063, enable fit to Badnell DR suppression
 ## >>chng 13 feb 01, from 5.063 to 5.085, BUGFIX, largely undo r6703
 ## >>chng 19 mar 01, from 5.085 to 5.05, remove recombination, etc, components from blends (#415)
-monitor eden 5.05 
+## >>chng 25 jul 16, from 5.05 to 5.018, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor eden 5.018 
 ## 
 monitor temperature "H+" 4
 save overview "optimize_subplex.ovr"

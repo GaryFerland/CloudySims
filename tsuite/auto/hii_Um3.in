@@ -48,21 +48,28 @@ monitor line "Blnd" 1.08302m 0.3584
 monitor line "blnd" 2326  0.4367 error 0.1
 ## >>chng 19 mar 01, from 0.1104 to 0.0207, remove recombination, etc, components from blends (#415)
 monitor line "blnd" 1335  0.0207 error 0.1
-monitor line "blnd" 1909  0.3214 error 0.1
+## >>chng 25 jul 16, from 0.3214 to 0.2811, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "blnd" 1909  0.2811 error 0.1
 monitor line "N  2"  6583.45  1.555 error 0.1
-monitor line "n  3"  57.3238m  0.1717
-monitor line "blnd"  7325  0.1375 error 0.07
+## >>chng 25 jul 16, from 0.1717 to 0.1604, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "n  3"  57.3238m  0.1604
+## >>chng 25 jul 16, from 0.1375 to 0.1275, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "blnd"  7325  0.1275 error 0.07
 monitor line "blnd"  3727  4.718 0.1
 monitor line "O  3"  51.8004m  0.8151
-monitor line "o  3"  5006.84  3.043
+## >>chng 25 jul 16, from 3.043 to 3.787, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "o  3"  5006.84  3.787
 monitor line "Ne 2"  12.8101m  0.2043
 monitor line "Ne 3"  15.5509m  0.3796
 monitor line "Ne 3"  36.0036m  0.0345
-monitor line "Ne 3" 3868.76A  0.1893 error 0.08
+## >>chng 25 jul 16, from 0.1893 to 0.175, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "Ne 3" 3868.76A  0.175 error 0.08
 monitor line "S  3"  18.7078m  0.563
-monitor line "S  3"   9530.62A  0.9898
+## >>chng 25 jul 16, from 0.9898 to 0.9122, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "S  3"   9530.62A  0.9122
 ## >>chng 18 jan 17, from 0.0467 to 0.0433, update Badnell RR, DR to http://dx.doi.org/10.1051/0004-6361/201731243
-monitor line "S  4"  10.5076m  0.0433
+## >>chng 25 jul 16, from 0.0433 to 0.0411, These corrections are made using the updated STOUT dataset for the C-like isoelectronic sequence. See Section 5.1 of the Cloudy release paper for full details.
+monitor line "S  4"  10.5076m  0.0411
 monitor line "Ar 2" 6.98337m  0.0278
 monitor line "Bac " 3646 15.68
 monitor hydrogen 2 ionization fraction is 0.8556
