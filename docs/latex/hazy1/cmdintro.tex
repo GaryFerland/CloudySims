@@ -448,9 +448,15 @@ that directory and not globally.
 \section{The Search Path for Input Files}
 \label{sec:SearchPath}
 
-The code uses a search path to locate input files, as was discussed in the
-previous section. The default search path is to look in the local directory
-first and then in the data directory included in the distribution. The user
+The code uses a search path to locate input and data files. 
+The default search path is to look in the local directory
+first and then in the data directory included in the distribution. 
+The code creates the default search path on the fly when the code starts up. 
+The makefile sets the path to the root of the Cloudy installation. 
+This section described how to set your own search path if you want to extend
+our default setup..
+
+The user
 can override that setting by defining the environment variable
 \cdVariable{CLOUDY\_DATA\_PATH}. How you can do that depends on the operating
 system and the shell you are using. For csh/tcsh under Linux/UNIX use:
@@ -507,6 +513,9 @@ Note that we put \cdFilename{/path/to/non\_standard\_data} up front (this is
 the directory containing data for a non-standard spectral resolution). This
 assures that the non-standard resolution version of a file is picked up first,
 before the standard version.
+
+You can verify your search path using the \cdCommand{print path} command
+described in Section~\ref{sec:PrintPath}.
 
 \section{The \cdCommand{init} command}
 
