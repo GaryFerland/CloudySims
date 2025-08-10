@@ -30,7 +30,7 @@ void SetPrintLineCol ()
 	LineSave.wl_length = (int) LineSave.sig_figs + 2;
 
 	/* set the format of the main output line list */
-	prt_linecol.column_len = (NCHLAB-1) + LineSave.wl_length + prt_linecol.absint_len + prt_linecol.relint_len + 3;
+	prt_linecol.column_len = (NCHLAB-1) + LineSave.wl_length+1 + prt_linecol.absint_len + prt_linecol.relint_len + 3;
 
 	prt_linecol.col_gap.assign( prt_linecol.col_gap_len, ' ' );
 	prt_linecol.relint_outrange.assign( prt_linecol.relint_len , '*' );

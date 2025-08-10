@@ -181,7 +181,8 @@ monitor line luminosity "Fe24"                10.6190A   -2.531
 ## >>chng 25 jun 01, from -2.934 to -28.28, first run
 ## >>chng 25 jun 22, from -28.28 to -2.725, first run with large column density
 monitor line luminosity "Fe24"                10.6630A   -2.725
-monitor line luminosity "Blnd" 11 10 10
+## >>chng 25 aug 02, add this monitor
+monitor line luminosity "Blnd" 11 -3.1256 
 #
 #
 ****************************

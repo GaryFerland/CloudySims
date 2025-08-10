@@ -29,22 +29,18 @@ void LineStackCreate()
 {
 	DEBUG_ENTRY( "LineStackCreate()" );
 
-	// set up emission line intensity stack
-	/* there are three types of calls to lines()
-	 * ipass = -1, first call, only count number of lines
-	 * ipass =  0, second pass, save labels and wavelengths
-	 * ipass =  1, integrate intensity*/
-	LineSave.ipass = -1;
-	lines();
-	ASSERT( LineSave.nsum > 0 );
-
 	/* in a grid or MPI run this may not be the first time here,
 	 * return old memory and grab new appropriate for this size,
 	 * since number of lines to be stored can change */
 	LineSave.clear();
 
-	/* this is the large main line array */
-	LineSave.resize(LineSave.nsum);
+	// set up emission line intensity stack
+	/* there are two types of calls to lines()
+	 * ipass =  0, first call, save labels and wavelengths
+	 * ipass =  1, integrate intensity*/
+	LineSave.ipass = 0;
+	lines();
+	ASSERT( LineSave.nsum > 0 );
 
 	/* this is only done on first iteration since will integrate over time */
 	for( long i=0; i < LineSave.nsum; i++ )
@@ -52,15 +48,6 @@ void LineStackCreate()
 		LineSave.lines[i].SumLineZero();
 		LineSave.lines[i].SumLineZeroAccum();
 	}
-
-	/* there are three calls to lines()
-	 * first call with ipass = -1 was above, only counted number
-	 * of lines and allocated space.  This is second call and will do
-	 * one-time creation of line labels */
-	LineSave.ipass = 0;
-	lines();
-	/* has to be positive */
-	ASSERT( LineSave.nsum > 0 );
 
 	/* make sure level index is initialized for all assocated transitions */
 	for( long i=0; i < LineSave.nsum; i++ )
@@ -413,13 +400,7 @@ STATIC LinSv* lincom(
 	/* increment the line counter */
 	++LineSave.nsum;
 
-	if (LineSave.ipass == -1)
-		return NULL;
-
 	return &LineSave.lines[LineSave.nsum-1];
-
-	/* routine can be called with negative LineSave.ipass, in this case
-	 * we are just counting number of lines for current setup */
 }
 
 /*linadd enter lines into the line storage array, called once per zone for each line*/

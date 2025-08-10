@@ -2188,25 +2188,10 @@ of this molecule are changed with the \cdCommand{database H2} command
 described on page \pageref{sec:AtomH2} above.
 
 \begin{description}
-\item[set H2 fraction]  This sets the ratio $n$(\htwo)/$n$(H).
-The number is
-interpreted as the log of the ratio if it is less then or equal to zero
-and as the linear ratio otherwise.
-An upper limit of 0.5 will be silently
-imposed.
-This command turns off the normal \htwo\ molecular network and forces
-the H2 density to the hydrogen density multiplied by this fraction.
-This
-is totally unphysical and is only intended to provide an easy way to test
-the \htwo\ molecule.
-
 \item[set H2 formation scale]  This scales the H2 formation rate
 (via three-body recombination). The number is
 interpreted as the log of the scaling factor if it is less then or equal to zero
-and as the linear factor otherwise.  In the fully molecular or fully
-ionized limits, this command should be used rather than the
-\cdCommand{set H2 fraction} command because it allows the same functionality without
-breaking numerous consistency checks.
+and as the linear factor otherwise.
 
 \item[set H2 Jura [TH85; CT02; SN99; ELRD]]  This changes the ``Jura rate'', the rate
 \htwo\ forms on grains \citep{Jura1975}.

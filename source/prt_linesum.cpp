@@ -52,10 +52,6 @@ double PrtLineSum()
 	DEBUG_ENTRY( "PrtLineSum()" );
 
 	double sum = 0.;
-	/* this can be called during setup mode, in which case we do nothing */
-	if( LineSave.ipass < 0 )
-		return sum;
-	
 	if( LineSave.ipass == 0 )
 	{
 		bool lgFail = false;

@@ -289,8 +289,7 @@ string TransitionProxy::chLabel() const
 
 	/* NB this function is profoundly slow due to sprintf statement
 	 * also - it cannot be evaluated within a write statement itself*/
-	string wav_str = twav().sprt_wl();
-	return chSpecies + " " + wav_str;
+	return chSpecies + " " + twav().sprt_wl();
 }
 
 /*PutCS enter a collision strength into an individual line vector */
@@ -359,8 +358,6 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 		xObsIntensity = t.Emis().xObsIntensity() + extra.v;
 	}
 
-	/* initial counting case, where ipass == -1, just ignored above, call linadd below */
-	
 	/* ExtraInten is option that allows extra intensity (i.e., recomb)
 	 * to be added to this line  with Call PutExtra( exta )
 	 * in main lines this extra
