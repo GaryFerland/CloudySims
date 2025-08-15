@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*prtmet print all line optical depths at end of iteration */
 #include "cddefines.h"
@@ -43,13 +43,51 @@ void prtmet(void)
 					{
 						for( long ipHi=ipLo+1; ipHi < iso_sp[ipISO][nelem].numLevels_local; ipHi++ )
 						{
-							prme(false,iso_sp[ipISO][nelem].trans(ipHi,ipLo));
+							/* print resolved one-electron doublets nP Lyman sequence optical depths */
+							if(lgIsLymanLineResolved(iso_sp[ipISO][nelem].trans(ipHi,ipLo),
+											ExtraLymanLinesJ05[nelem][N_(ipHi)], ExtraLymanLinesJ15[nelem][N_(ipHi)]))
+							{
+								prme(false, ExtraLymanLinesJ05[nelem][N_(ipHi)]);
+								prme(false, ExtraLymanLinesJ15[nelem][N_(ipHi)]);
+							}
+							else
+								prme(false,iso_sp[ipISO][nelem].trans(ipHi,ipLo));
 						}
 					}
 				}
 			}
 		}
 
+		/* extra lyman lines H-like */
+		long ipISO=ipH_LIKE;
+		for( long nelem=ipISO; nelem < LIMELM; nelem++ )
+		{
+			if( dense.lgElmtOn[nelem] )
+			{
+				if( (*iso_sp[ipISO][nelem].trans(1,0).Lo()).ColDen() <= 0. )
+                                            continue;
+				/* print one-electron doublets nP Lyman sequence optical depths */
+				for( long nHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
+				{
+					prme(false, ExtraLymanLinesJ05[nelem][nHi]);
+					prme(false, ExtraLymanLinesJ15[nelem][nHi]);
+				}
+			}
+		}
+
+		/* extra lyman lines He-like */
+		ipISO = ipHE_LIKE;
+		for( long nelem=ipISO; nelem < LIMELM; nelem++ )
+		{
+			if( dense.lgElmtOn[nelem] )
+			{
+				/* print two-electron doublets nP Lyman sequence optical depths */
+				for( long ipHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
+				{
+					prme(false, ExtraLymanLinesHeLike[nelem][ipExtraLymanLinesHeLike[nelem][ipHi]]);
+				}
+			}
+		}
 		/* print main lines optical depths */
 		for( long i=0; i < nWindLine; i++ )
 		{
@@ -133,9 +171,6 @@ STATIC void prme(
 		/* line is not transferred */
 		return;
 	}
-
-	if( (*t.Lo()).ColDen() <= 0. )
-		return;
 
 	/* print optical depth if greater than lower limit, or significantly negative
 	 * PrtTauFnt is threshold for printing it

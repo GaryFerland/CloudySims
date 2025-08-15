@@ -1,9 +1,9 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*atom_level2 do level population and cooling for two level atom,
  * side effects:
  * set elements of transition struc
- * cooling via 	CoolAdd( chLab, (long)t->WLAng , t->cool());
+ * cooling via 	CoolAdd( chLab, t->WLangVac(), t->cool());
  * cooling derivative */
 #include "cddefines.h"
 #include "phycon.h"
@@ -224,7 +224,7 @@ void atom_level2( const TransitionProxy &t, const bool lgHFS )
 	/* add to cooling - heating part was taken out above,
 	 * and is not added in here - it will be added to thermal.heating(0,22)
 	 * in CoolSum */
-	CoolAdd( chIonLbl(t).c_str(), t.WLAng() , t.Coll().cool());
+	CoolAdd( chIonLbl(t).c_str(), t.WLangVac() , t.Coll().cool());
 	thermal.elementcool[nelem-1] += MAX2( 0., t.Coll().cool() );
 
 	/* derivative of cooling function */

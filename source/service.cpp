@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /* 
 * a set of  routines that are widely used across the code for various
@@ -10,7 +10,6 @@
 /*caps convert input command line (through eol) to ALL CAPS */
 /*ShowMe produce request to send information to GJF after a crash */
 /*AnuUnit produce continuum energy in arbitrary units */
-/*cap4 convert first 4 char of input line chLab into chCAP all in caps, null termination */
 /*insane set flag saying that insanity has occurred */
 /*nMatch determine whether match to a keyword occurs on command line,
  * return value is 0 if no match, and position of match within string if hit */
@@ -37,6 +36,7 @@
 
 #include "cdstd.h"
 #include <cstdarg>	/* ANSI variable arg macros */
+#include <filesystem>
 #include "cddefines.h"
 #include "service.h"
 #include "cddrive.h"
@@ -58,6 +58,8 @@
 #include "prt.h"
 #include "integrate.h"
 #include "ran.h"
+
+namespace fs = std::filesystem;
 
 #ifdef __CYGWIN__
 extern "C" { int vsnprintf(char*, size_t, const char*, va_list); }
@@ -250,26 +252,6 @@ void ShowMe()
 			}
 		}
 	}
-	return;
-}
-
-/*cap4 convert first 4 char of input line chLab into chCAP all in caps, null termination */
-void cap4(char *chCAP ,	/* output string, cap'd first 4 char of chLab, with null terminating */
-	  const char *chLab)	/* input string ending with null byte */
-{
-	DEBUG_ENTRY( "cap4()" );
-
-	/* convert 4 character string in chLab to ALL CAPS in chCAP */
-	for( long i=0; i < 4; i++ )
-	{
-		/* toupper is function in ctype that converts to upper case */
-		chCAP[i] = toupper( chLab[i] );
-		if( chLab[i] == '\0' )
-			break;
-	}
-
-	/* now end string with null byte */
-	chCAP[4] = '\0';
 	return;
 }
 
@@ -1882,4 +1864,11 @@ istream& SafeGetline(istream& is, string& t)
 			t += (char)c;
 		}
 	}
+}
+
+uintmax_t FileSize(const string& fpath)
+{
+	fs::path fsp = fpath;
+	error_code ec;
+	return fs::file_size(fsp, ec);
 }

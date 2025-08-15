@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*main program to call cloudy to generate a large loc data cube */
 #include "cddefines.h"
@@ -408,7 +408,7 @@ int main( int argc, char *argv[] )
 			cdTalk( DO_PRINT );
 
 			/* title for grid */
-			sprintf(chLine,"title %s", TITLE);
+			snprintf(chLine,sizeof(chLine),"title %s", TITLE);
 			n = cdRead( chLine  );
 
 			/* print only last iteration? */
@@ -430,7 +430,7 @@ int main( int argc, char *argv[] )
 #      			if ITERATIONS < 0
 			n = cdRead( "iterate convergence "  );/**/
 #			else 
-			sprintf(chLine,"iterate %i", ITERATIONS);
+			snprintf(chLine,sizeof(chLine),"iterate %i", ITERATIONS);
 			n = cdRead( chLine  );
 #			endif
 #			endif
@@ -452,10 +452,10 @@ int main( int argc, char *argv[] )
 				cdNoExec();
 
 			/* flux and density */
-			sprintf(chLine,"phi(h) %f", flux);
+			snprintf(chLine,sizeof(chLine),"phi(h) %f", flux);
 			n = cdRead( chLine  );
 
-			sprintf(chLine,"hden %f", hden);
+			snprintf(chLine,sizeof(chLine),"hden %f", hden);
 			n = cdRead( chLine  );
 
 			/* turn on large FeII atom, VERY slow */
@@ -488,7 +488,7 @@ int main( int argc, char *argv[] )
 			/* add cosmic IR background as well */
 			n = cdRead( "background z=0  "  );
 
-			sprintf(chLine,"stop column density %f ", par1[mod]);
+			snprintf(chLine,sizeof(chLine),"stop column density %f ", par1[mod]);
 			n = cdRead( chLine  );/**/
 
 			n = cdRead( "failures 3 "  );
@@ -503,7 +503,7 @@ int main( int argc, char *argv[] )
 			n = cdRead( "element helium scale 2.41 "  );/**/
 #			endif
 
-			/*sprintf(chLine,"turbulence %f km/sec", vturb);
+			/*snprintf(chLine,sizeof(chLine),"turbulence %f km/sec", vturb);
 			  n = cdRead( chLine  );*/
 
 			/* all line intensities will be relative to incident continuum near Lya */
@@ -619,7 +619,7 @@ int main( int argc, char *argv[] )
 					grid.pred[n+nLines] = log10(MAX2(1e-30,relative) );
 				}
 				/* next the FeII continuum */
-				if( cdLine( "inci", 1215 , &relative , &absolute )<=0 )
+				if( cdLine( "inci", 1215_vac , &relative , &absolute )<=0 )
 				{
 					fprintf(stderr,"did not find incident continuum\n");
 					fprintf(ioDATA,"did not find incident continuum\n");

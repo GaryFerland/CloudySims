@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef DYNAMICS_H_
@@ -205,6 +205,13 @@ struct t_dynamics : public module
 		 timestep,
 		 timestep_stop,
 		 timestep_factor;
+
+	const size_t nlast_temps = 4;
+	vector<double> recomb_recent_temps;
+
+	void update_recomb_recent_temps();
+
+	bool recomb_temp_converged() const;
 };
 extern t_dynamics dynamics;
 

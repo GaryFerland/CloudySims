@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef RAN_H
@@ -255,5 +255,14 @@ public:
 };
 
 extern t_ran ran;
+
+class ran_u32
+{
+public:
+	typedef uint32 result_type;
+	static constexpr result_type min() { return 0; }
+	static constexpr result_type max() { return UINT32_MAX; }
+	result_type operator()() { return ran.u32(); }
+};
 
 #endif

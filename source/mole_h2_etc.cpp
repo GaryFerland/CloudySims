@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /* mole_H2_LTE sets Boltzmann factors and LTE unit population of large H2 molecular */
 /* H2_zero_pops_too_low - zero out some H2 variables if we decide not to compute

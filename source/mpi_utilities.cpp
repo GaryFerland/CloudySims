@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cddefines.h"
 #include "save.h"
@@ -38,7 +38,7 @@ STATIC void GridGatherOutputSequential(const string&,long);
 STATIC void GridGatherOutputParallel(const string&,long,const vector<long>&);
 STATIC bool lgIsRemote(const string&);
 STATIC gfstate check_grid_file(const string&,int,int);
-STATIC void fix_grid_file(const string&,int,gfstate,int);
+STATIC void fix_grid_file(const string&,int,gfstate,int, int);
 
 #ifndef MPI_ENABLED
 
@@ -83,7 +83,7 @@ void load_balance::init( unsigned int nJobs, unsigned int nCPU )
 			p_jobs[i] = i;
 
 		if( p_ncpu > 1 )
-			random_shuffle( p_jobs.begin(), p_jobs.end(), [](int n){ return int((ran.i63()>>7)%n); } );
+			shuffle( p_jobs.begin(), p_jobs.end(), ran_u32() );
 	}
 	// now broadcast the random sequence to the other ranks...
 	if( lgMPI )
@@ -199,14 +199,25 @@ void process_output()
 			}
 			// and now fix the files
 			for( int j=bound[nRANK]; j < bound[nRANK+1]; ++j )
-				fix_grid_file( fnam, j, st[j], jgood );
+				fix_grid_file( fnam, j, st[j], jgood, ipPun );
+
+			if( cpu.i().lgMPI() )
+				MPI_Barrier( MPI_COMM_WORLD );
+
 			// and concatenate the output if necessary
 			if( save.lgXSPEC[ipPun] )
 			{
 				if( cpu.i().lgMaster() )
 				{
-					ASSERT( save.FITStype[ipPun] >= 0 &&
-						save.FITStype[ipPun] < NUM_OUTPUT_TYPES );
+					if( save.FITStype[ipPun] < 0 || save.FITStype[ipPun] >= NUM_OUTPUT_TYPES )
+					{
+						fprintf( ioQQQ, "PROBLEM - FITS type not understood: %i\n", save.FITStype[ipPun] );
+						continue;
+					}
+
+					// this array may not be allocated yet if the sims on this rank failed...
+					if( grid.Spectra.empty() )
+						GridAllocXSPECData();
 
 					// combine the grid.Spectra data from all ranks.
 					// this is done by reading the results from file.
@@ -215,18 +226,22 @@ void process_output()
 						string gridnam = GridPointPrefix(j) + fnam;
 						size_t unitsz = sizeof(decltype(grid.Spectra[0][0][0]));
 						rd_block(&grid.Spectra[save.FITStype[ipPun]][j][0],
-							 size_t(rfield.nflux)*unitsz,
-							 gridnam.c_str());
+								 size_t(rfield.nflux)*unitsz,
+								 gridnam);
 						remove( gridnam.c_str() );
 					}
 
 					FILE *dest = open_data( fnam, "ab" );
 					// dest points to an empty file, so generate the complete FITS file now
 					saveFITSfile( dest, save.FITStype[ipPun], save.punarg[ipPun][0],
-						      save.punarg[ipPun][1], save.punarg[ipPun][2] );
-					fseek( dest, 0, SEEK_END );
-					ASSERT( ftell(dest)%2880 == 0 );
+								  save.punarg[ipPun][1], save.punarg[ipPun][2] );
 					fclose( dest );
+					auto file_size = FileSize(fnam);
+					if( file_size == FS_UNKNOWN || file_size%2880 != 0 )
+					{
+						fprintf( ioQQQ, "PROBLEM - length of %s is not a multiple of 2880 bytes.", fnam.c_str() );
+						fprintf( ioQQQ, "It is therefore not a valid FITS file!\n" );
+					}
 				}
 			}
 			else if( save.lgSaveToSeparateFiles[ipPun] )
@@ -302,13 +317,9 @@ STATIC void GridGatherOutputParallel(const string& basenam,
 		if( j >= bound[cpu.i().nRANK()] && j < bound[cpu.i().nRANK()+1] )
 		{
 			string gridnam = GridPointPrefix(j) + basenam;
-			FILE* fh = open_data( gridnam, "r", AS_LOCAL_ONLY_TRY );
-			if( fh != NULL )
-			{
-				fseek( fh, 0, SEEK_END );
-				mySize += static_cast<MPI_Offset>( ftell(fh) );
-				fclose(fh);
-			}
+			auto file_size = FileSize(gridnam);
+			if( file_size != FS_UNKNOWN )
+				mySize += static_cast<MPI_Offset>(file_size);
 		}
 	}
 
@@ -387,9 +398,26 @@ STATIC gfstate check_grid_file( const string& fnam, int j, int ipPun )
 
 	gfstate res;
 
-	// these are binary files, don't touch them...
+	string gridnam = GridPointPrefix(j) + fnam;
+	auto filesz = FileSize(gridnam);
+	fstream str;
+
 	if( save.lgFITS[ipPun] )
+	{
+		// these are binary files, they need different treatment...
+		// regular FITS files are always kept separate, so there is no urgent need
+		// to fix the files, it would be very difficult anyway...
+		// XSPEC FITS files on the other hand are always combined, so there is a
+		// need to fix them -> we write a block of zeros for each missing file...
+		// files with the wrong size (usually 0) are also treated as missing.
+		if( save.lgXSPEC[ipPun] )
+		{
+			uintmax_t blocksz = uintmax_t(rfield.nflux)*sizeof(decltype(grid.Spectra[0][0][0]));
+			if( filesz != blocksz )
+				res[FILE_ABSENT] = 1;
+		}
 		return res;
+	}
 
 	bool lgForceDelimiter = true;
 	// in these cases there should not be a GRID_DELIMIT string...
@@ -402,13 +430,11 @@ STATIC gfstate check_grid_file( const string& fnam, int j, int ipPun )
 	bool lgAppendDelimiter = lgForceDelimiter;
 	bool lgAppendNewline = false;
 	bool lgCreateStub = true;
-	string gridnam = GridPointPrefix(j) + fnam;
-	fstream str;
 	open_data( str, gridnam, mode_r, AS_LOCAL_ONLY_TRY );
 	if( str.is_open() )
 	{
 		str.seekg( 0, ios_base::end );
-		if( str.good() && str.tellg() > 0 )
+		if( str.good() && filesz > 0 )
 		{
 			// check if the file ends in a newline
 			str.seekg( -1, ios_base::cur );
@@ -437,7 +463,7 @@ STATIC gfstate check_grid_file( const string& fnam, int j, int ipPun )
 }
 
 /** fix_grid_file: fix absent or malformed grid file */
-STATIC void fix_grid_file( const string& fnam, int j, gfstate s, int jsource )
+STATIC void fix_grid_file( const string& fnam, int j, gfstate s, int jsource, int ipPun )
 {
 	DEBUG_ENTRY( "fix_grid_file()" );
 
@@ -446,30 +472,43 @@ STATIC void fix_grid_file( const string& fnam, int j, gfstate s, int jsource )
 		return;
 
 	string gridnam = GridPointPrefix(j) + fnam;
-	fstream str;
-	open_data( str, gridnam, mode_a, AS_LOCAL_ONLY_TRY );
-	if( str.is_open() )
+
+	if( save.lgXSPEC[ipPun] )
 	{
-		if( s[FILE_ABSENT] && jsource >= 0 )
+		// these are binary files, they need different treatment...
+		// FILE_ABSENT is the only possible failure mode here...
+		size_t blocksz = size_t(rfield.nflux)*sizeof(decltype(grid.Spectra[0][0][0]));
+		// this creates a block of zero bytes, which is just what we need...
+		string zero_block( blocksz, 0 );
+		wr_block( zero_block.data(), blocksz, gridnam );
+	}
+	else if( !save.lgFITS[ipPun] )
+	{
+		fstream str;
+		open_data( str, gridnam, mode_a, AS_LOCAL_ONLY_TRY );
+		if( str.is_open() )
 		{
-			string gridsource = GridPointPrefix(jsource) + fnam;
-			fstream src;
-			open_data( src, gridsource, mode_r, AS_LOCAL_ONLY );
-			string line;
-			while( getline( src, line ) )
+			if( s[FILE_ABSENT] && jsource >= 0 )
 			{
-				if( line.find( "GRID_DELIMIT" ) != string::npos )
-					break;
-				for( size_t i=0; i < line.length(); ++i )
-					if( isdigit(line[i]) )
-						line[i] = '0';
-				str << line << endl;
+				string gridsource = GridPointPrefix(jsource) + fnam;
+				fstream src;
+				open_data( src, gridsource, mode_r, AS_LOCAL_ONLY );
+				string line;
+				while( getline( src, line ) )
+				{
+					if( line.find( "GRID_DELIMIT" ) != string::npos )
+						break;
+					for( size_t i=0; i < line.length(); ++i )
+						if( isdigit(line[i]) )
+							line[i] = '0';
+					str << line << endl;
+				}
 			}
+			if( s[NEWLINE_ABSENT] )
+				str << endl;
+			if( s[DELIMITER_ABSENT] )
+				str << save.chGridDelimeter(j) << endl;
 		}
-		if( s[NEWLINE_ABSENT] )
-			str << endl;
-		if( s[DELIMITER_ABSENT] )
-			str << save.chGridDelimeter(j) << endl;
 	}
 }
 

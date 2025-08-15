@@ -3,12 +3,6 @@
 $res = "";
 $os = `uname -s`;
 $arch = "";
-if( $os =~ /Darwin/ )
-{
-    my $tmp = `uname -m`;
-    chomp( $tmp );
-    $arch = "arm64" if( $tmp =~ m/arm64/ );
-}
 $version = `$ARGV[0] --version 2> /dev/null`;
 # remove comments in parentheses, they may or may not contain spaces
 $version =~ s/\(.*?\)//g;
@@ -63,22 +57,7 @@ close FOO;
 if( "$^O" ne "cygwin" ) {
     $ret = system( "$ARGV[0] -Wl,-export-dynamic -o tmp_cloudyconfig.out tmp_cloudyconfig.cpp > /dev/null 2>&1" );
     if( $ret == 0 ) {
-	$res .= "dynamic ";
-    }
-}
-unlink "tmp_cloudyconfig.out";
-if( $arch ne "arm64" )
-{
-    # test if the -no-pie and -fno-pie flags are supported
-    if( $compiler eq "clang" || $os =~ /Darwin/ ) {
-        $npflags = "-fno-pie";
-    }
-    else  {
-        $npflags = "-no-pie -fno-pie";
-    }
-    $ret = system( "$ARGV[0] $npflags -o tmp_cloudyconfig.out tmp_cloudyconfig.cpp > /dev/null 2>&1" );
-    if( $ret == 0 ) {
-        $res .= "$npflags ";
+		$res .= "dynamic ";
     }
 }
 unlink "tmp_cloudyconfig.cpp";
@@ -113,6 +92,37 @@ if( "$string" eq "ParseCrashDo(Parser&)" )
 }
 unlink "tmp_cloudyconfig.cpp";
 unlink "tmp_cloudyconfig.out";
+# test if we need to add -lstdc++fs for C++17 filesystem support
+open FOO, ">tmp_cloudyconfig.cpp";
+print FOO <<'EOH';
+#include <filesystem>
+#include <iostream>
+namespace fs = std::filesystem;
+int main()
+{
+	fs::path ex = "./tmp_cloudyconfig.exe";
+	std::error_code ec;
+	std::cout << "size: " << fs::file_size(ex, ec) << "\n";
+	return 0;
+}
+EOH
+close FOO;
+$ret = system( "$ARGV[0] -std=c++17 -o tmp_cloudyconfig.exe tmp_cloudyconfig.cpp > /dev/null 2>&1" );
+if( $ret != 0 )
+{
+	$ret = system( "$ARGV[0] -std=c++17 -o tmp_cloudyconfig.exe tmp_cloudyconfig.cpp -lstdc++fs > /dev/null 2>&1" );
+	if( $ret == 0 )
+	{
+		$res .= "need_stdc++fs "
+	}
+	else
+	{
+		# Makefile depends on the wording of this error message, it picks up on the word "upgrade"
+		$res = "This compiler ($ARGV[0]) does not support C++17, please upgrade to a newer version\n";
+	}
+}
+unlink "tmp_cloudyconfig.cpp";
+unlink "tmp_cloudyconfig.exe";
 # remove trailing spaces
 $res =~ s/ +$//;
 if( $res ne "" ) {

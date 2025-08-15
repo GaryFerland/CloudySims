@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #include "cddefines.h"
@@ -12,11 +12,13 @@ static const char* tpn_file = "hydro_tpn.dat";
 static const char* tpnl_file = "hydro_tpnl.dat";
 static const char* tpnn_file = "hydro_tpnn.dat";
 static const char* pcs_file = "hydro_pcs.dat";
+static const char* m1wn_file = "hydro_energy_2s12.dat";
 
 static const long tpn_magic = 201809260L;
 static const long tpnl_magic = 201809271L;
 static const long tpnn_magic = 201809281L;
 static const long pcs_magic = 201810020L;
+static const long m1wn_magic = 20231106L;
 
 // p_stride needs a definition, following the discussion under "Constant static members" here:
 //
@@ -296,6 +298,33 @@ void t_hydro_tbl::p_initcs()
 	}
 }
 
+void t_hydro_tbl::p_initwn()
+{
+	DEBUG_ENTRY( "t_hydro_tbl::p_initwn()" );
+
+	if( p_tpwn.size() > 0 )
+		return;
+
+	DataParser d(m1wn_file, ES_NONE);
+	d.getline();
+	d.checkMagic(m1wn_magic);
+	d.getline();
+	d.getToken(p_Zmaxm1);
+
+	p_tpwn.reserve(p_Zmaxm1);
+
+	for( long Z=1; Z <= min(p_Zmaxm1,LIMELM); ++Z )
+	{
+		d.getline();
+		long ZZ;
+		d.getToken(ZZ);
+		if( Z != ZZ )
+			d.errorAbort("invalid atomic number");
+		d.getToken(p_tpwn[Z-1]);
+		d.checkEOL();
+	}
+}
+
 realnum t_hydro_tbl::p_RM(long Z) const
 {
 	DEBUG_ENTRY( "t_hydro_tbl::p_RM()" );
@@ -331,6 +360,21 @@ realnum t_hydro_tbl::tp(long nl, long ll, long nu, long lu, long Z)
 	size_t k2 = (nu-1)%p_stride;
 	long dl = ( ll < lu ) ? 0 : 1;
 	return powi(realnum(Z),4)*(*p_tpnl[k1])[k2][nl-1][lu][dl]*p_RM(Z);
+}
+
+#ifdef NDEBUG
+realnum t_hydro_tbl::m1wn(long, long, long Z)
+#else
+realnum t_hydro_tbl::m1wn(long n, long l, long Z)
+#endif
+{
+	DEBUG_ENTRY( "t_hydro_tbl::m1wn()" );
+
+	p_initwn();
+
+	ASSERT( n == 2 && l == 0 && Z <= LIMELM );
+
+	return p_tpwn[Z-1]*RYD_INF;
 }
 
 #ifdef NDEBUG

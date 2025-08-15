@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*save_line parse save lines command, or actually do the save lines output */
 /*Save_Line_RT parse the save line rt command - read in a set of lines */
@@ -51,11 +51,7 @@ void parse_save_line(Parser &p,
 
 	chHeader << "#depth";
 	for( size_t i=0; i < linelist[ipPun]->lineids.size(); i++ )
-	{
-		string chTemp;
-		sprt_wl( chTemp, linelist[ipPun]->lineids[i].wave );
-		chHeader << "\t" << linelist[ipPun]->lineids[i].chLabel << " " << chTemp;
-	}
+		chHeader << "\t" << linelist[ipPun]->lineids[i].chLabel() << " " << linelist[ipPun]->lineids[i].twav().sprt_wl();
 	chHeader << endl;
 }
 
@@ -81,7 +77,7 @@ void save_line(FILE * ioPUN, /* the file we will write to */
 			if( linelist[ipPun]->ipLine[i] <= 0 )
 			{
 				// missed line - ignore if H2 line since large model may be off
-				if( !h2.lgEnabled && linelist[ipPun]->lineids[i].chLabel == "H2" )
+				if( !h2.lgEnabled && linelist[ipPun]->lineids[i].chLabel() == "H2" )
 				{
 					if( linelist[ipPun]->lgMustPrintFirstTime )
 					{

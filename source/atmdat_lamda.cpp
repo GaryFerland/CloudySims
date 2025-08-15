@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cddefines.h"
 #include "atmdat.h"
@@ -176,6 +176,7 @@ void atmdat_LAMDA_readin( long intNS, const string& chEFilename )
 		}
 		dBaseStates[intNS][ipLev].energy().set(fenergy,"cm^-1");
 		dBaseStates[intNS][ipLev].g() = fstatwt;
+		dBaseStates[intNS][ipLev].ipOrg() = index;
 
 		if( ipLev > 0 )
 		{
@@ -209,12 +210,8 @@ void atmdat_LAMDA_readin( long intNS, const string& chEFilename )
 		(*tr).EnergyWN() = fenergyWN;
 
 		/* there are OH hyperfine levels where i+1 and i have exactly
-		 * the same energy.  The refractive index routine will FPE with
-		 * an energy of zero - so we do this test */
-		if( rfield.isEnergyBound( Energy( fenergyWN, "cm^-1" ) ) )
-			(*tr).WLAng() = (realnum) (1e+8f/fenergyWN/RefIndex(fenergyWN));
-		else
-			(*tr).WLAng() = 1e30f;
+		 * the same energy, but the routine wn2angVac handles this safely */
+		(*tr).WLangVac() = wn2angVac(fenergyWN);
 	}
 
 	if( !read_whole_line( chLine, ioLevData ) )
@@ -290,11 +287,11 @@ void atmdat_LAMDA_readin( long intNS, const string& chEFilename )
 		(*tr).EnergyWN() = fenergyWN;
 		if( rfield.isEnergyBound( Energy( fenergyWN, "cm^-1" ) ) )
 		{
-			(*tr).WLAng() = (realnum) wn2ang( fenergyWN );
+			(*tr).WLangVac() = wn2angVac( fenergyWN );
 			(*tr).Emis().gf() = (realnum)GetGF((*tr).Emis().Aul(),(*tr).EnergyWN(), (*(*tr).Hi()).g());
 		}
 		else
-			(*tr).WLAng() = 1e30;
+			(*tr).WLangVac() = 1e30;
 
 		(*tr).setComment( db_comment_tran_levels() );
 

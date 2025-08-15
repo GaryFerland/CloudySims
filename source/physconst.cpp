@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cddefines.h"
 
@@ -42,14 +42,14 @@ t_physconst::t_physconst()
 		fprintf(stderr," PROBLEM - Failed consistency check for MILNE_CONSTANT\n");
 		cdEXIT(EXIT_FAILURE);
 	}
-	if( !fp_equal(FREE_FREE_EMIS, 32. * PI * pow(ELEM_CHARGE_ESU, 6.) /
+	if( !fp_equal(FREE_FREE_EMIS, 32. * PI * pow2(pow3(ELEM_CHARGE_ESU)) /
 				  (3. * pow3(SPEEDLIGHT) * ELECTRON_MASS * HPLANCK ) *
 				  sqrt(2. * PI / (3. * BOLTZMANN * ELECTRON_MASS ) ) ) )
 	{
 		fprintf(stderr," PROBLEM - Failed consistency check for FREE_FREE_EMIS\n");
 		cdEXIT(EXIT_FAILURE);
 	}
-	if( !fp_equal(FREE_FREE_ABS, 4. * pow(ELEM_CHARGE_ESU, 6.) /
+	if( !fp_equal(FREE_FREE_ABS, 4. * pow2(pow3(ELEM_CHARGE_ESU)) /
 				  (3. * HPLANCK * ELECTRON_MASS * SPEEDLIGHT ) *
 				  sqrt(2. * PI / (3. * BOLTZMANN * ELECTRON_MASS ) ) /
 				  pow3(SPEEDLIGHT * RYD_INF) ) )

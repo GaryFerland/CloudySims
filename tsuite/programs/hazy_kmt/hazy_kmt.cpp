@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*main program that calls cloudy when used as a stand-alone program */
 #include "cddefines.h"
@@ -48,10 +48,10 @@ int main( void )
 			cdRead( "# set dielectronic recombination badnell "  );
 			cdRead( "# set dielectronic recombination kludge off "  );
 
-			sprintf(chLine,"phi(h) %f ",flux);
+			snprintf(chLine,sizeof(chLine),"phi(h) %f ",flux);
 			cdRead( chLine  );
 
-			sprintf(chLine,"hden %f ",hden);
+			snprintf(chLine,sizeof(chLine),"hden %f ",hden);
 			cdRead( chLine  );
 
 			/* log of the ionization parameter */

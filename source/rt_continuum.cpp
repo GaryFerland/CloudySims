@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*RT_continuum attenuation of diffuse and beamed continua */
 /*pnegopc save negative opacities on io unit, iff 'set negopc' command was given */
@@ -157,7 +157,7 @@ void RT_continuum(void)
 	rfield.EnergyDiffCont = 0.;
 
 	// attenuation of flux by optical depths IN THIS ZONE 
-	// DirectionalCosin is 1/COS(theta), is usually 1, reset with illuminate command,
+	// DirectionalCosin is 1/COS(theta), is usually 1, reset with illumination command,
 	// option for illumination of slab at an angle 
 	double fac = radius.drad_x_fillfac*geometry.DirectionalCosin;
 	for( long i=0; i < rfield.nflux; i++ )

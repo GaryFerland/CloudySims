@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*InitCoreloadPostparse initialization at start, called from cloudy
 * after parser one time per core load */
@@ -40,11 +40,19 @@ void InitCoreloadPostparse( void )
 				// resolved and collapsed levels
 				long numLevels = iso_sp[ipISO][nelem].numLevels_max;
 				// "extra" Lyman lines
-				numLevels += iso_ctrl.nLyman_alloc[ipISO] - 2;
+				if(ipISO == ipHE_LIKE)
+					numLevels += iso_ctrl.nLyman_alloc[ipISO] - 2;
 				// satellite lines (one for doubly-excited continuum)
 				if( iso_ctrl.lgDielRecom[ipISO] )
 					numLevels += 1;
 				iso_sp[ipISO][nelem].st.init( makeChemical( nelem, nelem-ipISO ).c_str(), numLevels );
+				if(ipISO == ipH_LIKE)
+				{
+					long numLevels2 = iso_sp[ipISO][nelem].numLevels_max;
+					numLevels2 += iso_ctrl.nLyman_alloc[ipISO];
+					iso_sp[ipISO][nelem].stJ05.init( makeChemical( nelem, nelem-ipISO ).c_str(), numLevels2 );
+					iso_sp[ipISO][nelem].stJ15.init( makeChemical( nelem, nelem-ipISO ).c_str(), numLevels2 );
+				}
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParseGrain parse parameters on grains command */
 #include "cddefines.h"
@@ -8,6 +8,23 @@
 #include "optimize.h"
 #include "parser.h"
 #include "grains.h"
+
+STATIC void ListFiles(const string& pattern, bool (*valid)(const string&))
+{
+	DEBUG_ENTRY( "ListFiles()" );
+
+	vector<string> matches;
+	getFileList(matches, pattern);
+	sort(matches.begin(), matches.end());
+	for( const string& fnam : matches )
+	{
+		fprintf(ioQQQ, "%s", fnam.c_str());
+		if( !valid(fnam) )
+			fprintf(ioQQQ, " **NOT VALID**");
+		fprintf(ioQQQ, "\n");
+	}
+	fprintf(ioQQQ, "\n");
+}
 
 void ParseGrain(Parser &p)
 {
@@ -24,6 +41,42 @@ void ParseGrain(Parser &p)
 	const char *chOption = NULL;
 
 	DEBUG_ENTRY( "ParseGrain()" );
+
+	if( p.nMatch("AVAI") )
+	{
+		/* GRAINS AVAILABLE: This command makes a list of all the grain related files that were found. */
+
+		// check which file types should be listed
+		bool lgRFI = p.nMatch("RFI ");
+		bool lgMIX = p.nMatch("MIX ");
+		bool lgSZD = p.nMatch("SZD ");
+		bool lgOPC = p.nMatch("OPC ");
+		// if no keyword was entered, print all file types
+		if( !( lgRFI || lgMIX || lgSZD || lgOPC ) )
+			lgRFI = lgMIX = lgSZD = lgOPC = true;
+
+		if( lgRFI )
+		{
+			fprintf(ioQQQ, "\nI will now list all refractive index files that were found in alphabetical order.\n\n");
+			ListFiles(".*\\.rfi", lgValidRfiFile);
+		}
+		if( lgMIX )
+		{
+			fprintf(ioQQQ, "\nI will now list all mixed medium files that were found in alphabetical order.\n\n");
+			ListFiles(".*\\.mix", lgValidMixFile);
+		}
+		if( lgSZD )
+		{
+			fprintf(ioQQQ, "\nI will now list all size distribution files that were found in alphabetical order.\n\n");
+			ListFiles(".*\\.szd", lgValidSzdFile);
+		}
+		if( lgOPC )
+		{
+			fprintf(ioQQQ, "\nI will now list all opacity files that were found in alphabetical order.\n\n");
+			ListFiles(".*\\.opc", lgValidOpcFile);
+		}
+		cdEXIT(EXIT_SUCCESS);
+	}
 
 	p.m_lgDSet = true;
 

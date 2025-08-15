@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /* HyperfineCreat establish space for hf arrays, reads atomic data from hyperfine.dat */
 /* HyperfineCS - returns collision strengths for hyperfine struc transitions */
@@ -441,9 +441,6 @@ typedef struct
 
 static vector<t_ColStr> colstr;
 
-const double ENERGY_MIN_WN = 1e-10;
-
-
 /* HyperfineCreate establish space for HFS arrays, reads atomic data from hyperfine.dat */
 void HyperfineCreate(void)
 {
@@ -586,7 +583,7 @@ void HyperfineCreate(void)
 	}
 
 	/* 
-	 * scan the string taken from Hyperfine.dat, parsing into
+	 * scan the string taken from hyperfine.dat, parsing into
 	 * needed variables.
 	 * nelem is the atomic number.
 	 * IonStg is the ionization stage.  Atom = 1, Z+ = 2, Z++ = 3, etc.
@@ -636,8 +633,8 @@ void HyperfineCreate(void)
 			(*HFLines[j].Lo()).g() = tmp;
 		}
 
-		double fenergyWN = MAX2(ENERGY_MIN_WN, 1.0 / wavelength);
-		HFLines[j].WLAng() = (realnum)(wavelength * 1e8f);
+		double fenergyWN = 1.0 / wavelength;
+		HFLines[j].WLangVac() = (realnum)(wavelength * 1e8f);
 		HFLines[j].EnergyWN() = (realnum) fenergyWN;
 
 		HFLines[j].Emis().dampXvel() = (realnum)( HFLines[j].Emis().Aul()
@@ -711,7 +708,7 @@ void HyperfineCreate(void)
 		q12 = (*HFLines[i].Hi()).g()/ (*HFLines[i].Lo()).g() * q21 * exp(-1 * h * c * HFLines[i].EnergyWN / (k * phycon.te)); 
 
 		x = Ne * q12 / (HFLines[i].Emis().Aul() * (1 + Ne * q21 / HFLines[i].Aul()));
-		HFLines[i].xIntensity() = N * HFLines[i].Emis().Aul() * x / (1.0 + x) * h * c / (HFLines[i].EnergyAng() / 1e8);
+		HFLines[i].xIntensity() = N * HFLines[i].Emis().Aul() * x / (1.0 + x) * h * c / (HFLines[i].WLangVac() / 1e8);
 
 	}
 #	endif

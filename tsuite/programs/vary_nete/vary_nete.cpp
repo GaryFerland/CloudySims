@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*main program that calls cloudy when used as a stand-alone program */
 #include "cddefines.h"
@@ -57,11 +57,11 @@ int main( void )
 				/*cdNoexec( );*/
 
 				/* gas temperature for this calculation */
-				sprintf(chLine,"constant temperature %f", temp);
+				snprintf(chLine,sizeof(chLine),"constant temperature %f", temp);
 				cdRead( chLine );
 
 				/* gas density for this calculation */
-				sprintf(chLine,"hden %f", hden);
+				snprintf(chLine,sizeof(chLine),"hden %f", hden);
 				cdRead( chLine );
 
 				/* only want the first zone */
@@ -88,7 +88,7 @@ int main( void )
 				fprintf(stderr,"%.3e\t%.5f",	hden, temp );
 
 				/************************ O III ******************/
-				if( cdLine( "O  3", 5006.84, &r5007 , &absolute ) < 0 )
+				if( cdLine( "O  3", 5006.84_air, &r5007 , &absolute ) < 0 )
 				{
 					printf("did not find O  3 5007\n");
 					exit_status = ES_FAILURE;
@@ -97,7 +97,7 @@ int main( void )
 				fprintf(ioDATA,"\t%.3e",	r5007 );
 				fprintf(stderr,"\t%.3e",	r5007 );
 
-				if( cdLine( "O  3", 4363.21, &r4363 , &absolute ) < 0 )
+				if( cdLine( "O  3", 4363.21_air, &r4363 , &absolute ) < 0 )
 				{
 					printf("did not find totl 4363\n");
 					exit_status = ES_FAILURE;
@@ -105,7 +105,7 @@ int main( void )
 				fprintf(ioDATA,"\t%.3e",	r4363 );
 				fprintf(stderr,"\t%.3e",	r4363 );
 
-				if( cdLine( "blnd", 1666., &r1665 , &absolute ) < 0 )
+				if( cdLine( "blnd", 1666._vac, &r1665 , &absolute ) < 0 )
 				{
 					printf("did not find totl 1665\n");
 					exit_status = ES_FAILURE;
@@ -113,7 +113,7 @@ int main( void )
 				fprintf(ioDATA,"\t%.3e",	r1665 );
 				fprintf(stderr,"\t%.3e",	r1665 );
 
-				if( cdLine( "O  3", 883323., &ro3_88 , &absolute ) < 0 )
+				if( cdLine( "O  3", 883323._air, &ro3_88 , &absolute ) < 0 )
 				{
 					printf("did not find O  3 88\n");
 					exit_status = ES_FAILURE;
@@ -121,7 +121,7 @@ int main( void )
 				fprintf(ioDATA,"\t%.3e",	ro3_88 );
 				fprintf(stderr,"\t%.3e",	ro3_88 );
 
-				if( cdLine( "O  3", 518004., &ro3_52 , &absolute ) < 0 )
+				if( cdLine( "O  3", 518004._air, &ro3_52 , &absolute ) < 0 )
 				{
 					printf("did not find O  3 52\n");
 					exit_status = ES_FAILURE;
@@ -129,7 +129,7 @@ int main( void )
 				fprintf(ioDATA,"\t%.3e",	ro3_52 );
 				fprintf(stderr,"\t%.3e",	ro3_52 );
 
-				if( cdLine( "O  3", 1660.81, &r1661 , &absolute ) < 0 )
+				if( cdLine( "O  3", 1660.81_vac, &r1661 , &absolute ) < 0 )
 				{
 					printf("did not find O  3 1661\n");
 					exit_status = ES_FAILURE;

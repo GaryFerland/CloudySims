@@ -85,7 +85,8 @@ monitor column density H2*  15.89 error 0.1
 ## >>chng 11 nov 16, from 12.28 to 12.17, adjust newmole monitors
 ## >>chng 14 mar 26, from 12.17 to 12.08, move O to external databases
 ## >>chng 16 apr 26, from 12.08 to 12.01, replace \"case B\" with \"Database H-like Lyman pumping off\"
-monitor column density HeH+ 12.01 error 0.1
+## >>chng 25 jan 26, from 12.01 to 11.67, master merg
+monitor column density HeH+ 11.67 error 0.1
 ## >>chng 11 jul 22, from 10 to 16.06, first run
 ## >>chng 12 jun 08, from 16.06 to 16, Updates to grain chemistry
 ## >>chng 14 mar 26, from 16 to 15.96, move O to external databases
@@ -118,6 +119,8 @@ monitor column density C3   13.07 error 0.1
 ## >>chng 11 jul 22, from 10 to 14.94, first run
 ## >>chng 14 mar 26, from 14.94 to 14.81, move O to external databases
 ## >>chng 23 may 15, from 14.81 to 14.74, GS updates 21 reactions to UMIST 2012
+## >>chng 24 apr 21, from 14.74 to 14.52, GS updates chemistry
+## >>chng 24 jun 08, from 14.52 to 14.74, GS rm 3 TiO reactions
 monitor column density SiO  14.74 error 0.1
 ## >>chng 11 jul 22, from 10 to 16.96, first run
 ## >>chng 12 jun 08, from 16.96 to 16.91, Updates to grain chemistry
@@ -131,7 +134,8 @@ monitor column density OH   16.8 error 0.1
 ## >>chng 14 mar 26, from 14.5 to 14.42, move O to external databases
 ## >>chng 21 nov 04, from 14.42 to 14.51, update co mole data
 ## >>chng 23 may 15, from 14.51 to 14.44, GS updates 21 reactions to UMIST 2012
-monitor column density CN   14.44 error 0.1
+## >>chng 25 jul 11, from 14.44 to 14.63, GS Si moles, UMIST2022
+monitor column density CN   14.63 error 0.1
 ## >>chng 11 jul 22, from 10 to 16.13, first run
 ## >>chng 13 feb 16, from 16.13 to 16.17, update iso recom files
 ## >>chng 13 nov 05, from 16.17 to 16.21, convergence branch changes
@@ -286,7 +290,8 @@ monitor "^13CO" 906.599m  -5.185 line intensity
 ## >>chng 21 sep 15, from -7.976 to -6.985, go back to unresolved model
 ## >>chng 21 nov 04, from -6.985 to -6.927, update co mole data
 ## >>chng 23 may 15, from -6.927 to -7.003, GS updates 21 reactions to UMIST 2012
-monitor "CN  " 880.858m  -7.003  line intensity
+## >>chng 25 jul 11, from -7.003 to -6.785, GS Si moles, UMIST2022
+monitor "CN  " 880.858m  -6.785  line intensity
 #
 # pdr_xdr.in
 # class pdr 

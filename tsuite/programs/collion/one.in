@@ -1,0 +1,5 @@
+cosmic ray background -8
+stop zone 1
+hden 0
+set trim -20
+constant temperature log 0.5

@@ -68,7 +68,9 @@ monitor line "O  4" 25.8863m 32.61
 ## >>chng 14 mar 26, from 3.953 to 4.269 O to external database
 ## >>chng 22 jul 09, wl from 24.2065m to 24.3109m, upgrade to Chianti v10
 ## >>chng 22 jul 09, from 4.269 to 2.441, upgrade to Chianti v10
-monitor line "Ne 5" 24.3109m 2.441
+## >>chng 25 jul 25, wl from 24.3109m to 24.3108m, Fixed to match Del Zana+2025 clike data-C25 release
+##>>chng 25 jul 30 from 2.4410  to 2.666, stout clike isosequences
+monitor line "Ne 5" 24.3108m 2.666
 ## 
 ## >>chng 06 jul 06, from 3.46 to 2.79, update Ne cs
 ## >>chng 06 nov 29, from 2.79 to 3.01 Badnell DR turned on

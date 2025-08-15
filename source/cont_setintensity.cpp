@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ContSetIntensity derive intensity of incident continuum */
 /*extin do extinction of incident continuum as set by extinguish command */
@@ -666,7 +666,8 @@ void ContSetIntensity()
 		/* if we are in a molecular cloud the current logic could badly fail
 		* do not let electron density fall below 1e-7 of H density */
 		1e-7*dense.gas_phase[ipHYDROGEN];
-	EdenChange( dense.xIonDense[ipHYDROGEN][1] + EdenExtraLocal );
+	/* do not reevaluate line escape probs since opacities not set up yet */
+	EdenChange( dense.xIonDense[ipHYDROGEN][1] + EdenExtraLocal, false );
 
 	/* hydrogen case B recombination coefficient */
 	HCaseBRecCoeff = (-9.9765209 + 0.158607055*phycon.telogn[0] + 0.30112749*
@@ -692,7 +693,7 @@ void ContSetIntensity()
 	do
 	{
 		/* update electron density */
-		EdenChange( newEden );
+		EdenChange( newEden, false );
 		double RatioIoniz = 
 			(CollIoniz*dense.eden+OtherIonization)/(HCaseBRecCoeff*dense.eden);
 		if( RatioIoniz<1e-3 )
@@ -857,7 +858,7 @@ void ContSetIntensity()
 	//ASSERT( dense.xIonDense[ipHYDROGEN][0] >0 && dense.xIonDense[ipHYDROGEN][1]>= 0.);
 
 	/* update electron density */
-	EdenChange( newEden );
+	EdenChange( newEden, false );
 
 	if( dense.eden <= SMALLFLOAT )
 	{
@@ -910,11 +911,11 @@ void ContSetIntensity()
 	dense.eden += EdenHeav;
 
 	/* >>chng 05 jan 05, insure positive eden */
-	EdenChange( MAX2( SMALLFLOAT , dense.eden ) );
+	EdenChange( MAX2( SMALLFLOAT , dense.eden ), false );
 
 	if( dense.EdenSet > 0. )
 	{
-		EdenChange( dense.EdenSet );
+		EdenChange( dense.EdenSet, false );
 	}
 
 	dense.EdenHCorr = dense.eden;

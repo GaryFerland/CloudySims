@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef GRAINVAR_H_
@@ -147,7 +147,7 @@ public:
 	long nData;             /**< number of Auger electrons with different energies */
 	vector<double> AvNr;    /**< AvNr[nData[ns]]: no. of electrons per primary ionization */
 	vector<double> Ener;    /**< Ener[nData[ns]]: energy of electron in Ryd */
-	vector< flex_arr<realnum> > y01A;/**< y0*y1 for Auger electrons */
+	vector<flex_arr<realnum>> y01A;/**< y0*y1 for Auger electrons */
 };
 
 /** this struct stores the data for the energy spectrum
@@ -170,12 +170,12 @@ public:
 		p_clear1();
 	}
 
-	unsigned int nSubShell;  /**< number of subshells of this element for which data is present */
+	unsigned int nSubShell;    /**< number of subshells of this element for which data is present */
 	vector<unsigned int> nData;/**< nData[nSubShell]: number of data points for each subshell */
-	vector<double> IonThres; /**< IonThres[nSubShell]: ionization threshold for electron in this subshell in Ryd */
-	vector< vector<double> > AvNumber;
-	                         /**< AvNumber[nSubShell][nData[ns]]: no. of electrons per primary ionization */
-	vector< vector<double> > Energy;/**< Energy[nSubShell][nData[ns]]: energy of electron in Ryd */
+	vector<double> IonThres;   /**< IonThres[nSubShell]: ionization threshold for electron in this subshell in Ryd */
+	vector<vector<double>> AvNumber;
+	                           /**< AvNumber[nSubShell][nData[ns]]: no. of electrons per primary ionization */
+	vector<vector<double>> Energy;/**< Energy[nSubShell][nData[ns]]: energy of electron in Ryd */
 };
 
 /** NB NB NB NB NB NB
@@ -183,7 +183,7 @@ public:
  * this is the data structure for all grain data that depends on the charge state
  * (i.e. all data that used to have an [NCHS] dependance in days of old),
  *
- * each data item will be referenced as:   gv.bin[nd]->chrg[nz]->data_item
+ * each data item will be referenced as:   gv.bin[nd].chrg(nz).data_item
  *
  * this structure is allocated for each charge state at run time.
  *
@@ -272,7 +272,7 @@ public:
  * this is the data structure for all grain data that depends on grain type
  * (i.e. all data that can differ from one grain bin to the next),
  *
- * each data item will be referenced as:   gv.bin[nd]->data_item
+ * each data item will be referenced as:   gv.bin[nd].data_item
  *
  * this structure is allocated for each grain bin at run time.
  *
@@ -307,16 +307,17 @@ public:
 	char chDstLab[13];      /**< label for the species */
 	double eec;             /**< pow(dustp[0],-0.85), needed for electron esacpe length */
 	double eyc;             /**< 1./AvRadius + 1.e7, needed for electron yield */
-	realnum dustp[5],       /**< 0 = specific weight (g/cm^3), 1 = mol. weight (amu), 2 = default abundance,
-	                         *   3 = default depletion, 4 = fraction of the mass in this grain bin */
-	  AvRadius,             /**< average grain radius, <a^3>/<a^2>, in cm */
+	double dustp[6];        /**< 0 = specific weight (g/cm^3), 1 = mol. weight (amu), 2 = default abundance,
+	                         *   3 = default depletion, 4 = fraction of the mass in this grain bin
+							 *   5 = fraction of the surface area in this grain bin */
+	realnum AvRadius,       /**< average grain radius, <a^3>/<a^2>, in cm */
 	  AvArea,               /**< average grain surface area, <4pi*a^2>, in cm^2, CURRENTLY NOT USED */
-	  AvVol,                /**< average grain volume, <4/3pi*a^3>, in cm^3 */
-	  IntRadius,            /**< integrated grain radius Int(a), normalized per H, in cm/H */
+	  AvVol;                /**< average grain volume, <4/3pi*a^3>, in cm^3 */
+	double IntRadius,       /**< integrated grain radius Int(a), normalized per H, in cm/H */
 	  IntArea,              /**< integrated grain surface area Int(4pi*a^2), normalized per H, in cm^2/H */
 	  IntVol,               /**< integrated grain volume Int(4/3pi*a^3), normalized per H, in cm^3/H */
-	  elmAbund[LIMELM],     /**< chemical composition, abundance at default depl, see comment below */ 
-	  atomWeight,           /**< molecular weight per atom, in amu */
+	  elmAbund[LIMELM];     /**< chemical composition, abundance at default depl, see comment below */ 
+	realnum atomWeight,     /**< molecular weight per atom, in amu */
 	  Tsublimat,            /**< sublimation temperature */
 	  DustWorkFcn,          /**< work function, in Ryd */
 	  BandGap,              /**< gap between valence and conduction band, in Ryd */
@@ -335,7 +336,7 @@ public:
 	realnum dstfactor,      /**< grain depletion factor, dep from GRAINS command */
 	  dstAbund,             /**< grain abundance in zone, dstfactor*GrainMetal*GrnVryDpth(radius) */
 	  GrnDpth;              /**< grain abundance scale factor in zone, GrnStdDpth(radius),
-				 *   used by set PAH constant / H0 commands */
+							 *   used by set PAH constant / H0 commands */
 	double cnv_H_pGR,       /**< grain unit conversion, \<unit\>/H (default depl) -> \<unit\>/grain */
 	  cnv_H_pCM3,           /**< grain unit conversion, \<unit\>/H (default depl) -> \<unit\>/cm^3 (actual depl) */
 	  cnv_CM3_pGR,          /**< grain unit conversion, \<unit\>/cm^3 (actual depl) -> \<unit\>/grain */
@@ -566,7 +567,7 @@ public:
 	vector<realnum> SilicateEmission;/**< silicate emission from this zone only */
 
 	/** per bin grain data */
-	vector<GrainBin> bin;          /**< pointers to memory allocated for bins */
+	vector<GrainBin> bin;          /**< data for individual grain size bins */
 };
 
 extern GrainVar gv;

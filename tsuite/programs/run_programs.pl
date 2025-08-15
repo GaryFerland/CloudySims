@@ -31,6 +31,8 @@ $cxx = `cd $DirObject; make echo-cxx | egrep -v '^make' | tail -n 1`;
 chomp( $cxx );
 $cxxflags = `cd $DirObject; make echo-cxxflags | egrep -v '^make' | tail -n 1`;
 chomp( $cxxflags );
+$ldlibs = `cd $DirObject; make echo-ldlibs | egrep -v '^make' | tail -n 1`;
+chomp( $ldlibs );
 # escape double quotes
 $cxxflags =~ s/"/\\"/g;
 
@@ -47,7 +49,7 @@ while($r=<RSOM>)
 		# remove trailing newline
 		chomp( $r );
 		chdir( $r ) or die "PROBLEM could not change to $r\n";
-		$command = "$cxx $cxxflags $r.cpp -o $r.exe -I../$DirSource -L../$DirObject -lcloudy";
+		$command = "$cxx $cxxflags $r.cpp -o $r.exe -I../$DirSource -L../$DirObject -lcloudy $ldlibs";
 		# print "$command\n";
 		print "compiling $r.cpp\n";
 		$res1 = system( "$command" );
@@ -70,7 +72,3 @@ while($r=<RSOM>)
 }
 
 close(RSOM);
-
-
- 
-

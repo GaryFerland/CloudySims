@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #include "cddefines.h"
@@ -141,34 +141,34 @@ void DumpLine(const TransitionProxy& t)
 
 	ASSERT( t.ipCont() > 0 );
 
-	/* routine to print contents of line arrays */
-	string chLbl = "DEBUG "+chLineLbl(t);
+	dprintf( ioQQQ, "%s Te%.6e eden%.6e CS%.6e Aul%.6e Tex%.6e cool%.6e\n",
+		  t.chLabel().c_str(),
+		  phycon.te,
+		  dense.eden,
+		  t.Coll().col_str(),
+		  t.Emis().Aul(),
+		  TexcLine(t),
+		  t.Coll().cool() );
 
-	fprintf( ioQQQ, 
-		"%10.10s Te%.2e eden%.1e CS%.2e Aul%.1e Tex%.2e cool%.1e het%.1e conopc%.1e albdo%.2e\n", 
-	  chLbl.c_str(), 
-	  phycon.te, 
-	  dense.eden, 
-	  t.Coll().col_str(), 
-	  t.Emis().Aul(), 
-	  TexcLine(t), 
-	  t.Coll().cool(), 
-	  t.Coll().heat() ,
-	  opac.opacity_abs[t.ipCont()-1],
-	  opac.albedo[t.ipCont()-1]);
+		fprintf( ioQQQ,
+		  "het%.6e conopc%.6e albdo%.6e Tin%.6e Tout%.6e Esc%.6e eEsc%.6e\n",
+		  t.Coll().heat(),
+		  opac.opacity_abs[t.ipCont()-1],
+		  opac.albedo[t.ipCont()-1],
+		  t.Emis().TauIn(),
+		  t.Emis().TauTot(),
+		  t.Emis().Pesc(),
+		  t.Emis().Pelec_esc() );
 
-	fprintf( ioQQQ, 
-		"Tin%.1e Tout%.1e Esc%.1e eEsc%.1e DesP%.1e Pump%.1e OTS%.1e PopL,U %.1e %.1e PopOpc%.1e\n", 
-	  t.Emis().TauIn(), 
-	  t.Emis().TauTot(), 
-	  t.Emis().Pesc(), 
-	  t.Emis().Pelec_esc(), 
-	  t.Emis().Pdest(), 
-	  t.Emis().pump(), 
-	  t.Emis().ots(), 
-	  (*t.Lo()).Pop(), 
-	  (*t.Hi()).Pop() ,
-	  t.Emis().PopOpc() );
+	fprintf( ioQQQ,
+		"DesP%.6e Pump%.6e OTS%.6e PopL,U %.6e %.6e PopOpc%.6e\n",
+		t.Emis().Pdest(),
+		t.Emis().pump(),
+		t.Emis().ots(),
+		(*t.Lo()).Pop(),
+		(*t.Hi()).Pop(),
+		t.Emis().PopOpc() );
+
 	return;
 }
 
@@ -289,9 +289,7 @@ string TransitionProxy::chLabel() const
 
 	/* NB this function is profoundly slow due to sprintf statement
 	 * also - it cannot be evaluated within a write statement itself*/
-	string chWavLen;
-	sprt_wl(chWavLen, WLAng());
-	return chSpecies + " " + chWavLen;
+	return chSpecies + " " + twav().sprt_wl();
 }
 
 /*PutCS enter a collision strength into an individual line vector */
@@ -321,7 +319,9 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	string chLabel;
 	double xIntensity,
 		other,
-		xIntensity_in;
+		xIntensity_in,
+		xObsIntensity,
+		xObsIntensity_in;
 		
 	/* routine to use line array data to generate input
 	 * for emission line array */
@@ -344,6 +344,7 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 			chLabel = chIonLbl(t);
 		}
 		xIntensity = 0.;
+		xObsIntensity = 0.;
 	}
 	else
 	{
@@ -354,10 +355,9 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 		/* total line intensity or luminosity 
 		 * these may not be defined in initial calls so define here */
 		xIntensity = t.Emis().xIntensity() + extra.v;
+		xObsIntensity = t.Emis().xObsIntensity() + extra.v;
 	}
 
-	/* initial counting case, where ipass == -1, just ignored above, call linadd below */
-	
 	/* ExtraInten is option that allows extra intensity (i.e., recomb)
 	 * to be added to this line  with Call PutExtra( exta )
 	 * in main lines this extra
@@ -377,12 +377,21 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	/* inward part of line - do not move this away from previous lines
 	 * since xIntensity is used here */
 	xIntensity_in = xIntensity*t.Emis().FracInwd();
+	xObsIntensity_in = xObsIntensity*t.Emis().FracInwd();
 	ASSERT( xIntensity_in>=0. );
-	linadd(xIntensity_in,t.WLAng(),"Inwd",'i',chComment);
+	if( lgIsM1Line(t) )
+		chLabel = chIonLbl(t) + " M1 Inwd";
+	else
+		chLabel = chIonLbl(t) + " Inwd";
+	linadd(xIntensity_in,xObsIntensity_in,t.twav(),chLabel.c_str(),'i',chComment);
 	
 	/* cooling part of line */
 	other = t.Coll().cool();
-	linadd(other,t.WLAng(),"Coll",'i',chComment);
+	if( lgIsM1Line(t) )
+		chLabel = chIonLbl(t) + " M1 Coll";
+	else
+		chLabel = chIonLbl(t) + " Coll";
+	linadd(other,t.twav(),chLabel.c_str(),'i',chComment);
 	
 	/* fluorescent excited part of line */
 	double radiative_branching;
@@ -411,12 +420,19 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	}
 
 	other = (*t.Lo()).Pop() * t.Emis().pump() * radiative_branching * t.EnergyErg();
-	linadd(other,t.WLAng(),"Pump",'i',chComment);
-		
+	if( lgIsM1Line(t) )
+		chLabel = chIonLbl(t) + " M1 Pump";
+	else
+		chLabel = chIonLbl(t) + " Pump";
+	linadd(other,t.twav(),chLabel.c_str(),'i',chComment);
 
 	/* heating part of line */
 	other = t.Coll().heat();
-	linadd(other,t.WLAng(),"Heat",'i',chComment);
+	if( lgIsM1Line(t) )
+		chLabel = chIonLbl(t) + " M1 Heat";
+	else
+		chLabel = chIonLbl(t) + " Heat";
+	linadd(other,t.twav(),chLabel.c_str(),'i',chComment);
 
 	return;
 }
@@ -445,7 +461,7 @@ void TransitionProxy::Junk() const
 	DEBUG_ENTRY( "TransitionProxy::Junk()" );
 
 		/* wavelength, usually in A, used for printout */
-	WLAng() = -FLT_MAX;
+	WLangVac() = -FLT_MAX;
 
 	/* transition energy in wavenumbers */
 	EnergyWN() = -FLT_MAX;

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cddefines.h"
 #include "hmi.h"
@@ -10,7 +10,6 @@ void t_hmi::zero()
 	H2_total = 0.;
 	H2_total_f = 0.f;
 	HD_total = 0.;
-	H2_frac_abund_set = 0.;
 	hmihet = 0.;
 	h2plus_exc_frac = 0.;
 	h2plus_heatcoef = 0.;

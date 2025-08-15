@@ -45,7 +45,8 @@ monitor pressure error < 0.002
 ## >>chng 14 apr 08, from 4.656 to 4.719, O excit state photo back in
 ## >>chng 16 mar 24, from 4.719 to 4.757, FeII cooling using Stout 80 levels
 ## >>chng 16 aug 07, from 4.757 to 4.685, Fran bug fix
-monitor line "nFnu" 122.4m luminosity 4.685 error 0.1
+## >>chng 24 oct 05, wl from 122.4m to 122.367m, reinterpret PredCont wl as vacuum
+monitor line "nFnu" 122.367m luminosity 4.685 error 0.1
 ##
 ## >>chng 01 nov 22, from 4.895 to 4.919, ? ?
 ## >>chng 02 may 27, from 4.919 to 4.950, improved gaunt factors
@@ -62,7 +63,8 @@ monitor line "nFnu" 122.4m luminosity 4.685 error 0.1
 ## >>chng 14 apr 08, from 4.928 to 5, O excit state photo back in
 ## >>chng 16 mar 24, from 5 to 5.044, FeII cooling using Stout 80 levels
 ## >>chng 16 aug 07, from 5.044 to 4.965, Fran bug fix
-monitor line "nFnu" 60.8322m luminosity 4.965 error 0.1
+## >>chng 24 oct 05, wl from 60.8322m to 60.8157m, reinterpret PredCont wl as vacuum
+monitor line "nFnu" 60.8157m luminosity 4.965 error 0.1
 ##
 ## 01 dec 21, from 5.052 to 5.074, inner shell yields
 ## >>chng 02 may 27, from 5.074 to 5.096, improved gaunt factors
@@ -81,7 +83,8 @@ monitor line "nFnu" 60.8322m luminosity 4.965 error 0.1
 ## >>chng 14 apr 08, from 5.081 to 5.157, O excit state photo back in
 ## >>chng 16 mar 24, from 5.157 to 5.204, FeII cooling using Stout 80 levels
 ## >>chng 16 aug 07, from 5.204 to 5.124, Fran bug fix
-monitor line "nFnu" 41.2152m luminosity 5.124 error 0.1
+## >>chng 24 oct 05, wl from 41.2152m to 41.2039m, reinterpret PredCont wl as vacuum
+monitor line "nFnu" 41.2039m luminosity 5.124 error 0.1
 ##
 ## >>chng 00 oct 03, from 5.931 to 6.004, rebin opt continuum, H- opac bug
 ## >>chng 01 mar 09, from 6.004 to 5.82, change in H redis
@@ -189,7 +192,7 @@ monitor line luminosity "H  1" 4861.32A 6.043,
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-monitor line luminosity "Inwd" 4861.32A 5.961, 
+monitor line luminosity "H  1 Inwd" 4861.32A 5.961,
 ##
 ## >>chng 00 oct 03, from 2.01 to 1.73 rebin opt continuum, H- opac bug
 ## >>chng 01 mar 09, from 1.73 to 2.65 change in H redis
@@ -515,7 +518,8 @@ monitor temperature "Fe+7" 4.276
 ## >>chng 14 apr 08, from 362 to 381, O excit state photo back in
 ## >>chng 16 mar 24, from 381 to 352, FeII cooling using Stout 80 levels
 ## >>chng 18 jun 20, from 352 to 330, #bugfixes at front face r12134:12136
-monitor nzone 330 
+## >>chng 25 jan 30, from 330 to <380, all double results
+monitor nzone <380 
 ##
 ## >>chng 04 feb 15, from 15 to 12
 ## >>chng 04 sep 25, from 12 to 15, incr temp toler 0.02 to 0.005
@@ -533,7 +537,8 @@ monitor itrzn 13.07
 ## >>chng 09 jul 14, from 7 to 5, reset autocv to 0.2 since 0.1 developed 32/64 bit distinction
 ## >>chng 09 jul 27, from 5 to 3, rm test on outward Hb - will create ticket on problems
 ## >>chng 11 aug 05, from 3 to 4, make PRD redis func for h-like ions; LY_A func is now for H only
-monitor niter 4 
+## >>chng 25 jan 30, from 4 to 3, all double results
+monitor niter < 5 
 ##
 ## >>chng 14 jul 10, from 1.01 to 5.245, Add monitors for WillsNetzerWills FeII Lines
 ## >>chng 16 mar 23, drop WillsNetzerWills FeII Lines

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*H2_ParseSave parse the save h2 command */
 /*H2_PunchDo save some properties of the large H2 molecule */
@@ -170,7 +170,7 @@ void diatomics::H2_ParseSave( Parser &p,
 		/* save H2 lines - all in X */
 		strcpy( save.chSave[save.nsave], "H2ln" );
 		sncatf( chHeader,
-			"#H2 line\tEhi\tVhi\tJhi\tElo\tVlo\tJlo\twl(mic)\twl(lab)\tlog L or I\tI/Inorm\tExcit(hi, K)\tg_u h nu * Aul\n" );
+			"#H2 line\tEhi\tVhi\tJhi\tElo\tVlo\tJlo\twl(ang)\twl(lab)\tlog L or I\tI/Inorm\tExcit(hi, K)\tg_u h nu * Aul\n" );
 		/* first optional number changes the threshold of weakest line to print*/
 		/* fe2thresh is intensity relative to normalization line,
 		 * normally Hbeta, and is set to zero in zero.c */
@@ -1599,7 +1599,8 @@ void diatomics::H2_PunchDo( FILE* io ,  char chJOB[] , const char chTime[] , lon
 			nsave,
 			ipOrdered[nSOL];
 		int nFail;
-		realnum fsave[nSOL], wlsave[nSOL];
+		realnum fsave[nSOL];
+		string wlsave[nSOL];
 		/* Solomon process, and where it came from */
 		fprintf(io,"%.5e\t%.3e", 
 			/* depth in cm */
@@ -1640,7 +1641,7 @@ void diatomics::H2_PunchDo( FILE* io ,  char chJOB[] , const char chTime[] , lon
 					jhisave[nsave] = (*Hi).J();
 					ivhisave[nsave] = (*Hi).v();
 					iehisave[nsave] = (*Hi).n();
-					wlsave[nsave] = (*tr).WLAng();
+					wlsave[nsave] = tr->twav().sprt_wl("%.3f");
 					++nsave;
 				}
 			}
@@ -1678,8 +1679,8 @@ void diatomics::H2_PunchDo( FILE* io ,  char chJOB[] , const char chTime[] , lon
 			{
 				long ip = ipOrdered[i];
 				/*lint -e644 not init */
-				fprintf(io,"\t%li\t%li\t%li\t%li\t%li\t%.3f\t%.3f", 
-					iehisave[ip],ivhisave[ip],jhisave[ip],ivlosave[ip] , jlosave[ip] , fsave[ip] , wlsave[ip] );
+				fprintf(io,"\t%li\t%li\t%li\t%li\t%li\t%.3f\t%s", 
+						iehisave[ip],ivhisave[ip],jhisave[ip],ivlosave[ip],jlosave[ip],fsave[ip],wlsave[ip].c_str());
 				/*lint +e644 not init */
 			}
 			fprintf(io,"\n"); 
@@ -1778,11 +1779,10 @@ void diatomics::H2_PunchDo( FILE* io ,  char chJOB[] , const char chTime[] , lon
 		 * are set up */
 		if( lgEnabled && LineSave.nsum > 0)
 		{
-			ASSERT( LineSave.ipNormWavL >= 0 );
+			ASSERT( LineSave.ipNormLine >= 0 );
 			/* get the normalization line */
-			if( LineSave.lines[LineSave.ipNormWavL].SumLine(0) > SMALLFLOAT )
-				renorm = LineSave.ScaleNormLine/
-				LineSave.lines[LineSave.ipNormWavL].SumLine(0);
+			if( LineSave.lines[LineSave.ipNormLine].SumLine(0) > SMALLFLOAT )
+				renorm = LineSave.ScaleNormLine/LineSave.lines[LineSave.ipNormLine].SumLine(0);
 			else
 				renorm = 1.;
 
@@ -1811,24 +1811,21 @@ void diatomics::H2_PunchDo( FILE* io ,  char chJOB[] , const char chTime[] , lon
 					continue;
 				if( H2_SaveLine[iElecHi][iVibHi][iRotHi][iElecLo][iVibLo][iRotLo] > thresh )
 				{
-					/* air wavelength in microns */
-					/* WLAng contains correction for index of refraction of air */
-					double wl = (*tr).WLAng()/1e4;
 					fprintf(io, "%li-%li %c(%li)", iVibHi, iVibLo, chMolBranch( iRotHi, iRotLo ), iRotLo );
-					fprintf( io, "\t%ld\t%ld\t%ld\t%ld\t%ld\t%ld", iElecHi , iVibHi , iRotHi , iElecLo , iVibLo , iRotLo);
-					/* WLAng contains correction for index of refraction of air */
-					fprintf( io, "\t%.7f\t", wl );
-					/*prt_wl print floating wavelength in Angstroms, in output format */
-					prt_wl( io , (*tr).WLAng() );
+					fprintf(io, "\t%ld\t%ld\t%ld\t%ld\t%ld\t%ld\t", iElecHi, iVibHi, iRotHi, iElecLo, iVibLo, iRotLo);
+					/* prt_wl print wavelength in custom format (in angstrom), converts to air if needed */
+					tr->twav().prt_wl(io, "%.3f\t");
+					/* prt_wl print wavelength in standard output format, converts to air if needed */
+					tr->twav().prt_wl(io);
 					/* the log of the line intensity or luminosity */
 					fprintf( io, "\t%.3f\t%.3e", 
 						log10( MAX2(1e-37, H2_SaveLine[iElecHi][iVibHi][iRotHi][iElecLo][iVibLo][iRotLo]*radius.Conv2PrtInten) ), 
 						H2_SaveLine[iElecHi][iVibHi][iRotHi][iElecLo][iVibLo][iRotLo]*renorm );
 					/* excitation energy of upper level in K */
-					fprintf( io, "\t%.3f", (*Hi).energy().K() );
+					fprintf(io, "\t%.3f", (*Hi).energy().K() );
 					/* the product g_hi h nu * Aul */
-					fprintf( io, "\t%.3e", (*tr).Emis().Aul() * (*tr).EnergyErg() * (*(*tr).Hi()).g() );
-					fprintf( io, "\n");
+					fprintf(io, "\t%.3e", (*tr).Emis().Aul() * (*tr).EnergyErg() * (*(*tr).Hi()).g() );
+					fprintf(io, "\n");
 				}
 			}
 		}
@@ -1898,12 +1895,12 @@ long int diatomics::getLine( long iElecHi, long iVibHi, long iRotHi, long iElecL
 		return 0;
 	}
 
-	ASSERT( LineSave.ipNormWavL >= 0 );
+	ASSERT( LineSave.ipNormLine >= 0 );
 	/* does the normalization line have a positive intensity*/
-	if( LineSave.lines[LineSave.ipNormWavL].SumLine(0) > 0. )
+	if( LineSave.lines[LineSave.ipNormLine].SumLine(0) > 0. )
 	{
 		*relint = H2_SaveLine[iElecHi][iVibHi][iRotHi][iElecLo][iVibLo][iRotLo]/
-			LineSave.lines[LineSave.ipNormWavL].SumLine(0) * LineSave.ScaleNormLine;
+			LineSave.lines[LineSave.ipNormLine].SumLine(0) * LineSave.ScaleNormLine;
 	}
 	else
 	{

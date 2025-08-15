@@ -43,7 +43,8 @@ save convergence reason "blr_n14_p18.cvr"
 ## 
 ## >>chng 18 jan 13, from 3.03 to 0.8557, first run
 ## >>chng 19 mar 01, from 0.8557 to -3.696, remove recombination, etc, components from blends (#415)
-monitor line luminosity "blnd"  1666 -3.696 error 0.1  ##total O III] 1666
+## >>chng 25 jul 25, from -3.696 to -3.532, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line luminosity "blnd"  1666 -3.532 error 0.1  ##total O III] 1666
 ##
 ## >>chng 18 jan 13, from 2.947 to -0.1831, first run
 ## >>chng 19 mar 01, from -0.1831 to -0.7269, remove recombination, etc, components from blends (#415)
@@ -73,7 +74,7 @@ monitor line luminosity "H  1"  4861.32A 6.374 ##total of sum of both Si IV comp
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-monitor line luminosity "Inwd" 4861.32A 6.355, 
+monitor line luminosity "H  1 Inwd" 4861.32A 6.355,
 ##
 ##total HeII Balmer-a 1640
 ## >>chng 16 aug 07, from 3.87 to 3.936, Fran bug fix

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef DEPTH_TABLE_H_
@@ -14,16 +14,20 @@ public:
 	vector<double> val;
 
 	/**number of values in above table */
-	long int nvals;
+	long int nvals() const
+	{
+		ASSERT( dist.size() == val.size() );
+		return long(dist.size());
+	}
 
 	/**tabval, adapted from dense_tabden interpolate on table of points for density with dlaw table command, by K Volk 
-		\param r0
-		\param depth
+		\param r0    current radius in cm
+		\param depth current depth in cm
 	*/
 	double tabval( double r0, double depth) const;
 	void clear()
 	{
-		nvals = 0;
+		lgDepth = false;
 		dist.resize(0);
 		val.resize(0);
 	}

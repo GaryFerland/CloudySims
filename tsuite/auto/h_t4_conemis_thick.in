@@ -63,33 +63,42 @@ monitor line "Q(H)" 4861.32A 1.07
 ## >>chng 02 jun 21, from 0.247 to 0.222, improved brems gaunt factors
 ## >>chng 13 jul 25, wl from 9.325m to 9.32488m, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, from 0.222 to 0.2415, change normalizing line to "H  1" 4861.36A.
-monitor line "nFnu" 9.32488m  0.2415
+## >>chng 24 oct 05, wl from 9.32488m to 9.32234m, reinterpret PredCont wl as vacuum
+monitor line "nFnu" 9.32234m  0.2415
 ## >>chng 02 may 27, from 0.6927 to 0.734, improved brems gaunt factors
 ## >>chng 02 jun 21, from 0.734 to 0.691, improved brems gaunt factors
 ## >>chng 13 jul 25, wl from 2.324m to 2.32440m, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, from 0.691 to 0.7488, change normalizing line to "H  1" 4861.36A.
-monitor line "nFnu" 2.32440m  0.7488
+## >>chng 24 oct 05, wl from 2.32440m to 2.32377m, reinterpret PredCont wl as vacuum
+monitor line "nFnu" 2.32377m  0.7488
 ## >>chng 13 jul 25, wl from 1.480m to 1.48022m, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, from 0.9508 to 1.02, change normalizing line to "H  1" 4861.36A.
-monitor line "nFnu" 1.48022m  1.02
+## >>chng 24 oct 05, wl from 1.48022m to 1.47981m, reinterpret PredCont wl as vacuum
+monitor line "nFnu" 1.47981m  1.02
 ## >>chng 13 jul 25, wl from 1.436m to 1.43649m, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, from 1.456 to 1.555, change normalizing line to "H  1" 4861.36A.
-monitor line "nFnu" 1.43649m  1.555
+## >>chng 24 oct 05, wl from 1.43649m to 1.43610m, reinterpret PredCont wl as vacuum
+monitor line "nFnu" 1.43610m  1.555
 ## >>chng 13 jul 25, wl from 8330 to 8329.68A, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, from 1.249 to 1.327, change normalizing line to "H  1" 4861.36A.
-monitor line "nFnu"  8329.68A  1.327
+## >>chng 24 oct 05, wl from 8329.68A to 8327.39A, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  8327.39A  1.327
 ## >>chng 13 jul 25, wl from 8079 to 8078.61A, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, from 3.268 to 3.481, change normalizing line to "H  1" 4861.36A.
-monitor line "nFnu"  8078.61A  3.481
+## >>chng 24 oct 05, wl from 8078.61A to 8076.39A, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  8076.39A  3.481
 ## >>chng 13 jul 25, wl from 4885 to 4885.36A, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, from 1.784 to 1.885, change normalizing line to "H  1" 4861.36A.
-monitor line "nFnu"  4885.36A  1.885
+## >>chng 24 oct 05, wl from 4885.36A to 4884.00A, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  4884.00A  1.885
 ## >>chng 13 jul 25, wl from 3704 to 3704.34A, increased wl precision to 6 sig. fig.
 ## >>chng 17 sep 09, from 0.964 to 1.009, fix bug in high n collisional excitation rates for H-like iso-sequences
-monitor line "nFnu"  3704.34A  1.009
+## >>chng 24 oct 05, wl from 3704.34A to 3703.28A, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  3703.28A  1.009
 ## >>chng 13 jul 25, wl from 3588 to 3587.67A, increased wl precision to 6 sig. fig.
 ## >>chng 15 dec 15, from 15.32 to 16.34, change normalizing line to "H  1" 4861.36A.
-monitor line "nFnu"  3587.67A  16.34
+## >>chng 24 oct 05, wl from 3587.67A to 3586.64A, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  3586.64A  16.34
 ## there is some two-photon emission clearly present at this wl
 ## >>chng 02 may 18, increase error from 0.1 to 0.15
 ## >>chng 07 dec 06, from 0.323 to 0.258, changes in h-like collisions

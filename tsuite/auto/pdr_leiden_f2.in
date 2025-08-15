@@ -93,7 +93,8 @@ monitor "HCS+" 1755.88m  -9.95 line intensity
 ## >>chng 21 sep 11, from -8.738 to -9.2, LAMDA update
 ## >>chng 21 nov 04, from -9.2 to -8.541, update mole co data
 ## >>chng 23 may 15, from -8.541 to -8.35, GS updates 21 reactions to UMIST 2012
-monitor "CS  " 3058.86m  -8.35 line intensity
+## >>chng 25 jul 11, from -8.35 to -8.392, GS Si chemistry, UMIST 2022
+monitor "CS  " 3058.86m  -8.392 line intensity
 ## >>chng 10 aug 21, from -8.887 to -7.776, add these lines
 ## >>chng 11 nov 16, from -7.776 to -7.879, adjust newmole monitors
 ## >>chng 12 jun 07, from -7.879 to -7.986, vib_evap fix
@@ -106,7 +107,8 @@ monitor "CS  " 3058.86m  -8.35 line intensity
 ## >>chng 21 sep 11, from -8.416 to -9.207, LAMDA update
 ## >>chng 21 nov 04, from -9.207 to -8.298, update mole co data
 ## >>chng 23 may 15, from -8.298 to -7.95, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 2600.05m  -7.95 line intensity
+## >>chng 25 jul 11, from -7.95 to -8.068, GS Si chemistry, UMIST 2022
+monitor "CO  " 2600.05m  -8.068 line intensity
 ## >>chng 10 aug 21, from -7.637 to -7.034, add these lines
 ## >>chng 11 nov 16, from -7.034 to -7.154, adjust newmole monitors
 ## >>chng 12 jun 07, from -7.154 to -7.275, vib_evap fix
@@ -119,7 +121,8 @@ monitor "CO  " 2600.05m  -7.95 line intensity
 ## >>chng 21 sep 11, from -7.755 to -8.58, LAMDA update
 ## >>chng 21 nov 04, from -8.58 to -7.627, update mole co data
 ## >>chng 23 may 15, from -7.627 to -7.235, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 1300.05m  -7.235 line intensity
+## >>chng 25 jul 11, from -7.235 to -7.369, GS Si chemistry, UMIST 2022
+monitor "CO  " 1300.05m  -7.369 line intensity
 ## >>chng 10 aug 21, from -7.173 to -6.922, add these lines
 ## >>chng 11 nov 16, from -6.922 to -7.064, adjust newmole monitors
 ## >>chng 12 jun 07, from -7.064 to -7.212, vib_evap fix
@@ -133,7 +136,8 @@ monitor "CO  " 1300.05m  -7.235 line intensity
 ## >>chng 21 sep 11, from -7.76 to -8.619, LAMDA update
 ## >>chng 21 nov 04, from -8.619 to -7.618, update mole co data
 ## >>chng 23 may 15, from -7.618 to -7.163, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 866.727m  -7.163 line intensity
+## >>chng 25 jul 11, from -7.163 to -7.325, GS Si chemistry, UMIST 2022
+monitor "CO  " 866.727m  -7.325 line intensity
 ## >>chng 10 aug 21, from -7.114 to -7.166, add these lines
 ## >>chng 11 nov 16, from -7.166 to -7.325, adjust newmole monitors
 ## >>chng 12 jun 07, from -7.325 to -7.488, vib_evap fix
@@ -147,7 +151,8 @@ monitor "CO  " 866.727m  -7.163 line intensity
 ## >>chng 21 sep 11, from -8.067 to -8.938, LAMDA update
 ## >>chng 21 nov 04, from -8.938 to -7.92, update mole co data
 ## >>chng 23 may 15, from -7.92 to -7.435, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 650.074m  -7.435 line intensity
+## >>chng 25 jul 11, from -7.435 to -7.611, GS Si chemistry, UMIST 2022
+monitor "CO  " 650.074m  -7.611 line intensity
 ## >>chng 10 aug 21, from -7.324 to -7.578, add these lines
 ## >>chng 11 nov 16, from -7.578 to -7.728, adjust newmole monitors
 ## >>chng 12 jun 07, from -7.728 to -7.887, vib_evap fix
@@ -161,7 +166,8 @@ monitor "CO  " 650.074m  -7.435 line intensity
 ## >>chng 21 sep 11, from -8.456 to -9.321, LAMDA update
 ## >>chng 21 nov 04, from -9.321 to -8.312, update mole co data
 ## >>chng 23 may 15, from -8.312 to -7.834, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 520.089m  -7.834 line intensity
+## >>chng 25 jul 11, from -7.834 to -8.008, GS Si chemistry, UMIST 2022
+monitor "CO  " 520.089m  -8.008 line intensity
 ## >>chng 10 aug 21, from -7.731 to -8.073, add these lines
 ## >>chng 10 dec 19, from -8.073 to -8.031, changes due to LAMDA update in r4457
 ## >>chng 11 nov 16, from -8.031 to -8.188, adjust newmole monitors
@@ -176,7 +182,8 @@ monitor "CO  " 520.089m  -7.834 line intensity
 ## >>chng 21 sep 11, from -8.922 to -9.79, LAMDA update
 ## >>chng 21 nov 04, from -9.79 to -8.777, update mole co data
 ## >>chng 23 may 15, from -8.777 to -8.297, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 433.438m  -8.297 line intensity
+## >>chng 25 jul 11, from -8.297 to -8.471, GS Si chemistry, UMIST 2022
+monitor "CO  " 433.438m  -8.471 line intensity
 ## >>chng 10 aug 21, from -8.299 to -8.648, add these lines
 ## >>chng 10 dec 19, from -8.648 to -8.552, changes due to LAMDA update in r4457
 ## >>chng 11 nov 16, from -8.552 to -8.711, adjust newmole monitors
@@ -191,7 +198,8 @@ monitor "CO  " 433.438m  -8.297 line intensity
 ## >>chng 21 sep 11, from -9.45 to -10.32, LAMDA update
 ## >>chng 21 nov 04, from -10.32 to -9.305, update mole co data
 ## >>chng 23 may 15, from -9.305 to -8.824, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 371.549m  -8.824 line intensity
+## >>chng 25 jul 11, from -8.824 to -8.998, GS Si chemistry, UMIST 2022
+monitor "CO  " 371.549m  -8.998 line intensity
 ## >>chng 10 aug 21, from -8.997 to -9.289, add these lines
 ## >>chng 10 dec 19, from -9.289 to -9.133, changes due to LAMDA update in r4457
 ## >>chng 11 nov 16, from -9.133 to -9.291, adjust newmole monitors
@@ -206,7 +214,8 @@ monitor "CO  " 371.549m  -8.824 line intensity
 ## >>chng 21 sep 11, from -10.03 to -10.89, LAMDA update
 ## >>chng 21 nov 04, from -10.89 to -9.881, update mole co data
 ## >>chng 23 may 15, from -9.881 to -9.401, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 325.137m  -9.401 line intensity
+## >>chng 25 jul 11, from -9.401 to -9.575, GS Si chemistry, UMIST 2022
+monitor "CO  " 325.137m  -9.575 line intensity
 ## >>chng 10 aug 21, from -9.336 to -10.16, add these lines
 ## >>chng 10 dec 19, from -10.16 to -10.01, changes due to LAMDA update in r4457
 ## >>chng 12 jun 07, from -10.01 to -10.07, vib_evap fix
@@ -221,7 +230,8 @@ monitor "CO  " 325.137m  -9.401 line intensity
 ## >>chng 21 sep 15, from -11.6 to -10.85, go back to unresolved model
 ## >>chng 21 nov 04, from -10.85 to -9.717, update mole co data
 ## >>chng 23 may 15, from -9.717 to -10.08, GS updates 21 reactions to UMIST 2012
-monitor "CN  " 880.858m  -10.08  line intensity
+## >>chng 25 jul 11, from -10.08 to -9.654, GS Si chemistry, UMIST 2022
+monitor "CN  " 880.858m  -9.654  line intensity
 monitor H2 column density 21.737 error 0.1
 ## 
 ## >>chng 05 jan 15, from 17.22 to 17.16, reset ion stg limits during search,
@@ -246,7 +256,8 @@ monitor H2 column density 21.737 error 0.1
 ## >>chng 21 sep 11, from 15.29 to 14.44, LAMDA update
 ## >>chng 21 nov 04, from 14.44 to 15.43, update mole co data
 ## >>chng 23 may 15, from 15.43 to 15.88, GS updates 21 reactions to UMIST 2012
-monitor CO column density 15.88 error 0.15
+## >>chng 25 jul 11, from 15.88 to 15.72, GS Si chemistry, UMIST 2022
+monitor CO column density 15.72 error 0.15
 ## 
 ## >>chng 05 nov 22, from 14.58 to 13.24, NA add freeze out onto grains
 ## >>chng 06 mar 06, from 13.24 to 13.05, PvH grain freeze out
@@ -276,7 +287,9 @@ monitor OH column density 13.78 error 0.1
 ## >>chng 15 mar 07, from 14.19 to 14.15, merging newmesh branch
 ## >>chng 20 aug 03, from 14.15 to 14.19, update H3+ rates Indriola+ 2012
 ## >>chng 23 may 15, from 14.19 to 14.14, GS updates 21 reactions to UMIST 2012
-monitor SiO column density 14.14 error 0.1
+## >>chng 24 apr 21, from 14.14 to 13.94, GS updates chemistry
+## >>chng 25 jan 26, from 13.94 to 13.99, merge master updated cham"
+monitor SiO column density 13.99 error 0.1
 ## 
 ## >>chng 05 sep 30, add these 5
 monitor column density H2+  11.56 error 0.1

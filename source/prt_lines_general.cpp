@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*lines_general put general information and energetics into line intensity stack */
 #include "cddefines.h"
@@ -35,13 +35,12 @@ void lines_general(void)
 	}
 
 	i = StuffComment( "general properties" );
-	linadd( 0., (realnum)i , "####", 'i',
-		" start of general properties");
+	linadd( 0., t_vac(i), "####", 'i', " start of general properties");
 
 	/* this entry only works correctly if the APERTURE command is not in effect */
 	if( geometry.iEmissPower == 2 )
 	{
-		linadd(continuum.totlsv/radius.dVeffAper,0,"Inci",'i',
+		linadd(continuum.totlsv/radius.dVeffAper,0_vac,"Inci",'i',
 		       "total luminosity in incident continuum");
 		/* ipass is flag to indicate whether to only set up line array
 		 * (ipass=0) or actually evaluate lines intensities (ipass=1) */
@@ -51,19 +50,19 @@ void lines_general(void)
 		}
 	}
 
-	linadd(thermal.htot,0,"TotH",'i',
+	linadd(thermal.htot,0_vac,"TotH",'i',
 		"  total heating, all forms, information since individuals added later ");
 
-	linadd(thermal.ctot,0,"TotC",'i',
+	linadd(thermal.ctot,0_vac,"TotC",'i',
 		"  total cooling, all forms, information since individuals added later ");
 
-	linadd(thermal.heating(0,0),0,"BFH1",'h',
+	linadd(thermal.heating(0,0),0_vac,"BFH1",'h',
 		"  hydrogen photoionization heating, ground state only ");
 
-	linadd(thermal.heating(0,1),0,"BFHx",'h',
+	linadd(thermal.heating(0,1),0_vac,"BFHx",'h',
 		"  net hydrogen photoionization heating less rec cooling, all excited states normally zero, positive if excited states are net heating ");
 
-	linadd(thermal.heating(0,22),0,"Line",'h',
+	linadd(thermal.heating(0,22),0_vac,"Line",'h',
 		"  heating due to induced lines absorption of continuum ");
 	if( thermal.htot > 0. )
 	{
@@ -73,7 +72,7 @@ void lines_general(void)
 		}
 	}
 
-	linadd(thermal.heating(1,0)+thermal.heating(1,1)+thermal.heating(1,2),0,"BFHe",'h',
+	linadd(thermal.heating(1,0)+thermal.heating(1,1)+thermal.heating(1,2),0_vac,"BFHe",'h',
 	  "  total helium photoionization heating, all stages ");
 
 	HeatMetal = 0.;
@@ -89,10 +88,10 @@ void lines_general(void)
 		}
 	}
 
-	linadd(HeatMetal,0,"TotM",'h',
+	linadd(HeatMetal,0_vac,"TotM",'h',
 		"  total heavy element photoionization heating, all stages ");
 
-	linadd(thermal.heating(0,21),0,"pair",'h',
+	linadd(thermal.heating(0,21),0_vac,"pair",'h',
 		"  heating due to pair production ");
 
 	/* ipass is flag to indicate whether to only set up line array
@@ -107,13 +106,13 @@ void lines_general(void)
 		ionbal.CompHeating_Max = 0.;
 	}
 
-	linadd(ionbal.CompRecoilHeatLocal,0,"Cbnd",'h',
+	linadd(ionbal.CompRecoilHeatLocal,0_vac,"Cbnd",'h',
 		"  heating due to bound compton scattering ");
 
-	linadd(rfield.cmheat,0,"ComH",'h',
+	linadd(rfield.cmheat,0_vac,"ComH",'h',
 		"  Compton heating ");
 
-	linadd(CoolHeavy.tccool,0,"ComC",'c',
+	linadd(CoolHeavy.tccool,0_vac,"ComC",'c',
 		"  total Compton cooling ");
 
 	/* record max local heating due to advection */
@@ -121,50 +120,50 @@ void lines_general(void)
 	/* record max local cooling due to advection */
 	dynamics.CoolMax = MAX2( dynamics.CoolMax , safe_div(dynamics.Cool(),thermal.htot,0.) );
 
-	linadd(dynamics.Cool()  , 0 , "advC" , 'i',
+	linadd(dynamics.Cool()  , 0_vac , "advC" , 'i',
 		"  cooling due to advection " );
 
-	linadd(dynamics.Heat() , 0 , "advH" , 'i' ,
+	linadd(dynamics.Heat() , 0_vac , "advH" , 'i' ,
 		"  heating due to advection ");
 
-	linadd( thermal.char_tran_heat ,0,"CT H",'h',
+	linadd( thermal.char_tran_heat ,0_vac,"CT H",'h',
 		" heating due to charge transfer ");
 
-	linadd( thermal.char_tran_cool ,0,"CT C",'c',
+	linadd( thermal.char_tran_cool ,0_vac,"CT C",'c',
 		" cooling due to charge transfer ");
 
-	linadd(thermal.heating(1,6),0,"CR H",'h',
+	linadd(thermal.heating(1,6),0_vac,"CR H",'h',
 		" cosmic ray heating ");
 
-	linadd(thermal.heating(0,20),0,"extH",'h',
+	linadd(thermal.heating(0,20),0_vac,"extH",'h',
 		" extra heat added to this zone, from HEXTRA command ");
 
-	linadd(CoolHeavy.cextxx,0,"extC",'c',
+	linadd(CoolHeavy.cextxx,0_vac,"extC",'c',
 		" extra cooling added to this zone, from CEXTRA command ");
 
 	// 511 keV annihilation line, counts as recombination line since
 	// neither heating nor cooling, but does remove energy
 	ee511 = (dense.gas_phase[ipHYDROGEN] + 4.*dense.gas_phase[ipHELIUM])*ionbal.PairProducPhotoRate[0]*2.*8.20e-7;
-	PntForLine(2.427e-2,"e-e+",&ipnt);
-	lindst(ee511,(realnum)2.427e-2,"e-e+",ipnt,'r',true,
+	PntForLine(2.427e-2_vac,"e-e+",&ipnt);
+	lindst(ee511,2.427e-2_vac,"e-e+",ipnt,'r',true,
 		" 511keV annihilation line " );
 
-	linadd(CoolHeavy.expans,0,"Expn",'c',
+	linadd(CoolHeavy.expans,0_vac,"Expn",'c',
 		"  expansion cooling, only non-zero for wind ");
 
-	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].RadRecCool,0,"H FB",'i',
+	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].RadRecCool,0_vac,"H FB",'i',
 		"  H radiative recombination cooling ");
 
-	linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHYDROGEN].FreeBnd_net_Cool_Rate),0,"HFBc",'c',
+	linadd(MAX2(0.,iso_sp[ipH_LIKE][ipHYDROGEN].FreeBnd_net_Cool_Rate),0_vac,"HFBc",'c',
 		"  net free-bound cooling ");
 
-	linadd(MAX2(0.,-iso_sp[ipH_LIKE][ipHYDROGEN].FreeBnd_net_Cool_Rate),0,"HFBh",'h',
+	linadd(MAX2(0.,-iso_sp[ipH_LIKE][ipHYDROGEN].FreeBnd_net_Cool_Rate),0_vac,"HFBh",'h',
 		"  net free-bound heating ");
 
-	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].RecomInducCool_Rate,0,"Hind",'c',
+	linadd(iso_sp[ipH_LIKE][ipHYDROGEN].RecomInducCool_Rate,0_vac,"Hind",'c',
 		"  cooling due to induced rec of hydrogen ");
 
-	linadd(CoolHeavy.cyntrn,0,"Cycn",'c',
+	linadd(CoolHeavy.cyntrn,0_vac,"Cycn",'c',
 		"  cyclotron cooling ");
 
 	// cooling due to iso-sequence species
@@ -186,9 +185,9 @@ void lines_general(void)
 			}
 			// this is information, 'i', since individual lines
 			// have been added as cooling or heating
-			linadd(max(0., iso_sp[ipISO][nelem].xLineTotCool),0, chLabel_cool,'c',
+			linadd(max(0., iso_sp[ipISO][nelem].xLineTotCool),0_vac, chLabel_cool,'c',
 				" net cooling due to iso-seq species");
-			linadd(max(0., -iso_sp[ipISO][nelem].xLineTotCool),0, chLabel_heat,'h',
+			linadd(max(0., -iso_sp[ipISO][nelem].xLineTotCool),0_vac, chLabel_heat,'h',
 				" heating due to iso-seq species");
 		}
 	}
@@ -209,9 +208,9 @@ void lines_general(void)
 		}
 		// this is information, 'i', since individual lines
 		// have been added as cooling or heating
-		linadd(max(0., dBaseSpecies[ipSpecies].CoolTotal),0, chLabel_cool,'c',
+		linadd(max(0., dBaseSpecies[ipSpecies].CoolTotal),0_vac, chLabel_cool,'c',
 			" net cooling due to database species");
-		linadd(max(0., -dBaseSpecies[ipSpecies].CoolTotal),0, chLabel_heat,'h',
+		linadd(max(0., -dBaseSpecies[ipSpecies].CoolTotal),0_vac, chLabel_heat,'h',
 			" heating due to database species");
 	}
 

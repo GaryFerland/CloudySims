@@ -183,7 +183,8 @@ monitor ionization  Oxygen    8 -2.138
 ## >>chng 05 jun 05, from -5.495 to -5.477, RP update he-like iso seq
 ## >>chng 06 jul 18, from -5.477 to -5.528 RP major upgrade VS coll strengths
 ## >>chng 11 sep 15, from -5.528 to -5.416, Chianti for Fe moderate to high ions
-monitor ionization  Oxygen    9 -5.416
+## >>chng 24 may 29, from -5.416 to -5.384, include continuum lowering for H-like nP doublets
+monitor ionization  Oxygen    9 -5.384
 ##
 ## >>chng 02 aug 19, from -5.462 to -5.392, better he-like cs
 ## >>chng 03 nov 23, from -5.392 to -3.357, Kraemer et al. guess of dr

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #include "cddefines.h"
@@ -150,11 +150,11 @@ double Flux::p_get(fu_bits bits) const
 	if( bits[FU_M2] )
 		val *= 1.e4;
 	if( bits[FU_A] )
-		val /= p_energy.Angstrom();
+		val /= p_energy.angstromVac();
 	if( bits[FU_NM] )
-		val /= p_energy.nm();
+		val /= p_energy.nmVac();
 	if( bits[FU_MU] )
-		val /= p_energy.micron();
+		val /= p_energy.micronVac();
 	if( bits[FU_HZ] )
 		val /= p_energy.Hz();
 	if( bits[FU_SR] )
@@ -183,11 +183,11 @@ void Flux::p_set(Energy e, double value, fu_bits bits)
 	if( bits[FU_M2] )
 		p_flux /= 1.e4;
 	if( bits[FU_A] )
-		p_flux *= p_energy.Angstrom();
+		p_flux *= p_energy.angstromVac();
 	if( bits[FU_NM] )
-		p_flux *= p_energy.nm();
+		p_flux *= p_energy.nmVac();
 	if( bits[FU_MU] )
-		p_flux *= p_energy.micron();
+		p_flux *= p_energy.micronVac();
 	if( bits[FU_HZ] )
 		p_flux *= p_energy.Hz();
 	if( bits[FU_SR] )

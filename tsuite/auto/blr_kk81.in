@@ -151,7 +151,9 @@ monitor line "Pa C"    0    33.64 error 0.1
 ## >>chng 16 mar 24, from 2.163 to 2.993, FeII cooling using Stout 80 levels
 ## >>chng 16 aug 07, from 2.993 to 3.806, Fran bug fix
 ## >>chng 18 feb 13, wl from 0 to 2431.34A, update two-photon wl 
-monitor line "H  1" 2431.34A 3.806 error 0.1
+## >>chng 24 jan 09, wl from 2431.34A to 2431.35A, resolve 1 electron Ly doublets
+## >>chng 24 oct 01, wl from 2431.35A to 2430.61A, treat H I two-photon cont. wl as vacuum
+monitor line "H  1" 2430.61A 3.806 error 0.1
 ##
 ## >>chng 01 aug 26, from 2.93 to 2.781 con res 2x better
 ## >>chng 03 jun 10, from 2.79 to 2.933, larger H atom, top topoff
@@ -582,7 +584,7 @@ monitor line "Fe 2c"    0    32.09 error 0.1
 ## monitor line "Fe 2" 2400 2.39
 ##
 ## >>chng 01 aug 26, from 1.8101 to 1.691 con res 2x better
-monitor line "FeKa"    1.78     1.691
+#monitor line "FeKa"    1.78     1.691
 ##
 ## ionization fractions
 ## >>chng 01 jun 15, from -0.474 to -0.574, H ct network upgrade

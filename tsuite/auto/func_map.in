@@ -60,7 +60,8 @@ monitor map heating   888290. -26.049
 ## >>chng 12 oct 15, from -21.75 to -21.77, experimental Chianti levels
 ## >>chng 16 jul 04, from -21.77 to -21.8, upgrade Fe 9 and Ni 11 to Stout
 ## >>chng 22 jul 09, from -21.8 to -21.75, upgrade to Chianti v10
-monitor map cooling   888290. -21.75 
+## >>chng 25 jun 14, from -21.75 to -21.8, drift away
+monitor map cooling   888290. -21.8 
 ##
 ## >>chng 02 jun 14, from -27.338 to 27.231
 ## >>chng 02 nov 20, from -27.231 to -27.269, noisy, increase error

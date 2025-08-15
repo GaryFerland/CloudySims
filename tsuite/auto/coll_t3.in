@@ -30,7 +30,8 @@ save dominant rates "coll_t3.molh" "H"
 #
 # commands giving the monitors    =========
 ## >>chng 15 nov 13, from -12.9 to -7.149, add this monitor
-monitor ctot -7.149
+## >>chng 25 jan 15, from -7.149 to -7.129, GS removes destabilizing reactions, updates others to current UMIST
+monitor ctot -7.129
 ## 
 ## >>chng 08 aug 18, from -15.18 to -14.04 add CRs
 ## >>chng 10 oct 18, from -14.04 to -14.13, replace faint brems with laser at high-energy limit of code in coronal cmmnd
@@ -84,7 +85,8 @@ monitor ionization Magnesium 2 -4.145 error 0.2
 ## >>chng 11 nov 16, from -3.195 to -4.035, adjust newmole monitors
 ## >>chng 12 apr 09, from -4.035 to -3.546, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 14 apr 11, from -3.546 to -3.794, fix non-negligible cutoff in hmrate4
-monitor ionization Aluminium 2 -3.794 error 0.1
+## >>chng 25 jul 11, from -3.794 to -3.863, GS Si chemistry, UMIST 2022
+monitor ionization Aluminium 2 -3.863 error 0.1
 ## 
 ## >>chng 08 aug 18, from 2.05 to 2.61 add CRs
 ## >>chng 09 nov 18, from 2.61 to 2.529, fix stopping criterion
@@ -93,7 +95,18 @@ monitor ionization Aluminium 2 -3.794 error 0.1
 ## >>chng 11 nov 16, from 2.578 to 1.916, adjust newmole monitors
 ## >>chng 12 apr 09, from 1.916 to 2.369, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 14 apr 11, from 2.369 to 2.227, fix non-negligible cutoff in hmrate4
-monitor eden 2.227 error 0.1
+## >>chng 25 jul 11, from 2.227 to 2.273, GS Si chemistry, UMIST 2022
+monitor eden 2.273 error 0.1
+##
+## >>chng 24 apr 21 GS add TiO
+## >>chng 24 jun 08, from 2.277 to 2.222, GS rm 3 TiO reactions
+## >>chng 25 jan 26, from 2.222 to 2.3, merge master updated cham"
+## >>chng 25 mar 4 turn off TiO for 25 rc1
+##monitor column density "TiO"	2.3
+##
+## >>chng 24 apr 21 GS add TiO
+## >>chng 25 mar 4 turn off TiO for 25 rc1
+##monitor column density "TiO2"	8.021
 #
 # coll_t3.in
 # class coronal  

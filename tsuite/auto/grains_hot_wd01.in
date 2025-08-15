@@ -63,7 +63,8 @@ monitor line luminosity "GraD" 0 -4.785
 ##
 ## >>chng 15 mar 07, from -5.3185 to -5.3413, merging newmesh branch
 ## >>chng 19 sep 20, from -5.341 to -4.429, BUGFIX, add one and two electron Ka to total FeKa reported here
-monitor line luminosity "FeKa" 1.780 -4.429
+## >>chng 24 jan 09, from -4.429 to -5.520, resolve 1 electron Ly doublets, FeKa replaced by sum of j-resolved and M1 transitions
+monitor line luminosity "Blnd" 1.77982 -5.520
 #
 # grains_hot_wd01.in
 # class limit 

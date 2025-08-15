@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef GRAINS_H_
@@ -32,6 +32,18 @@ void qheat(/*@out@*/vector<double>&,/*@out@*/vector<double>&,/*@out@*/long*,size
 void InitEnthalpy();
 
 struct GrainPar;
+
+/** check validity of a refractive index file by checking the magic number */
+bool lgValidRfiFile(const string& fnam);
+
+/** check validity of a mixed medium file by checking the magic number */
+bool lgValidMixFile(const string& fnam);
+
+/** check validity of a size distribution file by checking the magic number */
+bool lgValidSzdFile(const string& fnam);
+
+/** check validity of an opacity file by checking the magic number */
+bool lgValidOpcFile(const string& fnam);
 
 /** mie_write_opc
  \param [in] *rfi_file 

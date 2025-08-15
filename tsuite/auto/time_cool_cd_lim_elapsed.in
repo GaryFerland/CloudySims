@@ -1,0 +1,43 @@
+title constant density cloud cooling of preset elapsed time
+#
+# commands controlling continuum =========
+coronal 1e5 K init time 
+#
+# commands for density & abundances =========
+hden 1e-4 linear
+#
+# commands controlling geometry  =========
+set dr 0 
+set nend 1
+stop zone 1
+#
+# other commands for details     =========
+# number of time steps
+iterate 300
+stop time 1 Myr
+cosmic rays background
+#
+# commands controlling output    =========
+print line faint 2 log
+print line cumulative
+print ages
+set save prefix "time_cool_cd_lim_elapsed"
+save time dependent ".tim" no hash
+save dt ".dt" no hash
+save overview ".ovr" no hash
+save cooling ".col" no hash
+save heating ".het" no hash
+save continuum units Angstroms ".con"
+save cumulative continuum units Angstroms last ".concum"
+save monitors ".asr" last
+#
+# commands giving the asserts    =========
+monitor time elapsed 1 Myr error 0.001
+#
+# time_cool_cd_tfloor.in 
+# class dynamics 
+# ========================================
+# 
+
+Test time-dependent cooling for a fixed elapsed time (see 'stop time'
+command above).

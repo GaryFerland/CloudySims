@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef PRT_H_
@@ -26,37 +26,18 @@ void PrtFinal(void);
 /**SetPrintLineCol	set main line block & wl printing formats */
 void SetPrintLineCol ();
 
-/**prt_wl write wavelength to io 
-\param *io
-\param wavelength
-*/
-void prt_wl( 
-	FILE *io , 
-	realnum wavelength );
-
-/**sprt_wl write wavelength to string - must be kept parallel with prt_wl 
-\param *chString
-\param wl
-*/
-void sprt_wl( 
-	string& chString,
-	realnum wl );
-
-/** prt_line_err produce an error message containing the line label and wavelength,
- *              followed, if given, by the wavelength of the closest line of the same label 
+/** prt_line_err produce an error message containing the line label and wavelength
 \param *ioOUT		output file handle
-\param *label		line label
-\param wvlng		line wavelength
+\param &lineid		line identification
  */
-void prt_line_err( FILE *ioOUT, const string& label, realnum wvlng );
 void prt_line_err( FILE *ioOUT, const LineID& lineid );
 
 /* prt_line_inlist print line suitable for output list, label not enclosed in quotation marks
 \param *ioOUT		output file handle
 \param *label		line label
-\param wvlng		line wavelength
+\param twav			line wavelength
  */
-void prt_line_inlist ( FILE *ioOUT, const char *label, realnum wvlng );
+void prt_line_inlist ( FILE *ioOUT, const char *label, t_wavl twav );
 
 /**PrtHeader print large block of incident continuum numbers at start, 
  just after echoing input commands */
@@ -141,11 +122,12 @@ public:
 /** struct for holding user-defined blend */
 struct t_blend {
 	string chLabel;
-	realnum wave;
+	t_wavl wave;
 	bool lgQuiet;
 	bool lgIgnore;
 	vector<LineID> component;
-	t_blend() : chLabel("Blnd"), wave(0_r), lgQuiet(false), lgIgnore(false) {}
+	vector<long> compID;
+	t_blend() : chLabel("Blnd"), lgQuiet(false), lgIgnore(false) {}
 };
 
 struct t_prt {
@@ -171,7 +153,7 @@ struct t_prt {
 
 	/** lower and upper wavelength bounds for printed spectrum,
 	 * range option on print sort command */
-	realnum wlSort1 , wlSort2;
+	t_wavl wlSort1 , wlSort2;
 
 	/** print hydrogenic level populations, 
 	 * set with print hydrogenic command

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*rfield_opac_alloc allocate space for opacity arrays */
 #include "cddefines.h"
@@ -165,7 +165,7 @@ STATIC void rfield_opac_alloc()
 	/* we are at first zone so velocity shift is zero */
 	rfield.ipFineConVelShift = 0;
 
-	/* dimensionless resolution, dE/E, this is used in ipoint to get offset in find mesh */
+	/* dimensionless resolution, dE/E, this is used in ipoint to get offset in fine mesh */
 	rfield.fine_resol = rfield.fine_opac_velocity_width / SPEEDLIGHT;
 
 	/* the number of cells needed */

@@ -489,7 +489,7 @@ The water molecule in Lamda is referenced as ``H2O''.
 If a particular species is specified in more than one masterlist file we will
 use Stout if it exists, then Chianti, followed by Lamda.  
 
- \end{itemize}
+\end{itemize}
 
 \subsection{How we specify spectral lines}
 \label{sec:SpecifySpectralLines}
@@ -504,20 +504,36 @@ line. If it is longer, it is mandatory that you surround the label with double
 quotes. You may also use double quotes for labels that are four characters or
 shorter, but this is optional. If you use double quotes, the string must start
 in the first column. After the label you need to enter the wavelength. The
-code assumes that wavelengths are in \AA ngstrom by default. You can also
+code assumes that wavelengths are in angstrom by default. You can also
 supply wavelengths in micrometer or centimeter by appending a ``m'' or ``c''
 directly after the number (i.e., there may be no spaces inbetween). You may
 alternatively use upper case characters here. You can also append the character
-``a'', which will explicitly indicate that you use the default unit \AA ngstrom.
+``a'', which will explicitly indicate that you use the default unit angstrom.
 Note that the wavelength must start in the 5th column or later, even when the species
 label is shorter than four characters. There must always be whitespace between the
-label and the wavelength. Below we show some examples of how you enter spectral lines.
+label and the wavelength.
+
+\Cloudy\ assumes by default that the wavelength you entered has the same type
+(air or vacuum wavelength) as is used in the main output. You can set the
+latter using the \cdCommand{print line vacuum} command described in
+Sections~\ref{sec:AirVsVacuumWavelengths} and \ref{sec:CommandPrintVacuum}.
+This can be inconvenient, e.g. when you use the line identification in an init
+script that is intended to be used in both types of output. You can resolve
+this problem by adding the optional keyword \cdCommand{air} or
+\cdCommand{vacuum}. This keyword needs to be typed immediately after the
+wavelength, with at least one space between the wavelength and the keyword.
+The keyword will not affect how the wavelength of the line is printed in the
+output, only how the number immediately preceding it is interpreted. Below we
+show some examples of how you enter spectral lines.
 \begin{verbatim}
-O  3  5006.84 # green line of [O III], wavelength in Angstrom
-CO   2600.05m # CO 1 -> 0 line, wavelength in micron
-CO 2600.05m   # INVALID! wavelength starts in column 4!
-"O  3" 834.5A # double quotes are optional here
+O  3  5006.84  # green line of [O III], wavelength in angstrom
+CO   2600.05m  # CO 1 -> 0 line, wavelength in micron
+CO 2600.05m    # INVALID! wavelength starts in column 4!
+CO   2600.05 m # INVALID! there should be no space before "m"!
+"O  3" 834.5A  # double quotes are optional here
 "^13CO" 2719.67m # double quotes are mandatory here!
+O  3  5008.24 vacuum # force interpretation as vacuum wavelength
+O  3  5006.84air # ERROR! no space between the wavelength and "air"
 \end{verbatim}
 
 Sometimes specifying the label and the wavelength is not enough to find a
@@ -543,7 +559,7 @@ cases (a match is declared if the relative difference is less than 10$^{-6}$,
 which may be insufficient for very close multiplet components). The necessary
 information can be found in the \cdCommand{save line labels} output. Note that
 disambiguation is not supported for all lines. If the \cdCommand{save line
-  labels} output does not contain entries for index and Elow, than this type
+  labels} output does not contain entries for index and Elow, then this type
 of disambiguation is not supported for that line. In the excerpt shown below,
 disambiguation is supported for the first line, but not the second.
 \begin{verbatim}
@@ -560,6 +576,12 @@ copy / paste of a line identification from the \Cloudy\ output (e.g., the line
 list produced with the \cdCommand{save line labels} command) but remember that
 species labels that are longer than 4 characters {\em must} be enclosed in
 double quotes.
+
+Note that the intensity of the emission lines resulting from magnetic dipole
+transitions, also called M1 lines are not added in the sum of the corresponding
+line intensity. Instead, we keep these M1 lines seperate, and are distinguished
+by their line label ending with "M1". For example, "H  1 1215.67A" and
+"H  1 M1 1215.67A" are two separate lines.
 
 \subsection{What species are you using?}
 
@@ -598,15 +620,15 @@ end of species
 
 \section{Air vs vacuum wavelengths}
 \label{sec:AirVsVacuumWavelengths}
-The convention in spectroscopy, dating back to 19$^{th}$ century experimental atomic physics,
-is to quote line wavelengths in vacuum for  $\lambda < 2000$\AA\ and STP air wavelengths
-for $\lambda \ge 2000$\AA.
-The \cdCommand{print line vacuum} command, 
-described on page \pageref{sec:CommandPrintVacuum},
-tells the code to use vacuum wavelengths throughout.
+The convention in spectroscopy, dating back to 19$^{\rm th}$ century experimental atomic physics,
+is to quote line wavelengths in vacuum for $\lambda_{\rm vac} \le 2000$\,\AA\ and STP air wavelengths
+for $\lambda_{\rm vac} > 2000$\,\AA.
+The \cdCommand{print line vacuum} command
+tells the code to print vacuum wavelengths throughout.
+See Section~\ref{sec:CommandPrintVacuum} for more details.
 The continuum reported by the family of \cdCommand{save continuum} commands,
-described on page \pageref{sec:CommandSaveContinuum},
+described in Section~\ref{sec:CommandSaveContinuum},
 is always reported in vacuum wavelengths to avoid 
-a discontinuity at 2000\AA.
+a discontinuity at 2000\,\AA.
 
 

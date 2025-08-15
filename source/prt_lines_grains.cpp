@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*lines_hydro put H-iso seq into line intensity stack */
 #include "cddefines.h"
@@ -17,8 +17,7 @@ void lines_grains(void)
 		return;
 
 	long i = StuffComment( "grains" );
-	linadd( 0., (realnum)i , "####", 'i',
-		"the grain output");
+	linadd( 0., t_vac(i), "####", 'i', "the grain output");
 
 	/* find total grain heating */
 	double dhtot = 0.;
@@ -44,31 +43,31 @@ void lines_grains(void)
 	gv.GrnElecHoldMax = 
 		(realnum)MAX2( gv.GrnElecHoldMax , -gv.TotalEden/hold );
 
-	linadd(dhtot,0,"GrGH",'h',
+	linadd(dhtot,0_vac,"GrGH",'h',
 		   "gas heating by grain photoionization");
 
-	linadd(thermal.heating(0,25),0,"GrTH",'h',
+	linadd(thermal.heating(0,25),0_vac,"GrTH",'h',
 		   "gas heating by thermionic emissions of grains");
 
-	linadd(MAX2(0.,gv.GasCoolColl),0,"GrCC",'c',
+	linadd(MAX2(0.,gv.GasCoolColl),0_vac,"GrCC",'c',
 		   "gas cooling by collisions with grains");	
 
-	linadd(MAX2(0.,-gv.GasCoolColl),0,"GrCH",'c',
+	linadd(MAX2(0.,-gv.GasCoolColl),0_vac,"GrCH",'c',
 		   "gas heating by collisions with grains");	
 
-	linadd(gv.GrainHeatSum,0,"GraT",'i',
+	linadd(gv.GrainHeatSum,0_vac,"GraT",'i',
 		   "total grain heating by all sources, lines, collisions, incident continuum");
 
-	linadd(gv.GrainHeatInc,0,"GraI",'i',
+	linadd(gv.GrainHeatInc,0_vac,"GraI",'i',
 		   "grain heating by incident continuum");
 
-	linadd(gv.GrainHeatLya,1215.67,"GraL",'i',
+	linadd(gv.GrainHeatLya,1215.67_vac,"GraL",'i',
 		   "grain heating due to destruction of Ly alpha");
 
-	linadd(gv.GrainHeatCollSum,0,"GraC",'i',
+	linadd(gv.GrainHeatCollSum,0_vac,"GraC",'i',
 		   "grain heating due to collisions with gas");
 
-	linadd(gv.GrainHeatDif,0,"GraD",'i',
+	linadd(gv.GrainHeatDif,0_vac,"GraD",'i',
 		   "grain heating due to diffuse fields, may also have grain emission");
 	return;
 }

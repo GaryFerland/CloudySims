@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*GrainMakeDiffuse main routine for generating the grain diffuse emission, called by RT_diffuse */
 #include "cddefines.h"
@@ -245,11 +245,13 @@ void GrainMakeDiffuse()
 		/* >>chng 04 nov 09, do not evaluate quantum heating if abundance is negligible, PvH
 		 * this prevents PAH's deep inside molecular regions from failing if GrnVryDepth is used */
 		/* >>chng 04 dec 31, introduced separate thresholds near I-front and in molecular region, PvH */
+		/* >>chng 24 oct 12, replace dstAbund with GrnDpth in test below to avoid false negatives
+		 * in low-metallicity models, also test for fractional surface area in the current bin, PvH */
 		realnum threshold = ( dense.xIonDense[ipHYDROGEN][0]+dense.xIonDense[ipHYDROGEN][1] > hmi.H2_total ) ?
 			gv.dstAbundThresholdNear : gv.dstAbundThresholdFar;
 		long qnbin=-200;
 
-		if( lgLocalQHeat && gv.bin[nd].dstAbund >= threshold )
+		if( lgLocalQHeat && gv.bin[nd].GrnDpth >= threshold && gv.bin[nd].dustp[5] > 1.e-12 )
 		{
 			qheat(qtemp,qprob,&qnbin,nd);
 
@@ -948,7 +950,11 @@ STATIC void qheat_init(size_t nd,
 					xx = -xx;
 					sign = -1.;
 				}
-				long ipLo = rfield.ipointC( max(xx,rfield.emm()) );
+				/* the call to min() is needed because in extreme circumstances it can
+				 * happen that ratio*cool1 is so large that -xx > anu(qnflux-1). In that
+				 * case the contribution to phiTilde would not be counted, which can lead
+				 * to spurious failures of the energy conservation test */
+				long ipLo = rfield.ipointC( min(max(xx,rfield.emm()),rfield.anu(i)) );
 				/* for grains in hard X-ray environments, the coarseness of the grid can
 				 * lead to inaccuracies in the integral over phiTilde that would trip the
 				 * sanity check in qheat(), here we correct for the energy mismatch */
@@ -1745,7 +1751,9 @@ STATIC double TryDoubleStep(vector<double>& u1,
 	cooling2 = log_integral(u1[k-2],p[k-2]*Lambda[k-2],u1[k],p2k*Lambda[k],z[0],z[3],z[2],z[6]);
 
 	/* p[0] is not reliable, so ignore convergence test on cooling on first step */
-	RelErrCool = ( index > 0 ) ? fabs(cooling2-(*cooling))/(*cooling) : 0.;
+	/* on the first few steps it can happen that delu[k] is extremely small and log(u1[k-2]) == log(u1[k])
+	 * in that case *cooling will be zero and calculating RelErrCool would be meaningless (and crash as well) */
+	RelErrCool = ( index > 0 && *cooling > 0. ) ? fabs(cooling2-(*cooling))/(*cooling) : 0.;
 
 //	dprintf( ioQQQ, " TryDoubleStep k %ld p[k-1] %.4e p[k] %.4e p2k %.4e\n",k,p[k-1],p[k],p2k );
 	/* error scales as O(step^3), so this is relative accuracy of p[k] or cooling */

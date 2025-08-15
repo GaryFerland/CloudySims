@@ -22,7 +22,7 @@ iterate to convergence
 print line column
 ## >>chng 17 may 25, wl from 1.78198A to 1.78177A, up Rydberg constant
 ## >>chng 20 aug 25, wl from 1.78177A to 1.77982A, switched from computed to tabulated energies for H and He isoseq
-normalize "Fe26"      1.77982A 
+normalize "Blnd"      1.77982A 
 save overview ".ovr"
 save performance ".per"
 save continuum ".con" last units kev
@@ -30,9 +30,9 @@ save continuum ".conA" last units Angstroms
 save fine continuum ".finA" last units Angstroms range 7.6A to 15A merge 3
 save dr ".dr" last
 # this will be the default units, like the printout
-save line optical depths last ".lin"
-# this will be the same, in rygbergs
-save line optical depths last ".lin"  units rydberg
+save line optical depths last ".linkev" unit kev
+# this will be the same, in angstrom
+save line optical depths last ".lina" -3 units angstrom
 save monitors last ".asr" 
 #
 # commands giving the monitors    =========
@@ -94,7 +94,9 @@ monitor line luminosity "Fe25"      1.85040A  4.412 emergent
 ##
 ## >>chng 17 may 25, wl from 1.78198A to 1.78177A, up Rydberg constant
 ## >>chng 20 aug 25, wl from 1.78177A to 1.77982A, switched from computed to tabulated energies for H and He isoseq
-monitor line luminosity "Fe26"      1.77982A  4.696 emergent
+## >>chng 24 jan 09, from 4.696 to 4.854, resolve 1 electron Ly doublets, FeKa replaced by sum of j-resolved and M1 transitions
+## >>chng 24 apr 22, from 4.854 to 4.68, Redefine unresolved escape prob. to averaged np-split probabilites
+monitor line luminosity "Blnd"      1.77982A  4.68 emergent
 ##
 monitor line luminosity "Zn29"      1.38530A  1.337 emergent
 ##
@@ -105,7 +107,7 @@ monitor line luminosity "Zn29"      1.37781A  2.026 emergent
 ## >>chng 17 may 25, wl from 1.33440A to 1.33424A, up Rydberg constant
 ## >>chng 20 aug 22, wl from 1.33424A to 1.33298A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 1.33298A to 1.33232A, update NIST energies
-monitor line luminosity "Zn30"      1.33232A  2.03 emergent
+monitor line luminosity "Blnd"      1.33232A  2.03 emergent
 ##
 monitor temperature "H+" 6.927 error 0.1
 ## 

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef CONV_H_
@@ -18,7 +18,7 @@ void ConvIterCheck();
 
 /**ConvInitSolution drive search for initial solution at illuminated face,
  * called by cloudy */
-void ConvInitSolution();
+void ConvInitSolution(double);
 
 /**ConvPresTempEdenIoniz solve for current pressure, calls PressureChange, ConvTempEdenIoniz,
  * called by cloudy */
@@ -60,7 +60,7 @@ void ConvBase(long loopi);
 void eden_sum();
 
 /**EdenChange - changes electron density and dependent variables */
-void EdenChange( double EdenNew );
+void EdenChange( double EdenNew, bool lgEvalEscProb = true );
 
 class ConvergenceCounter;
 
@@ -291,6 +291,7 @@ private:
 	// Variables monitoring progress of convergence
 	std::vector<long> m_counters;
 	std::vector<long> m_counters_zone;
+	std::vector<long> m_counters_max;
 	std::vector<string> m_labels;
 public:
 	size_t ntypes(void) const
@@ -306,18 +307,24 @@ public:
 	void resetCounters()
 	{
 		for( size_t i=0; i<m_counters.size(); ++i )
+		{
 			m_counters[i] = 0;
+			m_counters_max[i] = 0;
+		}
 	}
 	void resetCountersZone()
 	{
 		for( size_t i=0; i<m_counters_zone.size(); ++i )
+		{
+			m_counters_max[i] = max(m_counters_max[i], m_counters_zone[i]);
 			m_counters_zone[i] = 0;
+		}
 	}
 	long getCounter( const long type ) const
 	{
 		return m_counters[type];
 	}
-	long getCounter( const string name ) const
+	long getCounter( const string& name ) const
 	{
 		for( size_t i=0; i<m_counters.size(); ++i )
 		{
@@ -329,6 +336,28 @@ public:
 	long getCounterZone( const long type ) const
 	{
 		return m_counters_zone[type];
+	}
+	long getCounterZone( const string& name ) const
+	{
+		for( size_t i=0; i<m_counters.size(); ++i )
+		{
+			if (name == m_labels[i])
+				return m_counters_zone[i];
+		}
+		return 0;
+	}
+	long getCounterMax( const long type ) const
+	{
+		return m_counters_max[type];
+	}
+	long getCounterMax( const string& name ) const
+	{
+		for( size_t i=0; i<m_counters.size(); ++i )
+		{
+			if (name == m_labels[i])
+				return m_counters_max[i];
+		}
+		return 0;
 	}
 	const char* getCounterName( const long type ) const
 	{

@@ -367,7 +367,8 @@ monitor "H2O " 538.142m line intensity -15.81
 ## >>chng 13 jul 25, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 14 dec 04, from -23.28 to -23.25, fix double-counting of big-H2 Solomon rate
 ## >>chng 21 sep 11, from -23.25 to -23.73, LAMDA update
-monitor "HNC " 1652.90m  line intensity -23.73
+## >>chng 25 jul 11, from -23.73 to -23.77, GS Si chemistry, UMIST 2022
+monitor "HNC " 1652.90m  line intensity -23.77
 ## >>chng 13 jun 27, from -8.563 to -22.81, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 27, from -22.81 to -23.02, fix the error in mole_h2_coll.cpp
 ## >>chng 13 jul 25, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
@@ -378,7 +379,8 @@ monitor "HCS+" 1755.88m  -23.02 line intensity
 ## >>chng 15 aug 03, from -24.37 to -24.45, update LAMDA to 2015
 ## >>chng 21 sep 11, from -24.45 to -24.34, LAMDA update
 ## >>chng 23 may 15, from -24.34 to -24.43, GS updates 21 reactions to UMIST 2012
-monitor "CS  " 3058.86m  -24.43 line intensity
+## >>chng 24 apr 21, from -24.43 to -24.33, GS updates chemistry
+monitor "CS  " 3058.86m  -24.33 line intensity
 ## >>chng 13 jun 27, from -7.288 to -20.45, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 monitor "CO  " 2600.05m  -20.45 line intensity

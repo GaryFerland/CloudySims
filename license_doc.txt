@@ -1,4 +1,4 @@
-Copyright (C) 1978-2023 Gary J. Ferland and others. All rights reserved.
+Copyright (C) 1978-2025 Gary J. Ferland and others. All rights reserved.
 
 Redistribution and use of the documentation (all parts of Hazy and the Quick
 Start Guide) in source (LaTeX) and 'compiled' forms (PDF, PostScript, HTML and

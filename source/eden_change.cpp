@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*EdenChange - update electron density and its dependent quantities */
 #include "cddefines.h"
@@ -7,8 +7,9 @@
 #include "phycon.h"
 #include "conv.h"
 #include "rt.h"
+#include "opacity.h"
 
-void EdenChange( double EdenNew )
+void EdenChange( double EdenNew, bool lgEvalEscProb )
 {
 	static double EdenOld=-1;
 
@@ -71,7 +72,7 @@ void EdenChange( double EdenNew )
 	// to the solver.  The electron density should not change by much during the
 	// solution for a zone
 	static double EdenEval=-1;
-	if( conv.lgSearch && !fp_equal(EdenEval,dense.eden) )
+	if( lgEvalEscProb && lgOpacAllocated && conv.lgSearch && !fp_equal(EdenEval,dense.eden) )
 	{
 		EdenEval = dense.eden;
 		RT_line_all_escape ( NULL );

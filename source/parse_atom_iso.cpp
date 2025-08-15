@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParseDatabaseISO parse information from the atom XX-like command line */
 #include "cddefines.h"
@@ -21,7 +21,7 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 
 	/* look for the name of an element - if we don't find one do the entire
 	 * iso sequence - returns negative number if element not found */
-	long int nelem = p.GetElem( );
+	long int nelem = p.GetElem();
 
 	/* He-like Hydrogen is not possible */
 	if( ipISO==ipHE_LIKE && nelem==ipHYDROGEN )
@@ -31,7 +31,7 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 	}
 
 	/* collisions - don't pick up the levels collapsed command */
-	if( p.nMatch("COLL") && !p.nMatch("LEVE"  ) )
+	if( p.nMatch("COLL") && !p.nMatch("LEVE") )
 	{
 		if( p.nMatch("THER") )
 		{
@@ -372,21 +372,30 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 
 			if( p.lgEOL() )
 			{
-				int LevelsResolved=-1 , LevelsCollapsed=10;
+				int MinLevelsCollapsed = -1, MaxLevelsCollapsed = -1;
+				int MinLevelsResolved = -1, MaxLevelsResolved = -1;
 				/* no number, so check for either large or small */
 				if( p.nMatch("LARG") )
 				{
+					// set up model atom to use at least RREC_MAXN resolved and 160 collapsed levels
+					MinLevelsCollapsed = 160;
+					MaxLevelsCollapsed = INT_MAX;
 					/* includes all levels with tabulated rec coefficient */
-					LevelsResolved = RREC_MAXN;
+					MinLevelsResolved = RREC_MAXN;
+					MaxLevelsResolved = INT_MAX;
 				}
 
 				/* this is small or compact keyword */
 				else if( p.nMatch("SMAL") || p.nMatch("COMP") )
 				{
+					// set up model atom to use no more than 3/5 resolved and 10 collapsed levels
+					MinLevelsCollapsed = 0;
+					MaxLevelsCollapsed = 10;
+					MinLevelsResolved = 0;
 					if( ipISO == ipH_LIKE )
-						LevelsResolved = 5;
+						MaxLevelsResolved = 5;
 					else if( ipISO == ipHE_LIKE )
-						LevelsResolved = 3;
+						MaxLevelsResolved = 3;
 					else
 						TotalInsanity();
 				}
@@ -394,23 +403,19 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 					/* punch out if no number */
 					p.NoNumb("levels");
 
-				if( nelem<0 )
+				for( int nelem2=ipISO; nelem2 < LIMELM; ++nelem2 )
 				{
-					// element not specified, do entire sequence
-					for( nelem=ipISO; nelem<LIMELM; ++nelem )
+					// if element not specified, do entire sequence
+					if( nelem < 0 || nelem == nelem2 )
 					{
-						iso_sp[ipISO][nelem].nCollapsed_max =
-								MIN2( iso_sp[ipISO][nelem].nCollapsed_max , LevelsCollapsed );
-						iso_sp[ipISO][nelem].n_HighestResolved_max =
-								MIN2( iso_sp[ipISO][nelem].n_HighestResolved_max , LevelsResolved );
-						iso_update_num_levels( ipISO, nelem );
+						int nCurrent = iso_sp[ipISO][nelem2].nCollapsed_max;
+						iso_sp[ipISO][nelem2].nCollapsed_max =
+							min(max(nCurrent, MinLevelsCollapsed), MaxLevelsCollapsed);
+						nCurrent = iso_sp[ipISO][nelem2].n_HighestResolved_max;
+						iso_sp[ipISO][nelem2].n_HighestResolved_max =
+							min(max(nCurrent, MinLevelsResolved), MaxLevelsResolved);
+						iso_update_num_levels( ipISO, nelem2 );
 					}
-				}
-				else
-				{
-					iso_sp[ipISO][nelem].nCollapsed_max = LevelsCollapsed;
-					iso_sp[ipISO][nelem].n_HighestResolved_max = LevelsResolved;
-					iso_update_num_levels( ipISO, nelem );
 				}
 			}
 
@@ -583,17 +588,38 @@ void ParseDatabaseISO(long ipISO, Parser &p )
 		}
 		else if( p.nMatch("EXTRA") )
 		{
-			/* option to set number of "extra" Lyman lines, used for optical depths only */
-			iso_ctrl.nLyman_max[ipISO] = (long int)p.FFmtRead();
-			iso_ctrl.nLyman[ipISO] = MIN2(iso_ctrl.nLyman[ipISO],
-													iso_ctrl.nLyman_max[ipISO]);
-			if( p.lgEOL() )
-				p.NoNumb("'extra' Lyman lines");
-			if( iso_ctrl.nLyman[ipISO] < 2 )
+			if( p.nMatch("RESO") )
 			{
-				// Code does not elsewhere protect against values less than 2.
-				fprintf(ioQQQ," Sorry, the value on this DATABASE xx-LIKE LYMAN command must be at least 2.\n");
-				cdEXIT(EXIT_FAILURE);
+				if (ipISO != ipH_LIKE )
+				{
+					fprintf(ioQQQ," Sorry, the DATABASE H-LIKE LYMAN EXTRA RESOLUTION command only works for hydrogen-like atoms.\n");
+					cdEXIT(EXIT_FAILURE);
+				}
+
+				/* option to set resolution of "extra" Lyman lines */
+				iso_ctrl.Resolution = p.FFmtRead();
+				if( p.lgEOL() )
+					p.NoNumb("'extra' Lyman lines resolution");
+				if( iso_ctrl.Resolution <= 0. )
+				{
+					fprintf(ioQQQ," Sorry, the value on this DATABASE H-LIKE LYMAN EXTRA RESOLUTION command must be positive.\n");
+					cdEXIT(EXIT_FAILURE);
+				}
+			}
+			else
+			{
+				/* option to set number of "extra" Lyman lines, used for optical depths only */
+				iso_ctrl.nLyman_max[ipISO] = (long int)p.FFmtRead();
+				iso_ctrl.nLyman[ipISO] = MIN2(iso_ctrl.nLyman[ipISO],
+														iso_ctrl.nLyman_max[ipISO]);
+				if( p.lgEOL() )
+					p.NoNumb("'extra' Lyman lines");
+				if( iso_ctrl.nLyman[ipISO] < 2 )
+				{
+					// Code does not elsewhere protect against values less than 2.
+					fprintf(ioQQQ," Sorry, the value on this DATABASE xx-LIKE LYMAN command must be at least 2.\n");
+					cdEXIT(EXIT_FAILURE);
+				}
 			}
 		}
 		else

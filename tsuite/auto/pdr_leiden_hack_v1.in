@@ -62,7 +62,9 @@ monitor CO column density 18.07 error 0.1
 ## >>chng 10 jun 17, from 17.5 to 17.39, fix botches due to recent dBase cooling changes
 ## >>chng 11 nov 16, from 17.39 to 17.34, adjust newmole monitors
 ## >>chng 13 nov 20, from 17.34 to 17.27, include H,H2+=>H+,H2 even when H2* is disabled
-monitor O2 column density 17.27 error 0.1
+## >>chng 25 jan 26, from 17.27 to 17.31, merge master updated cham"
+## >>chng 25 may 25, from 17.31 to 17.38, limit to UMIST Te extrapolation
+monitor O2 column density 17.38 error 0.1
 ##
 ## >>chng 05 jul 02, from 16.67 to 16.60, A_V zoning was not exact
 ## >>chng 05 aug 03, from 16.60 to 16.55, NA update CO, H chem net
@@ -79,7 +81,8 @@ monitor O2 column density 17.27 error 0.1
 ## >>chng 20 aug 03, from 17 to 17.05, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from 17.05 to 17.11, LAMDA update
 ## >>chng 21 nov 04, from 17.11 to 17.06, update mole co data
-monitor OH column density 17.06 error 0.1
+## >>chng 25 may 25, from 17.06 to 16.49, limit to UMIST Te extrapolation
+monitor OH column density 16.49 error 0.1
 ##
 ## >>chng 04 sep 23, from 29.5 to 30.9, slow drift
 ## >>chng 04 dec 08, from 30.9 to 33.6, co-ion feedback, check converg
@@ -118,7 +121,8 @@ monitor line luminosity "c  2" 157.636m -4.721
 ## >>chng 15 oct 14, from -6.555 to -6.528, update Ne 3 cs to McLaughlin+11
 ## >>chng 21 sep 11, from -6.528 to -6.418, LAMDA update
 ## >>chng 21 nov 04, from -6.418 to -6.505, update mole co data
-monitor line luminosity "C  1" 370.269m -6.505
+## >>chng 25 jan 26, from -6.505 to -6.549, merge master updated cham"
+monitor line luminosity "C  1" 370.269m -6.549
 ##
 ## >>chng 06 nov 29, from -6.595 to -6.427, Badnell DR turned on
 ## >>chng 10 jun 17, from -6.427 to -6.472, fix botches due to recent dBase cooling changes
@@ -127,7 +131,8 @@ monitor line luminosity "C  1" 370.269m -6.505
 ## >>chng 13 feb 01, from -6.467 to -6.43, BUGFIX, largely undo r6703
 ## >>chng 21 sep 11, from -6.43 to -6.221, LAMDA update
 ## >>chng 21 nov 04, from -6.221 to -6.379, update mole co data
-monitor line luminosity "c  1" 609.590m -6.379
+## >>chng 25 jan 26, from -6.379 to -6.444, merge master updated cham"
+monitor line luminosity "c  1" 609.590m -6.444
 ##
 ## >>chng 11 nov 16, from -6.15 to -6.503, adjust newmole monitors
 ## >>chng 13 nov 03, from -6.503 to -6.456, update H2 - C II collision rates
@@ -165,7 +170,8 @@ monitor itrzn 4.983
 ## >>chng 14 apr 30, from 556 to 541, continuum trimming fixes
 ## >>chng 21 sep 11, from 541 to 512, LAMDA update, average of FLT (504) and DBL (520)
 ## >>chng 21 sep 11, error from 0.01 to 0.02, LAMDA update, accommodate FLT and DBL limits
-monitor nzone 512 error 0.02
+## >>chng 25 jul 05, from 512 to 526, minor updates to UMIST 2022
+monitor nzone 526 error 0.02
 ##
 ## >>chng 13 jun 27, from -8.869 to -7.707, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
@@ -174,12 +180,14 @@ monitor nzone 512 error 0.02
 ## >>chng 20 aug 03, from -7.71 to -7.623, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -7.623 to -7.793, LAMDA update
 ## >>chng 21 nov 04, from -7.793 to -7.652, update mole co data
-monitor "H2O " 538.142m line intensity -7.652
+## >>chng 25 may 25, from -7.652 to -7.359, limit to UMIST Te extrapolation
+monitor "H2O " 538.142m line intensity -7.359
 ## >>chng 13 jun 27, from -7.288 to -7.253, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -7.253 to -7.477, LAMDA update
 ## >>chng 21 nov 04, from -7.477 to -7.286, update mole co data
-monitor "CO  " 2600.05m  -7.286 line intensity
+## >>chng 25 jan 26, from -7.286 to -7.244, merge master updated cham"
+monitor "CO  " 2600.05m  -7.244 line intensity
 ## >>chng 13 jun 27, from -6.463 to -6.623, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -6.623 to -6.949, LAMDA update
@@ -191,14 +199,16 @@ monitor "CO  " 1300.05m  -6.631 line intensity
 ## >>chng 21 sep 11, from -6.639 to -7.116, LAMDA update
 ## >>chng 21 nov 04, from -7.116 to -6.729, update mole co data
 ## >>chng 23 may 15, from -6.729 to -6.657, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 866.727m  -6.657 line intensity
+## >>chng 25 jul 05, from -6.657 to -6.609, minor updates to UMIST 2022
+monitor "CO  " 866.727m  -6.609 line intensity
 ## >>chng 13 jun 27, from -6.177 to -7.381, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -7.381 to -7.348, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -7.348 to -8.183, LAMDA update
 ## >>chng 21 nov 04, from -8.183 to -7.555, update mole co data
 ## >>chng 23 may 15, from -7.555 to -7.411, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 650.074m  -7.411 line intensity
+## >>chng 25 jan 26, from -7.411 to -7.343, merge master updated cham"
+monitor "CO  " 650.074m  -7.343 line intensity
 ## >>chng 13 jun 27, from -6.485 to -8.607, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -8.607 to -8.571, update H2 - C II 158m collision rate
@@ -208,7 +218,9 @@ monitor "CO  " 650.074m  -7.411 line intensity
 ## >>chng 21 sep 11, from -8.565 to -9.578, LAMDA update
 ## >>chng 21 nov 04, from -9.578 to -8.84, update mole co data
 ## >>chng 23 may 15, from -8.84 to -8.61, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 520.089m  -8.61 line intensity
+## >>chng 25 jan 26, from -8.61 to -8.521, merge master updated cham"
+## >>chng 25 jul 05, from -8.521 to -8.482, GS minor update to UMIST 2022
+monitor "CO  " 520.089m  -8.482 line intensity
 ## >>chng 13 jun 27, from -6.954 to -9.798, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -9.798 to -9.711, update H2 - C II 158m collision rate
@@ -218,7 +230,8 @@ monitor "CO  " 520.089m  -8.61 line intensity
 ## >>chng 21 sep 11, from -9.761 to -10.58, LAMDA update
 ## >>chng 21 nov 04, from -10.58 to -10.01, update mole co data
 ## >>chng 23 may 15, from -10.01 to -9.757, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 433.438m  -9.757 line intensity
+## >>chng 25 jan 26, from -9.757 to -9.678, merge master updated cham"
+monitor "CO  " 433.438m  -9.678 line intensity
 ## >>chng 13 jun 27, from -7.48 to -10.92, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -10.92 to -10.76, update H2 - C II 158m collision rate
@@ -228,7 +241,8 @@ monitor "CO  " 433.438m  -9.757 line intensity
 ## >>chng 21 sep 11, from -10.88 to -11.5, LAMDA update
 ## >>chng 21 nov 04, from -11.5 to -11.1, update mole co data
 ## >>chng 23 may 15, from -11.1 to -10.86, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 371.549m  -10.86 line intensity
+## >>chng 25 jan 26, from -10.86 to -10.79, merge master updated cham"
+monitor "CO  " 371.549m  -10.79 line intensity
 ## >>chng 13 jun 27, from -8.049 to -12, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -12 to -11.76, update H2 - C II 158m collision rate
@@ -238,7 +252,8 @@ monitor "CO  " 371.549m  -10.86 line intensity
 ## >>chng 21 sep 11, from -11.96 to -12.42, LAMDA update
 ## >>chng 21 nov 04, from -12.42 to -12.15, update mole co data
 ## >>chng 23 may 15, from -12.15 to -11.94, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 325.137m  -11.94 line intensity
+## >>chng 25 jan 26, from -11.94 to -11.9, merge master updated cham"
+monitor "CO  " 325.137m  -11.9 line intensity
 ## >>chng 13 jun 27, from -7.522 to -7.902, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -7.902 to -8.332, LAMDA update

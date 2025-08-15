@@ -31,7 +31,8 @@ save monitors ".asr" last
 #
 # commands giving the asserts    =========
 ## >>chng 21 jan 19, from -29.18 to -29.16, timestep logic change from tcool to n(H+)
-monitor line luminosity intrinsic "Fe24"      11.1710A   -29.16
+## >>chng 25 jun 05, wl from 11.1710A to 11.1709A, Increase chianti wavelength decimals from 3 to 4
+monitor line luminosity intrinsic "Fe24"      11.1709A   -29.16
 #
 # time_cool_cd_flux.in 
 # class dynamics 

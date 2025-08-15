@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include <iostream>
 #include <iomanip>
@@ -18,14 +18,12 @@ int main(int argc, char** argv)
 	}
 	for( int i=1; i < argc; ++i )
 	{
-		FILE* io = fopen( argv[i], "r" );
-		if( io == 0 )
+		string vh128sum = VHstream(argv[i]);
+		if( vh128sum == string() )
 		{
-			cout << argv[0] << ": " << argv[i] << ": No such file or directory" << endl;
+			cerr << argv[0] << ": " << argv[i] << ": an error occurred while computing checksum" << endl;
 			return 1;
 		}
-		string vh128sum = VHstream( io );
-		fclose( io );
 		cout << vh128sum << "  " << argv[i] << endl;
 	}
 	return 0;

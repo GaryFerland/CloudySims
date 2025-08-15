@@ -1,0 +1,49 @@
+title slow/grid_extreme lowest density lowest temperature
+set save prefix "grd_extreme_TloNlo"
+# 
+element lithium off
+element berylium off
+element boron off
+element limit -7 off
+## >>chng 12 apr 09, scale factor will result in CR rate for that meeting
+## old value maintained to keep history
+cosmic rays background linear 0.1266
+cmb
+iterate
+# 
+# SED is 1e6 K BB with low energy density
+blackbody 6 
+energy density 1 
+#
+hden -8
+stop zone 1
+# set to constant small thickness
+set dr -10
+## >>chng 13 jul 25, wl from 4861A to 4861.36A, increased wl precision to 6 sig. fig.
+## >>chng 17 may 26, wl from 4861.36A to 4861.33A, update Rydberg constant
+## >>chng 20 aug 25, wl from 4861.33A to 4861.32A, switched from computed to tabulated energies for H and He isoseq
+## >>chng 21 mar 17, wl from 4861.32A to 4861.33A, update NIST energies
+## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, update 1-e energies to np
+## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
+normalize to "Q(H)" 4861.32A
+# 
+# the normalizing line is not defined on the emergent line stack
+print lines emergent off
+save performance no hash ".per"
+save monitors last ".asr"
+## >>chng 25 jan 15, from 30.3 to 3.227e+06, first run
+monitor temperature "H+" 3.227e+06
+## >>chng 25 jan 15, from -3.45 to 0, add new monitors
+monitor ionization fraction hydrogen 2 0 
+## >>chng 25 jan 15, from 27 to 16, GS removes destabilizing reactions, updates others to current UMIST
+## >>chng 25 jan 15, from 16 to 3, first run
+monitor itrzn 3
+# >>chng 25 05 30, <60 -> <70 include alldouble
+monitor itrmax < 70
+## >>chng 25 mar 04, from 14 to 16, turn off Ti chemistry for C25 rc1
+monitor chemistry steps < 16
+monitor chemistry searches < 2
+#
+# one of the four corners of grid_extreme, 
+# Figs 17&18 of 2013RMxAA..49..137F
+ 

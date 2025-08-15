@@ -1,0 +1,39 @@
+title exercise continuum lowering
+set save prefix "func_cont_lower"
+# 
+# grid_extreme has a history of instability in the chemistry solver
+# in the low-T, high-n corner. We do not want to be hampered by that,
+# so disable the chemical network
+no molecules
+#
+# the number of levels is chosen such that continuum lowering will remove
+# resolved levels for hydrogen and only collapsed levels for helium
+database h-like hydrogen resolved levels 15
+database h-like hydrogen collapsed levels 25
+database h-like helium resolved levels 10
+database h-like helium collapsed levels 25
+database he-like helium resolved levels 10
+database he-like helium collapsed levels 25
+# 
+blackbody 6 
+energy density 3
+cmb
+#
+hden 19
+stop column density 23.5
+stop temperature off
+iterate
+database print
+print line optical depth faint -6
+#
+save performance no hash ".per"
+save monitors last ".asr"
+save line optical depths ".lin"
+#
+monitor temperature "H" 309
+#
+monitor column "H" 23.50
+
+modified from one of the four corners of grid_extreme, 
+the purpose of the sim is to test the interaction of
+continuum lowering with the iso sequences 

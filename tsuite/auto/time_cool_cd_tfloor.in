@@ -1,0 +1,46 @@
+title constant density cloud cooling to temperature floor
+#
+# commands controlling continuum =========
+coronal 1e5 K init time 
+#
+# commands for density & abundances =========
+hden 1e-4 linear
+#
+# commands controlling geometry  =========
+set dr 0 
+set nend 1
+stop zone 1
+#
+# other commands for details     =========
+# number of time steps
+iterate 300
+stop time when temperature falls below 1e4 K
+cosmic rays background
+#
+# commands controlling output    =========
+print line faint 2 log
+print line cumulative
+print ages
+set save prefix "time_cool_cd_tfloor"
+save time dependent ".tim" no hash
+save dt ".dt" no hash
+save overview ".ovr" no hash
+save cooling ".col" no hash
+save heating ".het" no hash
+save continuum units Angstroms ".con"
+save cumulative continuum units Angstroms last ".concum"
+save monitors ".asr" last
+#
+# commands giving the asserts    =========
+monitor temperature at face > 1e4
+#
+# time_cool_cd_tfloor.in 
+# class dynamics 
+# ========================================
+# 
+
+Test time dependent cooling at constant very low density.
+Cosmic rays inject energy in the gas and prevent it from cooling to the
+intended temperature (1e4K, see 'stop time' command above).
+This sim exercises the automatic detection of a temperature floor, that
+would otherwise lead to a crash.

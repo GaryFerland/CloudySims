@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParseTable parse the table read command */
 /*lines_table invoked by table lines command, check if we can find all lines in a given list */
@@ -329,7 +329,7 @@ void ParseTable(Parser &p)
 
 		/* this is an isotropic radiation field */
 		rfield.lgBeamed[p.m_nqh] = false;
-		rfield.Illumination[p.m_nqh] = Illuminate::ISOTROPIC;
+		rfield.Illumination[p.m_nqh] = Illumination::SYMMETRIC;
 
 		/* this will be flux density at some frequency on the table.  the numbers
 		 * are per Hz and sr so must multiply by 4 pi
@@ -397,7 +397,7 @@ void ParseTable(Parser &p)
 
 		/* this is an isotropic radiation field */
 		rfield.lgBeamed[p.m_nqh] = false;
-		rfield.Illumination[p.m_nqh] = Illuminate::ISOTROPIC;
+		rfield.Illumination[p.m_nqh] = Illumination::SYMMETRIC;
 
 		++p.m_nqh;
 	}
@@ -464,7 +464,7 @@ void ParseTable(Parser &p)
 
 		/* this is an isotropic radiation field */
 		rfield.lgBeamed[p.m_nqh] = false;
-		rfield.Illumination[p.m_nqh] = Illuminate::ISOTROPIC;
+		rfield.Illumination[p.m_nqh] = Illumination::SYMMETRIC;
 
 		++p.m_nqh;
 	}
@@ -515,7 +515,7 @@ void ParseTable(Parser &p)
 
 		/* this is an isotropic radiation field */
 		rfield.lgBeamed[p.m_nqh] = false;
-		rfield.Illumination[p.m_nqh] = Illuminate::ISOTROPIC;
+		rfield.Illumination[p.m_nqh] = Illumination::SYMMETRIC;
 
 		/* this will be flux density at 1 Ryd
 		 * >>chng 96 dec 18, from 1 Ryd to H mass Rydberg
@@ -581,7 +581,7 @@ void ParseTable(Parser &p)
 
 		/* this is an isotropic radiation field */
 		rfield.lgBeamed[p.m_nqh] = false;
-		rfield.Illumination[p.m_nqh] = Illuminate::ISOTROPIC;
+		rfield.Illumination[p.m_nqh] = Illumination::SYMMETRIC;
 
 		/* continuum normalization given by flux density at first point,
 		 * must set energy a bit higher to make sure it is within energy bounds
@@ -813,7 +813,7 @@ void ParseTable(Parser &p)
 			strcpy( rfield.chRSpec[p.m_nqh], "SQCM" );
 			strcpy( rfield.chSpNorm[p.m_nqh], "FLUX" );
 			// rfield.lgBeamed[p.m_nqh] = false;
-			// rfield.Illumination[p.m_nqh] = Illuminate::ISOTROPIC;
+			// rfield.Illumination[p.m_nqh] = Illumination::SYMMETRIC;
 		 
 			rfield.range[p.m_nqh][0] = rfield.tNu[rfield.nShape][0].Ryd();
 			double fmax = -70.;
@@ -845,6 +845,28 @@ void ParseTable(Parser &p)
 		fprintf( ioQQQ, " The TABLE TLUSTY command is no longer supported.\n" );
 		fprintf( ioQQQ, " Please use TABLE STAR TLUSTY instead. See Hazy for details.\n" );
 		cdEXIT(EXIT_FAILURE);
+	}
+
+	else if( p.nMatch("SED") && p.nMatch("AVAI") )
+	{
+		/* TABLE SED AVAILABLE: This command makes a list of all the SED files that were found.
+		 * It only checks for files with a file name ending with *.sed. Further checks are not
+		 * possible as these files do not have a magic number */
+
+		fprintf(ioQQQ, "\nI will now list all SED files that were found in alphabetical order.\n");
+		fprintf(ioQQQ, "Note that it is not possible to check whether these contain a valid SED.\n\n");
+
+		vector<string> matches;
+		string basedir = "SED"s + cpu.i().chDirSeparator();
+		string pattern = basedir + ".*\\.sed"s;
+		getFileList(matches, pattern);
+		for( string& fnam : matches )
+			(void)FindAndErase(fnam, basedir);
+		sort(matches.begin(), matches.end());
+		for( const string& fnam : matches )
+			fprintf(ioQQQ, "%s\n", fnam.c_str());
+		fprintf(ioQQQ, "\n");
+		cdEXIT(EXIT_SUCCESS);
 	}
 
 	else if( p.nMatch("SED") || lgKeyword )

@@ -27,7 +27,8 @@ set save prefix "time_cool_cd_flux"
 save monitors ".asr" last
 #
 # commands giving the asserts    =========
-monitor line luminosity cumulative intrinsic "Fe24"      11.1710A   -11.42
+## >>chng 25 jun 05, wl from 11.1710A to 11.1709A, Increase chianti wavelength decimals from 3 to 4
+monitor line luminosity cumulative intrinsic "Fe24"      11.1709A   -11.42
 #
 # time_cool_cd_flux.in 
 # class dynamics 

@@ -60,7 +60,9 @@ monitor CO column density 18.15 error 0.1
 ## >>chng 10 aug 25, from 16.65 to 15.23, bugfix r4165 & r4167
 ## >>chng 11 nov 16, from 15.23 to 16.03, adjust newmole monitors
 ## >>chng 15 aug 03, from 16.03 to 15.95, update LAMDA to 2015
-monitor O2 column density 15.95 error 0.1
+## >>chng 25 jan 15, from 15.95 to 15.7, GS removes destabilizing reactions, updates others to current UMIST
+## >>chng 25 may 25, from 15.7 to 16.67, limit to UMIST Te extrapolation
+monitor O2 column density 16.67 error 0.1
 ##
 ## >>chng 05 jul 02, from 14.24 to 14.21, AV stop was not exact
 ## >>chng 05 aug 24, from 14.21 to 14.13, NA update CO cr ion rate
@@ -71,7 +73,9 @@ monitor O2 column density 15.95 error 0.1
 ## >>chng 10 jun 17, from 14.37 to 13.6, fix botches due to recent dBase cooling changes
 ## >>chng 10 aug 25, from 13.6 to 14.35, bugfix r4165 & r4167
 ## >>chng 20 aug 03, from 14.35 to 14.4, update H3+ rates Indriola+ 2012
-monitor OH column density 14.4 error 0.1
+## >>chng 25 jan 15, from 14.4 to 14.19, GS removes destabilizing reactions, updates others to current UMIST
+## >>chng 25 may 25, from 14.19 to 13.92, limit to UMIST Te extrapolation
+monitor OH column density 13.92 error 0.1
 ##
 ## >>chng 05 aug 24, from 17.14 to 17.04, NA update CO cr ion rate
 ## >>chng 05 dec 08, from 17.04 to 17.00, update to Elwert Solomon rate
@@ -81,7 +85,9 @@ monitor OH column density 14.4 error 0.1
 ## >>chng 10 jun 17, from 17 to 16.45, fix botches due to recent dBase cooling changes
 ## >>chng 10 aug 25, from 16.45 to 16.97, bugfix r4165 & r4167
 ## >>chng 12 aug 21, from 16.97 to 17.01, fix CRPHOT botches and HD crash
-monitor SiO column density 17.01 error 0.1
+## >>chng 25 jan 15, from 17.01 to 17.23, GS removes destabilizing reactions, updates others to current UMIST
+## >>chng 25 may 25, from 17.23 to 17.03, limit to UMIST Te extrapolation
+monitor SiO column density 17.03 error 0.1
 ## 
 ## >>chng 05 mar 25, from 16.38 to 16.47 renorm H pops in level solver
 ## >>chng 05 jun 19, from 16.47 to 16.42, small chng in chem net
@@ -93,7 +99,9 @@ monitor SiO column density 17.01 error 0.1
 ## >>chng 10 jun 17, from 16.47 to 16.29, fix botches due to recent dBase cooling changes
 ## >>chng 10 aug 25, from 16.29 to 16.43, bugfix r4165 & r4167
 ## >>chng 11 nov 16, from 16.43 to 16.57, adjust newmole monitors
-monitor H2O column density 16.57 error 0.1
+## >>chng 25 jan 15, from 16.57 to 16.7, GS removes destabilizing reactions, updates others to current UMIST
+## >>chng 25 may 25, from 16.7 to 16.76, limit to UMIST Te extrapolation
+monitor H2O column density 16.76 error 0.1
 ## 
 ## >>chng 05 jun 26, from 13.41 to 18.32, make Federman chem the default
 ## >>chng 05 sep 27, from 18.326 to 17.25, TE, GS update H chem
@@ -105,7 +113,8 @@ monitor H2O column density 16.57 error 0.1
 ## >>chng 12 aug 21, from 23.62 to 37.39, fix CRPHOT botches and HD crash
 ## >>chng 13 aug 20, from 37.39 to 29.16, enable D chem by default
 ## >>chng 13 sep 17, from 29.16 to 38.44, D chem off by default
-monitor "H+" temperature 38.44
+## >>chng 25 jan 26, from 38.44 to 32.24, merge master updated cham"
+monitor "H+" temperature 32.24
 ## 
 ## >>chng 05 mar 25, from 9.06 to 9.63 renorm H pops in level solver
 ## >>chng 05 jun 26, from 9.63 to 10.10, make Federman chem the default
@@ -124,7 +133,10 @@ monitor column density H2+  9.22 error 0.1
 ## >>chng 06 apr 15, from 12.33 to 12.29 NA added N2H+ to the chemistry
 ## >>chng 08 feb 20, from 12.29 to 12.34, grain charge transfer changes in ion_solver and iso*
 ## >>chng 20 aug 03, from 12.34 to 12.05, update H3+ rates Indriola+ 2012
-monitor column density H3+  12.05 error 0.1
+## >>chng 24 apr 21, from 12.05 to 12.01, GS updates chemistry
+## >>chng 24 jun 08, from 12.01 to 12.06, GS rm 3 TiO reactions
+## >>chng 25 may 25, from 12.06 to 12.13, limit to UMIST Te extrapolation
+monitor column density H3+  12.13 error 0.1
 ## 
 monitor column density H2g  21.90 error 0.1
 ## 
@@ -233,7 +245,9 @@ monitor nzone 628
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
 ## >>chng 15 aug 03, from -6.767 to -6.829, update LAMDA to 2015
 ## >>chng 20 aug 03, from -6.829 to -6.794, update H3+ rates Indriola+ 2012
-monitor "H2O " 538.142m line intensity -6.794
+## >>chng 24 apr 21, from -6.794 to -6.704, GS updates chemistry
+## >>chng 24 jun 08, from -6.704 to -6.789, GS rm 3 TiO reactions
+monitor "H2O " 538.142m line intensity -6.789
 ## >>chng 13 jun 27, from -7.357 to -7.823, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -7.823 to -8.127, LAMDA update
@@ -245,53 +259,69 @@ monitor "HNC " 1652.90m  line intensity -8.127
 ## >>chng 20 aug 03, from -9.465 to -9.435, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -9.435 to -9.369, LAMDA update
 ## >>chng 23 may 15, from -9.369 to -9.632, GS updates 21 reactions to UMIST 2012
-monitor "HCS+" 1755.88m  -9.632 line intensity
+## >>chng 24 apr 21, from -9.632 to -9.594, GS updates chemistry
+## >>chng 24 jun 08, from -9.594 to -9.409, GS rm 3 TiO reactions
+## >>chng 25 may 25, from -9.409 to -9.479, limit to UMIST Te extrapolation
+## >>chng 25 jul 11, from -9.479 to -9.563, GS Si chemistry, UMIST 2022
+monitor "HCS+" 1755.88m  -9.563 line intensity
 ## >>chng 13 jun 27, from -7.453 to -7.546, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -7.546 to -7.47, LAMDA update
 ## >>chng 23 may 15, from -7.47 to -7.564, GS updates 21 reactions to UMIST 2012
-monitor "CS  " 3058.86m  -7.564 line intensity
+## >>chng 24 apr 21, from -7.564 to -7.5, GS updates chemistry
+## >>chng 25 may 25, from -7.5 to -7.552, limit to UMIST Te extrapolation
+## >>chng 25 jul 11, from -7.552 to -7.621, GS Si chemistry, UMIST 2022
+monitor "CS  " 3058.86m  -7.621 line intensity
 ## >>chng 13 jun 27, from -7.288 to -7.109, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 monitor "CO  " 2600.05m  -7.109 line intensity
 ## >>chng 13 jun 27, from -6.463 to -6.247, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
-monitor "CO  " 1300.05m  -6.247 line intensity
+## >>chng 25 jul 11, from -6.247 to -6.29, GS Si chemistry, UMIST 2022
+monitor "CO  " 1300.05m  -6.29 line intensity
 ## >>chng 13 jun 27, from -6.149 to -5.867, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
-monitor "CO  " 866.727m  -5.867 line intensity
+## >>chng 25 jul 11, from -5.867 to -5.931, GS Si chemistry, UMIST 2022
+monitor "CO  " 866.727m  -5.931 line intensity
 ## >>chng 13 jun 27, from -6.177 to -5.746, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
-monitor "CO  " 650.074m  -5.746 line intensity
+## >>chng 25 jul 11, from -5.746 to -5.843, GS Si chemistry, UMIST 2022
+monitor "CO  " 650.074m  -5.843 line intensity
 ## >>chng 13 jun 27, from -6.485 to -5.864, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
-monitor "CO  " 520.089m  -5.864 line intensity
+## >>chng 25 jul 11, from -5.864 to -6.012, GS Si chemistry, UMIST 2022
+monitor "CO  " 520.089m  -6.012 line intensity
 ## >>chng 13 jun 27, from -6.954 to -6.177, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 15 mar 07, from -6.177 to -6.2, merging newmesh branch
 ## >>chng 23 may 15, from -6.2 to -6.16, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 433.438m  -6.16 line intensity
+## >>chng 25 jul 11, from -6.16 to -6.359, GS Si chemistry, UMIST 2022
+monitor "CO  " 433.438m  -6.359 line intensity
 ## >>chng 13 jun 27, from -7.48 to -6.546, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -6.546 to -6.574, Move oxygen data to stout and chianti files
 ## >>chng 21 nov 04, from -6.574 to -6.616, update mole co data
 ## >>chng 23 may 15, from -6.616 to -6.541, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 371.549m  -6.541 line intensity
+## >>chng 25 jul 11, from -6.541 to -6.737, GS Si chemistry, UMIST 2022
+monitor "CO  " 371.549m  -6.737 line intensity
 ## >>chng 13 jun 27, from -8.049 to -6.95, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -6.95 to -6.996, Move oxygen data to stout and chianti files
 ## >>chng 21 nov 04, from -6.996 to -7.042, update mole co data
 ## >>chng 23 may 15, from -7.042 to -6.967, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 325.137m  -6.967 line intensity
+## >>chng 25 jul 11, from -6.967 to -7.159, GS Si chemistry, UMIST 2022
+monitor "CO  " 325.137m  -7.159 line intensity
 ## >>chng 13 jun 27, from -7.522 to -6.681, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
-monitor "^13CO" 906.599m  -6.681 line intensity
+## >>chng 25 jul 11, from -6.681 to -6.742, GS Si chemistry, UMIST 2022
+monitor "^13CO" 906.599m  -6.742 line intensity
 ## >>chng 13 jun 27, from -8.247 to -8.541, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -8.541 to -9.42, LAMDA update
 ## >>chng 21 sep 15, from -9.42 to -8.61, go back to unresolved model
 ## >>chng 23 may 15, from -8.61 to -8.717, GS updates 21 reactions to UMIST 2012
-monitor "CN  " 880.858m  -8.717  line intensity
+## >>chng 25 jul 11, from -8.717 to -7.306, GS Si chemistry, UMIST 2022
+monitor "CN  " 880.858m  -7.306  line intensity
 # 
 # pdr_leiden_v3.in
 # class pdr 

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*H2_ContPoint set the ipCont struc element for the H2 molecule, called by ContCreatePointers */
 /*H2_Accel radiative acceleration due to H2 */
@@ -399,7 +399,7 @@ void diatomics::H2_RTMake( linefunc line_one )
 		 * include self-shielding of line across this zone.  This introduces a dr dependent
 		 * variation in the line pumping rate, which made H2 abundance fluctuate due to
 		 * Solomon process having slight dr-caused mole. */
-		line_one( *tr, false, 0.f, doppler_width ); 
+		line_one( *tr, false, 0.f, doppler_width, true );
 	}
 
 	return;
@@ -1574,9 +1574,6 @@ void diatomics::H2_LevelPops( bool &lgPopsConverged, double &old_val, double &ne
 		 * since Solomon process is then irrelevant */
 		/* >>chng 04 sep 21, GS*/
 		else if( rfield.lgInducProcess && 
-			/* this is check that H2 abundance has not been set - if it has been
-			 * then we don't care what the Solomon rate is doing */ 
-			 hmi.H2_frac_abund_set==0 &&
 			 /*>>chng 05 feb 10, rather than checking change in Solomon relative to Solomon,
 			  * check it relative to total h2 destruction rate */
 			fabs( Solomon_dissoc_rate_g - old_solomon_rate)/SDIV(hmi.H2_rate_destroy) > 

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /************************************************************************************************/
 /*H_photo_cs returns hydrogenic photoionization cross section in cm^2                           */
@@ -205,7 +205,7 @@ double H_Einstein_A_log10(
 /* hv calculates photon energy in ergs for n -> n' transitions for H and H-like ions    */
 /*  In the following, we have n > n'                                                    */
 /****************************************************************************************/
-
+#if 0
 inline double hv(
 	/* returns energy in ergs */
 	/* principal quantum number, 1 for ground, upper level     */
@@ -215,6 +215,7 @@ inline double hv(
 	long int iz,
 	double mass_nuc
 );
+#endif
 
 /********************************************************************************/
 /*  In the following, we have n > n'                                            */
@@ -1656,7 +1657,8 @@ double H_Einstein_A_log10(/* returns Einstein A in units of (sec)^-1            
 /*  1 erg = 1e-07 J                                                             */
 /********************************************************************************/
 
-inline double hv( long int n, long int nprime, long int iz, double mass_nuc )
+//inline 
+double hv( long int n, long int nprime, long int iz, double mass_nuc )
 {
 	DEBUG_ENTRY( "hv()" );
 

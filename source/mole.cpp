@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cddefines.h"
 #include "mole.h"
@@ -32,6 +32,10 @@ void t_mole_global::zero(void)
 	 * these rates are in both mole_co_federman.dat and mole_co_base.dat,
 	 * latter based on UMIST */
 	lgFederman = true;
+
+	/** flag to enable TiO chemistry. it is off by default due to significant slowdown
+	 * even in models with no Ti, controlled with SET CHEMISTRY TIO ON/OFF command */
+	lgTiO = false;
 
 	/* option to use effective temperature as defined in
 	 * >> refer Zsargo, J. & Federman, S. R. 2003, ApJ, 589, 319

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cddefines.h"
 #include "elementnames.h"
@@ -8,6 +8,7 @@
 #include "grainvar.h"
 #include "rfield.h"
 #include "atmdat_adfa.h"
+#include "parser.h"
 #include "grains.h"
 
 /*=======================================================*
@@ -242,9 +243,8 @@ STATIC void Stognienko(complex<double>,const vector<double>&,const vector< compl
 STATIC void Bruggeman(complex<double>,const vector<double>&,const vector< complex<double> >&,
 					  long,complex<double>*,double*,double*);
 STATIC void mie_read_szd(/*@in@*/const string&,/*@out@*/sd_data*);
-STATIC void mie_read_long(/*@in@*/const string&,/*@in@*/const string&,/*@out@*/long int*,bool,long int);
-STATIC void mie_read_realnum(/*@in@*/const string&,/*@in@*/const string&,/*@out@*/realnum*,bool,long int);
-STATIC void mie_read_double(/*@in@*/const string&,/*@in@*/const string&,/*@out@*/double*,bool,long int);
+template<typename T>
+STATIC void mie_read_number(/*@in@*/const string&,/*@in@*/const string&,/*@out@*/T*,bool,long int,const string&);
 STATIC void mie_read_form(/*@in@*/const string&,/*@out@*/double[],/*@out@*/double*,/*@out@*/double*);
 STATIC void mie_write_form(/*@in@*/const double[],/*@out@*/string&);
 STATIC void mie_read_word(/*@in@*/const string&,/*@out@*/string&,bool);
@@ -260,6 +260,40 @@ STATIC void anomal(double,/*@out@*/double*,/*@out@*/double*,/*@out@*/double*,/*@
 STATIC void bigk(complex<double>,/*@out@*/complex<double>*);
 STATIC void ritodf(double,double,/*@out@*/double*,/*@out@*/double*);
 STATIC void dftori(/*@out@*/double*,/*@out@*/double*,double,double);
+
+inline bool lgValidXXXFile(const string& fnam, long expected)
+{
+	DataParser d(fnam, ES_NONE);
+	d.getline();
+	long magic;
+	if( !d.getTokenOptional(magic) )
+		return false;
+	return ( magic == expected );
+}
+
+/** check validity of a refractive index file by checking the magic number */
+bool lgValidRfiFile(const string& fnam)
+{
+	return lgValidXXXFile(fnam, MAGIC_RFI);
+}
+
+/** check validity of a mixed medium file by checking the magic number */
+bool lgValidMixFile(const string& fnam)
+{
+	return lgValidXXXFile(fnam, MAGIC_MIX);
+}
+
+/** check validity of a size distribution file by checking the magic number */
+bool lgValidSzdFile(const string& fnam)
+{
+	return lgValidXXXFile(fnam, MAGIC_SZD);
+}
+
+/** check validity of an opacity file by checking the magic number */
+bool lgValidOpcFile(const string& fnam)
+{
+	return lgValidXXXFile(fnam, MAGIC_OPC);
+}
 
 void mie_write_opc(/*@in@*/ const char *rfi_file,
 				   /*@in@*/ const char *szd_file,
@@ -959,8 +993,7 @@ void mie_read_opc(/*@in@*/const char *chFile,
 	  nup;
 	size_t nd,
 	  nd2;
-	realnum RefAbund[LIMELM],
-	  VolTotal;
+	double RefAbund[LIMELM];
 	double anu;
 	double RadiusRatio;
 	string chLine;
@@ -1008,7 +1041,7 @@ void mie_read_opc(/*@in@*/const char *chFile,
 
 	/* first read magic numbers */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_long(chFile,chLine,&magic,true,dl);
+	mie_read_number(chFile,chLine,&magic,true,dl,"magic number 1");
 	if( magic != MAGIC_OPC ) 
 	{
 		fprintf( ioQQQ, " Opacity file %s has obsolete magic number\n",chFile );
@@ -1020,10 +1053,10 @@ void mie_read_opc(/*@in@*/const char *chFile,
 
 	/* the following two magic numbers are for information only */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_long(chFile,chLine,&magic,true,dl);
+	mie_read_number(chFile,chLine,&magic,true,dl,"magic number 2");
 
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_long(chFile,chLine,&magic,true,dl);
+	mie_read_number(chFile,chLine,&magic,true,dl,"magic number 3");
 
 	/* the grain scale factor is set equal to the abundances scale factor
 	 * that might have appeared on the grains command.  Later, in grains.c, 
@@ -1039,79 +1072,81 @@ void mie_read_opc(/*@in@*/const char *chFile,
 
 	/* specific weight (g/cm^3) */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_realnum(chFile,chLine,&gv.bin[nd].dustp[0],true,dl);
+	mie_read_number(chFile,chLine,&gv.bin[nd].dustp[0],true,dl,"specific weight");
 	/* constant needed in the evaluation of the electron escape length */
 	gv.bin[nd].eec = pow((double)gv.bin[nd].dustp[0],-0.85);
 
 	/* molecular weight of grain molecule (amu) */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_realnum(chFile,chLine,&gv.bin[nd].dustp[1],true,dl);
+	mie_read_number(chFile,chLine,&gv.bin[nd].dustp[1],true,dl,"molecular weight");
 
 	/* average molecular weight per atom (amu) */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_realnum(chFile,chLine,&gv.bin[nd].atomWeight,true,dl);
+	mie_read_number(chFile,chLine,&gv.bin[nd].atomWeight,true,dl,"average molecular weight per atom");
 
 	/* abundance of grain molecule for max depletion */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_realnum(chFile,chLine,&gv.bin[nd].dustp[2],true,dl);
+	mie_read_number(chFile,chLine,&gv.bin[nd].dustp[2],true,dl,"grain abundance");
 
 	/* depletion efficiency */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_realnum(chFile,chLine,&gv.bin[nd].dustp[3],true,dl);
+	mie_read_number(chFile,chLine,&gv.bin[nd].dustp[3],true,dl,"depletion efficiency");
 
 	/* fraction of the integrated volume contained in this bin */
 	gv.bin[nd].dustp[4] = 1.;
+	/* fraction of the integrated area contained in this bin */
+	gv.bin[nd].dustp[5] = 1.;
 
 	/* average grain radius <a^3>/<a^2> for entire size distr (cm) */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_realnum(chFile,chLine,&gv.bin[nd].AvRadius,true,dl);
+	mie_read_number(chFile,chLine,&gv.bin[nd].AvRadius,true,dl,"average grain radius");
 	gv.bin[nd].eyc = 1./gv.bin[nd].AvRadius + 1.e7;
 
 	/* average grain area <4pi*a^2> for entire size distr (cm^2) */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_realnum(chFile,chLine,&gv.bin[nd].AvArea,true,dl);
+	mie_read_number(chFile,chLine,&gv.bin[nd].AvArea,true,dl,"average grain area");
 
 	/* average grain volume <4/3pi*a^3> for entire size distr (cm^3) */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_realnum(chFile,chLine,&gv.bin[nd].AvVol,true,dl);
+	mie_read_number(chFile,chLine,&gv.bin[nd].AvVol,true,dl,"average grain volume");
 
-	/* total grain radius Int(a) per H for entire size distr (cm/H) */
+	/* integrated grain radius Int(a) per H for entire size distr (cm/H) */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_realnum(chFile,chLine,&gv.bin[nd].IntRadius,true,dl);
+	mie_read_number(chFile,chLine,&gv.bin[nd].IntRadius,true,dl,"integrated grain radius");
 
-	/* total grain area Int(4pi*a^2) per H for entire size distr (cm^2/H) */
+	/* integrated grain area Int(4pi*a^2) per H for entire size distr (cm^2/H) */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_realnum(chFile,chLine,&gv.bin[nd].IntArea,true,dl);
+	mie_read_number(chFile,chLine,&gv.bin[nd].IntArea,true,dl,"integrated grain area");
 
-	/* total grain vol Int(4/3pi*a^3) per H for entire size distr (cm^3/H) */
+	/* integrated grain volume Int(4/3pi*a^3) per H for entire size distr (cm^3/H) */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_realnum(chFile,chLine,&gv.bin[nd].IntVol,true,dl);
+	mie_read_number(chFile,chLine,&gv.bin[nd].IntVol,true,dl,"integrated grain volume");
 
 	/* work function, in Rydberg */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_realnum(chFile,chLine,&gv.bin[nd].DustWorkFcn,true,dl);
+	mie_read_number(chFile,chLine,&gv.bin[nd].DustWorkFcn,true,dl,"work function");
 
 	/* bandgap, in Rydberg */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_realnum(chFile,chLine,&gv.bin[nd].BandGap,false,dl);
+	mie_read_number(chFile,chLine,&gv.bin[nd].BandGap,false,dl,"bandgap");
 
 	/* efficiency of thermionic emissions, between 0 and 1 */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_realnum(chFile,chLine,&gv.bin[nd].ThermEff,true,dl);
+	mie_read_number(chFile,chLine,&gv.bin[nd].ThermEff,true,dl,"efficiency of thermionic emissions");
 
 	/* sublimation temperature in K */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_realnum(chFile,chLine,&gv.bin[nd].Tsublimat,true,dl);
+	mie_read_number(chFile,chLine,&gv.bin[nd].Tsublimat,true,dl,"sublimation temperature");
 
 	/* material type, determines enthalpy function, etc... */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_long(chFile,chLine,&help,true,dl);
+	mie_read_number(chFile,chLine,&help,true,dl,"material type");
 	gv.bin[nd].matType = (mat_type)help;
 
 	for( nelem=0; nelem < LIMELM; nelem++ ) 
 	{
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_realnum(chFile,chLine,&RefAbund[nelem],false,dl);
+		mie_read_number(chFile,chLine,&RefAbund[nelem],false,dl,"elemental abundance");
 
 		gv.bin[nd].elmAbund[nelem] = RefAbund[nelem];
 
@@ -1122,7 +1157,7 @@ void mie_read_opc(/*@in@*/const char *chFile,
 
 	/* ratio a_max/a_min for grains in a single size bin */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_double(chFile,chLine,&RadiusRatio,true,dl);
+	mie_read_number(chFile,chLine,&RadiusRatio,true,dl,"ratio a_max/a_min");
 
 	gv.bin[nd].nDustFunc = gp.nDustFunc;
 	lgDefaultQHeat = ( RadiusRatio < RATIO_MAX && !gp.lgGreyGrain );
@@ -1135,7 +1170,7 @@ void mie_read_opc(/*@in@*/const char *chFile,
 
 	/* skip the table of the size distribution function (if present) */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_long(chFile,chLine,&nup,false,dl);
+	mie_read_number(chFile,chLine,&nup,false,dl,"number of size distribution table entries");
 	for( i=0; i < nup; i++ )
 		mie_next_data(chFile,io2,chLine,&dl);
 
@@ -1185,17 +1220,18 @@ void mie_read_opc(/*@in@*/const char *chFile,
 
 	/* nup is number of frequency bins stored in file, this should match rfield.nflux_with_check */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_long(chFile,chLine,&nup,true,dl);
+	mie_read_number(chFile,chLine,&nup,true,dl,"number of frequency points");
 
 	/* no. of size distribution bins */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_long(chFile,chLine,&nbin,true,dl);
+	mie_read_number(chFile,chLine,&nbin,true,dl,"number of size distribution bins");
 
 	/* now update the fields for a resolved size distribution */
 	if( nbin > 1 )
 	{
-		/* remember this number since it will be overwritten below */
-		VolTotal = gv.bin[nd].IntVol;
+		/* remember these numbers since they will be overwritten below */
+		double AreaTotal = gv.bin[nd].IntArea;
+		double VolTotal = gv.bin[nd].IntVol;
 
 		for( i=0; i < nbin; i++ )
 		{
@@ -1213,27 +1249,27 @@ void mie_read_opc(/*@in@*/const char *chFile,
 
 			/* average grain radius <a^3>/<a^2> for this bin (cm) */
 			mie_next_data(chFile,io2,chLine,&dl);
-			mie_read_realnum(chFile,chLine,&gv.bin[nd2].AvRadius,true,dl);
+			mie_read_number(chFile,chLine,&gv.bin[nd2].AvRadius,true,dl,"average grain radius");
 
 			/* average grain area in this bin (cm^2) */
 			mie_next_data(chFile,io2,chLine,&dl);
-			mie_read_realnum(chFile,chLine,&gv.bin[nd2].AvArea,true,dl);
+			mie_read_number(chFile,chLine,&gv.bin[nd2].AvArea,true,dl,"average grain area");
 
 			/* average grain volume in this bin (cm^3) */
 			mie_next_data(chFile,io2,chLine,&dl);
-			mie_read_realnum(chFile,chLine,&gv.bin[nd2].AvVol,true,dl);
+			mie_read_number(chFile,chLine,&gv.bin[nd2].AvVol,true,dl,"average grain volume");
 
-			/* total grain radius Int(a) per H for this bin (cm/H) */
+			/* integrated grain radius Int(a) per H for this bin (cm/H) */
 			mie_next_data(chFile,io2,chLine,&dl);
-			mie_read_realnum(chFile,chLine,&gv.bin[nd2].IntRadius,true,dl);
+			mie_read_number(chFile,chLine,&gv.bin[nd2].IntRadius,true,dl,"integrated grain radius");
 
-			/* total grain area Int(4pi*a^2) per H for this bin (cm^2/H) */
+			/* integrated grain area Int(4pi*a^2) per H for this bin (cm^2/H) */
 			mie_next_data(chFile,io2,chLine,&dl);
-			mie_read_realnum(chFile,chLine,&gv.bin[nd2].IntArea,true,dl);
+			mie_read_number(chFile,chLine,&gv.bin[nd2].IntArea,true,dl,"integrated grain area");
 
-			/* total grain vol Int(4/3pi*a^3) per H for this bin (cm^3/H) */
+			/* integrated grain volume Int(4/3pi*a^3) per H for this bin (cm^3/H) */
 			mie_next_data(chFile,io2,chLine,&dl);
-			mie_read_realnum(chFile,chLine,&gv.bin[nd2].IntVol,true,dl);
+			mie_read_number(chFile,chLine,&gv.bin[nd2].IntVol,true,dl,"integrated grain volume");
 
 			gv.bin[nd2].cnv_H_pGR = gv.bin[nd2].AvVol/gv.bin[nd2].IntVol;
 			gv.bin[nd2].cnv_GR_pH = 1./gv.bin[nd2].cnv_H_pGR;
@@ -1246,6 +1282,7 @@ void mie_read_opc(/*@in@*/const char *chFile,
 			 * contained in a particular bin. for unresolved distributions it is
 			 * by definition 1, for resolved distributions it is smaller than 1. */
 			gv.bin[nd2].dustp[4] = gv.bin[nd2].IntVol/VolTotal;
+			gv.bin[nd2].dustp[5] = gv.bin[nd2].IntArea/AreaTotal;
 			for( nelem=0; nelem < LIMELM; nelem++ )
 				gv.bin[nd2].elmAbund[nelem] = RefAbund[nelem]*gv.bin[nd2].dustp[4];
 		}
@@ -2848,7 +2885,7 @@ STATIC void mie_read_rfi(/*@in@*/  const string& chFile,
 
 	/* first read magic number */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_long(chFile,chLine,&gd->magic,true,dl);
+	mie_read_number(chFile,chLine,&gd->magic,true,dl,"magic number");
 	if( gd->magic != MAGIC_RFI ) 
 	{
 		fprintf( ioQQQ, " Refractive index file %s has obsolete magic number\n",chFile.c_str() );
@@ -2868,11 +2905,11 @@ STATIC void mie_read_rfi(/*@in@*/  const string& chFile,
 
 	/* determine abundance of grain molecule assuming max depletion */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_double(chFile,chLine,&gd->abun,true,dl);
+	mie_read_number(chFile,chLine,&gd->abun,true,dl,"abundance of grain molecule");
 
 	/* default depletion of grain molecule */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_double(chFile,chLine,&gd->depl,true,dl);
+	mie_read_number(chFile,chLine,&gd->depl,true,dl,"default depletion");
 	if( gd->depl > 1. ) 
 	{
 		fprintf( ioQQQ, " Illegal value for default depletion in %s\n",chFile.c_str() );
@@ -2885,11 +2922,11 @@ STATIC void mie_read_rfi(/*@in@*/  const string& chFile,
 
 	/* material density, to get cross section per unit mass: rho in cgs */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_double(chFile,chLine,&gd->rho,false,dl);
+	mie_read_number(chFile,chLine,&gd->rho,false,dl,"material density");
 
 	/* material type, determines enthalpy function: 1 -- carbonaceous, 2 -- silicate */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_long(chFile,chLine,&help,true,dl);
+	mie_read_number(chFile,chLine,&help,true,dl,"material type");
 	gd->matType = (mat_type)help;
 	if( gd->matType >= MAT_TOP ) 
 	{
@@ -2900,11 +2937,11 @@ STATIC void mie_read_rfi(/*@in@*/  const string& chFile,
 
 	/* work function, in Rydberg */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_double(chFile,chLine,&gd->work,true,dl);
+	mie_read_number(chFile,chLine,&gd->work,true,dl,"work function");
 
 	/* bandgap, in Rydberg */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_double(chFile,chLine,&gd->bandgap,false,dl);
+	mie_read_number(chFile,chLine,&gd->bandgap,false,dl,"bandgap");
 	if( gd->bandgap >= gd->work ) 
 	{
 		fprintf( ioQQQ, " Illegal value for bandgap in %s\n",chFile.c_str() );
@@ -2915,7 +2952,7 @@ STATIC void mie_read_rfi(/*@in@*/  const string& chFile,
 
 	/* efficiency of thermionic emission, between 0 and 1 */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_double(chFile,chLine,&gd->therm_eff,true,dl);
+	mie_read_number(chFile,chLine,&gd->therm_eff,true,dl,"efficiency of thermionic emission");
 	if( gd->therm_eff > 1.f ) 
 	{
 		fprintf( ioQQQ, " Illegal value for thermionic efficiency in %s\n",chFile.c_str() );
@@ -2926,7 +2963,7 @@ STATIC void mie_read_rfi(/*@in@*/  const string& chFile,
 
 	/* sublimation temperature in K */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_double(chFile,chLine,&gd->subl_temp,true,dl);
+	mie_read_number(chFile,chLine,&gd->subl_temp,true,dl,"sublimation temperature");
 
 	/* >>chng 02 sep 18, add keyword for special files (grey grains, PAH's, etc.), PvH */
 	mie_next_data(chFile,io2,chLine,&dl);
@@ -2962,7 +2999,7 @@ STATIC void mie_read_rfi(/*@in@*/  const string& chFile,
 		/* nridf is for choosing ref index or diel function input
 		 * case 2 allows greater accuracy reading in, when nr is close to 1. */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_long(chFile,chLine,&nridf,true,dl);
+		mie_read_number(chFile,chLine,&nridf,true,dl,"data code");
 		if( nridf > 3 ) 
 		{
 			fprintf( ioQQQ, " Illegal data code in %s\n",chFile.c_str() );
@@ -2973,7 +3010,7 @@ STATIC void mie_read_rfi(/*@in@*/  const string& chFile,
 		/* no. of principal axes, always 1 for amorphous grains,
 		 * maybe larger for crystalline grains */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_long(chFile,chLine,&gd->nAxes,true,dl);
+		mie_read_number(chFile,chLine,&gd->nAxes,true,dl,"number of principal axes");
 		if( gd->nAxes > NAX ) 
 		{
 			fprintf( ioQQQ, " Illegal no. of axes in %s\n",chFile.c_str() );
@@ -2986,7 +3023,7 @@ STATIC void mie_read_rfi(/*@in@*/  const string& chFile,
 		switch( gd->nAxes ) 
 		{
 		case 1:
-			mie_read_double(chFile,chLine,&gd->wt[0],true,dl);
+			mie_read_number(chFile,chLine,&gd->wt[0],true,dl,"relative weight of axis");
 			total = gd->wt[0];
 			break;
 		case 2:
@@ -3028,7 +3065,7 @@ STATIC void mie_read_rfi(/*@in@*/  const string& chFile,
 
 			/* read in optical constants for each principal axis. */
 			mie_next_data(chFile,io2,chLine,&dl);
-			mie_read_long(chFile,chLine,&gd->ndata[j],false,dl);
+			mie_read_number(chFile,chLine,&gd->ndata[j],false,dl,"number of data points");
 			if( gd->ndata[j] < 2 ) 
 			{
 				fprintf( ioQQQ, " Illegal number of data points in %s\n",chFile.c_str() );
@@ -3121,7 +3158,7 @@ STATIC void mie_read_rfi(/*@in@*/  const string& chFile,
 		 * 4: absorption + pure scattering cross sections + asymmetry factor +
 		 *      inverse attenuation length */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_long(chFile,chLine,&gd->nOpcCols,true,dl);
+		mie_read_number(chFile,chLine,&gd->nOpcCols,true,dl,"number of data columns");
 		if( gd->nOpcCols > NDAT ) 
 		{
 			fprintf( ioQQQ, " Illegal no. of data columns in %s\n",chFile.c_str() );
@@ -3147,7 +3184,7 @@ STATIC void mie_read_rfi(/*@in@*/  const string& chFile,
 
 		/* read in number of data points supplied. */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_long(chFile,chLine,&gd->nOpcData,false,dl);
+		mie_read_number(chFile,chLine,&gd->nOpcData,false,dl,"number of data points");
 		if( gd->nOpcData < 2 ) 
 		{
 			fprintf( ioQQQ, " Illegal number of data points in %s\n",chFile.c_str() );
@@ -3314,7 +3351,7 @@ STATIC void mie_read_mix(/*@in@*/  const string& chFile,
 
 	/* first read magic number */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_long(chFile,chLine,&gd->magic,true,dl);
+	mie_read_number(chFile,chLine,&gd->magic,true,dl,"magic number");
 	if( gd->magic != MAGIC_MIX ) 
 	{
 		fprintf( ioQQQ, " Mixed grain file %s has obsolete magic number\n",chFile.c_str() );
@@ -3325,7 +3362,7 @@ STATIC void mie_read_mix(/*@in@*/  const string& chFile,
 
 	/* default depletion of grain molecule */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_double(chFile,chLine,&gd->depl,true,dl);
+	mie_read_number(chFile,chLine,&gd->depl,true,dl,"default depletion");
 	if( gd->depl > 1. ) 
 	{
 		fprintf( ioQQQ, " Illegal value for default depletion in %s\n",chFile.c_str() );
@@ -3335,7 +3372,7 @@ STATIC void mie_read_mix(/*@in@*/  const string& chFile,
 
 	/* read number of different materials contained in this grain */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_long(chFile,chLine,&nMaterial,true,dl);
+	mie_read_number(chFile,chLine,&nMaterial,true,dl,"number of different materials");
 	if( nMaterial < 2 ) 
 	{
 		fprintf( ioQQQ, " Illegal number of materials in mixed grain file %s\n",chFile.c_str() );
@@ -3358,7 +3395,7 @@ STATIC void mie_read_mix(/*@in@*/  const string& chFile,
 		/* each line contains relative fraction of volume occupied by each material,
 		 * followed by the name of the refractive index file between double quotes */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_double(chFile,chLine,&frac[i],true,dl);
+		mie_read_number(chFile,chLine,&frac[i],true,dl,"relative fraction of volume");
 		if( frac[i] <= 0. )
 		{
 			fprintf( ioQQQ, " Invalid volume fraction was found on line #%ld of file %s\n",dl,chFile.c_str() );
@@ -3936,7 +3973,7 @@ STATIC void mie_read_szd(/*@in@*/  const string& chFile,
 
 	/* first read magic number */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_long(chFile,chLine,&sd->magic,true,dl);
+	mie_read_number(chFile,chLine,&sd->magic,true,dl,"magic number");
 	if( sd->magic != MAGIC_SZD ) 
 	{
 		fprintf( ioQQQ, " Size distribution file %s has obsolete magic number\n",chFile.c_str() );
@@ -4004,7 +4041,7 @@ STATIC void mie_read_szd(/*@in@*/  const string& chFile,
 	case SD_SINGLE_SIZE:
 		/* single sized grain */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_double(chFile,chLine,&sd->a[ipSize],true,dl);
+		mie_read_number(chFile,chLine,&sd->a[ipSize],true,dl,"grain radius");
 		if( sd->a[ipSize] < SMALLEST_GRAIN || sd->a[ipSize] > LARGEST_GRAIN ) 
 		{
 			fprintf( ioQQQ, " Illegal value for grain size\n" );
@@ -4017,12 +4054,12 @@ STATIC void mie_read_szd(/*@in@*/  const string& chFile,
 	case SD_NR_CARBON:
 		/* single sized PAH with fixed number of carbon atoms */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_long(chFile,chLine,&sd->nCarbon,true,dl);
+		mie_read_number(chFile,chLine,&sd->nCarbon,true,dl,"number of carbon atoms");
 		break;
 	case SD_POWERLAW:
 		/* simple power law distribution, first get lower limit */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_double(chFile,chLine,&sd->a[ipBLo],true,dl);
+		mie_read_number(chFile,chLine,&sd->a[ipBLo],true,dl,"lower limit of the grain size");
 		if( sd->a[ipBLo] < SMALLEST_GRAIN || sd->a[ipBLo] > LARGEST_GRAIN ) 
 		{
 			fprintf( ioQQQ, " Illegal value for grain size (lower limit)\n" );
@@ -4034,7 +4071,7 @@ STATIC void mie_read_szd(/*@in@*/  const string& chFile,
 
 		/* upper limit */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_double(chFile,chLine,&sd->a[ipBHi],true,dl);
+		mie_read_number(chFile,chLine,&sd->a[ipBHi],true,dl,"upper limit of the grain size");
 		if( sd->a[ipBHi] < SMALLEST_GRAIN || sd->a[ipBHi] > LARGEST_GRAIN ||
 		    sd->a[ipBHi] <= sd->a[ipBLo] ) 
 		{
@@ -4069,11 +4106,11 @@ STATIC void mie_read_szd(/*@in@*/  const string& chFile,
 		 * Greenberg (1978), Cosmic Dust, ed. J.A.M. McDonnell, Wiley, p. 187 */
 		/* "lower limit", below this the exponential cutoff sets in */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_double(chFile,chLine,&sd->a[ipBLo],false,dl);
+		mie_read_number(chFile,chLine,&sd->a[ipBLo],false,dl,"lower limit");
 
 		/* "upper" limit, above this the exponential cutoff sets in */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_double(chFile,chLine,&sd->a[ipBHi],false,dl);
+		mie_read_number(chFile,chLine,&sd->a[ipBHi],false,dl,"upper limit");
 
 		/* exponent for power law */
 		mie_next_data(chFile,io2,chLine,&dl);
@@ -4095,11 +4132,11 @@ STATIC void mie_read_szd(/*@in@*/  const string& chFile,
 
 		/* scale size for lower exponential cutoff, zero indicates normal cutoff */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_double(chFile,chLine,&sd->a[ipSLo],false,dl);
+		mie_read_number(chFile,chLine,&sd->a[ipSLo],false,dl,"scale size for lower exponential cutoff");
 
 		/* scale size for upper exponential cutoff, zero indicates normal cutoff */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_double(chFile,chLine,&sd->a[ipSHi],false,dl);
+		mie_read_number(chFile,chLine,&sd->a[ipSHi],false,dl,"scale size for upper exponential cutoff");
 
 		ref_neg = sd->a[ipBLo];
 		step_neg = -mul*sd->a[ipSLo];
@@ -4110,11 +4147,11 @@ STATIC void mie_read_szd(/*@in@*/  const string& chFile,
 	case SD_LOG_NORMAL:
 		/* log-normal distribution, first get center of gaussian */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_double(chFile,chLine,&sd->a[ipGCen],true,dl);
+		mie_read_number(chFile,chLine,&sd->a[ipGCen],true,dl,"center of the gaussian");
 
 		/* 1-sigma width */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_double(chFile,chLine,&sd->a[ipGSig],true,dl);
+		mie_read_number(chFile,chLine,&sd->a[ipGSig],true,dl,"1-sigma width");
 
 		/* ref_pos, ref_neg is the grain radius at which a^4*dN/da peaks */
 		ref_neg = ref_pos = sd->a[ipGCen]*exp(3.*pow2(sd->a[ipGSig]));
@@ -4125,11 +4162,11 @@ STATIC void mie_read_szd(/*@in@*/  const string& chFile,
 	case SD_LIN_NORMAL:
 		/* normal gaussian distribution, first get center of gaussian */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_double(chFile,chLine,&sd->a[ipGCen],true,dl);
+		mie_read_number(chFile,chLine,&sd->a[ipGCen],true,dl,"center of the gaussian");
 
 		/* 1-sigma width */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_double(chFile,chLine,&sd->a[ipGSig],true,dl);
+		mie_read_number(chFile,chLine,&sd->a[ipGSig],true,dl,"1-sigma width");
 
 		/* ref_pos, ref_neg is the grain radius at which a^4*dN/da peaks */
 		ref_neg = ref_pos = (sd->a[ipGCen] + sqrt(pow2(sd->a[ipGCen]) + 12.*pow2(sd->a[ipGSig])))/2.;
@@ -4140,7 +4177,7 @@ STATIC void mie_read_szd(/*@in@*/  const string& chFile,
 	case SD_TABLE:
 		/* user-supplied table of a^4*dN/da vs. a, first get lower limit on a */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_double(chFile,chLine,&sd->a[ipBLo],true,dl);
+		mie_read_number(chFile,chLine,&sd->a[ipBLo],true,dl,"lower limit of the grain size");
 		if( sd->a[ipBLo] < SMALLEST_GRAIN || sd->a[ipBLo] > LARGEST_GRAIN ) 
 		{
 			fprintf( ioQQQ, " Illegal value for grain size (lower limit)\n" );
@@ -4152,7 +4189,7 @@ STATIC void mie_read_szd(/*@in@*/  const string& chFile,
 
 		/* upper limit */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_double(chFile,chLine,&sd->a[ipBHi],true,dl);
+		mie_read_number(chFile,chLine,&sd->a[ipBHi],true,dl,"upper limit of the grain size");
 		if( sd->a[ipBHi] < SMALLEST_GRAIN || sd->a[ipBHi] > LARGEST_GRAIN ||
 		    sd->a[ipBHi] <= sd->a[ipBLo] ) 
 		{
@@ -4166,7 +4203,7 @@ STATIC void mie_read_szd(/*@in@*/  const string& chFile,
 
 		/* number of user supplied points */
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_long(chFile,chLine,&sd->npts,true,dl);
+		mie_read_number(chFile,chLine,&sd->npts,true,dl,"number of points in the table");
 		if( sd->npts < 2 )
 		{
 			fprintf( ioQQQ, " Illegal value for no. of points in table\n" );
@@ -4231,11 +4268,11 @@ STATIC void mie_read_szd(/*@in@*/  const string& chFile,
 		double help;
 
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_double(chFile,chLine,&help,false,dl);
+		mie_read_number(chFile,chLine,&help,false,dl,"lower limit");
 		sd->lim[ipBLo] = ( help <= 0. ) ? search_limit(ref_neg,step_neg,FRAC_CUTOFF,*sd) : help;
 
 		mie_next_data(chFile,io2,chLine,&dl);
-		mie_read_double(chFile,chLine,&help,false,dl);
+		mie_read_number(chFile,chLine,&help,false,dl,"upper limit");
 		sd->lim[ipBHi] = ( help <= 0. ) ? search_limit(ref_pos,step_pos,FRAC_CUTOFF,*sd) : help;
 
 		if( sd->lim[ipBLo] < SMALLEST_GRAIN || sd->lim[ipBHi] > LARGEST_GRAIN ||
@@ -4255,72 +4292,36 @@ STATIC void mie_read_szd(/*@in@*/  const string& chFile,
 	return;
 }
 
-STATIC void mie_read_long(/*@in@*/  const string& chFile,
-						  /*@in@*/  const string& chLine,
-						  /*@out@*/ long int *data,
-						  bool lgZeroIllegal,
-						  long int dl)
-{
-	DEBUG_ENTRY( "mie_read_long()" );
-	if( sscanf( chLine.c_str(), "%ld", data ) != 1 )
-	{
-		fprintf( ioQQQ, " Syntax error in %s\n",chFile.c_str());
-		fprintf( ioQQQ, " Line #%ld: %s\n",dl,chLine.c_str());
-		cdEXIT(EXIT_FAILURE);
-	}
-	if( *data < 0 || (*data == 0 && lgZeroIllegal) )
-	{
-		fprintf( ioQQQ, " Illegal data value in %s\n",chFile.c_str());
-		fprintf( ioQQQ, " Line #%ld: %ld\n",dl,*data);
-		cdEXIT(EXIT_FAILURE);
-	}
-	return;
-}
-
-STATIC void mie_read_realnum(/*@in@*/  const string& chFile,
-							 /*@in@*/  const string& chLine,
-							 /*@out@*/ realnum *data,
-							 bool lgZeroIllegal,
-							 long int dl)
-{
-	DEBUG_ENTRY( "mie_read_realnum()" );
-	double help;
-	if( sscanf( chLine.c_str(), "%lf", &help ) != 1 )
-	{
-		fprintf( ioQQQ, " Syntax error in %s\n",chFile.c_str());
-		fprintf( ioQQQ, " Line #%ld: %s\n",dl,chLine.c_str());
-		cdEXIT(EXIT_FAILURE);
-	}
-	*data = (realnum)help;
-	if( *data < 0. || (*data == 0. && lgZeroIllegal) )
-	{
-		fprintf( ioQQQ, " Illegal data value in %s\n",chFile.c_str());
-		fprintf( ioQQQ, " Line #%ld: %14.6e\n",dl,*data);
-		cdEXIT(EXIT_FAILURE);
-	}
-	return;
-}
-
-STATIC void mie_read_double(/*@in@*/  const string& chFile,
+template<typename T>
+STATIC void mie_read_number(/*@in@*/  const string& chFile,
 							/*@in@*/  const string& chLine,
-							/*@out@*/ double *data,
+							/*@out@*/ T* data,
 							bool lgZeroIllegal,
-							long int dl)
+							long int dl,
+							const string& vartype)
 {
-	DEBUG_ENTRY( "mie_read_double()" );
-	if( sscanf( chLine.c_str(), "%lf", data ) != 1 )
+	DEBUG_ENTRY( "mie_read_number()" );
+
+	istringstream iss(chLine);
+	iss >> *data;
+	if( iss.fail() )
 	{
 		fprintf( ioQQQ, " Syntax error in %s\n",chFile.c_str());
 		fprintf( ioQQQ, " Line #%ld: %s\n",dl,chLine.c_str());
 		cdEXIT(EXIT_FAILURE);
 	}
-	if( *data < 0. || (*data == 0. && lgZeroIllegal) )
+	if( *data < T() || (*data == T() && lgZeroIllegal) )
 	{
-		fprintf( ioQQQ, " Illegal data value in %s\n",chFile.c_str());
-		fprintf( ioQQQ, " Line #%ld: %14.6e\n",dl,*data);
+		ostringstream oss;
+		oss << " Invalid data in " << chFile << endl << " Line #" << dl << ": " << chLine << endl;
+		oss << " This number is parsed as: " << scientific << *data << endl;
+		if( lgZeroIllegal )
+			oss << " The " << vartype << " should be greater than zero" << endl;
+		else
+			oss << " The " << vartype << " should be greater than or equal to zero" << endl;
+		fprintf( ioQQQ, "%s",oss.str().c_str());
 		cdEXIT(EXIT_FAILURE);
 	}
-	return;
 }
 
 STATIC void mie_read_form(/*@in@*/  const string& chWord,
@@ -4458,6 +4459,12 @@ STATIC void mie_next_line(/*@in@*/  const string& chFile,
 	size_t pp;
 	if( (pp = chLine.find_first_of("\n\r")) != string::npos )
 		chLine.erase(pp);
+	if( chLine.length() == 0 )
+	{
+		fprintf( ioQQQ, " Found empty line in file %s\n",chFile.c_str());
+		fprintf( ioQQQ, " This grain data file does not have the expected format.\n");
+		cdEXIT(EXIT_FAILURE);
+	}
 	(*dl)++;
 }
 

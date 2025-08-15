@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*SaveSpecies generate output for the save species command */
 #include "cddefines.h"
@@ -404,7 +404,7 @@ STATIC void SaveSpeciesLines( FILE *ioPUN, const vector<genericState> &speciesLi
 			else
 			{
 				fprintf( ioPUN, "\t" );
-				prt_wl( ioPUN, realnum( tr->WLAng() ) );
+				tr->twav().prt_wl(ioPUN);
 			}
 
 			fprintf( ioPUN,"\t%li", ipLo);
@@ -468,10 +468,10 @@ void SaveSpeciesOptDep( const long int ipPun, const string &speciesLabel )
 			continue;
 
 		fprintf( save.params[ipPun].ipPnunit,
-			"%i\t%i\t%.5e\t%.5e\n",
+			"%i\t%i\t%s\t%.5e\n",
 			(*tr).ipHi()+1,
 			(*tr).ipLo()+1,
-			(*tr).WLAng(),
+			(*tr).twav().sprt_wl().c_str(),
 			(*tr).Emis().TauIn() * SQRTPI );
 	}
 }

@@ -90,7 +90,7 @@ globule& density& $-\infty$& $+\infty$& 0.2\\
 grains& grain abundance& $-\infty$& $+\infty$& 1.0\\
 hden& hydrogen density& $-\infty$& $+\infty$& 1.0\\
 hextra& extra heating& $-\infty$& $+\infty$& 0.1\\
-illuminate& Angle of illumination& 0& $\pi/2$& 0.1\\
+illumination& Angle of illumination& 0& $\pi/2$& 0.1\\
 intensity& intensity of source& $-\infty$& $+\infty$& 0.5\\
 ionization parameter& ionization parameter& $-\infty$& $+\infty$& 0.5\\
 luminosity& luminosity of source& $-\infty$& $+\infty$& 0.5\\
@@ -138,7 +138,7 @@ The physical quantities
 are actually varied as logs within the code and increments
 (the first steps away from the initial guess)
 are also logarithmic. The only exceptions to this rule are the
-\cdCommand{illuminate} command, and commands taking varying a power-law index
+\cdCommand{illumination} command, and commands varying a power-law index
 (\cdCommand{power law} and \cdCommand{ratio alphox}).
 They are varied as linear quantities.
 The parameters of the \cdCommand{dlaw} and \cdCommand{fudge} will
@@ -293,7 +293,7 @@ optimize luminosity 34.8
 This commands allows you to optimize an observed continuum flux or surface brightness at an
 arbitrary wavelength. Note that both the keywords \cdCommand{continuum} and
 \cdCommand{flux} need to be present on the command line. The first parameter
-must be the wavelength or frequency of the observation. The syntax for this
+must be the vacuum wavelength or frequency of the observation. The syntax for this
 parameter is exactly the same as for the \cdCommand{set nFnu add} command
 described in Section~\ref{sec:set:nfnu:add}. The code will implicitly behave
 as if a \cdCommand{set nFnu add} command had been given to add the requested
@@ -330,7 +330,7 @@ command line.
 A continuum flux can be specified as an upper limit by entering
 $<$ anywhere on the line after column 4.
 
-For wavelengths longer than 1~mm this command is counted in the
+For wavelengths longer than 1\,mm this command is counted in the
 absolute flux category, for shorter wavelengths in the photometry category (see
 Section~\ref{sec:conv:criteria}). This distinction is useful so that you can
 use a radio continuum flux measurement (e.g.\ at 6~cm) as a replacement for
@@ -743,7 +743,7 @@ The initial increment is set to 20\% of the initial estimate, or to 1 if the
 initial estimate is zero. Use the \cdCommand{optimize increment} command to
 override this default.
 
-\subsection{Illuminate}
+\subsection{Illumination}
 
 The illumination angle is varied as a linear quantity in radian.
 

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*grain main routine to converge grains thermal solution */
 #include "cddefines.h"
@@ -790,7 +790,7 @@ STATIC void InitBinAugerData(size_t nd,
 	temp.zero();
 
 	/* this converts gv.bin[nd].elmAbund[nelem] to particle density inside the grain */
-	double norm = gv.bin[nd].cnv_H_pGR/gv.bin[nd].AvVol;
+	double norm = gv.bin[nd].cnv_H_pGR/double(gv.bin[nd].AvVol);
 
 	/* this loop calculates the probability that photoionization occurs in a given shell */
 	for( ns=0; ns < gv.bin[nd].sd.size(); ns++ )

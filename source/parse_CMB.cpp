@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParseCMB parse parameters from fireball command */
 #include "cddefines.h"
@@ -40,7 +40,7 @@ void ParseCMB(double z,
 	rfield.totpow[*nqh] = rlogl;
 	/* this is an isotropic radiation field */
 	rfield.lgBeamed[*nqh] = false;
-	rfield.Illumination[*nqh] = Illuminate::ISOTROPIC;
+	rfield.Illumination[*nqh] = Illumination::SYMMETRIC;
 
 	++rfield.nShape;
 	++*nqh;

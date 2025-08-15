@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*iter_end_check after each zone by Cloudy, determines whether model is complete */
 #include "cddefines.h"
@@ -360,22 +360,22 @@ int iter_end_check(void)
 
 	/* option to stop calculation when line intensity ratio reaches certain value,
 	 * nstpl is number of stop line commands entered */
-	else if( StopCalc.nstpl > 0 || StopCalc.ContIndex.size() > 0 )
+	else if( StopCalc.sle.size() > 0 || StopCalc.ContIndex.size() > 0 )
 	{
 		/* line ratio exceeded maximum permitted value
 		 * do not consider case where norm line has zero intensity */
-		for( i=0; i < StopCalc.nstpl; i++ )
+		for( const auto& p : StopCalc.sle )
 		{
 			/* the second line is always set to something, default is H beta */
-			if( LineSave.lines[StopCalc.ipStopLin2[i]].SumLine(StopCalc.nEmergent[i]) > 0. )
+			if( LineSave.lines[p.ipStopLine2].SumLine(p.nEmergent) > 0. )
 			{
-				if( LineSave.lines[StopCalc.ipStopLin1[i]].SumLine(StopCalc.nEmergent[i])/
-					 LineSave.lines[StopCalc.ipStopLin2[i]].SumLine(StopCalc.nEmergent[i]) > 
-					StopCalc.stpint[i] )
+				if( LineSave.lines[p.ipStopLine1].SumLine(p.nEmergent)/
+					LineSave.lines[p.ipStopLine2].SumLine(p.nEmergent) > 
+					p.StopRatio )
 				{
 					lgDone = true;
 					sprintf( StopCalc.chReasonStop, "line %s reached", 
-								LineSave.lines[StopCalc.ipStopLin1[i]].label().c_str() );
+								LineSave.lines[p.ipStopLine1].label().c_str() );
 				}
 			}
 		}

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*RT_recom_effic generate escape probability function for continua, */
 #include "cddefines.h"
@@ -147,8 +147,8 @@ double RT_recom_effic(long int ip)
 		double OpacityEffective, EffectiveThickness;
 		realnum tau;
 
-		/* find line center opacity - use fine opacity if array indices are OK */
-		if( ipRecombEdgeFine>=0 && ipRecombEdgeFine<rfield.nfine && rfield.lgOpacityFine )
+		/* find line center opacity */
+		if( ipRecombEdgeFine>=0 && ipRecombEdgeFine<rfield.nfine )
 		{
 			/* use fine opacities fine grid fine mesh to get optical depth 
 			 * to continuum source */

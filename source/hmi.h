@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef HMI_H_
@@ -190,10 +190,6 @@ struct t_hmi : public module {
 
 	/** H2 formation rate as set with set h2 rate command units S^-1, actual depl */
 	double rate_h2_form_grains_set;  
-
-	/** this is set to zero, but to positive number with atom h2 fraction command
-	 * this sets the H2 density by multiplying the hydrogen density to become the H2 density */
-	double H2_frac_abund_set;
 
 	/** Boltzmann factor for hmi */
 	double exphmi,
