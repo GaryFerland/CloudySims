@@ -185,7 +185,8 @@ monitor line luminosity "he 2"  1640.41A 9.616 err 0.1 ##total He II Balmer-alph
 ## >>chng 14 mar 26, from 7.995 to 7.969, Move oxygen data to stout and chianti files
 ## >>chng 16 aug 07, from 7.969 to 7.995, Fran bug fix
 ## >>chng 16 dec 20, from 7.995 to 8.019, add secondary autoionization to DR suppression
-monitor line luminosity "blnd"  1666 8.019 ##total O III] 1666
+## >>chng 25 jul 25, from 8.019 to 8.127, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line luminosity "blnd"  1666 8.127 ##total O III] 1666
 ##
 ## >>chng 04 may 19, from 7.752 to 7.724 RP update helike sequence
 ## >>chng 04 jun 12, from 7.724 to 7.750 chng cont shield fcn

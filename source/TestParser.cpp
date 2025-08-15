@@ -469,4 +469,39 @@ namespace {
 			fclose(tmp);
 		ioQQQ = bak;
 	}
+	TEST(TestReadInputTime)
+	{
+		Parser p;
+		p.setline("age 1 second");
+		CHECK_EQUAL(1.,parse_input_time(p));
+		p.setline("age 1 minute");
+		CHECK_EQUAL(60.,parse_input_time(p));
+		p.setline("age 1 hour");
+		CHECK_EQUAL(3600.,parse_input_time(p));
+		p.setline("age 1 hour log");
+		CHECK_EQUAL(36000.,parse_input_time(p));
+		p.setline("age 1 days");
+		CHECK_EQUAL(86400.,parse_input_time(p));
+		p.setline("age 1 weeks");
+		CHECK_EQUAL(604800.,parse_input_time(p));
+		p.setline("age 2 fortnights");
+		CHECK_EQUAL(2419200.,parse_input_time(p));
+		p.setline("age 1 month");
+		CHECK_EQUAL(2629800.,parse_input_time(p));
+		p.setline("age 1 year");
+		CHECK_EQUAL(31557600.,parse_input_time(p));
+		p.setline("age 1 century");
+		realnum age = 3155760000.;
+		CHECK(fp_equal_tol(age,parse_input_time(p),1e-6_r*age));
+		p.setline("age 1 millenia");
+		age = 31557600000.;
+		CHECK(fp_equal_tol(age,parse_input_time(p),1e-6_r*age));
+
+		p.setline("stop time 1 Myr");
+		age = 31557600000000.;
+		CHECK(fp_equal_tol(age,parse_input_time(p),1e-6_r*age));
+		p.setline("stop time 1 Gyr");
+		age = 31557600000000000.;
+		CHECK(fp_equal_tol(age,parse_input_time(p),1e-6_r*age));
+	}
 }

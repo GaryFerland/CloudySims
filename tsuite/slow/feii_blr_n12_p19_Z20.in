@@ -112,7 +112,8 @@ monitor line luminosity "he 2"  1640.41A 6.606 err 0.1 ##total He II Balmer-alph
 ## >>chng 13 sep 12, from 4.439 to 4.374, Mg converted to database
 ## >>chng 14 mar 26, from 4.374 to 4.205, move O to external databases
 ## >>chng 16 mar 20, from 4.205 to 4.254, change from Werner model to Stout model for Fe+
-monitor line luminosity "o  3"  1666.15 4.254 err 0.1 ##total O III] 1666
+## >>chng 25 jul 25, from 4.254 to 4.354, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line luminosity "o  3"  1666.15 4.354 err 0.1 ##total O III] 1666
 ## 
 ## >>chng 06 aug 09, from 4.409 to 4.458 Meudon 06, Bowen change
 ## >>chng 08 mar 17, from 4.458 to 4.357, RP update line overlap

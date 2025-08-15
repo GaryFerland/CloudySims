@@ -325,7 +325,10 @@ STATIC void read_species_file( string filename, bool lgCreateIsotopologues )
 		double formation_enthalpy;
 		iss >> species;
 		iss >> formation_enthalpy;
-		ASSERT( iss.eof() );
+#ifndef NDEBUG
+		char c;
+		ASSERT( !(iss >> c) );
+#endif
 		newspecies( species.c_str(), MOLECULE,MOLE_ACTIVE, formation_enthalpy, lgCreateIsotopologues );
 		//fprintf( ioQQQ, "DEBUGGG read_species_file %s\t%f\n", species.c_str(), formation_enthalpy );
 	}

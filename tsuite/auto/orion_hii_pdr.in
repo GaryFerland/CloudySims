@@ -769,7 +769,8 @@ monitor column density "C2H3+"     9.232
 ## >>chng 21 sep 11, from 12.46 to 12.69, LAMDA update
 ## >>chng 21 nov 04, from 12.69 to 12.35, update mole co data
 ## >>chng 23 may 15, from 12.35 to 12.83, GS updates 21 reactions to UMIST 2012
-monitor column density "C3"        12.83  
+## >>chng 25 jul 11, from 12.83 to 12.74, GS Si chemistry, UMIST 2022
+monitor column density "C3"        12.74  
 ## >>chng 21 apr 16, from 12.28 to 10.62, add molecular column densities
 ## >>chng 21 sep 11, from 10.62 to 10.92, LAMDA update
 ## >>chng 21 nov 04, from 10.92 to 10.52, update mole co data
@@ -779,7 +780,8 @@ monitor column density "C3H+"      10.45
 ## >>chng 21 sep 11, from 13.49 to 11.13, LAMDA update
 ## >>chng 21 nov 04, from 11.13 to 13.42, update mole co data
 ## >>chng 23 sep 08, from 13.42 to 13.36, fix SQRTPI in Lya destprob
-monitor column density "C3H"       13.36  
+## >>chng 25 jul 11, from 13.36 to 13.28, GS Si chemistry, UMIST 2022
+monitor column density "C3H"       13.28  
 ## >>chng 21 apr 16, from 10.42 to 10.47, new monitor added
 ## >>chng 21 apr 16, from 10.47 to 10.59, add molecular column densities
 monitor column density "CCl+"      10.59  
@@ -820,10 +822,12 @@ monitor column density "CH4"       14.84
 ## >>chng 21 apr 16, from 11.76 to 9.322, add molecular column densities
 ## >>chng 21 sep 11, from 9.322 to 9.255, LAMDA update
 ## >>chng 21 nov 04, from 9.255 to 9.299, update mole co data
-monitor column density "CH5+"      9.299  
+## >>chng 25 jul 11, from 9.299 to 9.258, GS Si chemistry, UMIST 2022
+monitor column density "CH5+"      9.258  
 ## >>chng 21 apr 16, from 15.6 to 13.35, add molecular column densities
 ## >>chng 23 may 15, from 13.35 to 13.21, GS updates 21 reactions to UMIST 2012
-monitor column density "CN"        13.21  
+## >>chng 25 jul 11, from 13.21 to 13.69, GS Si chemistry, UMIST 2022
+monitor column density "CN"        13.69  
 ## >>chng 21 apr 16, from 17.28 to 7.013, add molecular column densities
 monitor column density "COgrn"     7.013  
 ## >>chng 21 apr 16, from 10.56 to 10.34, add molecular column densities
@@ -837,7 +841,8 @@ monitor column density "CS+"       10.3
 ## >>chng 24 apr 21, from 16.79 to 16.95, GS updates chemistry
 ## >>chng 24 oct 24, from 16.95 to 16.77, merge master
 ## >>chng 25 jan 26, from 16.77 to 16.93, merge master updated cham"
-monitor column density "CS"        16.93  
+## >>chng 25 jul 11, from 16.93 to 16.8, GS Si chemistry, UMIST 2022
+monitor column density "CS"        16.8  
 ## >>chng 21 apr 16, from 12.001to 12.0392, new monitor added
 ## >>chng 21 apr 16, from 12.04 to 12.32, add molecular column densities
 monitor column density "H2Cl+"     12.32  
@@ -853,12 +858,14 @@ monitor column density "H2O+"      11.03
 ## monitor column density "H2O"       16.4  
 ## >>chng 21 apr 16, from 11.41 to 12.91, add molecular column densities
 ## >>chng 21 sep 11, from 12.91 to 12.98, LAMDA update
-monitor column density "H3O+"      12.98  
+## >>chng 25 jul 11, from 12.98 to 13.03, GS Si chemistry, UMIST 2022
+monitor column density "H3O+"      13.03  
 ## >>chng 21 apr 16, from 11.29 to 12.21, add molecular column densities
 monitor column density "HCl+"      12.21  
 ## >>chng 21 apr 16, from 13.8 to 13.42, new monitor added
 ## >>chng 21 apr 16, from 13.42 to 14.61, add molecular column densities
-monitor column density "HCl"       14.61  
+## >>chng 25 jul 11, from 14.61 to 14.66, GS Si chemistry, UMIST 2022
+monitor column density "HCl"       14.66  
 ## >>chng 21 apr 16, from 15.17 to 13.81, add molecular column densities
 ## >>chng 21 sep 11, from 13.81 to 14.16, LAMDA update
 monitor column density "HCN"       14.16  
@@ -867,33 +874,38 @@ monitor column density "HCN"       14.16
 monitor column density "HCNH+"     10.56  
 ## >>chng 21 apr 16, from 12.65 to 13.49, add molecular column densities
 ## >>chng 21 sep 11, from 13.49 to 13.56, LAMDA update
-monitor column density "HCO+"      13.56  
+## >>chng 25 jul 11, from 13.56 to 13.6, GS Si chemistry, UMIST 2022
+monitor column density "HCO+"      13.6  
 ## >>chng 21 apr 16, from 13.96 to 13.16, add molecular column densities
 ## >>chng 21 sep 11, from 13.16 to 13.24, LAMDA update
 ## >>chng 23 may 15, from 13.24 to 13.08, GS updates 21 reactions to UMIST 2012
 ## >>chng 24 apr 21, from 13.08 to 13.2, GS updates chemistry
 ## >>chng 24 oct 24, from 13.2 to 13.08, merge master
 ## >>chng 25 jan 26, from 13.08 to 13.2, merge master updated cham"
-monitor column density "HCS+"      13.2 
+## >>chng 25 jul 11, from 13.2 to 13.14, GS Si chemistry, UMIST 2022
+monitor column density "HCS+"      13.14 
 ## >>chng 21 apr 16, from 15.85 to 14.56, add molecular column densities
 ## >>chng 21 sep 11, from 14.56 to 14.13, LAMDA update
 monitor column density "HNC"       14.13
 ## >>chng 21 apr 16, from 12.26 to 7.232, add molecular column densities
 ## >>chng 23 sep 08, from 7.232 to 7.186, fix SQRTPI in Lya destprob
-monitor column density "HNO"       7.186  
+## >>chng 25 jul 11, from 7.186 to 7.234, GS Si chemistry, UMIST 2022
+monitor column density "HNO"       7.234  
 ## >>chng 21 apr 16, from 12.97 to 11.73, add molecular column densities
 ## >>chng 21 sep 11, from 11.73 to 11.79, LAMDA update
 monitor column density "HS+"       11.79  
 ## >>chng 21 apr 16, from 14.71 to 11.88, add molecular column densities
 ## >>chng 25 jan 15, from 11.88 to 11.84, GS removes destabilizing reactions, updates others to current UMIST
-monitor column density "HS"        11.84  
+## >>chng 25 jul 11, from 11.84 to 12.11, GS Si chemistry, UMIST 2022
+monitor column density "HS"        12.11  
 ## >>chng 21 apr 16, from 12.49 to 10.83, add molecular column densities
 monitor column density "N2+"       10.83  
 ## >>chng 21 apr 16, from 17.44 to 18.31, add molecular column densities
 monitor column density "N2"        18.31  
 ## >>chng 21 apr 16, from 13.95 to 13.03, add molecular column densities
 ## >>chng 21 sep 11, from 13.03 to 13.11, LAMDA update
-monitor column density "N2H+"      13.11
+## >>chng 25 jul 11, from 13.11 to 13.16, GS Si chemistry, UMIST 2022
+monitor column density "N2H+"      13.16
 ## >>chng 21 apr 16, from 11.03 to 8.465, add molecular column densities
 ## >>chng 24 jun 08, from 8.465 to 8.419, GS rm 3 TiO reactions
 ## >>chng 24 oct 24, from 8.419 to 8.461, merge master
@@ -909,30 +921,36 @@ monitor column density "NH2"       12.63
 monitor column density "NH3+"      10.69
 ## >>chng 21 apr 16, from 14.86 to 15.56, add molecular column densities
 ## >>chng 21 sep 11, from 15.56 to 15.52, LAMDA update
-monitor column density "NH3"       15.52  
+## >>chng 25 jul 11, from 15.52 to 15.47, GS Si chemistry, UMIST 2022
+monitor column density "NH3"       15.47  
 ## >>chng 21 apr 16, from 11.03 to 11.11, add molecular column densities
 ## >>chng 21 sep 11, from 11.11 to 11.21, LAMDA update
-monitor column density "NH4+"      11.21  
+## >>chng 25 jul 11, from 11.21 to 11.26, GS Si chemistry, UMIST 2022
+monitor column density "NH4+"      11.26  
 ## >>chng 21 apr 16, from 13.76 to 15.13, add molecular column densities
 ## >>chng 23 sep 08, from 15.13 to 15.08, fix SQRTPI in Lya destprob
-monitor column density "NO"        15.08
+## >>chng 25 jul 11, from 15.08 to 15.13, GS Si chemistry, UMIST 2022
+monitor column density "NO"        15.13
 ## >>chng 21 apr 16, from 11.47 to 11.02, add molecular column densities
 ## >>chng 21 sep 11, from 11.02 to 11.07, LAMDA update
 monitor column density "NS+"       11.07  
 ## >>chng 21 apr 16, from 14.72 to 10.97, add molecular column densities
 ## >>chng 23 may 15, from 10.97 to 12.01, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 26, from 12.01 to 11.96, merge master updated cham"
-monitor column density "NS"        11.96
+## >>chng 25 jul 11, from 11.96 to 12.05, GS Si chemistry, UMIST 2022
+monitor column density "NS"        12.05
 ## >>chng 21 apr 16, from 11.9 to 8.208, add molecular column densities
 ## >>chng 21 sep 11, from 8.208 to 7.075, LAMDA update
 ## >>chng 23 sep 08, from 7.075 to 7.017, fix SQRTPI in Lya destprob
-monitor column density "OCN"       7.017  
+## >>chng 25 jul 11, from 7.017 to 7.094, GS Si chemistry, UMIST 2022
+monitor column density "OCN"       7.094  
 ## >>chng 21 apr 16, from 10.98 to 16.82, add molecular column densities
 ## >>chng 23 may 15, from 16.82 to 16.9, GS updates 21 reactions to UMIST 2012
 ## >>chng 24 apr 21, from 16.9 to 16.82, GS updates chemistry
 ## >>chng 24 oct 24, from 16.82 to 16.9, merge master
 ## >>chng 25 jan 26, from 16.9 to 16.83, merge master updated cham"
-monitor column density "OCS"       16.83  
+## >>chng 25 jul 11, from 16.83 to 16.68, GS Si chemistry, UMIST 2022
+monitor column density "OCS"       16.68  
 ## >>chng 21 apr 16, from 10.33 to 11.39, add molecular column densities
 ## >>chng 23 sep 08, from 11.39 to 11.52, fix SQRTPI in Lya destprob
 monitor column density "OH+"       11.52  
@@ -946,7 +964,8 @@ monitor column density "SiH"       11.38
 monitor column density "SiH2+"     9.611  
 ## >>chng 21 apr 16, from 12.83 to 7.393, add molecular column densities
 ## >>chng 23 may 15, from 7.393 to 7.452, GS updates 21 reactions to UMIST 2012
-monitor column density "SiN+"      7.452  
+## >>chng 25 jul 11, from 7.452 to 7.382, GS Si chemistry, UMIST 2022
+monitor column density "SiN+"      7.382  
 ## >>chng 21 apr 16, from 13.61 to 11.89, add molecular column densities
 ## >>chng 23 mar 17, from 11.89 to 11.81, add SiS and Lamda model"
 ## >>chng 23 may 15, from 11.81 to 11.51, GS updates 21 reactions to UMIST 2012
@@ -954,13 +973,16 @@ monitor column density "SiN"       11.51
 ## >>chng 21 apr 16, from 11.25 to 11.98, add molecular column densities
 ## >>chng 21 sep 11, from 11.98 to 12.08, LAMDA update
 ## >>chng 25 jan 15, from 12.08 to 12.25, GS removes destabilizing reactions, updates others to current UMIST
-monitor column density "SiOH+"     12.25
+## >>chng 25 jul 11, from 12.25 to 12.31, GS Si chemistry, UMIST 2022
+monitor column density "SiOH+"     12.31
 ## >>chng 21 apr 16, from 10.1 to 12.34, add molecular column densities
 ## >>chng 21 sep 11, from 12.34 to 12.46, LAMDA update
-monitor column density "SO+"       12.46  
+## >>chng 25 jul 11, from 12.46 to 12.57, GS Si chemistry, UMIST 2022
+monitor column density "SO+"       12.57  
 ## >>chng 21 apr 16, from 13.18 to 17.38, add molecular column densities
 ## >>chng 23 may 15, from 17.38 to 17.42, GS updates 21 reactions to UMIST 2012
-monitor column density "SO"        17.42  
+## >>chng 25 jul 11, from 17.42 to 17.5, GS Si chemistry, UMIST 2022
+monitor column density "SO"        17.5  
 ## >>chng 21 jun 17, from 1 to 14.39, first run
 ## >>chng 21 sep 11, from 14.39 to 9.766, LAMDA update
 ## >>chng 21 nov 04, from 9.766 to 9.716, update mole co data
@@ -1027,7 +1049,8 @@ monitor "HNC " 1652.90m  line intensity -4.88
 ## >>chng 24 apr 21, from -6.377 to -6.257, GS updates chemistry
 ## >>chng 24 oct 24, from -6.257 to -6.377, merge master
 ## >>chng 25 jan 26, from -6.377 to -6.261, merge master updated cham"
-monitor "HCS+" 1755.88m  -6.261 line intensity
+## >>chng 25 jul 11, from -6.261 to -6.312, GS Si chemistry, UMIST 2022
+monitor "HCS+" 1755.88m  -6.312 line intensity
 ## >>chng 13 jun 27, from -7.453 to -4.903, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -4.903 to -4.94, update H3+ rates Indriola+ 2012
@@ -1069,7 +1092,8 @@ monitor "^13CO" 906.599m  -3.645 line intensity
 ## >>chng 21 sep 15, from -5.954 to -5.288, go back to unresolved model
 ## >>chng 21 nov 04, from -5.288 to -5.352, update mole co data
 ## >>chng 23 may 15, from -5.352 to -5.467, GS updates 21 reactions to UMIST 2012
-monitor "CN  " 880.858m  -5.467  line intensity
+## >>chng 25 jul 11, from -5.467 to -4.988, GS Si chemistry, UMIST 2022
+monitor "CN  " 880.858m  -4.988  line intensity
 ##
 # orion_hii_pdr.in
 # class hii pdr  

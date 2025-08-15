@@ -34,7 +34,8 @@ save element iron "blr_n09_p22_Z20.fe"
 # saving the emissivities should still work correctly though...
 save line emissivity "blr_n09_p22_Z20.ems"
 ## >>chng 13 jul 25, wl from 142.3A to 142.281A, increased wl precision to 6 sig. fig.
-Fe21 142.281A
+## >>chng 25 jul 25, wl from 142.281A to 142.280A, Fixed to match Del Zana+2025 clike data-C25 release
+Fe21 142.280A
 #### >>chng 22 jul 09, wl not present in Chianti v10 -- DISABLE
 ## Fe 8 270.0898A
 blnd  1666A

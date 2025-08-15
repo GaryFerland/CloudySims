@@ -56,9 +56,7 @@ t_version::t_version()
 		else
 		{
 			string pre_release;
-			regex relbranch_expr("^c\\d\\d_branch$");
-			smatch what2;
-			if( regex_match(firstPart, what2, relbranch_expr) )
+			if( firstPart == "release"s )
 			{
 				lgRelease = true;
 				pre_release = ", prerelease";

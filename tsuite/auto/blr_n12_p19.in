@@ -182,7 +182,8 @@ monitor line luminosity "he 2"  1640.41A 6.803 ##total He II Balmer-alpha 1640
 ## >>chng 19 jun 28, from 4.47 to 4.494, reintegrate iso_collisions branch
 ## >>chng 19 jul 30, from 4.494 to 4.53, split He I 2 ^3P_J
 ## >>chng 24 apr 22, from 4.53 to 4.506, Redefine unresolved escape prob. to averaged np-split probabilites
-monitor line luminosity "blnd"  1666 4.506 ##total O III] 1666
+## >>chng 25 jul 25, from 4.506 to 4.631, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line luminosity "blnd"  1666 4.631 ##total O III] 1666
 ## 
 ## >>chng 05 mar 12, from 4.511 to 4.482, RP merge He-like code
 ## >>chng 06 jul 18, from 4.482 to 4.531, RP major upgrade VS coll strengths

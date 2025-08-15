@@ -132,17 +132,34 @@ void RT_tau_inc(void)
 
 				if( ipISO == ipH_LIKE )
 				{
+					/* j-resolved lyman lines */
 					for( long nHi=2; nHi <= iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; nHi++ )
 					{
-						TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+ipExtraLymanLinesJ05[nelem][nHi];
+						TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+nHi;
 						(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
 						RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, nHi,
 							DopplerWidth[nelem] );
 
-						tr = ExtraLymanLinesJ15[nelem].begin()+ipExtraLymanLinesJ15[nelem][nHi];
+						tr = ExtraLymanLinesJ15[nelem].begin()+nHi;
 						(*tr).Emis().PopOpc() = (*(*tr).Lo()).Pop() - (*(*tr).Hi()).Pop()*(*(*tr).Lo()).g()/(*(*tr).Hi()).g();
 						RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, nHi,
 							DopplerWidth[nelem] );
+					}
+					/* H-like extra lyman lines */
+					for( long nHi=iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local+1; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++)
+					{
+						TransitionList::iterator tr = ExtraLymanLinesJ05[nelem].begin()+nHi;
+						(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
+
+						RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, nHi,
+							DopplerWidth[nelem] );
+
+						tr = ExtraLymanLinesJ15[nelem].begin()+nHi;
+						(*tr).Emis().PopOpc() = iso_sp[ipISO][nelem].st[0].Pop();
+
+						RT_line_one_tauinc(*tr, -1 ,ipISO, nelem, nHi,
+							DopplerWidth[nelem] );
+
 					}
 				}
 				else if( ipISO == ipHE_LIKE )

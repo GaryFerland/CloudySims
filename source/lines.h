@@ -116,9 +116,8 @@ struct t_LineSave : public module {
 	/** index to number of comments printed within the block of lines */
 	long int nComment;
 
-	/** there are three types of calls to lines() 
-	 * ipass = -1, first call, only count number off lines
-	 * ipass =  0, second pass, save labels and wavelengths
+	/** there are two types of calls to lines() 
+	 * ipass =  0, first pass, save labels and wavelengths
 	 * ipass =  1, integrate intensity*/
 	long int ipass;
 
@@ -146,18 +145,19 @@ struct t_LineSave : public module {
 	/** save rec coefficient data for recombination lines of C, N, O */
 	realnum RecCoefCNO[4][NRECCOEFCNO];
 
-	long findline(const LineID& line);
+	long findline(const LineID& line, bool lgQuiet=false);
 
 	/** number of lines allocated in emission line stack
 	 * must not change between iterations or grid points */
 	vector<LinSv> lines;
-	vector<realnum> m_wavelength;
+	vector<t_wavl> m_twav;
 	vector<size_t> SortWL;
 	void clear()
 	{
 		lines.clear();
-		m_wavelength.clear();
+		m_twav.clear();
 	}
+	size_t size() const;
 	void resize(long nlines);
 	
 	void setSortWL();
@@ -165,16 +165,16 @@ struct t_LineSave : public module {
 			  bool lgAdd, t_wavl wavelength, const TransitionProxy& tr);
 	realnum wavlVac(long index) const
 	{
-		return m_wavelength[index];
+		return m_twav[index].wavlVac();
 	}
 	t_wavl twav(long index) const
 	{
-		return t_vac(wavlVac(index));
+		return m_twav[index];
 	}
 
-	void resetWavlVac( long index, realnum wl )
+	void resetWavlVac( long index, t_wavl wl )
 	{
-		m_wavelength[index] = wl;
+		m_twav[index] = wl;
 	}
 
 	bool lgIsoContSubSignif;
@@ -214,12 +214,12 @@ public:
 		return m_chSumTyp;
 	}
 
-	/** the four char string label for the line */
+	/** the label for the line */
 	const char *chALab() const
 	{
 		return m_chALab;
 	}
-	/** the four char string label for the line, all caps */
+	/** the label for the line, all caps */
 	const char *chCLab() const
 	{
 		return m_chCLab;
@@ -238,7 +238,6 @@ public:
 	{
 		return	m_chSumTyp;
 	}
-	void addComponent(const LineID& line);
 	void addComponentID(long id);
 	void makeBlend(const char* species, const t_wavl& wavelength, const realnum width);
 	void setBlendWavl();
@@ -353,7 +352,18 @@ public:
 
 	void prt(FILE *fp) const;
 	string label() const;
+	string labelQuoted() const;
 	string biglabel() const;
+	/**
+	 * @brief Checks if the last four characters of the line label match the given string.
+	 *
+	 * This function retrieves the label associated with the current line (via chALab()),
+	 * extracts its last four characters (or the entire label if it is shorter than four characters),
+	 * and compares it to the input string @p s.
+	 *
+	 * @param s The string to compare against the last four characters of the line label.
+	 * @return true if the last four characters of the label match @p s, false otherwise.
+	 */
 	bool isCat(const char *s) const;
 	bool isSeparator() const
 	{
@@ -455,10 +465,18 @@ public:
 #endif
 };
 
+inline size_t t_LineSave::size() const
+{
+	ASSERT( lines.size() == m_twav.size() );
+	return lines.size();
+}
+
 inline void t_LineSave::resize(long nlines)
 {
 	lines.resize(nlines);
-	m_wavelength.resize(nlines);
+	m_twav.resize(nlines);
 }
+
+long findComponent(const LineID& line, bool lgQuiet);
 
 #endif /* LINES_H_ */

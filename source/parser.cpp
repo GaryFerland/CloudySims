@@ -1466,6 +1466,36 @@ void DataParser::getLineID(LineID& line, bool lgAtStart)
 	line = LineID(chLabel, t_wavl(wave, type), indLo, indHi, ELo);
 }
 
+bool DataParser::getLvlEnergy(double& En)
+{
+	// read a level energy from a data file
+	// experimental energies should be written as a plain number, e.g. 123.456
+	// theoretical energies should be written inbetween square brackets, e.g. [123.456]
+	// the return value is true if the value is theoretical, false otherwise
+
+	p_skipWS();
+	if( p_ls.good() )
+	{
+		bool lgTheo = ( p_ls.peek() == '[' );
+		if( lgTheo )
+		{
+			(void)p_ls.get();
+			getTokenOptionalImpl(p_ls, p_line, En);
+			if( p_ls.fail() )
+				errorAbort("getLvlEnergy failed to read level energy");
+			if( p_ls.peek() == ']' )
+				(void)p_ls.get();
+			else
+				errorAbort("expected character ']' here");
+		}
+		else
+			getToken(En);
+		return lgTheo;
+	}
+	else
+		errorAbort("getLvlEnergy failed to read level energy");
+}
+
 bool DataParser::lgEODMarker() const
 {
 	DEBUG_ENTRY( "DataParser::lgEODMarker()" );
@@ -1512,4 +1542,56 @@ void DataParser::warning(const string& msg, FILE *io)
 	p_showLocation(p_ptr, io);
 	// restore state flags to initial state
 	p_ls.flags(f);
+}
+
+namespace Time {
+	const double
+	        GIGAYEAR=YEAR*1.0e9,
+	        MEGAYEAR=YEAR*1.0e6,
+		MILLENIUM=YEAR*1000.,
+		CENTURY=YEAR*100.,
+		FORTNIGHT=DAY*14.,
+		WEEK=DAY*7.,
+		MINUTE=60.,
+		SECOND=1.;
+
+	KeyAction<UnitConverter> TimeUnits[] =
+	{
+		MakeKeyAction(" GYR", UnitConverter(GIGAYEAR)),
+		MakeKeyAction(" MYR", UnitConverter(MEGAYEAR)),
+		MakeKeyAction("MILL", UnitConverter(MILLENIUM)),
+		MakeKeyAction("CENT", UnitConverter(CENTURY)),
+		MakeKeyAction("YEAR", UnitConverter(YEAR)),
+		MakeKeyAction("MONT", UnitConverter(MONTH)),
+		MakeKeyAction("FORT", UnitConverter(FORTNIGHT)),
+		MakeKeyAction("WEEK", UnitConverter(WEEK)),
+		MakeKeyAction(" DAY", UnitConverter(DAY)),
+		MakeKeyAction("HOUR", UnitConverter(HOUR)),
+		MakeKeyAction("MINU", UnitConverter(MINUTE)),
+		MakeKeyAction("SECO", UnitConverter(SECOND)),
+	};
+
+	const size_t nUnits = sizeof(TimeUnits) / sizeof(TimeUnits[0]);
+}
+
+realnum parse_input_time( Parser &p )
+{
+	realnum value = (realnum)p.FFmtRead();
+
+	/* check if log of age */
+	if( p.nWord(" LOG") )
+	{
+		value = exp10(value);
+	}
+
+	parserProcess(p, Time::TimeUnits, Time::nUnits, &value);
+
+	return value;
+}
+
+realnum parse_input_time_unit( Parser &p )
+{
+	realnum value = 1.;
+	parserProcess( p, Time::TimeUnits, Time::nUnits, &value );
+	return value;
 }

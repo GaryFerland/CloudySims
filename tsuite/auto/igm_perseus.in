@@ -1,6 +1,16 @@
 title Perseus cluster
 # model of IGM in Perseus galaxy cluster inspired by Hitommi spectroscopy
+# RAD affects the intensity of 2e Fe Fe24 X
+# w 1.8504 A
+# X 1.8554 A
+# y 1.8595 A
+# z 1.8682 A
+# doublet ratio affected by line optical depths 2025A&A...694L..13G
+# Fe 26 1.77802A
+# Fe 26 1.78337A
 set save prefix "igm_perseus"
+# improve continuum resolution and use all levels for Fe23+
+init "XRISM.ini"
 #
 # assume gas is in collisional equilibrium
 coronal 4.6e7K
@@ -8,10 +18,16 @@ coronal 4.6e7K
 # commands for density & abundances =========
 hden -1.5
 #
-# commands controlling geometry  =========
-set dr 0
-stop zone 1
+stop column density 24.5
+# no scattering escape intensity
 #
+# RAD occurs with default setup
+# following would turn off RAD effect, included if commented out
+# set UTA off
+# RAD occurs with first ionization since large Li-like abundace, 
+# second has little RAD since 3e density is small
+element iron ionization 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.01 0 0 0
+# element iron ionization 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.5 0 0 0
 # adjust models to get higher accuracy
 database H-like element iron resolved levels 10
 database H-like element iron collapsed levels 50
@@ -36,69 +52,137 @@ save performance ".per"
 ## >>chng 19 jul 20, -27.72, first run
 ## >>chng 20 aug 26, from -27.72 to -27.47, He-like Fe collisions strengths updated to Si+2017
 ## >>chng 21 nov 02, from -27.47 to -27.45, fix bug with overresolving CS in isoseq
-monitor line luminosity "Fe25"    1.85040A -27.45
+## >>chng 25 jun 10, from 7.45 to 1, change luminosity to intensity
+monitor line "Fe25"    1.85040A 1
 #
 ## >>chng 19 jul 20, -27.81, first run
 ## >>chng 20 aug 26, from -27.81 to -27.88, He-like Fe collisions strengths updated to Si+2017
 ## >>chng 21 mar 16, wl from 1.85541A to 1.85540A, update NIST energies
-monitor line luminosity "Fe25"    1.85540A -27.88
+## >>chng 25 jun 10, from 7.88 to 0.2948, change luminosity to intensity
+## >>chng 25 jun 10, from 0.2948 to 0.1408, large N(H) to make lines thick
+monitor line "Fe25"    1.85540A 0.1408
 #
 ## >>chng 19 jul 20, -27.94, first run
 ## >>chng 20 aug 26, from -27.94 to -27.91, He-like Fe collisions strengths updated to Si+2017
-monitor line luminosity "Fe25"    1.85951A -27.91
+## >>chng 25 jun 10, from 7.91 to 0.2833, change luminosity to intensity
+monitor line "Fe25"    1.85951A 0.2833
 #
 ## >>chng 19 jul 20, -27.83, first run
 ## >>chng 20 aug 26, from -27.83 to -27.87, He-like Fe collisions strengths updated to Si+2017
-monitor line luminosity "Fe25"    1.86819A -27.87
+## >>chng 25 jun 10, from 7.87 to 0.3685, change luminosity to intensity
+## >>chng 25 jun 10, from 0.3685 to 0.6091, large N(H) to make lines thick
+monitor line "Fe25"    1.86819A 0.6091
 #
 ## >>chng 19 jul 20, -28.52, first run
-monitor line luminosity "Fe25"    1.57456A -28.52
+## >>chng 25 jun 10, from 8.52 to 0.0823, change luminosity to intensity
+## >>chng 25 jun 10, from 0.0823 to 0.0607, large N(H) to make lines thick
+monitor line "Fe25"    1.57456A 0.0607
 #
 ## >>chng 19 jul 20, -28.84, first run
 ## >>chng 19 aug 06, from -28.84 to -28.82, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 21 nov 02, from -28.82 to -28.65, fix bug with overresolving CS in isoseq
-monitor line luminosity "Fe25"    1.57317A -28.65
+## >>chng 25 jun 10, from 8.65 to 0.0728, change luminosity to intensity
+## >>chng 25 jun 10, from 0.0728 to 0.0787, large N(H) to make lines thick
+monitor line "Fe25"    1.57317A 0.0787
 #
 ## >>chng 19 jul 20, -28.95, first run
-monitor line luminosity "Fe25"    1.49513A -28.95
+## >>chng 25 jun 10, from 8.95 to 0.0324, change luminosity to intensity
+## >>chng 25 jun 10, from 0.0324 to 0.0296, large N(H) to make lines thick
+monitor line "Fe25"    1.49513A 0.0296
 #
 ## >>chng 19 jul 20, -29.23, first run
 ## >>chng 21 nov 02, from -29.23 to -29.13, fix bug with overresolving CS in isoseq
-monitor line luminosity "Fe25"    1.49460A -29.13
+## >>chng 25 jun 10, from 9.13 to 0.0241, change luminosity to intensity
+## >>chng 25 jun 10, from 0.0241 to 0.0342, large N(H) to make lines thick
+monitor line "Fe25"    1.49460A 0.0342
 #
 ## >>chng 19 jul 20, -28.03, first run
 ## >>chng 20 aug 25, wl from 1.78177A to 1.77982A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 24 feb 07, switched from FeKa to sum of Fe26 j-resolved and M1 transitions
-monitor line luminosity "Blnd"    1.77982A -28.03
+## >>chng 25 jun 10, from 8.03 to 1.372, change luminosity to intensity
+## >>chng 25 jun 10, from 1.372 to 2.368, large N(H) to make lines thick
+monitor line "Blnd"    1.77982A 2.368
+#
 ## >>chng 24 feb 07, add monitor
-monitor line luminosity "Fe26"	  1.78344A -28.51
+## >>chng 25 jun 10, from 8.51 to 0.4436, change luminosity to intensity
+## >>chng 25 jun 10, from 0.4436 to 1.1, large N(H) to make lines thick
+monitor line "Fe26"	  1.78344A 1.1
+##
 ## >>chng 24 feb 07, add monitor
-monitor line luminosity "Fe26"	  1.77802A -28.21
+## >>chng 25 jun 10, from 8.21 to 0.89, change luminosity to intensity
+## >>chng 25 jun 10, from 0.89 to 1.258, large N(H) to make lines thick
+monitor line "Fe26"	  1.77802A 1.258
+##
 ## >>chng 24 feb 07, add monitor
-monitor line luminosity "Fe26 M1" 1.78330A -29.79
+## >>chng 25 jun 10, from 9.79 to 0.038, change luminosity to intensity
+## >>chng 25 jun 10, from 0.038 to 0.0095, large N(H) to make lines thick
+monitor line "Fe26 M1" 1.78330A 0.0095
 #
 ## >>chng 19 jul 20, -28.91, first run
 ## >>chng 20 aug 25, wl from 1.50337A to 1.50273A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 1.50273A to 1.50248A, update NIST energies
 ## >>chng 21 apr 08, wl from 1.50248A to 1.50273A, up 1-e energies to np
-monitor line luminosity "Blnd"    1.50273A -28.91
+## >>chng 25 jun 10, from 8.91 to 0.2052, change luminosity to intensity
+## >>chng 25 jun 10, from 0.2052 to 0.2839, large N(H) to make lines thick
+monitor line "Blnd"    1.50273A 0.2839
 #
 ## >>chng 19 jul 20, -29.43, first run
 ## >>chng 19 aug 06, from -29.43 to -29.4, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 22, wl from 1.42541A to 1.42505A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 1.42505A to 1.42485A, update NIST energies
 ## >>chng 21 apr 08, wl from 1.42485A to 1.42505A, up 1-e energies to np
-monitor line luminosity "Blnd"    1.42505A -29.4
+## >>chng 25 jun 10, from 9.4 to 0.0677, change luminosity to intensity
+## >>chng 25 jun 10, from 0.0677 to 0.1011, large N(H) to make lines thick
+monitor line "Blnd"    1.42505A 0.1011
 #
 ## >>chng 19 jul 20, -29.74, first run
 ## >>chng 20 aug 22, wl from 1.39200A to 1.39177A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 mar 16, wl from 1.39177A to 1.39164A, update NIST energies
 ## >>chng 21 apr 08, wl from 1.39164A to 1.39177A, up 1-e energies to np
-monitor line luminosity "Blnd"    1.39177A -29.74
+## >>chng 25 jun 10, from 9.74 to 0.0328, change luminosity to intensity
+## >>chng 25 jun 10, from 0.0328 to 0.0504, large N(H) to make lines thick
+monitor line "Blnd"    1.39177A 0.0504
 #
 ## >>chng 19 jul 20, -29.98, first run
 ## >>chng 20 aug 22, wl from 1.37451A to 1.37418A, switched from computed to tabulated energies for H and He isoseq
-monitor line luminosity "Blnd"    1.37418A -29.98 
+## >>chng 25 jun 22, from -29.98 to -4.336, first run with large column density
+monitor line luminosity "Blnd"    1.37418A -4.336 
+## >>chng 25 jun 01, from -3.289 to -28.64, first run
+## >>chng 25 jun 22, from -28.64 to -3.053, first run with large column density
+monitor line luminosity "Fe24"                1.86100A   -3.053
+## >>chng 25 jun 01, from -3.332 to -28.71, first run
+## >>chng 25 jun 22, from -28.71 to -2.7, first run with large column density
+monitor line luminosity "Ca20"                3.01849A   -2.7
+## >>chng 25 jun 01, from -3.405 to -28.75, first run
+## >>chng 25 jun 22, from -28.75 to -2.804, first run with large column density
+monitor line luminosity "Ar18"                3.73111A   -2.804
+## >>chng 25 jun 01, from -2.801 to -28.12, first run
+## >>chng 25 jun 22, from -28.12 to -2.206, first run with large column density
+monitor line luminosity "S 16"                4.72736A   -2.206
+## >>chng 25 jun 01, from -2.838 to -28.42, first run
+## >>chng 25 jun 22, from -28.42 to -2.222, first run with large column density
+monitor line luminosity "S 16"                4.73276A   -2.222
+## >>chng 25 jun 01, from -2.822 to -28.16, first run
+## >>chng 25 jun 22, from -28.16 to -2.227, first run with large column density
+monitor line luminosity "Si14"                6.18043A   -2.227
+## >>chng 25 jun 01, from -2.879 to -28.46, first run
+## >>chng 25 jun 22, from -28.46 to -2.253, first run with large column density
+monitor line luminosity "Si14"                6.18584A   -2.253
+## >>chng 25 jun 01, from -3.182 to -28.57, first run
+## >>chng 25 jun 22, from -28.57 to -2.571, first run with large column density
+monitor line luminosity "Mg12"                8.41921A   -2.571
+## >>chng 25 jun 01, from -3.309 to -28.87, first run
+## >>chng 25 jun 22, from -28.87 to -2.641, first run with large column density
+monitor line luminosity "Mg12"                8.42461A   -2.641
+## >>chng 25 jun 01, from -2.742 to -28.08, first run
+## >>chng 25 jun 22, from -28.08 to -2.531, first run with large column density
+monitor line luminosity "Fe24"                10.6190A   -2.531
+## >>chng 25 jun 01, from -2.934 to -28.28, first run
+## >>chng 25 jun 22, from -28.28 to -2.725, first run with large column density
+monitor line luminosity "Fe24"                10.6630A   -2.725
+## >>chng 25 aug 02, add this monitor
+monitor line luminosity "Blnd" 11 -3.1256 
+#
 #
 ****************************
 # agn_erseus.in, hot gas in the Perseus galaxy cluster
@@ -108,3 +192,5 @@ monitor line luminosity "Blnd"    1.37418A -29.98
 
 This is inspired by Hitomi observations of the Fe complex in Perseus
 and has been developed by Priyanka Chakraborty as part of her thesis.
+The 1e and 2e resonance lines are optically thick so the 1e Ka doublet
+ratio is not 2:1 and RAD affects one member of the 2d Ka multiplet

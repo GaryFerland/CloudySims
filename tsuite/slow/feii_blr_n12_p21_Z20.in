@@ -83,7 +83,8 @@ monitor line luminosity "he 2"  1640.41A 8.564 ##total He II Balmer-alpha 1640
 ## >>chng 13 dec 18, from 7.909 to 7.883, fixes to Federman shielding
 ## >>chng 14 jan 05, from 7.883 to 7.849, N to external databases
 ## >>chng 14 mar 26, from 7.849 to 7.72, move O to external databases
-monitor line luminosity "o  3"  1666.15 7.72 ##total O III] 1666
+## >>chng 25 jul 25, from 7.72 to 7.805, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line luminosity "o  3"  1666.15 7.805 ##total O III] 1666
 ##
 ##total of sum of CIII] 1908.73+
 ## >>chng 10 jun 29, from 4.541 to 7.733, init

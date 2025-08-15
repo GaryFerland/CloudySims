@@ -178,16 +178,16 @@ void RT_diffuse(void)
 
 		for( long nHi=2; nHi <= iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; nHi++ )
 		{
-			if( ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].ipCont() > 0 )
+			if( ExtraLymanLinesJ05[nelem][nHi].ipCont() > 0 )
 			{
-				set_xIntensity( ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]] );
-				ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].outline( 1.0, lgDoChecks );
+				set_xIntensity( ExtraLymanLinesJ05[nelem][nHi] );
+				ExtraLymanLinesJ05[nelem][nHi].outline( 1.0, lgDoChecks );
 			}
 
-			if( ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]].ipCont() > 0 )
+			if( ExtraLymanLinesJ15[nelem][nHi].ipCont() > 0 )
 			{
-				set_xIntensity( ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]] );
-				ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]].outline( 1.0, lgDoChecks );
+				set_xIntensity( ExtraLymanLinesJ15[nelem][nHi] );
+				ExtraLymanLinesJ15[nelem][nHi].outline( 1.0, lgDoChecks );
 			}
 		}
 

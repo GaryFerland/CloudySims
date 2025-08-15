@@ -34,6 +34,7 @@
 #include "lines_service.h"
 #include "service.h"
 #include "generic_state.h"
+#include "dynamics.h"
 
 bool lgMonitorsOK , lgBigBotch, lgPrtSciNot;
 t_monitorresults MonitorResults;
@@ -1684,6 +1685,65 @@ void ParseMonitorResults(Parser &p)
 			AssertError[nAsserts] = ErrorDefault;
 		}
 	}
+
+	/* monitor time */
+	else if( p.nMatch("TIME") )
+	{
+		/* Tc is the total elapsed time in cooling (dynamical) calc */
+		if( p.nMatch("ELAP") )
+		{
+			chAssertType[nAsserts] = "Tc";
+			chAssertLineLabel[nAsserts] = "time elapsed";
+		}
+		else
+		{
+			fprintf( ioQQQ, "No time option given\n" );
+			cdEXIT(EXIT_FAILURE);
+		}
+
+		/* NB NB
+		 * Function parse_input_time() can do much of what we do here,
+		 * but returns value in seconds, whereas we need to report it
+		 * in the units opted by the user.
+		 * If we were to use it, we'd have to convert it and the
+		 * predicted value back into user's units.
+		 * The approach below is simpler, as we only convert the
+		 * predicted value.
+		 */
+		AssertQuantity[nAsserts] = p.FFmtRead();
+		if( p.lgEOL() )
+			p.NoNumb("time");
+
+		/* store the unit time (inverse) to report results in the
+		 * units given in the command */
+		Param[nAsserts][0] = parse_input_time_unit( p );
+		if( Param[nAsserts][0] > 0. )
+			Param[nAsserts][0] = 1. / Param[nAsserts][0];
+		else
+			Param[nAsserts][0] = 1.;
+
+		/* optional error, default available */
+		AssertError[nAsserts] = p.FFmtRead();
+		if( p.lgEOL() )
+			AssertError[nAsserts] = ErrorDefault;
+
+		if( p.nWord(" LOG" ) )
+		{
+			AssertQuantity[nAsserts] =
+				exp10( AssertQuantity[nAsserts] );
+			lgQuantityLog[nAsserts] = true;
+		}
+
+		/* result cannot be zero */
+		if( fabs(AssertQuantity[nAsserts]) <= SMALLDOUBLE )
+		{
+			fprintf( ioQQQ,
+				"  The time is too small, or zero.  Check input\n");
+			fprintf( ioQQQ, " Sorry.\n" );
+			cdEXIT(EXIT_FAILURE);
+		}
+	}
+
 	/* monitor nothing - a pacifier */
 	else if( p.nMatch("NOTH") )
 	{
@@ -1832,8 +1892,9 @@ bool lgCheckMonitors(
 					if( j==ipDisambiguate[i][0] )
 						continue;
 
-					/* change chLabel to all caps to be like input chALab */
-					cap4(chCaps, LineSave.lines[j].chALab());
+					/* change chLabel to all caps to be like input */
+					strcpy(chCaps, LineSave.lines[j].chALab());
+					caps(chCaps);
 
 					/* look for wavelengths within 3 error bars.
 					 * For example, for a line entered in Angstroms with
@@ -2871,6 +2932,16 @@ bool lgCheckMonitors(
 			RelError[i] = AssertQuantity[i] -  PredQuan[i];
 		}
 
+		/* age of cooling (dynamical) calc */
+		else if( chAssertType[i] == "Tc" )
+		{
+			PredQuan[i] = dynamics.time_elapsed * Param[i][0];
+			if (AssertError[i] > 0.0)
+				RelError[i] = get_error_ratio( PredQuan[i], AssertQuantity[i] );
+			else
+				RelError[i] = PredQuan[i]-AssertQuantity[i] ;
+		}
+
 		else
 		{
 			fprintf( ioMONITOR, 
@@ -2928,6 +2999,7 @@ bool lgCheckMonitors(
 
 			LineSave.sig_figs = LineSave.sig_figs_max;
 
+			// NB NB - do not change the following line, the checkall.pl script picks this up!
 			fprintf( ioMONITOR, "=======================Line Disambiguation============================================================\n" );
 			fprintf( ioMONITOR, "                            Wavelengths                 ||                  Intensities               \n" );
 			fprintf( ioMONITOR, "Label               line     match1   match2   match3   ||   asserted     match1     match2     match3\n" );
@@ -2975,7 +3047,8 @@ bool lgCheckMonitors(
 					}
 				}
 			}
-			fprintf( ioMONITOR, "\n" );
+			// NB NB - do not change the following line, the checkall.pl script picks this up!
+			fprintf( ioMONITOR, "======================================================================================================\n\n" );
 
 			/* revert to original significant figures */
 			LineSave.sig_figs = sigfigsav;

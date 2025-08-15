@@ -249,7 +249,8 @@ monitor line "Ne 5" 3425.88A  0.423 error 0.1
 ## >>chng 13 jul 24, from 1.043 to 1.1525 Ne to external databases
 ## >>chng 22 jul 09, wl from 24.2065m to 24.3109m, upgrade to Chianti v10
 ## >>chng 22 jul 09, from 1.153 to 0.9099, upgrade to Chianti v10
-monitor line "Ne 5" 24.3109m  0.9099
+## >>chng 25 jul 25, wl from 24.3109m to 24.3108m, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line "Ne 5" 24.3108m  0.9099
 ## 
 ## >>chng 00 dec 28, from 2.33 to 2.45 improved 2-nu transport
 ## >>chng 01 may 10, from 2.45 to 2.313 ct network chng

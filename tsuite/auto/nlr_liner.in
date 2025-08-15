@@ -206,7 +206,8 @@ monitor line "blnd"  1666 0.3126
 ## >>chng 07 dec 06, from 3.393 to 3.573, changes in h-like collisions
 ## >>chng 11 nov 16, from 3.573 to 3.402, adjust newmole monitors
 ## >>chng 19 aug 06, from 3.402 to 3.56, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
-monitor line "o  3"  5006.84 3.56
+## >>chng 25 jul 25, from 3.56 to 3.307, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line "o  3"  5006.84 3.307
 ##
 ## >>chng 01 apr 02, from 0.352 to 0.334, improve H atom
 ## >>chng 04 jul 07, from 0.334 to 0.316, oh ct integ
@@ -217,7 +218,8 @@ monitor line "o  3"  5006.84 3.56
 ## >>chng 15 nov 03, from 0.2911 to 0.3069, update O III CS to Storey+14
 ## >>chng 16 aug 07, from 0.3069 to 0.3229, Fran bug fix
 ## >>chng 19 mar 01, change "Blnd" 4363 -> "O  3" 4363.21
-monitor line "O  3"  4363.21 0.3229
+## >>chng 25 jul 25, from 0.3229 to 0.3407, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line "O  3"  4363.21 0.3407
 ##
 ## >>chng 04 sep 06, from 0.070 to 0.0655, bug nej Auger
 ## >>chng 13 jul 26, wl from 15.55m to 15.5503m, increased wl precision to 6 sig. fig.

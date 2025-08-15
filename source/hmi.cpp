@@ -10,7 +10,6 @@ void t_hmi::zero()
 	H2_total = 0.;
 	H2_total_f = 0.f;
 	HD_total = 0.;
-	H2_frac_abund_set = 0.;
 	hmihet = 0.;
 	h2plus_exc_frac = 0.;
 	h2plus_heatcoef = 0.;

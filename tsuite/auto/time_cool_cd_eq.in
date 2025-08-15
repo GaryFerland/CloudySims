@@ -49,7 +49,8 @@ monitor line luminosity cumulative intrinsic "Fe24"      11.4263A   13.1374
 ## >>chng 22 jul 09, wl from 12.1612A to 12.1610A, upgrade to Chianti v10
 ## >>chng 22 jul 09, from 13.23 to 13.26, upgrade to Chianti v10
 monitor line luminosity cumulative intrinsic "Fe23"      12.1610A   13.26
-monitor line luminosity cumulative intrinsic "Fe20"      13.0520A   12.3831
+## >>chng 25 jul 25, from 12.38 to 12.36, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line luminosity cumulative intrinsic "Fe20"      13.0520A   12.36
 ## >>chng 22 jul 09, from 13.58 to 13.55, upgrade to Chianti v10
 monitor line luminosity cumulative intrinsic "Fe17"      17.0510A   13.55
 ## >>chng 22 jul 09, from 13.43 to 13.4, upgrade to Chianti v10
@@ -124,14 +125,16 @@ monitor line luminosity cumulative intrinsic "C  4"      1548.19A   12.0837
 monitor line luminosity cumulative intrinsic "C  3"      1906.68A   11.74
 ## >>chng 16 aug 07, from 11.26 to 11.28, Marios bug fixes
 monitor line luminosity cumulative intrinsic "O  3"      1666.15A   11.28
-monitor line luminosity cumulative intrinsic "O  3"      5006.84A   11.5285
+##>>chng 25 jul 30 from 11.5285 to 11.5500, stout clike isosequences
+monitor line luminosity cumulative intrinsic "O  3"      5006.84A   11.5500
 ## >>chng 16 aug 07, from 11.31 to 11.28, Marios bug fixes
 ## >>chng 16 nov 14, from 11.28 to 11.12, Reintegration of RydDep after several bug fixes
 ## >>chng 19 jun 28, from 11.12 to 11.42, reintegrate iso_collisions branch
 ## >>chng 19 aug 06, from 11.42 to 11.46, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 20 aug 22, wl from 1640.43A to 1640.40A, switched from computed to tabulated energies for H and He isoseq
 ## >>chng 21 apr 08, wl from 1640.40A to 1640.41A, up 1-e energies to np
-monitor line luminosity cumulative intrinsic "He 2"      1640.41A   11.46
+## >>chng 25 jul 25, from 11.46 to 11.44, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line luminosity cumulative intrinsic "He 2"      1640.41A   11.44
 ## >>chng 16 aug 07, from 11.72 to 11.74, Fran bug fix
 monitor line luminosity cumulative intrinsic "O  2"      3728.81A   11.74
 #

@@ -1,0 +1,112 @@
+title high ionization warm absorber model to test XRISM simulations
+set save prefix "agn_warm_hiu"
+init "XRISM.ini"
+iterate to converge
+normalize to "Blnd"  1.77982A
+#save xspec mtable ".fits"
+#save xspec atable ".fits"
+#save xspec atable incident continuum ".fits"
+#save xspec atable diffuse continuum ".fits"
+power law, slope=-0.8 hi cut 1000 Ryd low cut 10 Ryd
+xi 4.0 log
+hden 9.0 log power -2
+stop column density 24.0 log
+turbulence 100 km/s
+print line optical depths
+print line column
+print line sort wavelength
+print line faint  -1.
+# this will enable the largest possible number of higher ionization Fe lines
+database chianti levels max
+#
+save overview ".ovr" last
+save performance ".per"
+save element iron ionization ".fe"
+save monitors ".asr" last
+save overview ".ovr" last no hash separate
+#
+# these are affected by RAD 2020ApJ...901...68C
+# Fe 25 w 1.8504 A
+# Fe 25 X 1.8554 A
+# Fe 25 y 1.8595 A
+# Fe 25 z 1.8682 A
+# doublet ratio affected by line optical depths 2025A&A...694L..13G
+# Fe 26 1.77802A
+# Fe 26 1.78337A
+monitor line luminosity emergent "Blnd"                1.39177A    8.092
+monitor line luminosity emergent "Fe26"                1.42490A    8.063 
+monitor line luminosity emergent "Blnd"                1.42505A    8.290 
+monitor line luminosity emergent "Fe25"                1.49460A    8.094 
+monitor line luminosity emergent "Fe26"                1.50235A    8.227 
+monitor line luminosity emergent "Blnd"                1.50273A    8.493 
+monitor line luminosity emergent "Fe26"                1.50350A    8.153 
+monitor line luminosity emergent "Ni28"                1.53035A    8.175 
+monitor line luminosity emergent "Ni28"                1.53577A    8.037 
+monitor line luminosity emergent "Fe25"                1.57317A    8.292
+monitor line luminosity emergent "Fe25"                1.57456A    8.018 
+monitor line luminosity emergent "Ni27"                1.58840A    8.398 
+monitor line luminosity emergent "Blnd"                1.59656A    8.151 
+monitor line luminosity emergent "Ni27"                1.59656A    8.004 
+monitor line luminosity emergent "Fe26"                1.77802A    8.986 
+monitor line luminosity emergent "Blnd"                1.77982A    9.271 
+monitor line luminosity emergent "Blnd"                1.78337A    8.954 
+monitor line luminosity emergent "Fe26"                1.78344A    8.953 
+monitor line luminosity emergent "Fe25"                1.85040A    8.912
+monitor line luminosity emergent "Fe25"                1.85540A    8.596
+monitor line luminosity emergent "Blnd"                1.85951A    8.957  
+monitor line luminosity emergent "Fe25"                1.85951A    8.709 
+monitor line luminosity emergent "Fe24"                1.86100A    8.077
+monitor line luminosity emergent "Fe25"                1.86819A    8.894   
+monitor line luminosity emergent "Ca20"                3.01849A    8.218  
+monitor line luminosity emergent "Ca20"                3.02390A    8.073 
+monitor line luminosity emergent "Ar18"                3.73111A    8.153
+monitor line luminosity emergent "Ar18"                3.73651A    7.992  
+monitor line luminosity emergent "S 16"                3.99080A    8.049 
+monitor line luminosity emergent "S 16"                4.72736A    8.493 
+monitor line luminosity emergent "S 16"                4.73276A    8.408 
+monitor line luminosity emergent "Si14"                5.21682A    8.065 
+monitor line luminosity emergent "Blnd"                5.21719A    8.279 
+monitor line luminosity emergent "Si14"                6.18043A    8.496 
+monitor line luminosity emergent "Blnd"                6.18222A    8.758 
+monitor line luminosity emergent "Si14"                6.18584A    8.413 
+monitor line luminosity emergent "Mg12"                8.41921A    8.324 
+monitor line luminosity emergent "Mg12"                8.42461A    8.200 
+monitor line luminosity emergent "Fe26"                9.65247A    8.121 
+monitor line luminosity emergent "Ne10"                10.2389A    8.065 
+monitor line luminosity emergent "Fe24"                10.6190A    8.213 
+monitor line luminosity emergent "Fe24"                10.6630A    8.114 
+monitor line luminosity emergent "Ne10"                12.1321A    8.369 
+monitor line luminosity emergent "Ne10"                12.1375A    8.230 
+monitor line luminosity emergent "O  8"                16.0059A    8.161 
+monitor line luminosity emergent "O  8"                18.9689A    8.656 
+monitor line luminosity emergent "N  7"                24.7810A    8.065 
+monitor line luminosity emergent "C  6"                33.7360A    8.114 
+
+#This and the following commands are ignored because of the empty line.
+#This part of the file can be used for comments or notes.
+#save line list absolute ".lin" last no hash "linelist_fe.dat"
+#save physical condition ".phys" last no hash separate
+#save continuum ".con" last no hash separate
+#
+#save line list absolute "_lines_Fe25.dat" "Lines_Fe25.txt" last no hash units Angstroms
+#save line list absolute "_lines_Fe26.dat" "Lines_Fe26.txt" last no hash units Angstroms
+#
+#save line population "_Fe25.pop" "Lines_Fe25.txt" no hash last separate
+#save line population "_Fe26.pop" "Lines_Fe26.txt" no hash last separate
+#
+save element iron ionization "_Fe.ion" no hash last separate
+#
+save lines, optical some, "_Fe26-19.opt" last no hash units Angstroms separate
+Fe26 1.77802A
+Fe26 1.78344A
+Fe26 1.50235A
+Fe26 1.50350A
+Fe26 1.42490A
+Fe26 1.42534A
+Fe25 1.85040A
+Fe25 1.85540A
+Fe25 1.85951A
+Fe25 1.86819A
+Fe25 1.57317A
+Fe25 1.49460A
+end of lines

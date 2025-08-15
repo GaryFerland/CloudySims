@@ -270,6 +270,28 @@ void ParseSet(Parser &p)
 			}
 		}
 
+		else if( p.nMatch("TIO") )
+		{
+			/* turn on TiO chemistry, which is off by default */
+			if( p.nMatch(" ON ") )
+			{
+				mole_global.lgTiO = true;
+			}
+			else if( p.nMatch(" OFF") )
+			{
+				mole_global.lgTiO = false;
+			}
+			else
+			{
+				/* this is the default when command used - true */
+				mole_global.lgTiO = true;
+			}
+		}
+
+		else if( p.nMatch("STAN") )
+		{
+			mole_global.lgStancil = true;
+		}
 		else
 		{
 			/* should not have happened ... */
@@ -933,41 +955,6 @@ void ParseSet(Parser &p)
 			if (hmi.Tad <= 10. && !p.nMatch("LINE"))
 				hmi.Tad = exp10(hmi.Tad);
 		}
-
-		else if (p.nMatch("FRAC"))
-		{
-			/* this is special option to force H2 abundance to value for testing
-			 * this factor will multiply the hydrogen density to become the H2 density
-			 * no attempt to conserve particles, or do the rest of the molecular equilibrium
-			 * set consistently is made */
-			hmi.H2_frac_abund_set = p.FFmtRead();
-			if (p.lgEOL())
-				p.NoNumb("H2 fractional abundance");
-
-			/* a number <= 0 is the log of the ratio */
-			if (hmi.H2_frac_abund_set <= 0.)
-				hmi.H2_frac_abund_set = exp10(hmi.H2_frac_abund_set);
-			/* don't let it exceed 0.5 */
-			/* >>chng 03 jul 19, from 0.5 to 0.4999, do not want atomic density exactly zero */
-			hmi.H2_frac_abund_set = MIN2(0.49999, hmi.H2_frac_abund_set);
-		}
-#if 0
-		else if( p.nMatch("FORM") && p.nMatch("SCAL") )
-		{
-			/* this is special option to scale H2 formation rate. 
-			 * In the fully molecular or fully ionized limits,
-			 * this should supercede the above "FRAC" option because
-			 * it allows the same thing without breaking the chemistry
-			 * or any conservation checks */
-			hmi.H2_formation_scale = p.FFmtRead();
-			if (p.lgEOL())
-				p.NoNumb("H2 formation scale");
-
-			/* a number <= 0 is the log of the ratio */
-			if (hmi.H2_formation_scale <= 0.)
-				hmi.H2_formation_scale = exp10(hmi.H2_frac_abund_set);
-		}
-#endif
 	}
 
 	/* this is a scale factor that changes the n(H0)*1.7e-4 that is added to the

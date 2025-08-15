@@ -167,7 +167,8 @@ monitor line luminosity "he 2"  1640.41A 6.609 ##total He II Balmer-alpha 1640
 ## >>chng 13 jul 15, from 4.535 to 4.487, move to Stout/Chianti for Si, botches are due to improved atomic data
 ## >>chng 13 sep 12, from 4.487 to 4.418, database Mg
 ## >>chng 14 may 24, from 4.418 to 4.354, allow all NIST levels to be used
-monitor line luminosity "blnd"  1666 4.354 ##total O III] 1666
+## >>chng 25 jul 25, from 4.354 to 4.457, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line luminosity "blnd"  1666 4.457 ##total O III] 1666
 ## 
 ## >>chng 06 aug 09, from 4.551 to 4.591 Meudon 06, Bowen change
 ## >>chng 07 jul 25, from 4.591 to 4.552, bugfix pvh FeII tau r1290

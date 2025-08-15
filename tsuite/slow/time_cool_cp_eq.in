@@ -162,7 +162,8 @@ monitor line luminosity cumulative intrinsic "C  4"      1548.19A   12.3018
 monitor line luminosity cumulative intrinsic "C  3"      1906.68A   11.95
 ## >>chng 16 nov 14, from 11.48 to 11.5, Reintegration of RydDep after several bug fixes
 monitor line luminosity cumulative intrinsic "O  3"      1666.15A   11.5
-monitor line luminosity cumulative intrinsic "O  3"      5006.84A   11.7472
+## >>chng 25 jul 30, from 11.75 to 11.77, merge master to TiO
+monitor line luminosity cumulative intrinsic "O  3"      5006.84A   11.77
 ## >>chng 16 aug 17, from 11.52 to 11.5, bugfix at r11237
 ## >>chng 16 nov 14, from 11.5 to 11.34, Reintegration of RydDep after several bug fixes
 ## >>chng 17 may 26 update Rydberg constant 1640.00 -> 1640.43

@@ -47,8 +47,8 @@ void prtmet(void)
 							if(lgIsLymanLineResolved(iso_sp[ipISO][nelem].trans(ipHi,ipLo),
 											ExtraLymanLinesJ05[nelem][N_(ipHi)], ExtraLymanLinesJ15[nelem][N_(ipHi)]))
 							{
-								prme(false, ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]]);
-								prme(false, ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]]);
+								prme(false, ExtraLymanLinesJ05[nelem][N_(ipHi)]);
+								prme(false, ExtraLymanLinesJ15[nelem][N_(ipHi)]);
 							}
 							else
 								prme(false,iso_sp[ipISO][nelem].trans(ipHi,ipLo));
@@ -59,29 +59,35 @@ void prtmet(void)
 		}
 
 		/* extra lyman lines H-like */
+		long ipISO=ipH_LIKE;
+		for( long nelem=ipISO; nelem < LIMELM; nelem++ )
 		{
-			long ipISO=ipH_LIKE;
-
-			for( long nelem=ipISO; nelem < LIMELM; nelem++ )
+			if( dense.lgElmtOn[nelem] )
 			{
-				if( dense.lgElmtOn[nelem] )
+				if( (*iso_sp[ipISO][nelem].trans(1,0).Lo()).ColDen() <= 0. )
+                                            continue;
+				/* print one-electron doublets nP Lyman sequence optical depths */
+				for( long nHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 				{
-					if( (*iso_sp[ipISO][nelem].trans(1,0).Lo()).ColDen() <= 0. )
-                                                continue;
-					/* print one-electron doublets nP Lyman sequence optical depths */
-					for( long nHi=iso_sp[ipISO][nelem].numLevels_local; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
-					{
-						if( lgIsLymanLineResolved(ExtraLymanLinesJ05[nelem][nHi],
-										ExtraLymanLinesJ05[nelem][nHi], ExtraLymanLinesJ15[nelem][nHi]) )
-						{
-							prme(false, ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]]);
-							prme(false, ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]]);
-						}
-					}
+					prme(false, ExtraLymanLinesJ05[nelem][nHi]);
+					prme(false, ExtraLymanLinesJ15[nelem][nHi]);
 				}
 			}
 		}
 
+		/* extra lyman lines He-like */
+		ipISO = ipHE_LIKE;
+		for( long nelem=ipISO; nelem < LIMELM; nelem++ )
+		{
+			if( dense.lgElmtOn[nelem] )
+			{
+				/* print two-electron doublets nP Lyman sequence optical depths */
+				for( long ipHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; ipHi < iso_ctrl.nLyman[ipISO]; ipHi++ )
+				{
+					prme(false, ExtraLymanLinesHeLike[nelem][ipExtraLymanLinesHeLike[nelem][ipHi]]);
+				}
+			}
+		}
 		/* print main lines optical depths */
 		for( long i=0; i < nWindLine; i++ )
 		{

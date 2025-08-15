@@ -37,8 +37,6 @@ void check_co_ion_converge(void);
 STATIC void funjac(GroupMap &MoleMap, const valarray<double> &b2vec,
 						 double * const ervals, double * const amat, const bool lgJac, bool *lgConserve);
 
-STATIC void mole_h_fixup(void);
-
 STATIC void grouped_elems(const double bvec[], double mole_elems[]);
 
 #define SMALLABUND 1e-24
@@ -53,15 +51,6 @@ double mole_solve()
 	GroupMap MoleMap( nuclide_list.size() );
 
 	DEBUG_ENTRY( "mole_solve()" );
-
-	if (hmi.H2_frac_abund_set>0.)
-	{
-		mole_h_fixup();
-		fixit("Need to treat hmi.H2_frac_abund_set in revised network"); 
-		fprintf(stderr,"Need to treat hmi.H2_frac_abund_set in revised network\n");
-		fprintf(stderr,"%g\n",hmi.H2_frac_abund_set);
-		exit(-1);
-	}
 
 	ASSERT(lgElemsConserved());
 
@@ -274,63 +263,6 @@ void check_co_ion_converge(void)
 		conv.setConvIonizFail(
 			"CO O1 con", dense.xIonDense[ipOXYGEN][1],
 			findspecieslocal("O+")->den);
-	}
-}
-
-STATIC void mole_h_fixup(void)
-{
-	long int mol;
-	
-	/* there are two "no molecules" options, the no co, which turns off everything,
-	 * and the no n2, which only turns off the h2.  in order to not kill the co
-	 * part we still need to compute the hydrogen network here, and then set h2 to
-	 * small values */
-	/* >> chng 03 jan 15 rjrw -- suddenly switching off molecules confuses the solvers... */
-	DEBUG_ENTRY( "mole_h_fixup()" );
-
-	/* >>chng 02 jun 19, add option to force H2 abundance, for testing h2 molecules,
-	 * hmi.H2_frac_abund_set is fraction in molecules that is set by set h2 fraction command */
-	if( hmi.H2_frac_abund_set>0.)
-	{
-		for(mol=0;mol<mole_global.num_calc;mol++) 
-		{
-			mole.species[mol].den = 0.;
-		}
-		/* >>chng 03 jul 19, from 0 to SMALLFLOAT, to pass asserts in ConvBase,
-		 * problem is that ion range has not been reset for hydrogen */
-		dense.xIonDense[ipHYDROGEN][0] = dense.xIonDense[ipHYDROGEN][1] = 
-			2.f*SMALLFLOAT*dense.gas_phase[ipHYDROGEN];
-		/* put it all in the ground state */
-		findspecieslocal("H2")->den = (realnum)(dense.gas_phase[ipHYDROGEN] * hmi.H2_frac_abund_set);
-		findspecieslocal("H2*")->den = 0.;
-
-		hmi.H2_total = findspecieslocal("H2")->den + findspecieslocal("H2*")->den;
-		/* first guess at ortho and para densities */
-		h2.ortho_density = 0.75*hmi.H2_total;
-		h2.para_density = 0.25*hmi.H2_total;
-		{
-			hmi.H2_total_f = (realnum)hmi.H2_total;
-			h2.ortho_density_f = (realnum)h2.ortho_density;
-			h2.para_density_f = (realnum)h2.para_density;
-		}
-
-		hmi.hmihet = 0.;
-		hmi.h2plus_exc_frac = 0.;
-		hmi.h2plus_heatcoef = 0.;
-		hmi.h2plus_heat = 0.;
-		hmi.H2Opacity = 0.;
-		hmi.hmicol = 0.;
-		hmi.HeatH2Dish_TH85 = 0.;
-		hmi.HeatH2Dexc_TH85 = 0.;
-		hmi.deriv_HeatH2Dexc_TH85 = 0.;
-		hmi.hmidep = 1.;
-
-		for( size_t nd=0; nd < gv.bin.size(); nd++ )
-		{
-			gv.bin[nd].rate_h2_form_grains_used = 0.;
-		}
-
-		return;
 	}
 }
 

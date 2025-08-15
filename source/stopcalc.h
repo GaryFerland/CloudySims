@@ -60,6 +60,10 @@ struct t_StopCalc {
 	 * set with stop time temperature command, used to stop time dependent sims */
 	realnum TempLoStopIteration;
 
+	/** TimeStop is total elapsed time in time dependent sim
+	 * set with stop time command */
+	realnum TimeStop;
+
 	/** STOP EFRAC sets this limiting ratio of electron to H densities */
 	realnum StopElecFrac;
 

@@ -95,6 +95,9 @@ NEW_CONSTANT( MBOL_ZERO_LUMINOSITY, 3.0128e35 );
 /* >>refer	phys	const	https://pdg.lbl.gov/2021/reviews/rpp2021-rev-astrophysical-constants.pdf */
 NEW_CONSTANT( AU, 1.49597870700e13 );
 
+/** hour, s */
+NEW_CONSTANT( HOUR, 3600. );
+
 /*********************************************************************
  * fundamental constants go next, eventually rest should be defined  *
  * in terms of these, these are CODATA 2022 values.                  *
@@ -159,6 +162,15 @@ NEW_CONSTANT( ATOMIC_MASS_UNIT, 1.66053906892e-24 );
  *                                                                   *
  * use the PRINT CONSTANTS command to get precise values             *
  *********************************************************************/
+
+/** day, s */
+NEW_CONSTANT( DAY, 24 * HOUR );
+
+/** julian year, s */
+NEW_CONSTANT( YEAR, 365.25 * DAY );
+
+/* month, s */
+NEW_CONSTANT( MONTH, YEAR / 12. );
 
 /** molar mass constant, g/mol */
 NEW_CONSTANT( MOL_MASS_CONST, AVOGADRO*ATOMIC_MASS_UNIT );

@@ -170,7 +170,8 @@ monitor line luminosity "he 2"  1640.41A 7.85 ##total He II Balmer-alpha 1640
 ## >>chng 16 aug 07, from 7.016 to 7.14, Fran bug fix
 ## >>chng 19 jul 30, from 7.14 to 7.185, split He I 2 ^3P_J
 ## >>chng 23 sep 08, from 7.185 to 7.125, fix SQRTPI in Lya destprob
-monitor line luminosity "blnd"  1666 7.125 error 0.1
+## >>chng 25 jul 25, from 7.125 to 7.208, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line luminosity "blnd"  1666 7.208 error 0.1
 ##
 ## >>chng 03 oct 04, from 7.044 to 7.066, atom2 ots
 ## >>chng 04 may 19, from 7.066 to 7.023 RP update helike sequence

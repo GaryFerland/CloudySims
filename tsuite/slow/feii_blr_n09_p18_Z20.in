@@ -98,7 +98,8 @@ monitor line luminosity "he 2"  1640.41A 5.507 ##total He II Balmer-alpha 1640
 ## >>chng 13 jan 10, from 5.355 to 5.374, fix in-zone continuum shielding
 ## >>chng 15 jan 14, from 5.374 to 5.404, FeII damping parameter fix
 ## >>chng 23 jun 27, from 5.404 to 5.465, update Fe+ model to Smyth+19
-monitor line luminosity "o  3"  1666.15 5.465 ##total O III] 1666
+## >>chng 25 jul 25, from 5.465 to 5.437, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line luminosity "o  3"  1666.15 5.437 ##total O III] 1666
 ## 
 ## >>chng 06 nov 29, from 6.035 to 6.115, Badnell DR
 ## >>chng 08 mar 17, from 6.115 to 6.087, RP update line overlap

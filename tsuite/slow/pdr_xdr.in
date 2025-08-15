@@ -134,7 +134,8 @@ monitor column density OH   16.8 error 0.1
 ## >>chng 14 mar 26, from 14.5 to 14.42, move O to external databases
 ## >>chng 21 nov 04, from 14.42 to 14.51, update co mole data
 ## >>chng 23 may 15, from 14.51 to 14.44, GS updates 21 reactions to UMIST 2012
-monitor column density CN   14.44 error 0.1
+## >>chng 25 jul 11, from 14.44 to 14.63, GS Si moles, UMIST2022
+monitor column density CN   14.63 error 0.1
 ## >>chng 11 jul 22, from 10 to 16.13, first run
 ## >>chng 13 feb 16, from 16.13 to 16.17, update iso recom files
 ## >>chng 13 nov 05, from 16.17 to 16.21, convergence branch changes
@@ -289,7 +290,8 @@ monitor "^13CO" 906.599m  -5.185 line intensity
 ## >>chng 21 sep 15, from -7.976 to -6.985, go back to unresolved model
 ## >>chng 21 nov 04, from -6.985 to -6.927, update co mole data
 ## >>chng 23 may 15, from -6.927 to -7.003, GS updates 21 reactions to UMIST 2012
-monitor "CN  " 880.858m  -7.003  line intensity
+## >>chng 25 jul 11, from -7.003 to -6.785, GS Si moles, UMIST2022
+monitor "CN  " 880.858m  -6.785  line intensity
 #
 # pdr_xdr.in
 # class pdr 

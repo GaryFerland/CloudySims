@@ -43,7 +43,8 @@ save convergence reason "blr_n14_p18.cvr"
 ## 
 ## >>chng 18 jan 13, from 3.03 to 0.8557, first run
 ## >>chng 19 mar 01, from 0.8557 to -3.696, remove recombination, etc, components from blends (#415)
-monitor line luminosity "blnd"  1666 -3.696 error 0.1  ##total O III] 1666
+## >>chng 25 jul 25, from -3.696 to -3.532, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line luminosity "blnd"  1666 -3.532 error 0.1  ##total O III] 1666
 ##
 ## >>chng 18 jan 13, from 2.947 to -0.1831, first run
 ## >>chng 19 mar 01, from -0.1831 to -0.7269, remove recombination, etc, components from blends (#415)

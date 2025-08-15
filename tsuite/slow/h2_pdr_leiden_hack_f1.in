@@ -91,7 +91,8 @@ monitor column density OH   16.19 error 0.1
 ## >>chng 20 aug 03, from 13.35 to 13.29, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from 13.29 to 13.74, LAMDA update
 ## >>chng 21 nov 04, from 13.74 to 14.17, update co mole data
-monitor column density CH   14.17 error 0.1
+## >>chng 25 jul 11, from 14.17 to 14.13, GS Si moles, UMIST2022
+monitor column density CH   14.13 error 0.1
 ## 
 ## >>chng 05 jun 21, from 21.83 to 21.79, chng cr, grn deex
 ## >>chng 11 nov 16, from 21.79 to 21.74, adjust newmole monitors

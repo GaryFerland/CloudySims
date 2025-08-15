@@ -34,7 +34,10 @@ save monitors "limit_eden.asr" last
 ## >>chng 11 jul 12, from 9.005 to 9.049, enable fit to Badnell DR suppression
 ## >>chng 24 apr 21, from 9.049 to 9.078, GS updates chemistry
 ## >>chng 25 mar 04, from 9.078 to 9.044, turn off Ti chemistry for C25 rc1
-monitor eden 9.044
+## >>chng 25 jul 30, from 9.044 to 9.068, marginal botch gcc nebula
+## >>chng 25 jul 30, from 9.044 to 9.068, marginal botch gcc nebula
+## >>chng 25 jul 30, from 9.068 to 9.0436 llvm mac; use 9.0558
+monitor eden 9.0558
 ## 
 ## >>chng 06 nov 24, from 0.769 to 0.634, turn on Badnell RR
 ## >>chng 06 nov 29, from 0.634 to 0.521, Badnell DR turned on
@@ -42,7 +45,9 @@ monitor eden 9.044
 ## >>chng 15 mar 07, from 0.5811 to 0.5534, merging newmesh branch
 ## >>chng 24 apr 21, from 0.5534 to 0.5086, GS updates chemistry
 ## >>chng 25 mar 04, from 0.5086 to 0.5499, turn off Ti chemistry for C25 rc1
-monitor ionization fraction magnesium 2 0.5499
+## >>chng 25 jul 30, from 0.5499 to 0.5198, marginal botch gcc nebula
+## >>chng 25 jul 30, from 0.5198 to 0.5505, llvm mac; use 0.5295
+monitor ionization fraction magnesium 2 0.5295
 ## 
 ## >>chng 06 nov 24, from 0.050 to 0.038, turn on Badnell RR
 ## >>chng 06 nov 29, from 0.038 to 0.031, Badnell DR turned on
@@ -52,7 +57,9 @@ monitor ionization fraction magnesium 2 0.5499
 ## >>chng 15 mar 07, from 0.0382 to 0.034, merging newmesh branch
 ## >>chng 24 apr 21, from 0.034 to 0.0307, GS updates chemistry
 ## >>chng 25 mar 04, from 0.0307 to 0.0336, turn off Ti chemistry for C25 rc1
-monitor ionization fraction silicon 2 0.0336
+## >>chng 25 jul 30, from 0.0336 to 0.0314, marginal botch gcc nebula
+## >>chng 25 jul 30, from 0.0314 to 0.0337, llvm mac, use 0.0326
+monitor ionization fraction silicon 2 0.0326
 ## 
 ## >>chng 06 nov 24, from 0.676 to 0.625, turn on Badnell RR
 ## >>chng 06 nov 29, from 0.625 to 0.589, Badnell DR turned on

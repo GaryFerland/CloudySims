@@ -15,8 +15,6 @@ print line precision 6
 print constants
 # print RR and DR rates
 print recombination
-# print the past to the data directory
-print path 
 # the citation for the current version of the code
 print citation
 # following prints column densities 

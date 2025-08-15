@@ -208,6 +208,27 @@ namespace {
 		return 0.;
 	}
 	/*hmrate - evalurate UMIST expression for rate coefficient */
+	/**
+	 * @brief Computes the reaction rate for a given molecular reaction using UMIST formalism.
+	 *
+	 * This function calculates the rate coefficient for a molecular reaction based on the UMIST database
+	 * formula:
+	 *   rate = alpha * (T/300)^beta * exp(-gamma/T)
+	 * where:
+	 *   - alpha = rate->a
+	 *   - beta  = rate->b
+	 *   - gamma = rate->c
+	 *   - T     = electron temperature (with possible non-equilibrium offset)
+	 *
+	 * The temperature used in the calculation is adjusted by the function noneq_offset(rate),
+	 * which accounts for non-equilibrium effects specific to the reaction. This offset allows
+	 * the rate calculation to reflect physical conditions where the electron temperature may
+	 * differ from the kinetic temperature due to non-equilibrium processes.
+	 * Normally zero, it is set with SET CHEMISTRY NON-EQUILIBRIUM command
+	 *
+	 * @param rate Pointer to a mole_reaction structure containing the reaction parameters.
+	 * @return The computed reaction rate coefficient [cm^3 s^-1].
+	 */
 	double hmrate(const mole_reaction *rate) 
 	{
 		double te;
@@ -215,30 +236,20 @@ namespace {
 		DEBUG_ENTRY( "hmrate()" );
 		/* the UMIST equation is
 		 * rate = alpha \times (T/300)^beta \times exp( -gamma/T 
-		 alpha==rate->a; beta== rate->b; gamma==rate->c */  
+		 alpha==rate->a; beta== rate->b; gamma==rate->c
+
+		 rate = rate->a * pow( te/300. , rate->b) * exp( -rate->c/te )
+		 where te is the electron temperature in K.
+		 */  
 		
+		 /* noneq_offset is possible temperature hack to account for
+		  * turbulent heating */
+		/* option to use effective temperature as defined in
+		 * >>refer	CO	chemistry	Zsargo, J. & Federman, S. R. 2003, ApJ, 589, 319
+		 * By default, this is zero - changed with set chemistry command */
 		te = phycon.te+noneq_offset(rate);
-		/* UMIST rates are simple temperature power laws that
-	 	 * can become large at the high temperatures Cloudy
-	 	 * may encounter. Do not extrapolate to above T>5e3K */
-		/* rate-b is the power beta in (T/300)^beta, positive beta
-		 * can diverge at high temperatures */
-		/* THIS CODE MUST BE KEPT PARALLEL WITH HMRATE4 IN MOLE.H */ 
-		if( rate->b > 0.)	
-			te = min(te, 5000.);
-		if(rate->b <0.)
-			te = max(te, 10.);
-
-		/* rate->c is gamma in expontntial */
-		if( rate->c < 0. )
-			te = max(te,10.);
-
-		double r = 1.;
-		if( rate->b != 0. )
-			r *= pow(te/300.,rate->b);
-		if( rate->c != 0. )
-			r *= exp(-rate->c/te);
-		return r;
+		/** hmrate is multiplied by rate->a when used so we do not pass rate->a as first coefficient */
+		return hmrate4( 1., rate->b, rate->c , te);
 	}
 	
 	class mole_reaction_hmrate_exo : public mole_reaction
@@ -1205,19 +1216,39 @@ namespace {
 			}
 	};
 
+	/**
+	 * @brief Calculates the rate of H2 dissociation in the gas phase.
+	 *
+	 * This function computes the dissociation rate of molecular hydrogen (H2) in the gas phase,
+	 * based on the provided reaction rate data.
+	 *
+	 * @param rate Pointer to a mole_reaction structure containing the reaction parameters.
+	 * NB this is not currently used, hard coded rate in place
+	 * @return The calculated dissociation rate of H2 as a double.
+	 */
 	double rh2g_dis_h2(const mole_reaction *rate)
 	{
 		DEBUG_ENTRY( "rh2g_dis_h2()" );
+		/** resolve ground and excited states when big H2 is enabled,
+		 * use ground dissociation rate here 
+		 */
 		if( h2.lgEnabled && h2.lgEvaluated && hmi.lgH2_Chemistry_BigH2 )
-		{
+		{ 
 			return h2.Average_collH2_dissoc_g;
 		}
 		else
 		{
+			/** GS reports that Palla+83 do not give this reactions. She was not able to find
+			 * the rate fits given in the call to hmrate4 in the literature.
+			 * Does comment mean we derived the rate from detailed balance?
+			 */
 			/* >>refer	H2	chemistry Palla, F., Salpeter, E.E., & Stahler, S.W., 1983, ApJ,271, 632-641 + detailed balance relation */
 			if( ! fp_equal( rate->a, 1. ) )
 			{
-				fprintf( ioQQQ, "invalid parameter for rh2g_dis_h2\n" );
+				/** this clause checked on the rate structure value but we do not
+				 * use the contents of *rate, so this is not needed
+				 */
+				fprintf( ioQQQ, " PROBLEM invalid parameter for rh2g_dis_h2\n" );
 				cdEXIT(EXIT_FAILURE);
 			}
 			return hmrate4(5.5e-29*0.5/(SAHA*3.634e-5)*sqrt(300.),0.5,5.195e4,phycon.te); 
@@ -1741,7 +1772,7 @@ namespace {
 			}
 	};
 
-	enum {exclude, base, umisthack, federman, lithium, deuterium, ti, misc, in_code, generated};
+	enum {exclude, base, umisthack, federman, lithium, deuterium, ti, misc, in_code, generated, phosphorus};
 	static int source;
 
 
@@ -1866,13 +1897,18 @@ void mole_create_react( void )
 	read_data("mole_deuterium.dat",parse_base);
 
 	/* 23 mar 01, GS adding TiO */
-	#if 0
-	source = ti;
-	read_data("mole_ti.dat",parse_base);
-	#endif
+	if( mole_global.lgTiO )
+	{
+		source = ti;
+		read_data("mole_ti.dat",parse_base);
+	}
 	
 	source = misc;
 	read_data("mole_misc.dat",parse_base);
+	
+	/* 25 apr 22, GS adding P-chemistry */
+	source = phosphorus;
+	read_data("mole_Phosphorus.dat",parse_base);
 
 	/* Load null reaction to delete real rate from database */
 	if (!mole_global.lgProtElim) 

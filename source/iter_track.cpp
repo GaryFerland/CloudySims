@@ -50,6 +50,12 @@ realnum secant_track::next_val(realnum current, realnum next_est)
 	}
 	m_lastnext = next_est;
 	m_lastcurr = current;
+	// reject spurious negative proposals if neither current or next_est are negative
+	// they likely are the result of noisy optical depth data showing large (random?) jumps
+	// if the proposal is sufficiently negative, it may even lead to a crash of the code
+	if( proposal < 0_r && current >= 0_r && next_est >= 0_r )
+		// revert to geometric mean as there likely is a large difference between current and next_est
+		proposal = sqrt(current*next_est);
 	return proposal;
 }
 

@@ -33,6 +33,10 @@ void t_mole_global::zero(void)
 	 * latter based on UMIST */
 	lgFederman = true;
 
+	/** flag to enable TiO chemistry. it is off by default due to significant slowdown
+	 * even in models with no Ti, controlled with SET CHEMISTRY TIO ON/OFF command */
+	lgTiO = false;
+
 	/* option to use effective temperature as defined in
 	 * >> refer Zsargo, J. & Federman, S. R. 2003, ApJ, 589, 319
 	 * By default, this is false - changed with set chemistry command */

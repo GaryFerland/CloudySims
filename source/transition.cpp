@@ -358,8 +358,6 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 		xObsIntensity = t.Emis().xObsIntensity() + extra.v;
 	}
 
-	/* initial counting case, where ipass == -1, just ignored above, call linadd below */
-	
 	/* ExtraInten is option that allows extra intensity (i.e., recomb)
 	 * to be added to this line  with Call PutExtra( exta )
 	 * in main lines this extra

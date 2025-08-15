@@ -232,7 +232,8 @@ monitor itrzn 9.319
 ## >>chng 20 sep 06, from -8.758 to -8.718, further update to McCall CR-related rate
 ## >>chng 23 sep 12, from -8.718 to -6.309, update fast.ini
 ## >>chng 25 jan 26, from -6.309 to -6.333, merge master updated cham"
-monitor "H2O " 538.142m line intensity -6.333
+## >>chng 25 jul 11, from -6.333 to -6.305, GS Si chemistry, UMIST 2022
+monitor "H2O " 538.142m line intensity -6.305
 ## >>chng 13 jun 27, from -7.357 to -9.282, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 14, from -9.282 to -9.312, CollisSuppres, final version from Dragan Nikolic
@@ -241,7 +242,8 @@ monitor "H2O " 538.142m line intensity -6.333
 ## >>chng 21 sep 11, from -9.311 to -9.582, LAMDA update
 ## >>chng 21 nov 04, from -9.582 to -9.671, update mole co data
 ## >>chng 23 sep 12, from -9.671 to -7.725, update fast.ini
-monitor "HNC " 1652.90m  line intensity -7.725
+## >>chng 25 jul 11, from -7.725 to -7.703, GS Si chemistry, UMIST 2022
+monitor "HNC " 1652.90m  line intensity -7.703
 ## >>chng 13 jun 27, from -8.563 to -9.845, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from -9.845 to -9.822, EleyRideal H2 formation
@@ -249,7 +251,8 @@ monitor "HNC " 1652.90m  line intensity -7.725
 ## >>chng 21 nov 04, from -9.293 to -9.591, update mole co data
 ## >>chng 23 may 15, from -9.591 to -9.705, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 sep 12, from -9.705 to -8.365, update fast.ini
-monitor "HCS+" 1755.88m  -8.365 line intensity
+## >>chng 25 jul 11, from -8.365 to -8.412, GS Si chemistry, UMIST 2022
+monitor "HCS+" 1755.88m  -8.412 line intensity
 ## >>chng 13 jun 27, from -7.453 to -8.216, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 14, from -8.216 to -8.25, CollisSuppres, final version from Dragan Nikolic
@@ -260,7 +263,8 @@ monitor "HCS+" 1755.88m  -8.365 line intensity
 ## >>chng 21 nov 04, from -7.762 to -8.048, update mole co data
 ## >>chng 23 may 15, from -8.048 to -8.17, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 sep 12, from -8.17 to -6.61, update fast.ini
-monitor "CS  " 3058.86m  -6.61 line intensity
+## >>chng 25 jul 11, from -6.61 to -6.655, GS Si chemistry, UMIST 2022
+monitor "CS  " 3058.86m  -6.655 line intensity
 ## >>chng 13 jun 27, from -7.288 to -8.759, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 14 aug 28, from -8.759 to -8.785, EleyRideal H2 formation
@@ -367,7 +371,8 @@ monitor "^13CO" 906.599m  -6.913 line intensity
 ## >>chng 21 nov 04, from -9.09 to -9.296, update mole co data
 ## >>chng 23 may 15, from -9.296 to -9.383, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 sep 12, from -9.383 to -8.706, update fast.ini
-monitor "CN  " 880.858m  -8.706  line intensity
+## >>chng 25 jul 11, from -8.706 to -7.952, GS Si chemistry, UMIST 2022
+monitor "CN  " 880.858m  -7.952  line intensity
 ##
 # orion_hii_pdr_fast.in
 # class hii pdr 

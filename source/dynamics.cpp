@@ -69,6 +69,73 @@ bool t_dynamics::doNonEquilibriumSolve( long int iteration )
 	return false;
 }
 
+void t_dynamics::update_recomb_recent_temps()
+{
+	ASSERT( lgRecom );
+
+	double temp = phycon.te;
+
+	if( recomb_recent_temps.size() != nlast_temps )
+	{
+		recomb_recent_temps.insert( recomb_recent_temps.begin(), temp );
+	}
+	else
+	{
+		for( size_t it=nlast_temps-1; it >= 1; it-- )
+		{
+			recomb_recent_temps[it] = recomb_recent_temps[it-1];
+		}
+		recomb_recent_temps[0] = temp;
+	}
+
+	enum { DEBUG_LOCAL = false };
+	if( DEBUG_LOCAL )
+	{
+		fprintf( ioQQQ, "===============\n" );
+		fprintf( ioQQQ, "ITERATION: %ld\n", iteration );
+		for( auto &t: recomb_recent_temps )
+		{
+			fprintf( ioQQQ, "%.4e\n", t );
+		}
+		fprintf( ioQQQ, "===============\n" );
+	}
+}
+
+bool t_dynamics::recomb_temp_converged() const
+{
+	if( ! lgRecom )
+		return false;
+
+	if( recomb_recent_temps.size() != nlast_temps )
+		return false;
+
+	double last_temp = recomb_recent_temps[0];
+	const double tolerance = 1e-2;
+
+	enum { DEBUG_LOCAL = false };
+	if( DEBUG_LOCAL )
+		fprintf( ioQQQ, "last temp: %.4e\n", last_temp );
+
+	for( size_t it = 1; it < nlast_temps; it++ )
+	{
+		if( DEBUG_LOCAL )
+			fprintf( ioQQQ,
+				"temp: %.4e\t dtemp/temp: %.4e\n",
+				recomb_recent_temps[it],
+				last_temp / recomb_recent_temps[it] -1. );
+		if( fabs(last_temp - recomb_recent_temps[it])
+		     > tolerance * recomb_recent_temps[it] )
+		{
+			return false;
+		}
+	}
+
+	if( DEBUG_LOCAL )
+		fprintf( ioQQQ, "-------\n" );
+
+	return true;
+}
+
 
 /* 
  * >>chng 01 mar 16, incorporate advection within dynamical solutions
@@ -943,9 +1010,9 @@ void DynaStartZone(void)
 		f1 = fabs(ymol - Upstream_molecules[mol] );
 		if( f1 > SMALLFLOAT )
 		{
-			dynamics.dRad = MIN2(dynamics.dRad,fabs(Dyn_dr*STEP_FACTOR) * 
-				/* don't pay attention to species with abundance relative to H less than 1e-6 */
-				MAX2(ymol + Upstream_molecules[mol],1e-6 ) / f1 );
+			dynamics.dRad = MIN2(dynamics.dRad,
+								 /* don't pay attention to species with abundance relative to H less than 1e-6 */
+								 safe_div(fabs(Dyn_dr*STEP_FACTOR) * MAX2(ymol + Upstream_molecules[mol], 1e-6), f1));
 		}
 
 		/* Must be consistent with convergence_error below */
@@ -1082,6 +1149,7 @@ void DynaIterEnd(void)
 				dynamics.timestep ,
 				dynamics.time_elapsed,
 				iteration , dynamics.n_initial_relax);
+
 		if( ! dynamics.isInitialRelaxIteration( iteration ) )
 		{
 			/* evaluate errors */
@@ -1110,6 +1178,46 @@ void DynaIterEnd(void)
 				(phycon.te > StopCalc.TempHiStopIteration ) )
 				dynamics.lgStatic_completed = true;
 
+			if( dynamics.lgRecom )
+			{
+				if( StopCalc.TimeStop > 0 && dynamics.time_elapsed >= StopCalc.TimeStop )
+				{
+					dynamics.lgStatic_completed = true;
+					fprintf( ioQQQ, "DYNAMICS max elapsed time reached.\n" );
+				}
+
+				//
+				// Search for a temperature floor that would waste
+				// computing time, or could even lead to a crash;
+				// but not when the 'stop time' command is given.
+				//
+				//
+				// NB NB NB
+				//
+				// The temperature changes very slowly during the first
+				// few timesteps of a cooling calculation.  Especially
+				// in isobaric cooling, the change is of order 1e-4 off
+				// being constant, which can fool the convergence function
+				// below into thinking that the temperature has hit a
+				// floor, when in reality the simulation just started.
+				//
+				// Skip the first few iterations, to make sure we avoid
+				// this pathological case.
+				//
+				else if( StopCalc.TimeStop < 0.
+					 && iteration > long( dynamics.n_initial_relax + 1
+							+ dynamics.nlast_temps ) )
+				{
+					dynamics.update_recomb_recent_temps();
+
+					if( dynamics.recomb_temp_converged() )
+					{
+						fprintf( ioQQQ, "DYNAMICS temperature floor reached.\n" );
+						dynamics.lgStatic_completed = true;
+					}
+				}
+			}
+
 			/* this is heat radiated, after correction for change of H density in constant
 			 * pressure cloud */
 			HeatRadiated += (thermal.ctot-dynamics.Cool()) * dynamics.timestep *
@@ -1134,6 +1242,12 @@ void DynaIterEnd(void)
 			// Do nothing but talk.
 			if( lgPrintDynamics )
 				fprintf(ioQQQ,"DEBUG lgtimes -- stop time reached.\n" );
+		}
+		else if( StopCalc.TimeStop > 0. )
+		{
+			dynamics.timestep = timestep_next();
+			if( dynamics.time_elapsed + dynamics.timestep >= 0.9999 * StopCalc.TimeStop )
+				dynamics.timestep = StopCalc.TimeStop - dynamics.time_elapsed;
 		}
 		/* at this point dynamics.time_elapsed is the time at the end of the 
 		 * previous iteration.  We need dt for the next iteration */

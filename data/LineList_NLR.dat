@@ -310,7 +310,8 @@ ne 3  36.0036m air
 # >>chng 22 jul 09, wl from 14.3228m to 14.3178m, upgrade to Chianti v10
 ne 5  14.3178m air
 # >>chng 22 jul 09, wl from 24.2065m to 24.3109m, upgrade to Chianti v10
-ne 5  24.3109m air
+# >>chng 25 jul 29, wl from 24.3109m t o24.3108m, upgrade to new stout c-like isosequences
+ne 5  24.3108m air
 # >>chng 22 jul 09, wl from 7.64318m to 7.65019m, upgrade to Chianti v10
 ne 6  7.65019m air
 # >>chng 22 jul 09, wl from 7.31706m to 7.31570m, upgrade to Chianti v10
@@ -320,27 +321,33 @@ Na 4  9.03096m air
 Na 4  21.3162m air
 # >>chng 22 jul 09, wl from 14.3228m to 14.3925m, upgrade to Chianti v10
 # >>chng 24 jun 24, wl from 14.3925m to 14.3929m, update to Chianti v10.1
-Na 6  14.3929m air
+# >>chng 25 jul 29, wl from 14.3929m to 14.3924m, upgrade to new stout c-like isosequences
+Na 6  14.3924m air
 # >>chng 22 jul 09, wl from 8.61836m to 8.60825m, upgrade to Chianti v10
 # >>chng 24 jun 24, wl from 8.60825m to 8.60795m, update to Chianti v10.1
-Na 6  8.60795m air
+# >>chng 25 jul 29, wl from 8.60795m to 8.60825m, upgrade to new stout c-like isosequences
+Na 6  8.60825m air
 # >>chng 22 jul 09, wl from 4.48712m to 4.48711m, upgrade to Chianti v10
 mg 4   4.48711m air
 mg 5   5.60700m air
 mg 5   13.5464m air
 # >>chng 22 jul 09, wl from 5.50177m to 5.49270m, upgrade to Chianti v10
-mg 7   5.49270m air
+# >>chng 25 jul 29, wl from 5.49270m to 5.50208m, upgrade to new stout c-like isosequences
+mg 7   5.50208m air
 # >>chng 22 jul 09, wl from 9.00655m to 9.03094m, upgrade to Chianti v10
-mg 7   9.03094m air
+# >>chng 25 jul 29, wl from 9.03094m to 9.03096m, upgrade to new stout c-like isosequences
+mg 7   9.03096m air
 # >>chng 22 jul 09, wl from 3.02765m to 3.02764m, upgrade to Chianti v10
 mg 8   3.02764m air
 Al 5  2.90450m air
 Al 6  3.65932m air
 Al 6  9.11329m air
 # >>chng 22 jul 09, wl from 5.82933m to 5.84641m, upgrade to Chianti v10
-Al 8  5.84641m air
+# >>chng 25 jul 29, wl from 5.84641m to 5.84636m, upgrade to new stout c-like isosequences
+Al 8  5.84636m air
 # >>chng 22 jul 09, wl from 3.69722m to 3.69719m, upgrade to Chianti v10
-Al 8  3.69719m air
+# >>chng 25 jul 29, wl from  3.69719m to 3.68903m, upgrade to new stout c-like isosequences
+Al 8  3.68903m air
 si 2  34.8046m air
 si 6  1.96247m air
 si 7  2.48071m air
@@ -358,9 +365,11 @@ s  9     1.25196m air
 # >>chng 24 jun 24, wl from 3.75414m to 3.75418m, update to Chianti v10.1
 s  9     3.75418m air
 # >>chng 22 jul 09, wl from 1.91960m to 1.91958m, upgrade to Chianti v10
-s 11     1.91958m air
+# >>chng 25 jul 29, wl from  1.91958m  to1.91960m , upgrade to new stout c-like isosequences
+s 11     1.91960m air
 # >>chng 22 jul 09, wl from 1.39238m to 1.39232m, upgrade to Chianti v10
-s 11     1.39232m air
+# >>chng 25 jul 29, wl from  1.39232m  to 1.39236 , upgrade to new stout c-like isosequences
+s 11  1.39236m air
 Ar 2  6.98337m air
 Ar 3  8.98898m air
 Ar 3  21.8253m air

@@ -1574,9 +1574,6 @@ void diatomics::H2_LevelPops( bool &lgPopsConverged, double &old_val, double &ne
 		 * since Solomon process is then irrelevant */
 		/* >>chng 04 sep 21, GS*/
 		else if( rfield.lgInducProcess && 
-			/* this is check that H2 abundance has not been set - if it has been
-			 * then we don't care what the Solomon rate is doing */ 
-			 hmi.H2_frac_abund_set==0 &&
 			 /*>>chng 05 feb 10, rather than checking change in Solomon relative to Solomon,
 			  * check it relative to total h2 destruction rate */
 			fabs( Solomon_dissoc_rate_g - old_solomon_rate)/SDIV(hmi.H2_rate_destroy) > 

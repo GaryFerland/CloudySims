@@ -239,7 +239,8 @@ monitor "HNC " 1652.90m  line intensity -11.63
 ## >>chng 21 nov 04, from -12.37 to -13.09, update mole co data
 ## >>chng 23 may 15, from -13.09 to -13.14, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 may 25, from -13.14 to -13.05, limit to UMIST Te extrapolation
-monitor "HCS+" 1755.88m  -13.05 line intensity
+## >>chng 25 jul 11, from -13.05 to -13.1, GS Si chemistry, UMIST 2022
+monitor "HCS+" 1755.88m  -13.1 line intensity
 ## >>chng 13 jun 27, from -7.453 to -10.92, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 14 jan 05, from -10.92 to -10.94, N to external databases
@@ -249,7 +250,8 @@ monitor "HCS+" 1755.88m  -13.05 line intensity
 ## >>chng 21 sep 11, from -11.06 to -10.83, LAMDA update
 ## >>chng 21 nov 04, from -10.83 to -10.34, update mole co data
 ## >>chng 23 may 15, from -10.34 to -10.46, GS updates 21 reactions to UMIST 2012
-monitor "CS  " 3058.86m  -10.46 line intensity
+## >>chng 25 jul 11, from -10.46 to -10.56, GS Si chemistry, UMIST 2022
+monitor "CS  " 3058.86m  -10.56 line intensity
 ## >>chng 13 jun 27, from -7.288 to -7.823, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -7.823 to -7.866, LAMDA update
@@ -343,7 +345,8 @@ monitor "^13CO" 906.599m  -9.503 line intensity
 ## >>chng 23 may 15, from -12.64 to -12.78, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 15, from -12.78 to -12.83, GS removes destabilizing reactions, updates others to current UMIST
 ## >>chng 25 may 25, from -12.83 to -12.88, limit to UMIST Te extrapolation
-monitor "CN  " 880.858m  -12.88  line intensity
+## >>chng 25 jul 11, from -12.88 to -12.43, GS Si chemistry, UMIST 2022
+monitor "CN  " 880.858m  -12.43  line intensity
 #
 # pdr_leiden_v2.in
 # class pdr  

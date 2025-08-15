@@ -216,7 +216,8 @@ monitor line "Ne 2"  12.8101m 0.2961
 ## >>chng 11 jul 12, from 0.63 to 0.5944, enable fit to Badnell DR suppression
 ## >>chng 13 feb 01, from 0.5944 to 0.6213, BUGFIX, largely undo r6703
 ## >>chng 14 dec 14, from 0.6213 to 0.7149, update S2+ - S+ DR to Badnell+ 2015 ApJ
-monitor line "Blnd" 6720 0.7149
+## >>chng 25 jul 25, from 0.7149 to 0.7518, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line "Blnd" 6720 0.7518
 ##
 ## >>chng 04 jun 21, from 0.458 to 0.441, norm to totl 4861
 ## >>chng 07 apr 30, from 0.441 to 0.366 log DR average, use mix S DR

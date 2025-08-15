@@ -61,8 +61,10 @@ void InitDefaultsPreparse( void )
 	atmdat.lgChiantiPrint = false;
 	//Use gbar to fill in dBase transitions if they lack collision strengths
 	atmdat.lgGbarOn = true;
-	//Tells Cloudy to exclusively use experimental energies in Chianti.
-	atmdat.lgChiantiExp = true;
+
+	// by default, exclusively use experimental energy levels in Chianti.
+	atmdat.ChiantiType = t_atmdat::CHIANTI_EXP;
+
 	// Set the default number of Chianti energy levels to use for Fe for photoionization case
 	atmdat.nChiantiMaxLevelsFe = atmdat.nDefaultPhotoLevelsFe;
 	// Set the default number of Chianti energy levels to use for all other elements
@@ -484,6 +486,8 @@ void InitDefaultsPreparse( void )
 	StopCalc.TempLoStopZone = (realnum)phycon.TEMP_STOP_DEFAULT;
 	/* stop iterations, used to stop time dependent command */
 	StopCalc.TempLoStopIteration = -1.;
+
+	StopCalc.TimeStop = -1.;
 
 	/* ending column densities */
 	StopCalc.HColStop = COLUMN_INIT;

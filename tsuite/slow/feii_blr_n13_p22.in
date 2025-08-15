@@ -170,7 +170,8 @@ monitor line luminosity "he 2"  1640.41A 9.616  ##total He II Balmer-alpha 1640
 ## >>chng 14 mar 26, from 7.998 to 7.823, move O to external databases
 ## >>chng 16 aug 17, from 7.823 to 7.849, bugfix at r11237
 ## >>chng 16 dec 20, from 7.849 to 7.872, add secondary autoionization to DR suppression
-monitor line luminosity "o  3"  1666.15 7.872  ##total O III] 1666
+## >>chng 25 jul 25, from 7.872 to 7.957, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line luminosity "o  3"  1666.15 7.957  ##total O III] 1666
 ##
 ## >>chng 06 aub 06, update O+2 & N+2 CT, from 7.752 to 7.814
 ## >>chng 06 nov 29, from 7.814 to 7.932, Badnell DR

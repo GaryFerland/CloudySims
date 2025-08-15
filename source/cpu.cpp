@@ -4,6 +4,9 @@
 
 #include "cdstd.h"
 #include <locale.h>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 #if defined(__ia64) && defined(__INTEL_COMPILER)
 extern "C" unsigned long fpgetmask();
@@ -158,8 +161,15 @@ t_cpu_i::t_cpu_i()
 #if defined(__APPLE__) /* MacOS only use physical cores*/
 	size_t sizeOfInt = sizeof(int);
 	int physicalCores;
-	sysctlbyname("hw.physicalcpu", &physicalCores, &sizeOfInt, NULL, 0);
-	n_avail_CPU = physicalCores;
+	// this is needed on modern ARM machines to only pick up peformance cores
+	int retval = sysctlbyname("hw.perflevel0.physicalcpu", &physicalCores, &sizeOfInt, NULL, 0);
+	if( retval == -1 )
+		// fallback for older Intel Macs
+		retval = sysctlbyname("hw.physicalcpu", &physicalCores, &sizeOfInt, NULL, 0);
+	if( retval == 0 )
+		n_avail_CPU = int(physicalCores);
+	else
+		n_avail_CPU = 1;
 #else
 	n_avail_CPU = sysconf(_SC_NPROCESSORS_ONLN);
 #endif
@@ -180,11 +190,18 @@ t_cpu_i::t_cpu_i()
 		n_avail_CPU = 1;
 	}
 #	elif defined(HW_AVAILCPU)         /* MacOS, BSD variants */
-#if defined(__APPLE__) /* MacOS only use physical cores*/
+#if defined(__APPLE__) /* MacOS only use physical (performance) cores*/
 	size_t sizeOfInt = sizeof(int);
 	int physicalCores;
-	sysctlbyname("hw.physicalcpu", &physicalCores, &sizeOfInt, NULL, 0);
-	n_avail_CPU = int(physicalCores);
+	// this is needed on modern ARM machines to only pick up peformance cores
+	int retval = sysctlbyname("hw.perflevel0.physicalcpu", &physicalCores, &sizeOfInt, NULL, 0);
+	if( retval == -1 )
+		// fallback for older Intel Macs
+		retval = sysctlbyname("hw.physicalcpu", &physicalCores, &sizeOfInt, NULL, 0);
+	if( retval == 0 )
+		n_avail_CPU = int(physicalCores);
+	else
+		n_avail_CPU = 1;
 #else
 	int mib[2];
 	size_t len = sizeof(n_avail_CPU);
@@ -299,7 +316,7 @@ void t_cpu_i::initPath()
 
 	lgPathInitialized = true;
 
-	getchecksums( "checksums.dat" );
+	p_getchecksums( "checksums.dat" );
 }
 
 void t_cpu_i::p_assertValidPath()
@@ -544,20 +561,36 @@ void t_cpu_i::signal_handler(int sig, siginfo_t*, void* ptr)
 }
 
 
-void t_cpu_i::printDataPath() const
+void t_cpu_i::printDataPath(const string& pattern) const
 {
-	if( lgPathInitialized )
+	if( !lgPathInitialized )
+		return;
+
+	if( pattern.empty() )
 	{
 		fprintf(ioQQQ, "The path is:\n");
 		for( vector<string>::size_type i=0; i < chSearchPath.size(); ++i )
 			fprintf( ioQQQ, "   ==%s==\n", chSearchPath[i].c_str() );
 	}
+	else
+	{
+		vector<string> results;
+		p_getFileList(results, pattern, false);
+		if( results.size() == 0 )
+			fprintf( ioQQQ, "No files matched the pattern\n" );
+		else
+		{
+			fprintf( ioQQQ, "These files matched the pattern\n" );
+			for( const auto& f : results )
+				fprintf( ioQQQ, "   ==%s==\n", f.c_str() );
+		}
+	}
 }
 
 // this routine generates a list of all full paths to the locations where we should look for the file
-void t_cpu_i::getPathList( const string& fname, vector<string>& PathList, access_scheme scheme, bool lgRead ) const
+void t_cpu_i::p_getPathList( const string& fname, vector<string>& PathList, access_scheme scheme, bool lgRead ) const
 {
-	DEBUG_ENTRY( "getPathList()" );
+	DEBUG_ENTRY( "p_getPathList()" );
 
 	PathList.clear();
 	string FileName( fname );
@@ -585,9 +618,9 @@ void t_cpu_i::getPathList( const string& fname, vector<string>& PathList, access
 	}
 }
 
-void t_cpu_i::getchecksums( const string& fname )
+void t_cpu_i::p_getchecksums( const string& fname )
 {
-	DEBUG_ENTRY( "getchecksums()" );
+	DEBUG_ENTRY( "p_getchecksums()" );
 
 	// this routine reads a file with expected checksum values for all Cloudy data files
 	// they will be stored in the map checksum_expct[] and can be used to compare to the
@@ -651,7 +684,7 @@ STATIC void ErrorMessage( const string& fname, const vector<string>& PathList, a
 			fprintf( ioQQQ, "variable CLOUDY_DATA_PATH to define the data directory search path\n");
 			fprintf( ioQQQ, "using the shell command \nexport CLOUDY_DATA_PATH=\"<search path>\"\n");
 			fprintf( ioQQQ, "from a bash command prompt.\n\n");
-			cpu.i().printDataPath();
+			cpu.i().printDataPath("");
 		}
 		else
 		{
@@ -719,6 +752,80 @@ STATIC string check_mult_path( const string& fname, const vector<string>& PathLi
 	return ( PathSuccess.size() > 0 ) ? PathSuccess[0] : "";
 }
 
+STATIC void getFileListSub(vector<string>& results, fs::path fspath, const string& pattern, bool lgStrip)
+{
+	DEBUG_ENTRY( "getFileListSub()" );
+
+	try
+	{
+		if( fs::status(fspath).type() != fs::file_type::directory )
+			return;
+
+		string basePath = fspath;
+
+		for( const auto& entry : fs::directory_iterator(fspath) )
+		{
+			fs::path spath = entry.path();
+			fs::file_status stat = fs::status(spath);
+			if( stat.type() == fs::file_type::regular )
+			{
+				string name = entry.path();
+				string sname = name;
+				FindAndReplace(sname, basePath, ""s);
+				if( lgStrip )
+					name = sname;
+				if( !pattern.empty() )
+				{
+					regex fnam_expr(pattern);
+					smatch what;
+					if( regex_match(sname, what, fnam_expr) )
+						results.emplace_back(name);
+				}
+				else
+				{
+					results.emplace_back(name);
+				}
+			}
+		}
+	}
+	catch( fs::filesystem_error& )
+	{
+		// quietly ignore all errors...
+		(void)0;
+	}
+}
+
+void t_cpu_i::p_getFileList(vector<string>& results, const string& pattern, bool lgStrip) const
+{
+	DEBUG_ENTRY( "p_getFileList()" );
+
+	if( !lgPathInitialized )
+	{
+		results.clear();
+		return;
+	}
+
+	string filepattern, subdir;
+	// subdir includes the trailing directory separator
+	p_splitPath(pattern, subdir, filepattern);
+
+	for( const string& path1 : chSearchPath )
+	{
+		fs::path fspath{path1};
+		if( !subdir.empty() )
+		{
+			fs::path fspath_sub{path1 + subdir};
+			getFileListSub(results, fspath_sub, filepattern, lgStrip);
+		}
+		getFileListSub(results, fspath, filepattern, lgStrip);
+	}
+}
+	
+void getFileList(vector<string>& results, const string& pattern)
+{
+	cpu.i().p_getFileList(results, pattern, true);
+}
+
 FILE* open_data( const string& fname, const string& mode, access_scheme scheme, string* rpath )
 {
 	DEBUG_ENTRY( "open_data()" );
@@ -732,7 +839,7 @@ FILE* open_data( const string& fname, const string& mode, access_scheme scheme, 
 	bool lgMessage = ( scheme == AS_DEFAULT || scheme == AS_OPTIONAL || scheme == AS_LOCAL_ONLY );
 
 	vector<string> PathList;
-	cpu.i().getPathList( fname, PathList, scheme, lgRead );
+	cpu.i().p_getPathList( fname, PathList, scheme, lgRead );
 
 	FILE* handle = NULL;
 	string path = check_mult_path( fname, PathList, scheme, lgRead );
@@ -770,7 +877,7 @@ void open_data( fstream& stream, const string& fname, ios_base::openmode mode, a
 	bool lgMessage = ( scheme == AS_DEFAULT || scheme == AS_OPTIONAL || scheme == AS_LOCAL_ONLY );
 
 	vector<string> PathList;
-	cpu.i().getPathList( fname, PathList, scheme, lgRead );
+	cpu.i().p_getPathList( fname, PathList, scheme, lgRead );
 
 	ASSERT( !stream.is_open() );
 	string path = check_mult_path( fname, PathList, scheme, lgRead );
@@ -806,7 +913,7 @@ MPI_File open_data( const string& fname, int mode, access_scheme scheme, string*
 	bool lgMessage = ( scheme == AS_DEFAULT || scheme == AS_OPTIONAL || scheme == AS_LOCAL_ONLY );
 
 	vector<string> PathList;
-	cpu.i().getPathList( fname, PathList, scheme, lgRead );
+	cpu.i().p_getPathList( fname, PathList, scheme, lgRead );
 
 	int err = MPI_ERR_INTERN;
 	MPI_File fh = MPI_FILE_NULL;
@@ -851,7 +958,8 @@ void check_data(const string& fpath, const string& fname)
 		string checksum = VHstream(fpath);
 		if( checksum != ptr->second )
 		{
-			fprintf( ioQQQ, "NOTE: using modified data in %s.\n", fname.c_str() );
+			fprintf( ioQQQ, "NOTE: using modified data in %s. Full path:\n", fname.c_str() );
+			fprintf( ioQQQ, "   ==%s==\n", fpath.c_str() );
 			++cpu.i().nCSMismatch;
 		}
 	}

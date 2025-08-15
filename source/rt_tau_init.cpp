@@ -67,8 +67,8 @@ void RT_tau_init(void)
 				{
 					for( long nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 					{
-						ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].Zero();
-						ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]].Zero();
+						ExtraLymanLinesJ05[nelem][nHi].Zero();
+						ExtraLymanLinesJ15[nelem][nHi].Zero();
 					}
 				}
 				else if( ipISO == ipHE_LIKE )
@@ -625,7 +625,7 @@ void RT_tau_init(void)
 					iso_sp[ipH_LIKE][nelem].trans(ipHi,ipLo).Emis().FracInwd() = 0.5;
 				}
 			}
-			for( nHi=ipH1s; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
+			for( nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 			{
 				if( ExtraLymanLinesJ05[nelem][nHi].ipCont() > 0 )
 				{

@@ -132,7 +132,8 @@ monitor line "He 2" 1640.41A 1.319
 ## >>chng 01 may 05, from 3.718 to 3.516, He+ H ct rate change
 ## >>chng 06 nov 29, from 3.516 to 3.771, Badnell DR turned on
 ## >>chng 16 jul 24, from 3.771 to 2.926, update C III to 2014A&A...566A.104F
-monitor line "blnd" 1909 2.926
+## >>chng 25 jul 25, from 2.926 to 3.089, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line "blnd" 1909 3.089
 ##
 ## >>chng 01 feb 20, from 0.305 to 0.388, change in def ISM O abundance
 ## >>chng 01 feb 24, from 0.388 to 0.337, change in radiaition pressure
@@ -225,7 +226,8 @@ monitor line "blnd"  1666 0.2868
 ## >>chng 07 dec 06, from 3.966 to 4.181, changes in h-like collisions
 ## >>chng 13 feb 01, from 4.181 to 3.992, BUGFIX, largely undo r6703
 ## >>chng 16 aug 07, from 3.992 to 4.176, Fran bug fix
-monitor line "o  3"  5006.84 4.176
+## >>chng 25 jul 25, from 4.176 to 3.969, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line "o  3"  5006.84 3.969
 ##
 ## >>chng 01 feb 20, from 0.495 to 0.370, change in def ISM O abundance
 ## >>chng 01 feb 24, change in radiaition pressure, 0.370 to 0.346
@@ -238,7 +240,8 @@ monitor line "o  3"  5006.84 4.176
 ## >>chng 15 nov 03, from 0.291 to 0.3164, update O III CS to Storey+14
 ## >>chng 16 aug 07, from 0.3164 to 0.334, Fran bug fix
 ## >>chng 19 mar 01, change "Blnd" 4363 -> "O  3" 4363.21
-monitor line "O  3"  4363.21 0.334
+## >>chng 25 jul 25, from 0.334 to 0.3553, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line "O  3"  4363.21 0.3553
 ##
 ## >>chng 01 feb 24, from 0.259 to 0.236, change in radiaition pressure, 
 ## >>chng 01 nov 08, from 0.236 to 0.224, better P convergence

@@ -459,8 +459,8 @@ void IterStart()
 		{
 			for( long nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 			{
-				ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].Lo()->ColDen() = 0.;
-				ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]].Lo()->ColDen() = 0.;
+				ExtraLymanLinesJ05[nelem][nHi].Lo()->ColDen() = 0.;
+				ExtraLymanLinesJ15[nelem][nHi].Lo()->ColDen() = 0.;
 			}
 		}
 	}
@@ -555,8 +555,8 @@ void IterStart()
 
 
 	/* this was set in call to lines above */
-	ASSERT( LineSave.nsum > 0);
-	ASSERT( LineSave.lines.size() == (size_t) LineSave.nsum );
+	ASSERT( LineSave.nsum > 0 );
+	ASSERT( LineSave.size() >= (size_t) LineSave.nsum );
 
 	/* zero emission line arrays - this has to be done on every iteration */
 	for( i=0; i < LineSave.nsum; i++ )

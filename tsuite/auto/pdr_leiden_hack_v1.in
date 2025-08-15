@@ -170,7 +170,8 @@ monitor itrzn 4.983
 ## >>chng 14 apr 30, from 556 to 541, continuum trimming fixes
 ## >>chng 21 sep 11, from 541 to 512, LAMDA update, average of FLT (504) and DBL (520)
 ## >>chng 21 sep 11, error from 0.01 to 0.02, LAMDA update, accommodate FLT and DBL limits
-monitor nzone 512 error 0.02
+## >>chng 25 jul 05, from 512 to 526, minor updates to UMIST 2022
+monitor nzone 526 error 0.02
 ##
 ## >>chng 13 jun 27, from -8.869 to -7.707, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
@@ -198,7 +199,8 @@ monitor "CO  " 1300.05m  -6.631 line intensity
 ## >>chng 21 sep 11, from -6.639 to -7.116, LAMDA update
 ## >>chng 21 nov 04, from -7.116 to -6.729, update mole co data
 ## >>chng 23 may 15, from -6.729 to -6.657, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 866.727m  -6.657 line intensity
+## >>chng 25 jul 05, from -6.657 to -6.609, minor updates to UMIST 2022
+monitor "CO  " 866.727m  -6.609 line intensity
 ## >>chng 13 jun 27, from -6.177 to -7.381, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 20 aug 03, from -7.381 to -7.348, update H3+ rates Indriola+ 2012
@@ -217,7 +219,8 @@ monitor "CO  " 650.074m  -7.343 line intensity
 ## >>chng 21 nov 04, from -9.578 to -8.84, update mole co data
 ## >>chng 23 may 15, from -8.84 to -8.61, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 26, from -8.61 to -8.521, merge master updated cham"
-monitor "CO  " 520.089m  -8.521 line intensity
+## >>chng 25 jul 05, from -8.521 to -8.482, GS minor update to UMIST 2022
+monitor "CO  " 520.089m  -8.482 line intensity
 ## >>chng 13 jun 27, from -6.954 to -9.798, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 03, from -9.798 to -9.711, update H2 - C II 158m collision rate

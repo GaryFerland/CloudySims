@@ -193,7 +193,7 @@ void AgeCheck(void)
 	if( timesc.CloudAgeSet < 0. )
 	{
 		/* CloudAgeSet initially set to -1, if still the case then age not set */
-		if( tlong < 3600. )
+		if( tlong < HOUR )
 		{
 			/* less than one day, give only seconds */
 			sprintf( chLine, "  !AGE: Cloud age was not set.  Longest timescale was %.2e s.", 
@@ -201,27 +201,27 @@ void AgeCheck(void)
 			bangin(chLine);
 		}
 
-		else if( tlong < 8.64e4 )
+		else if( tlong < DAY )
 		{
 			/* less than one day, give seconds and hours */
 			sprintf( chLine, "  !AGE: Cloud age was not set.  Longest timescale was %.2e s = %.2e hours.", 
-			  tlong, tlong/3600. );
+			  tlong, tlong/HOUR );
 			bangin(chLine);
 		}
 
-		else if( tlong < 3e7/12. )
+		else if( tlong < MONTH )
 		{
 			/* less than one month, give seconds and days */
 			sprintf( chLine, "  !AGE: Cloud age was not set.  Longest timescale was %.2e s = %.2e days.", 
-			  tlong, tlong/86400. );
+			  tlong, tlong/DAY );
 			bangin(chLine);
 		}
 
-		else if( tlong < 3e7 )
+		else if( tlong < YEAR )
 		{
 			/* less than one year, give seconds and months */
 			sprintf( chLine, "  !AGE: Cloud age was not set.  Longest timescale was %.2e s = %.2e months.", 
-			  tlong, (tlong/3.15569e7)*12. );
+			  tlong, tlong/MONTH );
 			bangin(chLine);
 		}
 
@@ -229,7 +229,7 @@ void AgeCheck(void)
 		{
 			/* more than one year, give seconds and years */
 			sprintf( chLine, "  !AGE: Cloud age was not set.  Longest timescale was %.2e s = %.2e years.", 
-			  tlong, tlong/3.15569e7 );
+			  tlong, tlong/YEAR );
 			bangin(chLine);
 		}
 	}
@@ -237,7 +237,7 @@ void AgeCheck(void)
 	else
 	{
 		/* age set, and passed tests, still say longest */
-		if( tlong < 3e7 )
+		if( tlong < YEAR )
 		{
 			/* less than one year, give only seconds */
 			sprintf( chLine, "   AGE: Cloud age was %.2es, Longest timescale was %.2e s.", 
@@ -249,7 +249,7 @@ void AgeCheck(void)
 		{
 			/* more than one year, give seconds and years */
 			sprintf( chLine, "   AGE: Cloud age was %.2e s.  Longest timescale was %.2e s = %.2e years.", 
-			  timesc.CloudAgeSet, tlong, tlong/3.15569e7 );
+			  timesc.CloudAgeSet, tlong, tlong/YEAR );
 			notein(chLine);
 		}
 	}

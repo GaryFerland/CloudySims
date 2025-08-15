@@ -208,7 +208,8 @@ monitor line luminosity "he 2"  1640.41A 9.33 0.10 ##total He II Balmer-alpha 16
 ## >>chng 13 dec 18, from 8.604 to 8.556, fixes to Federman shielding
 ## >>chng 14 jan 05, from 8.556 to 8.499, N to external databases
 ## >>chng 22 jul 09, from 8.499 to 8.457, upgrade to Chianti v10
-monitor line luminosity "blnd"  1666 8.457 ##total O III] 1666
+## >>chng 25 jul 25, from 8.457 to 8.565, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line luminosity "blnd"  1666 8.565 ##total O III] 1666
 ##
 ## >>chng 03 dec 07, from 8.554 to 8.526, add dr on metal structure
 ## >>chng 05 jul 08, from 8.526 to 8.542, drift down

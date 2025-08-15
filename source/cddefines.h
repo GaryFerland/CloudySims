@@ -133,12 +133,24 @@ typedef float sys_float;
 #define float PLEASE_USE_REALNUM_NOT_FLOAT
 
 // define realnum literals, use as 12_r or 12.4_r
-inline realnum operator "" _r( unsigned long long l )
+/**
+ * @brief User-defined literal operator for converting an unsigned long long literal to a realnum.
+ *
+ * This operator allows you to write numeric literals with the `_r` suffix, which will be
+ * automatically converted to the `realnum` type.
+ *
+ * Example usage:
+ *     realnum x = 42_r; // x is of type realnum with value 42
+ *
+ * @param l The unsigned long long integer literal to convert.
+ * @return The value of `l` converted to `realnum`.
+ */
+inline realnum operator ""_r( unsigned long long l )
 {
 	return realnum(l);
 }
 
-inline realnum operator "" _r( long double l )
+inline realnum operator ""_r( long double l )
 {
 	return realnum(l);
 }
@@ -1144,12 +1156,6 @@ double csphot(long int inu, long int ithr, long int iofset);
 /**AnuUnit produce continuum energy in arbitrary units, ip is on C scale */
 double AnuUnit(realnum energy);
 
-/**cap4 convert first 4 char of input line chLab into chCAP all in caps, null termination 
-\param chCAP output string, cap'd first 4 char of chLab,
-\param chLab with null terminating input string ending with eol
-*/ 
-void cap4(char *chCAP , const char *chLab);
-
 /**uncaps convert input command line (through eol) to all lowercase 
 \param chCard - line image as string of characters */
 void uncaps(char *chCard);
@@ -1302,6 +1308,8 @@ class t_wavl {
 	realnum p_wavl;
 	/** wavelength type: air, vacuum, or native */
 	wl_type p_type;
+	/** boolean for uncertain wavelengths(rmatrix) */
+	bool p_lgUnc;
 	/** convert wavelength to vacuum, if needed */
 	realnum p_convertWvl() const;
 	/** convert air wavelength to vacuum */
@@ -1311,8 +1319,9 @@ class t_wavl {
 	*/
 	double p_RefIndex(double EnergyWN) const;
 public:
-	t_wavl() : p_wavl(-1_r), p_type(WL_NATIVE) {}
-	t_wavl(realnum w, wl_type t) : p_wavl(w), p_type(t) {}
+	t_wavl() : p_wavl(-1_r), p_type(WL_NATIVE), p_lgUnc(false) {}
+	t_wavl(realnum w, wl_type t) : p_wavl(w), p_type(t), p_lgUnc(false) {}
+	t_wavl(realnum w, wl_type t, bool unc) : p_wavl(w), p_type(t), p_lgUnc(unc) {}
 	/** unary minus */
 	t_wavl operator- () const { return t_wavl(-p_wavl, p_type); }
 	/** gives the vacuum wavelength of the line in angstrom */
@@ -1324,11 +1333,26 @@ public:
 	void prt_wl(FILE *io, const char* format=NULL) const;
 };
 
-// shorthand for turning literal constants into wavelengths, e.g. 1393.75_vac or 2795.53_air
-inline t_wavl operator "" _vac(unsigned long long wavl) { return t_wavl(wavl, WL_VACUUM); }
-inline t_wavl operator "" _vac(long double wavl) { return t_wavl(wavl, WL_VACUUM); }
-inline t_wavl operator "" _air(unsigned long long wavl) { return t_wavl(wavl, WL_AIR); }
-inline t_wavl operator "" _air(long double wavl) { return t_wavl(wavl, WL_AIR); }
+/**
+ * @brief User-defined literal for creating a t_wavl object with vacuum wavelength units.
+ *
+ * This operator allows you to specify a wavelength value as an unsigned long long literal
+ * and automatically constructs a t_wavl object with the unit set to WL_VACUUM.
+ *
+ * @param wavl The wavelength value as an unsigned long long.
+ * @return t_wavl object initialized with the given wavelength and WL_VACUUM unit.
+ *
+ * @usage
+ * // Create a t_wavl object representing 5000 Angstroms in vacuum
+ * t_wavl wavelength = 5000_vac;
+ *
+ * // Use in function calls or calculations
+ * process_wavelength(1216_vac);
+ */
+inline t_wavl operator ""_vac(unsigned long long wavl) { return t_wavl(wavl, WL_VACUUM); }
+inline t_wavl operator ""_vac(long double wavl) { return t_wavl(wavl, WL_VACUUM); }
+inline t_wavl operator ""_air(unsigned long long wavl) { return t_wavl(wavl, WL_AIR); }
+inline t_wavl operator ""_air(long double wavl) { return t_wavl(wavl, WL_AIR); }
 
 // shorthand for turning variables into wavelengths
 inline t_wavl t_vac(realnum w) { return t_wavl(w, WL_VACUUM); }

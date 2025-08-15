@@ -78,7 +78,7 @@ are set to 4\% of the cooling time.
 
 The \cdCommand{iterate} command tells the code to evolve
 the system until some stopping criterion is met.
-The command \cdCommand{stop time when temperature below [value]}
+The command \cdCommand{stop time when temperature below 10000}
 tells the code to stop when the lowest temperature falls
 below the specified value.
 The is a reasonable simulation of a constant pressure cooling flow.
@@ -122,6 +122,52 @@ save continuum units angstrom ".concum" cumulative
 		This functionality is described in \citet{Chatzikos2015}.
 	}
 \end{figure}
+
+
+\subsection{Handling of Temperature Floors}
+\label{sec:Cooling-TempFloor}
+
+It is possible that a cooling calculation reaches a temperature floor above
+the temperature specified with the command
+\cdCommand{stop time when temperature below 10000}.
+This could happen in situations when the gas is not cooling freely, but some
+external mechanism deposits energy in the gas.
+
+For instance, when the gas is exposed to an intense radiation field,
+photoionization may be so important that the gas comes into equilibrium with
+the radiation field at a temperature higher than intended. 
+That will be the case, for instance, when computing the cooling of gas exposed
+to the SED of the AGN in the Phoenix Cluster \citep{Reefe2025} with the simple
+input deck shown above.
+Or when very tenuous gas is cooling isochorically (constant density) subject to
+cosmic ray heating, see Fig.~\ref{fig:crDensityTemp}.
+
+Cloudy is now designed to detect such temperature floors, identified as a
+temperature constant to within 1\% over the previous four timesteps, and
+conclude the simulation gracefully.
+In earlier versions, temperature floors drove the solvers to use unphysical
+timesteps, and eventually Cloudy to crash.
+
+
+\subsection{Stop time 25 Myr}
+\label{sec:StopTimeValue}
+
+Another way to terminate a cooling a calculation is by setting a total
+integration time.
+The syntax is \cdCommand{stop time $<$value$>$}, where the value may be set as
+with the \cdCommand{age} command, Section \ref{sec:AgeCommand}.
+For example,
+%
+\begin{verbatim}
+stop time 25 Myr
+\end{verbatim}
+%
+will complete the simulation when the total integration time reaches 25 Myr.
+This command is useful when the cooling time may be limited by other dynamical
+effects, e.g., the time since the last X-ray bubble was inflated in a galaxy
+cluster \citep[e.g.,][]{Reefe2025}.
+It can also be useful with using Cloudy to post-process results of
+hydrodynamical simulations.
 
 
 \begin{shaded}

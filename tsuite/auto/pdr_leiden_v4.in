@@ -175,7 +175,8 @@ monitor itrzn 7.271
 ## >>chng 12 nov 08, from 766 to 809, fix e-,H2 dissociation rate
 ## >>chng 14 jan 05, from 809 to 771, N to external databases
 ## >>chng 17 feb 10, from 771 to 818, default size of N 1 model atom set to 50
-monitor nzone 818
+## >>chng 25 jul 23, from 818 to 925, GS enable PN and PO
+monitor nzone 925
 ##
 ## >>chng 13 jun 27, from -8.869 to -6.199, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
@@ -195,7 +196,8 @@ monitor "HNC " 1652.90m  line intensity -8.069
 ## >>chng 16 mar 21, from -10.06 to -10.02, remove He+,Si=>Si+,He from chemical network (is already in ChargTranEval)
 ## >>chng 21 sep 11, from -10.02 to -9.38, LAMDA update
 ## >>chng 21 nov 04, from -9.38 to -9.912, update mole co data
-monitor "HCS+" 1755.88m  -9.912 line intensity
+## >>chng 25 jul 11, from -9.912 to -9.961, GS Si chemistry, UMIST 2022
+monitor "HCS+" 1755.88m  -9.961 line intensity
 ## >>chng 13 jun 27, from -7.453 to -8.129, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -8.129 to -8.015, LAMDA update
@@ -232,7 +234,8 @@ monitor "CO  " 433.438m  -6.497 line intensity
 ## >>chng 20 aug 03, from -7.21 to -7.238, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from -7.238 to -7.136, LAMDA update
 ## >>chng 21 nov 04, from -7.136 to -7.236, update mole co data
-monitor "CO  " 371.549m  -7.236 line intensity
+## >>chng 25 jul 11, from -7.236 to -7.292, GS Si chemistry, UMIST 2022
+monitor "CO  " 371.549m  -7.292 line intensity
 ## >>chng 13 jun 27, from -8.049 to -7.666, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 13 sep 17, from -7.666 to -7.645, D chem off by default
@@ -240,7 +243,8 @@ monitor "CO  " 371.549m  -7.236 line intensity
 ## >>chng 14 mar 26, from -7.727 to -7.899, Move oxygen data to stout and chianti files
 ## >>chng 21 sep 11, from -7.899 to -7.682, LAMDA update
 ## >>chng 21 nov 04, from -7.682 to -7.907, update mole co data
-monitor "CO  " 325.137m  -7.907 line intensity
+## >>chng 25 jul 23, from -7.907 to -7.952, GS enable PN and PO
+monitor "CO  " 325.137m  -7.952 line intensity
 ## >>chng 13 jun 27, from -7.522 to -6.506, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 monitor "^13CO" 906.599m  -6.506 line intensity
@@ -250,7 +254,8 @@ monitor "^13CO" 906.599m  -6.506 line intensity
 ## >>chng 21 sep 11, from -8.93 to -9.54, LAMDA update
 ## >>chng 21 sep 15, from -9.54 to -8.836, go back to unresolved model
 ## >>chng 21 nov 04, from -8.836 to -8.945, update mole co data
-monitor "CN  " 880.858m  -8.945  line intensity
+## >>chng 25 jul 11, from -8.945 to -8.21, GS Si chemistry, UMIST 2022
+monitor "CN  " 880.858m  -8.21  line intensity
 #
 # pdr_leiden_v4.in
 # class pdr 

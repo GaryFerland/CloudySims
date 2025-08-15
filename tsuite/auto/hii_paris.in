@@ -325,7 +325,8 @@ monitor line "o  3"  5006.84 1.809
 ## >>chng 14 mar 26, from 0.0047 to 0.0042, Move oxygen data to stout and chianti files
 ## >>chng 15 nov 03, from 0.0042 to 0.0045, update O III CS to Storey+14
 ## >>chng 19 mar 01, change "Blnd" 4363 -> "O  3" 4363.21
-monitor line "O  3"  4363.21 0.0045
+## >>chng 25 jul 25, from 0.0045 to 0.0047, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line "O  3"  4363.21 0.0047
 ## 
 ## >>chng 06 jul 06, from 0.176 to 0.191, revise ne cs
 ## >>chng 13 jul 26, wl from 12.81m to 12.8101m, increased wl precision to 6 sig. fig.

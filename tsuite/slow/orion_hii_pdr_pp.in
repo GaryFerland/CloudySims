@@ -126,7 +126,8 @@ monitor line luminositry "o  3"  5006.84 1.094
 ## >>chng 15 may 12, from -1.226 to -1.252, coll. str. reduced mass scaling
 ## >>chng 19 mar 01, change "Blnd" 4363 -> "O  3" 4363.21
 ## >>chng 19 jul 30, from -1.252 to -1.209, split He I 2 ^3P_J
-monitor line luminosity "O  3"  4363.21 -1.209
+## >>chng 25 jul 25, from -1.209 to -1.187, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line luminosity "O  3"  4363.21 -1.187
 ##
 ## >>chng 06 nov 29, from -0.301 to -0.272, Badnell DR turned on
 ## >>chng 08 apr 03, from -0.272 to -0.292, include 10830 in fine opacity array

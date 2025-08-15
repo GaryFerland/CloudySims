@@ -17,6 +17,7 @@ A covering or filling factor can be specified and the
 cloud can be either static or expanding.
 
 \section{Age 44 years [off]}
+\label{sec:AgeCommand}
 
 For an equilibrium geometry the code assumes that the cloud is old enough for
 atomic processes to have become time steady.
@@ -29,8 +30,10 @@ seconds.
 The keyword \cdCommand{log} will force the code to interpret the number as
 a log.
 The keywords \cdCommand{minutes}, \cdCommand{days}, \cdCommand{weeks},
-\cdCommand{fortnights}, \cdCommand{months}, \cdCommand{years},
-\cdCommand{centuries}, and \cdCommand{millennia} change the units.
+\cdCommand{fortnights}, \cdCommand{months} (defined as 1/12 of a year),
+\cdCommand{years} (we adopt the Julian year, or 365.25 days, as our definition
+of the year), \cdCommand{centuries}, \cdCommand{millennia}, \cdCommand{Myr},
+and \cdCommand{Gyr} change the units.
 
 The code keeps track of many timescales during a calculation.
 After the calculation is complete it will check that none of the
