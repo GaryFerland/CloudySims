@@ -3817,13 +3817,26 @@ STATIC void SaveLineStuff(
 						if( iso_sp[ipISO][nelem].trans(ipHi,ipLo).Emis().Aul() <= iso_ctrl.SmallA )
 							continue;
 
-						if( lgIsLymanLineResolved(iso_sp[ipISO][nelem].trans(ipHi,ipLo), 
+						/* j-resolved lyman lines */
+						if( ipISO == ipH_LIKE && lgIsLymanLineResolved(iso_sp[ipISO][nelem].trans(ipHi,ipLo),
 									ExtraLymanLinesJ05[nelem][N_(ipHi)], ExtraLymanLinesJ15[nelem][N_(ipHi)]) )
-							continue;
+						{
+							++index;
 
-						++index;
-						Save1Line( iso_sp[ipISO][nelem].trans(ipHi,ipLo), ioPUN, 
-								xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
+							Save1Line( ExtraLymanLinesJ05[nelem][N_(ipHi)], ioPUN,
+									xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
+
+							++index;
+
+							Save1Line( ExtraLymanLinesJ15[nelem][N_(ipHi)], ioPUN,
+									xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
+						}
+						else
+						{
+							++index;
+							Save1Line( iso_sp[ipISO][nelem].trans(ipHi,ipLo), ioPUN,
+									xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
+						}
 					}
 				}
 				/* also do extra Lyman lines if optical depths are to be done,
@@ -3833,21 +3846,17 @@ STATIC void SaveLineStuff(
 				{
 					if (ipISO == ipH_LIKE)
 					{
-						for( long nHi=2; nHi < iso_sp[ipISO][nelem].n_HighestResolved_local + iso_sp[ipISO][nelem].nCollapsed_local; nHi++ )
+						for( long nHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 						{
-							if(lgIsLymanLineResolved(ExtraLymanLinesJ05[nelem][nHi], 
-										ExtraLymanLinesJ05[nelem][nHi], ExtraLymanLinesJ15[nelem][nHi]))
-							{
-								++index;
+							++index;
 
-								Save1Line( ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]], ioPUN, 
-										xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
+							Save1Line( ExtraLymanLinesJ05[nelem][nHi], ioPUN,
+									xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
 
-								++index;
+							++index;
 
-								Save1Line( ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]], ioPUN, 
-										xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
-							}
+							Save1Line( ExtraLymanLinesJ15[nelem][nHi], ioPUN,
+									xLimit, index, GetDopplerWidth(dense.AtomicWeight[nelem]) );
 						}
 					}
 					/* >>chng 02 aug 23, for he-like, had starting on much too high a level since

@@ -108,10 +108,10 @@ void RT_OTS(void)
 		 * ok since dest probs updated on every iteration*/
 		iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().Pdest() *= (realnum)bwnfac;
 		ASSERT( iso_sp[ipH_LIKE][nelem].trans(ipH2p,ipH1s).Emis().Pdest() >= 0. );
-		ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][2]].Emis().Pdest() *= (realnum)bwnfac;
-		ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][2]].Emis().Pdest() *= (realnum)bwnfac;
-		ASSERT( ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][2]].Emis().Pdest() >= 0.);
-		ASSERT( ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][2]].Emis().Pdest() >= 0.);
+		ExtraLymanLinesJ05[nelem][2].Emis().Pdest() *= (realnum)bwnfac;
+		ExtraLymanLinesJ15[nelem][2].Emis().Pdest() *= (realnum)bwnfac;
+		ASSERT( ExtraLymanLinesJ05[nelem][2].Emis().Pdest() >= 0.);
+		ASSERT( ExtraLymanLinesJ15[nelem][2].Emis().Pdest() >= 0.);
 		{
 			/* debugging code for line oscillation problems 
 			 * most often Lya OTS oscillations*/
@@ -134,25 +134,25 @@ void RT_OTS(void)
 
 	/* save Lya loss rates so we can reset at end */
 	save_lya_dest = iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).Emis().Pdest();
-	save_lya_destJ05 = ExtraLymanLinesJ05[ipHYDROGEN][ipExtraLymanLinesJ05[ipHYDROGEN][2]].Emis().Pdest();
-	save_lya_destJ15 = ExtraLymanLinesJ15[ipHYDROGEN][ipExtraLymanLinesJ15[ipHYDROGEN][2]].Emis().Pdest();
+	save_lya_destJ05 = ExtraLymanLinesJ05[ipHYDROGEN][2].Emis().Pdest();
+	save_lya_destJ15 = ExtraLymanLinesJ15[ipHYDROGEN][2].Emis().Pdest();
 
 	/* this is option to kill Lya ots rates, 
 	 * rfield.lgLyaOTS is usually true (1), and set false (0) with
 	 * no lya ots command */
 	iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).Emis().Pdest() *= rfield.lgLyaOTS;
-	ExtraLymanLinesJ05[ipHYDROGEN][ipExtraLymanLinesJ05[ipHYDROGEN][2]].Emis().Pdest() *= rfield.lgLyaOTS;
-	ExtraLymanLinesJ15[ipHYDROGEN][ipExtraLymanLinesJ15[ipHYDROGEN][2]].Emis().Pdest() *= rfield.lgLyaOTS;
+	ExtraLymanLinesJ05[ipHYDROGEN][2].Emis().Pdest() *= rfield.lgLyaOTS;
+	ExtraLymanLinesJ15[ipHYDROGEN][2].Emis().Pdest() *= rfield.lgLyaOTS;
 
 	if( dense.lgElmtOn[ipHELIUM] )
 	{
 		/* option to kill heii lya and rec continua ots */
 		save_he2lya_dest = iso_sp[ipH_LIKE][ipHELIUM].trans(ipH2p,ipH1s).Emis().Pdest();
-		save_he2lya_destJ05 = ExtraLymanLinesJ05[ipHELIUM][ipExtraLymanLinesJ05[ipHELIUM][2]].Emis().Pdest();
-		save_he2lya_destJ15 = ExtraLymanLinesJ15[ipHELIUM][ipExtraLymanLinesJ15[ipHELIUM][2]].Emis().Pdest();
+		save_he2lya_destJ05 = ExtraLymanLinesJ05[ipHELIUM][2].Emis().Pdest();
+		save_he2lya_destJ15 = ExtraLymanLinesJ15[ipHELIUM][2].Emis().Pdest();
 		iso_sp[ipH_LIKE][ipHELIUM].trans(ipH2p,ipH1s).Emis().Pdest() *= rfield.lgHeIIOTS;
-		ExtraLymanLinesJ05[ipHELIUM][ipExtraLymanLinesJ05[ipHELIUM][2]].Emis().Pdest() *= rfield.lgHeIIOTS;
-		ExtraLymanLinesJ15[ipHELIUM][ipExtraLymanLinesJ15[ipHELIUM][2]].Emis().Pdest() *= rfield.lgHeIIOTS;
+		ExtraLymanLinesJ05[ipHELIUM][2].Emis().Pdest() *= rfield.lgHeIIOTS;
+		ExtraLymanLinesJ15[ipHELIUM][2].Emis().Pdest() *= rfield.lgHeIIOTS;
 
 		/* option to kill heii lya and rec continua ots */
 		save_he2rec_dest = iso_sp[ipH_LIKE][ipHELIUM].fb[ipH1s].RadRecomb[ipRecRad];
@@ -185,15 +185,15 @@ void RT_OTS(void)
 					/* add OTS for all nP or collapsed lines */
 					if( ipISO == ipH_LIKE && (N_(ipHi) > iso_sp[ipISO][nelem].n_HighestResolved_local || L_(ipHi) == 1 ) )
 					{
-						ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Emis().ots() =
-							ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Emis().Aul()*
-							ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Hi()->Pop()*
-							ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Emis().Pdest();
+						ExtraLymanLinesJ05[nelem][N_(ipHi)].Emis().ots() =
+							ExtraLymanLinesJ05[nelem][N_(ipHi)].Emis().Aul()*
+							ExtraLymanLinesJ05[nelem][N_(ipHi)].Hi()->Pop()*
+							ExtraLymanLinesJ05[nelem][N_(ipHi)].Emis().Pdest();
 
-						ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].Emis().ots() =
-							ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].Emis().Aul()*
-							ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].Hi()->Pop()*
-							ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].Emis().Pdest();
+						ExtraLymanLinesJ15[nelem][N_(ipHi)].Emis().ots() =
+							ExtraLymanLinesJ15[nelem][N_(ipHi)].Emis().Aul()*
+							ExtraLymanLinesJ15[nelem][N_(ipHi)].Hi()->Pop()*
+							ExtraLymanLinesJ15[nelem][N_(ipHi)].Emis().Pdest();
 					}
 
 					for( ipLo=0; ipLo < ipHi; ipLo++ )
@@ -221,16 +221,16 @@ void RT_OTS(void)
 						/* use the ots rate from the resolved doublet only for lyman lines */
 						if( lgIsLymanLine(iso_sp[ipISO][nelem].trans(ipHi,ipLo)) )
 						{
-							if( ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Emis().ots() > SMALLFLOAT )
+							if( ExtraLymanLinesJ05[nelem][N_(ipHi)].Emis().ots() > SMALLFLOAT )
 							{
-								RT_OTS_AddLine(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].Emis().ots(),
-											ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]].ipCont() );
+								RT_OTS_AddLine(ExtraLymanLinesJ05[nelem][N_(ipHi)].Emis().ots(),
+											ExtraLymanLinesJ05[nelem][N_(ipHi)].ipCont() );
 							}
 
-							if( ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].Emis().ots() > SMALLFLOAT )
+							if( ExtraLymanLinesJ15[nelem][N_(ipHi)].Emis().ots() > SMALLFLOAT )
 							{
-								RT_OTS_AddLine(ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].Emis().ots(),
-										ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]].ipCont() );
+								RT_OTS_AddLine(ExtraLymanLinesJ15[nelem][N_(ipHi)].Emis().ots(),
+										ExtraLymanLinesJ15[nelem][N_(ipHi)].ipCont() );
 							}
 						}
 						/* otherwise use the ots rate from the unresolved model lines */
@@ -330,21 +330,21 @@ void RT_OTS(void)
 
 	/* now reset Lya dest prob in case it was clobbered by rfield.lgHeIIOTS */
 	iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).Emis().Pdest() = (realnum)save_lya_dest;
-	ExtraLymanLinesJ05[ipHYDROGEN][ipExtraLymanLinesJ05[ipHYDROGEN][2]].Emis().Pdest() = (realnum)save_lya_destJ05;
-	ExtraLymanLinesJ15[ipHYDROGEN][ipExtraLymanLinesJ15[ipHYDROGEN][2]].Emis().Pdest() = (realnum)save_lya_destJ15;
+	ExtraLymanLinesJ05[ipHYDROGEN][2].Emis().Pdest() = (realnum)save_lya_destJ05;
+	ExtraLymanLinesJ15[ipHYDROGEN][2].Emis().Pdest() = (realnum)save_lya_destJ15;
 
 	if( dense.lgElmtOn[ipHELIUM] )
 	{
 		iso_sp[ipH_LIKE][ipHELIUM].trans(ipH2p,ipH1s).Emis().Pdest() = (realnum)save_he2lya_dest;
-		ExtraLymanLinesJ05[ipHELIUM][ipExtraLymanLinesJ05[ipHELIUM][2]].Emis().Pdest() = (realnum)save_he2lya_destJ05;
-		ExtraLymanLinesJ15[ipHELIUM][ipExtraLymanLinesJ15[ipHELIUM][2]].Emis().Pdest() = (realnum)save_he2lya_destJ15;
+		ExtraLymanLinesJ05[ipHELIUM][2].Emis().Pdest() = (realnum)save_he2lya_destJ05;
+		ExtraLymanLinesJ15[ipHELIUM][2].Emis().Pdest() = (realnum)save_he2lya_destJ15;
 		iso_sp[ipH_LIKE][ipHELIUM].fb[ipH1s].RadRecomb[ipRecRad] = save_he2rec_dest;
 		if( bwnfac > 0. )
 		{
 			/* increase the destruction prob by the amount we decreased it above */
 			iso_sp[ipH_LIKE][ipHELIUM].trans(ipH2p,ipH1s).Emis().Pdest() /= (realnum)bwnfac;
-			ExtraLymanLinesJ05[ipHELIUM][ipExtraLymanLinesJ05[ipHELIUM][2]].Emis().Pdest() /= (realnum)bwnfac;
-			ExtraLymanLinesJ15[ipHELIUM][ipExtraLymanLinesJ15[ipHELIUM][2]].Emis().Pdest() /= (realnum)bwnfac;
+			ExtraLymanLinesJ05[ipHELIUM][2].Emis().Pdest() /= (realnum)bwnfac;
+			ExtraLymanLinesJ15[ipHELIUM][2].Emis().Pdest() /= (realnum)bwnfac;
 		}
 	}
 

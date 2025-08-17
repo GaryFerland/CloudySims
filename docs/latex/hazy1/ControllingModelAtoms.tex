@@ -1366,19 +1366,27 @@ and \nDefaultCollLevels\ for all others.
 The \cdCommand{levels} option will overwrite these limits.
 The first number, i, is the iron level limit, while the second number, 
 j, is for all other Chianti elements.
-If no numbers appear but the keyword \cdCommand{MAX} does, we use all 
+If no numbers appear but the keyword \cdCommand{max} does, we use all 
 of the available energy levels.
 See \citet{2013MNRAS.429.3133L} for more details.
+Beware that using the \cdCommand{max} option (especially when combined with
+the \cdCommand{mixed} or \cdCommand{theoretical} options described below)
+will result in models that require a considerable amount of CPU time and memory.
 
-\subsection{Database Chianti [experimental theoretical]}
+\subsection{Database Chianti [experimental, theoretical, mixed]}
 \label{sec:AtomChiantiExperimental}
-By default we use experimental Chianti energies.
-The \cdCommand{theoretical} option causes \Cloudy\ to only use theoretical 
+By default we use only experimental Chianti energies.
+The \cdCommand{experimental} option also specifies this choice.
+The \cdCommand{theoretical} option causes \Cloudy\ to only use only theoretical 
 energies.
 This provides significantly more levels and transitions, 
-however the error in wavelength is larger.
+however the uncertainty in wavelength is larger.
+In rare cases where the theoretical energy is missing, but the experimental energy
+is provided, the latter will be used.
+The \cdCommand{mixed} option causes \Cloudy\ to use experimental where
+possible and theoretical if only those are available.
 
-\section{Database Stout [on , off, no hybrid][print][levels \{j, MAX\}]}
+\section{Database Stout [on , off, no hybrid][print][levels \{j, max\}]}
 \label{sec:SetStout}
 The command controls the use of the Stout database.
 The \cdCommand{database Chianti} command, described on page \pageref{sec:SetChianti},
@@ -1425,6 +1433,8 @@ and \nDefaultCollLevels\ for all others.
 The \cdCommand{levels} option will overwrite these limits.
 The first number is the iron level limit, while the second number 
 is for all other Stout elements.
-If no numbers appear but the keyword \cdCommand{MAX} does, we use all 
+If no numbers appear but the keyword \cdCommand{max} does, we use all 
 of the available energy levels.
+Beware that using this option
+will result in models that require a considerable amount of CPU time and memory.
 

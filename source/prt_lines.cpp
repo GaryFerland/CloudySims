@@ -177,25 +177,20 @@ void lines()
 	{
 		if( ! dense.lgElmtOn[nelem] )
 			continue;
-		long int nLoop  = iso_Max_Emitting_Level(nelem, ipISO, prt.lgPrnIsoCollapsed);
-		for( long nHi=N_(nLoop); nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
+		for( long nHi=iso_sp[ipISO][nelem].n_HighestResolved_max + iso_sp[ipISO][nelem].nCollapsed_max+1; nHi < iso_ctrl.nLymanHLike_max[nelem]; nHi++ )
 		{
-			if( lgIsLymanLineResolved(ExtraLymanLinesJ05[nelem][nHi],
-							ExtraLymanLinesJ05[nelem][nHi], ExtraLymanLinesJ15[nelem][nHi]) )
+			if (ExtraLymanLinesJ05[nelem][nHi].ipCont() > 0)
 			{
-				if (ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].ipCont() > 0)
-				{
-					string comment_trans = extraLymanJ_comment_tran_levels( ExtraLymanLinesJ05[nelem][nHi] );
-					PutLine(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]],
-							comment_trans.c_str());
-				}
+				string comment_trans = extraLymanJ_comment_tran_levels( ExtraLymanLinesJ05[nelem][nHi] );
+				PutLine(ExtraLymanLinesJ05[nelem][nHi],
+						"extra Lyman line, j=1/2");
+			}
 
-				if (ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]].ipCont() > 0)
-				{
-					string comment_trans = extraLymanJ_comment_tran_levels( ExtraLymanLinesJ15[nelem][nHi] );
-					PutLine(ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]],
-							comment_trans.c_str());
-				}
+			if (ExtraLymanLinesJ15[nelem][nHi].ipCont() > 0)
+			{
+				string comment_trans = extraLymanJ_comment_tran_levels( ExtraLymanLinesJ15[nelem][nHi] );
+				PutLine(ExtraLymanLinesJ15[nelem][nHi],
+						"extra Lyman line, j=3/2");
 			}
 		}
 	}

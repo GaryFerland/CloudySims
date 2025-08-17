@@ -130,7 +130,7 @@ Ne+	Stout
 Ne+10	
 Ne+2	Stout
 Ne+3	Chianti
-Ne+4	Chianti
+Ne+4	Stout
 Ne+5	Chianti
 Ne+6	Chianti
 Ne+7	Chianti
@@ -144,7 +144,7 @@ Na+11
 Na+2	Chianti
 Na+3	Chianti
 Na+4	Chianti
-Na+5	Chianti
+Na+5	Stout
 Na+6	Chianti
 Na+7	Chianti
 Na+8	Chianti
@@ -158,7 +158,7 @@ Mg+2	Stout
 Mg+3	Chianti
 Mg+4	Chianti
 Mg+5	Chianti
-Mg+6	Chianti
+Mg+6	Stout
 Mg+7	Chianti
 Mg+8	Chianti
 Mg+9	Stout
@@ -173,7 +173,7 @@ Al+3	Stout
 Al+4	Chianti
 Al+5	Stout
 Al+6	Chianti
-Al+7	Chianti
+Al+7	Stout
 Al+8	Chianti
 Al+9	Chianti
 Si	Stout
@@ -223,10 +223,24 @@ P+5	Stout
 P+6	Chianti
 P+7	Chianti
 P+8	Chianti
-P+9	Chianti
+P+9	Stout
+PH	
+PH+	
+PH2	
+PH2+	
+PH3	LAMDA
+PH3+	
+CP	
+CP+	
+HCP	
+HCP+	
+PN	LAMDA
+PN+	
+PO	
+PO+	LAMDA
 S	Stout
 S+	Stout
-S+10	Chianti
+S+10	Stout
 S+11	Chianti
 S+12	Chianti
 S+13	Chianti
@@ -262,7 +276,7 @@ S2+
 Cl	Stout
 Cl+	Chianti
 Cl+10	Chianti
-Cl+11	Chianti
+Cl+11	Stout
 Cl+12	
 Cl+13	Chianti
 Cl+14	
@@ -289,7 +303,7 @@ Ar	Stout
 Ar+	Stout
 Ar+10	Chianti
 Ar+11	Chianti
-Ar+12	Chianti
+Ar+12	Stout
 Ar+13	Chianti
 Ar+14	Chianti
 Ar+15	Chianti
@@ -310,7 +324,7 @@ K+	Stout
 K+10	Chianti
 K+11	Chianti
 K+12	Chianti
-K+13	Chianti
+K+13	Stout
 K+14	Chianti
 K+15	Chianti
 K+16	Chianti
@@ -331,7 +345,7 @@ Ca+10	Chianti
 Ca+11	Chianti
 Ca+12	Chianti
 Ca+13	Chianti
-Ca+14	Chianti
+Ca+14	Stout
 Ca+15	Chianti
 Ca+16	Chianti
 Ca+17	Chianti
@@ -376,7 +390,7 @@ Ti+12	Stout
 Ti+13	Chianti
 Ti+14	Chianti
 Ti+15	Chianti
-Ti+16	Chianti
+Ti+16	Stout
 Ti+17	Chianti
 Ti+18	Chianti
 Ti+19	Chianti
@@ -450,7 +464,7 @@ Cr+14	Stout
 Cr+15	Chianti
 Cr+16	Chianti
 Cr+17	Chianti
-Cr+18	Chianti
+Cr+18	Stout
 Cr+19	Chianti
 Cr+2	
 Cr+20	Chianti
@@ -476,7 +490,7 @@ Mn+15	Stout
 Mn+16	Chianti
 Mn+17	Chianti
 Mn+18	Chianti
-Mn+19	Chianti
+Mn+19	Stout
 Mn+2	
 Mn+20	Chianti
 Mn+21	Chianti
@@ -504,7 +518,7 @@ Fe+17	Chianti
 Fe+18	Chianti
 Fe+19	Chianti
 Fe+2	Stout
-Fe+20	Chianti
+Fe+20	Stout
 Fe+21	Chianti
 Fe+22	Chianti
 Fe+23	Chianti
@@ -532,7 +546,7 @@ Co+18	Chianti
 Co+19	Chianti
 Co+2	Stout
 Co+20	Chianti
-Co+21	Chianti
+Co+21	Stout
 Co+22	Chianti
 Co+23	Chianti
 Co+24	Chianti
@@ -561,7 +575,7 @@ Ni+19	Chianti
 Ni+2	Stout
 Ni+20	Chianti
 Ni+21	Chianti
-Ni+22	Chianti
+Ni+22	Stout
 Ni+23	Chianti
 Ni+24	Chianti
 Ni+25	Chianti
@@ -622,7 +636,7 @@ Zn+20
 Zn+21	
 Zn+22	Chianti
 Zn+23	Chianti
-Zn+24	Chianti
+Zn+24	Stout
 Zn+25	
 Zn+26	Chianti
 Zn+27	Chianti

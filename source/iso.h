@@ -421,6 +421,8 @@ public:
 	 *  to include both as opacity and emission sources,
 	 *  unlike the He-like this spans over the resolved and collapsed as well. */
 	long int nLymanHLike[LIMELM];
+	/** max number of levels to consider - probably greater than above */
+	long int nLymanHLike_max[LIMELM];
 
 	/** default resolution for X-ray observations in eV,
 	 *  the energy difference between j=1/2 and j=3/2 levels */

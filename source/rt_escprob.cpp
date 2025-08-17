@@ -494,8 +494,8 @@ STATIC void FindNeg( void )
 		for( EmissionList::iterator em=dBaseTrans[ipSpecies].Emis().begin();
 			  em != dBaseTrans[ipSpecies].Emis().end(); ++em)
 		{
-			if((*em).TauIn() < -1. )
-				DumpLine((*em).Tran());
+			if( em->TauIn() < -1. || em->TauTot() < -1. )
+				DumpLine(em->Tran());
 		}
 	}
 
@@ -505,7 +505,7 @@ STATIC void FindNeg( void )
 		if( (*TauLine2[i].Hi()).IonStg() < (*TauLine2[i].Hi()).nelem()+1-NISO )
 		{
 			/* check if a line was a strong maser */
-			if( TauLine2[i].Emis().TauIn() < -1. )
+			if( TauLine2[i].Emis().TauIn() < -1. || TauLine2[i].Emis().TauTot() < -1. )
 				DumpLine(TauLine2[i]);
 		}
 	}
@@ -514,8 +514,41 @@ STATIC void FindNeg( void )
 	for( size_t i=0; i < HFLines.size(); i++ )
 	{
 		/* check if a line was a strong maser */
-		if( HFLines[i].Emis().TauIn() < -1. )
+		if( HFLines[i].Emis().TauIn() < -1. || HFLines[i].Emis().TauTot() < -1. )
 			DumpLine(HFLines[i]);
+	}
+
+	/* now do extra Lyman lines */
+	for( long ipISO=ipH_LIKE; ipISO<NISO; ++ipISO )
+	{
+		for( long nelem=ipISO; nelem < LIMELM; nelem++ )
+		{
+			if( dense.lgElmtOn[nelem] )
+			{
+				if( ipISO == ipH_LIKE )
+				{
+					/* Need all levels, as may have been raised/lowered throughout layer */
+					for( long nHi=2; nHi < iso_ctrl.nLymanHLike_max[nelem]; nHi++ )
+					{
+						if( ExtraLymanLinesJ05[nelem][nHi].Emis().TauIn() < -1. ||
+							ExtraLymanLinesJ05[nelem][nHi].Emis().TauTot() < -1. )
+							DumpLine(ExtraLymanLinesJ05[nelem][nHi]);
+						if( ExtraLymanLinesJ15[nelem][nHi].Emis().TauIn() < -1. ||
+							ExtraLymanLinesJ15[nelem][nHi].Emis().TauTot() < -1. )
+							DumpLine(ExtraLymanLinesJ15[nelem][nHi]);
+					}
+				}
+				else if( ipISO == ipHE_LIKE )
+				{
+					for( long ipHi=2; ipHi < iso_ctrl.nLyman_max[ipISO]; ipHi++ )
+					{
+						if( ExtraLymanLinesHeLike[nelem][ipExtraLymanLinesHeLike[nelem][ipHi]].Emis().TauIn() < -1. ||
+							ExtraLymanLinesHeLike[nelem][ipExtraLymanLinesHeLike[nelem][ipHi]].Emis().TauTot() < -1. )
+							DumpLine(ExtraLymanLinesHeLike[nelem][ipExtraLymanLinesHeLike[nelem][ipHi]]);
+					}
+				}
+			}
+		}
 	}
 
 	return;

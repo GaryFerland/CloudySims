@@ -492,11 +492,11 @@ void lines_hydro(void)
 									ExtraLymanLinesJ05[nelem][N_(ipHi)], ExtraLymanLinesJ15[nelem][N_(ipHi)]) )
 					{
 						string comment_trans = extraLymanJ_comment_tran_levels( ExtraLymanLinesJ05[nelem][N_(ipHi)] );
-						PutLine(ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][N_(ipHi)]],
+						PutLine(ExtraLymanLinesJ05[nelem][N_(ipHi)],
 								comment_trans.c_str());
 
 						comment_trans = extraLymanJ_comment_tran_levels( ExtraLymanLinesJ15[nelem][N_(ipHi)] );
-						PutLine(ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][N_(ipHi)]],
+						PutLine(ExtraLymanLinesJ15[nelem][N_(ipHi)],
 								comment_trans.c_str());
 
 						continue;

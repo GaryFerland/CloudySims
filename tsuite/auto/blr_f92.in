@@ -1177,7 +1177,8 @@ monitor itrzn 4.702
 ## >>chng 16 aug 07, from 615 to 585, Fran bug fix
 ## >>chng 17 feb 17, from 585 to 604, readjust to average of multiple runs
 ## >>chng 18 jun 20, from 604 to 567, #bugfixes at front face r12134:12136
-monitor nzone 567
+## >>chng 25 aug 15, from 567 to 595, Reduce lower loop bound in save optical depths for H-like extra lyman
+monitor nzone 595
 ##
 ## >>chng 14 jul 10, from 1.01 to 6.942, Add monitors for WillsNetzerWills FeII Lines
 ## >>chng 16 mar 23, drop WillsNetzerWills FeII Lines

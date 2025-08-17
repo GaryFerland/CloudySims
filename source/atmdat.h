@@ -375,8 +375,15 @@ struct t_atmdat : public module {
 	bool lgChiantiLvl2Hybrid;
 	/** true if Cloudy will print which Chianti species are being used as well as number of levels */
 	bool lgChiantiPrint;
-	/** true if Cloudy will use no theoretical energy levels from Chianti, only experimental. False means that only theoretical energy levels are used */
-	bool lgChiantiExp;
+
+	/** use experimental, theoretical, or mixed Chianti energy levels */
+	enum chianti_type { 
+		CHIANTI_EXP, // only use experimental energy levels, our default
+		CHIANTI_THEO, // theo is theoretical where possible, experimental if none, set with DATABASE CHIANTI THEO
+		CHIANTI_MIXED }; // mixed is experimental where possible, theoretical if none, set with DATABASE CHIANTI MIXED
+	/** specified EXP, THEO, or MIXED */
+	chianti_type ChiantiType;
+
 	/**CloudyChianti filename variable **/
 	char chCloudyChiantiFile[FILENAME_PATH_LENGTH];
 	/** The maximum number of chianti energy levels used for Fe */

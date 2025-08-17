@@ -111,6 +111,12 @@ void iso_continuum_lower( long ipISO, long nelem )
 	/* Lyman lines can not be greater than original allocation or critical pqn. */
 	iso_ctrl.nLyman[ipISO] = MIN2( nc, iso_ctrl.nLyman_max[ipISO]);
 
+	/* H-like Lyman lines can not be greater than original allocation or critical pqn. */
+	if( ipISO == ipH_LIKE )
+	{
+		iso_ctrl.nLymanHLike[nelem] = MIN2( nc, iso_ctrl.nLymanHLike_max[nelem]);
+	}
+
 	// zero out cooling and heating terms involving unused levels
 	for( long ipHi=sp->numLevels_local; ipHi < sp->numLevels_max; ++ipHi )
 	{

@@ -951,7 +951,7 @@ void ParseDatabase(Parser &p)
 	}
 
 	/* enable models from CHIANTI database */
-	else if (p.nMatch("CHIANTI"))
+	else if (p.nMatch("CHIA"))
 	{
 		// option to specify different CloudyChianti.ini file, was initialized
 		// with string CloudyChianti.ini
@@ -971,15 +971,23 @@ void ParseDatabase(Parser &p)
 			atmdat.lgChiantiLvl2Hybrid = false;
 
 		// Print which species are being used in output and # of levels
-		if (p.nMatch("PRINT"))
+		if (p.nMatch("PRIN"))
 			atmdat.lgChiantiPrint = true;
 
-		// Use Experimental energies exclusively. Default use experimental.
-		if (p.nMatch("THEOR"))
-			atmdat.lgChiantiExp = false;
+		// Use theoretical energies exclusively. Default uses experimental.
+		if (p.nMatch("THEO"))
+			atmdat.ChiantiType = t_atmdat::CHIANTI_THEO;
+
+		// mixed, use experimental energies where available, theory if only available
+		if( p.nMatch("MIXE"))
+			atmdat.ChiantiType = t_atmdat::CHIANTI_MIXED;
+
+		// Use only experimental energies, the defaulte
+		if( p.nMatch("EXPE"))
+			atmdat.ChiantiType = t_atmdat::CHIANTI_EXP;
 
 		// Input the maximum number of Chianti levels to use
-		if (p.nMatch("LEVEL"))
+		if (p.nMatch("LEVE"))
 		{
 			if (p.nMatch(" MAX"))
 			{

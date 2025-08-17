@@ -22,8 +22,6 @@ vector< StoutCollArray > StoutCollData;
 long int nSpecies;
 qList AnonStates("AnonStates",1);
 multi_arr<int,2> ipExtraLymanLinesHeLike;
-multi_arr<int,2> ipExtraLymanLinesJ05;
-multi_arr<int,2> ipExtraLymanLinesJ15;
 vector<TransitionList> ExtraLymanLinesHeLike;
 vector<TransitionList> ExtraLymanLinesJ05;
 vector<TransitionList> ExtraLymanLinesJ15;

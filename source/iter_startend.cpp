@@ -459,8 +459,8 @@ void IterStart()
 		{
 			for( long nHi=2; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 			{
-				ExtraLymanLinesJ05[nelem][ipExtraLymanLinesJ05[nelem][nHi]].Lo()->ColDen() = 0.;
-				ExtraLymanLinesJ15[nelem][ipExtraLymanLinesJ15[nelem][nHi]].Lo()->ColDen() = 0.;
+				ExtraLymanLinesJ05[nelem][nHi].Lo()->ColDen() = 0.;
+				ExtraLymanLinesJ15[nelem][nHi].Lo()->ColDen() = 0.;
 			}
 		}
 	}
