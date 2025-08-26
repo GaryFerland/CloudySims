@@ -1226,8 +1226,8 @@ void DataParser::p_showLocation(size_t p, FILE *io)
 {
 	DEBUG_ENTRY( "DataParser::p_showLocation()" );
 
-	fprintf(io, "  %s\n", p_line.c_str());
-	fprintf(io, "  ");
+	fprintf(io, "\n  ==%s==\n", p_line.c_str());
+	fprintf(io, "    ");
 	// make sure tabs are treated correctly....
 	for( size_t i=0; i < p; ++i )
 	{
@@ -1361,7 +1361,7 @@ void DataParser::getLineID(LineID& line, bool lgAtStart)
 	{
 		p_pos(min(p_line.length(), 4));
 		if( p_line.length() < 4 )
-			errorAbort("failed to read line label");
+			errorAbort("failed to read line label, the line is too short");
 		// relax rule for whitespace in between tokens: if label
 		// is shorter than 4 chars, wavelength may start in 5th column
 		if( !isspace(p_line[3]) && !isspace(p_line[4]) )
@@ -1506,10 +1506,11 @@ NORETURN void DataParser::errorAbort(const string& msg, FILE *io)
 	// this is OK since we abort immediately afterwards
 	p_ls.clear();
 	size_t p_ptr = p_pos();
-	if( p_filename.length() > 0 )
-		fprintf(ioQQQ, "\n %s:%ld:%ld: PROBLEM ERROR: ", p_filename.c_str(), p_nr, p_ptr);
-	fprintf(ioQQQ, "%s\n", msg.c_str());
 	p_showLocation(p_ptr, io);
+	fprintf(io, " ");
+	if( p_filename.length() > 0 )
+		fprintf(io, "%s:%ld:", p_filename.c_str(), p_nr);
+	fprintf(io, "%ld: PROBLEM ERROR: %s\n", p_ptr, msg.c_str());
 	cdEXIT(EXIT_FAILURE);
 }
 
@@ -1523,18 +1524,19 @@ void DataParser::warning(const string& msg, FILE *io)
 	// always return -1 if an error flag is set...
 	p_ls.clear();
 	size_t p_ptr = p_pos();
-	if( p_filename.length() > 0 )
-		fprintf(ioQQQ, "\n %s:%ld:%ld: WARNING: ", p_filename.c_str(), p_nr, p_ptr);
-	fprintf(ioQQQ, "%s\n", msg.c_str());
 	p_showLocation(p_ptr, io);
+	fprintf(io, " ");
+	if( p_filename.length() > 0 )
+		fprintf(io, "%s:%ld:", p_filename.c_str(), p_nr);
+	fprintf(io, "%ld: WARNING: %s\n", p_ptr, msg.c_str());
 	// restore state flags to initial state
 	p_ls.flags(f);
 }
 
 namespace Time {
 	const double
-	        GIGAYEAR=YEAR*1.0e9,
-	        MEGAYEAR=YEAR*1.0e6,
+		GIGAYEAR=YEAR*1.0e9,
+		MEGAYEAR=YEAR*1.0e6,
 		MILLENIUM=YEAR*1000.,
 		CENTURY=YEAR*100.,
 		FORTNIGHT=DAY*14.,
