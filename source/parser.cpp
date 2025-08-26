@@ -1345,6 +1345,9 @@ void DataParser::getLineID(LineID& line, bool lgAtStart)
 {
 	DEBUG_ENTRY( "DataParser::getLineID()" );
 
+	// Print the current line being parsed
+	// fprintf(ioQQQ, "DataParser::getLineID parsing line: [%s]\n", p_line.c_str());
+
 	if( lgAtStart && p_pos() > 0 )
 		errorAbort("the line ID must be the first item on the line");
 	p_replaceSep();
@@ -1352,16 +1355,21 @@ void DataParser::getLineID(LineID& line, bool lgAtStart)
 	string chLabel;
 	if( !lgAtStart || p_line[0] == '\"' )
 	{
-		// skip to the first double quote on the line starting from the current position
+		// this branch label in quotes, skip to the first double quote
+		// on the line starting from the current position
 		auto p = p_line.substr(p_pos()).find('\"') + p_pos();
 		p_pos(p);
 		getQuote(chLabel);
 	}
 	else
 	{
+		// this branch no quotes so expect 4-character label
 		p_pos(min(p_line.length(), 4));
 		if( p_line.length() < 4 )
+		{
+			fprintf(ioQQQ, "Parsing line: [%s]\n", p_line.c_str());
 			errorAbort("failed to read line label");
+		}
 		// relax rule for whitespace in between tokens: if label
 		// is shorter than 4 chars, wavelength may start in 5th column
 		if( !isspace(p_line[3]) && !isspace(p_line[4]) )
