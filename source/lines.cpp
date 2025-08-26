@@ -299,7 +299,7 @@ long findComponent(const LineID& line, bool lgQuiet)
 			return -1;
 		else
 		{
-			fprintf( ioQQQ, "ERROR: line blend component %s does not have type 't'.\n",
+			fprintf( ioQQQ, "ERROR: line blend component %s does not have type 't'. Only transferred lines can be reported.\n",
 					 line.str().c_str() );
 			cdEXIT( EXIT_FAILURE );
 		}
