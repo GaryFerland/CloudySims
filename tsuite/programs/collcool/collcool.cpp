@@ -46,18 +46,16 @@ int main( void )
 			}
 		}
 
-		/* the first temperature */
-		te_first = 4.;
+		/* first and last temperature, its increment, and number of T points */
+		te_first = 1.;
 		te_last = 9.;
-		/* the increment in the temperature */
 		teinc = 0.2;
-		/* the log of the hydrogen density that will be used */
-		hden = 0.;
-		/* the log of the ratio of the abundance of the element in question to hydrogen */
-		element_abund = 5.;
-
 		int npoints = (te_last-te_first)/teinc + 1;
-		
+
+		/* log of the hydrogen density that will be used */
+		hden = 0.;
+		/* log of the ratio of the abundance of the element in question to hydrogen */
+		element_abund = 5.;
 
 		for( nelem=NELEMI; nelem<NELEMF; ++nelem)
 		{
@@ -69,11 +67,16 @@ int main( void )
 				/* initialize the code for this run */
 				cdInit();
 				cdTalk(false);
+				/* option to set up but not execute the code */
 				/*cdNoExec( );*/
 				printf("%s  Te = %g\n",chElementName[nelem],telog);
 				
 				snprintf(chLine,sizeof(chLine),"coronal %3.1f ",telog);
 				cdRead( chLine  );
+
+				/* Chemistry at low temperatures requires a source of
+				 * ionization. Add small component of background cosmic rays */
+				cdRead( "cosmic ray background -4 "  );
 
 				/* just do the first zone - only want ionization distribution */
 				cdRead( "stop zone 1 "  );
@@ -83,10 +86,8 @@ int main( void )
 				snprintf(chLine,sizeof(chLine),"hden %i ",int(hden));
 				cdRead( chLine  );
 
-				cdRead( "set dr 0"  );
-
-				// cannot turn elements off and on during one run, so set them
-				// all to small abundances, relative to H
+				/* cannot turn elements off and on during one run, so set them
+				   all to small abundances, relative to H */
 				cdRead( "element helium abundance -9"  );
 				cdRead( "metals -9"  );
 
@@ -104,7 +105,6 @@ int main( void )
 				{
 					xCoolSave[nte][nelem] /= pow(10.,element_abund);
 				}
-				//printf("%6.2e\t\%6.2e\n",xCoolSave[nte][nelem],cdCooling_last());
 
 				tesave[nte] = telog;
 				telog += teinc;
@@ -112,7 +112,7 @@ int main( void )
 			}
 		}
 			
-		/* this generates large printout */
+		/* generate large printout */
 		fprintf(ioRES,"Te");
 		for( nelem=NELEMI; nelem<NELEMF; ++nelem)
 		{
