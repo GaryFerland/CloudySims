@@ -1,7 +1,7 @@
 ## Notes
 
 This directory contains the files needed to generate
-an O3 optimized executable with clang++
+a clang++ executable that is optimized for line-level profiling
 
 Edit Makefile.conf so that the default build has other properties,
 or use this to pass additional options to make:
