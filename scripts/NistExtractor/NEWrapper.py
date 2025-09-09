@@ -2,7 +2,6 @@
 
 import sys
 import subprocess
-from sys import platform
 
 
 if len(sys.argv) != 2:
@@ -25,18 +24,23 @@ for current_line in input_file:
             species = tokens[0]
             num_level_limit = 1000
         else:
-            print("File, %s, is not properly formatted", input_file_name)
+            print(f"File {input_file_name} is not properly formatted")
             sys.exit(99)
         
-        print("\nRunning NIST Extractor on %s for %s levels" % (species,str(num_level_limit)))
-        if platform.startswith('win'):
-            rcode = subprocess.call(["NistExtractor.py",species,str(num_level_limit)],shell = True)
+        print(f"\nRunning NIST Extractor on {species} for {num_level_limit} levels")
+        
+        if sys.platform.startswith('win'):
+            rcode = subprocess.call(
+                ["python", "NistExtractor.py", species, str(num_level_limit)],
+                shell=True
+            )
         else:
-            rcode = subprocess.call(["NistExtractor.py",species,str(num_level_limit)])
+            rcode = subprocess.call(
+                ["python3", "NistExtractor.py", species, str(num_level_limit)]
+            )
             
 
 
-input_file.close()
 
 print("\nNEWrapper finished!")
     
