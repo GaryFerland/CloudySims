@@ -1215,9 +1215,15 @@ void DataParser::p_newlineProcess()
 {
 	DEBUG_ENTRY( "DataParser::p_newlineProcess()" );
 
-	auto p = p_line.find_first_of("#\r");
-	if( p != string::npos )
-		p_line.erase(p);
+	// remove comment part of the line, as well as CR when on Windows
+	for( size_t p=0; p < p_line.length(); ++p )
+	{
+		if( p_line[p] == '#' || p_line[p] == '\r' )
+		{
+			p_line.erase(p);
+			break;
+		}
+	}
 	p_ls.str(p_line);
 	p_ls.clear();
 }
