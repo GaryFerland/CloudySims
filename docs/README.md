@@ -30,8 +30,9 @@ CompileAll.pl hazy1
 
 To check on compile-time errors do
 ```
-grep underfined */*.log in the latex directory.
+grep undefined */*.log
 ```
+in the latex directory.
 
 To erase all intermediate files produced by latex and bibtex
 (but not the PDFs), do

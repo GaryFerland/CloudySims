@@ -1,7 +1,9 @@
-title dust-free Leiden meeting model 1
+title dust-free dense PDR
 set save prefix "pdr_no_dust"
-# This is one of the tests in Rollig et al. 2007, A&A, 467, 187 
-# but with no dust to test TiO, PN, PO chemistry
+# This started as one of the tests in Rollig et al. 2007, A&A, 467, 187 
+# but with no dust or depletion to test TiO, PN, PO chemistry. A high density is
+# needed to allow molecules to form. There is little Balmer continuum opacity
+# since grains are not present, so we extend to a large column density.
 #
 # commands controlling continuum =========
 # Use the Draine 1978 field, for a semi-infinite slab we have to use half
@@ -13,18 +15,14 @@ cosmic rays background
 set chemistry TiO on
 #
 # commands for density & abundances =========
-#  hydrogen density 
+# hydrogen density 
 hden 7.
 #
 # commands controlling geometry  =========
 #
 # other commands for details     =========
 failures 3
-# use leiden initialization file
-# init file="pdr_leiden.ini"
-# This command defines the grain temperature to be a constant 20 Kelvin
-#constant grain temperature 20 
-# This sets the temperature to a constant 50 Kelvin
+# This sets the gas kinetic temperature to a constant 50 Kelvin
 constant temperature 50 linear
 stop column density 22
 stop temperature off

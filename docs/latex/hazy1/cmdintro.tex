@@ -587,8 +587,8 @@ numbers. A PRNG creates a deterministic sequence of numbers starting from a
 given seed. However, on each invocation the bits in the number are so
 efficiently scrambled that for all intents and purposes they can be considered
 a truly random sequence of numbers. The PRNG in \Cloudy\ is by default a fully
-vectorized version of xoshiro256** (Blackman and Vigna, 2018, in
-press)\footnote{http://xoshiro.di.unimi.it.}, while the random numbers with a
+vectorized version of xoshiro256** \citep{2018arXiv180501407B}
+\footnote{http://xoshiro.di.unimi.it.}, while the random numbers with a
 normal distribution are now generated using the Ziggurat algorithm
 \citep{MarsagliaTsang00}. Both methods are very fast. An additional advantage
 is that the new code is fully aware of parallelization in the code, meaning

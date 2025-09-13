@@ -3846,7 +3846,7 @@ STATIC void SaveLineStuff(
 				{
 					if (ipISO == ipH_LIKE)
 					{
-						for( long nHi=iso_sp[ipISO][nelem].n_HighestResolved_max + iso_sp[ipISO][nelem].nCollapsed_max + 1; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
+						for( long nHi=iso_sp[ipISO][nelem].st[iso_sp[ipISO][nelem].numLevels_local-1].n()+1; nHi < iso_ctrl.nLymanHLike[nelem]; nHi++ )
 						{
 							++index;
 

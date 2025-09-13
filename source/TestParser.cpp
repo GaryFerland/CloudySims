@@ -215,36 +215,44 @@ namespace {
 		CHECK( fp_equal(t.wavlVac(), -1_r) );
 		t = 5000_vac;
 		CHECK( fp_equal(t.wavlVac(), 5000_r) );
-		CHECK( t.sprt_wl() == "5000.00A" );
+		CHECK( t.sprt_wl() == "5000.00A " );
 		t = 6564.522546600_vac;
 		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
-		CHECK( t.sprt_wl() == "6564.52A" );
+		CHECK( t.sprt_wl() == "6564.52A " );
 		t = 6562.709693357_air;
 		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
-		CHECK( t.sprt_wl() == "6564.52A" );
+		CHECK( t.sprt_wl() == "6564.52A " );
 		t = t_vac(6564.522546600_r);
 		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
-		CHECK( t.sprt_wl() == "6564.52A" );
+		CHECK( t.sprt_wl() == "6564.52A " );
 		t = t_air(6562.709693357_r);
 		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
-		CHECK( t.sprt_wl() == "6564.52A" );
+		CHECK( t.sprt_wl() == "6564.52A " );
 
 		// now test printing wavelengths in air
 		prt.lgPrintLineAirWavelengths = true;
 
 		t = 6564.522546600_vac;
 		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
-		CHECK( t.sprt_wl() == "6562.71A" );
+		CHECK( t.sprt_wl() == "6562.71A " );
 		t = 6562.709693357_air;
 		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
-		CHECK( t.sprt_wl() == "6562.71A" );
+		CHECK( t.sprt_wl() == "6562.71A " );
 		t = t_vac(6564.522546600_r);
 		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
-		CHECK( t.sprt_wl() == "6562.71A" );
+		CHECK( t.sprt_wl() == "6562.71A " );
 		t = t_air(6562.709693357_r);
 		CHECK( fp_equal(t.wavlVac(), 6564.522546600_r) );
-		CHECK( t.sprt_wl() == "6562.71A" );
+		CHECK( t.sprt_wl() == "6562.71A " );
 
+		// test ctors
+		t = t_wavl(6564.52_r, WL_AIR);
+		CHECK( t.sprt_wl() == "6564.52A " );
+		t = t_wavl(6564.522546600_r, WL_VACUUM);
+		CHECK( t.sprt_wl() == "6562.71A " );
+		t = t_wavl(6564.522546600_r, WL_VACUUM, true);
+		CHECK( t.sprt_wl() == "6562.71A?" );
+		
 		// unary minus
 		t = -t_vac(6564.522546600_r);
 		CHECK( fp_equal(t.wavlVac(), -6564.522546600_r) );
@@ -389,11 +397,11 @@ namespace {
 		p.setline("H  1 6562.71A air");
 		line = p.getLineID();
 		CHECK( line.chLabel() == "H  1" && fp_equal(line.wavlVac(), 6564.523_r) );
-		CHECK( line.str() == "\"H  1\" 6564.52A" );
+		CHECK( line.str() == "\"H  1\" 6564.52A " );
 		p.setline("H  1 6562.71A air index=2, 5");
 		line = p.getLineID();
 		CHECK( line.chLabel() == "H  1" && fp_equal(line.wavlVac(), 6564.523_r) );
-		CHECK( line.str() == "\"H  1\" 6564.52A" );
+		CHECK( line.str() == "\"H  1\" 6564.52A " );
 		CHECK( line.indLo() == 2 && line.indHi() == 5 );
 
 		prt.lgPrintLineAirWavelengths = true;
@@ -403,17 +411,17 @@ namespace {
 		p.setline("H  1 6564.52A vacuum");
 		line = p.getLineID();
 		CHECK( line.chLabel() == "H  1" && fp_equal(line.wavlVac(), 6564.52_r) );
-		CHECK( line.str() == "\"H  1\" 6562.71A" );
+		CHECK( line.str() == "\"H  1\" 6562.71A " );
 		// test an input line with two line IDs
 		p.setline("stop line \"c  2\" 157.636m air relative to \"o  3\" 5008.24 vacuum");
 		line = p.getLineID(false);
 		CHECK( line.chLabel() == "c  2" && fp_equal(line.wavlVac(), 157.67897e4_r) );
-		CHECK( line.str() == "\"c  2\" 157.636m" );
+		CHECK( line.str() == "\"c  2\" 157.636m " );
 		t_wavl t = line.twav();
 		CHECK( fp_equal(line.wavlVac(), t.wavlVac()) );
 		line = p.getLineID(false);
 		CHECK( line.chLabel() == "o  3" && fp_equal(line.wavlVac(), 5008.24_r) );
-		CHECK( line.str() == "\"o  3\" 5006.84A" );
+		CHECK( line.str() == "\"o  3\" 5006.84A " );
 
 		prt.lgPrintLineAirWavelengths = false;
 		// test failure modes
