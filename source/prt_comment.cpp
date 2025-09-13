@@ -2039,6 +2039,14 @@ void PrtComment(void)
 			"  !The CMB was not included.  This is added with the CMB command." );
 		bangin(chLine);
 	}
+	
+	/* check whether TiO is on */
+	if( !mole_global.lgTiO && !gv.lgDustOn() )
+	{
+		sprintf( chLine, 
+			"  !The Ti-chemistry is disabled by default. For dust-free environments, TiO may be an important opacity source. To enable, use the command: set chemistry TiO on." );
+		bangin(chLine);
+	}
 
 	/* incident radiation field is less than background Habing ISM field */
 	if( rfield.lgHabing )
