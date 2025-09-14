@@ -251,62 +251,102 @@ public:
 	void readLaw(DepthTable& table);
 };
 
+//! lightweight variant of istringstream to be used in DataParser
+//! the main objective is to speed up execution by removing unnecessary overhead
+//! note that the functionality is not always exactly equal to istringstream
+//! even when the method has the same name as the corresponding method in istringstream
+class mystream {
+	const char* p_line;
+	size_t p_len;
+	size_t p_pos;
+	bool p_fail;
+	bool p_eof;
+public:
+	mystream() : p_line(NULL), p_len(0), p_pos(0), p_fail(false), p_eof(false) {}
+	char peek() { p_eof = ( p_eof || p_pos >= p_len ); return p_line[p_pos]; }
+	char get() { p_eof = ( p_eof || p_pos >= p_len ); return p_line[p_pos++]; }
+	bool good() const { return ( !p_fail && !p_eof ); }
+	bool fail() const { return p_fail; }
+	void fail(bool f) { p_fail = f; }
+	bool eof() const { return p_eof; }
+	void eof(bool e) { p_eof = e; }
+	size_t tellg() const { return p_pos; }
+	void seekg(size_t p) { p_pos = p; p_eof = ( p_eof || p >= p_len ); }
+	const char* str() const { return p_line; }
+	void str(const string& s) { clear(); p_line = s.data(); p_len = s.length(); }
+	size_t length() const { return p_len; }
+	void clear() { p_line = NULL, p_len = 0; p_pos = 0; p_fail = false; p_eof = false; }
+};
+
 // helper functions for the DataParser class, do not call these directly
 template<typename T>
-inline void getTokenOptionalImpl(istringstream& iss, const string&, T& var)
+inline void getTokenOptionalImpl(mystream& ms, const string&, T& var)
 {
+	istringstream iss(ms.str());
+	iss.seekg(ms.tellg());
 	iss >> var;
-	if( iss.fail() )
+	if( iss.fail() ) {
+		ms.fail(true);
 		var = T();
+	}
+	ms.eof(iss.eof());
+	iss.clear();
+	ms.seekg(iss.tellg());
 }
 
 // optimized specializations for the most common types
 template<>
-inline void getTokenOptionalImpl(istringstream& iss, const string& s, double& var)
+inline void getTokenOptionalImpl(mystream& ms, const string& s, double& var)
 {
-	FPRead(iss, s, var);
+	FPRead(ms, s, var);
 }
 
 template<>
-inline void getTokenOptionalImpl(istringstream& iss, const string& s, sys_float& var)
+inline void getTokenOptionalImpl(mystream& ms, const string& s, sys_float& var)
 {
-	FPRead(iss, s, var);
+	FPRead(ms, s, var);
 }
 
 template<>
-inline void getTokenOptionalImpl(istringstream& iss, const string& s, long long& var)
+inline void getTokenOptionalImpl(mystream& ms, const string& s, long long& var)
 {
-	IntRead(iss, s, var);
+	IntRead(ms, s, var);
 }
 
 template<>
-inline void getTokenOptionalImpl(istringstream& iss, const string& s, unsigned long long& var)
+inline void getTokenOptionalImpl(mystream& ms, const string& s, unsigned long long& var)
 {
-	IntRead(iss, s, var);
+	IntRead(ms, s, var);
 }
 
 template<>
-inline void getTokenOptionalImpl(istringstream& iss, const string& s, long& var)
+inline void getTokenOptionalImpl(mystream& ms, const string& s, long& var)
 {
-	IntRead(iss, s, var);
+	IntRead(ms, s, var);
 }
 
 template<>
-inline void getTokenOptionalImpl(istringstream& iss, const string& s, unsigned long& var)
+inline void getTokenOptionalImpl(mystream& ms, const string& s, unsigned long& var)
 {
-	IntRead(iss, s, var);
+	IntRead(ms, s, var);
 }
 
 template<>
-inline void getTokenOptionalImpl(istringstream& iss, const string& s, int& var)
+inline void getTokenOptionalImpl(mystream& ms, const string& s, int& var)
 {
-	IntRead(iss, s, var);
+	IntRead(ms, s, var);
 }
 
 template<>
-inline void getTokenOptionalImpl(istringstream& iss, const string& s, unsigned int& var)
+inline void getTokenOptionalImpl(mystream& ms, const string& s, unsigned int& var)
 {
-	IntRead(iss, s, var);
+	IntRead(ms, s, var);
+}
+
+template<>
+inline void getTokenOptionalImpl(mystream& ms, const string& s, string& var)
+{
+	StringRead(ms, s, var);
 }
 
 //! ES_NONE means that neither blank lines nor a field of stars are end-of-data (EOD)
@@ -323,7 +363,7 @@ class DataParser {
 	eod_style p_es;      //! what are the allowed EOD markers?
 	string p_line;       //! the current line being read
 	size_t p_nr;         //! number of the line we are parsing
-	istringstream p_ls;  //! stream for reading current line
+	mystream p_ls;       //! stream for reading current line
 	bool p_lgEOF;        //! have we passed beyond the EOF?
 
 	void p_open(const string& name, eod_style es, access_scheme as);
@@ -346,11 +386,13 @@ class DataParser {
 	// than blank lines, depending on the value of p_es...
 	bool p_blankLine() const
 	{
-		for( size_t i=0; i < p_line.length(); ++i )
+		const char* begin = p_line.data();
+		const char* end = begin + p_line.size();
+		for( auto p=begin; p < end; ++p )
 		{
-			if( i > 0 && p_line[i] == '#' )
+			if( UNLIKELY(p > begin && *p == '#') )
 				return true;
-			else if( !isspace(p_line[i]) )
+			else if( LIKELY(!isspace(*p)) )
 				return false;
 		}
 		return true;
@@ -358,18 +400,12 @@ class DataParser {
 	// get the position on the current line
 	size_t p_pos()
 	{
-		long p = p_ls.tellg();
-		if( p < 0 )
-			return p_line.length();
-		else
-			return size_t(p);
+		return p_ls.tellg();
 	}
 	// set the position on the current line (i.e. skip to position p)
 	void p_pos(size_t p)
 	{
 		p_ls.seekg(p);
-		if( p >= p_line.length() )
-			p_ls.setstate(ios_base::eofbit);
 	}
 	// skip whitespace on the current line
 	void p_skipWS()
@@ -403,6 +439,8 @@ class DataParser {
 	void p_showLocation(size_t p, FILE *io);
 	// this implements reading a quoted string
 	void p_getQuoteOptional(string& str);
+	// helper routine for errorAbort() and warning()
+	void p_printMsg(const string& severity, const string& msg, FILE *io);
 public:
 	// default constructor
 	DataParser() : p_es(ES_INVALID), p_nr(0), p_lgEOF(false) {}	
@@ -577,14 +615,20 @@ public:
 		p_io.seekg(0);
 		p_line.clear();
 		p_nr = 0;
-		p_ls.str("");
 		p_ls.clear();
 		p_lgEOF = false;
 	}
 	// abort with specific error message
-	NORETURN void errorAbort(const string& msg, FILE *io = ioQQQ);
+	NORETURN void errorAbort(const string& msg, FILE *io = ioQQQ)
+	{
+		p_printMsg("PROBLEM ERROR", msg, io);
+		cdEXIT(EXIT_FAILURE);
+	}
 	// non-fatal warning message
-	void warning(const string& msg, FILE *io = ioQQQ);
+	void warning(const string& msg, FILE *io = ioQQQ)
+	{
+		p_printMsg("WARNING", msg, io);
+	}
 };
 
 /** Links text string to an action on a specified argument */
