@@ -584,6 +584,7 @@ STATIC double Badnell_RR_rate_eval(
 		 * said that RR was present but no data were read in. Division by zero
 		 * occurred, which is not trapped on a Mac. Ubuntu gcc threw an fpe
 		 * but ubuntu llvm did not. These ASSERTS will always detect this error condition. */
+		//fprintf(ioQQQ,"DEBUG crash RR use %d %d %e\n",nAtomicNumberCScale , n_core_e_before_recomb,RRFitPar[nAtomicNumberCScale][n_core_e_before_recomb][2]);
 		ASSERT( RRFitPar[nAtomicNumberCScale][n_core_e_before_recomb][2]>0. );
 		ASSERT( RRFitPar[nAtomicNumberCScale][n_core_e_before_recomb][3]>0. );
 		D = sqrt(phycon.te/RRFitPar[nAtomicNumberCScale][n_core_e_before_recomb][2]); /* D = (T/T0)^1/2 */
@@ -1218,6 +1219,7 @@ void Badnell_rec_init( void )
 
 	while( read_whole_line(chLine, ioDATA) )
 	{
+		//fprintf(ioQQQ, "DEBUGG Read Whole Line %s\n", chLine.c_str());
 		/*read in coefficients - first set array par to zero */
 		for( long i=0; i<MAX_FIT_PAR_RR; i++ )
 		{
@@ -1225,6 +1227,8 @@ void Badnell_rec_init( void )
 		}
 		if(chLine[0] != '#')
 		{
+			M_state = 0;
+			/* second line in Badnell files are null, which does not enter values in this sscanf */
 			sscanf(chLine.c_str(), "%i%i%i%i%lf%lf%lf%lf%lf%lf",
 				&NuclearCharge, &NumberElectrons, &M_state, &W_state, &temp_par[0], &temp_par[1],
 				&temp_par[2], &temp_par[3], &temp_par[4], &temp_par[5]);
@@ -1234,11 +1238,13 @@ void Badnell_rec_init( void )
 			{
 				ASSERT( NuclearChargeM1 < LIMELM );
 				ASSERT( NumberElectrons <= LIMELM );
+
 				/*Set a flag to '1' when the indices are defined */  
 				lgRRBadnellDefined[NuclearChargeM1][NumberElectrons] = true;
 				/*assign the values into array */
 				for( long i=0; i<MAX_FIT_PAR_RR; i++ )
 					RRFitPar[NuclearChargeM1][NumberElectrons][i] = temp_par[i];
+				//fprintf(ioQQQ,"DEBUG crash RR define %ld %d %e\n",NuclearChargeM1 , NumberElectrons,RRFitPar[NuclearChargeM1][NumberElectrons][2]);
 			}
 		}
 	}
