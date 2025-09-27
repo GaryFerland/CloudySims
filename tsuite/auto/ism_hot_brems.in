@@ -262,7 +262,8 @@ monitor oxygen 8 ionization -2.015
 ## >>chng 11 sep 15, from -2.957 to -2.883, Chianti for Fe moderate to high ions
 ## >>chng 13 jul 15, from -2.883 to -2.819, move to Stout/Chianti for Si, botches are due to improved atomic data
 ## >>chng 13 sep 12, from -2.819 to -2.72, database Mg
-monitor iron 7 ionization fraction is -2.72 error 0.15
+## >>chng 25 sep 26, from -2.72 to -2.878, update Fe DR recomb
+monitor iron 7 ionization fraction is -2.878 error 0.15
 ##
 ## >> this changes by about 7% when zoning changes
 ## >>chng 99 dec 6 caused by changing dr to go from 50 to 10

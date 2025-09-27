@@ -303,7 +303,8 @@ monitor ionization  Silicon  13 -4.73
 ## >>chng 11 sep 15, from -5.87 to -5.777, Chianti for Fe moderate to high ions
 ## >>chng 12 nov 01, from -5.777 to -5.746, Chianti experimental levels, revised Badnell DR suppression
 ## >>chng 13 feb 01, from -5.746 to -5.036, BUGFIX, largely undo r6703
-monitor ionization  Iron      6 -5.036 
+## >>chng 25 sep 26, from -5.036 to -5.175, update Fe DR recomb
+monitor ionization  Iron      6 -5.175 
 ##
 ## >>chng 03 nov 23, from -3.090 to -2.999, Kraemer et al. guess of dr
 ## >>chng 06 feb 03, from -2.999 to -2.927, guess dr to Badnell mean
@@ -313,7 +314,8 @@ monitor ionization  Iron      6 -5.036
 ## >>chng 11 sep 15, from -3.611 to -3.531, Chianti for Fe moderate to high ions
 ## >>chng 12 nov 01, from -3.531 to -3.508, Chianti experimental levels, revised Badnell DR suppression
 ## >>chng 13 feb 01, from -3.508 to -2.783, BUGFIX, largely undo r6703
-monitor ionization  Iron      7 -2.783 
+## >>chng 25 sep 26, from -2.783 to -2.921, update Fe DR recomb
+monitor ionization  Iron      7 -2.921 
 ##
 ## >>chng 03 nov 23, from -1.570 to -1.482, Kraemer et al. guess of dr
 ## >>chng 06 jul 12, from -1.482 to -1.450, use Savin & Gu DR to make mean DR
