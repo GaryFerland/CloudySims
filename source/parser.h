@@ -264,7 +264,7 @@ class mystream {
 public:
 	mystream() : p_line(NULL), p_len(0), p_pos(0), p_fail(false), p_eof(false) {}
 	char peek() { p_eof = ( p_eof || p_pos >= p_len ); return p_line[p_pos]; }
-	char get() { p_eof = ( p_eof || p_pos >= p_len ); return p_line[p_pos++]; }
+	char get() { char c = p_line[p_pos++]; p_eof = ( p_eof || p_pos >= p_len ); return c; }
 	bool good() const { return ( !p_fail && !p_eof ); }
 	bool fail() const { return p_fail; }
 	void fail(bool f) { p_fail = f; }
