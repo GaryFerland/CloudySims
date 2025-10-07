@@ -472,7 +472,7 @@ STATIC void badprt(
 	fprintf(ioQQQ," all strong cooling lines \n line  wl  ener/total\n");
 	chInfo = 'c';
 	sum_coolants = (realnum)totlin('c');
-	fprintf( ioQQQ, " Sum of coolants (abs) = %.4e (rel)= %.4e\n", 
+	fprintf( ioQQQ, " Sum of coolants (abs) = %.2e (rel)= %.2e\n", 
 	  sum_coolants, sum_coolants/MAX2(1e-30,total) );
 	for( i=0; i < LineSave.nsum; i++ )
 	{
@@ -486,7 +486,7 @@ STATIC void badprt(
 
 	fprintf(ioQQQ," all strong heating lines \n line  wl  ener/total\n");
 	chInfo = 'h';
-	fprintf( ioQQQ, " Sum of heat (abs) = %.4e (rel)= %.4e\n", 
+	fprintf( ioQQQ, " Sum of heat (abs) = %.2e (rel)= %.2e\n", 
 	  thermal.power, thermal.power/MAX2(1e-30,total) );
 	for( i=0; i < LineSave.nsum; i++ )
 	{
