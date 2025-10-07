@@ -58,6 +58,7 @@
 #include "prt.h"
 #include "integrate.h"
 #include "ran.h"
+#include "parser.h"
 
 namespace fs = std::filesystem;
 
@@ -514,11 +515,11 @@ double FFmtRead(const char *chCard,
 	return value;
 }
 
-// helper routine for the following 3 routines
-inline char getChar(const string& s, long& p)
+// helper routine for the following 4 routines
+inline char getChar(const char*& p, const char* end)
 {
-	if( LIKELY(p < long(s.length())) )
-		return s[p++];
+	if( LIKELY(p < end) )
+		return *p++;
 	else
 	{
 		++p;
@@ -527,27 +528,28 @@ inline char getChar(const string& s, long& p)
 }
 
 // helper routine for DataParser -- efficiently read double
-void FPRead(istringstream& iss, const string& s, double& value)
+void FPRead(mystream& ms, const string& s, double& value)
 {
 	DEBUG_ENTRY( "FPRead()" );
 
-	if( !iss.good() )
+	if( !ms.good() )
 	{
-		iss.setstate(ios_base::failbit);
+		ms.fail(true);
 		value = 0.;
 		return;
 	}
-	long p = iss.tellg();
-	char c = getChar(s, p);
+	const char* p = s.data() + ms.tellg();
+	const char* end = s.data() + s.size();
+	char c = getChar(p, end);
 	while( isspace(c) )
-		c = getChar(s, p);
+		c = getChar(p, end);
 	int sign = 1;
 	if( c == '+' )
-		c = getChar(s, p);
+		c = getChar(p, end);
 	else if( c == '-' )
 	{
 		sign = -1;
-		c = getChar(s, p);
+		c = getChar(p, end);
 	}
 	double number = 0.;
 	int ndn = 0, nde = 0;
@@ -556,46 +558,46 @@ void FPRead(istringstream& iss, const string& s, double& value)
 		int digit = (c - '0');
 		number = 10.0*number+digit;
 		++ndn;
-		c = getChar(s, p);
+		c = getChar(p, end);
 	}
 	bool lgFoundExp = false;
 	int expo = 0;
 	if( c == '.' )
 	{
-		c = getChar(s, p);
+		c = getChar(p, end);
 		while( isdigit(c) )
 		{
 			int digit = (c - '0');
 			number = 10.0*number+digit;
 			++ndn;
 			--expo;
-			c = getChar(s, p);
+			c = getChar(p, end);
 		}
 	}
 	if( c == 'e' || c == 'E' )
 	{
 		int exponent = 0, expsign = 1;
 		lgFoundExp = true;
-		c = getChar(s, p);
+		c = getChar(p, end);
 		if( c == '+' )
-			c = getChar(s, p);
+			c = getChar(p, end);
 		else if( c == '-' )
 		{
 			expsign = -1;
-			c = getChar(s, p);
+			c = getChar(p, end);
 		}
 		while( isdigit(c) )
 		{
 			int digit = (c - '0');
 			exponent = 10*exponent+digit;
 			++nde;
-			c = getChar(s, p);
+			c = getChar(p, end);
 		}
 		expo += expsign*exponent;
 	}
 	if( ndn == 0 || ( lgFoundExp && nde == 0 ) )
-		iss.setstate(ios_base::failbit);
-	if( iss.fail() )
+		ms.fail(true);
+	if( ms.fail() )
 		value = 0.;
 	else
 	{
@@ -622,33 +624,34 @@ void FPRead(istringstream& iss, const string& s, double& value)
 			value *= neg_pow10[-expo];
 		}
 	}
-	iss.seekg( --p );
-	if( p >= long(s.length()) )
-		iss.setstate(ios_base::eofbit);
+	ms.seekg(--p - s.data());
+	if( p >= end )
+		ms.eof(true);
 }
 
 // helper routine for DataParser -- efficiently read signed 64-bit integer
-void IntRead(istringstream& iss, const string& s, long long& value)
+void IntRead(mystream& ms, const string& s, long long& value)
 {
 	DEBUG_ENTRY( "IntRead()" );
 
-	if( !iss.good() )
+	if( !ms.good() )
 	{
-		iss.setstate(ios_base::failbit);
+		ms.fail(true);
 		value = 0LL;
 		return;
 	}
-	long p = iss.tellg();
-	char c = getChar(s, p);
+	const char* p = s.data() + ms.tellg();
+	const char* end = s.data() + s.size();
+	char c = getChar(p, end);
 	while( isspace(c) )
-		c = getChar(s, p);
+		c = getChar(p, end);
 	long long sign = 1;
 	if( c == '+' )
-		c = getChar(s, p);
+		c = getChar(p, end);
 	else if( c == '-' )
 	{
 		sign = -1;
-		c = getChar(s, p);
+		c = getChar(p, end);
 	}
 	long long number = 0LL;
 	int ndn = 0;
@@ -657,36 +660,37 @@ void IntRead(istringstream& iss, const string& s, long long& value)
 		long long digit = (c - '0');
 		number = 10LL*number+digit;
 		++ndn;
-		c = getChar(s, p);
+		c = getChar(p, end);
 	}
 	if( ndn == 0 )
-		iss.setstate(ios_base::failbit);
-	if( iss.fail() )
+		ms.fail(true);
+	if( ms.fail() )
 		value = 0LL;
 	else
 		value = sign*number;
-	iss.seekg( --p );
-	if( p >= long(s.length()) )
-		iss.setstate(ios_base::eofbit);
+	ms.seekg(--p - s.data());
+	if( p >= end )
+		ms.eof(true);
 }
 
 // helper routine for DataParser -- efficiently read unsigned 64-bit integer
-void IntRead(istringstream& iss, const string& s, unsigned long long& value)
+void IntRead(mystream& ms, const string& s, unsigned long long& value)
 {
 	DEBUG_ENTRY( "IntRead()" );
 
-	if( !iss.good() )
+	if( !ms.good() )
 	{
-		iss.setstate(ios_base::failbit);
+		ms.fail(true);
 		value = 0ULL;
 		return;
 	}
-	long p = iss.tellg();
-	char c = getChar(s, p);
+	const char* p = s.data() + ms.tellg();
+	const char* end = s.data() + s.size();
+	char c = getChar(p, end);
 	while( isspace(c) )
-		c = getChar(s, p);
+		c = getChar(p, end);
 	if( c == '+' )
-		c = getChar(s, p);
+		c = getChar(p, end);
 	value = 0ULL;
 	int ndn = 0;
 	while( isdigit(c) )
@@ -694,15 +698,41 @@ void IntRead(istringstream& iss, const string& s, unsigned long long& value)
 		unsigned long long digit = (c - '0');
 		value = 10ULL*value+digit;
 		++ndn;
-		c = getChar(s, p);
+		c = getChar(p, end);
 	}
 	if( ndn == 0 )
-		iss.setstate(ios_base::failbit);
-	if( iss.fail() )
+		ms.fail(true);
+	if( ms.fail() )
 		value = 0ULL;
-	iss.seekg( --p );
-	if( p >= long(s.length()) )
-		iss.setstate(ios_base::eofbit);
+	ms.seekg(--p - s.data());
+	if( p >= end )
+		ms.eof(true);
+}
+
+// helper routine for DataParser -- read C++-style string
+void StringRead(mystream& ms, const string& s, string& str)
+{
+	DEBUG_ENTRY( "StringRead()" );
+
+	str.clear();
+	if( !ms.good() )
+	{
+		ms.fail(true);
+		return;
+	}
+	const char* p = s.data() + ms.tellg();
+	const char* end = s.data() + s.size();
+	char c = getChar(p, end);
+	while( isspace(c) )
+		c = getChar(p, end);
+	while( c != '\0' && !isspace(c) )
+	{
+		str.push_back(c);
+		c = getChar(p, end);
+	}
+	ms.seekg(--p - s.data());
+	if( p >= end )
+		ms.eof(true);
 }
 
 /*nMatch determine whether match to a keyword occurs on command line,
