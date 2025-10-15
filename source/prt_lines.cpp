@@ -1150,28 +1150,30 @@ void lines()
 		/* collisional quenching ratio */
 		double effec = 1.6/(1.6 + 0.9*dense.cdsqte);
 
-		/* O III 4363 recombination, coefficient from Burgess and Seaton */
-		/*
-		double r43630 = 6.3e-21/(phycon.te70*phycon.te10)*dense.eden*dense.xIonDense[ipOXYGEN][3]*effec;
+		/* O III 4363 recombination */
 
-		 * Hi Gary, Daniel, Francisco and Veronica,
-			I was wondering why the Liu's fit to the recombination of OIII4363 was so different from what I obtained, from PPB91 or BS60. The point is that the dielectronic recombination is also included in Liu's formula. It is taken from Nussbaumer and Storey 1984. If I add this contribution to PPB91, I obtain the same result than Liu, for Te> 5,000K. At lower Te, the Liu's fit is not correct as only the recombination is acting and the slope changes.
+		/* Hi Gary, Daniel, Francisco and Veronica, I was wondering why the Liu's fit to the recombination of
+		   OIII4363 was so different from what I obtained, from PPB91 or BS60. The point is that the
+		   dielectronic recombination is also included in Liu's formula. It is taken from Nussbaumer and
+		   Storey 1984. If I add this contribution to PPB91, I obtain the same result than Liu, for Te>
+		   5,000K. At lower Te, the Liu's fit is not correct as only the recombination is acting and the slope
+		   changes.
 
-			A full correct recombination computation of 4363 must then take these 2 effects into account, using something like:
-			3.0e-22 * T**-0.6 + 6.37e-25 * exp(-8000/T)
-			i.e. in C++:
-			update:  published in  2020MNRAS.498L..82G
-			*/
-		double r4363 = (3.0e-22/(phycon.te40*phycon.te20) + 6.37e-25*exp(-8000/phycon.te) ) *
-										   dense.eden*dense.xIonDense[ipOXYGEN][3]*effec;
+		   A full correct recombination computation of 4363 must then take these 2 effects into account, using
+		   something like:
+			
+		   3.0e-22 * T**-0.6 + 6.37e-25 * exp(-8000/T)
 
-			/*This is fitting PPB91+NS84 within 3% from 200 to 30,000K.
-			I'm not sure that this is what you want to include in Cloudy?
+		   This is fitting PPB91+NS84 within 3% from 200 to 30,000K.
+		   I'm not sure that this is what you want to include in Cloudy?
 
-			Best regards,
-			Christophe Morisset
-		 */
+		   Best regards,
+		   Christophe Morisset
 
+		   update: published in 2020MNRAS.498L..82G
+		*/
+		double r4363 = (3.0e-22/(phycon.te40*phycon.te20) + 6.37e-25*exp(-8000/phycon.te)) *
+			dense.eden*dense.xIonDense[ipOXYGEN][3]*effec;
 
 		/* charge exchange,
 		 * >>refer	O3	CT	Dalgarno+Sternberg ApJ Let 257, L87.
@@ -1183,10 +1185,10 @@ void lines()
 		PntForLine(4363_air,"O  3",&ipnt);
 
 		lindst(r4363,4363_air,"O 3R",ipnt,'t',true,
-			"recombination, coefficient from Burgess and Seaton" );
+			"recombination, Gomez-Llanos+ MNRAS 498, L82" );
 
 		linadd(ct4363,4363_air,"O 3C",'i' ,
-			"charge exchange, Dalgarno+Sternberg ApJ Let 257, L87");
+			"charge exchange, Dalgarno+Sternberg ApJL 257, L87");
 	}
 
 	/***********************/

@@ -82,7 +82,8 @@ monitor volumn ionization iron  7 -1.465
 ## >>chng 06 nov 29, from -1.975 to -1.909, Badnell DR turned on
 ## >>chng 11 jul 12, from -1.909 to -1.825, enable fit to Badnell DR suppression
 ## >>chng 12 aug 24, from -1.825 to -1.916, BUGFIX r6603 DR rates not updated in const temp sim
-monitor volumn ionization iron  8 -1.916 
+## >>chng 25 sep 26, from -1.916 to -1.953, update Fe DR recomb
+monitor volumn ionization iron  8 -1.953 
 ## 
 ## >>chng 06 feb 03, from -1.988 to -2.009, guess dr to Badnell mean
 ## >>chng 06 aug 17, from -2.009 to -1.981, update to Badnell dr

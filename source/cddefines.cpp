@@ -172,3 +172,123 @@ void t_wavl::prt_wl(FILE *ioOUT, const char* format) const
 		fprintf(ioOUT, "%s", sprt_wl().c_str() );
 	return;
 }
+
+#ifdef HAVE_LIBCPP_BUG
+
+#include "service.h"
+
+/* helper routine for FPRead() */
+inline char getChar(const string& s, long& p)
+{
+	if( LIKELY(p < long(s.length())) )
+		return s[p++];
+	else
+	{
+		++p;
+		return '\0';
+	}
+}
+
+/* this is an older version of FPRead() that still uses an istringstream
+ * it is needed as a fallback for the LLVM libc++ bug mentioned in cddefines.h */
+void FPRead(istringstream& iss, const string& s, double& value)
+{
+	DEBUG_ENTRY( "FPRead()" );
+
+	if( !iss.good() )
+	{
+		iss.setstate(ios_base::failbit);
+		value = 0.;
+		return;
+	}
+	long p = iss.tellg();
+	char c = getChar(s, p);
+	while( isspace(c) )
+		c = getChar(s, p);
+	int sign = 1;
+	if( c == '+' )
+		c = getChar(s, p);
+	else if( c == '-' )
+	{
+		sign = -1;
+		c = getChar(s, p);
+	}
+	double number = 0.;
+	int ndn = 0, nde = 0;
+	while( isdigit(c) )
+	{
+		int digit = (c - '0');
+		number = 10.0*number+digit;
+		++ndn;
+		c = getChar(s, p);
+	}
+	bool lgFoundExp = false;
+	int expo = 0;
+	if( c == '.' )
+	{
+		c = getChar(s, p);
+		while( isdigit(c) )
+		{
+			int digit = (c - '0');
+			number = 10.0*number+digit;
+			++ndn;
+			--expo;
+			c = getChar(s, p);
+		}
+	}
+	if( c == 'e' || c == 'E' )
+	{
+		int exponent = 0, expsign = 1;
+		lgFoundExp = true;
+		c = getChar(s, p);
+		if( c == '+' )
+			c = getChar(s, p);
+		else if( c == '-' )
+		{
+			expsign = -1;
+			c = getChar(s, p);
+		}
+		while( isdigit(c) )
+		{
+			int digit = (c - '0');
+			exponent = 10*exponent+digit;
+			++nde;
+			c = getChar(s, p);
+		}
+		expo += expsign*exponent;
+	}
+	if( ndn == 0 || ( lgFoundExp && nde == 0 ) )
+		iss.setstate(ios_base::failbit);
+	if( iss.fail() )
+		value = 0.;
+	else
+	{
+		value = sign*number;
+		// numbers produced by FPRead() should ideally be accurate to 1 ULP, but certainly
+		// better than 3 ULP (the rest of the code relies on this).
+		// To achieve this we use a lookup table of powers of 10, which is also fast...
+		if( expo > 0 )
+		{
+			while( UNLIKELY(expo > max_pow10) )
+			{
+				value *= pos_pow10[max_pow10];
+				expo -= max_pow10;
+			}
+			value *= pos_pow10[expo];
+		}
+		else if( expo < 0 )
+		{
+			while( UNLIKELY(expo < min_pow10) )
+			{
+				value *= neg_pow10[-min_pow10];
+				expo -= min_pow10;
+			}
+			value *= neg_pow10[-expo];
+		}
+	}
+	iss.seekg( --p );
+	if( p >= long(s.length()) )
+		iss.setstate(ios_base::eofbit);
+}
+
+#endif
