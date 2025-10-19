@@ -6,7 +6,6 @@
 #include "called.h"
 #include "version.h"
 #include "grainvar.h"
-#include "rfield.h"
 #include "atmdat_adfa.h"
 #include "parser.h"
 #include "grains.h"
@@ -371,10 +370,10 @@ void mie_write_opc(/*@in@*/ const char *rfi_file,
 	double volnorm = sd.vol;
 	double volfrac = 1.;
 
-	multi_arr<double,2> acs_abs( sd.nPart, rfield.nflux_with_check );
+	multi_arr<double,2> acs_abs( sd.nPart, gv.ncells() );
 	multi_arr<double,2> acs_sct( acs_abs.clone() );
 	multi_arr<double,2> a1g( acs_abs.clone() );
-	vector<double> inv_att_len( rfield.nflux_with_check );
+	vector<double> inv_att_len( gv.ncells() );
 
 	fprintf( ioQQQ, "\n Starting mie_write_opc, output will be written to %s\n\n", chFile.c_str() );
 
@@ -478,23 +477,23 @@ void mie_write_opc(/*@in@*/ const char *rfi_file,
 	} u;
 
 	lgErr = lgErr || ( fprintf(fdes,"#\n") < 0 );
-	lgErr = lgErr || ( fprintf(fdes,"%s # check 1\n",rfield.mesh_cksum().c_str()) < 0 );
-	u.x = rfield.emm();
+	lgErr = lgErr || ( fprintf(fdes,"%s # check 1\n",gv.mesh_cksum().c_str()) < 0 );
+	u.x = gv.emm();
 	if( cpu.i().big_endian() )
 		lgErr = lgErr || ( fprintf(fdes,"%23.8x %8.8x # check 2\n",u.i[0],u.i[1]) < 0 );
 	else
 		lgErr = lgErr || ( fprintf(fdes,"%23.8x %8.8x # check 2\n",u.i[1],u.i[0]) < 0 );
-	u.x = rfield.egamry();
+	u.x = gv.egamry();
 	if( cpu.i().big_endian() )
 		lgErr = lgErr || ( fprintf(fdes,"%23.8x %8.8x # check 3\n",u.i[0],u.i[1]) < 0 );
 	else
 		lgErr = lgErr || ( fprintf(fdes,"%23.8x %8.8x # check 3\n",u.i[1],u.i[0]) < 0 );
-	u.x = rfield.getResolutionScaleFactor();
+	u.x = 1.;
 	if( cpu.i().big_endian() )
 		lgErr = lgErr || ( fprintf(fdes,"%23.8x %8.8x # check 4\n",u.i[0],u.i[1]) < 0 );
 	else
 		lgErr = lgErr || ( fprintf(fdes,"%23.8x %8.8x # check 4\n",u.i[1],u.i[0]) < 0 );
-	lgErr = lgErr || ( fprintf(fdes,"%32ld # rfield.nflux_with_check\n",rfield.nflux_with_check) < 0 );
+	lgErr = lgErr || ( fprintf(fdes,"%32ld # gv.ncells()\n",gv.ncells()) < 0 );
 	lgErr = lgErr || ( fprintf(fdes,"%32ld # number of size distr. bins\n#\n",sd.nPart) < 0 );
 
 	if( gd.rfiType == OPC_PAH1 )
@@ -509,7 +508,7 @@ void mie_write_opc(/*@in@*/ const char *rfi_file,
 		mie_read_rfi("gdraine.rfi",&gd2);
 	}
 
-	vector<int> ErrorIndex( rfield.nflux_with_check );
+	vector<int> ErrorIndex( gv.ncells() );
 
 	for( long p=0; p < sd.nPart; p++ ) 
 	{
@@ -547,9 +546,9 @@ void mie_write_opc(/*@in@*/ const char *rfi_file,
 		bool lgErrorOccurred = false;
 
 		/* calculate the opacity data */
-		for( long i=0; i < rfield.nflux_with_check; i++ ) 
+		for( long i=0; i < gv.ncells(); i++ ) 
 		{
-			double wavlen = WAVNRYD/rfield.anu(i)*1.e4;
+			double wavlen = WAVNRYD/gv.anu(i)*1.e4;
 
 			ErrorIndex[i] = 0;
 			acs_abs[p][i] = 0.;
@@ -638,14 +637,14 @@ void mie_write_opc(/*@in@*/ const char *rfi_file,
 		if( lgErrorOccurred ) 
 		{
 			chString = "absorption cs";
-			mie_repair(chString,rfield.nflux_with_check,2,0,rfield.anuptr(),&acs_abs[p][0],ErrorIndex,false,&lgWarning);
+			mie_repair(chString,gv.ncells(),2,0,gv.anuptr(),&acs_abs[p][0],ErrorIndex,false,&lgWarning);
 			chString = "scattering cs";
-			mie_repair(chString,rfield.nflux_with_check,2,1,rfield.anuptr(),&acs_sct[p][0],ErrorIndex,false,&lgWarning);
+			mie_repair(chString,gv.ncells(),2,1,gv.anuptr(),&acs_sct[p][0],ErrorIndex,false,&lgWarning);
 			chString = "asymmetry parameter";
-			mie_repair(chString,rfield.nflux_with_check,1,1,rfield.anuptr(),&a1g[p][0],ErrorIndex,true,&lgWarning);
+			mie_repair(chString,gv.ncells(),1,1,gv.anuptr(),&a1g[p][0],ErrorIndex,true,&lgWarning);
 		}
 
-		for( long i=0; i < rfield.nflux_with_check; i++ ) 
+		for( long i=0; i < gv.ncells(); i++ ) 
 		{
 			acs_abs[p][i] /= gd.norm;
 			/* >>chng 02 dec 30, do not multiply with (1-g) and write this factor out
@@ -658,9 +657,9 @@ void mie_write_opc(/*@in@*/ const char *rfi_file,
 	lgErr = lgErr || ( fprintf(fdes,"# ===========================================\n") < 0 );
 	lgErr = lgErr || ( fprintf(fdes,"# anu (Ryd) abs_cs_01 (cm^2/H) abs_cs_02.....\n#\n") < 0 );
 
-	for( long i=0; i < rfield.nflux_with_check; i++ ) 
+	for( long i=0; i < gv.ncells(); i++ ) 
 	{
-		lgErr = lgErr || ( fprintf(fdes,"%.6e ",rfield.anu(i)) < 0 );
+		lgErr = lgErr || ( fprintf(fdes,"%.6e ",gv.anu(i)) < 0 );
 		for( long p=0; p < sd.nPart; p++ ) 
 		{
 			lgErr = lgErr || ( fprintf(fdes,"%.6e ",acs_abs[p][i]) < 0 );
@@ -672,9 +671,9 @@ void mie_write_opc(/*@in@*/ const char *rfi_file,
 	lgErr = lgErr || ( fprintf(fdes,"# ===========================================\n") < 0 );
 	lgErr = lgErr || ( fprintf(fdes,"# anu (Ryd) sct_cs_01 (cm^2/H) sct_cs_02.....\n#\n") < 0 );
 
-	for( long i=0; i < rfield.nflux_with_check; i++ ) 
+	for( long i=0; i < gv.ncells(); i++ ) 
 	{
-		lgErr = lgErr || ( fprintf(fdes,"%.6e ",rfield.anu(i)) < 0 );
+		lgErr = lgErr || ( fprintf(fdes,"%.6e ",gv.anu(i)) < 0 );
 		for( long p=0; p < sd.nPart; p++ ) 
 		{
 			lgErr = lgErr || ( fprintf(fdes,"%.6e ",acs_sct[p][i]) < 0 );
@@ -686,9 +685,9 @@ void mie_write_opc(/*@in@*/ const char *rfi_file,
 	lgErr = lgErr || ( fprintf(fdes,"# ===========================================\n") < 0 );
 	lgErr = lgErr || ( fprintf(fdes,"# anu (Ryd) (1-g)_bin_01 (1-g)_bin_02.....\n#\n") < 0 );
 
-	for( long i=0; i < rfield.nflux_with_check; i++ ) 
+	for( long i=0; i < gv.ncells(); i++ ) 
 	{
-		lgErr = lgErr || ( fprintf(fdes,"%.6e ",rfield.anu(i)) < 0 );
+		lgErr = lgErr || ( fprintf(fdes,"%.6e ",gv.anu(i)) < 0 );
 		for( long p=0; p < sd.nPart; p++ ) 
 		{
 			// cap of 1-g is needed when g is negative...
@@ -708,11 +707,11 @@ void mie_write_opc(/*@in@*/ const char *rfi_file,
 		{
 		case IAL_CAR:
 			mie_read_rfi("graphite.rfi",&gd2);
-			mie_calc_ial(&gd2,rfield.nflux_with_check,inv_att_len,chString,&lgWarning);
+			mie_calc_ial(&gd2,gv.ncells(),inv_att_len,chString,&lgWarning);
 			break;
 		case IAL_SIL:
 			mie_read_rfi("silicate.rfi",&gd2);
-			mie_calc_ial(&gd2,rfield.nflux_with_check,inv_att_len,chString,&lgWarning);
+			mie_calc_ial(&gd2,gv.ncells(),inv_att_len,chString,&lgWarning);
 			break;
 		default:
 			fprintf( ioQQQ, " mie_write_opc detected unknown ial type: %d\n" , icase );
@@ -721,16 +720,16 @@ void mie_write_opc(/*@in@*/ const char *rfi_file,
 	}
 	else 
 	{
-		mie_calc_ial(&gd,rfield.nflux_with_check,inv_att_len,chString,&lgWarning);
+		mie_calc_ial(&gd,gv.ncells(),inv_att_len,chString,&lgWarning);
 	}
 
 	lgErr = lgErr || ( fprintf(fdes,"#\n") < 0 );
 	lgErr = lgErr || ( fprintf(fdes,"# ===========================================\n") < 0 );
 	lgErr = lgErr || ( fprintf(fdes,"# anu (Ryd) inverse attenuation length (cm^-1)\n#\n") < 0 );
 
-	for( long i=0; i < rfield.nflux_with_check; i++ ) 
+	for( long i=0; i < gv.ncells(); i++ ) 
 	{
-		lgErr = lgErr || ( fprintf(fdes,"%.6e %.6e\n",rfield.anu(i),inv_att_len[i]) < 0 );
+		lgErr = lgErr || ( fprintf(fdes,"%.6e %.6e\n",gv.anu(i),inv_att_len[i]) < 0 );
 	}
 
 	fclose(fdes);
@@ -1200,9 +1199,9 @@ void mie_read_opc(/*@in@*/const char *chFile,
 		sscanf( chLine.c_str(), "%x %x", &u.i[1], &u.i[0] );
 	mesh_hi = u.x;
 
-	if( cksum != rfield.mesh_cksum() ||
-	    !fp_equal_tol( mesh_lo, rfield.emm(), 1.e-11*rfield.emm() ) ||
-	    !fp_equal_tol( mesh_hi, rfield.egamry(), 1.e-7*rfield.egamry() ) )
+	if( cksum != gv.mesh_cksum() ||
+	    !fp_equal_tol( mesh_lo, gv.emm(), 1.e-11*gv.emm() ) ||
+	    !fp_equal_tol( mesh_hi, gv.egamry(), 1.e-7*gv.egamry() ) )
 	{
 		fprintf( ioQQQ, " Opacity file %s has an incompatible energy grid.\n", chFile );
 		fprintf( ioQQQ, " Please recompile this file using the COMPILE GRAINS command.\n" );
@@ -1218,7 +1217,7 @@ void mie_read_opc(/*@in@*/const char *chFile,
 	/* this number is checked later since it may not have been set yet by the input script */
 	gv.bin[nd].RSFCheck = u.x;
 
-	/* nup is number of frequency bins stored in file, this should match rfield.nflux_with_check */
+	/* nup is number of frequency bins stored in file, this should match gv.ncells() */
 	mie_next_data(chFile,io2,chLine,&dl);
 	mie_read_number(chFile,chLine,&nup,true,dl,"number of frequency points");
 
@@ -1325,10 +1324,10 @@ void mie_read_opc(/*@in@*/const char *chFile,
 			cdEXIT(EXIT_FAILURE);
 		}
 		// check that frequency grid matches, frequencies are printed with 7 significant digits
-		if( !fp_equal_tol(anu,rfield.anu(i),1e-6*rfield.anu(i)) )
+		if( !fp_equal_tol(anu,gv.anu(i),1e-6*gv.anu(i)) )
 		{
 			fprintf(ioQQQ,"\n\n PROBLEM while reading frequencies: point %li should "
-				"have value %e, but actually has %e\n", (unsigned long)i, rfield.anu(i), anu );
+				"have value %e, but actually has %e\n", (unsigned long)i, gv.anu(i), anu );
 			fprintf(ioQQQ," Please recompile the grain opacity file %s.\n", chFile );
 			cdEXIT(EXIT_FAILURE);
 		}
@@ -1343,7 +1342,7 @@ void mie_read_opc(/*@in@*/const char *chFile,
 				cdEXIT(EXIT_FAILURE);
 			}
 			ASSERT( gv.bin[nd2].dstab1[i] > 0. );
-			gv.bin[nd2].dstab1_x_anu[i] = gv.bin[nd2].dstab1[i]*rfield.anu(i);
+			gv.bin[nd2].dstab1_x_anu[i] = gv.bin[nd2].dstab1[i]*gv.anu(i);
 		}
 	}
 
@@ -2572,11 +2571,11 @@ STATIC void mie_calc_ial(/*@in@*/ const grain_data *gd,
 	/* sanity check */
 	ASSERT( gd->rfiType == RFI_TABLE );
 
-	vector<int> ErrorIndex( rfield.nflux_with_check );
+	vector<int> ErrorIndex( gv.ncells() );
 
 	for( i=0; i < n; i++ ) 
 	{
-		wavlen = WAVNRYD/rfield.anu(i)*1.e4;
+		wavlen = WAVNRYD/gv.anu(i)*1.e4;
 
 		ErrorIndex[i] = 0;
 		lgErrorOccurred = false;
@@ -2606,7 +2605,7 @@ STATIC void mie_calc_ial(/*@in@*/ const grain_data *gd,
 
 	if( lgErrorOccurred ) 
 	{
-		mie_repair(chString,n,3,3,rfield.anuptr(),&invlen[0],ErrorIndex,false,lgWarning);
+		mie_repair(chString,n,3,3,gv.anuptr(),&invlen[0],ErrorIndex,false,lgWarning);
 	}
 
 	return;

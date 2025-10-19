@@ -7,6 +7,7 @@
 #include "dense.h"
 #include "iso.h"
 #include "grains.h"
+#include "grainvar.h"
 #include "rfield.h"
 #include "stars.h"
 #include "parser.h"
@@ -84,8 +85,8 @@ void ParseCompile(Parser &p)
 	{
 		string chRFI, chSZD;
 
-		/* calls fill to set up continuum energy mesh if first call */
-		ContCreateMesh();
+		/* set up special grain energy mesh */
+		gv.InitMesh();
 
 		/* get first filename (either .rfi or .szd file) */
 		if( p.nMatch( "\"" ) )
