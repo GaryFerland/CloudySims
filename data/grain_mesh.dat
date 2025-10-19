@@ -1,0 +1,6 @@
+10 08 08 # the magic number for this format file
+#
+# this file defines the frequency mesh used internally by the grains code
+# its format is the same as the file continuum_mesh.dat.
+#
+0.	 10

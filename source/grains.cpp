@@ -271,6 +271,8 @@ void GrainsInit()
 		fprintf( ioQQQ, " GrainsInit called.\n" );
 	}
 
+	gv.InitMesh();
+
 	gv.dstab.resize( rfield.nflux_with_check );
 	gv.dstsc.resize( rfield.nflux_with_check );
 	gv.GrainEmission.resize( rfield.nflux_with_check );

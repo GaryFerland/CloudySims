@@ -213,8 +213,21 @@ public:
 	// constructor
 	t_mesh() : t_basic_mesh()
 	{
-		p_mesh_defname = "continuum_mesh.ini";
-	}		
+		p_mesh_defname = "continuum_mesh.dat";
+	}
+};
+
+class t_grainmesh : public t_basic_mesh {
+public:
+	void InitMesh()
+	{
+		p_InitBasicMesh(false);
+	}
+	// constructor
+	t_grainmesh() : t_basic_mesh()
+	{
+		p_mesh_defname = "grain_mesh.dat";
+	}	
 };
 
 #endif /* MESH_H_ */

@@ -7,6 +7,7 @@
 /* grainvar.h */
 
 #include "container_classes.h"
+#include "mesh.h"
 
 /** flag that determines if quantum heating is to be taken into account in H2
  * grain surface formation rate, set this true to enable quantum heating treatment, PvH */
@@ -440,7 +441,7 @@ public:
  *
  * NB NB NB NB NB NB */
 
-class GrainVar
+class GrainVar : public t_grainmesh
 {
 	void p_clear0();
 	void p_clear1();
