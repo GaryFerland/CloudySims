@@ -1452,7 +1452,7 @@ void SaveDo(
 					fprintf( save.params[ipPun].ipPnunit, "%32ld # file format version number\n",
 							 VERSION_TRNCON );
 					fprintf( save.params[ipPun].ipPnunit, "%s # check 1\n",
-							 rfield.mesh_md5sum().c_str() );
+							 rfield.mesh_cksum().c_str() );
 					union {
 						double x;
 						uint32 i[2];

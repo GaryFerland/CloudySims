@@ -478,7 +478,7 @@ void mie_write_opc(/*@in@*/ const char *rfi_file,
 	} u;
 
 	lgErr = lgErr || ( fprintf(fdes,"#\n") < 0 );
-	lgErr = lgErr || ( fprintf(fdes,"%s # check 1\n",rfield.mesh_md5sum().c_str()) < 0 );
+	lgErr = lgErr || ( fprintf(fdes,"%s # check 1\n",rfield.mesh_cksum().c_str()) < 0 );
 	u.x = rfield.emm();
 	if( cpu.i().big_endian() )
 		lgErr = lgErr || ( fprintf(fdes,"%23.8x %8.8x # check 2\n",u.i[0],u.i[1]) < 0 );
@@ -997,7 +997,7 @@ void mie_read_opc(/*@in@*/const char *chFile,
 	double anu;
 	double RadiusRatio;
 	string chLine;
-	string md5sum;
+	string cksum;
 
 	/* if a_max/a_min in a single size bin is less than
 	 * RATIO_MAX quantum heating will be turned on by default */
@@ -1174,9 +1174,9 @@ void mie_read_opc(/*@in@*/const char *chFile,
 	for( i=0; i < nup; i++ )
 		mie_next_data(chFile,io2,chLine,&dl);
 
-	/* read checksum of continuum_mesh.ini */
+	/* read checksum of the mesh definition file */
 	mie_next_data(chFile,io2,chLine,&dl);
-	mie_read_word(chLine,md5sum,false);
+	mie_read_word(chLine,cksum,false);
 
 	union {
 		double x;
@@ -1200,7 +1200,7 @@ void mie_read_opc(/*@in@*/const char *chFile,
 		sscanf( chLine.c_str(), "%x %x", &u.i[1], &u.i[0] );
 	mesh_hi = u.x;
 
-	if( md5sum != rfield.mesh_md5sum() ||
+	if( cksum != rfield.mesh_cksum() ||
 	    !fp_equal_tol( mesh_lo, rfield.emm(), 1.e-11*rfield.emm() ) ||
 	    !fp_equal_tol( mesh_hi, rfield.egamry(), 1.e-7*rfield.egamry() ) )
 	{
