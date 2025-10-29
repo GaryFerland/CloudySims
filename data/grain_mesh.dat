@@ -3,4 +3,6 @@
 # this file defines the frequency mesh used internally by the grains code
 # its format is the same as the file continuum_mesh.dat.
 #
-0.	 10
+0.0014	 20
+4.       100
+0.       20

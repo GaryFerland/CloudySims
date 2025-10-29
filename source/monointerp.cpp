@@ -9,17 +9,8 @@
 
 // Internal utility functions
 namespace {
-	// Hermite polynomial basis functions
-	inline double h00( double t )
-	{
-		return (1.0+2.0*t)*(1.0-t)*(1.0-t);
-	}
-	inline double h10( double t )
-	{
-		return t*(1.0-t)*(1.0-t);
-	}
 	// Bisection search
-	inline long bisect ( const std::vector<double> &x, double xval )
+	inline long bisect(const std::vector<double> &x, double xval)
 	{
 		long n = x.size();
 		long ilo = 0, ihi = n-1;
@@ -39,22 +30,13 @@ namespace {
 	}
 }
 
-// Constructor for interpolation function object
-Monointerp::Monointerp ( const double x[], const double y[], long n ) 
-	: m_x(x,x+n), m_y(y,y+n), m_g(n)
+void MI_SetupData(const vector<double>& d, const vector<double>& h, vector<double> m_g, long n) 
 {
-	ASSERT(m_x.size() == m_y.size() && m_x.size() == m_g.size());
-	std::vector<double> d(n-1),h(n-1);			
-	for (long k=0;k<n-1;++k) 
-	{
-		h[k] = (x[k+1]-x[k]);
-		d[k] = (y[k+1]-y[k])/h[k];
-	}
 	m_g[0] = d[0];
-	for (long k=1;k<n-1;++k) 
+	for( long k=1; k < n-1; ++k )
 	{
 		m_g[k] = d[k]*d[k-1];
-		if (m_g[k] > 0.0)
+		if( m_g[k] > 0.0 )
 		{
 			double a = (h[k-1]+2.0*h[k])/(3.0*(h[k-1]+h[k]));
 			m_g[k] /= (a*d[k]+(1-a)*d[k-1]);
@@ -67,12 +49,22 @@ Monointerp::Monointerp ( const double x[], const double y[], long n )
 	m_g[n-1] = d[n-2];
 }
 
-Monointerp::~Monointerp( void )
+// Constructor for interpolation function object
+Monointerp::Monointerp(const double x[], const double y[], long n) 
+	: m_x(x,x+n), m_y(y,y+n), m_g(n)
 {
+	ASSERT( m_x.size() == m_y.size() && m_x.size() == m_g.size() );
+	std::vector<double> d(n-1), h(n-1);			
+	for( long k=0; k < n-1; ++k )
+	{
+		h[k] = (x[k+1]-x[k]);
+		d[k] = (y[k+1]-y[k])/h[k];
+	}
+	MI_SetupData(d, h, m_g, n);
 }
 
 // Evaluate interpolant
-double Monointerp::operator() ( double xval ) const
+double Monointerp::operator() (double xval) const
 {
 	double yval;
 	

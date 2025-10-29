@@ -34,7 +34,7 @@
  * the first digit is file type, the rest is date (YYMMDD) */
 static const long MAGIC_RFI = 1030103L;
 static const long MAGIC_SZD = 2010403L;
-static const long MAGIC_OPC = 3100827L;
+static const long MAGIC_OPC = 3251019L;
 static const long MAGIC_MIX = 4030103L;
 
 /* >>chng 02 may 28, by Ryan, moved struct complex to cddefines.h to make it available to entire code. */
@@ -488,11 +488,6 @@ void mie_write_opc(/*@in@*/ const char *rfi_file,
 		lgErr = lgErr || ( fprintf(fdes,"%23.8x %8.8x # check 3\n",u.i[0],u.i[1]) < 0 );
 	else
 		lgErr = lgErr || ( fprintf(fdes,"%23.8x %8.8x # check 3\n",u.i[1],u.i[0]) < 0 );
-	u.x = 1.;
-	if( cpu.i().big_endian() )
-		lgErr = lgErr || ( fprintf(fdes,"%23.8x %8.8x # check 4\n",u.i[0],u.i[1]) < 0 );
-	else
-		lgErr = lgErr || ( fprintf(fdes,"%23.8x %8.8x # check 4\n",u.i[1],u.i[0]) < 0 );
 	lgErr = lgErr || ( fprintf(fdes,"%32ld # gv.ncells()\n",gv.ncells()) < 0 );
 	lgErr = lgErr || ( fprintf(fdes,"%32ld # number of size distr. bins\n#\n",sd.nPart) < 0 );
 
@@ -1207,15 +1202,6 @@ void mie_read_opc(/*@in@*/const char *chFile,
 		fprintf( ioQQQ, " Please recompile this file using the COMPILE GRAINS command.\n" );
 		cdEXIT(EXIT_FAILURE);
 	}
-
-	/* read mesh resolution scale factor in hex form */
-	mie_next_data(chFile,io2,chLine,&dl);
-	if( cpu.i().big_endian() )
-		sscanf( chLine.c_str(), "%x %x", &u.i[0], &u.i[1] );
-	else
-		sscanf( chLine.c_str(), "%x %x", &u.i[1], &u.i[0] );
-	/* this number is checked later since it may not have been set yet by the input script */
-	gv.bin[nd].RSFCheck = u.x;
 
 	/* nup is number of frequency bins stored in file, this should match gv.ncells() */
 	mie_next_data(chFile,io2,chLine,&dl);

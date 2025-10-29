@@ -85,9 +85,6 @@ void ParseCompile(Parser &p)
 	{
 		string chRFI, chSZD;
 
-		/* set up special grain energy mesh */
-		gv.InitMesh();
-
 		/* get first filename (either .rfi or .szd file) */
 		if( p.nMatch( "\"" ) )
 		{

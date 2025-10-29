@@ -232,6 +232,9 @@ void t_mesh::p_SetupEdges()
 {
 	DEBUG_ENTRY( "SetupEdges()" );
 
+	if( p_edges.size() > 0 )
+		return;
+
 	// a list of major ionization edges that need to be fiddled into the frequency mesh
 	// this list will be sorted at the end, so can be entered in any order
 

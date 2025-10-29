@@ -4,6 +4,10 @@
 #ifndef GRAINS_H_
 #define GRAINS_H_
 
+#include "rfield.h"
+#include "grainvar.h"
+#include "monointerp.h"
+
 /** GrainDrive main routine to converge grains thermal solution */
 void GrainDrive();
 
@@ -83,4 +87,60 @@ void gauss_legendre(long int,vector<double>&,vector<double>&);
 */
 void find_arr(double,const vector<double>&,long int,/*@out@*/long int*,/*@out@*/bool*);
 
+/* grain_interpolate: interpolate on an array on the grain frequency mesh to create an array on the standard mesh */
+template<typename T>
+inline long grain_interpolate(const T arr1[], T arr2[], long n1) // arr1[n1], n1 <= gv.nflux
+{
+	DEBUG_ENTRY( "grain_interpolate()" );
+
+#if 1
+	avx_ptr<T> arr1ln(gv.nflux), arr2ln(rfield.nflux);
+
+	vlog(arr1, arr1ln.data(), 0, n1);
+
+	long i1=0, i2;
+	for( i2=0; i2 < rfield.nflux; ++i2 )
+	{
+		double x = rfield.anu(i2);
+		double xln = rfield.anuln(i2);
+		while( i1 < n1-1 && x >= gv.anu(i1+1) )
+			++i1;
+		if( i1 == n1-1 )
+			break;
+		// do log-log first-order interpolation
+		double f = (xln-gv.anuln(i1))/(gv.anuln(i1+1)-gv.anuln(i1));
+		arr2ln[i2] = arr1ln[i1] + f*(arr1ln[i1+1]-arr1ln[i1]);
+	}
+
+	vexp(arr2ln.data(), arr2, 0, i2);
+	// return the number of elements of arr2 that have been filled in
+	return i2;
+#else
+	vector<double> d(n1-1), h(n1), g(n1);
+	for( long k=0; k < n1-1; ++k ) 
+	{
+		h[k] = (gv.anu(k+1)-gv.anu(k));
+		d[k] = (arr1[k+1]-arr1[k])/h[k];
+	}
+	MI_SetupData(d, h, g, n1);
+
+	long i1=0, i2;
+	double hh = h[0];
+	for( i2=0; i2 < rfield.nflux; ++i2 )
+	{
+		double x = rfield.anu(i2);
+		while( i1 < n1-1 && x >= gv.anu(i1+1) )
+			hh = h[++i1];
+		if( i1 == n1-1 )
+			break;
+		// apply Fritsch & Butland monotonic interpolation algorithm
+		double t = (x - gv.anu(i1))/hh;
+		arr2[i2] = arr1[i1]*h00(t) + hh*g[i1]*h10(t) +
+			arr1[i1+1]*h00(1.0-t) - hh*g[i1+1]*h10(1.0-t);
+	}
+	// return the number of elements of arr2 that have been filled in
+	return i2;
+#endif
+}
+		
 #endif /* GRAINS_H_ */
