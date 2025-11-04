@@ -59,7 +59,31 @@ public:
 		AtomicWeight[26] = 58.9332009f;
 		AtomicWeight[27] = 58.69342f;
 		AtomicWeight[28] = 63.5463f;
-		AtomicWeight[29] = 65.392f;
+		AtomicWeight[29] = 65.382f;
+		AtomicWeight[30] = 69.723f;
+		AtomicWeight[31] = 72.6308f;
+		AtomicWeight[32] = 74.921595f;
+		AtomicWeight[33] = 78.9718f;
+		AtomicWeight[34] = 79.904f;
+		AtomicWeight[35] = 83.7982f;
+		AtomicWeight[36] = 85.4678f;
+		AtomicWeight[37] = 87.62f;
+		AtomicWeight[38] = 88.90584f;
+		AtomicWeight[39] = 91.224f;
+		AtomicWeight[40] = 92.90637f;
+		AtomicWeight[41] = 95.95f;
+		AtomicWeight[42] = 98.0f; // no stable isotope for Technetium.
+		AtomicWeight[43] = 101.07f;
+		AtomicWeight[44] = 102.90550f;
+		AtomicWeight[45] = 106.42f;
+		AtomicWeight[46] = 107.8682f;
+		AtomicWeight[47] = 112.414f;
+		AtomicWeight[48] = 114.818f;
+		AtomicWeight[49] = 118.710f;
+		AtomicWeight[50] = 121.760f;
+		AtomicWeight[51] = 127.60f;
+		AtomicWeight[52] = 126.90447f;
+		AtomicWeight[53] = 131.2936f;
 
 		/* smallest density to permit in any ion - if smaller then set to zero */
 		density_low_limit = max( SMALLFLOAT * 1e3, 1e-50 );

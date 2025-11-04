@@ -300,30 +300,36 @@ void iso_init_energies()
 			string fnam = "stout" + sep + elm + sep + species + sep + species + ".nrg.dat"; 
 			if( false ) printf( "'%s'\n", fnam.c_str() );
 
-			d.open(fnam, ES_NONE);
-			d.getline();
-			d.checkMagic(ENERGIESMAGIC);
-			while( d.getline() )
-			{
-				long n, l, s, j;
-				d.getToken(n);
-				d.getToken(l);
-				d.getToken(s);
-				d.getToken(j);
-				QNPack ind = QN2ind(n, l, s, 2*j+1);
-				/*d.getToken(iso_sp[ipISO][nelem].Energy[ind]);*/
-				bool lgTheo = d.getLvlEnergy(iso_sp[ipISO][nelem].Energy[ind]);
-                                iso_sp[ipISO][nelem].lgTheoLevel[ind] = lgTheo;
-				if( ! d.lgEOL() )
-				{
-					double error;
-					d.getToken( error );
-				}
-				d.checkEOL();
-			}
-			d.checkEOD();
+			/* if h-like ions use energies from iso_create hydrogenic calculations for the moment
+			 * It looks like hydrogenic 1<=n<=10 first levels are read from Stout for all h-like ions but
+			 * never used again.  */
 
-			double IP = atmdat.getIonPot(nelem, nelem-ipISO);
+
+				d.open(fnam, ES_NONE);
+				d.getline();
+				d.checkMagic(ENERGIESMAGIC);
+				while( d.getline() )
+				{
+					long n, l, s, j;
+					d.getToken(n);
+					d.getToken(l);
+					d.getToken(s);
+					d.getToken(j);
+					QNPack ind = QN2ind(n, l, s, 2*j+1);
+					/*d.getToken(iso_sp[ipISO][nelem].Energy[ind]);*/
+					bool lgTheo = d.getLvlEnergy(iso_sp[ipISO][nelem].Energy[ind]);
+					iso_sp[ipISO][nelem].lgTheoLevel[ind] = lgTheo;
+					if( ! d.lgEOL() )
+					{
+						double error;
+						d.getToken( error );
+					}
+					d.checkEOL();
+				}
+				d.checkEOD();
+
+
+double IP = atmdat.getIonPot(nelem, nelem-ipISO);
 			iso_sp[ipISO][nelem].IonPot = Energy(IP, "Ryd").WN();
 		}
 	}

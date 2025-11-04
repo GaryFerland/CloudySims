@@ -925,7 +925,8 @@ void t_yield::init_yield()
 	 * skip any line starting with #
 	 * this loop goes from lithium to Zn */
 	string chLine;
-	for( int nelem=2; nelem < LIMELM; nelem++ )
+  	/* TODO DATAFIX NEEDED Auger yield data missing from database for Kr-Ga, so changed LIMELM upper limit to 30 below*/
+	for( int nelem=2; nelem < 30; nelem++ )
 	{
 		/* nelem is on the shifted C scale, so 2 is Li */
 		for( int ion=0; ion <= nelem; ion++ )
@@ -1349,7 +1350,8 @@ STATIC void read_UTA_lines()
 	/* first read in the Badnell data */
 	for( long ipISO=ipLI_LIKE; ipISO < ipAL_LIKE; ++ipISO )
 	{
-		for( long nelem=ipISO; nelem < LIMELM; ++nelem )
+	  	/* TODO DATAFIX NEEDED Nigel UTA files do not exist for Ga-Kr, so changed LIMELM upper limit to 30 below*/
+		for( long nelem=ipISO; nelem < 30; ++nelem )
 		{
 			// ion = 0 for neutral atom
 			long ion = nelem - ipISO;

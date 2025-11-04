@@ -18,7 +18,7 @@ protected:
 private:
 	phfit_version version;
 	/* phfit.dat */
-	static const int NSHELLS = 7;
+	static const int NSHELLS = 11;
 	long int L[NSHELLS];
 	long int NINN[LIMELM];
 	long int NTOT[LIMELM];

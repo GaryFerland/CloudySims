@@ -31,7 +31,7 @@ void atmdat_outer_shell(long int iz, /* atomic number from 1 to 30 */
 	 ***          ig1  - statistical weight of (iz,in-1) ground state
 	 ****************************************************************************** */
 
-	if( iz < 1 || iz > 30 )
+	if( iz < 1 || iz > 54 )
 	{
 		fprintf( ioQQQ, " ***ERROR: wrong atomic number\n" );
 		return;

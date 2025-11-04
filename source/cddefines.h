@@ -328,7 +328,8 @@ const int NCHLAB = 20;
 
 /** This is the number of elements included in the code,
  * is used to set lengths of many vectors */
-const int LIMELM = 30;
+/* Aug 19, 2025 FG: changes LIMELM to 54 */
+const int LIMELM = 54;
 
 /** the number of iso sequences now in the code */
 const int NISO = 2;
