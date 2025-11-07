@@ -28,10 +28,6 @@
 /*  #define IGNORE_GRAIN_ION_COLLISIONS 1 */
 /*  #define IGNORE_THERMIONIC 1 */
 
-/* no parentheses around PTR needed since it needs to be an lvalue */
-#define FREE_CHECK(PTR) { ASSERT( PTR != NULL ); free( PTR ); PTR = NULL; }
-#define FREE_SAFE(PTR) { if( PTR != NULL ) free( PTR ); PTR = NULL; }
-
 static const long MAGIC_AUGER_DATA = 20060126L;
 
 static const bool INCL_TUNNEL = true;
@@ -1369,8 +1365,7 @@ STATIC void GrainChargeTemp()
 	  nelem,
 	  nz;
 	realnum dccool = FLT_MAX;
-	double delta,
-	  GasHeatNet,
+	double GasHeatNet,
 	  hcon = DBL_MAX,
 	  hla = DBL_MAX,
 	  hots = DBL_MAX,
@@ -1422,8 +1417,6 @@ STATIC void GrainChargeTemp()
 
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
-		double one;
-		double ChTdBracketLo = 0., ChTdBracketHi = -DBL_MAX;
 		long relax = ( conv.lgSearch ) ? 3 : 1;
 
 		/* >>chng 02 nov 11, added test for the presence of PAHs in the ionized region, PvH */
@@ -1446,179 +1439,193 @@ STATIC void GrainChargeTemp()
 				 gv.bin[nd].chDstLab );
 		}
 
-		delta = 2.*TOLER;
-		/* >>chng 01 nov 29, relax max no. of iterations during initial search */
-		for( i=0; i < relax*CT_LOOP_MAX && delta > TOLER; ++i )
+		double mul_toler = 0.1;
+		double delta = 2.*TOLER;
+		for( int k=0; k < 3 && delta > TOLER; ++k )
 		{
-			string which;
-			long j;
-			double TdBracketLo = 0., TdBracketHi = -DBL_MAX;
-			double ThresEst = 0.;
-			oldtemp = gv.bin[nd].tedust;
+			double ChTdBracketLo = 0., ChTdBracketHi = -DBL_MAX;
 
-			/* solve for charge using previous estimate for grain temp
-			 * grain temp only influences thermionic emissions
-			 * Thermratio is fraction thermionic emissions contribute
-			 * to the total electron loss rate of the grain */
-			GrainCharge(nd,&ThermRatio);
-
-			ASSERT( gv.bin[nd].GrainHeat > 0. );
-			ASSERT( gv.bin[nd].tedust >= GRAIN_TMIN && gv.bin[nd].tedust <= GRAIN_TMAX );
-
-			/* >>chng 04 may 31, in conditions where collisions become an important
-			 * heating/cooling source (e.g. gas that is predominantly heated by cosmic
-			 * rays), the heating rate depends strongly on the assumed dust temperature.
-			 * hence it is necessary to iterate for the dust temperature. PvH */
-			gv.bin[nd].lgTdustConverged = false;
-			for( j=0; j < relax*T_LOOP_MAX; ++j )
+			/* >>chng 01 nov 29, relax max no. of iterations during initial search */
+			for( i=0; i < relax*CT_LOOP_MAX && delta > TOLER; ++i )
 			{
-				double oldTemp2 = gv.bin[nd].tedust;
-				double oldHeat2 = gv.bin[nd].GrainHeat;
-				double oldCool = gv.bin[nd].GrainGasCool;
+				string which;
+				long j;
+				double TdBracketLo = 0., TdBracketHi = -DBL_MAX;
+				double ThresEst = 0.;
+				oldtemp = gv.bin[nd].tedust;
 
-				/* now solve grain temp using new value for grain potential */
-				GrainTemperature(nd,&dccool,&hcon,&hots,&hla);
+				/* solve for charge using previous estimate for grain temp
+				 * grain temp only influences thermionic emissions
+				 * Thermratio is fraction thermionic emissions contribute
+				 * to the total electron loss rate of the grain */
+				GrainCharge(nd,&ThermRatio);
 
-				gv.bin[nd].GrainGasCool = dccool;
+				ASSERT( gv.bin[nd].GrainHeat > 0. );
+				ASSERT( gv.bin[nd].tedust >= GRAIN_TMIN && gv.bin[nd].tedust <= GRAIN_TMAX );
 
-				if( trace.lgTrace && trace.lgDustBug )
+				/* >>chng 04 may 31, in conditions where collisions become an important
+				 * heating/cooling source (e.g. gas that is predominantly heated by cosmic
+				 * rays), the heating rate depends strongly on the assumed dust temperature.
+				 * hence it is necessary to iterate for the dust temperature. PvH */
+				gv.bin[nd].lgTdustConverged = false;
+				for( j=0; j < relax*T_LOOP_MAX; ++j )
 				{
-					fprintf( ioQQQ, "  >>loop %ld BracketLo %.6e BracketHi %.6e",
-						 j, TdBracketLo, TdBracketHi );
-				}
+					double oldTemp2 = gv.bin[nd].tedust;
+					double oldHeat2 = gv.bin[nd].GrainHeat;
+					double oldCool = gv.bin[nd].GrainGasCool;
+					double oldThermionic = gv.bin[nd].thermionic;
 
-				/* this test assures that convergence can only happen if GrainHeat > 0
-				 * and therefore the value of tedust is guaranteed to be valid as well */
-				/* >>chng 04 aug 05, test that gas cooling is converged as well,
-				 * in deep PDRs gas cooling depends critically on grain temperature, PvH */
-				if( fabs(gv.bin[nd].GrainHeat-oldHeat2) < HEAT_TOLER*gv.bin[nd].GrainHeat &&
-				    fabs(gv.bin[nd].GrainGasCool-oldCool) < HEAT_TOLER_BIN*thermal.ctot )
-				{
-					gv.bin[nd].lgTdustConverged = true;
+					/* now solve grain temp using new value for grain potential */
+					GrainTemperature(nd,&dccool,&hcon,&hots,&hla);
+
+					gv.bin[nd].GrainGasCool = dccool;
+
 					if( trace.lgTrace && trace.lgDustBug )
-						fprintf( ioQQQ, " converged\n" );
-					break;
-				}
-
-				/* update the bracket for the solution */
-				if( gv.bin[nd].tedust < oldTemp2 )
-					TdBracketHi = oldTemp2;
-				else
-					TdBracketLo = oldTemp2;
-
-				/* GrainTemperature yields a new estimate for tedust, and initially
-				 * that estimate will be used. In most zones this will converge quickly.
-				 * However, sometimes the solution will oscillate and converge very
-				 * slowly. So, as soon as j >= 2 and the bracket is set up, we will
-				 * force convergence by using a bisection search within the bracket */
-				/** \todo	2	this algorithm might be more efficient with Brent */
-
-				/* this test assures that TdBracketHi is initialized */
-				if( TdBracketHi > TdBracketLo )
-				{
-					/* if j >= 2, the solution is converging too slowly
-					 * so force convergence by doing a bisection search */
-					if( ( j >= 2 && TdBracketLo > 0. ) ||
-					    gv.bin[nd].tedust <= TdBracketLo ||
-					    gv.bin[nd].tedust >= TdBracketHi )
 					{
-						gv.bin[nd].tedust = (realnum)(0.5*(TdBracketLo + TdBracketHi));
+						fprintf( ioQQQ, "  >>loop %ld BracketLo %.6e BracketHi %.6e",
+								 j, TdBracketLo, TdBracketHi );
+					}
+
+					/* this test assures that convergence can only happen if GrainHeat > 0
+					 * and therefore the value of tedust is guaranteed to be valid as well */
+					/* >>chng 04 aug 05, test that gas cooling is converged as well,
+					 * in deep PDRs gas cooling depends critically on grain temperature, PvH */
+					/* >>chng 25 oct 31, add test for thermionic heating of the gas. In extreme
+					 * conditions the themionic rate can become important for the charge and
+					 * temperature balance of the grain and needs to be converged carefully, PvH */
+					if( fabs(gv.bin[nd].GrainHeat-oldHeat2) < HEAT_TOLER*gv.bin[nd].GrainHeat &&
+						fabs(gv.bin[nd].GrainGasCool-oldCool) < HEAT_TOLER_BIN*thermal.ctot &&
+						fabs(gv.bin[nd].thermionic-oldThermionic) < mul_toler*HEAT_TOLER*gv.bin[nd].GrainHeat )
+					{
+						gv.bin[nd].lgTdustConverged = true;
 						if( trace.lgTrace && trace.lgDustBug )
-							fprintf( ioQQQ, " bisection\n" );
+							fprintf( ioQQQ, " converged\n" );
+						break;
+					}
+
+					/* update the bracket for the solution */
+					if( gv.bin[nd].tedust < oldTemp2 )
+						TdBracketHi = oldTemp2;
+					else
+						TdBracketLo = oldTemp2;
+
+					/* GrainTemperature yields a new estimate for tedust, and initially
+					 * that estimate will be used. In most zones this will converge quickly.
+					 * However, sometimes the solution will oscillate and converge very
+					 * slowly. So, as soon as j >= 2 and the bracket is set up, we will
+					 * force convergence by using a bisection search within the bracket */
+					/** \todo	2	this algorithm might be more efficient with Brent */
+
+					/* this test assures that TdBracketHi is initialized */
+					if( TdBracketHi > TdBracketLo )
+					{
+						/* if j >= 2, the solution is converging too slowly
+						 * so force convergence by doing a bisection search */
+						if( ( j >= 2 && TdBracketLo > 0. ) ||
+							gv.bin[nd].tedust <= TdBracketLo ||
+							gv.bin[nd].tedust >= TdBracketHi )
+						{
+							gv.bin[nd].tedust = (realnum)(0.5*(TdBracketLo + TdBracketHi));
+							if( trace.lgTrace && trace.lgDustBug )
+								fprintf( ioQQQ, " bisection\n" );
+						}
+						else
+						{
+							if( trace.lgTrace && trace.lgDustBug )
+								fprintf( ioQQQ, " iteration\n" );
+						}
 					}
 					else
 					{
 						if( trace.lgTrace && trace.lgDustBug )
 							fprintf( ioQQQ, " iteration\n" );
 					}
+
+					ASSERT( gv.bin[nd].tedust >= GRAIN_TMIN && gv.bin[nd].tedust <= GRAIN_TMAX );
+				}
+
+				if( gv.bin[nd].lgTdustConverged )
+				{
+					/* update the bracket for the solution */
+					if( gv.bin[nd].tedust < oldtemp )
+						ChTdBracketHi = oldtemp;
+					else
+						ChTdBracketLo = oldtemp;
 				}
 				else
+				{
+					bool lgBoundErr;
+					double y, x = log(gv.bin[nd].tedust);
+					/* make sure GrainHeat is consistent with value of tedust */
+					splint_safe(gv.dsttmp,gv.bin[nd].dstems,gv.bin[nd].dstslp2,NDEMS,x,&y,&lgBoundErr);
+					gv.bin[nd].GrainHeat = exp(y)*gv.bin[nd].cnv_H_pCM3;
+
+					fprintf( ioQQQ," PROBLEM  temperature of grain species %s (Tg=%.3eK) not converged\n",
+							 gv.bin[nd].chDstLab , gv.bin[nd].tedust );
+					ConvFail("grai","");
+				}
+
+				ASSERT( gv.bin[nd].GrainHeat > 0. );
+				ASSERT( gv.bin[nd].tedust >= GRAIN_TMIN && gv.bin[nd].tedust <= GRAIN_TMAX );
+
+				/* delta estimates relative change in electron emission rate
+				 * due to the update in the grain temperature, if it is small
+				 * we won't bother to iterate (which is usually the case)
+				 * the formula assumes that thermionic emission is the only
+				 * process that depends on grain temperature */
+				/** \todo	2	should collisional heating/cooling be included here? */
+				ratio = gv.bin[nd].tedust/oldtemp;
+				for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
+				{
+					ThresEst += gv.bin[nd].chrg(nz).FracPop*gv.bin[nd].chrg(nz).ThresInf;
+				}
+				delta = ThresEst*TE1RYD/gv.bin[nd].tedust*(ratio - 1.);
+				/** \todo	2	use something like log(ThermRatio) + log(delta) ???? */
+				delta = ( delta < 0.9*log(DBL_MAX) ) ?
+					ThermRatio*fabs(POW2(ratio)*exp(delta)-1.) : DBL_MAX;
+
+				/* >>chng 06 feb 07, bracket grain temperature to force convergence when oscillating, PvH */
+				if( delta > TOLER )
 				{
 					if( trace.lgTrace && trace.lgDustBug )
-						fprintf( ioQQQ, " iteration\n" );
-				}
+						which = "iteration";
 
-				ASSERT( gv.bin[nd].tedust >= GRAIN_TMIN && gv.bin[nd].tedust <= GRAIN_TMAX );
-			}
+					/* The loop above yields a new estimate for tedust, and initially that
+					 * estimate will be used. In most zones this will converge very quickly.
+					 * However, sometimes the solution will oscillate and converge very
+					 * slowly. So, as soon as i >= 2 and the bracket is set up, we will
+					 * force convergence by using a bisection search within the bracket */
+					/** \todo	2	this algorithm might be more efficient with Brent */
 
-			if( gv.bin[nd].lgTdustConverged )
-			{
-				/* update the bracket for the solution */
-				if( gv.bin[nd].tedust < oldtemp )
-					ChTdBracketHi = oldtemp;
-				else
-					ChTdBracketLo = oldtemp;
-			}
-			else
-			{
-				bool lgBoundErr;
-				double y, x = log(gv.bin[nd].tedust);
-				/* make sure GrainHeat is consistent with value of tedust */
-				splint_safe(gv.dsttmp,gv.bin[nd].dstems,gv.bin[nd].dstslp2,NDEMS,x,&y,&lgBoundErr);
-				gv.bin[nd].GrainHeat = exp(y)*gv.bin[nd].cnv_H_pCM3;
-
-				fprintf( ioQQQ," PROBLEM  temperature of grain species %s (Tg=%.3eK) not converged\n",
-					 gv.bin[nd].chDstLab , gv.bin[nd].tedust );
-				ConvFail("grai","");
-			}
-
-			ASSERT( gv.bin[nd].GrainHeat > 0. );
-			ASSERT( gv.bin[nd].tedust >= GRAIN_TMIN && gv.bin[nd].tedust <= GRAIN_TMAX );
-
-			/* delta estimates relative change in electron emission rate
-			 * due to the update in the grain temperature, if it is small
-			 * we won't bother to iterate (which is usually the case)
-			 * the formula assumes that thermionic emission is the only
-			 * process that depends on grain temperature */
-			/** \todo	2	should collisional heating/cooling be included here? */
-			ratio = gv.bin[nd].tedust/oldtemp;
-			for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
-			{
-				ThresEst += gv.bin[nd].chrg(nz).FracPop*gv.bin[nd].chrg(nz).ThresInf;
-			}
-			delta = ThresEst*TE1RYD/gv.bin[nd].tedust*(ratio - 1.);
-			/** \todo	2	use something like log(ThermRatio) + log(delta) ???? */
-			delta = ( delta < 0.9*log(DBL_MAX) ) ?
-				ThermRatio*fabs(POW2(ratio)*exp(delta)-1.) : DBL_MAX;
-
-			/* >>chng 06 feb 07, bracket grain temperature to force convergence when oscillating, PvH */
-			if( delta > TOLER )
-			{
-				if( trace.lgTrace && trace.lgDustBug )
-					which = "iteration";
-
-				/* The loop above yields a new estimate for tedust, and initially that
-				 * estimate will be used. In most zones this will converge very quickly.
-				 * However, sometimes the solution will oscillate and converge very
-				 * slowly. So, as soon as i >= 2 and the bracket is set up, we will
-				 * force convergence by using a bisection search within the bracket */
-				/** \todo	2	this algorithm might be more efficient with Brent */
-
-				/* this test assures that ChTdBracketHi is initialized */
-				if( ChTdBracketHi > ChTdBracketLo )
-				{
-					/* if i >= 2, the solution is converging too slowly
-					 * so force convergence by doing a bisection search */
-					if( ( i >= 2 && ChTdBracketLo > 0. ) ||
-					    gv.bin[nd].tedust <= ChTdBracketLo ||
-					    gv.bin[nd].tedust >= ChTdBracketHi )
+					/* this test assures that ChTdBracketHi is initialized */
+					if( ChTdBracketHi > ChTdBracketLo )
 					{
-						gv.bin[nd].tedust = (realnum)(0.5*(ChTdBracketLo + ChTdBracketHi));
-						if( trace.lgTrace && trace.lgDustBug )
-							which = "bisection";
+						/* if i >= 2, the solution is converging too slowly
+						 * so force convergence by doing a bisection search */
+						if( ( i >= 2 && ChTdBracketLo > 0. ) ||
+							gv.bin[nd].tedust <= ChTdBracketLo ||
+							gv.bin[nd].tedust >= ChTdBracketHi )
+						{
+							gv.bin[nd].tedust = (realnum)(0.5*(ChTdBracketLo + ChTdBracketHi));
+							if( trace.lgTrace && trace.lgDustBug )
+								which = "bisection";
+						}
 					}
 				}
-			}
 
-			if( trace.lgTrace && trace.lgDustBug )
-			{
-				fprintf( ioQQQ, " >>GrainChargeTemp finds delta=%.4e, ", delta );
-				fprintf( ioQQQ, " old/new temp=%.5e %.5e, ", oldtemp, gv.bin[nd].tedust );
-				if( delta > TOLER ) 
-					fprintf( ioQQQ, "doing another %s\n", which.c_str() );
-				else 
-					fprintf( ioQQQ, "converged\n" );
+				if( trace.lgTrace && trace.lgDustBug )
+				{
+					fprintf( ioQQQ, " >>GrainChargeTemp finds delta=%.4e, ", delta );
+					fprintf( ioQQQ, " old/new temp=%e %e, bracket lo, hi=%e %e, mul_toler=%e, ",
+							 oldtemp, gv.bin[nd].tedust, ChTdBracketLo, ChTdBracketHi, mul_toler );
+					if( delta > TOLER ) 
+						fprintf( ioQQQ, "doing another %s\n", which.c_str() );
+					else 
+						fprintf( ioQQQ, "converged\n" );
+				}
 			}
+			/* if convergence failed, try again with stricter convergence of the thermionic emissions */
+			mul_toler /= 10.;
 		}
 		if( delta > TOLER )
 		{
@@ -1664,7 +1671,7 @@ STATIC void GrainChargeTemp()
 
 		/* this is grain charge in e/cm^3, positive number means grain supplied free electrons */
 		/* >>chng 01 mar 24, changed DustZ+1 to DustZ, PvH */
-		one = 0.;
+		double one = 0.;
 		for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
 		{
 			one += gv.bin[nd].chrg(nz).FracPop*(double)gv.bin[nd].chrg(nz).DustZ*
