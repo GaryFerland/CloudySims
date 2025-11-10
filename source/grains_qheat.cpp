@@ -239,6 +239,10 @@ void GrainMakeDiffuse()
 	avx_ptr<realnum> flux(gv.nflux);
 	vector<realnum> flux2(rfield.nflux);
 
+#	ifndef NDEBUG
+	double BolFlux1 = 0.;
+#	endif
+
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
 		/* this local copy is necessary to keep lint happy */
@@ -299,13 +303,19 @@ void GrainMakeDiffuse()
 		}
 
 		double fac = factor*gv.bin[nd].cnv_H_pCM3;
-		// use two separate loops so that they can be vectorized
 		for( long i=0; i < loopmax; i++ )
 			flux[i] *= realnum(fac*gv.bin[nd].dstab1[i]*gv.anu2(i));
 
 		loopmax = 1;
 		while( loopmax < gv.nflux && flux[loopmax] > RNM_MIN )
 			++loopmax;
+
+#		ifndef NDEBUG
+		for( long i=0; i < loopmax; i++ )
+		{
+			BolFlux1 += flux[i]*gv.widflx(i)*gv.anu(i)*EN1RYD;
+		}
+#		endif
 
 		loopmax = grain_interpolate(flux.data(), flux2.data(), loopmax);
 
@@ -327,9 +337,9 @@ void GrainMakeDiffuse()
 	 * soon as any one of the checks fails.
 	 *
 	 * NB NB - despite appearances, these checks do NOT guarantee overall energy
-	 *         conservation in the Cloudy model to the asserted tolerance, see note 1B !
+	 *         conservation in the Cloudy model to the asserted tolerance, see note 1B/C !
 	 *
-	 * Note 1: there are two sources for energy imbalance in the grain code (see A & B).
+	 * Note 1: there are three sources for energy imbalance (see points A thru C below).
 	 *   A: Interpolation in dstems. The code calculates how much energy the grains
 	 *      emit in thermal radiation (gv.bin[nd].GrainHeat), and converts that into
 	 *      an (average) grain temperature by reverse interpolation in dstems. If
@@ -353,11 +363,20 @@ void GrainMakeDiffuse()
 	 *      been moved to qheat, implying that phiTilde now uses the updated version of
 	 *      the OTS fields. The total amount of radiated energy however is still based
 	 *      on gv.bin[nd].GrainHeat which uses the old version of the OTS fields.
-	 *   C: Energy conservation for collisional processes is guaranteed by adding in
+	 *   C: The diffuse grain emission is calculated on the internal grain frequency
+	 *      mesh to conserve CPU time (especially if quantum heating is enabled this is
+	 *      a major CPU time sink). Afterwards it is interpolated onto the regular mesh
+	 *      used by the rest of the code. This interpolation cannot be guaranteed to
+	 *      conserve the integral over all frequencies. The differences are small, but
+	 *      still big enough that they can trip CHECK 1A below, so special care needs
+	 *      to be taken to safeguard against this. Since the interpolated array is
+	 *      used by the rest of the code, energy conservation is limited to the level
+	 *      indicated by CHECK 1B.
+	 *   D: Energy conservation for collisional processes is guaranteed by adding in
 	 *      (very small) correction terms. These corrections are needed to cover up
 	 *      small imperfection in the theory, and cannot be avoided without making the
 	 *      already very complex theory even more complex.
-	 *   D: Photo-electric heating and collisional cooling can have an important effect
+	 *   E: Photo-electric heating and collisional cooling can have an important effect
 	 *      on the total heating balance of the gas. Both processes depend strongly on
 	 *      the grain charge, so assuring proper charge balance is important as well.
 	 *      This is tested in Check 2.
@@ -383,17 +402,17 @@ void GrainMakeDiffuse()
 		}
 	}
 
-	/* CHECK 1: does the grain thermal emission conserve energy ? */
-	double BolFlux = 0.;
+	/* CHECK 1A: does the grain thermal emission conserve energy ? */
+	double BolFlux2 = 0.;
 	for( long i=0; i < rfield.nflux; i++ )
 	{
-		BolFlux += gv.GrainEmission[i]*rfield.anu(i)*EN1RYD;
+		BolFlux2 += gv.GrainEmission[i]*rfield.anu(i)*EN1RYD;
 	}
 	double Comparison1 = 0.;
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
 		if( gv.bin[nd].tedust < gv.bin[nd].Tsublimat )
-			Comparison1 += 2.*CONSERV_TOL*gv.bin[nd].GrainHeat;
+			Comparison1 += CONSERV_TOL*gv.bin[nd].GrainHeat;
 		else
 			/* for high temperatures the interpolation in dstems
 			 * is less accurate, so we have to be more lenient */
@@ -402,9 +421,10 @@ void GrainMakeDiffuse()
 
 	/* >>chng 04 mar 11, add constant grain temperature to pass assert */
 	/* >>chng 04 jun 01, deleted test for constant grain temperature, PvH */
-	if( fabs(BolFlux-gv.GrainHeatSum) >= Comparison1 )
-		dprintf(ioQQQ, "CHECK 1: %e\n", (BolFlux-gv.GrainHeatSum)/Comparison1 );
-//	ASSERT( fabs(BolFlux-gv.GrainHeatSum) < Comparison1 );
+	ASSERT( fabs(BolFlux1-gv.GrainHeatSum) < Comparison1 );
+
+	/* CHECK 1B: does the interpolation of the diffuse emission conserve energy? */
+	ASSERT( fabs(BolFlux2/BolFlux1 - 1.) < 3.*CONSERV_TOL );
 
 	/* CHECK 2: assert charging balance */
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )

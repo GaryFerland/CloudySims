@@ -93,7 +93,7 @@ inline long grain_interpolate(const T arr1[], T arr2[], long n1) // arr1[n1], n1
 {
 	DEBUG_ENTRY( "grain_interpolate()" );
 
-#if 1
+#if 0
 	avx_ptr<T> arr1ln(gv.nflux), arr2ln(rfield.nflux);
 
 	vlog(arr1, arr1ln.data(), 0, n1);
