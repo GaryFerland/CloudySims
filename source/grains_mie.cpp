@@ -2598,7 +2598,7 @@ STATIC void mie_calc_ial(/*@in@*/ const grain_data *gd,
 }
 
 /* this is the number of x-values we use for extrapolating functions */
-const int NPTS_DERIV = 8;
+const int NPTS_DERIV = 3;
 
 /* extrapolate/interpolate mie data to fill in the blanks */
 STATIC void mie_repair(/*@in@*/ const string& chString,
