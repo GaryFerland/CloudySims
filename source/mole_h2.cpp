@@ -900,10 +900,13 @@ void diatomics::H2_LevelPops( bool &lgPopsConverged, double &old_val, double &ne
 	string convLabel;
 	if( this==&h2 )
 		convLabel = "H2_LOOPS";
+#if 0	
+	 /*>>chng 25 11 04, GShaw add HD LAMDA format, always on, so do not include Porter HD */
 	else if( this==&hd )
 		convLabel = "HD_LOOPS";
 	else
 		TotalInsanity();
+#endif
 	static ConvergenceCounter cctr_diatom_l =conv.register_(convLabel);
 
 	/* H2 not on, so space not allocated and return */

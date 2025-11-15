@@ -8,7 +8,8 @@
 vector<diatomics*> diatoms;
 
 diatomics h2("h2", 4100., &hmi.H2_total, Yan_H2_CS);
-diatomics hd("hd", 4100., &hmi.HD_total, Yan_H2_CS);
+/*>>chng 25 11 04, GShaw add HD LAMDA format, always on, so do not include Porter HD */
+/*diatomics hd("hd", 4100., &hmi.HD_total, Yan_H2_CS);*/
 
 diatomics::diatomics( const string& a, const double& e_star, const double* const abund, double (*fun)(double) ):
 	trans(a, &states), ENERGY_H2_STAR (e_star), dense_total(abund)
@@ -160,7 +161,8 @@ void diatoms_init( void )
 
 	diatoms.clear();
 	diatoms.push_back( &h2 );
-	diatoms.push_back( &hd );
+	/*>>chng 25 11 04, GShaw add HD LAMDA format, always on, so do not include Porter HD */
+	/*diatoms.push_back( &hd );*/
 
 	// molecular hydrogen, H2
 	// H
@@ -180,6 +182,8 @@ void diatoms_init( void )
 	h2.coll_source[4].magic = 110416;
 	h2.coll_source[4].filename = "coll_rates_Hp.dat";
 
+#if 0
+	/*>>chng 25 11 04, GShaw add HD LAMDA format, always on, so do not include Porter HD */
 	// HD
 	// H
 	hd.coll_source[0].magic = 110416;
@@ -197,6 +201,7 @@ void diatoms_init( void )
 	hd.coll_source[4].magic = 110416;
 	hd.coll_source[4].filename = "coll_rates_Hp.dat";
 
+#endif 
 	return;
 }
 

@@ -161,8 +161,9 @@ void CoolSave(FILE * io, const char chJob[])
 		debug_ctot += MAX2( 0., CoolHeavy.h2line );
 
 		/* HDro - HD cooling*/
-		fprintf( io, "\t%.4e", CoolHeavy.HD );
-		debug_ctot += MAX2( 0., CoolHeavy.HD );
+		/* 25 11 15 GS HD now in LAMDA format*/
+		/*fprintf( io, "\t%.4e", CoolHeavy.HD );*/
+		/* debug_ctot += MAX2( 0., CoolHeavy.HD );*/
 
 		/* H2+ - H + H+ -> H2+ cooling*/
 		fprintf( io, "\t%.4e", CoolHeavy.H2PlsCool );

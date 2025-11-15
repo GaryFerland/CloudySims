@@ -11,7 +11,8 @@ class t_deuterium : public module
 public:
 	t_deuterium()
 	{
-		lgElmtOn = false;
+		/* 25 11 15, GS now does D from LAMDA database */
+		lgElmtOn = true;
 		gas_phase = 0.f;
 		xIonDense[0] = 0.;
 		xIonDense[1] = 0.;

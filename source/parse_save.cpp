@@ -377,13 +377,15 @@ void ParseSave(Parser& p)
 		h2.H2_ParseSave( p, chHeader );
 	}
 
+#if 0
+	/*>>chng 25 11 04, GShaw add HD LAMDA format, always on, so do not include Porter HD */
 	/* save HD has to come early since it has many suboptions */
 	else if( p.nMatchErase(" HD ") )
 	{
 		/* this is in mole_h2_io.c */
 		hd.H2_ParseSave( p, chHeader );
 	}
-
+#endif
 	/* save grain abundance will be handled later */
 	else if( p.nMatch("ABUN") && !p.nMatch("GRAI") )
 	{

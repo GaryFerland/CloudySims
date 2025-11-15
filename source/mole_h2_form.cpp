@@ -168,6 +168,8 @@ void diatomics::mole_H2_form( void )
 	/* units cm-3 s-1 */
 	H2_X_formation[4][0] += (realnum)rate;
 
+#if 0
+	/*>>chng 25 11 04, GShaw add HD LAMDA format, always on, so do not include Porter HD */
 	fixit("this code is still far too H2-centric. Kick the can a bit");
 	ASSERT( this==&h2 || this==&hd );	
 	if( this != &h2 )
@@ -182,6 +184,7 @@ void diatomics::mole_H2_form( void )
 			}
 		}
 	}
+#endif
 
 	return;
 }

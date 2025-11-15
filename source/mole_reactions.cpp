@@ -1675,6 +1675,8 @@ namespace {
 			}
 	};
 
+#if 0
+	/*>>chng 25 11 04, GShaw add HD LAMDA format, always on, so do not include Porter HD */
 	class mole_reaction_hd_photodissoc : public mole_reaction
 	{
 		typedef mole_reaction_hd_photodissoc T;
@@ -1683,9 +1685,13 @@ namespace {
 		virtual const char* name() {return "hd_photodissoc";}
 		double rk() const
 			{
-				return hd.photodissoc_BigH2_H2g + hd.Solomon_dissoc_rate_g;
-			}
+		
+		/*>>chng 2025/11/04, GShaw, now HD is in LAMDA format */	
+		return hd.photodissoc_BigH2_H2g + hd.Solomon_dissoc_rate_g;
+               }
 	};
+#endif
+
 }
 
 /*hmirat compute radiative association rate for H- */
@@ -1828,7 +1834,8 @@ void mole_create_react( void )
 	newfunc<mole_reaction_h_hnc_hcn_h>();
 	
 	newfunc<mole_reaction_gamheh>();
-	newfunc<mole_reaction_hd_photodissoc>();
+	/*>>chng 25 11 04, GShaw add HD LAMDA format, always on, so do not include Porter HD */
+	/*newfunc<mole_reaction_hd_photodissoc>();*/
 	newfunc<mole_reaction_h2gdissoc>();
 	newfunc<mole_reaction_h2sdissoc>();
 	newfunc<mole_reaction_h2gexcit>();
@@ -4169,9 +4176,12 @@ STATIC void mole_h_reactions( void )
 					  h2.gs_rate() );
 		}
 	}
-
+	
+#if 0
+	/*>>chng 25 11 04, GShaw add HD LAMDA format, always on, so do not include Porter HD */
 	if( !hd.lgEnabled )
 		hd.photodissoc_BigH2_H2g = hmi.H2_photodissoc_used_H2g;
+#endif 
 
 	return;
 }

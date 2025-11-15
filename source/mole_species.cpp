@@ -200,8 +200,9 @@ void t_mole_global::make_species(void)
 	}
 
 	if( deut.lgElmtOn )
-	{
-		read_species_file( "chem_species_deuterium.dat", false );
+	{	/*>>chng 25 11 04, GShaw add HD LAMDA format, always on, so do not include Porter HD */
+		/* read file with HD chemistry */
+		read_species_file( "chem_species_deuterium.dat", true );
 	}
 
 	/* Add species for all other elements and their first ions -- couple to network at least via H- */

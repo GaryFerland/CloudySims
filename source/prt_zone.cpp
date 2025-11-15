@@ -203,7 +203,8 @@ void PrtZone(void)
 		fprintf(ioQQQ,PrintEfmt("%9.2e",(deut.xIonDense[0] + deut.xIonDense[1])/deut.gas_phase));
 		fprintf(ioQQQ,PrintEfmt("%9.2e",findspecieslocal("D-")->den/deut.gas_phase));
 		fprintf( ioQQQ, " D-    HD");
-		fprintf(ioQQQ,PrintEfmt("%9.2e",hmi.HD_total/deut.gas_phase));
+		/*>>chng 25 11 04, GShaw add HD LAMDA format, always on, so do not include Porter HD */
+		/*fprintf(ioQQQ,PrintEfmt("%9.2e",hmi.HD_total/deut.gas_phase));*/
 		fprintf(ioQQQ,PrintEfmt("%9.2e",findspecieslocal("HD+")->den/deut.gas_phase));
 		fprintf( ioQQQ, " HD+ HeD+");
 		fprintf(ioQQQ,PrintEfmt("%9.2e",findspecieslocal("HeD+")->den/deut.gas_phase));

@@ -24,7 +24,8 @@ struct t_hmi : public module {
 	/** the total H2 density [cm-3], NOT 2*n(H2), the sum of H2 and H2* */
 	double H2_total;
 	realnum H2_total_f; // single-precision version of above
-	double HD_total;
+	/*>>chng 25 11 04, GShaw add HD LAMDA format, always on, so do not include Porter HD w*/	
+	/*double HD_total;*/
 
 	/** rate ground of H2 is destroyed */
 	double H2_rate_destroy;

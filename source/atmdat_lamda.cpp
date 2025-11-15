@@ -392,6 +392,10 @@ void atmdat_LAMDA_readin( long intNS, const string& chEFilename )
 		{
 			intCollIndex = ipATOM_HE;
 		}
+		else if(intLColliderIndex == 7)
+                {
+                        intCollIndex = ipPROTON; /*GShaw Added H+ collider on 2025/11/10*/
+                }
 		else
 		{
 			// this happens for some LAMDA files (as of Jan 20, 2009) because there is no integer

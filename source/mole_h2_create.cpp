@@ -198,11 +198,15 @@ void diatomics::init(void)
 				H2_lgOrtho[(*st).n()][(*st).v()][(*st).J()] = false;
 			}
 		}
+
+#if 0
+		/*>>chng 25 11 04, GShaw add HD LAMDA format, always on, so do not include Porter HD */
 		else if( this==&hd )
 		{
 			// No ortho-para distinction, set all of these to false.
 			H2_lgOrtho[(*st).n()][(*st).v()][(*st).J()] = false;
 		}
+#endif 
 		else
 			// This will have to change for any additional molecules.
 			TotalInsanity();
