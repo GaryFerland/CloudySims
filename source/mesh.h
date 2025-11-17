@@ -65,7 +65,7 @@ protected:
 		if( lgMeshSetUp() )
 			return;
 
-		p_mesh_cksum = MD5datafile(p_mesh_defname.c_str());
+		p_mesh_cksum = VHdatafile(p_mesh_defname);
 
 		p_ReadResolution();
 		p_SetupMesh(lgUnitCell);

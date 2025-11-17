@@ -93,29 +93,6 @@ inline long grain_interpolate(const T arr1[], T arr2[], long n1) // arr1[n1], n1
 {
 	DEBUG_ENTRY( "grain_interpolate()" );
 
-#if 0
-	avx_ptr<T> arr1ln(gv.nflux), arr2ln(rfield.nflux);
-
-	vlog(arr1, arr1ln.data(), 0, n1);
-
-	long i1=0, i2;
-	for( i2=0; i2 < rfield.nflux; ++i2 )
-	{
-		double x = rfield.anu(i2);
-		double xln = rfield.anuln(i2);
-		while( i1 < n1-1 && x >= gv.anu(i1+1) )
-			++i1;
-		if( i1 == n1-1 )
-			break;
-		// do log-log first-order interpolation
-		double f = (xln-gv.anuln(i1))/(gv.anuln(i1+1)-gv.anuln(i1));
-		arr2ln[i2] = arr1ln[i1] + f*(arr1ln[i1+1]-arr1ln[i1]);
-	}
-
-	vexp(arr2ln.data(), arr2, 0, i2);
-	// return the number of elements of arr2 that have been filled in
-	return i2;
-#else
 	vector<double> d(n1-1), h(n1), g(n1);
 	for( long k=0; k < n1-1; ++k ) 
 	{
@@ -140,7 +117,6 @@ inline long grain_interpolate(const T arr1[], T arr2[], long n1) // arr1[n1], n1
 	}
 	// return the number of elements of arr2 that have been filled in
 	return i2;
-#endif
 }
 		
 #endif /* GRAINS_H_ */
