@@ -6,7 +6,6 @@
 
 #include "rfield.h"
 #include "grainvar.h"
-#include "monointerp.h"
 
 /** GrainDrive main routine to converge grains thermal solution */
 void GrainDrive();
@@ -93,28 +92,54 @@ inline long grain_interpolate(const T arr1[], T arr2[], long n1) // arr1[n1], n1
 {
 	DEBUG_ENTRY( "grain_interpolate()" );
 
-	vector<double> d(n1-1), h(n1), g(n1);
-	for( long k=0; k < n1-1; ++k ) 
+	avx_ptr<T> arr1ln(gv.nflux), arr2ln(rfield.nflux);
+
+	vlog(arr1, arr1ln.data(), 0, n1);
+
+	vector<double> h(n1-1), d(n1-1), m(n1);
+	for( long k=0; k < n1-1; ++k )
 	{
-		h[k] = (gv.anu(k+1)-gv.anu(k));
-		d[k] = (arr1[k+1]-arr1[k])/h[k];
+		h[k] = (gv.anuln(k+1)-gv.anuln(k));
+		d[k] = (arr1ln[k+1]-arr1ln[k])/h[k];
 	}
-	MI_SetupData(d, h, g, n1);
+	m[0] = d[0];
+	for( long k=1; k < n1-1; ++k )
+		m[k] = (d[k-1] + d[k])/2.;
+	m[n1-1] = d[n1-2];
+	for( long k=0; k < n1-1; ++k )
+		if( abs(d[k]) <= 1.e-10 )
+			m[k] = m[k+1] = 0.;
 
 	long i1=0, i2;
 	double hh = h[0];
+	// at the low-frequency end we need to do a bit of extrapolation. we will not use
+	// monotic cubic splines for that, but rather linear extrapolation in log-log space.
+	// at the high-frequency end this is not needed as the grain frequency mesh has no
+	// unit cell and therefore extends beyond the regular frequency mesh
+	double deriv0 = (arr1ln[1] - arr1ln[0])/(gv.anuln(1) - gv.anuln(0));
 	for( i2=0; i2 < rfield.nflux; ++i2 )
 	{
-		double x = rfield.anu(i2);
-		while( i1 < n1-1 && x >= gv.anu(i1+1) )
-			hh = h[++i1];
-		if( i1 == n1-1 )
-			break;
-		// apply Fritsch & Butland monotonic interpolation algorithm
-		double t = (x - gv.anu(i1))/hh;
-		arr2[i2] = arr1[i1]*h00(t) + hh*g[i1]*h10(t) +
-			arr1[i1+1]*h00(1.0-t) - hh*g[i1+1]*h10(1.0-t);
+		double x = rfield.anuln(i2);
+		if( x < gv.anuln(0) )
+		{
+			arr2ln[i2] = arr1ln[0] + deriv0*(rfield.anuln(i2) - gv.anuln(0));
+		}
+		else
+		{
+			while( i1 < n1-1 && x >= gv.anuln(i1+1) )
+				hh = h[++i1];
+			if( i1 == n1-1 )
+				break;
+			// use monotonic cubic Hermite splines
+			double t = (x - gv.anuln(i1))/hh;
+			double t2 = t*t;
+			double t3 = t2*t;
+			arr2ln[i2] = (2.*t3 - 3.*t2 + 1.)*arr1ln[i1] + (t3 - 2.*t2 + t)*hh*m[i1] +
+				(-2.*t3 + 3.*t2)*arr1ln[i1+1] + (t3 - t2)*hh*m[i1+1];
+		}
 	}
+
+	vexp(arr2ln.data(), arr2, 0, i2);
 	// return the number of elements of arr2 that have been filled in
 	return i2;
 }
