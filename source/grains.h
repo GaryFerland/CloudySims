@@ -114,14 +114,15 @@ inline long grain_interpolate(const T arr1[], T arr2[], long n1) // arr1[n1], n1
 	double hh = h[0];
 	// at the low-frequency end we need to do a bit of extrapolation. we will not use
 	// monotic cubic splines for that, but rather linear extrapolation in log-log space.
-	// at the high-frequency end this is not needed as the grain frequency mesh has no
-	// unit cell and therefore extends beyond the regular frequency mesh
+	// at the high-frequency end this is not needed as the algorithm will stop once the
+	// end of the input array is reached and will not fill in the output array further
 	double deriv0 = (arr1ln[1] - arr1ln[0])/(gv.anuln(1) - gv.anuln(0));
 	for( i2=0; i2 < rfield.nflux; ++i2 )
 	{
 		double x = rfield.anuln(i2);
 		if( x < gv.anuln(0) )
 		{
+			// use linear extrapolation
 			arr2ln[i2] = arr1ln[0] + deriv0*(rfield.anuln(i2) - gv.anuln(0));
 		}
 		else
