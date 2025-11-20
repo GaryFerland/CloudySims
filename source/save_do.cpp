@@ -1738,7 +1738,7 @@ void SaveDo(
 						radius.depth_mid_zone );
 					/* grain heating */
 					for( size_t nd=0; nd < gv.bin.size(); ++nd ) 
-						fprintf( save.params[ipPun].ipPnunit, "\t%.3e", gv.bin[nd].GasHeatPhotoEl );
+						fprintf( save.params[ipPun].ipPnunit, "\t%.3e", gv.bin[nd].GasHeatPhotoElBin );
 					fprintf( save.params[ipPun].ipPnunit, "\n" );
 				}
 			}
@@ -2805,7 +2805,7 @@ void SaveDo(
 					/* grain collisional cooling */
 					MAX2(0.,gv.GasCoolColl),	
 					/* grain collisional heating */
-					-1.*MIN2(0.,gv.GasCoolColl),	
+					MAX2(0.,-gv.GasCoolColl),	
 					/* COds - CO dissociation heating */
 					thermal.heating(0,9),
 					/* H2dH-Heating due to H2 dissociation */

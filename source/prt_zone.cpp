@@ -451,9 +451,9 @@ void PrtZone(void)
 			fprintf( ioQQQ, " drf cm/s");
 			fprintf(ioQQQ,PrintEfmt("%9.2e", gv.bin[nd].DustDftVel));
 			fprintf( ioQQQ, " Heating:");
-			fprintf(ioQQQ,PrintEfmt("%9.2e", gv.bin[nd].GasHeatPhotoEl));
+			fprintf(ioQQQ,PrintEfmt("%9.2e", gv.bin[nd].GasHeatPhotoElBin));
 			fprintf( ioQQQ, " Frac tot");
-			fprintf(ioQQQ,PrintEfmt("%9.2e", gv.bin[nd].GasHeatPhotoEl/thermal.htot));
+			fprintf(ioQQQ,PrintEfmt("%9.2e", gv.bin[nd].GasHeatPhotoElBin/thermal.htot));
 			fprintf( ioQQQ, "\n" );
 		}
 	}

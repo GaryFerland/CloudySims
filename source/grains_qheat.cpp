@@ -323,8 +323,8 @@ void GrainMakeDiffuse()
 	 *
 	 * Note 1: there are two sources for energy imbalance in the grain code (see A & B).
 	 *   A: Interpolation in dstems. The code calculates how much energy the grains
-	 *      emit in thermal radiation (gv.bin[nd].GrainHeat), and converts that into
-	 *      an (average) grain temperature by reverse interpolation in dstems. If
+	 *      emit in thermal radiation (gptr.GrainHeatCS), and converts that into an
+	 *      (average) grain temperature by reverse interpolation in dstems. If
 	 *      quantum heating is not used, that temperature is used directly to generate
 	 *      the local diffuse emission. Hence the finite resolution of the dstems grid
 	 *      can lead to small errors in flux. This is tested in Check 1. The maximum
@@ -338,13 +338,13 @@ void GrainMakeDiffuse()
 	 *      imbalance, depending on how accurate the convergence of the OTS fields is.
 	 *      This is outside the control of the grain code and is therefore NOT checked.
 	 *      Rather, the grain code remembers the contribution from the old OTS fields
-	 *      (through gv.bin[nd].BolFlux) and uses that in Check 3. In most models the
-	 *      difference will be well below 0.1%, but in AGN type models where OTS continua
-	 *      are important, the energy imbalance can be of the order of 0.5% of the grain
+	 *      (through gv.BolFlux) and uses that in Check 3. In most models the difference
+	 *      will be well below 0.1%, but in AGN type models where OTS continua are
+	 *      important, the energy imbalance can be of the order of 0.5% of the grain
 	 *      heating (status nov 2001). On 04 jan 25 the initialization of phiTilde has
 	 *      been moved to qheat, implying that phiTilde now uses the updated version of
 	 *      the OTS fields. The total amount of radiated energy however is still based
-	 *      on gv.bin[nd].GrainHeat which uses the old version of the OTS fields.
+	 *      on gv.bin[nd].GrainHeatBin which uses the old version of the OTS fields.
 	 *   C: Energy conservation for collisional processes is guaranteed by adding in
 	 *      (very small) correction terms. These corrections are needed to cover up
 	 *      small imperfection in the theory, and cannot be avoided without making the
@@ -368,10 +368,13 @@ void GrainMakeDiffuse()
 	bool lgNoTdustFailures = true;
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
-		if( !gv.bin[nd].lgTdustConverged )
+		for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
 		{
-			lgNoTdustFailures = false;
-			break;
+			if( !gv.bin[nd].chrg(nz).lgTdustConverged )
+			{
+				lgNoTdustFailures = false;
+				break;
+			}
 		}
 	}
 
@@ -385,16 +388,16 @@ void GrainMakeDiffuse()
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
 		if( gv.bin[nd].tedust < gv.bin[nd].Tsublimat )
-			Comparison1 += CONSERV_TOL*gv.bin[nd].GrainHeat;
+			Comparison1 += CONSERV_TOL*gv.bin[nd].GrainHeatBin;
 		else
 			/* for high temperatures the interpolation in dstems
 			 * is less accurate, so we have to be more lenient */
-			Comparison1 += 10.*CONSERV_TOL*gv.bin[nd].GrainHeat;
+			Comparison1 += 10.*CONSERV_TOL*gv.bin[nd].GrainHeatBin;
 	}
 
 	/* >>chng 04 mar 11, add constant grain temperature to pass assert */
 	/* >>chng 04 jun 01, deleted test for constant grain temperature, PvH */
-	ASSERT( fabs(BolFlux-gv.GrainHeatSum) < Comparison1 );
+	ASSERT( fabs(BolFlux-gv.GrainHeat) < Comparison1 );
 
 	/* CHECK 2: assert charging balance */
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
@@ -407,18 +410,14 @@ void GrainMakeDiffuse()
 	{
 		/* CHECK 3: calculate the total energy donated to grains, must be balanced by
 		 * the energy emitted in thermal radiation plus various forms of gas heating */
-		Comparison1 = 0.;
-		for( size_t nd=0; nd < gv.bin.size(); nd++ )
-		{
-			Comparison1 += gv.bin[nd].BolFlux;
-		}
+		Comparison1 = gv.BolFlux;
 		/* add in collisional heating of grains by plasma (if positive) */
 		Comparison1 += MAX2(gv.GasCoolColl,0.);
 		/* add in net amount of chemical energy donated by recombining ions and molecule formation */
-		Comparison1 += gv.GrainHeatChem;
+		Comparison1 += gv.GrainHeatChemEn;
 
 		/*              thermal emis        PE effect          gas heating by coll    thermionic emis */
-		double Comparison2 = gv.GrainHeatSum+thermal.heating(0,13)+thermal.heating(0,14)+thermal.heating(0,25);
+		double Comparison2 = gv.GrainHeat+thermal.heating(0,13)+thermal.heating(0,14)+thermal.heating(0,25);
 
 		/* >>chng 06 jun 02, add test on gv.GrainHeatScaleFactor so that assert not thrown
 		 * when set grain heat command is used */
@@ -499,7 +498,7 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 
 	qheat_init( nd, phiTilde, &check );
 
-	check += gv.bin[nd].GrainHeatColl-gv.bin[nd].GrainCoolTherm;
+	check += gv.bin[nd].GrainHeatCollBin-gv.bin[nd].GrainCoolThermBin;
 
 	xx = integral = 0.;
 	c0 = c1 = c2 = 0.;
@@ -598,19 +597,22 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 
 	if( trace.lgTrace && trace.lgDustBug )
 	{
-		double Rate2 = 0.;
-		for( int nz=0; nz < gv.bin[nd].nChrg; nz++ )
-			Rate2 += gv.bin[nd].chrg(nz).FracPop*gv.bin[nd].chrg(nz).HeatingRate2;
+		long nz;
 
 		fprintf( ioQQQ, "   grain heating: %.4e, integral %.4e, total rate %.4e lgNegRate %c\n",
-			 gv.bin[nd].GrainHeat,integral,Phi[0],TorF(lgNegRate));
+			 gv.bin[nd].GrainHeatBin,integral,Phi[0],TorF(lgNegRate));
+		fprintf( ioQQQ, "   HeatingRate1" );
+		for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
+			fprintf( ioQQQ, " %.6e", gv.bin[nd].chrg(nz).HeatingRate1*gv.bin[nd].cnv_H_pCM3 );
+		fprintf( ioQQQ, " HeatingRate2" );
+		for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
+			fprintf( ioQQQ, " %.6e", gv.bin[nd].chrg(nz).HeatingRate2*gv.bin[nd].cnv_H_pCM3 );
+		fprintf( ioQQQ, "\n" );
 		fprintf( ioQQQ, "   av grain temp %.4e av grain enthalpy (Ryd) %.4e\n",
 			 gv.bin[nd].tedust,Umax);
 		fprintf( ioQQQ, "   fwhm^2/(4ln2*c2/c0): %.4e fwhm (Ryd) %.4e fwhm/Umax %.4e\n",
 			 NumEvents,fwhm,FwhmRatio );
-		fprintf( ioQQQ, "   HeatingRate1 %.4e HeatingRate2 %.4e lgQHTooWide %c\n",
-			 gv.bin[nd].HeatingRate1*gv.bin[nd].cnv_H_pCM3, Rate2*gv.bin[nd].cnv_H_pCM3,
-			 TorF(gv.bin[nd].lgQHTooWide) );
+		fprintf( ioQQQ, "   lgQHTooWide %c\n", TorF(gv.bin[nd].lgQHTooWide) );
 	}
 
 	/* these two variables will bracket qtmin, they should only be needed during the initial search phase */
@@ -860,6 +862,7 @@ STATIC void qheat_init(size_t nd,
 	long i,
 	  nz;
 	double sum = 0.;
+	double HeatingRate2;
 
 	/*@-redef@*/
 	enum {DEBUG_LOC=false};
@@ -982,7 +985,7 @@ STATIC void qheat_init(size_t nd,
 
 		/* add quantum heating due to recombination of electrons, subtract thermionic cooling */
 
-		/* gptr.HeatingRate2 is net heating rate in erg/H/s at standard depl
+		/* gptr.HeatingRate1 is net heating rate in erg/H/s at standard depl
 		 * includes contributions for recombining electrons, autoionizing electrons
 		 * subtracted by thermionic emissions here since it is inverse process
 		 *
@@ -993,7 +996,7 @@ STATIC void qheat_init(size_t nd,
 		 * but we will check that in qheat1 anyway. */
 
 		/* >>chng 03 nov 06, check for extremely low HeatingRate and save CPU time, pah_crash.in, PvH */
-		if( gptr.HeatingRate2*gv.bin[nd].cnv_H_pCM3 > 0.05*CONSERV_TOL*gv.bin[nd].GrainHeat ) 
+		if( gptr.HeatingRate1*gv.bin[nd].cnv_H_pCM3 > 0.05*CONSERV_TOL*gv.bin[nd].GrainHeatBin ) 
 		{
 			double Sum,ESum,DSum,E_av2,Corr;
 			double fac = BOLTZMANN/EN1RYD*phycon.te;
@@ -1012,7 +1015,7 @@ STATIC void qheat_init(size_t nd,
 			/* >>chng 03 jan 23, replaced ThresInfInc[nz] with MAX2(ThresInfInc[nz],0.), PvH */
 			double E_av = MAX2(gptr.ThresInfInc,0.)*EN1RYD + 2.*BOLTZMANN*phycon.te;
 			/* this is rate in events/H/s at standard depletion */
-			double rate = gptr.HeatingRate2/E_av;
+			double rate = gptr.HeatingRate1/E_av;
 
 			double ylo = -exp(-E0/fac);
 			/* this is highest kinetic energy of electron that can be represented in phiTilde */
@@ -1061,7 +1064,7 @@ STATIC void qheat_init(size_t nd,
 				phiTilde[i] += RateArr[i]*Corr;
 			}
 
-			sum += gptr.FracPop*gptr.HeatingRate2*gv.bin[nd].cnv_H_pCM3;
+			sum += gptr.FracPop*gptr.HeatingRate1*gv.bin[nd].cnv_H_pCM3;
 
 			if( DEBUG_LOC )
 			{
@@ -1075,7 +1078,7 @@ STATIC void qheat_init(size_t nd,
 		}
 		else
 		{
-			NegHeatingRate += gptr.FracPop*gptr.HeatingRate2*gv.bin[nd].cnv_H_pCM3;
+			NegHeatingRate += gptr.FracPop*gptr.HeatingRate1*gv.bin[nd].cnv_H_pCM3;
 		}
 	}
 
@@ -1083,7 +1086,7 @@ STATIC void qheat_init(size_t nd,
 
 	/* add quantum heating due to molecule/ion collisions */
 
-	/* gv.bin[nd].HeatingRate1 is heating rate in erg/H/s at standard depl
+	/* gv.bin[nd].HeatingRate2 is heating rate in erg/H/s at standard depl
 	 * includes contributions from molecules/neutral atoms and recombining ions
 	 *
 	 * in fully ionized conditions electron heating rates will be much higher
@@ -1096,8 +1099,13 @@ STATIC void qheat_init(size_t nd,
 	 * if photon rates are not high enough to prevent phiTilde from becoming negative,
 	 * we will raise a flag while calculating the quantum heating in qheat1 */
 
+	fixit("the remaining initialization code should be integrated in previous loop");
+	HeatingRate2 = 0.;
+	for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
+		HeatingRate2 += gv.bin[nd].chrg(nz).FracPop*gv.bin[nd].chrg(nz).HeatingRate2;
+
 	/* >>chng 03 nov 06, check for extremely low HeatingRate and save CPU time, PvH */
-	if( gv.bin[nd].HeatingRate1*gv.bin[nd].cnv_H_pCM3 > 0.05*CONSERV_TOL*gv.bin[nd].GrainHeat )
+	if( HeatingRate2*gv.bin[nd].cnv_H_pCM3 > 0.05*CONSERV_TOL*gv.bin[nd].GrainHeatBin )
 	{
 		/* limits for Taylor expansion of (1+x)*exp(-x) */
 		/* these choices will assure only 6 digits precision */
@@ -1111,7 +1119,7 @@ STATIC void qheat_init(size_t nd,
 		/* this is average energy deposited/extracted by one event, in erg */
 		double E_av = 2.*BOLTZMANN*MAX2(phycon.te,gv.bin[nd].tedust);
 		/* this is rate in events/H/s at standard depletion */
-		double rate = gv.bin[nd].HeatingRate1/E_av;
+		double rate = HeatingRate2/E_av;
 
 		double ylo = -1.;
 		/* this is highest energy of incoming/outgoing particle that can be represented in phiTilde */
@@ -1142,7 +1150,7 @@ STATIC void qheat_init(size_t nd,
 			ylo = yhi;
 		}
 
-		sum += gv.bin[nd].HeatingRate1*gv.bin[nd].cnv_H_pCM3;
+		sum += HeatingRate2*gv.bin[nd].cnv_H_pCM3;
 
 		if( DEBUG_LOC )
 		{
@@ -1156,7 +1164,7 @@ STATIC void qheat_init(size_t nd,
 	}
 	else
 	{
-		NegHeatingRate += gv.bin[nd].HeatingRate1*gv.bin[nd].cnv_H_pCM3;
+		NegHeatingRate += HeatingRate2*gv.bin[nd].cnv_H_pCM3;
 	}
 
 	/* here we account for the negative heating rates, we simply do that by scaling the entire
@@ -1425,7 +1433,7 @@ STATIC void GetProbDistr_LowLimit(size_t nd,
 		}
 
 		/* force thermal equilibrium of the grains */
-		fac = RadCooling*gv.bin[nd].cnv_GR_pCM3*EN1RYD/gv.bin[nd].GrainHeat;
+		fac = RadCooling*gv.bin[nd].cnv_GR_pCM3*EN1RYD/gv.bin[nd].GrainHeatBin;
 
 		/* this is regular stop criterion */
 		if( dPdlnT[k] < dPdlnT[k-1] && dPdlnT[k]/fac < PROB_CUTOFF_HI )
@@ -2083,7 +2091,7 @@ STATIC long RebinQHeatResults(size_t nd,
 		return 0;
 	}
 
-	fac = RadCooling*EN1RYD*gv.bin[nd].cnv_GR_pCM3/gv.bin[nd].GrainHeat;
+	fac = RadCooling*EN1RYD*gv.bin[nd].cnv_GR_pCM3/gv.bin[nd].GrainHeatBin;
 
 	if( trace.lgTrace && trace.lgDustBug )
 	{
@@ -2258,7 +2266,7 @@ STATIC void GetProbDistr_HighLimit(long nd,
 
 	} while( T2 < Thi && nbin < NQGRID );
 
-	fac = RadCooling*EN1RYD*gv.bin[nd].cnv_GR_pCM3/gv.bin[nd].GrainHeat;
+	fac = RadCooling*EN1RYD*gv.bin[nd].cnv_GR_pCM3/gv.bin[nd].GrainHeatBin;
 
 	for( i=0; i < nbin; ++i )
 	{
