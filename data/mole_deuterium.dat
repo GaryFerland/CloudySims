@@ -43,7 +43,7 @@ HD+,H=>HD,H+:hmrate:6.40e-10:0.00e+00:0.00e+00  		# Gay et al. 2011, reaction 66
 HD+,H=>H2+,D:hmrate:1.00e-09:0.00e+00:1.54e+02  		# Gay et al. 2011, reaction 67 (a)
 HD+,H2=>H3+,D:hmrate:1.05e-09:0.00e+00:0.00e+00  		# Gay et al. 2011, reaction 68 (a)
 H,D=>HD,PHOTON:hmrate_exo:1.05e-26:0.09e+00:7.00e+03  		# Gay et al. 2011, reaction 69 ()
-H,D=>HD,PHOTON:hmrate:2.00e-27:0.00e+00:4.00e+02  		# Gay et al. 2011, reaction 70 (a)
+#H,D=>HD,PHOTON:hmrate:2.00e-27:0.00e+00:4.00e+02  		# This reaction is exothermic,Gay et al. 2011, reaction 70 (a)
 #>>chng 25 11 GShaw, HD is in LAMDA format*/
 #H2,D+=>HD,H+:hmrate:2.10e-09:0.00e+00:0.00e+00  		# Gay et al. 2011, reaction 71 (a) # big blotches,order of diff  
 HD,H+=>H2,D+:hmrate:1.00e-09:0.00e+00:4.58e+02  		# Gay et al. 2011, reaction 72 (a)
@@ -53,7 +53,7 @@ D,H-=>HD,e-:hmrate:1.50e-09:-0.10e+00:0.00e+00  		# Gay et al. 2011, reaction 75
 D-,H=>HD,e-:hmrate:1.50e-09:-0.10e+00:0.00e+00  		# Gay et al. 2011, reaction 76 (a)
 He+,D=>HeD+,PHOTON:hmrate_exo:5.00e-16:-0.37e+00:8.76e+04  		# Gay et al. 2011, reaction 77 ()
 He,D+=>HeD+,PHOTON:hmrate_exo:1.00e-19:-0.24e+00:4.00e+03  		# Gay et al. 2011, reaction 78 ()			
-He,D+=>HeD+,PHOTON:hmrate:1.50e-20:0.00e+00:2.00e+02  		# Gay et al. 2011, reaction 80 (a)
+#He,D+=>HeD+,PHOTON:hmrate:1.50e-20:0.00e+00:2.00e+02  		# THis reaction is exothermic, Gay et al. 2011, reaction 80 (a)
 #>>chng 25 11 GShaw, HD is in LAMDA format*/
 #HeH+,D=>HeD+,H:hmrate:1.00e-09:0.00e+00:0.00e+00  	# Gay et al. 2011, reaction 81 (a) #big blotch for h2_pdr_leiden_f1_hack, 2023Jan07, GShaw
 HeD+,H=>HeH+,D:hmrate:8.00e-10:0.00e+00:4.68e+02  		# Gay et al. 2011, reaction 82 (a)

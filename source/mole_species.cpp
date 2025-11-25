@@ -351,6 +351,8 @@ void create_isotopologues(
 	fixit("make sure atom_new and atom_old are isotopes");
 	fixit("make sure atom_new is not already present");
 
+#if 0	
+	/* >>chng 25 nov 23,GS do not count Deuterated species twice*/
 	//for( ChemNuclideList::iterator it = atoms.begin(); it != atoms.end(); ++it )
 	for( unsigned position = 0; position < atoms.size(); ++position )
 	{
@@ -359,7 +361,7 @@ void create_isotopologues(
 		if( !newLabel.empty() )
 			newLabels.push_back( newLabel );
 	}
-
+#endif
 	return;
 }
 
