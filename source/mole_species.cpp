@@ -338,33 +338,6 @@ STATIC void read_species_file( string filename, bool lgCreateIsotopologues )
 }
 /*lint +e778 constant expression evaluates to 0 in operation '-' */
 
-void create_isotopologues(
-	ChemNuclideList& atoms,
-	vector< int >& numNuclides,
-	string atom_old,
-	string atom_new,
-	string embellishments,
-	vector<string>& newLabels )
-{
-	DEBUG_ENTRY( "create_isotopologues()" );
-
-	fixit("make sure atom_new and atom_old are isotopes");
-	fixit("make sure atom_new is not already present");
-
-#if 0	
-	/* >>chng 25 nov 23,GS do not count Deuterated species twice*/
-	//for( ChemNuclideList::iterator it = atoms.begin(); it != atoms.end(); ++it )
-	for( unsigned position = 0; position < atoms.size(); ++position )
-	{
-		string newLabel;
-		create_isotopologues_one_position( position, atoms, numNuclides, atom_old, atom_new, embellishments, newLabel );
-		if( !newLabel.empty() )
-			newLabels.push_back( newLabel );
-	}
-#endif
-	return;
-}
-
 void create_isotopologues_one_position(
 	unsigned position,
 	ChemNuclideList& atoms,
@@ -611,38 +584,6 @@ STATIC molecule *newspecies(
 	{
 		molecule *sp = newspecies( "^13CO", MOLECULE, mol->state, mol->form_enthalpy, false );
 		sp->parentLabel = mol->label;
-	}
-
-	// create singly-substituted isotopologues	
-	if( lgCreateIsotopologues && type==MOLECULE && !mol->isMonatomic() )
-	{
-		for( nNucs_i it1 = mol->nNuclide.begin(); it1 != mol->nNuclide.end(); ++it1 )
-		{
-			for( map<int, shared_ptr<chem_nuclide> >::iterator it2 = it1->first->el()->isotopes.begin(); 
-				 it2 != it1->first->el()->isotopes.end(); ++it2 )
-			{
-				// we don't want to create ^1H isotopologues (only substitute D for H)
-				if( it1->first->el()->Z-1 == ipHYDROGEN && it2->second->A != 2 )
-					continue;
-				if( !mole_global.lgTreatIsotopes[it1->first->el()->Z-1] )
-					continue;
-				if( it2->second->lgMeanAbundance() )
-					continue;
-				vector<string> isoLabs;
-				create_isotopologues( nuclidesLeftToRight, numNuclides, it1->first->label(), it2->second->label(), embellishments, isoLabs );
-				//fprintf( ioQQQ, " DEBUGGG %10s isotopologues of %10s:", it1->first->label().c_str(), mol->label.c_str() );
-				//for( vector<string>::iterator lab = isoLabs.begin(); lab != isoLabs.end(); ++ lab )
-				//	fprintf( ioQQQ, " %10s", lab->c_str() );
-				//fprintf( ioQQQ, "\n" );
-				for( vector<string>::iterator newLabel = isoLabs.begin(); newLabel != isoLabs.end(); ++newLabel )
-				{
-					molecule *sp = newspecies( newLabel->c_str(), MOLECULE, mol->state, mol->form_enthalpy, false );
-					// D is special -- don't set parentLabel
-					if( sp!=NULL && it2->second->A != 2 )
-						sp->parentLabel = mol->label;
-				}
-			}
-		}
 	}
 		
 	return &(*mol);

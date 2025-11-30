@@ -2158,13 +2158,7 @@ STATIC void mole_generate_isotopologue_reactions( string atom_old, string atom_n
 			if( !lgParseOK )
 				TotalInsanity();
 			// generate isotopologue labels
-			create_isotopologues(
-				atomsLeftToRight,
-				numAtoms,
-				atom_old,
-				atom_new,
-				embellishments,
-				react_iso_labels );	
+			//create_isotopologues();	
 			for( unsigned j=0; j<react_iso_labels.size(); ++j )
 			{	
 				int numAtomsTot = 0;	
