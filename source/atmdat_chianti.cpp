@@ -206,7 +206,6 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	if( dBaseSpecies[intNS].dataset.length() > 0 )
 		chUnCaps += "_" + dBaseSpecies[intNS].dataset;
 	// Construct the filename for the STOUT energy levels file (.nrg) based on the species prefix.
-	// Transition probability file for STOUT data
 	string chNRGFilename = chUnCaps + ".nrg";
 	string chTPFilename  = chUnCaps + ".tp";
 	
@@ -228,8 +227,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		shortName = chUnCaps.substr( pos+1 );        // "al_8"
 	}
 	vector<string> collFiles;
-	//string collPattern = basedir + shortName + ".*\\.coll";
-	string collPattern = basedir + ".*\\.coll";
+	string collPattern = basedir + shortName + ".*\\.coll";
 	getFileList( collFiles, collPattern );
 
 	if( collFiles.empty() )
@@ -536,7 +534,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 			processIndices(ipLoInFile, ipHiInFile, lgIsRegular, indexold2new, ipLo, ipHi);
 
 			if( ipHi >= nMolLevs )
-				continue;
+				continue; // we've read all levels we are using;
 
 			double tpData;
 			d.getToken( tpData );
@@ -788,21 +786,6 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	/******************************************************
 	 ************* Collision Data File ********************
 	 ******************************************************/
-
-	// Allocate space for collision strengths ONCE per species
-	StoutCollData[intNS].alloc(nMolLevs,nMolLevs,ipNCOLLIDER);
-	for( long ipHi=0; ipHi<nMolLevs; ipHi++ )
-	{
-		for( long ipLo=0; ipLo<nMolLevs; ipLo++ )
-		{
-			for( long k=0; k<ipNCOLLIDER; k++ )
-			{
-				/* initialize all spline variables */
-				StoutCollData[intNS].junk(ipHi,ipLo,k);
-			}
-		}
-	}
-
 	int numpoints = 0;
 	vector<double> temps;
 	long ipCollider = -1;
@@ -842,21 +825,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 					StoutCollData[intNS].junk(ipHi,ipLo,k);
 				}
 			}
-		}	
-		/* allocate space for collision strengths */
-		StoutCollData[intNS].alloc(nMolLevs,nMolLevs,ipNCOLLIDER);
-		for( long ipHi=0; ipHi<nMolLevs; ipHi++ )
-		{
-			for( long ipLo=0; ipLo<nMolLevs; ipLo++ )
-			{
-				for( long k=0; k<ipNCOLLIDER; k++ )
-				{
-					/* initialize all spline variables */
-					StoutCollData[intNS].junk(ipHi,ipLo,k);
-				}
-			}
 		}
-	
 
 		numpoints = 0;
 		temps.clear();
