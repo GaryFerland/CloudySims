@@ -79,7 +79,6 @@ void ParsePhi(Parser &p);
 void ParseQH(Parser &p);
 void ParseRoberto(Parser &);
 void ParseSpecial(Parser &);
-void ParseTauMin(Parser &p);
 void ParseTitle(Parser &);
 void ParseTolerance(Parser &);
 void ParseVLaw(Parser &p);
@@ -341,7 +340,6 @@ void ParseCommands(void)
 		 * input stored in big BLOCK data
 		 * first check that this is the one and only INTERP command
 		 * in readsun */
-		{"TAUMIN",ParseTauMin}, // not in Hazy 1
 		{"TEST",ParseTest},
 		/* parse the test command and its options */
 		{"TIME",ParseDynaTime},
@@ -2183,13 +2181,6 @@ void ParseSpecial(Parser &)
 	DEBUG_ENTRY( "ParseSpecial()" );
 	/* special key, can do anything */
 	cdEXIT(EXIT_FAILURE);
-}
-void ParseTauMin(Parser &p)
-{
-	/* taumin command minimum optical depths for lines dafault 1e-20 */
-	opac.taumin = (realnum)exp10(p.FFmtRead());
-	if( p.lgEOL() )
-		p.NoNumb("minimum optical depth");	
 }
 void ParseTitle(Parser &p)
 {
