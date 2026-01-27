@@ -546,7 +546,7 @@ bool read_whole_line( string& chLine, FILE *ioIN );
 
 #ifdef HAVE_LIBCPP_BUG
 
-#include "service.h"
+void FPRead(istringstream& iss, const string& s, double& value);
 
 // workaround for the bug described in https://bugs.llvm.org/show_bug.cgi?id=17782
 inline istringstream& operator>> ( istringstream& s, double& x )
