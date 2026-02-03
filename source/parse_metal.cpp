@@ -114,7 +114,6 @@ STATIC void EvalJenkins( const double Fstar , const double DxLimit )
 		if( lgSetJenkins09[nelem] )
 		{
 			abund.DepletionScaleFactor[nelem] = pow(10., BX[nelem] + AX[nelem]*(Fstar-ZX[nelem]) );
-			abund.DepletionScaleFactor[nelem] = MAX2( 0., abund.DepletionScaleFactor[nelem] );
 			abund.DepletionScaleFactor[nelem] = MIN2( DxLimit, abund.DepletionScaleFactor[nelem] );
 		}
 		else

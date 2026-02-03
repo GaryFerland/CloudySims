@@ -22,6 +22,7 @@
 #include "dense.h"
 #include "vectorize.h"
 #include "parser.h"
+#include "abund.h"
 
 /* the next three defines are for debugging purposes only, uncomment to activate */
 /*  #define WD_TEST2 1 */
@@ -122,8 +123,10 @@ STATIC void InitEmissivities();
 STATIC double PlanckIntegral(double,size_t,long);
 /* invalidate charge dependent data from previous iteration */
 STATIC void NewChargeData(long);
+/* GetFracDep returns fraction to adjust grain abundances when depletion command used */
+STATIC void GetFracDep(vector<double>&);
 /* GrnStdDpth returns the grain abundance as a function of depth into cloud */
-STATIC double GrnStdDpth(long);
+STATIC double GrnStdDpth(long, double);
 /* iterate grain charge and temperature */
 STATIC void GrainChargeTemp();
 /* GrainCharge compute grains charge */
@@ -525,11 +528,17 @@ void GrainsInit()
 		atoms = gv.bin[nd].AvVol*gv.bin[nd].dustp[0]/ATOMIC_MASS_UNIT/gv.bin[nd].atomWeight;
 		p_rad = 1./(1.+exp(20.-atoms));
 		gv.bin[nd].StickElecNeg = gv.bin[nd].StickElecPos*p_rad;
+	}
 
+	vector<double> mult_frac(MAT_TOP);
+	GetFracDep(mult_frac);
+
+	for( size_t nd=0; nd < gv.bin.size(); nd++ )
+	{
 		/* >>chng 02 feb 15, these quantities depend on radius and are normally set
 		 * in GrainUpdateRadius1(), however, it is necessary to initialize them here
 		 * as well so that they are valid the first time hmole is called. */
-		gv.bin[nd].GrnDpth = (realnum)GrnStdDpth(nd);
+		gv.bin[nd].GrnDpth = (realnum)GrnStdDpth(nd, mult_frac[gv.bin[nd].matType]);
 		gv.bin[nd].dstAbund = (realnum)(gv.bin[nd].dstfactor*gv.GrainMetal*gv.bin[nd].GrnDpth);
 		ASSERT( gv.bin[nd].dstAbund > 0.f );
 		/* grain unit conversion, <unit>/H (default depl) -> <unit>/cm^3 (actual depl) */
@@ -1130,10 +1139,39 @@ STATIC void NewChargeData(long nd)
 	return;
 }
 
+/* GetFracDep computes the fraction to adjust the grain abundance per element, so that
+user set depleted abundances are consistent with the grain abundances. */
+STATIC void GetFracDep(vector<double>& mult_frac) // pass the material type as a solution
+{
+	DEBUG_ENTRY( "GetFracDep()" );
+
+	double default_grain_car_abund = 0.0;
+	double default_grain_sil_abund = 0.0;
+	/* grain abundance may be a function of depth */
+	for( size_t nd=0; nd < gv.bin.size(); nd++ )
+	{
+		default_grain_car_abund += gv.bin[nd].elmAbund[ipCARBON];
+		default_grain_sil_abund += gv.bin[nd].elmAbund[ipSILICON];
+	}
+
+	realnum depleted_car_abund = max(0., 1.-abund.DepletionScaleFactor[ipCARBON]) * abund.ReferenceAbun[ipCARBON];
+	realnum depleted_sil_abund = max(0., 1.-abund.DepletionScaleFactor[ipSILICON]) * abund.ReferenceAbun[ipSILICON];
+
+	for( size_t mT=0; mT < mult_frac.size(); mT++ )
+		if( mT == MAT_CAR || mT == MAT_CAR2 ||
+			mT == MAT_PAH || mT == MAT_PAH2 ||
+			mT == MAT_SIC
+		)
+			mult_frac[mT] = (abund.DepletionScaleFactor[ipCARBON] == 1.0) ? 1.0 : depleted_car_abund/default_grain_car_abund;
+		else if( mT == MAT_SIL || mT == MAT_SIL2 )
+			mult_frac[mT] = (abund.DepletionScaleFactor[ipSILICON] == 1.0) ? 1.0 : depleted_sil_abund/default_grain_sil_abund;
+		else
+			mult_frac[mT] = 1.0;
+};
 
 /* GrnStdDpth sets the standard behavior of the grain abundance as a function 
  * of depth into cloud - user-define code should go in GrnVryDpth */
-STATIC double GrnStdDpth(long int nd)
+STATIC double GrnStdDpth(long int nd, double mult_frac)
 {
 	double GrnStdDpth_v;
 
@@ -1199,7 +1237,7 @@ STATIC double GrnStdDpth(long int nd)
 		TotalInsanity();
 	}
 
-	GrnStdDpth_v = max(1.e-10,GrnStdDpth_v);
+	GrnStdDpth_v = max(1.e-10,GrnStdDpth_v*mult_frac);
 
 	return GrnStdDpth_v;
 }
@@ -3776,10 +3814,13 @@ STATIC void GrainUpdateRadius1()
 		gv.elmSumAbund[nelem] = 0.f;
 	}
 
+	vector<double> mult_frac(MAT_TOP);
+	GetFracDep(mult_frac);
+
 	/* grain abundance may be a function of depth */
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
-		gv.bin[nd].GrnDpth = (realnum)GrnStdDpth(nd);
+		gv.bin[nd].GrnDpth = (realnum)GrnStdDpth(nd, mult_frac[gv.bin[nd].matType]);
 		gv.bin[nd].dstAbund = (realnum)(gv.bin[nd].dstfactor*gv.GrainMetal*gv.bin[nd].GrnDpth);
 		ASSERT( gv.bin[nd].dstAbund > 0.f );
 
