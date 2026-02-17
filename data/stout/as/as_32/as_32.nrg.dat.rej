@@ -1,0 +1,12 @@
+diff a/data/stout/as/as_32/as_32.nrg.dat b/data/stout/as/as_32/as_32.nrg.dat	(rejected hunks)
+@@ -50,7 +50,9 @@
+  6  4  1  4 113404830   110  
+  6  5  3 -1 113405143.333333 64.2045
+  6  5  1  5 113405760   110  
+--1 -1 -1 -1 116528397.0  20.0
++#  Commented out by Kenny Gilmore 12/18/25.  The first column is the principal quantum number (n) cannot be zero.  An Assert is thrown
++# inside Iso_Init_energies() method.
++# -1 -1 -1 -1 116528397.0  20.0
+ #
+ # 
+ # Bibliography:

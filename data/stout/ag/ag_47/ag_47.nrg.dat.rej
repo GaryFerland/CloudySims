@@ -1,0 +1,12 @@
+diff a/data/stout/ag/ag_47/ag_47.nrg.dat b/data/stout/ag/ag_47/ag_47.nrg.dat	(rejected hunks)
+@@ -12,7 +12,9 @@
+  1 -1 -1 -1 0 60
+  2 -1 -1 -1 188062126.333333 49.0453
+  3 -1 -1 -1 222363373.333333 223.607
+--1 -1 -1 -1 249755860.0  60.0
++#  Commented out by Kenny Gilmore 12/18/25.  The first column is the principal quantum number (n) cannot be zero.  An Assert is thrown
++# inside Iso_Init_energies() method.
++# -1 -1 -1 -1 249755860.0  60.0
+ #
+ # 
+ # Bibliography:

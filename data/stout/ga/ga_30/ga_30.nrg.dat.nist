@@ -1,0 +1,113 @@
+20190102 # magic number
+# Give level energies in cm^-1 for each ion.
+# Each line gives n, l, S, J, energy, energy uncertainty.
+# The last entry for each ion is the ionization potential.
+# It is marked with negative quantum numbers. The ionization
+# potential MUST be the last entry for a given element!
+#
+# NIST data for n<=6 were downloaded using ADM.
+#
+ 1  0  1 0.0         0    13  
+ 2  0  3 1.0  76910055    13  
+ 2  1  3 0.0  77201852    13  
+ 2  1  3 1.0  77223131    12  
+ 2  0  1 0.0  77224526    13  
+ 2  1  3 2.0  77489001    12  
+ 2  1  1 1.0  77656743    12  
+ 3  0  3 1.0  91177890   190  
+ 3  1  3 0.0  91258296    93  
+ 3  0  1 0.0  91261000   190  
+ 3  1  3 1.0  91264309    93  
+ 3  1  3 2.0  91343770   100  
+ 3  2  3 2.0  91384940   100  
+ 3  2  3 1.0  91386420   100  
+ 3  1  1 1.0  91389321    93  
+ 3  2  3 3.0  91413710   100  
+ 3  2  1 2.0  91416900   100  
+ 4  0  3 1.0  96121630   190  
+ 4  1  3 0.0  96154668    93  
+ 4  0  1 0.0  96155290   190  
+ 4  1  3 1.0  96157162    93  
+ 4  1  3 2.0  96190731    98  
+ 4  2  3 2.0  96207761    98  
+ 4  2  3 1.0  96208271    98  
+ 4  1  1 1.0  96209366    93  
+ 4  2  3 3.0  96219797    98  
+ 4  3  3 3.0  96220892    98  
+ 4  2  1 2.0  96221339    98  
+ 4  3  3 2.0  96221363    98  
+ 4  3  3 4.0  96227129    98  
+ 4  3  1 3.0  96227492    98  
+ 5  0  3 1.0  98396490   190  
+ 5  1  3 0.0  98413187    93  
+ 5  0  1 0.0  98413390   190  
+ 5  1  3 1.0  98414452    93  
+ 5  1  3 2.0  98431638    94  
+ 5  2  3 2.0  98440275    95  
+ 5  2  3 1.0  98440512    95  
+ 5  1  1 1.0  98441041    93  
+ 5  2  3 3.0  98446414    95  
+ 5  3  3 3.0  98447024    95  
+ 5  2  1 2.0  98447247    95  
+ 5  3  3 2.0  98447263    95  
+ 5  3  3 4.0  98450216    95  
+ 5  4  3 4.0  98450245    95  
+ 5  4  3 3.0  98450386    95  
+ 5  3  1 3.0  98450406    95  
+ 5  4  3 5.0  98452157    95  
+ 5  4  1 4.0  98452269    95  
+ 6  0  3 1.0  99627420   190  
+ 6  1  3 0.0  99637006    93  
+ 6  0  1 0.0  99637080   190  
+ 6  1  3 1.0  99637734    93  
+ 6  1  3 2.0  99647675    93  
+ 6  2  3 2.0  99652630    94  
+ 6  2  3 1.0  99652761    94  
+ 6  1  1 1.0  99653073    93  
+ 6  2  3 3.0  99656176    94  
+ 6  3  3 3.0  99656526    94  
+ 6  3  3 2.0  99656664    94  
+ 6  2  1 2.0  99656671    94  
+ 6  3  3 4.0  99658373    94  
+ 6  4  3 4.0  99658379    94  
+ 6  4  3 3.0  99658461    94  
+ 6  3  1 3.0  99658484    94  
+ 6  4  3 5.0  99659486    94  
+ 6  5  3 5.0  99659486    94  
+ 6  5  3 4.0  99659539    94  
+ 6  4  1 4.0  99659551    94  
+ 6  5  3 6.0  99660222    94  
+ 6  5  1 5.0  99660266    94  
+#  Commented out by Kenny Gilmore 12/18/25.  The first column is the principal quantum number (n) cannot be zero.  An Assert is thrown
+# inside Iso_Init_energies() method.
+# -1 -1 -1 -1.0 102404647.0  13.0
+#
+# 
+# Bibliography:
+# -------------
+# PUB     Refcode: L19700c211 on NIST
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=19700&comment_code=c211&element=Ga&spectr_charge=30&ref=19700&type=E
+# PUBCON    Title: Energy Levels and Transition Rates for Helium-like Ions with Z = 10–36
+# PUBCON  Authors: R. Si and X. L. Guo and K. Wang and S. Li and J. Yan and C. Y. Chen and T. Brage and Y. M. Zou
+# PUBCON Citation: Astron. Astrophys. 592, p. A141 (2016)
+# PUBCON      DOI: https://doi.org/10.1051/0004-6361/201628656
+# PUBCON  Comment: Derivation of excitation energies from the transition data reported by Si et al. 2016 involved two steps. First, four adjusted values were calculated for each 1snl $^{1,3}$L$_{J}$ levels (n = 3–6, l = d, f, g, h) by addding the separations of these levels from the corresponding 1snp $^{1,3}$P°$_{0,1,2}$ levels (from Si et al.) were added to the reference values of those lower levels taken from Yerokhin & Surzhykov 2019 . Then these four adjusted values were averaged, the straight arithmetic mean providing the final adjusted level value and the root-mean-square deviation from the mean providing an estimate of uncertainty. For the 1s3d levels, thus derived adjusted values of Si et al. are in good agreement with the data derived in a similar way from the unified-theory calculation of Drake 1956 L. This adjustment was made by A. Kramida (unpublished, 2023).
+# 
+# PUB     Refcode: L21139 on NIST
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=21139&comment_code=&element=Ga&spectr_charge=30&ref=21139&type=E
+# PUBCON    Title: Theoretical Energy Levels of 1sns and 1snp States of Helium-Like Ions
+# PUBCON  Authors: V. A. Yerokhin and A. Surzhykov
+# PUBCON Citation: J. Phys. Chem. Ref. Data 48, 033104 (2019)
+# PUBCON      DOI: https://doi.org/10.1063/1.5121413
+# 
+# PUB     Refcode: L22382c208 on NIST
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=22382&comment_code=c208&element=Ga&spectr_charge=30&ref=22382&type=E
+# PUBCON    Title: Calculated Transition Frequencies for Helium-like Ions
+# PUBCON  Authors: G. W. F. Drake
+# PUBCON Citation: University of Windsor Preprint, 37 pp. (Windsor, Ontario, Canada, 1985)
+# PUBCON  Comment: Derivation of excitation energies from the theoretical ionization energies calculated by Drake 1985 involved three steps. First, Drake's values have been scaled to the current values of the fundamental constants (see Tiesinga et al. 2021 (full reference: L22677)) and atomic masses (see Wang et al. 2021 ). Then these adjusted values of ionization energies were subtracted from the ground-state ionization energy calculated by Yerokhin & Surzhykov 2019 . Finally, excitation energies of the 1s3d configuration were determined as a straight mean of four values obtained by adding Drake's adjusted 1s3p $^{1,3}$P°$_{0,1,2}$ – 1s3d $^{S}$D$_{J}$ energy intervals to the reference values of the corresponding $^{1,3}$P°$_{0,1,2}$ levels from Yerokhin & Surzhykov 2019 . The root-mean-square deviation of the four values from the mean, combined in quadrature with the average uncertainty of the reference $^{1,3}$P°$_{0,1,2}$ levels, provided a rough estimate of the uncertainies of thus derived 1s3d $^{S}$D$_{J}$ levels. This adjustment was made by A. Kramida (unpublished, 2023). These adjusted values were found to be in good agreement with the values derived in a similar procedure from the many-body perturbation theory calculation of Si et al. 2016 for nuclear charges Z = 10–36.
+# 
+# PUB     Refcode: u50 on NIST
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=&comment_code=u50&element=Ga&spectr_charge=30&ref=&type=E
+# PUBCON     Link: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=18395&element=Ga&spectr_charge=30&comment_code=
+# PUBCON  Comment: The excitation energy was determined by fitting the extended Ritz quantum-defect expansion formula (Eq. (1a) of Kramida 2013 ) to the theoretical energies of the same 1snl $^{S}$L$_{J}$ series listed here (A. Kramida 2023, unpublished).

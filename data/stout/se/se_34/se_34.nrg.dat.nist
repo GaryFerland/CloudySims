@@ -1,0 +1,55 @@
+20190102 # magic number
+# Give level energies in cm^-1 for each ion.
+# Each line gives n, l, S, J, energy, energy uncertainty.
+# The last entry for each ion is the ionization potential.
+# It is marked with negative quantum numbers. The ionization
+# potential MUST be the last entry for a given element!
+#
+# NIST data for n<=5 were downloaded using ADM.
+#
+ 1  0  2 0.5         0    10   
+ 2  1  2 0.5  96446748.1  10.1 
+ 2  0  2 0.5  96458165    10   
+ 2  1  2 1.5  96955400.0  10.2 
+ 3  1  2 0.5 114472860    50   
+ 3  0  2 0.5 114476290    60   
+ 3  2  2 1.5 114623455.3   1.0 
+ 3  1  2 1.5 114623733    24   
+ 3  2  2 2.5 114672290.3   1.0 
+ 4  1  2 0.5 120761103    20   
+ 4  0  2 0.5 120762555    20   
+ 4  2  2 1.5 120824543.1   1.0 
+ 4  1  2 1.5 120824663    12   
+ 4  3  2 2.5 120845135.3   0.3 
+ 4  2  2 2.5 120845172.1   1.0 
+ 4  3  2 3.5 120855376.7   0.3 
+ 5  1  2 0.5 123662773    10   
+ 5  0  2 0.5 123663518    10   
+ 5  2  2 1.5 123695208.4   0.6 
+ 5  1  2 1.5 123695269     7   
+ 5  3  2 2.5 123705753.0   0.3 
+ 5  2  2 2.5 123705771.8   0.6 
+ 5  4  2 3.5 123710990.75  0.06
+ 5  3  2 3.5 123711000.5   0.3 
+ 5  4  2 4.5 123714130.28  0.06
+#  Commented out by Kenny Gilmore 12/18/25.  The first column is the principal quantum number (n) cannot be zero.  An Assert is thrown
+# inside Iso_Init_energies() method.
+# -1 -1 -1 -1.0 128791473.0  10.0
+#
+# 
+# Bibliography:
+# -------------
+# PUB     Refcode: L19200 on NIST
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=19200&comment_code=&element=Se&spectr_charge=34&ref=19200&type=E
+# PUBCON    Title: Lamb Shift of n = 1 and n = 2 States of Hydrogen-like Atoms, 1 ≤ Z ≤ 110
+# PUBCON  Authors: V. A. Yerokhin and V. M. Shabaev
+# PUBCON Citation: J. Phys. Chem. Ref. Data 44, 033103 (2015)
+# PUBCON      DOI: https://doi.org/10.1063/1.4927487
+# 
+# PUB     Refcode: L3620c107 on NIST
+# PUBCON      URL: https://physics.nist.gov/cgi-bin/ASBib1/get_ASBib_ref.cgi?db=el&db_id=3620&comment_code=c107&element=Se&spectr_charge=34&ref=3620&type=E
+# PUBCON    Title: Energy Levels of One-Electron Atoms
+# PUBCON  Authors: G. W. Erickson
+# PUBCON Citation: J. Phys. Chem. Ref. Data 6, 831–869 (1977)
+# PUBCON      DOI: https://doi.org/10.1063/1.555557
+# PUBCON  Comment: Erickson's theoretical values of ionization energies were scaled to the CODATA-2018 values of the fundamental constants and then subtracted from the ground-state ionization energy given by Yerokhin & Shabaev 2015 . Additional corrections were applied to the nS levels, as described by Kramida et al. 2008.
