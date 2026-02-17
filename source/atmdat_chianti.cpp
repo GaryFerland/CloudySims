@@ -157,6 +157,49 @@ inline void processIndices(long ipLoInFile, long ipHiInFile, bool lgIsRegular, c
 	}
 }
 
+
+/**
+ * @brief Extract numeric block index from a STOUT block filename.
+ *
+ * This function searches the filename for the substring "_blk_"
+ * and extracts the integer that immediately follows it.
+ *
+ * Example:
+ *     "al_8_blk_20.tp"  →  returns 20
+ *
+ * The extracted number is used to:
+ *     - Sort block files numerically
+ *     - Determine baseline block (lowest N)
+ *     - Control override priority (higher N overrides lower N)
+ *
+ * If the filename does not contain "_blk_" or no digits follow it,
+ * the program aborts with an error.
+ */
+static long ExtractBlkIndexOrDie( const string& fn )
+{
+	size_t p = fn.rfind("_blk_");
+	if( p == string::npos )
+	{
+		fprintf(ioQQQ, " PROBLEM: Missing _blk_ in STOUT block filename: %s\n", fn.c_str());
+		cdEXIT(EXIT_FAILURE);
+	}
+
+	p += 5; // after "_blk_"
+	if( p >= fn.size() || !isdigit(fn[p]) )
+	{
+		fprintf(ioQQQ, " PROBLEM: No digits after _blk_ in STOUT block filename: %s\n", fn.c_str());
+		cdEXIT(EXIT_FAILURE);
+	}
+
+	long n = 0;
+	while( p < fn.size() && isdigit(fn[p]) )
+	{
+		n = 10*n + (fn[p] - '0');
+		++p;
+	}
+	return n;
+}
+
 /**
  * @brief Reads and processes STOUT atomic/molecular data files for a given species.
  *
@@ -229,7 +272,6 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	vector<string> collFiles;
 	string collPattern = basedir + shortName + ".*\\.coll";
 	getFileList( collFiles, collPattern );
-
 	if( collFiles.empty() )
 	{
 		fprintf( ioQQQ,
@@ -237,9 +279,37 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 				collPattern.c_str() );
 		cdEXIT( EXIT_FAILURE );
 	}
+	// Split coll files by magic number.
+	// Old magic files are legacy single-file format and do NOT require _blk_.
+	// New magic files must be block files and will be ordered by blk index.
+	vector<string> collFilesOld;
+	vector<string> collFilesNew;
 
-	// Make sure we process blk_10, blk_20, ... in ascending order
-	sort( collFiles.begin(), collFiles.end() );
+	for( const auto& f : collFiles )
+	{
+		DataParser dp;
+		dp.open( basedir + f, ES_STARS_ONLY );
+
+		long yr, mo, dy;
+		dp.getline();
+		dp.getToken( yr );
+		dp.getToken( mo );
+		dp.getToken( dy );
+
+		if( yr == iyr_old && mo == imo_old && dy == idy_old )
+		{
+			collFilesOld.push_back( f );
+		}
+		else if( yr == iyr_new && mo == imo_new && dy == idy_new )
+		{
+			collFilesNew.push_back( f );
+		}
+		else
+		{
+			fprintf(ioQQQ, " PROBLEM: Invalid magic number in STOUT .coll file %s\n", (basedir+f).c_str() );
+			cdEXIT(EXIT_FAILURE);
+		}
+	}
 
 	DataParser d;
 
@@ -471,101 +541,194 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	}
 
 	/******************************************************
-	 ************* Transition Probability File ************
-	 ******************************************************/
-	d.open( chTPFilename, ES_STARS_ONLY );
+ 	************* Transition Probability File ************
+ 	******************************************************/
 
-	/* first line is a version number - now confirm that it is valid */
-	d.getline();
-	d.getToken(myr);
-	d.getToken(mmo);
-	d.getToken(mdy);
+	/*
+	* NEW vs OLD STOUT .tp handling:
+	*
+	*   - Old STOUT (magic 17 09 05):
+	*       * File is legacy: "<shortName>.tp" (no _blk_)
+	*       * Each data row starts with dataType:  A|G|S
+	*       * End-of-data MUST be the "***" sentinel (exactly as before)
+	*
+	*   - New STOUT (magic 25 10 15):
+	*       * File(s) may be split as "<shortName>_blk_<N>.tp"
+	*       * After magic line there is a global dataType line: A|G|S
+	*       * Each data row is: ipLo ipHi value [transType]
+	*       * End-of-data can be "***" OR an empty line
+	*       * Multiple blocks are applied in blk order; later blocks OVERRIDE earlier ones
+	*/
 
-	bool lgTPold = (myr == iyr_old && mmo == imo_old && mdy == idy_old);
-	bool lgTPnew = (myr == iyr_new && mmo == imo_new && mdy == idy_new);
+	// ---- discover tp candidates (legacy and/or blk) ----
+	vector<string> tpFiles;
+	string tpPattern = basedir + shortName + ".*\\.tp";
+	getFileList( tpFiles, tpPattern );
 
-	if( !lgTPold && !lgTPnew )
-    	d.errorAbort("invalid magic number in STOUT .tp file");
+	vector<string> tpFilesNew; // contains _blk_
+	vector<string> tpFilesOld; // legacy (no _blk_)
+	for( const auto& fn : tpFiles )
+	{
+		if( fn.find("_blk_") != string::npos )
+			tpFilesNew.push_back(fn);
+		else
+			tpFilesOld.push_back(fn);
+	}
 
-	/* lgLineStrengthTT functions as a checklist for line strengths
-	 * from the various transition types (E1,M2, etc.)
-	 * When a line strength is added to the total Aul from a specific
-	 * transition type, the corresponding value (based on ipLo, ipHi, and transition type)
-	 * is set to true.
-	 * lgLineStrengthTT[ipLo][ipHi][k]:
-	 * k = 0 => E1
-	 * k = 1 => E2
-	 * k = 2 => E3
-	 * k = 3 => M1
-	 * k = 4 => M2
-	 * k = 5 => M3
-	 */
+	vector<string> tpToProcess;
+	bool lgUsingNewTpBlocks = false;
+
+	if( !tpFilesNew.empty() )
+	{
+		// New format uses blk files (only for new magic)
+		tpToProcess = tpFilesNew;
+		lgUsingNewTpBlocks = true;
+	}
+	else
+	{
+		// Legacy mode (old format)
+		tpToProcess = tpFilesOld;
+		lgUsingNewTpBlocks = false;
+	}
+
+	if( tpToProcess.empty() )
+	{
+		fprintf( ioQQQ,
+			" PROBLEM: No STOUT .tp file found matching pattern '%s'\n",
+			tpPattern.c_str() );
+		cdEXIT( EXIT_FAILURE );
+	}
+
+	// In legacy mode, prefer exact "<shortName>.tp" if multiple matches exist
+	if( !lgUsingNewTpBlocks && tpToProcess.size() > 1 )
+	{
+		string preferred = shortName + ".tp";
+		auto it = find( tpToProcess.begin(), tpToProcess.end(), preferred );
+		if( it != tpToProcess.end() )
+		{
+			vector<string> tmp;
+			tmp.push_back(*it);
+			tpToProcess.swap(tmp);
+		}
+		else
+		{
+			fprintf( ioQQQ,
+				" PROBLEM: Multiple legacy STOUT .tp files found for '%s' but none matches '%s'\n",
+				shortName.c_str(), preferred.c_str() );
+			cdEXIT( EXIT_FAILURE );
+		}
+	}
+
+	// If using blocks, sort by blk index (lowest blk = baseline)
+	vector<long> tpBlk;
+	long baselineTpBlk = LONG_MAX;
+
+	if( lgUsingNewTpBlocks )
+	{
+		tpBlk.assign(tpToProcess.size(), LONG_MAX);
+		for( size_t i=0; i<tpToProcess.size(); ++i )
+			tpBlk[i] = ExtractBlkIndexOrDie(tpToProcess[i]); // safe: only called on *_blk_*
+
+		vector<size_t> order(tpToProcess.size());
+		for( size_t i=0; i<order.size(); ++i )
+			order[i] = i;
+
+		sort( order.begin(), order.end(),
+			[&](size_t a, size_t b){ return tpBlk[a] < tpBlk[b]; } );
+
+		vector<string> sorted;
+		vector<long>   sortedBlk;
+		sorted.reserve(tpToProcess.size());
+		sortedBlk.reserve(tpToProcess.size());
+
+		for( size_t i=0; i<order.size(); ++i )
+		{
+			sorted.push_back( tpToProcess[order[i]] );
+			sortedBlk.push_back( tpBlk[order[i]] );
+		}
+		tpToProcess.swap(sorted);
+		tpBlk.swap(sortedBlk);
+
+		baselineTpBlk = tpBlk.front();
+	}
+
+	// ---- line-strength bookkeeping (shared across all tp blocks/files) ----
 	static const int intNumCols = 6;
 	multi_arr<bool,3,C_TYPE> lgLineStrengthTT(nMolLevs, nMolLevs, intNumCols);
 	lgLineStrengthTT = false;
-	if( lgTPold )
+
+	// ---- NEW: track which transitions have been "reset" for overrides (per file/block pass) ----
+	multi_arr<bool,2,C_TYPE> lgResetThisTP(nMolLevs, nMolLevs);
+	lgResetThisTP = false;
+
+	// ---- helper to apply one radiative datum to a transition ----
+	auto ApplyTPDatum =
+	[&]( const string& dataType,
+		long ipLoInFile, long ipHiInFile,
+		double tpData,
+		const string& transTypeRaw,
+		const bool lgOverrideExisting )
 	{
-		if( DEBUGSTATE )
+		long ipLo, ipHi;
+		processIndices(ipLoInFile, ipHiInFile, lgIsRegular, indexold2new, ipLo, ipHi);
+
+		// unmapped indices (irregular level files) -> ignore silently
+		if( ipLo == LONG_MAX || ipHi == LONG_MAX )
+			return;
+
+		if( ipHi >= nMolLevs )
+			return;
+
+		if( tpData < 0. )
+			d.errorAbort( "transition probability data must be >= 0" );
+
+		// apply aul threshold only if input is A-values
+		if( dataType == "A" && tpData < atmdat.aulThreshold )
+			return;
+
+		string transType = transTypeRaw;
+		if( transType.empty() )
+			transType = "NS"; // not set, treat as E1 (NIST behavior)
+		if( transType == "UT" )
+			transType = "M1+E2";
+
+		if( dataType == "S" )
 		{
-			fprintf(ioQQQ,"\nStout Species: %s\n",dBaseSpecies[intNS].chLabel);
-			fprintf(ioQQQ,"Radiative Data File: %s\n",chTPFilename.c_str());
-			fprintf(ioQQQ,"Species|File Index (Lo:Hi)|Cloudy Index (Lo:Hi)|Data Type (A,G,S)|Data\n");
+			if( transType == "NS" )
+				d.errorAbort( "line strength specified, but no transition type was found" );
+			if( transType.length() != 2 )
+				d.errorAbort( "invalid transition type" );
 		}
 
-		//Read the remaining lines of the transition probability file
-		lgSentinelReached = false;
-		while( d.getline() )
+		TransitionList::iterator tr = dBaseTrans[intNS].begin() + ipdBaseTrans[intNS][ipHi][ipLo];
+
+		// If this is an override block and this transition already exists, reset it ONCE for this block
+		if( lgOverrideExisting && tr->hasEmis() && !lgResetThisTP[ipLo][ipHi] )
 		{
-			if( d.lgEODMarker() )
-			{
-				lgSentinelReached = true;
-				break;
-			}
+			// Reset totals so later blocks truly override earlier ones
+			tr->Emis().Aul() = 0.;
+			tr->Emis().gf()  = 0.;
 
-			string dataType;
-			d.getToken( dataType );
+			// Also clear the line-strength checklist for this transition,
+			// otherwise you will trip the "already has an Aul value set" guard.
+			for( int k=0; k<intNumCols; ++k )
+				lgLineStrengthTT[ipLo][ipHi][k] = false;
 
-			if( dataType != "A" && dataType != "G" && dataType != "S" )
-				d.errorAbort( "invalid data type" );
+			lgResetThisTP[ipLo][ipHi] = true;
+		}
 
-			long ipLoInFile, ipHiInFile, ipLo, ipHi;
-			d.getToken( ipLoInFile );
-			d.getToken( ipHiInFile );
-			processIndices(ipLoInFile, ipHiInFile, lgIsRegular, indexold2new, ipLo, ipHi);
+		// ensure transition is in stack and initialize totals
+		if( !tr->hasEmis() )
+		{
+			tr->AddLine2Stack();
+			tr->Emis().Aul() = 0.;
+			tr->Emis().gf()  = 0.;
+		}
 
-			if( ipHi >= nMolLevs )
-				continue; // we've read all levels we are using;
-
-			double tpData;
-			d.getToken( tpData );
-			if( tpData < 0. )
-				d.errorAbort( "transition probability data must be >= 0" );
-
-			if( tpData < atmdat.aulThreshold && dataType == "A" )
-			{
-				// skip these lines
-				continue;
-			}
-
-			string transType;
-			if( !d.getTokenOptional( transType ) )
-			transType = "NS"; // not set, will be treated as E1
-		// sometimes NIST sets the transition type to UT (undefined transition type)
-		// this is used for forbidden transitions where they cannot decide if they
-		// are M1 or E2, so we treat them here as if they are both...
-			if( transType == "UT" )
-				transType = "M1+E2";
-			if( dataType == "S" )
-			{
-				if( transType == "NS" )
-					d.errorAbort( "line strength specified, but no transition type was found" );
-				if( transType.length() != 2 )
-					d.errorAbort( "invalid transition type" );
-			}
-
+		// transition type checklist (prevents double counting within the ACTIVE definition)
+		{
 			size_t len = transType.length();
 			size_t p = 0;
-			// correctly handle transition types like "M1+E2"
 			while( p < len )
 			{
 				string tt = transType.substr(p,2);
@@ -575,228 +738,300 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 					d.errorAbort( "invalid transition type" );
 				if( lgLineStrengthTT[ipLo][ipHi][ttCode] )
 					d.errorAbort( "this transition already has an Aul value set" );
-				lgLineStrengthTT[ipLo][ipHi][ttCode]= true;
+				lgLineStrengthTT[ipLo][ipHi][ttCode] = true;
 				p += 3;
 			}
-			d.checkEOL();
+		}
 
-			if( DEBUGSTATE )
-			{
-				fprintf(ioQQQ,"<%s>\t%li:%li\t%li:%li\t%s\t%.2e\n",
-					dBaseSpecies[intNS].chLabel,ipLoInFile,ipHiInFile,
-					ipLo+1,ipHi+1,dataType.c_str(),tpData);
-			}
-
-			TransitionList::iterator tr = dBaseTrans[intNS].begin()+ipdBaseTrans[intNS][ipHi][ipLo];
-
-			/* If we don't already have the transition in the stack, add it and
-			* zero out Aul */
-			if( !tr->hasEmis() )
-			{
-				tr->AddLine2Stack();
-				tr->Emis().Aul() = 0.;
-				tr->Emis().gf() = 0.;
-			}
-
-			//This means last data column has Aul.
+		if( tr->EnergyWN() > ENERGY_MIN_WN )
+		{
 			if( dataType == "A" )
 			{
-				if( tr->EnergyWN() > ENERGY_MIN_WN )
-				{
-					tr->Emis().Aul() += tpData;
-					// use updated total Aul to get gf
-					tr->Emis().gf() = (realnum)GetGF(tr->Emis().Aul(), tr->EnergyWN(), tr->Hi()->g());
-				}
+				tr->Emis().Aul() += tpData;
+				tr->Emis().gf() = (realnum)GetGF(tr->Emis().Aul(), tr->EnergyWN(), tr->Hi()->g());
 			}
-			//This means last data column has gf.
 			else if( dataType == "G" )
 			{
-				if( tr->EnergyWN() > ENERGY_MIN_WN )
-				{
-					tr->Emis().gf() += tpData;
-					// use updated total gf to get Aul
-					tr->Emis().Aul() = (realnum)eina(tr->Emis().gf(), tr->EnergyWN(), tr->Hi()->g());
-				}
+				tr->Emis().gf() += tpData;
+				tr->Emis().Aul() = (realnum)eina(tr->Emis().gf(), tr->EnergyWN(), tr->Hi()->g());
 			}
-			//This means last data column has line strengths.
-			else if( dataType == "S" )
+			else // "S"
 			{
-				if( tr->EnergyWN() > ENERGY_MIN_WN )
-				{
-					tr->Emis().Aul() += S2Aul(tpData, tr->WLangVac(), tr->Hi()->g(), transType);
-					tr->Emis().gf() = (realnum)GetGF(tr->Emis().Aul(), tr->EnergyWN(), tr->Hi()->g());
-				}
+				tr->Emis().Aul() += S2Aul(tpData, tr->WLangVac(), tr->Hi()->g(), transType);
+				tr->Emis().gf() = (realnum)GetGF(tr->Emis().Aul(), tr->EnergyWN(), tr->Hi()->g());
 			}
-
-			tr->setComment( db_comment_tran_levels( dBaseStatesOrg[ipLo].config, dBaseStatesOrg[ipHi].config ) );
 		}
 
-		if( !lgSentinelReached )
-		{
-			fprintf( ioQQQ, " PROBLEM End of data sentinel was not reached in file %s\n", chTPFilename.c_str() );
-			fprintf( ioQQQ, " Check that stars (*****) appear after the last line of data"
-				" and start in the first column of that line.");
-			cdEXIT(EXIT_FAILURE);
-		}
-    }
-    	// ------------------------------------------------------------------
-	// NEW FORMAT BRANCH: magic = iyr_new/imo_new/idy_new, global dataType
-	// ------------------------------------------------------------------
-	else
+		tr->setComment( db_comment_tran_levels(
+			dBaseStatesOrg[ipLo].config, dBaseStatesOrg[ipHi].config ) );
+	};
+
+	// ---- now actually read each tp file ----
+	for( size_t iTP=0; iTP<tpToProcess.size(); ++iTP )
 	{
-		// read global data type, e.g. "A"
+		// Reset per-block override bookkeeping (so each block can reset each transition once)
+		lgResetThisTP = false;
+
+		const string thisTP = basedir + tpToProcess[iTP];
+
+		// Decide override: only meaningful for NEW block mode, and only after baseline block
+		const bool lgOverrideExisting =
+			( lgUsingNewTpBlocks && baselineTpBlk != LONG_MAX && tpBlk.size() == tpToProcess.size() &&
+			tpBlk[iTP] > baselineTpBlk );
+
+		d.open( thisTP, ES_STARS_ONLY );
+
+		// read and validate magic
 		d.getline();
-		string dataType;
-		d.getToken( dataType );
-		if( dataType != "A" && dataType != "G" && dataType != "S" )
-			d.errorAbort( "invalid global data type in STOUT .tp file" );
+		d.getToken(myr);
+		d.getToken(mmo);
+		d.getToken(mdy);
+
+		bool lgTPold = (myr == iyr_old && mmo == imo_old && mdy == idy_old);
+		bool lgTPnew = (myr == iyr_new && mmo == imo_new && mdy == idy_new);
+
+		if( !lgTPold && !lgTPnew )
+			d.errorAbort("invalid magic number in STOUT .tp file");
 
 		if( DEBUGSTATE )
 		{
-			fprintf(ioQQQ,"\nStout Species: %s\n",dBaseSpecies[intNS].chLabel);
-			fprintf(ioQQQ,"Radiative Data File: %s\n",chTPFilename.c_str());
-			fprintf(ioQQQ,"Species|File Index (Lo:Hi)|Cloudy Index (Lo:Hi)|Data Type (A,G,S)|Data\n");
+			fprintf(ioQQQ,"\nStout Species: %s\n", dBaseSpecies[intNS].chLabel);
+			fprintf(ioQQQ,"Radiative Data File: %s\n", thisTP.c_str());
 		}
 
-		//Read the remaining lines of the transition probability file
-		lgSentinelReached = false;
-		while( d.getline() )
+		// ==========================================================
+		// OLD FORMAT (17 09 05) -- KEEP EXACTLY AS BEFORE
+		// ==========================================================
+		if( lgTPold )
 		{
-			if( d.lgEODMarker() )
+			if( DEBUGSTATE )
+				fprintf(ioQQQ,"Species|File Index (Lo:Hi)|Cloudy Index (Lo:Hi)|Data Type (A,G,S)|Data\n");
+
+			lgSentinelReached = false;
+			while( d.getline() )
 			{
-				lgSentinelReached = true;
-				break;
+				if( d.lgEODMarker() )
+				{
+					lgSentinelReached = true;
+					break;
+				}
+
+				string dataType;
+				d.getToken( dataType );
+
+				if( dataType != "A" && dataType != "G" && dataType != "S" )
+					d.errorAbort( "invalid data type" );
+
+				long ipLoInFile, ipHiInFile;
+				d.getToken( ipLoInFile );
+				d.getToken( ipHiInFile );
+
+				double tpData;
+				d.getToken( tpData );
+
+				string transType;
+				if( !d.getTokenOptional( transType ) )
+					transType = "NS";
+
+				d.checkEOL(); // legacy strictness stays
+
+				ApplyTPDatum( dataType, ipLoInFile, ipHiInFile, tpData, transType, /*override*/false );
 			}
 
-			long ipLoInFile, ipHiInFile, ipLo, ipHi;
-			d.getToken( ipLoInFile );
-			d.getToken( ipHiInFile );
-			processIndices( ipLoInFile, ipHiInFile, lgIsRegular, indexold2new, ipLo, ipHi );
-
-			if( ipHi >= nMolLevs )
-				break;
-
-			double tpData;
-			d.getToken( tpData );
-			if( tpData < 0. )
-				d.errorAbort( "transition probability data must be >= 0" );
-
-			if( tpData < atmdat.aulThreshold && dataType == "A" )
+			if( !lgSentinelReached )
 			{
-				// skip these lines
-				continue;
+				fprintf( ioQQQ, " PROBLEM End of data sentinel was not reached in file %s\n", thisTP.c_str() );
+				fprintf( ioQQQ, " Check that stars (*****) appear after the last line of data"
+					" and start in the first column of that line.");
+				cdEXIT(EXIT_FAILURE);
 			}
-
-			string transType;
-			if( !d.getTokenOptional( transType ) )
-				transType = "NS"; // not set, will be treated as E1
-			// sometimes NIST sets the transition type to UT (undefined transition type)
-			// this is used for forbidden transitions where they cannot decide if they
-			// are M1 or E2, so we treat them here as if they are both...
-			if( transType == "UT" )
-				transType = "M1+E2";
-			if( dataType == "S" )
-			{
-				if( transType == "NS" )
-					d.errorAbort( "line strength specified, but no transition type was found" );
-				if( transType.length() != 2 )
-					d.errorAbort( "invalid transition type" );
-			}
-
-			size_t len = transType.length();
-			size_t p = 0;
-			// correctly handle transition types like "M1+E2"
-			while( p < len )
-			{
-				string tt = transType.substr(p,2);
-				int ttCode = getCode(tt);
-				char c = ( p+2 >= len ) ? '+' : transType[p+2];
-				if( ttCode < 0 || c != '+' )
-					d.errorAbort( "invalid transition type" );
-				if( lgLineStrengthTT[ipLo][ipHi][ttCode] )
-					d.errorAbort( "this transition already has an Aul value set" );
-				lgLineStrengthTT[ipLo][ipHi][ttCode]= true;
-				p += 3;
-			}
-
+		}
+		// ==========================================================
+		// NEW FORMAT (25 10 15)
+		// ==========================================================
+		else
+		{
+			// line after magic contains global data type: A|G|S
+			d.getline();
+			string globalType;
+			d.getToken( globalType );
+			if( globalType != "A" && globalType != "G" && globalType != "S" )
+				d.errorAbort( "invalid global data type in STOUT .tp file" );
 			d.checkEOL();
 
-			if( DEBUGSTATE )
+			lgSentinelReached = false;
+			while( d.getline() )
 			{
-				fprintf(ioQQQ,"<%s>\t%li:%li\t%li:%li\t%s\t%.2e\n",
-					dBaseSpecies[intNS].chLabel,ipLoInFile,ipHiInFile,
-					ipLo+1,ipHi+1,dataType.c_str(),tpData);
-			}
-
-			TransitionList::iterator tr =
-				dBaseTrans[intNS].begin()+ipdBaseTrans[intNS][ipHi][ipLo];
-
-			/* If we don't already have the transition in the stack, add it and
-			 * zero out Aul */
-			if( !tr->hasEmis() )
-			{
-				tr->AddLine2Stack();
-				tr->Emis().Aul() = 0.;
-				tr->Emis().gf() = 0.;
-			}
-
-			//This means last data column has Aul.
-			if( dataType == "A" )
-			{
-				if( tr->EnergyWN() > ENERGY_MIN_WN )
+				if( d.lgEODMarker() )
 				{
-					tr->Emis().Aul() += tpData;
-					// use updated total Aul to get gf
-					tr->Emis().gf() = (realnum)GetGF(tr->Emis().Aul(), tr->EnergyWN(), tr->Hi()->g());
+					lgSentinelReached = true;
+					break;
 				}
-			}
-			//This means last data column has gf.
-			else if( dataType == "G" )
-			{
-				if( tr->EnergyWN() > ENERGY_MIN_WN )
+
+				// allow blank line as end-of-data in new format
+				string first;
+				if( !d.getTokenOptional(first) )
 				{
-					tr->Emis().gf() += tpData;
-					// use updated total gf to get Aul
-					tr->Emis().Aul() = (realnum)eina(tr->Emis().gf(), tr->EnergyWN(), tr->Hi()->g());
+					lgSentinelReached = true;
+					break;
 				}
-			}
-			//This means last data column has line strengths.
-			else if( dataType == "S" )
-			{
-				if( tr->EnergyWN() > ENERGY_MIN_WN )
-				{
-					tr->Emis().Aul() += S2Aul(tpData, tr->WLangVac(), tr->Hi()->g(), transType);
-					tr->Emis().gf() = (realnum)GetGF(tr->Emis().Aul(), tr->EnergyWN(), tr->Hi()->g());
-				}
+
+				long ipLoInFile = atol(first.c_str());
+				long ipHiInFile;
+				d.getToken( ipHiInFile );
+
+				double tpData;
+				d.getToken( tpData );
+
+				string transType;
+				if( !d.getTokenOptional( transType ) )
+					transType = "NS";
+
+				d.checkEOL();
+
+				ApplyTPDatum( globalType, ipLoInFile, ipHiInFile, tpData, transType, lgOverrideExisting );
 			}
 
-			tr->setComment( db_comment_tran_levels(
-				dBaseStatesOrg[ipLo].config, dBaseStatesOrg[ipHi].config ) );
+			if( !lgSentinelReached )
+			{
+				fprintf( ioQQQ, " PROBLEM End of data sentinel was not reached in file %s\n", thisTP.c_str() );
+				fprintf( ioQQQ, " New-format STOUT .tp expects stars (*****) or an empty line at end-of-data.\n" );
+				cdEXIT(EXIT_FAILURE);
+			}
 		}
-#if 0
-		if( !lgSentinelReached )
-		{
-			fprintf( ioQQQ, " PROBLEM End of data sentinel was not reached in file %s\n", chTPFilename.c_str() );
-			fprintf( ioQQQ, " Check that stars (*****) appear after the last line of data"
-				 " and start in the first column of that line.");
-			cdEXIT(EXIT_FAILURE);
-		}
-#endif
-	}
+	} // end loop over tpToProcess
+
+
+
+
 	/******************************************************
 	 ************* Collision Data File ********************
-	 ******************************************************/
+	******************************************************/
 	int numpoints = 0;
 	vector<double> temps;
 	long ipCollider = -1;
 
-	// Loop over ALL .coll files (e.g. *_blk_10.coll, *_blk_20.coll, ...)
-	for( size_t iFile=0; iFile < collFiles.size(); ++iFile )
+	/****** Could add ability to count number of temperature changes, electron CS, and proton CS ****/
+	/* Allocate space for collision strengths ONCE per species (before reading any blocks/files) */
+	StoutCollData[intNS].alloc(nMolLevs, nMolLevs, ipNCOLLIDER);
+	for( long ipHi=0; ipHi<nMolLevs; ipHi++ )
 	{
-		string chCOLLFilename = basedir + collFiles[iFile];
+		for( long ipLo=0; ipLo<nMolLevs; ipLo++ )
+		{
+			for( long k=0; k<ipNCOLLIDER; k++ )
+			{
+				/* initialize all spline variables */
+				StoutCollData[intNS].junk(ipHi, ipLo, k);
+			}
+		}
+	}
 
-		// blk_10 is baseline, later blocks override
-		bool lgOverrideExisting = ( chCOLLFilename.find("_blk_10") == string::npos );
+	/*
+	* Decide which collision set to process:
+	*   - New-magic (25 10 15): supports block files named *_blk_<N>.coll
+	*   - Old-magic (17 09 05): legacy single-file format like al_1.coll (NO _blk_)
+	*
+	* IMPORTANT:
+	*   We must NOT require _blk_ for legacy files.
+	*   Numeric blk ordering and override behavior only apply to block files.
+	*/
+	vector<string> collToProcess;
+	bool lgUsingNewCollBlocks = false;
+
+	if( !collFilesNew.empty() )
+	{
+		/* We have at least one *_blk_<N>.coll candidate -> treat as new block mode */
+		collToProcess = collFilesNew;
+		lgUsingNewCollBlocks = true;
+	}
+	else
+	{
+		/* No block files -> legacy mode */
+		collToProcess = collFilesOld;
+		lgUsingNewCollBlocks = false;
+	}
+
+	/*
+	* In legacy mode we should not “merge” multiple files silently.
+	* If multiple legacy candidates exist, it likely indicates a naming problem.
+	* You can relax this if you truly want to read multiple old-format files.
+	*/
+	if( !lgUsingNewCollBlocks && collToProcess.size() > 1 )
+	{
+		/* Prefer the exact "<shortName>.coll" if present, otherwise abort */
+		string preferred = shortName + ".coll";
+		auto it = find( collToProcess.begin(), collToProcess.end(), preferred );
+		if( it != collToProcess.end() )
+		{
+			collToProcess.clear();
+			collToProcess.push_back( preferred );
+		}
+		else
+		{
+			fprintf( ioQQQ,
+				" PROBLEM: Multiple legacy STOUT .coll files match pattern '%s' for species %s\n",
+				(basedir + shortName + ".*\\.coll").c_str(),
+				dBaseSpecies[intNS].chLabel );
+			fprintf( ioQQQ,
+				" None is a unique default (expected exactly one legacy file like '%s').\n",
+				preferred.c_str() );
+			cdEXIT(EXIT_FAILURE);
+		}
+	}
+
+	/*
+	* Build processing order:
+	*   - New block mode: sort by numeric blk index (ascending), baseline = lowest blk
+	*   - Legacy mode: just process the single file (or lexicographic order if you later allow >1)
+	*/
+	vector<size_t> collOrder(collToProcess.size());
+	for( size_t i=0; i<collOrder.size(); ++i )
+		collOrder[i] = i;
+
+	vector<long> collBlk; /* only used in block mode */
+	long baselineBlk = LONG_MIN;
+
+	if( lgUsingNewCollBlocks )
+	{
+		collBlk.assign( collToProcess.size(), LONG_MAX );
+		for( size_t i=0; i<collToProcess.size(); ++i )
+		{
+			collBlk[i] = ExtractBlkIndexOrDie( collToProcess[i] ); /* requires _blk_ */
+		}
+
+		sort( collOrder.begin(), collOrder.end(),
+			[&](size_t a, size_t b)
+			{
+				return collBlk[a] < collBlk[b];
+			});
+
+		baselineBlk = collBlk[ collOrder.front() ];
+	}
+	else
+	{
+		/* Legacy mode: lexicographic is fine (usually only 1 file anyway) */
+		sort( collOrder.begin(), collOrder.end(),
+			[&](size_t a, size_t b)
+			{
+				return collToProcess[a] < collToProcess[b];
+			});
+	}
+
+	/* Loop over selected .coll files */
+	for( size_t ii=0; ii < collOrder.size(); ++ii )
+	{
+		size_t iFile = collOrder[ii];
+
+		string chCOLLFilename = basedir + collToProcess[iFile];
+
+		/*
+		* Override semantics:
+		*   - Only in new block mode: higher blk overrides lower blk
+		*   - In legacy mode: never override (duplicates are errors as before)
+		*/
+		bool lgOverrideExisting = false;
+		if( lgUsingNewCollBlocks )
+			lgOverrideExisting = ( collBlk[iFile] > baselineBlk );
 
 		d.open( chCOLLFilename, ES_STARS_ONLY );
 
@@ -810,36 +1045,22 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		bool lgCOLLnew = (myr == iyr_new && mmo == imo_new && mdy == idy_new);
 
 		if( !lgCOLLold && !lgCOLLnew )
-		d.errorAbort("Invalid magic number in STOUT .coll file");
+			d.errorAbort("Invalid magic number in STOUT .coll file");
 
-		/****** Could add ability to count number of temperature changes, electron CS, and proton CS ****/
-		// Allocate space for collision strengths ONCE per species
-		StoutCollData[intNS].alloc(nMolLevs,nMolLevs,ipNCOLLIDER);
-		for( long ipHi=0; ipHi<nMolLevs; ipHi++ )
-		{
-			for( long ipLo=0; ipLo<nMolLevs; ipLo++ )
-			{
-				for( long k=0; k<ipNCOLLIDER; k++ )
-				{
-					/* initialize all spline variables */
-					StoutCollData[intNS].junk(ipHi,ipLo,k);
-				}
-			}
-		}
-
+		/* Reset per-file state */
 		numpoints = 0;
 		temps.clear();
 		ipCollider = -1;
 
 		if( DEBUGSTATE )
 		{
-			fprintf(ioQQQ,"\nStout Species: %s\n",dBaseSpecies[intNS].chLabel);
-			fprintf(ioQQQ,"Collision Data File: %s\n",chCOLLFilename.c_str());
+			fprintf(ioQQQ,"\nStout Species: %s\n", dBaseSpecies[intNS].chLabel);
+			fprintf(ioQQQ,"Collision Data File: %s\n", chCOLLFilename.c_str());
 			fprintf(ioQQQ,"Species|TEMP|Temperatures (K)\n");
 			fprintf(ioQQQ,"Species|Data Type (CS,RATE)|Collider|File Index (Lo:Hi)|Cloudy Index (Lo:Hi)|Data\n");
 		}
 
-		// ---------------- OLD COLLISION FORMAT ----------------
+		// ---------------- OLD COLLISION FORMAT (17 09 05) ----------------
 		if( lgCOLLold )
 		{
 			lgSentinelReached = false;
@@ -855,11 +1076,11 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 				string dataType;
 				d.getToken( dataType );
 
-				//This is a temperature line
+				// Temperature line
 				if( dataType == "TEMP" )
 				{
 					if( DEBUGSTATE )
-						fprintf(ioQQQ,"<%s>\tTEMP\t",dBaseSpecies[intNS].chLabel);
+						fprintf(ioQQQ,"<%s>\tTEMP\t", dBaseSpecies[intNS].chLabel);
 
 					temps.clear();
 					double data;
@@ -871,11 +1092,12 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 							d.errorAbort( "temperatures must be monotonically increasing" );
 						temps.emplace_back( data );
 						if( DEBUGSTATE )
-							fprintf(ioQQQ,"%.2e\t",data);
+							fprintf(ioQQQ,"%.2e\t", data);
 					}
 					if( DEBUGSTATE )
 						fprintf(ioQQQ,"\n");
-					numpoints = temps.size();
+
+					numpoints = (int)temps.size();
 					ASSERT( numpoints > 0 );
 				}
 				else if( dataType == "CS" || dataType == "RATE" )
@@ -903,8 +1125,8 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 					else if( colliderType == "H" )
 						ipCollider = ipATOM_H;
 					else
-						d.errorAbort( "invalid type of collider for RATE, I know about"
-								"ELECTRON PROTON H+ HE+2 HE+ H2ORTHO H2PARA H2 HE " );
+						d.errorAbort( "invalid type of collider for RATE, I know about "
+							"ELECTRON PROTON H+ HE+2 HE+ H2ORTHO H2PARA H2 HE H" );
 
 					if( !isRate && ipCollider != ipELECTRON )
 						d.errorAbort( "collision strengths are only allowed for electron colliders" );
@@ -923,26 +1145,26 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 					if( DEBUGSTATE )
 					{
 						fprintf(ioQQQ,"<%s>\t%s\t%li\t%li:%li\t%li:%li",
-							dBaseSpecies[intNS].chLabel,isRate?"RATE":"CS",ipCollider,
-							ipLoInFile,ipHiInFile,ipLo+1,ipHi+1);
+							dBaseSpecies[intNS].chLabel, isRate?"RATE":"CS", ipCollider,
+							ipLoInFile, ipHiInFile, ipLo+1, ipHi+1);
 					}
 
-					/* Set this as a collision strength not a collision rate coefficient*/
-					StoutCollData[intNS].lgIsRate(ipHi,ipLo,ipCollider) = isRate;
+					StoutCollData[intNS].lgIsRate(ipHi, ipLo, ipCollider) = isRate;
 
 					ASSERT( numpoints > 0 );
-					if( StoutCollData[intNS].ntemps(ipHi,ipLo,ipCollider) > 0 )
+					if( StoutCollData[intNS].ntemps(ipHi, ipLo, ipCollider) > 0 )
 						d.errorAbort( "duplicate collisional transition found" );
-					StoutCollData[intNS].setpoints(ipHi,ipLo,ipCollider,numpoints);
+
+					StoutCollData[intNS].setpoints(ipHi, ipLo, ipCollider, numpoints);
 
 					for( int j = 0; j < numpoints; j++ )
 					{
-						StoutCollData[intNS].temps(ipHi,ipLo,ipCollider)[j] = temps[j];
-						d.getToken( StoutCollData[intNS].collstrs(ipHi,ipLo,ipCollider)[j] );
-						if( StoutCollData[intNS].collstrs(ipHi,ipLo,ipCollider)[j] <= 0. )
+						StoutCollData[intNS].temps(ipHi, ipLo, ipCollider)[j] = temps[j];
+						d.getToken( StoutCollData[intNS].collstrs(ipHi, ipLo, ipCollider)[j] );
+						if( StoutCollData[intNS].collstrs(ipHi, ipLo, ipCollider)[j] <= 0. )
 							d.errorAbort( "invalid collisional data" );
 						if( DEBUGSTATE )
-							fprintf(ioQQQ,"\t%.2e",StoutCollData[intNS].collstrs(ipHi,ipLo,ipCollider)[j]);
+							fprintf(ioQQQ,"\t%.2e", StoutCollData[intNS].collstrs(ipHi, ipLo, ipCollider)[j]);
 					}
 					if( DEBUGSTATE )
 						fprintf(ioQQQ,"\n");
@@ -955,11 +1177,14 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 				d.checkEOL();
 			}
 		}
-		// ---------------- NEW COLLISION FORMAT ----------------
+		// ---------------- NEW COLLISION FORMAT (25 10 15) ----------------
 		else
 		{
-			// NEW FORMAT: header line "CS ELECTRON" or "RATE H", then TEMP + lines with ipLo ipHi values...
-			// First line after magic is header
+			/*
+			* New format: after magic, first non-comment data line is a header:
+			*   "CS ELECTRON"  or  "RATE H"  etc.
+			* Then TEMP lines + transition lines.
+			*/
 			d.getline();
 			string dataTypeHeader;
 			d.getToken( dataTypeHeader );
@@ -1000,6 +1225,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 				d.errorAbort( "Collision strengths (CS) are only allowed for electron colliders" );
 
 			lgSentinelReached = false;
+			numpoints = 0; /* require TEMP before transition rows */
 			while( d.getline() )
 			{
 				if( d.lgEODMarker() )
@@ -1008,15 +1234,13 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 					break;
 				}
 
-				// Look at first token of this line:
 				string first;
 				d.getToken( first );
 
-				// TEMP line (same semantics as old format)
 				if( first == "TEMP" )
 				{
 					if( DEBUGSTATE )
-						fprintf(ioQQQ,"<%s>\tTEMP\t",dBaseSpecies[intNS].chLabel);
+						fprintf(ioQQQ,"<%s>\tTEMP\t", dBaseSpecies[intNS].chLabel);
 
 					temps.clear();
 					double t;
@@ -1028,22 +1252,25 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 							d.errorAbort( "temperatures must be monotonically increasing" );
 						temps.emplace_back( t );
 						if( DEBUGSTATE )
-							fprintf(ioQQQ,"%.2e\t",t);
+							fprintf(ioQQQ,"%.2e\t", t);
 					}
 					if( DEBUGSTATE )
 						fprintf(ioQQQ,"\n");
-					numpoints = temps.size();
+
+					numpoints = (int)temps.size();
 					ASSERT( numpoints > 0 );
 				}
 				else
 				{
-					// In new format this is a transition line: first token is ipLoInFile
+					if( numpoints <= 0 )
+						d.errorAbort( "First data line after header must be TEMP in new-format .coll file" );
+
 					long ipLoInFile = atol( first.c_str() );
 					long ipHiInFile, ipLo, ipHi;
 					d.getToken( ipHiInFile );
 					processIndices(ipLoInFile, ipHiInFile, lgIsRegular, indexold2new, ipLo, ipHi);
 
-					// out-of-range or unmapped transitions: consume data and skip
+					/* out-of-range/unmapped transitions: consume values and skip */
 					if( ipLo == LONG_MAX || ipHi == LONG_MAX || ipHi >= nMolLevs || ipLo >= nMolLevs )
 					{
 						double dummy;
@@ -1056,41 +1283,33 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 					if( DEBUGSTATE )
 					{
 						fprintf(ioQQQ,"<%s>\t%s\t%li\t%li:%li\t%li:%li",
-							dBaseSpecies[intNS].chLabel,isRate?"RATE":"CS",ipCollider,
-							ipLoInFile,ipHiInFile,ipLo+1,ipHi+1);
+							dBaseSpecies[intNS].chLabel, isRate?"RATE":"CS", ipCollider,
+							ipLoInFile, ipHiInFile, ipLo+1, ipHi+1);
 					}
 
-					/* remember if this is CS or RATE for this transition */
-					StoutCollData[intNS].lgIsRate(ipHi,ipLo,ipCollider) = isRate;
+					StoutCollData[intNS].lgIsRate(ipHi, ipLo, ipCollider) = isRate;
 
 					ASSERT( numpoints > 0 );
-					int oldNpts = StoutCollData[intNS].ntemps(ipHi,ipLo,ipCollider);
+					int oldNpts = StoutCollData[intNS].ntemps(ipHi, ipLo, ipCollider);
 
-					// We already have data for this transition?
 					if( oldNpts > 0 )
 					{
-						// For the baseline file (blk_10) this is still an error:
+						/* Baseline block: duplicates are an error; higher blocks may override */
 						if( !lgOverrideExisting )
-						{
 							d.errorAbort( "duplicate collisional transition found" );
-						}
-						// For blk_20, blk_30, ... we are allowed to override.
-						// Just (re)allocate storage for the new number of points.
 					}
 
-					// First time or override: always (re)allocate here.
-					// setpoints() is responsible for freeing/reallocating its own arrays safely.
-					StoutCollData[intNS].setpoints(ipHi,ipLo,ipCollider,numpoints);
+					/* First time or override: allocate for this transition */
+					StoutCollData[intNS].setpoints(ipHi, ipLo, ipCollider, numpoints);
 
-					// Fill the arrays
 					for( int j = 0; j < numpoints; j++ )
 					{
-						StoutCollData[intNS].temps(ipHi,ipLo,ipCollider)[j] = temps[j];
-						d.getToken( StoutCollData[intNS].collstrs(ipHi,ipLo,ipCollider)[j] );
-						if( StoutCollData[intNS].collstrs(ipHi,ipLo,ipCollider)[j] <= 0. )
+						StoutCollData[intNS].temps(ipHi, ipLo, ipCollider)[j] = temps[j];
+						d.getToken( StoutCollData[intNS].collstrs(ipHi, ipLo, ipCollider)[j] );
+						if( StoutCollData[intNS].collstrs(ipHi, ipLo, ipCollider)[j] <= 0. )
 							d.errorAbort( "invalid collisional data" );
 						if( DEBUGSTATE )
-							fprintf(ioQQQ,"\t%.2e",StoutCollData[intNS].collstrs(ipHi,ipLo,ipCollider)[j]);
+							fprintf(ioQQQ,"\t%.2e", StoutCollData[intNS].collstrs(ipHi, ipLo, ipCollider)[j]);
 					}
 					if( DEBUGSTATE )
 						fprintf(ioQQQ,"\n");
@@ -1098,8 +1317,8 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 
 				d.checkEOL();
 			}
-		} // end new coll format
-	} // end loop over collFiles
+		} // end new-coll branch
+	} // end loop over collToProcess
 
 } // end atmdat_STOUT_readin
 
