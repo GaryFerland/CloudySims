@@ -43,6 +43,7 @@ extern "C" void fpsetmask(unsigned long);
 #include "cddefines.h"
 #include "trace.h"
 #include "service.h"
+#include "vectorize.h"
 #include "vectorhash.h"
 #include "version.h"
 #include "prt.h"
@@ -955,7 +956,7 @@ void check_data(const string& fpath, const string& fname)
 	map<string,string>::const_iterator ptr = cpu.i().checksum_expct.find(fname);
 	if( ptr != cpu.i().checksum_expct.end() )
 	{
-		string checksum = VHstream(fpath);
+		string checksum = VHfile(fpath);
 		if( checksum != ptr->second )
 		{
 			fprintf( ioQQQ, "NOTE: using modified data in %s. Full path:\n", fname.c_str() );
@@ -964,6 +965,55 @@ void check_data(const string& fpath, const string& fname)
 		}
 	}
 #endif
+}
+
+void VHstring(const string& s, void* out)
+{
+	DEBUG_ENTRY( "VHstring()" );
+
+	// copy the string to make sure it is aligned on a 32-byte boundary
+	avx_ptr<char> buf(s.length());
+	memcpy(buf.ptr0(), s.data(), s.length());
+
+	VectorHash(buf.ptr0(), s.length(), 0xfd4c799d, out);
+}
+
+string VHstring(const string& s)
+{
+	DEBUG_ENTRY( "VHstring()" );
+
+	uint32 cksum[4];
+	VHstring(s, cksum);
+
+	ostringstream hash;
+	for( uint32 i=0; i < 4; ++i )
+		hash << hex << setfill('0') << setw(8) << cksum[i];
+
+	return hash.str();
+}
+
+// this routine returns the checksum of a datafile. It filters out the eol characters,
+// which makes it incompatible with the routine VHfile(), but also makes it OS agnostic...
+// comment sections of lines starting with the hash symbol are also skipped
+// this version is much slower than VHfile(), so should only be used on small files
+// this routine uses the regular search path to find the file
+string VHdatafile(const string& fname, access_scheme scheme)
+{
+	DEBUG_ENTRY( "VHdatafile()" );
+
+	fstream ioFile;
+	open_data(ioFile, fname, mode_r, scheme);
+
+	string line, content;
+	while( getline(ioFile, line) )
+	{
+		auto p = line.find('#');
+		if( p != string::npos )
+			line.erase(p);
+		content += line;
+	}
+
+	return VHstring(content);
 }
 
 /** define routines for setting single and double precision signaling NaN

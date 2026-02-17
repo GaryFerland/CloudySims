@@ -337,23 +337,23 @@ void radius_increment(void)
 		 * total absorption and scattering,
 		 * does not discount forward scattering to be similar to stellar extinction
 		 * measurements made within ism */
-		rfield.opac_mag_B_point += (gv.bin[nd].dstab1[rfield.ipB_filter-1] +
-			gv.bin[nd].pure_sc1[rfield.ipB_filter-1])*double(gv.bin[nd].dstAbund)*
+		rfield.opac_mag_B_point += (gv.bin[nd].dstab1[rfield.ipB_filter] +
+			gv.bin[nd].pure_sc1[rfield.ipB_filter])*double(gv.bin[nd].dstAbund)*
 			double(dense.gas_phase[ipHYDROGEN]) * OPTDEP2EXTIN;
 
-		rfield.opac_mag_V_point += (gv.bin[nd].dstab1[rfield.ipV_filter-1] +
-			gv.bin[nd].pure_sc1[rfield.ipV_filter-1])*double(gv.bin[nd].dstAbund)*
+		rfield.opac_mag_V_point += (gv.bin[nd].dstab1[rfield.ipV_filter] +
+			gv.bin[nd].pure_sc1[rfield.ipV_filter])*double(gv.bin[nd].dstAbund)*
 			double(dense.gas_phase[ipHYDROGEN]) * OPTDEP2EXTIN;
 
 		/* this is total extinction in magnitudes at V and B, for an extended source 
 		 * total absorption and scattering,
 		 * DOES discount forward scattering to apply for extended source like Orion */
-		rfield.opac_mag_B_extended += (gv.bin[nd].dstab1[rfield.ipB_filter-1] +
-			gv.bin[nd].pure_sc1[rfield.ipB_filter-1]*gv.bin[nd].asym[rfield.ipB_filter-1])*
+		rfield.opac_mag_B_extended += (gv.bin[nd].dstab1[rfield.ipB_filter] +
+			gv.bin[nd].pure_sc1[rfield.ipB_filter]*gv.bin[nd].asym[rfield.ipB_filter])*
 			double(gv.bin[nd].dstAbund)*double(dense.gas_phase[ipHYDROGEN]) * OPTDEP2EXTIN;
 
-		rfield.opac_mag_V_extended += (gv.bin[nd].dstab1[rfield.ipV_filter-1] +
-			gv.bin[nd].pure_sc1[rfield.ipV_filter-1]*gv.bin[nd].asym[rfield.ipV_filter-1])*
+		rfield.opac_mag_V_extended += (gv.bin[nd].dstab1[rfield.ipV_filter] +
+			gv.bin[nd].pure_sc1[rfield.ipV_filter]*gv.bin[nd].asym[rfield.ipV_filter])*
 			double(gv.bin[nd].dstAbund)*double(dense.gas_phase[ipHYDROGEN]) * OPTDEP2EXTIN;
 
 		gv.bin[nd].avdust += gv.bin[nd].tedust*(realnum)radius.drad_x_fillfac;

@@ -1872,7 +1872,7 @@ void ParseSet(Parser &p)
 		if (p.nMatch("RESO"))
 		{
 			/* set resolution, get factor that will multiply continuum resolution that
-			 * is contained in the file continuum_mesh.ini */
+			 * is contained in the mesh definition file */
 			(void)p.FFmtRead();
 			if (p.lgEOL())
 			{

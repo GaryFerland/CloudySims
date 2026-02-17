@@ -1782,7 +1782,7 @@ STATIC void ReadTable(const string& fnam)
 	d.getline();
 	mesh_hi = getHexDouble(d);
 	
-	if( md5sum != rfield.mesh_md5sum() ||
+	if( md5sum != rfield.mesh_cksum() ||
 	    !fp_equal_tol( mesh_lo, rfield.emm(), 1.e-11*rfield.emm() ) ||
 	    !fp_equal_tol( mesh_hi, rfield.egamry(), 1.e-7*rfield.egamry() ) )
 	{
