@@ -335,7 +335,7 @@ treated with the iso-electronic model atoms.
 \section{The frequency mesh}
 
 The energy interval \emm\ -- \egamry\ is divided into a number of sections
-using the contents of the file \cdFilename{continuum\_mesh.ini}. Each of these
+using the contents of the file \cdFilename{continuum\_mesh.dat}. Each of these
 sections has an associated mesh resolution $r$, and is filled with a large
 number of frequency cells with nearly exponentially increasing widths.
 
@@ -376,15 +376,15 @@ these routines are set up in the routine \cdRoutine{t\_mesh::p\_SetupMesh}.
 \subsection{Changing the resolution of the mesh}
 \label{sec:ChangingMeshResolution}
 
-The file \cdFilename{continuum\_mesh.ini} contains ordered pairs of continuum
+The file \cdFilename{continuum\_mesh.dat} contains ordered pairs of continuum
 energies and resolving powers (defined as $1/r$) that are read by
 \cdRoutine{t\_mesh::p\_ReadResolution} to set the frequency mesh. Change the
-contents of \cdFilename{continuum\_mesh.ini} to change the resolution of the
+contents of \cdFilename{continuum\_mesh.dat} to change the resolution of the
 continuum mesh. The file explains how to do this.
 
 Alternatvely, you can also use the command \cdCommand{set continuum
   resolution} that will apply a uniform multiplicative factor to the
-resolution in each section defined in \cdFilename{continuum\_mesh.ini}. This
+resolution in each section defined in \cdFilename{continuum\_mesh.dat}. This
 command is explained in Section~\ref{Hazy1-sec:CommandSetContinuumOptions} in
 Hazy 1.
 

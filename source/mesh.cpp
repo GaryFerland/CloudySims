@@ -9,20 +9,20 @@
 #include "dense.h"
 #include "mesh.h"
 
-void t_mesh::p_ReadResolution()
+void t_basic_mesh::p_ReadResolution()
 {
 	DEBUG_ENTRY( "p_ReadResolution()" );
 
 	if( trace.lgTrace )
-		fprintf( ioQQQ,"p_ReadResolution opening continuum_mesh.ini:");
+		fprintf( ioQQQ,"p_ReadResolution opening %s:", p_mesh_defname.c_str());
 
-	FILE* ioDATA = open_data( "continuum_mesh.ini", "r" );
+	FILE* ioDATA = open_data( p_mesh_defname, "r" );
 
 	string chLine;
 	/* check that magic number is ok */
 	if( !read_whole_line( chLine, ioDATA ) )
 	{
-		fprintf( ioQQQ, "p_ReadResolution could not read first line of continuum_mesh.ini.\n");
+		fprintf( ioQQQ, "p_ReadResolution could not read first line of %s.\n", p_mesh_defname.c_str());
 		cdEXIT(EXIT_FAILURE);
 	}
 
@@ -35,10 +35,10 @@ void t_mesh::p_ReadResolution()
 
 	bool lgResPower;
 
-	/* the following is the set of numbers that appear at the start of continuum_mesh.ini */
+	/* the following is the set of numbers that appear at the start of the mesh definition file */
 	if( i1 == 1 && i2 == 9 && i3 == 29 )
 		// old version of the file (c08 and older), this has pairs: upper limit freq range, resolution
-		// this format is still supported to accomodate users with existing continuum_mesh.ini files.
+		// this format is still supported to accomodate users with existing mesh definition files.
 		lgResPower = false;
 	else if( i1 == 10 && i2 == 8 && i3 == 8 )
 		// new version of the file (c10 and newer), this has pairs: upper limit freq range, resolving power
@@ -47,7 +47,7 @@ void t_mesh::p_ReadResolution()
 	else
 	{
 		fprintf( ioQQQ, 
-			"p_ReadResolution: the version of continuum_mesh.ini is not supported.\n" );
+				 "p_ReadResolution: the version of %s is not supported.\n", p_mesh_defname.c_str() );
 		fprintf( ioQQQ, 
 			"I found version number %li %li %li.\n" ,
 			 i1 , i2 , i3 );
@@ -72,7 +72,7 @@ void t_mesh::p_ReadResolution()
 			// all must be positive
 			if( upper_limit <= 0. || val2 <= 0. )
 			{
-				fprintf(ioQQQ, "DISASTER PROBLEM continuum_mesh.ini has a non-positive number.\n");
+				fprintf(ioQQQ, "DISASTER PROBLEM %s has a non-positive number.\n", p_mesh_defname.c_str());
 				cdEXIT(EXIT_FAILURE);
 			}
 
@@ -143,7 +143,7 @@ void t_mesh::p_ReadResolution()
 	return;
 }
 
-void t_mesh::p_SetupMesh(bool lgUnitCell)
+void t_basic_mesh::p_SetupMesh(bool lgUnitCell)
 {
 	DEBUG_ENTRY( "p_SetupMesh()" );
 
@@ -231,6 +231,9 @@ void t_mesh::p_SetupMesh(bool lgUnitCell)
 void t_mesh::p_SetupEdges()
 {
 	DEBUG_ENTRY( "SetupEdges()" );
+
+	if( p_edges.size() > 0 )
+		return;
 
 	// a list of major ionization edges that need to be fiddled into the frequency mesh
 	// this list will be sorted at the end, so can be entered in any order
@@ -373,7 +376,7 @@ void t_mesh::CheckMesh() const
 	DEBUG_ENTRY( "CheckMesh()" );
 
 	// is the grid initialized?
-	ASSERT( p_anu.size() > 0 );
+	ASSERT( ncells() > 0 );
 
 	// check outer bounds of the complete grid
 	ASSERT( fp_equal( anumin(0), emm() ) );

@@ -186,6 +186,9 @@ STATIC void PE_init(size_t,long,long,/*@out@*/double*,/*@out@*/double*,/*@out@*/
 		    /*@out@*/double*,/*@out@*/double*,/*@out@*/double*,/*@out@*/double*);
 /* GrainCollHeating computes grains collisional heating cooling */
 STATIC void GrainCollHeating(size_t,/*@out@*/realnum*,/*@out@*/realnum*);
+/* RebinFlux rebins a flux array from the standard to the internal grain frequency mesh */
+template<typename T>
+STATIC void RebinFlux(const vector<T>&, vector<double>&);
 /* GrnVryDpth user supplied function for the grain abundance as a function of depth into cloud */
 STATIC double GrnVryDpth(size_t);
 
@@ -271,7 +274,9 @@ void GrainsInit()
 		fprintf( ioQQQ, " GrainsInit called.\n" );
 	}
 
+	gv.dstab0.resize( gv.nflux );
 	gv.dstab.resize( rfield.nflux_with_check );
+	gv.dstsc0.resize( gv.nflux );
 	gv.dstsc.resize( rfield.nflux_with_check );
 	gv.GrainEmission.resize( rfield.nflux_with_check );
 	gv.GraphiteEmission.resize( rfield.nflux_with_check );
@@ -332,7 +337,7 @@ void GrainsInit()
 		/* sanity checks */
 		ASSERT( gv.bin[nd].nChrg >= 2 && gv.bin[nd].nChrg <= NCHU );
 
-		if( gv.bin[nd].DustWorkFcn < rfield.emm() || gv.bin[nd].DustWorkFcn > rfield.egamry() )
+		if( gv.bin[nd].DustWorkFcn < gv.emm() || gv.bin[nd].DustWorkFcn > gv.egamry() )
 		{
 			fprintf( ioQQQ, " Grain work function for %s has insane value: %.4e\n",
 				 gv.bin[nd].chDstLab,gv.bin[nd].DustWorkFcn );
@@ -478,17 +483,17 @@ void GrainsInit()
 			double Ethres = ( ns == 0 ) ? ThresInfVal : gv.bin[nd].sd[ns].ionPot;
 			ShellData *sptr = &gv.bin[nd].sd[ns];
 
-			sptr->ipLo = rfield.ithreshC( Ethres );
+			sptr->ipLo = gv.ithreshC( Ethres );
 
 			ipLo = sptr->ipLo;
-			// allow room for adjustment of rfield.nPositive later on
-			long len = rfield.nflux_with_check - ipLo;
+			// allow room for adjustment of gv.nPositive later on
+			long len = gv.nflux - ipLo;
 
 			sptr->p.reserve( len );
-			sptr->p.alloc( ipLo, rfield.nPositive );
+			sptr->p.alloc( ipLo, gv.nPositive );
 
 			sptr->y01.reserve( len );
-			sptr->y01.alloc( ipLo, rfield.nPositive );
+			sptr->y01.alloc( ipLo, gv.nPositive );
 
 			/* there are no Auger electrons from the band structure */
 			if( ns > 0 )
@@ -504,16 +509,16 @@ void GrainsInit()
 					sptr->Ener[n] = gv.AugerData[sptr->nelem].Energy[sptr->ns][n];
 
 					sptr->y01A[n].reserve( len );
-					sptr->y01A[n].alloc( ipLo, rfield.nPositive );
+					sptr->y01A[n].alloc( ipLo, gv.nPositive );
 				}
 			}
 		}
 
-		gv.bin[nd].y0b06.resize( rfield.nflux_with_check );
+		gv.bin[nd].y0b06.resize( gv.nflux );
 
-		InitBinAugerData( nd, 0, rfield.nPositive );
+		InitBinAugerData( nd, 0, gv.nPositive );
 
-		gv.bin[nd].nfill = rfield.nPositive;
+		gv.bin[nd].nfill = gv.nPositive;
 
 		/* >>chng 00 jul 13, new sticking probability for electrons */
 		/* the second term is chance that electron passes through grain,
@@ -623,9 +628,9 @@ void GrainsInit()
 		}
 		fprintf( ioQQQ, "\n" );
 
-		for( i=0; i < rfield.nflux_with_check; i += 40 )
+		for( i=0; i < gv.nflux; i += 10 )
 		{
-			fprintf( ioQQQ, "%10.2e", rfield.anu(i) );
+			fprintf( ioQQQ, "%10.2e", gv.anu(i) );
 			for( size_t nd=0; nd < gv.bin.size(); nd++ )
 			{
 				fprintf( ioQQQ, " %10.2e  ", gv.bin[nd].dstab1[i] );
@@ -642,9 +647,9 @@ void GrainsInit()
 		}
 		fprintf( ioQQQ, "\n" );
 
-		for( i=0; i < rfield.nflux_with_check; i += 40 )
+		for( i=0; i < gv.nflux; i += 10 )
 		{
-			fprintf( ioQQQ, "%10.2e", rfield.anu(i) );
+			fprintf( ioQQQ, "%10.2e", gv.anu(i) );
 			for( size_t nd=0; nd < gv.bin.size(); nd++ )
 			{
 				fprintf( ioQQQ, " %10.2e  ", gv.bin[nd].pure_sc1[i] );
@@ -661,9 +666,9 @@ void GrainsInit()
 		}
 		fprintf( ioQQQ, "\n" );
 
-		for( i=0; i < rfield.nflux_with_check; i += 40 )
+		for( i=0; i < gv.nflux; i += 10 )
 		{
-			fprintf( ioQQQ, "%10.2e", rfield.anu(i) );
+			fprintf( ioQQQ, "%10.2e", gv.anu(i) );
 			for( size_t nd=0; nd < gv.bin.size(); nd++ )
 			{
 				fprintf( ioQQQ, " %10.2e  ", gv.bin[nd].dstab1[i]*4./gv.bin[nd].IntArea );
@@ -680,9 +685,9 @@ void GrainsInit()
 		}
 		fprintf( ioQQQ, "\n" );
 
-		for( i=0; i < rfield.nflux_with_check; i += 40 )
+		for( i=0; i < gv.nflux; i += 10 )
 		{
-			fprintf( ioQQQ, "%10.2e", rfield.anu(i) );
+			fprintf( ioQQQ, "%10.2e", gv.anu(i) );
 			for( size_t nd=0; nd < gv.bin.size(); nd++ )
 			{
 				fprintf( ioQQQ, " %10.2e  ", gv.bin[nd].pure_sc1[i]*4./gv.bin[nd].IntArea );
@@ -699,9 +704,9 @@ void GrainsInit()
 		}
 		fprintf( ioQQQ, "\n" );
 
-		for( i=0; i < rfield.nflux_with_check; i += 40 )
+		for( i=0; i < gv.nflux; i += 10 )
 		{
-			fprintf( ioQQQ, "%10.2e", rfield.anu(i) );
+			fprintf( ioQQQ, "%10.2e", gv.anu(i) );
 			for( size_t nd=0; nd < gv.bin.size(); nd++ )
 			{
 				fprintf( ioQQQ, " %10.2e  ", gv.bin[nd].asym[i] );
@@ -806,7 +811,7 @@ STATIC void InitBinAugerData(size_t nd,
 			long nel,nsh;
 			double phot_ev,cs;
 
-			phot_ev = rfield.anu(i)*EVRYD;
+			phot_ev = gv.anu(i)*EVRYD;
 
 			if( ns == 0 )
 			{
@@ -849,7 +854,7 @@ STATIC void InitBinAugerData(size_t nd,
 	for( i=ipBegin; i < ipEnd && !gv.lgWD01; i++ )
 	{
 		/* this is Eq. 10 of WDB06 */
-		if( rfield.anu(i) > 20./EVRYD )
+		if( gv.anu(i) > 20./EVRYD )
 			gv.bin[nd].inv_att_len[i] = temp[i];
 	}
 
@@ -882,7 +887,7 @@ STATIC void InitBinAugerData(size_t nd,
 		{
 			double elec_en,yzero,yone;
 
-			elec_en = MAX2(rfield.anu(i) - sptr->ionPot,0.);
+			elec_en = MAX2(gv.anu(i) - sptr->ionPot,0.);
 			yzero = y0psa( nd, ns, i, elec_en );
 
 			/* this is size-dependent geometrical yield enhancement
@@ -1022,12 +1027,12 @@ STATIC double PlanckIntegral(double tdust,
 	/* Boltzmann factors for Planck integration */
 	double TDustRyg = TE1RYD/tdust;
 	double x = 0.999*log(DBL_MAX);
-	long mini = 0, maxi = rfield.nflux_with_check;
-	avx_ptr<double> arg(rfield.nflux_with_check), expval(rfield.nflux_with_check);
-	for( long i=0; i < rfield.nflux_with_check; i++ )
+	long mini = 0, maxi = gv.nflux;
+	avx_ptr<double> arg(gv.nflux), expval(gv.nflux);
+	for( long i=0; i < gv.nflux; i++ )
 	{
 		/* this is hnu/kT for grain at this temp and photon energy */
-		arg[i] = TDustRyg*rfield.anu(i);
+		arg[i] = TDustRyg*gv.anu(i);
 		if( arg[i] < 0.9999e-5 )
 			++mini;
 		if( arg[i] > x+0.0001 )
@@ -1057,14 +1062,14 @@ STATIC double PlanckIntegral(double tdust,
 		}
 
 		double Planck1 = PI4*2.*HPLANCK/POW2(SPEEDLIGHT)*POW2(FR1RYD)*POW2(FR1RYD)*
-			rfield.anu3(i)/ExpM1*rfield.widflx(i);
+			gv.anu3(i)/ExpM1*gv.widflx(i);
 		double Planck2 = Planck1*gv.bin[nd].dstab1[i];
 
 		/* add integral over RJ tail, maybe useful for extreme low temps */
 		if( i == 0 ) 
 		{
-			integral1 = Planck1/rfield.widflx(0)*rfield.anu(0)/3.;
-			integral2 = Planck2/rfield.widflx(0)*rfield.anu(0)/5.;
+			integral1 = Planck1/gv.widflx(0)*gv.anu(0)/3.;
+			integral2 = Planck2/gv.widflx(0)*gv.anu(0)/5.;
 		}
 		/* if we are in the Wien tail - exit */
 		if( Planck1/integral1 < DBL_EPSILON && Planck2/integral2 < DBL_EPSILON )
@@ -1416,6 +1421,16 @@ STATIC void GrainChargeTemp()
 			}
 		}
 	}
+
+	/* rebin the radiation fields to the grain frequency mesh to speed up the calculations */
+	RebinFlux(rfield.flux[0], gv.flux);
+	RebinFlux(rfield.SummedCon, gv.SummedCon);
+	RebinFlux(rfield.SummedDif, gv.SummedDif);
+
+	/* update gv.nPositive */
+	for( gv.nPositive=gv.nflux; gv.nPositive > 0; gv.nPositive-- )
+		if( gv.flux[gv.nPositive-1] > 0. || gv.SummedCon[gv.nPositive-1] > 0. || gv.SummedDif[gv.nPositive-1] > 0. )
+			break;
 
 	/* this sets dstAbund and conversion factors, but not gv.dstab and gv.dstsc! */
 	GrainUpdateRadius1();
@@ -1937,10 +1952,10 @@ STATIC void GrainCharge(size_t nd,
 		{
 			// this is the very first time the grain charge is determined
 			// so here we try to get a rough first estimate of the charge
-			long ilo = rfield.ipointC(0.9);
-			long ihi = rfield.nflux;
+			long ilo = gv.ipointC(0.9);
+			long ihi = gv.nflux;
 			// determine average photon energy above 0.9 Ryd to ionize grain
-			double sum1, sum2 = reduce_ab_a( get_ptr(rfield.flux[0]), rfield.anuptr(), ilo, ihi, &sum1 );
+			double sum1, sum2 = reduce_ab_a( gv.flux.data(), gv.anuptr(), ilo, ihi, &sum1 );
 			double anuav = safe_div( sum2, sum1, 0. );
 			if( anuav > 1. )
 			{
@@ -2262,11 +2277,11 @@ STATIC double GrainElecEmis1(size_t nd,
 	ChargeBin& gptr = gv.bin[nd].chrg(nz);
 
 	long ipLo = gptr.ipThresInfVal;
-	long ipHi = rfield.nPositive;
+	long ipHi = gv.nPositive;
 #	ifdef WD_TEST2
-	*sum1a = reduce_abc( get_ptr(gv.bin[nd].dstab1), get_ptr(rfield.flux[0]), gptr.yhat.ptr0(), ipLo, ipHi );
+	*sum1a = reduce_abc( get_ptr(gv.bin[nd].dstab1), gv.flux.data(), gptr.yhat.ptr0(), ipLo, ipHi );
 #	else
-	*sum1a = reduce_abc( get_ptr(gv.bin[nd].dstab1), get_ptr(rfield.SummedCon), gptr.yhat.ptr0(), ipLo, ipHi );
+	*sum1a = reduce_abc( get_ptr(gv.bin[nd].dstab1), gv.SummedCon.data(), gptr.yhat.ptr0(), ipLo, ipHi );
 #	endif
 	/* normalize to rates per cm^2 of projected grain area */
 	*sum1a /= gv.bin[nd].IntArea/4.;
@@ -2277,9 +2292,9 @@ STATIC double GrainElecEmis1(size_t nd,
 		ipLo = gptr.ipThresInf;
 		/* >>chng 00 jul 17, use description of Weingartner & Draine, 2001 */
 #		ifdef WD_TEST2
-		*sum1b = reduce_ab( gptr.cs_pdt.ptr0(), get_ptr(rfield.flux[0]), ipLo, ipHi );
+		*sum1b = reduce_ab( gptr.cs_pdt.ptr0(), gv.flux.data(), ipLo, ipHi );
 #		else
-		*sum1b = reduce_ab( gptr.cs_pdt.ptr0(), get_ptr(rfield.SummedCon), ipLo, ipHi );
+		*sum1b = reduce_ab( gptr.cs_pdt.ptr0(), gv.SummedCon.data(), ipLo, ipHi );
 #		endif
 		*sum1b /= gv.bin[nd].IntArea/4.;
 	}
@@ -2472,10 +2487,10 @@ STATIC void UpdatePot(size_t nd,
 		fprintf( ioQQQ, " %ld/%ld", Zlo, stride );
 	}
 
-	if( gv.bin[nd].nfill < rfield.nPositive )
+	if( gv.bin[nd].nfill < gv.nPositive )
 	{
-		InitBinAugerData( nd, gv.bin[nd].nfill, rfield.nPositive );
-		gv.bin[nd].nfill = rfield.nPositive;
+		InitBinAugerData( nd, gv.bin[nd].nfill, gv.nPositive );
+		gv.bin[nd].nfill = gv.nPositive;
 	}
 
 	for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
@@ -2505,7 +2520,7 @@ STATIC void UpdatePot(size_t nd,
 
 		if( gv.bin[nd].chrg(nz).DustZ != Zg )
 			UpdatePot1(nd,nz,Zg,0);
-		else if( gv.bin[nd].chrg(nz).nfill < rfield.nPositive )
+		else if( gv.bin[nd].chrg(nz).nfill < gv.nPositive )
 			UpdatePot1(nd,nz,Zg,gv.bin[nd].chrg(nz).nfill);
 
 		UpdatePot2(nd,nz);
@@ -2516,7 +2531,7 @@ STATIC void UpdatePot(size_t nd,
 
 		/* sanity checks */
 		ASSERT( gv.bin[nd].chrg(nz).DustZ == Zg );
-		ASSERT( gv.bin[nd].chrg(nz).nfill >= rfield.nPositive );
+		ASSERT( gv.bin[nd].chrg(nz).nfill >= gv.nPositive );
 		ASSERT( rate_up[nz] >= 0. && rate_dn[nz] >= 0. );
 	}
 
@@ -2533,10 +2548,10 @@ STATIC void UpdatePot(size_t nd,
 		HighEnergy = MAX2(HighEnergy,
 		  MAX2(gv.bin[nd].chrg(nz).ThresInfInc,0.) + BoltzFac*MAX2(phycon.te,gv.bin[nd].tedust));
 	}
-	HighEnergy = min(HighEnergy,rfield.anu(rfield.nflux));
-	gv.bin[nd].qnflux2 = ipoint(HighEnergy);
-	gv.bin[nd].qnflux = max(rfield.nPositive,gv.bin[nd].qnflux2);
-	gv.bin[nd].qnflux = min(gv.bin[nd].qnflux,rfield.nflux);
+	HighEnergy = min(HighEnergy,gv.egamry());
+	gv.bin[nd].qnflux2 = gv.ipointF(HighEnergy);
+	gv.bin[nd].qnflux = max(gv.nPositive,gv.bin[nd].qnflux2);
+	gv.bin[nd].qnflux = min(gv.bin[nd].qnflux,gv.nflux);
 	return;
 }
 
@@ -2720,7 +2735,7 @@ STATIC void UpdatePot1(size_t nd,
 		GetPotValues(nd,Zg-1,&gv.bin[nd].chrg(nz).ThresInfInc,&d[0],&gv.bin[nd].chrg(nz).ThresSurfInc,
 			     &d[1],&gv.bin[nd].chrg(nz).PotSurfInc,&gv.bin[nd].chrg(nz).EminInc,NO_TUNNEL);
 
-		gv.bin[nd].chrg(nz).ipThresInfVal = rfield.ithreshC( gv.bin[nd].chrg(nz).ThresInfVal );
+		gv.bin[nd].chrg(nz).ipThresInfVal = gv.ithreshC( gv.bin[nd].chrg(nz).ThresInfVal );
 	}
 
 	ASSERT( gv.bin[nd].chrg(nz).DustZ == Zg );
@@ -2728,11 +2743,11 @@ STATIC void UpdatePot1(size_t nd,
 	long ipLo = gv.bin[nd].chrg(nz).ipThresInfVal;
 
 	/* remember how far the yhat(_primary), ehat, cs_pdt, fac1, and fac2 arrays were filled in */
-	gv.bin[nd].chrg(nz).nfill = rfield.nPositive;
+	gv.bin[nd].chrg(nz).nfill = gv.nPositive;
 	long nfill = gv.bin[nd].chrg(nz).nfill;
 
 	/* >>chng 04 feb 07, only allocate arrays from ipLo to nfill to save memory, PvH */
-	long len = rfield.nflux_with_check - ipLo;
+	long len = gv.nflux - ipLo;
 	if( ipStart == 0 )
 	{
 		gv.bin[nd].chrg(nz).yhat.reserve( len );
@@ -2750,7 +2765,7 @@ STATIC void UpdatePot1(size_t nd,
 	}
 
 	double GrainPot = chrg2pot(Zg,nd);
-	const double *anu = rfield.anuptr();
+	const double *anu = gv.anuptr();
 
 	if( nfill > ipLo )
 	{
@@ -2884,12 +2899,12 @@ STATIC void UpdatePot1(size_t nd,
 		/* >>chng 01 jan 08, ThresInf[nz] and ThresInfVal[nz] may become zero in
 		 * initial stages of grain potential search, PvH */
 		/* >>chng 01 oct 10, use bisection search to find ipThresInf, ipThresInfVal. On C scale now */
-		gv.bin[nd].chrg(nz).ipThresInf = rfield.ithreshC( gv.bin[nd].chrg(nz).ThresInf );
+		gv.bin[nd].chrg(nz).ipThresInf = gv.ithreshC( gv.bin[nd].chrg(nz).ThresInf );
 	}
 
 	ipLo = gv.bin[nd].chrg(nz).ipThresInf;
 
-	len = rfield.nflux_with_check - ipLo;
+	len = gv.nflux - ipLo;
 
 	if( Zg <= -1 )
 	{
@@ -2897,13 +2912,13 @@ STATIC void UpdatePot1(size_t nd,
 		if( ipStart == 0 )
 		{
 			gv.bin[nd].chrg(nz).cs_pdt.reserve( len );
-			gv.bin[nd].chrg(nz).cs_pdt.alloc( ipLo, rfield.nflux );
+			gv.bin[nd].chrg(nz).cs_pdt.alloc( ipLo, gv.nflux );
 
 			double c1 = -CS_PDT*(double)Zg;
 			double ThresInf = gv.bin[nd].chrg(nz).ThresInf;
 			double cnv_GR_pH = gv.bin[nd].cnv_GR_pH;
 
-			for( long i=ipLo; i < rfield.nflux; i++ )
+			for( long i=ipLo; i < gv.nflux; i++ )
 			{
 				double x = (anu[i] - ThresInf)*INV_DELTA_E;
 				double cs = c1*x/POW2(1.+(1./3.)*POW2(x));
@@ -3178,8 +3193,8 @@ STATIC void y0b(size_t nd,
 	{
 		realnum Ethres_low = 20./EVRYD;
 		realnum Ethres_high = 50./EVRYD;
-		long ip20 = rfield.ithreshC(Ethres_low);
-		long ip50 = rfield.ithreshC(Ethres_high);
+		long ip20 = gv.ithreshC(Ethres_low);
+		long ip50 = gv.ithreshC(Ethres_high);
 		long ipr1a = ilo;
 		//long ipr1b = min(ip20,ihi);
 		long ipr2a = max(ilo,ip20);
@@ -3190,7 +3205,7 @@ STATIC void y0b(size_t nd,
 		y0b01( nd, nz, yzero, ipr1a, ipr2b );
 		avx_ptr<realnum> arg(ipr2a, ipr2b), val(ipr2a, ipr2b), val2(ipr2a, ipr2b);
 		for( int i=ipr2a; i < ipr2b; i++ )
-			arg[i] = realnum(rfield.anu(i))/Ethres_low;
+			arg[i] = realnum(gv.anu(i))/Ethres_low;
 		vlog( arg.ptr0(), val.ptr0(), ipr2a, ipr2b );
 		for( int i=ipr2a; i < ipr2b; i++ )
 			arg[i] = gv.bin[nd].y0b06[i]/yzero[i];
@@ -3227,7 +3242,7 @@ STATIC void y0b01(size_t nd,
 		/* >>refer	grain	physics	Bakes & Tielens, 1994, ApJ, 427, 822 */
 		for( int i=ilo; i < ihi; i++ )
 		{
-			double xv = max((rfield.anu(i)-gv.bin[nd].chrg(nz).ThresSurfVal)/gv.bin[nd].DustWorkFcn,0.);
+			double xv = max((gv.anu(i)-gv.bin[nd].chrg(nz).ThresSurfVal)/gv.bin[nd].DustWorkFcn,0.);
 			double xv2 = xv*xv;
 			xv = xv2*xv2*xv;
 			yzero[i] = realnum(xv/((1./9.e-3) + (3.7e-2/9.e-3)*xv));
@@ -3237,7 +3252,7 @@ STATIC void y0b01(size_t nd,
 		/* >>refer	grain	physics	Weingartner & Draine, 2001 */
 		for( int i=ilo; i < ihi; i++ )
 		{
-			double xv = max((rfield.anu(i)-gv.bin[nd].chrg(nz).ThresSurfVal)/gv.bin[nd].DustWorkFcn,0.);
+			double xv = max((gv.anu(i)-gv.bin[nd].chrg(nz).ThresSurfVal)/gv.bin[nd].DustWorkFcn,0.);
 			yzero[i] = realnum(xv/(2.+10.*xv));
 		}
 		break;
@@ -3808,8 +3823,8 @@ STATIC void GrainUpdateRadius2()
 {
 	DEBUG_ENTRY( "GrainUpdateRadius2()" );
 
-	memset( get_ptr(gv.dstab), 0, size_t(rfield.nflux_with_check*sizeof(gv.dstab[0])) );
-	memset( get_ptr(gv.dstsc), 0, size_t(rfield.nflux_with_check*sizeof(gv.dstsc[0])) );
+	vzero(gv.dstab0);
+	vzero(gv.dstsc0);
 
 	/* >>chng 06 oct 05 rjrw, reorder loops */
 	/* >>chng 11 dec 12 reorder loops so they can be vectorized, PvH */
@@ -3818,7 +3833,7 @@ STATIC void GrainUpdateRadius2()
 		double dstAbund = gv.bin[nd].dstAbund;
 
 		/* >>chng 01 mar 26, from nupper to nflux */
-		for( long i=0; i < rfield.nflux; i++ )
+		for( long i=0; i < gv.nflux; i++ )
 		{
 			/* these are total absorption and scattering cross sections,
 			 * the latter should contain the asymmetry factor (1-g) */
@@ -3826,11 +3841,11 @@ STATIC void GrainUpdateRadius2()
 			 * dareff(nd) = darea(nd) * dstAbund(nd) */
 			/* grain abundance may be a function of depth */
 			/* >>chng 02 dec 30, separated scattering cross section and asymmetry factor, PvH */
-			gv.dstab[i] += gv.bin[nd].dstab1[i]*dstAbund;
+			gv.dstab0[i] += gv.bin[nd].dstab1[i]*dstAbund;
 		}
-		for( long i=0; i < rfield.nflux; i++ )
+		for( long i=0; i < gv.nflux; i++ )
 		{
-			gv.dstsc[i] += gv.bin[nd].pure_sc1[i]*gv.bin[nd].asym[i]*dstAbund;
+			gv.dstsc0[i] += gv.bin[nd].pure_sc1[i]*gv.bin[nd].asym[i]*dstAbund;
 		}
 
 		for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
@@ -3840,11 +3855,14 @@ STATIC void GrainUpdateRadius2()
 			{
 				double FracAbund = gptr.FracPop*dstAbund;
 
-				for( long i=gptr.ipThresInf; i < rfield.nflux; i++ )
-					gv.dstab[i] += FracAbund*gptr.cs_pdt[i];
+				for( long i=gptr.ipThresInf; i < gv.nflux; i++ )
+					gv.dstab0[i] += FracAbund*gptr.cs_pdt[i];
 			}
 		}
 	}
+
+	grain_interpolate(gv.dstab0.data(), gv.dstab.data(), gv.nflux);
+	grain_interpolate(gv.dstsc0.data(), gv.dstsc.data(), gv.nflux);
 
 	for( long i=0; i < rfield.nflux; i++ )
 	{
@@ -3883,6 +3901,8 @@ STATIC void GrainTemperature(size_t nd,
 	*hla = 0.;
 
 	long ipLya = iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).ipCont() - 1;
+	double ELyaRyd = iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).EnergyRyd();
+	long ipgvLya = gv.ipointC(ELyaRyd);
 
 	/* integrate over ionizing continuum; energy goes to dust and gas
 	 * GasHeatPhotoEl is what heats the gas */
@@ -3907,13 +3927,13 @@ STATIC void GrainTemperature(size_t nd,
 		bool lgReEvaluate2 = gptr.hots1 < 0.;
 
 		long ip0 = 0;
-		long ip1 = min(gptr.ipThresInf,rfield.nPositive);
-		long ip2 = rfield.nPositive;
+		long ip1 = min(gptr.ipThresInf, gv.nPositive);
+		long ip2 = gv.nPositive;
 		double hcon1, hots1, pe1, bolflux1, hla1;
 		if( lgReEvaluate1 )
 		{
-			hcon1 = reduce_ab( get_ptr(gv.bin[nd].dstab1_x_anu), get_ptr(rfield.flux[0]), ip0, ip1 ) +
-				reduce_ab( gptr.fac1.ptr0(), get_ptr(rfield.flux[0]), ip1, ip2 );
+			hcon1 = reduce_ab( get_ptr(gv.bin[nd].dstab1_x_anu), gv.flux.data(), ip0, ip1 ) +
+				reduce_ab( gptr.fac1.ptr0(), gv.flux.data(), ip1, ip2 );
 			gptr.hcon1 = hcon1;
 		}
 		else
@@ -3922,18 +3942,18 @@ STATIC void GrainTemperature(size_t nd,
 		}
 		if( lgReEvaluate2 )
 		{
-			hots1 = reduce_ab( get_ptr(gv.bin[nd].dstab1_x_anu), get_ptr(rfield.SummedDif), ip0, ip1 ) +
-				reduce_ab( gptr.fac1.ptr0(), get_ptr(rfield.SummedDif), ip1, ip2 );
+			hots1 = reduce_ab( get_ptr(gv.bin[nd].dstab1_x_anu), gv.SummedDif.data(), ip0, ip1 ) +
+				reduce_ab( gptr.fac1.ptr0(), gv.SummedDif.data(), ip1, ip2 );
 #			ifdef WD_TEST2
-			pe1 = reduce_ab( gptr.fac2.ptr0(), get_ptr(rfield.flux[0]), ip1, ip2 );
+			pe1 = reduce_ab( gptr.fac2.ptr0(), gv.flux.data(), ip1, ip2 );
 #			else
-			pe1 = reduce_ab( gptr.fac2.ptr0(), get_ptr(rfield.SummedCon), ip1, ip2 );
+			pe1 = reduce_ab( gptr.fac2.ptr0(), gv.SummedCon.data(), ip1, ip2 );
 #			endif
 #			ifndef NDEBUG
-			bolflux1 = reduce_ab( get_ptr(gv.bin[nd].dstab1_x_anu), get_ptr(rfield.SummedCon), ip0, ip2 );
+			bolflux1 = reduce_ab( get_ptr(gv.bin[nd].dstab1_x_anu), gv.SummedCon.data(), ip0, ip2 );
 			if( gptr.DustZ <= -1 )
 				bolflux1 +=
-					reduce_abc( gptr.cs_pdt.ptr0(), rfield.anuptr(), get_ptr(rfield.SummedCon), ip1, ip2 );
+					reduce_abc( gptr.cs_pdt.ptr0(), gv.anuptr(), gv.SummedCon.data(), ip1, ip2 );
 #			else
 			bolflux1 = 0.;
 #			endif
@@ -3952,14 +3972,14 @@ STATIC void GrainTemperature(size_t nd,
 		 *  only used for printout; Ly-a is already in OTS fields */
 		/* >>chng 00 apr 18, moved calculation of hla, by PvH */
 		/* >>chng 04 feb 01, moved calculation of hla1 outside loop for optimization, PvH */
-		if( ipLya < MIN2(gptr.ipThresInf,rfield.nPositive) )
+		if( ipLya < rfield.nPositive && ipgvLya < gptr.ipThresInf )
 		{
-			hla1 = rfield.otslin[ipLya]*gv.bin[nd].dstab1_x_anu[ipLya];
+			hla1 = rfield.otslin[ipLya]*gv.bin[nd].dstab1_x_anu[ipgvLya];
 		}
 		else if( ipLya < rfield.nPositive )
 		{
 			/* >>chng 00 apr 18, include photo-electric effect, by PvH */
-			hla1 = rfield.otslin[ipLya]*gptr.fac1[ipLya];
+			hla1 = rfield.otslin[ipLya]*gptr.fac1[ipgvLya];
 		}
 		else
 		{
@@ -4121,7 +4141,7 @@ STATIC void PE_init(size_t nd,
 	/* sanity checks */
 	ASSERT( nd < gv.bin.size() );
 	ASSERT( nz >= 0 && nz < gv.bin[nd].nChrg );
-	ASSERT( i >= 0 && i < rfield.nPositive );
+	ASSERT( i >= 0 && i < gv.nPositive );
 
 	/** \todo xray - add fluoresence in energy balance */
 
@@ -4173,9 +4193,9 @@ STATIC void PE_init(size_t nd,
 		/* effective cross section for photo-detechment */
 		*cs2 = gptr.cs_pdt[i];
 		/* ehat2 is the average energy of the escaping electron at infinity */
-		*ehat2 = rfield.anu(i) - gptr.ThresSurf - gptr.PotSurf;
+		*ehat2 = gv.anu(i) - gptr.ThresSurf - gptr.PotSurf;
 		/* cool2 is the amount by which photo-detechment cools the grain */
-		*cool2 = rfield.anu(i);
+		*cool2 = gv.anu(i);
 
 		ASSERT( *ehat2 >= 0. && *cool2 > 0. );
 	}
@@ -4594,18 +4614,20 @@ void GrainDrift()
 
 	DEBUG_ENTRY( "GrainDrift()" );
 
-	vector<realnum> help( rfield.nPositive );
+	vector<realnum> help0(rfield.nPositive);
+	vector<double> help(gv.nflux);
 	for( i=0; i < rfield.nPositive; i++ )
 	{
-		help[i] = (rfield.flux[0][i]+rfield.ConInterOut[i]+rfield.outlin[0][i]+rfield.outlin_noplot[i])*
+		help0[i] = (rfield.flux[0][i]+rfield.ConInterOut[i]+rfield.outlin[0][i]+rfield.outlin_noplot[i])*
 			rfield.anu(i);
 	}
+	RebinFlux(help0, help);
 
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
 		/* find momentum absorbed by grain */
 		dmomen = 0.;
-		for( i=0; i < rfield.nPositive; i++ )
+		for( i=0; i < gv.nPositive; i++ )
 		{
 			/* >>chng 02 dec 30, separated scattering cross section and asymmetry factor, PvH */
 			dmomen += help[i]*(gv.bin[nd].dstab1[i] + gv.bin[nd].pure_sc1[i]*gv.bin[nd].asym[i]);
@@ -4687,6 +4709,37 @@ void GrainDrift()
 		}
 	}
 	return;
+}
+
+/* RebinFlux rebins a flux array arr1 on the standard frequency mesh onto an
+ * array arr2 on the internal grain frequency mesh -- arr1 can be a vector
+ * of realnums or doubles, but arr2 always needs to be a vector of doubles */
+template<typename T>
+STATIC void RebinFlux(const vector<T>& arr1, vector<double>& arr2)
+{
+	DEBUG_ENTRY( "RebinFlux()" );
+
+	arr2.resize(gv.nflux);
+	vzero(arr2);
+
+	long i1 = 0;
+	long i1end = min(rfield.nflux, long(arr1.size()));
+	// this algorithm implicitly assumes that rfield.anumin[0] == gv.anumin[0]
+	// which is guaranteed by design
+	double transfer = 0.;
+	for( long i2=0; i2 < gv.nflux; ++i2 )
+	{
+		arr2[i2] += transfer;
+		while( i1 < i1end && rfield.anumax(i1) <= gv.anumax(i2) )
+			arr2[i2] += arr1[i1++];
+		if( i1 >= i1end )
+			break;
+		// this rfield freq cell extends beyond the gv freq cell, so split it up
+		// f is the fraction of the rfield cell that is contained in the current gv cell
+		double f = (gv.anumax(i2) - rfield.anumin(i1))/rfield.widflx(i1);
+		arr2[i2] += f*arr1[i1];
+		transfer = (1.-f)*arr1[i1++];
+	}
 }
 
 /* GrnVryDpth sets the grain abundance as a function of depth into cloud 

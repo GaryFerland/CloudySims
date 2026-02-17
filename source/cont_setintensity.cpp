@@ -1153,20 +1153,6 @@ STATIC void conorm()
 		}
 	}
 
-	/* this sanity check is that the grains we have read in from opacity files agree
-	 * with the energy grid in this version of cloudy */
-	for( size_t nd=0; nd < gv.bin.size(); nd++ )
-	{
-		if( !fp_equal( gv.bin[nd].RSFCheck, rfield.getResolutionScaleFactor() ) )
-		{
-			fprintf( ioQQQ,"\n\n PROBLEM DISASTER At least one of the grain opacity files "
-				 "has been compiled with a different energy grid resolution factor.\n" );
-			fprintf( ioQQQ, " Please recompile this file using the COMPILE GRAINS command "
-				 "and make sure that you use the correct SET CONTINUUM RESOLUTION factor.\n" );
-			cdEXIT(EXIT_FAILURE);
-		}
-	}
-
 	/* default is is to predict line intensities, 
 	 * but if any continuum specified as luminosity then would override this -
 	 * following two values are correct for intensities */
