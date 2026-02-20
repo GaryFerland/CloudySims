@@ -128,7 +128,7 @@ inline long grain_interpolate(const T arr1[], T arr2[], long n1) // arr1[n1], n1
 		else
 		{
 			while( i1 < n1-1 && x >= gv.anuln(i1+1) )
-				hh = h[++i1];
+				hh = h[min(++i1,n1-2)];
 			if( i1 == n1-1 )
 				break;
 			// use monotonic cubic Hermite splines
