@@ -31,6 +31,7 @@
 #include "dense.h"
 #include "prt.h"
 #include "lines_service.h"
+#include "grainvar.h"
 
 /*LimitSh sets upper energy limit to subshell integrations */
 STATIC long LimitSh(long int ion, 
@@ -251,12 +252,12 @@ void ContCreatePointers(void)
 	if( dense.lgElmtOn[ipHELIUM] )
 		ASSERT( strcmp( rfield.chContLabel[iso_sp[ipH_LIKE][ipHELIUM].fb[ipH1s].ipIsoLevNIonCon-1].c_str(), "He 2" ) ==0 );
 
-	/* these are indices for centers of B and V filters,
+	/* these are indices for centers of B and V filters (ONLY VALID ON THE GRAIN MESH!),
 	 * taken from table on page 202 of Allen, AQ, 3rd ed */
 	/* the B filter array offset */
-	rfield.ipB_filter = ipoint( RYDLAM / WL_B_FILT );
+	rfield.ipB_filter = gv.ipointC( RYDLAM / WL_B_FILT );
 	/* the V filter array offset */
-	rfield.ipV_filter = ipoint( RYDLAM / WL_V_FILT );
+	rfield.ipV_filter = gv.ipointC( RYDLAM / WL_V_FILT );
 
 	/* these are the lower and upper bounds for the G0 radiation field
 	 * used by Tielens & Hollenbach in their PDR work */

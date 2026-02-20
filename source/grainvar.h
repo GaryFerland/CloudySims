@@ -7,6 +7,7 @@
 /* grainvar.h */
 
 #include "container_classes.h"
+#include "mesh.h"
 
 /** flag that determines if quantum heating is to be taken into account in H2
  * grain surface formation rate, set this true to enable quantum heating treatment, PvH */
@@ -345,8 +346,6 @@ public:
 	  cnv_GR_pCM3;          /**< grain unit conversion, \<unit\>/grain -> \<unit\>/cm^3 (actual depl) */
 
 	/** grain opacities */
-	double RSFCheck;        /**< save resolution scale factor for later check */
-
 	/** >>chng 02 dec 30, separated scattering cross section and asymmetry factor (1-g),
 	 * NB NB NB -- note that pure_sc1 DOES NOT contain the asymmetry factor, while gv.dstsc DOES !!! */
 	vector<double> dstab1;  /**< absorption cross section per grain species, for default depl */
@@ -440,7 +439,7 @@ public:
  *
  * NB NB NB NB NB NB */
 
-class GrainVar
+class GrainVar : public t_grainmesh
 {
 	void p_clear0();
 	void p_clear1();
@@ -479,7 +478,7 @@ public:
 	bool lgDColOn;                 /**< default true, turned off with GRAIN NO COOLING */
 
 	/** should electrons from/to grains be included in the total electron sum? 
-	 * del true, set false with no grain electrons command */
+	 * default true, set false with no grain electrons command */
 	bool lgGrainElectrons;
 
 	long nCalledGrainDrive;        /**< count how many times GrainDrive has been called */
@@ -507,10 +506,21 @@ public:
 	strg_type which_strg[MAT_TOP]; /**< defines where the emitted spectrum is stored */
 	H2_type which_H2distr[MAT_TOP];/**< defines expression for H2 ro-vib distribution at formation */
 
+	/** grain frequency mesh */
+	long nflux;                    /**< number of frequency cells in the mesh */
+	long nPositive;                /**< number of cells to include highest continuum cell with non-zero photon flux */
+
+	/** incident radiation field */
+	vector<double> flux;           /**< rfield.flux[0] rebinned onto the grain mesh */
+	vector<double> SummedCon;      /**< rfield.SummedCon rebinned onto the grain mesh */
+	vector<double> SummedDif;      /**< rfield.SummedDif rebinned onto the grain mesh */
+
 	/** grain opacities */
 	long nzone;                    /**< remember in what zone grain quantities were last updated */
-	vector<double> dstab;          /**< total absorption cross section, current depl is factored in */
-	vector<double> dstsc;          /**< total scattering cross section, current depl and asymmetry factored in */
+	vector<double> dstab0;         /**< total absorption cs, current depl is factored in, internal freq mesh */
+	vector<double> dstab;          /**< total absorption cs, current depl is factored in, regular freq mesh */
+	vector<double> dstsc0;         /**< total scattering cs, current depl and asymmetry factored in, internal mesh */
+	vector<double> dstsc;          /**< total scattering cs, current depl and asymmetry factored in, regular mesh */
 
 	/** grain charging */
 	double TotalEden;              /**< contribution to eden from all grain species, a positive number means
