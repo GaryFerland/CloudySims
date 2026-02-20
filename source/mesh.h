@@ -60,7 +60,21 @@ protected:
 	vector<Energy> p_edges;
 
 	/* set up the frequency mesh */
-	void p_InitBasicMesh(bool lgUnitCell)
+	void p_InitBasicMesh1()
+	{
+		if( lgMeshSetUp() )
+			return;
+
+		// these are the low and high energy bounds of the continuum
+		Energy Elo( 10., "MHz" );
+		p_emm = Elo.Ryd();
+		Energy Ehi( 100., "MeV" );
+		p_egamry = Ehi.Ryd();
+
+		// this is set with the set continuum resolution command
+		p_ResolutionScaleFactor = 1.;
+	}
+	void p_InitBasicMesh2(bool lgUnitCell)
 	{
 		if( lgMeshSetUp() )
 			return;
@@ -116,7 +130,7 @@ public:
 	const double* anulog10ptr() const
 	{
 		return get_ptr(p_anulog10);
-	}	
+	}
 	double anulog10(size_t i) const
 	{
 		return p_anulog10[i];
@@ -170,19 +184,6 @@ public:
 	{
 		return en.Ryd() > emm() && en.Ryd() < egamry();
 	}
-
-	// constructor
-	t_basic_mesh()
-	{
-		// these are the low and high energy bounds of the continuum
-		Energy Elo( 10., "MHz" );
-		p_emm = Elo.Ryd();
-		Energy Ehi( 100., "MeV" );
-		p_egamry = Ehi.Ryd();
-
-		// this is set with the set continuum resolution command
-		p_ResolutionScaleFactor = 1.;
-	}
 };
 
 class t_mesh : public t_basic_mesh {
@@ -192,8 +193,9 @@ class t_mesh : public t_basic_mesh {
 public:
 	void InitMesh(bool lgUnitCell)
 	{
+		p_InitBasicMesh1();
 		p_SetupEdges();
-		p_InitBasicMesh(lgUnitCell);
+		p_InitBasicMesh2(lgUnitCell);
 	}
 	/* perform sanity checks on the frequency mesh */
 	void ValidateEdges() const;
@@ -221,13 +223,14 @@ class t_grainmesh : public t_basic_mesh {
 public:
 	void InitMesh()
 	{
-		p_InitBasicMesh(false);
+		p_InitBasicMesh1();
+		p_InitBasicMesh2(false);
 	}
 	// constructor
 	t_grainmesh() : t_basic_mesh()
 	{
 		p_mesh_defname = "grain_mesh.dat";
-	}	
+	}
 };
 
 #endif /* MESH_H_ */
