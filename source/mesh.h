@@ -70,9 +70,6 @@ protected:
 		p_emm = Elo.Ryd();
 		Energy Ehi( 100., "MeV" );
 		p_egamry = Ehi.Ryd();
-
-		// this is set with the set continuum resolution command
-		p_ResolutionScaleFactor = 1.;
 	}
 	void p_InitBasicMesh2(bool lgUnitCell)
 	{
@@ -184,6 +181,8 @@ public:
 	{
 		return en.Ryd() > emm() && en.Ryd() < egamry();
 	}
+	// constructor
+	t_basic_mesh() : p_ResolutionScaleFactor(1.) {}
 };
 
 class t_mesh : public t_basic_mesh {
