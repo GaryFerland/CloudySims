@@ -4,7 +4,6 @@
 #include "global.h"
 #include "deuterium.h"
 #include "dense.h"
-#include "collision.h"
 
 //
 // The purpose of this file is to make global variable dependencies manifest.
@@ -17,4 +16,3 @@
 
 t_deuterium deut;
 t_dense dense;
-ColliderList colliders(dense);
