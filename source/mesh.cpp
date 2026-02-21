@@ -14,7 +14,7 @@ void t_basic_mesh::p_ReadResolution()
 	DEBUG_ENTRY( "p_ReadResolution()" );
 
 	if( trace.lgTrace )
-		fprintf( ioQQQ,"p_ReadResolution opening %s:", p_mesh_defname.c_str());
+		fprintf( ioQQQ,"p_ReadResolution opening: %s\n", p_mesh_defname.c_str());
 
 	FILE* ioDATA = open_data( p_mesh_defname, "r" );
 
