@@ -92,10 +92,17 @@ inline long grain_interpolate(const T arr1[], T arr2[], long n1) // arr1[n1], n1
 {
 	DEBUG_ENTRY( "grain_interpolate()" );
 
+	// interpolate on an array on the grain frequency mesh (arr1) to create an array on
+	// the standard mesh (arr2). this is done in log-log space using monotonic cubic
+	// Hermite splines on the log of the input data. experiments show that this gives
+	// the best results.
+	// see also: https://en.wikipedia.org/wiki/Monotone_cubic_interpolation
+
 	avx_ptr<T> arr1ln(gv.nflux), arr2ln(rfield.nflux);
 
 	vlog(arr1, arr1ln.data(), 0, n1);
 
+	// set up helper arrays for the monotonic cubic Hermite splines
 	vector<double> h(n1-1), d(n1-1), m(n1);
 	for( long k=0; k < n1-1; ++k )
 	{
@@ -128,7 +135,7 @@ inline long grain_interpolate(const T arr1[], T arr2[], long n1) // arr1[n1], n1
 		else
 		{
 			while( i1 < n1-1 && x >= gv.anuln(i1+1) )
-				hh = h[++i1];
+				hh = h[min(++i1,n1-2)];
 			if( i1 == n1-1 )
 				break;
 			// use monotonic cubic Hermite splines

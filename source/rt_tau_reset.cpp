@@ -59,8 +59,8 @@ void RT_tau_reset(void)
 		mole.species[i].column_old = mole.species[i].column;
 	}
 
-	opac.telec = opac.taumin;
-	opac.thmin = opac.taumin;
+	opac.telec = TAUMIN;
+	opac.thmin = TAUMIN;
 
 	/* all iso sequences */
 	for(ipISO=ipH_LIKE; ipISO<NISO; ++ipISO )
@@ -327,11 +327,11 @@ void RT_tau_reset(void)
 		for( long i=0; i < rfield.nflux_with_check; i++ )
 		{
 			opac.TauTotalGeo[1][i] = opac.TauTotalGeo[0][i];
-			opac.TauTotalGeo[0][i] = opac.taumin;
+			opac.TauTotalGeo[0][i] = TAUMIN;
 			opac.TauAbsGeo[1][i] = opac.TauAbsGeo[0][i];
-			opac.TauAbsGeo[0][i] = opac.taumin;
+			opac.TauAbsGeo[0][i] = TAUMIN;
 			opac.TauScatGeo[1][i] = opac.TauScatGeo[0][i];
-			opac.TauScatGeo[0][i] = opac.taumin;
+			opac.TauScatGeo[0][i] = TAUMIN;
 		}
 	}
 
@@ -344,8 +344,8 @@ void RT_tau_reset(void)
 		 * not that opac.TauAbsFace is reset to small number just after this */
 		opac.E2TauAbsTotal[i] = (realnum)e2( opac.TauAbsTotal[i] );
 		/* TauAbsFace and TauScatFace are abs and sct optical depth to ill face */
-		opac.TauScatFace[i] = opac.taumin;
-		opac.TauAbsFace[i] = opac.taumin;
+		opac.TauScatFace[i] = TAUMIN;
+		opac.TauAbsFace[i] = TAUMIN;
 	}
 
 	/* this is optical depth at x-ray point defining effective optical depth */

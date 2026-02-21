@@ -9,7 +9,8 @@ ifeq ($(DEFCXX),)
 endif
 
 STD = -std=c++17
-OPT = -O3 -ftrapping-math -fno-math-errno -fasynchronous-unwind-tables -Wno-deprecated-declarations
+OPT = -O3 -ftrapping-math -fno-math-errno -fno-omit-frame-pointer -fasynchronous-unwind-tables \
+	-Wno-deprecated-declarations
 DEBUGOPT = -finline -fasynchronous-unwind-tables
 CXX = $(DEFCXX)
 CXXFLAGSEXC = -fnon-call-exceptions
