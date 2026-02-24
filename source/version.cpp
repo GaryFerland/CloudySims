@@ -8,7 +8,7 @@
 
 static const int CLD_MAJOR = 25;
 static const int CLD_MINOR = 0;
-static const int CLD_BETA = 1;
+static const int CLD_BETA = 0;
 
 #ifdef REVISION
 static const char* revision = REVISION;

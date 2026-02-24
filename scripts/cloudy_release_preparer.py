@@ -9,6 +9,7 @@ import asyncio
 import shutil
 import subprocess
 import re
+from datetime import datetime
 
 """
 Gold To Do Version: Making a Cloudy Release step by step instructions
@@ -78,7 +79,7 @@ Required packages: doxygen, pyppeteer, pdflatex (script will run through this as
        Exit nublado.org
             >> [CTRL d]
        Copy the doxygen tree to the new subdirectory created in nublado
-            >> rsync -a doxygen/html/ cmgu228@nublado.org:/var/www/webapps/data_area/doxygen/c25.00/
+            >> rsync -a doxygen/html/ <user-name>@nublado.org:/var/www/webapps/data_area/doxygen/c25.00/
 
     6. Copy the release tarball to nublado
        (this script creates one automatically once all directories have been prepped sucessfully)
@@ -161,6 +162,77 @@ def check_packages():
 
     return 0
 
+def update_copyright_year():
+    # Check Copyright year and update to current year
+    pattern = re.compile(r"1978-20\d{2}")
+    current_year = str(datetime.now().year)
+    replacement = f"1978-{current_year}"
+
+    folder_path = "source/"
+    for root, dirs, files in os.walk(folder_path):
+        for filename in files:
+            filepath = os.path.join(root, filename)
+            try:
+                with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+                    content = f.read()
+
+                # Change copyright year only if it needs to
+                matches = pattern.findall(content)
+                if matches and any(match != replacement for match in matches):
+                    new_content = pattern.sub(replacement, content)
+                    with open(filepath, 'w', encoding='utf-8') as f:
+                        f.write(new_content)
+            except Exception as e:
+                print(f"Skipping {filepath}: {e}")
+
+    # Also make this replacement in docs/latex/frontis_common.tex
+    pattern = re.compile(r"1978--20\d{2}")
+    replacement = f"1978--{current_year}"
+    filepath = "docs/latex/frontis_common.tex"
+    with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+        content = f.read()
+    matches = pattern.findall(content)
+    if matches and any(match != replacement for match in matches):
+        new_content = pattern.sub(replacement, content)
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(new_content)
+
+def update_readme(cloudy_release):
+    if "_" in cloudy_release:
+        print("Please review and update README.md in the root directory.")
+        with open("cloudy_file_prep_log.txt", 'a', encoding='utf-8') as f:
+            f.write("readme\n")
+        return
+
+    readme_file = "README.md"
+    new_version = cloudy_release[1:]
+    if "00" in cloudy_release:
+        new_version = new_version.split(".")[0]
+    year_suffix = str(datetime.now().year)[-2:]
+
+    replacements = {
+        r"The current version of Cloudy is C\d+, released in \d{4}.": f"The current version of Cloudy is C{new_version}, released in {datetime.now().year}.",
+        r"\[here\]\(https://gitlab\.nublado\.org/cloudy/cloudy/-/wikis/NewC\d+\)": f"[here](https://gitlab.nublado.org/cloudy/cloudy/-/wikis/NewC{year_suffix})"
+    }
+
+    with open(readme_file, 'r', encoding="utf-8") as f:
+        lines = f.read()
+    for pattern, replacement in replacements.items():
+        lines = re.sub(pattern, replacement, lines)
+    with open(readme_file, "w", encoding="utf-8") as f:
+        f.write(lines)
+
+    print("Please update the bib link to the latest release paper in README.md")
+    readme_update_success = input(" Is the README.md file in the root directory up-to-date (y/n)? ")
+
+    if readme_update_success == "y":
+        with open("cloudy_file_prep_log.txt", 'a', encoding='utf-8') as f:
+            f.write("readme\n")
+    else:
+        print("README.md not ready for release.")
+        return
+
+
 def prep_source(cloudy_release):
     os.chdir("./source/")
 
@@ -169,8 +241,9 @@ def prep_source(cloudy_release):
 
     # This checks on any header files that are not used.
     command_args = ["./list_headers.pl"]
-    print(f"\n Running source/{command_args[0][1:]}")
+    print(f"\n Running source{command_args[0][1:]}")
     subprocess.run(command_args)
+
     header_summary = glob.glob(f"{current_dir}/headers.txt")[0]
     header_file_list = glob.glob(f"{current_dir}/listfiles.list")[0]
     print(f" Written to \n{header_summary} \n{header_file_list}")
@@ -184,13 +257,6 @@ def prep_source(cloudy_release):
     command_args = ["./doc_atomic_data.pl"]
     print("\n Running ", command_args[0])
     subprocess.run(command_args)
-
-    cloudy_executable = glob.glob(f"{current_dir}/cloudy.exe")
-    if f"{current_dir}/cloudy.exe" not in cloudy_executable:
-        num_cpus = os.cpu_count()
-        command_args = ["make", "-j", f"{num_cpus}"]
-        print("Making Cloudy executable for later use.")
-        subprocess.run(command_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
     # Update the CLD_MAJOR, CLD_MINOR, CLD_BETA in version.cpp
     rc = None if len(cloudy_release.split("_")) == 1 else cloudy_release.split("_")[-1]
@@ -218,44 +284,72 @@ def prep_source(cloudy_release):
     print(f"Version numbers in {version_file} updated to")
     print(f" CLD_MAJOR={new_major}, CLD_MINOR={new_minor}, CLD_BETA={new_beta}.")
 
+    # Update the release date to current date in date.h
+    date_file = "date.h"
+    base_year = 2000
+    today = datetime.now()
+    year = today.year - base_year + 100 # So 2025 -> 125
+    month = today.month - 1        # January is 0
+    day = today.day
+    replacement_dates = {
+        r'#define\s+YEAR\t\d+':  f'#define YEAR\t{year}',
+        r'#define\s+MONTH\t\d+': f'#define\tMONTH\t{month}',
+        r'#define\s+DAY\t\d+':   f'#define\tDAY\t{day}'
+    }
+    with open(date_file, 'r', encoding="utf-8") as f:
+        lines = f.read()
+    for pattern, replacement in replacement_dates.items():
+        lines = re.sub(pattern, replacement, lines)
+    with open(date_file, "w", encoding="utf-8") as f:
+        f.write(lines)
+    print(f"Date in {date_file} updated to")
+    print(f" YEAR={year}, MONTH={month}, DATE={day}.")
+
     print("\nSource directory ready for release.\n")
-    return 0
+    os.chdir("../")
+    with open("cloudy_file_prep_log.txt", 'a', encoding='utf-8') as f:
+        f.write("source\n")
+
 
 def prep_doxygen(cloudy_release):
     os.chdir("./doxygen/")
     current_dir = os.getcwd()
     print("Entered", current_dir)
 
-    # This creates the Doxygen documentation
-    command_args = ["doxygen", "Doxyfile"]
-    print("\n Running ", command_args[0], command_args[1])
-    subprocess.run(command_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-
     doxygen_html = glob.glob(f"{current_dir}/html/index.html")
-    doxygen_latx = glob.glob(f"{current_dir}/latex/")
-    print(doxygen_html)
+    if doxygen_html:
+        print("\n Doxygen files found: ", "/".join(doxygen_html[0].split("/")[-3:]))
+        run_doxygen = input("\n Run Doxygen (y/n)? ")
+    else:
+        run_doxygen = "y"
+
+    if run_doxygen.lower() == "y":
+        # This creates the Doxygen documentation
+        command_args = ["doxygen", "Doxyfile"]
+        print("\n Running ", command_args[0], command_args[1])
+        subprocess.run(command_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        doxygen_html = glob.glob(f"{current_dir}/html/index.html")
+
     # If documentation .html file exists open for viewing
     if f"{current_dir}/html/index.html" in doxygen_html:
         print("Doxygen successfully configured.\n Openning doxygen html\n")
         subprocess.run(["open", doxygen_html[0]])
+    else:
+        print("Oops! Could not configure doxygen. Please run the following command manually.")
+        print(" >> doxygen Doxyfile")
+        return
 
-    # FOLLOWING BIT NEEDS TO BE REVISED: 
-    # I think we need to be in nebula
-    # make sure to first test the if the directory is there
-#    print("Next we need to copy the doxygen tree to Cloudy's data server.")
-#    nublado_username = input("Please enter (https://data.nublado.org/) username: ")
-#    #nublado_password = input("password: ")
-#    #print(nublado_username, nublado_password)
-#    cloudy_data_server = f"{nublado_username}@nublado.org:/var/www/webapps/data_area/doxygen/{cloudy_release}/"
-#    command_args = ["rsync", "-avz", "html/", cloudy_data_server]
-#    try:
-#        print(f"Copying doxygen directory try to @nublado.org:/var/www/webapps/data_area/doxygen/{cloudy_release}")
-#        subprocess.run(command_args)
-#    except:
-#        print("Could not copy doxygen directory to @nublado.org:/var/www/webapps/data_area/doxygen/")
+    print("Next you need to copy the doxygen tree to Cloudy's data server.")
+    cloudy_data_server = f"[nublado_username]@nublado.org:/var/www/webapps/data_area/doxygen/{cloudy_release}/"
+    print(f"rsync -avz html/ {cloudy_data_server}")
+    doxygen_complete = input("Has the doxygen tree been copied to nublado (y/n)? ")
 
-    print("\nDoxygen directory ready for release.\n")
-    return 0
+    if doxygen_complete == "y":
+        print("\nDoxygen directory ready for release.\n")
+        os.chdir("../")
+        with open("cloudy_file_prep_log.txt", 'a', encoding='utf-8') as f:
+            f.write("doxygen\n")
+
 
 def prep_data():
     os.chdir("./data/")
@@ -264,10 +358,10 @@ def prep_data():
 
     readme_data_file = "README_data.md"
     print(f"\n Please review and update the data/{readme_data_file}.")
-    readme_edit_success = input(" Enter \'continue\' when finished review and update, or enter \'error\' to abort release prep: ")
-    if readme_edit_success.lower() == "error":
-        print("Error encountered, aborting release prep script.")
-        return -1
+    readme_edit_success = input(" Is docs/README_data.md up-to-date (y/n)? ")
+    if readme_edit_success == "n":
+        print("Aborting release prep script. Come back once data/README_data.md has been updated.")
+        return
 
     # This asks user to make sure all compiled data files are up to date.
     command_args = ["./make_data.sh"]
@@ -276,10 +370,10 @@ def prep_data():
 
     # This asks user to make sure Cloudy citations are up-to-date
     print("\n Please review and update data/citation_cloudy.txt")
-    citation_update_success = input(" Enter \'continue\' once Cloudy citations have been updated, otherwise enter \'error\' to abort: ")
-    if citation_update_success == "error":
-        print("Error: aborting script.")
-        return -1
+    citation_update_success = input(" Is data/citation_cloudy.txt up-to-date (y/n)? ")
+    if citation_update_success == "n":
+        print("Aborting release prep script. Comeb back once data/citation_cloudy.txt has been updated.")
+        return
     else:
         # Then test it by creating and running a test with print citation command
         with open("citation_test.in", 'w') as file:
@@ -294,42 +388,66 @@ def prep_data():
             citation_test_success = input(" Enter \'continue\' if test looks good, otherwise enter \'error\' to abort: ")
             if citation_test_success == "error":
                 print("Error: aborting script.")
-                return -1
-            subprocess.run(["rm", "citation_test*"])
+                return
+            os.remove("citation_test.in")
+            os.remove("citation_test.out")
         except:
             print("Error: aborting, something went wrong running Cloudy executable.")
-            return -1
+            return
 
     # Ask user to update the citations for the databases used by Cloudy.
     print("\n Please review and update data/citation_data.txt, the file needs to be updated with the latest database versions.")
-    citationdata_update_success = input("Enter \'continue\' once Cloudy citations have been updated, otherwise enter \'error\' to abort: ")
-    if citationdata_update_success == "error":
-        print("Error: aborting script.")
+    citationdata_update_success = input(" Is data/citation_data.txt up-to-date (y/n)? ")
+    if citationdata_update_success == "n":
+        print("Aborting release prep script. Comeb back once data/citation_data.txt has been updated.")
         return -1
 
     # This makes sure checksums.dat is up to date.
     # If you build Cloudy in one of the sys_xxxx directories you must temporarily
     # copy (or symlink) vh128sum.exe into source.
     vh128sum_executable = glob.glob("../source/vh128sum.exe")
-    if vh128sum_executable != []:
+    if vh128sum_executable:
         command_args = ["../scripts/generate_checksums.sh"]
         print(f"\n Running {command_args[0]} to update checksums.dat")
         subprocess.run(command_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        # TODO: add test for checksums run success
+
+        print("A smoke test will now start to make sure checksums ran ok.")
+        run_smoketest = input("Run smoke test (y/n) ?")
+        if run_smoketest == "y":
+            command_args = ["../source/cloudy.exe", "-e", "test"]
+            subprocess.run(command_args)
     else:
         print("Could not find /source/vh128sum.exe. If you build Cloudy in one of the sys_xxxx")
         print("directories, you must temporarily copy (or symlink) vh128sum.exe into source.")
         print("Moving onto next directory.")
-        return 1
+        return
 
-    print("\nData directory ready for release.\n")
-    return 0
+    smoketest_success = input("Smoke test looks good (y/n) ?")
+
+    if smoketest_success == "y":
+        print("\nData directory ready for release.\n")
+        os.chdir("../")
+        with open("cloudy_file_prep_log.txt", 'a', encoding='utf-8') as f:
+            f.write("data\n")
+    else:
+        print("Something went wrong. Data directory not ready for release.")
+        return
+
 
 async def convert_html_to_pdf(in_htm, out_pdf):
     browser = await launch(headless=True)
     page = await browser.newPage()
     await page.goto(in_htm, {'waitUntil': 'networkidle2'})  # local HTML file
     await page.pdf({'path': out_pdf})
+    await page.pdf({
+        'path': out_pdf,
+        'margin': {
+            'top': '1in',
+            'right': '1in',
+            'bottom': '1in',
+            'left': '1in'
+        }
+        })
     await browser.close()
 
 
@@ -354,7 +472,7 @@ def prep_tsuite():
     doc_tsuite_success = input(" Enter \'continue\' if doc_suites look good, otherwise enter \'error\' to abort: ")
     if doc_tsuite_success == "error":
         print("Error encountered, aborting release prep script.")
-        return -1
+        return
 
     # This diagnoses results of tsuite run
     command_args = ["./checkall.pl"]
@@ -369,7 +487,7 @@ def prep_tsuite():
             print(f"Warning! {file} not found.")
     if not_empty_files:
         print("Following files are not empty. Please resolve and come back. Moving onto next directory.")
-        return 1
+        return
 
     #The first character should be a sharp sign. This script lists all files that do not start with "#".
     # This is an error, and may indicate that the header was not properly produced.
@@ -389,7 +507,7 @@ def prep_tsuite():
     doc_tsuite_success = input(" Enter \'continue\' if doc_suites look good, otherwise enter \'error\' to abort: ")
     if doc_tsuite_success == "error":
         print("Error encountered, aborting release prep script.")
-        return -1
+        return
 
     command_args = ["./checkall.pl"]
     print(f"\n Running tsuite/auto/{command_args[0][2:]}, to diagnose results.")
@@ -403,22 +521,36 @@ def prep_tsuite():
             print(f"Warning! {file} not found.")
     if not_empty_files:
         print("Following files are not empty. Please resolve and come back. Moving onto next directory.")
-        return 1
+        return
 
     # Note: tsuite/slow/ does not have CheckPunchSharp.pl
 
     os.chdir("../")
 
-    print("\n Creating pdf from new do doc_tsuite.htm files to be included in Hazy2.")
-    asyncio.get_event_loop().run_until_complete(convert_html_to_pdf(f"file://{current_dir}/auto/doc_tsuite.htm", f"{current_dir}/auto/doc_tsuite.pdf"))
-    asyncio.get_event_loop().run_until_complete(convert_html_to_pdf(f"file://{current_dir}/slow/doc_tsuite.htm", f"{current_dir}/slow/doc_tsuite.pdf"))
+    doctsuite_files = ["auto/doc_tsuite.pdf", "slow/doc_tsuite.pdf"]
 
-    auto_doc = glob.glob("auto/doc_tsuite.pdf")
-    slow_doc = glob.glob("slow/doc_tsuite.pdf")
-    if auto_doc and slow_doc:
-        print(" New doc_tsuite.pdf files created from doc_tsuite.htm files")
+    doctsuite_pdfs = []
+    for file in doctsuite_files:
+        found_file = glob.glob(file)
+        if found_file: doctsuite_pdfs.append(found_file)
+
+    print("\n pdf files found in tsuite: ", doctsuite_pdfs)
+
+    if len(doctsuite_pdfs) == 2:
+        html_to_pdf = input("\n Convert doc_tsuite.htm files to pdfs to be included in Hazy2 (y/n)? ")
     else:
-        print("Failed to convert doc_suite.htm files to .pdfs. Please do this manually.")
+        html_to_pdf = "y"
+
+    if html_to_pdf == "y":
+        print("\n Creating pdfs from doc_tsuite.htm files...")
+        asyncio.get_event_loop().run_until_complete(convert_html_to_pdf(f"file://{current_dir}/auto/doc_tsuite.htm", f"{current_dir}/auto/doc_tsuite.pdf"))
+        asyncio.get_event_loop().run_until_complete(convert_html_to_pdf(f"file://{current_dir}/slow/doc_tsuite.htm", f"{current_dir}/slow/doc_tsuite.pdf"))
+
+        auto_doc = glob.glob(doctsuite_files[0])
+        slow_doc = glob.glob(doctsuite_files[1])
+        if not auto_doc or not slow_doc:
+            print(" Something went wrong. Could not find auto/doc_tsuite.pdf and slow/doc_tsuite.pdf.")
+            return
 
     # TODO: Find coverage run, what script does this? 
 
@@ -432,7 +564,26 @@ def prep_tsuite():
     # TODO: what is needed to be checked here? Add test.
 
     print("Tsuite directory ready for release.\n")
-    return 0
+    os.chdir("../../")
+    with open("cloudy_file_prep_log.txt", 'a', encoding='utf-8') as f:
+        f.write("tsuite\n")
+
+
+def prep_scripts():
+    os.chdir("./scripts/")
+    current_dir = os.getcwd()
+    print("Entered", current_dir)
+
+    # This creates a list of all test cases, including the input commands and a description of its purpose.
+    command_args = ["./prep-bib.sh"]
+    print(f"\n Running tsuite/auto/{command_args[0][2:]}, gathers atomic data references from the Stout database into LaTeX/PDF format.")
+    subprocess.run(command_args)
+
+    print("Scripts directory ready for release.\n")
+    os.chdir("../")
+    with open("cloudy_file_prep_log.txt", 'a', encoding='utf-8') as f:
+        f.write("scripts\n")
+
 
 def prep_docs():
     os.chdir("./docs/")
@@ -440,9 +591,13 @@ def prep_docs():
     print("Entered", current_dir)
 
     # This makes sure LineLabels.txt and SpeciesLabels.txt are up-to-date
-    linelable_input_script = "LineLables"
+    linelable_input_script = "LineLabels"
     print(f"\n Running docs/{linelable_input_script}.in")
     subprocess.run(["../source/cloudy.exe", "-r", linelable_input_script])
+    outfile = glob.glob(f"{linelable_input_script}.out")
+    if not outfile:
+        print(f"Aborting script. Something went wrong running {linelable_input_script}.in")
+        return
 
     os.chdir("./latex/")
     print("\n Entered", "docs/latex/")
@@ -485,7 +640,7 @@ def prep_docs():
     hazy_pdfs = []
     for file in pdf_files:
        found_file = glob.glob(file)
-       hazy_pdfs.append(found_file)
+       if found_file: hazy_pdfs.append(found_file)
 
     print("\n Hazy pdfs found in docs/latex/: ", hazy_pdfs)
     # This provides an option to skip re-compiliing hazy pdfs if they have already been
@@ -504,52 +659,61 @@ def prep_docs():
 
     # Copy hazy1.pdf, hazy2.pdf, hazy3.pdf, and QuickStart.pdf to top of docs directory
     for file in pdf_files:
-        shutil.copy(file, f"../{file}")
+        shutil.copy(file, f"../{file.split("/")[-1]}")
 
     print("Docs directory ready for release.\n")
-    return 0
+    os.chdir("../../")
+    with open("cloudy_file_prep_log.txt", 'a', encoding='utf-8') as f:
+        f.write("docs\n")
+
 
 def main():
-    print("Before we get started, the full tsuite must be run.")
+    print("\nFirst make sure that the executable has recently been made...")
+    os.chdir("./source/")
+    num_cpus = os.cpu_count()
+    command_args = ["make", "-j", f"{num_cpus}"]
+    subprocess.run(command_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    os.chdir("../")
+
+    print("\nBefore we get started, the full tsuite must be run.")
     tsuite_run = input("Full tsuite has been run? (y/n) Warning: entering \'n\' will start tsuite run. ")
     if tsuite_run.lower() == "n":
         os.chdir("./tsuite/")
         subprocess.run(["./run_parallel.pl"])
         os.chdir("../")
+        return
     elif tsuite_run.lower() == "y":
-        dir_prep_success = {}
+        update_copyright_year()
+
+        # Write release prep log
+        log_file = glob.glob("./cloudy_file_prep_log.txt")
+        if not log_file:
+            with open("./cloudy_file_prep_log.txt", 'w', encoding='utf-8') as f:
+                f.write("# Following directories are prepped for release:\n")
+            print("Release prep log file created: cloudy_file_prep_log.txt")
         cloudy_release = input("Enter cloudy release version number (e.g. \'c25.00\'): ")
-        dir_prep_success["source"] = prep_source(cloudy_release)
-        if dir_prep_success["source"] >= 0: os.chdir("../")
-        else: return
-        dir_prep_success["doxygen"] = prep_doxygen(cloudy_release)
-        if dir_prep_success["doxygen"] >= 0: os.chdir("../")
-        else: return
-        dir_prep_success["data"] = prep_data()
-        if dir_prep_success["doxygen"] >= 0: os.chdir("../")
-        else: return
-        dir_prep_success["tsuite"] = prep_tsuite()
-        if dir_prep_success["tsuite"] >= 0: os.chdir("../../")
-        # TODO: add a prep_scripts() routine
-        else: return
-        dir_prep_success["docs"] = prep_docs()
-        os.chdir("../")
+        with open("./cloudy_file_prep_log.txt", 'r', encoding='utf-8') as f:
+            release_log = f.read()
+        if "readme" not in release_log: update_readme(cloudy_release)
+        if "source" not in release_log: prep_source(cloudy_release)
+        if "doxygen" not in release_log: prep_doxygen(cloudy_release)
+        if "data" not in release_log: prep_data()
+        if "tsuite" not in release_log: prep_tsuite()
+        #if "scripts" not in release_log: prep_scripts()
+        if "docs" not in release_log: prep_docs()
 
-        print("Summary: \n")
-        for dir in dir_prep_success.keys():
-            if dir_prep_success[dir] == 0:
-                print(f"{dir} prepped successfully.")
-            elif dir_prep_success[dir] == -1:
-                print(f"{dir} FAILED!")
+        with open("./cloudy_file_prep_log.txt", 'r', encoding='utf-8') as f:
+            release_log = f.read()
+        if all(s in release_log for s in ["readme", "source", "doxygen", "data", "tsuite", "docs"]):
+            print("All directories prepped.")
 
-        if (-1 not in list(dir_prep_success.values())) and (1 not in list(dir_prep_success.values())):
             # Define your parameters
             output_file = f"{cloudy_release}.tar.gz"
-            branch_name = "EditReleaseScript" #release
+            branch_name = "release"
             prefix_dir = f"{cloudy_release}/"
 
             # Run the git archive command
-            print(f"Making {cloudy_release} tarball...")
+            print(f"Now creating {cloudy_release} tarball...")
             subprocess.run([
                 "git", "archive",
                 "--format=tar.gz",
@@ -559,6 +723,9 @@ def main():
             ], check=True)
 
             print(f"Tarball created: {output_file}")
+
+            if os.path.isfile(log_file[0]):
+                os.remove(log_file[0])
         else:
             print("I did not create a release tarball since some directories failed to be prepped.")
     else:
@@ -572,3 +739,6 @@ from pyppeteer import launch
 
 if __name__ == "__main__":
     main()
+
+# TODO: add in a read and update docs/latex/version.tex to the latest version number
+# TODO: some of these steps need to be in master, others only in release. This needs to be disentangled.

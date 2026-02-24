@@ -578,6 +578,14 @@ STATIC double Badnell_RR_rate_eval(
 		temp = -RRFitPar[nAtomicNumberCScale][n_core_e_before_recomb][5]/phycon.te; /* temp = (-T2/T) */
 		B = RRFitPar[nAtomicNumberCScale][n_core_e_before_recomb][1] + 
 			RRFitPar[nAtomicNumberCScale][n_core_e_before_recomb][4]*exp(temp);
+		/* confirm that RR coefficients have been read in
+		 * all Badnell DR species also had RR data until the Fe+8, +7 update in 2025 09,
+		 * which only includes DR. This exposed a logical error where sentinal
+		 * said that RR was present but no data were read in. Division by zero
+		 * occurred, which is not trapped on a Mac. Ubuntu gcc threw an fpe
+		 * but ubuntu llvm did not. These ASSERTS will always detect this error condition. */
+		ASSERT( RRFitPar[nAtomicNumberCScale][n_core_e_before_recomb][2]>0. );
+		ASSERT( RRFitPar[nAtomicNumberCScale][n_core_e_before_recomb][3]>0. );
 		D = sqrt(phycon.te/RRFitPar[nAtomicNumberCScale][n_core_e_before_recomb][2]); /* D = (T/T0)^1/2 */
 		F = sqrt(phycon.te/RRFitPar[nAtomicNumberCScale][n_core_e_before_recomb][3]); /* F = (T/T1)^1/2 */
 		RateCoefficient = RRFitPar[nAtomicNumberCScale][n_core_e_before_recomb][0]/(D*pow((1.+D),(1.-B))*pow((1.+F),(1.+B)));
@@ -1217,6 +1225,8 @@ void Badnell_rec_init( void )
 		}
 		if(chLine[0] != '#')
 		{
+			M_state = 0;
+			/* second line in Badnell files are null, which does not enter values in this sscanf */
 			sscanf(chLine.c_str(), "%i%i%i%i%lf%lf%lf%lf%lf%lf",
 				&NuclearCharge, &NumberElectrons, &M_state, &W_state, &temp_par[0], &temp_par[1],
 				&temp_par[2], &temp_par[3], &temp_par[4], &temp_par[5]);
@@ -1226,6 +1236,7 @@ void Badnell_rec_init( void )
 			{
 				ASSERT( NuclearChargeM1 < LIMELM );
 				ASSERT( NumberElectrons <= LIMELM );
+
 				/*Set a flag to '1' when the indices are defined */  
 				lgRRBadnellDefined[NuclearChargeM1][NumberElectrons] = true;
 				/*assign the values into array */

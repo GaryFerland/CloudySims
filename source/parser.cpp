@@ -1206,7 +1206,6 @@ void DataParser::p_close()
 	p_es = ES_INVALID;
 	p_line.clear();
 	p_nr = 0;
-	p_ls.str("");
 	p_ls.clear();
 	p_lgEOF = false;
 }
@@ -1215,19 +1214,26 @@ void DataParser::p_newlineProcess()
 {
 	DEBUG_ENTRY( "DataParser::p_newlineProcess()" );
 
-	auto p = p_line.find_first_of("#\r");
-	if( p != string::npos )
-		p_line.erase(p);
+	// remove comment part of the line, as well as CR when on Windows
+	const char* begin = p_line.data();
+	const char* end = begin + p_line.size();
+	for( auto p=begin; p < end; ++p )
+	{
+		if( UNLIKELY(*p == '#' || *p == '\r') )
+		{
+			p_line.erase(p-begin);
+			break;
+		}
+	}
 	p_ls.str(p_line);
-	p_ls.clear();
 }
 
 void DataParser::p_showLocation(size_t p, FILE *io)
 {
 	DEBUG_ENTRY( "DataParser::p_showLocation()" );
 
-	fprintf(io, "  %s\n", p_line.c_str());
-	fprintf(io, "  ");
+	fprintf(io, "\n  ==%s==\n", p_line.c_str());
+	fprintf(io, "    ");
 	// make sure tabs are treated correctly....
 	for( size_t i=0; i < p; ++i )
 	{
@@ -1246,13 +1252,13 @@ void DataParser::p_getQuoteOptional(string& str)
 	str.clear();
 	if( !p_ls.good() )
 	{
-		p_ls.setstate(ios_base::failbit);
+		p_ls.fail(true);
 		return;
 	}
 	p_skipWS();
 	if( p_ls.peek() != '\"' )
 	{
-		p_ls.setstate(ios_base::failbit);
+		p_ls.fail(true);
 		return;
 	}
 	char c = p_ls.get(); // eat the first double quote...
@@ -1261,10 +1267,10 @@ void DataParser::p_getQuoteOptional(string& str)
 		if( p_ls.eof() )
 		{
 			str.clear();
-			p_ls.setstate(ios_base::failbit);
+			p_ls.fail(true);
 			return;
 		}
-		str += c;
+		str.push_back(c);
 	}
 }
 
@@ -1353,19 +1359,21 @@ void DataParser::getLineID(LineID& line, bool lgAtStart)
 	if( !lgAtStart || p_line[0] == '\"' )
 	{
 		// skip to the first double quote on the line starting from the current position
-		auto p = p_line.substr(p_pos()).find('\"') + p_pos();
-		p_pos(p);
+		auto p = p_line.substr(p_pos()).find('\"');
+		if( p == string::npos )
+			errorAbort("failed to read line label between double quotes");
+		p_pos(p + p_pos());
 		getQuote(chLabel);
 	}
 	else
 	{
-		p_pos(min(p_line.length(), 4));
-		if( p_line.length() < 4 )
-			errorAbort("failed to read line label");
+		if( p_line.length() < 5 )
+			errorAbort("failed to read line ID, the line is too short");
 		// relax rule for whitespace in between tokens: if label
 		// is shorter than 4 chars, wavelength may start in 5th column
 		if( !isspace(p_line[3]) && !isspace(p_line[4]) )
 			errorAbort("found unrecognized input after line label");
+		p_pos(4);
 		chLabel = p_line.substr(0,4);
 	}
 	trimTrailingWhiteSpace(chLabel);
@@ -1389,7 +1397,7 @@ void DataParser::getLineID(LineID& line, bool lgAtStart)
 	}
 
 	realnum wave;
-	p_ls >> wave;
+	getTokenOptionalImpl(p_ls, p_line, wave);
 	if( p_ls.fail() )
 		errorAbort("failed to read wavelength");
 
@@ -1497,44 +1505,22 @@ bool DataParser::lgEODMarker() const
 		TotalInsanity();
 }
 
-NORETURN void DataParser::errorAbort(const string& msg, FILE *io)
+void DataParser::p_printMsg(const string& severity, const string& msg, FILE *io)
 {
-	DEBUG_ENTRY( "DataParser::errorAbort()" );
+	DEBUG_ENTRY( "DataParser::p_printMsg()" );
 
-	// need to clear flags first, otherwise tellg() will
-	// always return -1 if an error flag is set...
-	// this is OK since we abort immediately afterwards
-	p_ls.clear();
 	size_t p_ptr = p_pos();
-	if( p_filename.length() > 0 )
-		fprintf(ioQQQ, "\n %s:%ld:%ld: PROBLEM ERROR: ", p_filename.c_str(), p_nr, p_ptr);
-	fprintf(ioQQQ, "%s\n", msg.c_str());
 	p_showLocation(p_ptr, io);
-	cdEXIT(EXIT_FAILURE);
-}
-
-void DataParser::warning(const string& msg, FILE *io)
-{
-	DEBUG_ENTRY( "DataParser::warning()" );
-
-	// save state flags
-	ios::fmtflags f(p_ls.flags());
-	// now clear flags, otherwise tellg() will
-	// always return -1 if an error flag is set...
-	p_ls.clear();
-	size_t p_ptr = p_pos();
+	fprintf(io, " ");
 	if( p_filename.length() > 0 )
-		fprintf(ioQQQ, "\n %s:%ld:%ld: WARNING: ", p_filename.c_str(), p_nr, p_ptr);
-	fprintf(ioQQQ, "%s\n", msg.c_str());
-	p_showLocation(p_ptr, io);
-	// restore state flags to initial state
-	p_ls.flags(f);
+		fprintf(io, "%s:%ld:%ld: ", p_filename.c_str(), p_nr, p_ptr);
+	fprintf(io, "%s: %s\n", severity.c_str(), msg.c_str());
 }
 
 namespace Time {
 	const double
-	        GIGAYEAR=YEAR*1.0e9,
-	        MEGAYEAR=YEAR*1.0e6,
+		GIGAYEAR=YEAR*1.0e9,
+		MEGAYEAR=YEAR*1.0e6,
 		MILLENIUM=YEAR*1000.,
 		CENTURY=YEAR*100.,
 		FORTNIGHT=DAY*14.,

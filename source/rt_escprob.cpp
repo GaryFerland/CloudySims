@@ -1068,7 +1068,7 @@ double RT_LineWidth(const TransitionProxy& t, realnum DopplerWidth)
 	{
 		/* static geometry */
 		/* esc prob has noise if smaller than FLT_EPSILON, or is masing */
-		if( (tau-opac.taumin)/100. < FLT_EPSILON )
+		if( (tau-TAUMIN)/100. < FLT_EPSILON )
 		{
 			RT_LineWidth_v = 0.;
 		}

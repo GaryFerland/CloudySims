@@ -622,8 +622,8 @@ void diatomics::init(void)
 		(*tr).resetEmis();
 		(*tr).Emis().iRedisFun() = ipCRDW;
 		/* line optical depths in direction towards source of ionizing radiation */
-		(*tr).Emis().TauIn() = opac.taumin;
-		(*tr).Emis().TauCon() = opac.taumin;
+		(*tr).Emis().TauIn() = TAUMIN;
+		(*tr).Emis().TauCon() = TAUMIN;
 		/* outward optical depth */
 		(*tr).Emis().TauTot() = 1e20f;
 

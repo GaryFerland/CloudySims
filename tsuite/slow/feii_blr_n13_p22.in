@@ -455,7 +455,8 @@ monitor niter 3 error 0.01
 ## >>chng 18 jun 21, from 434 to 410, bugfixes at front face r12134:12136
 ## >>chng 19 jul 23. from 410 to 421, average between cloudy, nephos, gcc and clang, after fixing heavy ions impact excitation for iso-sequences 
 ## >>chng 23 jun 27, from 421 to 399, update Fe+ model to Smyth+19
-monitor nzone 399
+## >>chng 25 oct 01, from 399 to 407, average of seven runs
+monitor nzone 407
 ##
 ## >>chng 14 jul 08, from 1.01 to 7.952, Move FeII to Stout
 ## >>chng 23 jun 27, from 7.952 to 8.465, update Fe+ model to Smyth+19

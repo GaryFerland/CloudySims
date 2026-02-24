@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 
+class mystream;
+
 extern const double pos_pow10[];
 extern const int max_pow10;
 extern const double neg_pow10[];
@@ -20,53 +22,56 @@ void trimTrailingWhiteSpace( char *str );
 void trimWhiteSpace( string &str );
 
 // helper routine for DataParser -- efficiently read double
-void FPRead(istringstream& iss, const string& s, double& value);
+void FPRead(mystream& ms, const string& s, double& value);
 
 // helper routine for DataParser -- efficiently read sys_float
-inline void FPRead(istringstream& iss, const string& s, sys_float& value)
+inline void FPRead(mystream& ms, const string& s, sys_float& value)
 {
 	double x;
-	FPRead(iss, s, x);
+	FPRead(ms, s, x);
 	value = sys_float(x);
 }
 
 // helper routine for DataParser -- efficiently read signed 64-bit integer
-void IntRead(istringstream& iss, const string& s, long long& value);
+void IntRead(mystream& ms, const string& s, long long& value);
 
 // helper routine for DataParser -- efficiently read long
-inline void IntRead(istringstream& iss, const string& s, long& value)
+inline void IntRead(mystream& ms, const string& s, long& value)
 {
 	long long x;
-	IntRead(iss, s, x);
+	IntRead(ms, s, x);
 	value = long(x);
 }
 
 // helper routine for DataParser -- efficiently read int
-inline void IntRead(istringstream& iss, const string& s, int& value)
+inline void IntRead(mystream& ms, const string& s, int& value)
 {
 	long long x;
-	IntRead(iss, s, x);
+	IntRead(ms, s, x);
 	value = int(x);
 }
 
 // helper routine for DataParser -- efficiently read unsigned 64-bit integer
-void IntRead(istringstream& iss, const string& s, unsigned long long& value);
+void IntRead(mystream& ms, const string& s, unsigned long long& value);
 
 // helper routine for DataParser -- efficiently read unsigned int
-inline void IntRead(istringstream& iss, const string& s, unsigned long& value)
+inline void IntRead(mystream& ms, const string& s, unsigned long& value)
 {
 	unsigned long long x;
-	IntRead(iss, s, x);
+	IntRead(ms, s, x);
 	value = (unsigned long)x;
 }
 
 // helper routine for DataParser -- efficiently read unsigned int
-inline void IntRead(istringstream& iss, const string& s, unsigned int& value)
+inline void IntRead(mystream& ms, const string& s, unsigned int& value)
 {
 	unsigned long long x;
-	IntRead(iss, s, x);
+	IntRead(ms, s, x);
 	value = (unsigned int)x;
 }
+
+// helper routine for DataParser -- read C++-style string
+void StringRead(mystream& ms, const string& s, string& str);
 
 /** split_mode defines how the routine Split generates substrings
  * SPM_RELAX: multiple adjacent separators will be coalesced into one

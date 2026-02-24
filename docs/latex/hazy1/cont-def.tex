@@ -57,7 +57,7 @@ of energy bins needed to store the radiation field is proportional to the
 resolving power.  The number of bins is a major pace setter for the code since it
 must continuously reevaluate various integrals over the radiation field.
 The resolving power of the
-coarse continuum is defined in the file \cdFilename{continuum\_mesh.ini}
+coarse continuum is defined in the file \cdFilename{continuum\_mesh.dat}
 in the data directory.
 This file is designed to be changed by the user and can be
 changed to much higher resolving power if need be.  This is all described in
@@ -65,9 +65,6 @@ Section~\ref{Hazy2-sec:ChangingMeshResolution} in Part 2 of this document.
 The resolution of the coarse continuum for a particular model can also be changed with the 
 \cdCommand{set continuum resolution} command described on 
 page \pageref{sec:CommandSetContinuumOptions}.
-If you change the continuum resolution you will need to recompile
-the stellar continuua and grain opacities so that their energy grid
-agrees with that used by the code.
 
 The resolving power of the fine continuum is established at the start of a calculation.
 It needs to resolve lines, so the resolution depends on the lowest possible kinetic temperature
