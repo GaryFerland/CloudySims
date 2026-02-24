@@ -98,7 +98,6 @@ double helike_quantum_defect( long nelem, long n, long lqn, long S, long j )
 		if( n<=10 && n<=iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max )
 		{
 			double Econt = iso_sp[ipHE_LIKE][nelem].energy_ioniz(n, lqn, S, 2*j+1);
-			fprintf(ioQQQ,"n %li,lqn %li ,S%li, j %li, Econt %g %g\n",n,lqn,S,j,Econt, iso_sp[ipHE_LIKE][nelem].IonPot);
 			ASSERT( Econt >= 0. );
 			qd = n - sqrt(HE_RYD_FACTOR*RYD_INF/Econt);
 		} 
