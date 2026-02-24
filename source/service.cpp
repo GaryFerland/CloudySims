@@ -1374,7 +1374,7 @@ double qg32(
 	 *                                                                              *
 	 *  32-point Gaussian quadrature                                                *
 	 *  xl  : the lower limit of integration                                        *
-	 *  xu  : the upper limit                                                       *
+	 *  xu  : the upper limit														*
 	 *  fct : the (external) function                                               *
 	 *  returns the value of the integral                                           *
 	 *                                                                              *

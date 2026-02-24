@@ -720,7 +720,7 @@ double t_ADfA::rad_rec(long int iz,
 
 	DEBUG_ENTRY( "rad_rec()" );
 
-	if( iz < 1 || iz > 30 )
+	if( iz < 1 || iz > LIMELM )
 	{
 		fprintf( ioQQQ, " rad_rec called with insane atomic number, =%4ld\n", 
 		  iz );
