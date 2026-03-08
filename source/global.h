@@ -4,10 +4,10 @@
 #ifndef GLOBAL_H_
 #define GLOBAL_H_
 
+class t_deuterium;
+extern t_deuterium deut;
+
 class t_dense;
 extern t_dense dense;
-
-class ColliderList;
-extern ColliderList colliders;
 
 #endif /* GLOBAL_H__ */

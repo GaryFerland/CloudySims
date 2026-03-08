@@ -18,7 +18,7 @@ int main(int argc, char** argv)
 	}
 	for( int i=1; i < argc; ++i )
 	{
-		string vh128sum = VHstream(argv[i]);
+		string vh128sum = VHfile(argv[i]);
 		if( vh128sum == string() )
 		{
 			cerr << argv[0] << ": " << argv[i] << ": an error occurred while computing checksum" << endl;

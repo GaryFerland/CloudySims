@@ -24,6 +24,7 @@
 #include "magnetic.h"
 #include "hydrogenic.h"
 #include "secondaries.h"
+#include "grains.h"
 #include "grainvar.h"
 #include "lines.h"
 #include "dynamics.h"
@@ -1452,7 +1453,7 @@ void SaveDo(
 					fprintf( save.params[ipPun].ipPnunit, "%32ld # file format version number\n",
 							 VERSION_TRNCON );
 					fprintf( save.params[ipPun].ipPnunit, "%s # check 1\n",
-							 rfield.mesh_md5sum().c_str() );
+							 rfield.mesh_cksum().c_str() );
 					union {
 						double x;
 						uint32 i[2];
@@ -1553,19 +1554,19 @@ void SaveDo(
 				/* save grain cross sections per hydrogen, cm^2/H */
 				if( lgLastOnly )
 				{
-					for( j=0; j < rfield.nflux; j++ )
+					for( j=0; j < gv.nflux; j++ )
 					{
 						double scat;
 						fprintf( save.params[ipPun].ipPnunit, 
 						  "%.5e\t%.2e\t%.2e\t%.2e\t", 
 						  /* photon energy or wavelength */
-						  AnuUnit(rfield.anu(j)), 
+						  AnuUnit(gv.anu(j)), 
 						  /* total cross section per hydrogen cm^2/H, discount forward scattering */
-						  gv.dstab[j] + gv.dstsc[j], 
+						  gv.dstab0[j] + gv.dstsc0[j], 
 						  /* absorption cross section per H */
-						  gv.dstab[j], 
+						  gv.dstab0[j], 
 						  /* scatter, with forward discounted */
-						  gv.dstsc[j] );
+						  gv.dstsc0[j] );
 						/* add together total scattering, discounting 1-g */
 						scat = 0.;
 						/* sum over all grain species */
@@ -1783,15 +1784,15 @@ void SaveDo(
 						fprintf( save.params[ipPun].ipPnunit, "\n" );
 						save.SaveHeaderDone(ipPun);
 					}
-					for( j=0; j < rfield.nflux; j++ )
+					for( j=0; j < gv.nflux; j++ )
 					{
 						fprintf( save.params[ipPun].ipPnunit, " %.5e", 
-						  rfield.anu(j) );
+								 gv.anu(j) );
 						for( size_t nd=0; nd < gv.bin.size(); nd++ )
 						{
 							fprintf( save.params[ipPun].ipPnunit, "\t%.3e\t%.3e", 
-							   gv.bin[nd].dstab1[j]*4./gv.bin[nd].IntArea,
-							   gv.bin[nd].pure_sc1[j]*gv.bin[nd].asym[j]*4./gv.bin[nd].IntArea );
+									 gv.bin[nd].dstab1[j]*4./gv.bin[nd].IntArea,
+									 gv.bin[nd].pure_sc1[j]*gv.bin[nd].asym[j]*4./gv.bin[nd].IntArea );
 						}
 						fprintf( save.params[ipPun].ipPnunit, "\n" );
 					}
@@ -3199,7 +3200,6 @@ void SaveDo(
 					/* >>chyng 03 feb 25, report extinction to illuminated face,
 					 * rather than total extinction which included far side when
 					 * sphere was set */
-					/*av = opac.TauTotalGeo[0][rfield.ipV_filter-1]*1.08574;*/
 
 					fprintf( save.params[ipPun].ipPnunit, 
 						"%.5e\t%.2e\t%.2e\t%.2e\t%.2e\t%.2e\t%.2e\t%.2e\t%.2e\t%.2e\t", 
@@ -3226,7 +3226,8 @@ void SaveDo(
 					fprintf( save.params[ipPun].ipPnunit, "%.2e\t" , rfield.extin_mag_V_extended);
 
 					/* visual extinction (all sources) of a point source (like a PDR)*/
-					fprintf( save.params[ipPun].ipPnunit, "%.2e\n", opac.TauAbsGeo[0][rfield.ipV_filter] );
+					long ip = rfield.ipointC( RYDLAM / WL_V_FILT );
+					fprintf( save.params[ipPun].ipPnunit, "%.2e\n", opac.TauAbsGeo[0][ip] );
 				}
 			}
 

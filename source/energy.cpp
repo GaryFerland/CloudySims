@@ -18,6 +18,7 @@
 #include "wind.h"
 #include "dynamics.h"
 #include "lines_service.h"
+#include "physconst.h"
 
 static const char *ENERGY_RYD    = "Ryd";
 static const char *ENERGY_ERG    = "erg";

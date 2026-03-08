@@ -442,19 +442,34 @@ void PrtZone(void)
 			*  asterisk just after the name (K Volk)
 			*  added QHMARK here and in the write statement */
 			chQHMark = (char)(( gv.bin[nd].lgQHeat && gv.bin[nd].lgUseQHeat ) ? '*' : ' ');
-			fprintf( ioQQQ, "%-12.12s%c  DustTemp",gv.bin[nd].chDstLab, chQHMark);
-			fprintf(ioQQQ,PrintEfmt("%9.2e", gv.bin[nd].tedust));
-			fprintf( ioQQQ, " Pot Volt");
-			fprintf(ioQQQ,PrintEfmt("%9.2e", gv.bin[nd].dstpot*EVRYD));
+			fprintf( ioQQQ, "%-12.12s%c  Pot (Volt)",gv.bin[nd].chDstLab, chQHMark);
+			fprintf(ioQQQ,PrintEfmt("%10.3e", gv.bin[nd].dstpot*EVRYD));
 			fprintf( ioQQQ, " Chrg (e)");
-			fprintf(ioQQQ,PrintEfmt("%9.2e", gv.bin[nd].AveDustZ));
-			fprintf( ioQQQ, " drf cm/s");
-			fprintf(ioQQQ,PrintEfmt("%9.2e", gv.bin[nd].DustDftVel));
-			fprintf( ioQQQ, " Heating:");
-			fprintf(ioQQQ,PrintEfmt("%9.2e", gv.bin[nd].GasHeatPhotoElBin));
+			fprintf(ioQQQ,PrintEfmt("%10.3e", gv.bin[nd].AveDustZ));
+			fprintf( ioQQQ, " drift vel (cm/s)");
+			fprintf(ioQQQ,PrintEfmt("%10.3e", gv.bin[nd].DustDftVel));
+			fprintf( ioQQQ, " Heating (erg/cm^3/s)");
+			fprintf(ioQQQ,PrintEfmt("%10.3e", gv.bin[nd].GasHeatPhotoElBin));
 			fprintf( ioQQQ, " Frac tot");
-			fprintf(ioQQQ,PrintEfmt("%9.2e", gv.bin[nd].GasHeatPhotoElBin/thermal.htot));
+			fprintf(ioQQQ,PrintEfmt("%10.3e", gv.bin[nd].GasHeatPhotoElBin/thermal.htot));
 			fprintf( ioQQQ, "\n" );
+			fprintf( ioQQQ, "               " );
+			for( long nz=0; nz < gv.bin[nd].nChrg; ++nz )
+			{
+				fprintf( ioQQQ, "nz=%2ld Zg=%4ld FracPop", nz, gv.bin[nd].chrg(nz).DustZ);
+				fprintf(ioQQQ,PrintEfmt("%10.3e", gv.bin[nd].chrg(nz).FracPop));
+				fprintf( ioQQQ, " Temp");
+				fprintf(ioQQQ,PrintEfmt("%10.3e", gv.bin[nd].chrg(nz).tedust));
+				if( nz < gv.bin[nd].nChrg-1 )
+				{
+					if( (nz%2) == 0 )
+						fprintf( ioQQQ, "     " );
+					else
+						fprintf( ioQQQ, "\n               " );
+				}
+				else
+					fprintf( ioQQQ, "\n" );
+			}
 		}
 	}
 	/* >>chng 00 apr 20, moved save-out of quantum heating data to qheat(), by PvH */

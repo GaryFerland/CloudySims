@@ -552,7 +552,7 @@ void VectorHash(const void* key, size_t len, uint32_t seed, void* out)
 
 #endif
 
-string VHstream(const string& fpath)
+string VHfile(const string& fpath)
 {
 	fs::path fsp = fpath;
 	error_code ec;
@@ -591,17 +591,5 @@ string VHstream(const string& fpath)
 		hash << hex << setfill('0') << setw(8) << state[i];
 
 	fclose(io);
-	return hash.str();
-}
-
-string VHstring(const string& s)
-{
-	uint32_t state[vh_nstate];
-	VectorHash( s.data(), s.length(), 0xfd4c799d, state );
-
-	ostringstream hash;
-	for( uint32_t i=0; i < vh_nstate; ++i )
-		hash << hex << setfill('0') << setw(8) << state[i];
-
 	return hash.str();
 }

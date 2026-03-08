@@ -84,9 +84,6 @@ void GrainBin::p_clear1()
 	cnv_CM3_pH = -DBL_MAX;
 	cnv_GR_pH = -DBL_MAX;
 	cnv_GR_pCM3 = -DBL_MAX;
-	/* used to check that the energy grid resolution scale factor in
-	 * grains opacity files is the same as current cloudy scale */
-	RSFCheck = 0.;
 	memset( dstems, 0, NDEMS*sizeof(dstems[0]) );
 	memset( dstslp, 0, NDEMS*sizeof(dstslp[0]) );
 	memset( dstslp2, 0, NDEMS*sizeof(dstslp2[0]) );
@@ -159,7 +156,6 @@ void GrainVar::p_clear1()
 {
 	lgAnyDustVary = false;
 	TotalEden = 0.;
-	dHeatdT = 0.;
 	lgQHeatAll = false;
 	/* lgGrainElectrons - should grain electron source/sink be included in overall electron sum?
 	 * default is true, set false with no grain electrons command */
