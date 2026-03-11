@@ -229,6 +229,7 @@ clean: testclean
 	rm -rf vh128sum.exe.dSYM
 	rm -f libcloudy.${LIBEXT}
 	rm -f $(DEFAULT)
+	rm -f tmp_ccf.tmp
 	rm -rf tmp_cloudyconfig.*
 	rm -f cloudyconfig.h
 
