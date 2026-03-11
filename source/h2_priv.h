@@ -443,6 +443,11 @@ private:
 	/*#define	ENERGY_H2_STAR	(0.5/EVRYD/WAVNRYD)*/
 	/* energy of v=0, J=8 is 4051.73, J=9 is 5001.97
 	 * v=1, J=0 is 4161.14 */
+	/* 26 03 11 discovered that reintegration of diatomic branch changed energy for H2* to 2000 wn
+	 * we intended to follow Tielens and Hollenbach 1985ApJ...291..722T who mention 2.6 eV
+	 * Shaw+ 2005 2005ApJ...624..794S choose 2.6 eV=20,970 cm-1 as the cutoff for H2g - H2*  
+	 * NB Shaw+ energy of 2.6 eV energy is not consistent with line 443 above where we say 4051 wn*/
+	/* the energy is set in the diatomics class constructor at h2.ccp:16 */
 public:
 	const double ENERGY_H2_STAR;
 

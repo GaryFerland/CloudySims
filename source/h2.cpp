@@ -7,9 +7,12 @@
 	
 vector<diatomics*> diatoms;
 
+/* energy cutoff in wn for H2g - H2* */
 diatomics h2("h2", 4100., &hmi.H2_total, Yan_H2_CS);
 diatomics hd("hd", 4100., &hmi.HD_total, Yan_H2_CS);
 
+/* constructor for diatomics class 
+ * ENERGY_H2_STAR set to e_star */
 diatomics::diatomics( const string& a, const double& e_star, const double* const abund, double (*fun)(double) ):
 	trans(a, &states), ENERGY_H2_STAR (e_star), dense_total(abund)
 	{
