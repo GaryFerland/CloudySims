@@ -1,6 +1,7 @@
 #!/bin/sh
 comp="$*"
-config="cloudyconfig.h"
+config="tmp_ccf.h"
+config_final="cloudyconfig.h"
 rm -f $config
 rm -rf tmp_cloudyconfig.*
 cat >> tmp_cloudyconfig.cpp <<EOF
@@ -479,3 +480,7 @@ else
     echo "#undef HAVE_URANDOM" >> $config
 fi
 rm -rf tmp_cloudyconfig.*
+# the following mv statement should be the last command in the script
+# it makes sure that cloudyconfig.h only becomes visible to make when
+# the configuration file is entirely complete
+mv $config $config_final
