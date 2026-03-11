@@ -1,8 +1,8 @@
 #!/bin/sh
 comp="$*"
-config="tmp_ccf.h"
+config="tmp_ccf.tmp"
 config_final="cloudyconfig.h"
-rm -f $config
+rm -f $config $config_final
 rm -rf tmp_cloudyconfig.*
 cat >> tmp_cloudyconfig.cpp <<EOF
 int sub()
