@@ -51,7 +51,7 @@ void ChargeBin::p_clear1()
 	DustZ = LONG_MIN;
 	nfill = 0;
 	FracPop = -DBL_MAX;
-	tedust = 1.f;
+	tedust = 1.;
 	hcon1 = -DBL_MAX;
 	hots1 = -DBL_MAX;
 	GrainHeatCS = DBL_MAX/10.;
@@ -89,7 +89,7 @@ void GrainBin::p_clear1()
 	memset( dstslp2, 0, NDEMS*sizeof(dstslp2[0]) );
 	/* >>chng 00 jun 19, tedust has to be greater than zero
 	 * to prevent division by zero in GrainElecEmis and GrainCollHeating, PvH */
-	tedust = 1.f;
+	tedust = 1.;
 	TgZoneMin = FLT_MAX;
 	TgZoneMax = FLT_MAX;
 	TeGrainMax = FLT_MAX;

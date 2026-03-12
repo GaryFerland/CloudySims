@@ -215,7 +215,7 @@ void GrainStartIter()
 			gv.bin[nd].avdpot = 0.;
 			gv.bin[nd].avdft = 0.;
 			gv.bin[nd].avDGRatio = 0.;
-			gv.bin[nd].TeGrainMax = -1.f;
+			gv.bin[nd].TeGrainMax = -1.;
 			gv.bin[nd].lgEverQHeat = false;
 			gv.bin[nd].QHeatFailures = 0L;
 			gv.bin[nd].lgQHTooWide = false;
@@ -1266,13 +1266,13 @@ void GrainDrive()
 					gv.bin[nd].chrg(nz).DustZ = nz;
 					gv.bin[nd].chrg(nz).FracPop = ( nz == 0 ) ? 1. : 0.;
 					gv.bin[nd].chrg(nz).nfill = 0;
-					gv.bin[nd].chrg(nz).tedust = 100.f;
+					gv.bin[nd].chrg(nz).tedust = 100.;
 				}
 
 				gv.bin[nd].AveDustZ = 0.;
 				gv.bin[nd].dstpot = chrg2pot(0.,nd);
 
-				gv.bin[nd].tedust = 100.f;
+				gv.bin[nd].tedust = 100.;
 				gv.bin[nd].TeGrainMax = 100.;
 
 				/* set all heating/cooling agents to zero */
@@ -1542,7 +1542,7 @@ STATIC void GrainChargeTemp()
 									gptr.tedust <= TdBracketLo ||
 									gptr.tedust >= TdBracketHi )
 								{
-									gptr.tedust = (realnum)(0.5*(TdBracketLo + TdBracketHi));
+									gptr.tedust = 0.5*(TdBracketLo + TdBracketHi);
 									/* >>chng 05 jun 22, update ThermRate for new tedust
 									 * (orion_pdr10.in), this creates a charging imbalance
 									 * which is tested after the loop over nz, PvH */
@@ -1622,7 +1622,7 @@ STATIC void GrainChargeTemp()
 									gptr.tedust <= ChTdBracketLo ||
 									gptr.tedust >= ChTdBracketHi )
 								{
-									gptr.tedust = (realnum)(0.5*(ChTdBracketLo + ChTdBracketHi));
+									gptr.tedust = 0.5*(ChTdBracketLo + ChTdBracketHi);
 									if( trace.lgTrace && trace.lgDustBug )
 										which = "bisection";
 								}
@@ -1703,9 +1703,9 @@ STATIC void GrainChargeTemp()
 
 		/* >>chng 04 jan 25, moved initialization of phiTilde to qheat_init(), PvH */
 
-		gv.bin[nd].tedust = 0.f;
-		gv.bin[nd].TgZoneMin = FLT_MAX;
-		gv.bin[nd].TgZoneMax = 0.f;
+		gv.bin[nd].tedust = 0.;
+		gv.bin[nd].TgZoneMin = DBL_MAX;
+		gv.bin[nd].TgZoneMax = 0.;
 
 		for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
 		{
@@ -1757,8 +1757,8 @@ STATIC void GrainChargeTemp()
 				gv.bin[nd].GasCoolCollBin += gptr.FracPop*gptr.GasCoolCollCS;
 
 			gv.bin[nd].tedust += gptr.FracPop*gptr.tedust;
-			gv.bin[nd].TgZoneMin = (realnum)MIN2(gv.bin[nd].TgZoneMin,gptr.tedust);
-			gv.bin[nd].TgZoneMax = (realnum)MAX2(gv.bin[nd].TgZoneMax,gptr.tedust);
+			gv.bin[nd].TgZoneMin = MIN2(gv.bin[nd].TgZoneMin,gptr.tedust);
+			gv.bin[nd].TgZoneMax = MAX2(gv.bin[nd].TgZoneMax,gptr.tedust);
 
 			if( trace.lgTrace && trace.lgDustBug )
 			{
@@ -1770,7 +1770,7 @@ STATIC void GrainChargeTemp()
 		}
 
 		/*  save for later possible printout */
-		gv.bin[nd].TeGrainMax = (realnum)MAX2(gv.bin[nd].TeGrainMax,gv.bin[nd].TgZoneMax);
+		gv.bin[nd].TeGrainMax = MAX2(gv.bin[nd].TeGrainMax,gv.bin[nd].TgZoneMax);
 	}
 
  	if( gv.lgBakesPAH_heat && gv.lgDHetOn )
@@ -4047,8 +4047,8 @@ STATIC void GrainTemperature(size_t nd,
 	 * it can be benificial to make sure that grain temperature and the thermionic rates agree
 	 * with each other using this convergence loop. since calculating thermionic rates and the
 	 * resulting temperature is extremely fast, we do not need to be stingy in this loop */
-	iter_track_basic<realnum> tr;
-	realnum OldTg;
+	iter_track_basic<double> tr;
+	double OldTg;
 	double OldGH, NewGH = -1.e100;
 	for( int n=0; n < 50; ++n )
 	{
@@ -4087,7 +4087,7 @@ STATIC void GrainTemperature(size_t nd,
 			double y, x = log(MAX2(DBL_MIN,gptr.GrainHeatCS*gv.bin[nd].cnv_CM3_pH));
 			/* >>chng 96 apr 27, as per Peter van Hoof comment */
 			splint_safe(gv.bin[nd].dstems,gv.dsttmp,gv.bin[nd].dstslp,NDEMS,x,&y,&lgOutOfBounds);
-			gptr.tedust = (realnum)exp(y);
+			gptr.tedust = exp(y);
 		}
 		else
 		{
@@ -4095,7 +4095,7 @@ STATIC void GrainTemperature(size_t nd,
 		}
 		NewGH =	gptr.GrainHeatCS;
 
-		gptr.lgTdustConverged = ( min(NewGH, OldGH) > 0. && fabs(NewGH-OldGH) <= 1.e-3*CONSERV_TOL*NewGH );
+		gptr.lgTdustConverged = ( min(NewGH, OldGH) > 0. && fabs(NewGH-OldGH) <= 1.e-4*CONSERV_TOL*NewGH );
 		if( gptr.lgTdustConverged )
 			break;
 

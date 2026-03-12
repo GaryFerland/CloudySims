@@ -244,7 +244,7 @@ public:
 
 	/** grain heating */
 	bool lgTdustConverged;  /**< is dust temperature converged ? */
-	realnum tedust;         /**< equilibrium temperature for this zone */
+	double tedust;          /**< equilibrium temperature for this zone */
 	double hcon1;           /**< reminder of heating integral over incident flux, Ryd/H/s at default depl */
 	double hots1;           /**< reminder of heating integral over diffuse fields, Ryd/H/s at default depl */
 	double pe1;             /**< reminder of photoelectric heating integral, Ryd/H/s at default depl */
@@ -366,11 +366,11 @@ public:
 	  dstslp[NDEMS],        /**< auxiliary array for spline interpolation */
 	  dstslp2[NDEMS];       /**< auxiliary array for inverse spline interpolation */
 
-	realnum tedust,         /**< equilibrium temperature for this zone */
-	  TgZoneMin,            /**< minimum grain temperature over all charge states for this zone, OUTPUT ONLY */
-	  TgZoneMax,            /**< maximum grain temperature over all charge states for this zone, OUTPUT ONLY */
-	  TeGrainMax,           /**< highest equilibrium temperature as a function of radius, OUTPUT ONLY */
-	  avdust;               /**< Integral(Tdust*dReff) for average equilibrium temperature, OUTPUT ONLY */
+	double tedust;          /**< equilibrium temperature for this zone */
+	double TgZoneMin;       /**< minimum grain temperature over all charge states for this zone, OUTPUT ONLY */
+	double TgZoneMax;       /**< maximum grain temperature over all charge states for this zone, OUTPUT ONLY */
+	double TeGrainMax;      /**< highest equilibrium temperature as a function of radius, OUTPUT ONLY */
+	realnum avdust;         /**< Integral(Tdust*dReff) for average equilibrium temperature, OUTPUT ONLY */
 
 	/** grain charging, photoelectric effect, thermionic emissions
 	 *
