@@ -1655,17 +1655,40 @@ STATIC void GrainChargeTemp()
 				}
 			}
 
+			string reason;
+			if( lgTryAnotherIter )
+				reason += " delta";
+
+			/* double-check the charge convergence */
+			auto oldZ0 = gv.bin[nd].chrg(0).DustZ;
+			GrainCharge(nd, &ThermRatio);
+			if( gv.bin[nd].chrg(0).DustZ != oldZ0 )
+			{
+				lgTryAnotherIter = true;
+				reason += " Z0";
+			}
+
 			gv.bin[nd].lgChTdConverged = gv.bin[nd].lgChrgConverged && !lgTryAnotherIter;
 			for( long nz=0; nz < gv.bin[nd].nChrg; ++nz )
 			{
 				if( !gv.bin[nd].chrg(nz).lgTdustConverged )
+				{
 					gv.bin[nd].lgChTdConverged = false;
+					ostringstream oss;
+					oss << " Td[" << nz << "]";
+					reason += oss.str();
+				}
 				/* this test indicates that this charge state was never evaluated at all -> do it now */
 				if( gv.bin[nd].chrg(nz).GasCoolCollCS < -1e100 )
 					GrainTemperature(nd,nz);
 			}
 			if( trace.lgTrace && trace.lgDustBug )
-				fprintf( ioQQQ, " >>GrainChargeTemp overall convergence: %c\n", TorF(gv.bin[nd].lgChTdConverged));
+			{
+				if( reason.size() == 0 )
+					reason = " none";
+				fprintf( ioQQQ, " >>GrainChargeTemp overall convergence: %c reason:%s\n",
+						 TorF(gv.bin[nd].lgChTdConverged), reason.c_str());
+			}
 		}
 		
 		if( !gv.bin[nd].lgChTdConverged )
