@@ -137,7 +137,7 @@ STATIC double ThetaNu(double);
 /* update items that depend on grain potential */
 STATIC void UpdatePot(size_t,long,long,/*@out@*/double[],/*@out@*/double[]);
 /* calculate charge state populations */
-STATIC void GetFracPop(size_t,long,long,/*@in@*/double[],/*@in@*/double[],/*@out@*/long*);
+STATIC void GetFracPop(size_t,long,/*@in@*/double[],/*@in@*/double[],/*@out@*/long*);
 /* this routine updates all quantities that depend only on grain charge and radius */
 STATIC void UpdatePot1(size_t,long,long,long);
 /* this routine updates all quantities that depend on grain charge, radius and temperature */
@@ -1955,6 +1955,12 @@ STATIC void GrainCharge(size_t nd,
 
 	DEBUG_ENTRY( "GrainCharge()" );
 
+	/* find dust charge */
+	if( trace.lgTrace && trace.lgDustBug )
+	{
+		fprintf( ioQQQ, "    Charge loop, search %c,", TorF(conv.lgSearch) );
+	}
+
 	ASSERT( nd < gv.bin.size() );
 
 	for( nz=0; nz < NCHS; nz++ )
@@ -1966,13 +1972,6 @@ STATIC void GrainCharge(size_t nd,
 	 * in the n-charge state model as described in:
 	 *
 	 * >>refer	grain	physics	van Hoof P.A.M., Weingartner J.C., et al., 2004, MNRAS, 350, 1330
-	 *
-	 * this algorithm has been tweaked to use larger strides for large grains
-	 * because such grains have a very broad charge distribution and finding
-	 * the correct bracket down to a single charge state would be too unstable.
-	 * the final stride (called stride1) is an integer power of n-1 (where n
-	 * is the number of charge states) chosen to give appoximately a 0.02 Ryd
-	 * step in grain potential. the text below assumes that stride1 == 1.
 	 *
 	 * the algorithm first uses the n charge states to bracket the solution by
 	 * separating the charge states with a stride that is an integral power of
@@ -2022,18 +2021,6 @@ STATIC void GrainCharge(size_t nd,
 
 	stride0 = gv.bin[nd].nChrg-1;
 
-	const double MIN_POT_STEP = 0.02; /* Ryd */
-	double help = log(MIN_POT_STEP*EVRYD*gv.bin[nd].Capacity/ELEM_CHARGE)/log((double)stride0);
-	long power1 = max(long(help),0);
-	power1 = 0;
-	long stride1 = ipow(stride0, power1);
-
-	/* find dust charge */
-	if( trace.lgTrace && trace.lgDustBug )
-	{
-		fprintf( ioQQQ, "    Charge loop, search %c, stride1 %ld", TorF(conv.lgSearch), stride1 );
-	}
-
 	/* set up initial bracket for grain charge, will be checked below */
 	if( gv.bin[nd].lgIterStart )
 	{
@@ -2059,20 +2046,21 @@ STATIC void GrainCharge(size_t nd,
 				Zlo = -long(nint(step/4.));
 			}
 			power = (int)(log(step)/log((double)stride0));
-			power = max(power,power1);
-			stride = ipow(stride0,power);
+			power = MAX2(power,0);
+			double xxx = powi((double)stride0,power);
+			stride = nint(xxx);
 		}
 		else
 		{
 			// use the initial solution from the previous iteration
-			stride = stride1;
+			stride = 1;
 			Zlo = gv.bin[nd].ZloSave;
 		}
 	}
 	else
 	{
 		/* the previous solution is the best choice here */
-		stride = stride1;
+		stride = 1;
 		Zlo = gv.bin[nd].chrg(0).DustZ;
 	}
 	Zlo = max(Zlo,gv.bin[nd].LowestZg);
@@ -2108,7 +2096,7 @@ STATIC void GrainCharge(size_t nd,
 	}
 
 	/* home in on the charge */
-	while( stride > stride1 )
+	while( stride > 1 )
 	{
 		stride /= stride0;
 
@@ -2138,7 +2126,7 @@ STATIC void GrainCharge(size_t nd,
 	lgBigError = true;
 	for( i=0; i < loopMax; i++ )
 	{
-		GetFracPop( nd, Zlo, stride1, rate_up, rate_dn, &newZlo );
+		GetFracPop( nd, Zlo, rate_up, rate_dn, &newZlo );
 
 		if( newZlo == Zlo )
 		{
@@ -2147,7 +2135,7 @@ STATIC void GrainCharge(size_t nd,
 		}
 
 		Zlo = newZlo;
-		UpdatePot( nd, Zlo, stride1, rate_up, rate_dn );
+		UpdatePot( nd, Zlo, 1, rate_up, rate_dn );
 	}
 
 	/* >>chng 05 jun 24, when thermionic emissions are important, this can destabilize the
@@ -2198,6 +2186,8 @@ STATIC void GrainCharge(size_t nd,
 			csum1b += gv.bin[nd].chrg(nz).FracPop*d[1];
 			csum2 += gv.bin[nd].chrg(nz).FracPop*d[2];
 			csum3 += gv.bin[nd].chrg(nz).FracPop*d[3];
+			fprintf( ioQQQ, "    nz=%ld rate1a=%.4e, rate1b=%.4e, ", nz, d[0], d[1] );
+			fprintf( ioQQQ, "rate2=%.4e, rate3=%.4e, sum=%.4e\n", d[2], d[3], d[0]+d[1]+d[2]+d[3] );
 		}
 
 		fprintf( ioQQQ, "    ElecEm  rate1a=%.4e, rate1b=%.4e, ", csum1a, csum1b );
@@ -2214,6 +2204,7 @@ STATIC void GrainCharge(size_t nd,
 			crate += gv.bin[nd].chrg(nz).FracPop*GrainElecRecomb1(nd,nz,&d[0],&d[1]);
 			csum1 += gv.bin[nd].chrg(nz).FracPop*d[0];
 			csum2 += gv.bin[nd].chrg(nz).FracPop*d[1];
+			fprintf( ioQQQ, "    nz=%ld rate1=%.4e, rate2=%.4e, sum=%.4e\n", nz, d[0], d[1], d[0]+d[1] );
 		}
 
 		fprintf( ioQQQ, "    ElecRc  rate1=%.4e, rate2=%.4e, sum=%.4e\n", csum1, csum2, crate );
@@ -2653,7 +2644,6 @@ STATIC void UpdatePot(size_t nd,
 /* calculate charge state populations */
 STATIC void GetFracPop(size_t nd,
 					   long Zlo,
-					   long stride,
 					   /*@in@*/ double rate_up[], /* rate_up[NCHU] */
 					   /*@in@*/ double rate_dn[], /* rate_dn[NCHU] */
 					   /*@out@*/ long *newZlo)
@@ -2718,7 +2708,7 @@ STATIC void GetFracPop(size_t nd,
 		/* ascertain that the choice of Zlo was correct, this is to ensure positive
 		 * level populations and continuous emission and recombination rates */
 		if( netloss[0]*netloss[1] > 0. )
-			*newZlo = ( netloss[1] > 0. ) ? Zlo + stride : Zlo - stride;
+			*newZlo = ( netloss[1] > 0. ) ? Zlo + 1 : Zlo - 1;
 		else
 			*newZlo = Zlo;
 
