@@ -90,7 +90,8 @@ save element magnesium last "pdr_th85ism_cgto.mag"
 ## these are for the grains
 save grain extinction last  "pdr_th85ism_cgto.grnext"
 save grain potential last   "pdr_th85ism_cgto.grnpot"
-save grain temperature last "pdr_th85ism_cgto.grntem"
+save grain temperature last "pdr_th85ism_cgto.grntemres"
+save grain temperature average last "pdr_th85ism_cgto.grntem"
 save grain charge last "pdr_th85ism_cgto.grnchr"
 #
 # commands giving the monitors    =========

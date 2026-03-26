@@ -1670,23 +1670,59 @@ void SaveDo(
 				/* grain temperatures - K*/
 				if( ! lgLastOnly )
 				{
-					/* do labels first if this is first zone */
-					if( save.lgSaveHeader(ipPun) )
+					if( save.lgTgrAverage[ipPun] )
 					{
-						/* first print string giving grain id */
-						fprintf( save.params[ipPun].ipPnunit, "#Depth" );
-						for( size_t nd=0; nd < gv.bin.size(); ++nd ) 
-							fprintf( save.params[ipPun].ipPnunit, "\t%s", gv.bin[nd].chDstLab );
+						/* do labels first if this is first zone */
+						if( save.lgSaveHeader(ipPun) )
+						{
+							/* first print string giving grain id */
+							fprintf( save.params[ipPun].ipPnunit, "#Depth" );
+							for( size_t nd=0; nd < gv.bin.size(); ++nd ) 
+								fprintf( save.params[ipPun].ipPnunit, "\t%s", gv.bin[nd].chDstLab );
+							fprintf( save.params[ipPun].ipPnunit, "\n" );
+							save.SaveHeaderDone(ipPun);
+						}
+						fprintf( save.params[ipPun].ipPnunit, " %.5e", radius.depth_mid_zone );
+						for( size_t nd=0; nd < gv.bin.size(); ++nd )
+						{
+							double tedust = 0.;
+							for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+								tedust += gv.bin[nd].chrg(nz).FracPop*gv.bin[nd].chrg(nz).tedust;
+							fprintf( save.params[ipPun].ipPnunit, "\t%.4e", tedust );
+						}
 						fprintf( save.params[ipPun].ipPnunit, "\n" );
-						save.SaveHeaderDone(ipPun);
 					}
-					fprintf( save.params[ipPun].ipPnunit, " %.5e", 
-						radius.depth_mid_zone );
-					for( size_t nd=0; nd < gv.bin.size(); ++nd ) 
-						fprintf( save.params[ipPun].ipPnunit, "\t%.3e", gv.bin[nd].tedust );
-					fprintf( save.params[ipPun].ipPnunit, "\n" );
+					else
+					{
+						/* do labels first if this is first zone */
+						if( save.lgSaveHeader(ipPun) )
+						{
+							/* first print string giving grain id */
+							fprintf( save.params[ipPun].ipPnunit, "#Depth\tlabel" );
+							long nchrg = 0;
+							for( size_t nd=0; nd < gv.bin.size(); ++nd )
+								nchrg = max(nchrg, gv.bin[nd].nChrg);
+							for( long i=0; i < nchrg; i++ )
+								fprintf( save.params[ipPun].ipPnunit, "\tZg\tTd");
+							fprintf( save.params[ipPun].ipPnunit, "\n" );
+							save.SaveHeaderDone(ipPun);
+						}
+						for( size_t nd=0; nd < gv.bin.size(); ++nd )
+						{
+							if( nd == 0 )
+								fprintf( save.params[ipPun].ipPnunit, " %.5e", radius.depth_mid_zone );
+							else
+								fprintf( save.params[ipPun].ipPnunit, "            " );
+							fprintf( save.params[ipPun].ipPnunit, "\t%s", gv.bin[nd].chDstLab );
+							for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+								fprintf( save.params[ipPun].ipPnunit, "\t%ld\t%.4e", gv.bin[nd].chrg(nz).DustZ,
+										 gv.bin[nd].chrg(nz).tedust );
+							fprintf( save.params[ipPun].ipPnunit, "\n" );
+						}
+					}
 				}
 			}
+
 
 			else if( strcmp(save.chSave[ipPun],"DUSC") == 0 )
 			{

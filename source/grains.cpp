@@ -1189,7 +1189,11 @@ STATIC double GrnStdDpth(long int nd)
 	{
 		// abundance depends on temperature relative to sublimation
 		// "grain function sublimation" command
-		GrnStdDpth_v = sexp( pow3( gv.bin[nd].tedust / gv.bin[nd].Tsublimat ) );
+		// use weighted average of all charge states
+		double tedust = 0.;
+		for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+			tedust += gv.bin[nd].chrg(nz).FracPop*gv.bin[nd].chrg(nz).tedust;
+		GrnStdDpth_v = sexp( pow3( tedust / gv.bin[nd].Tsublimat ) );
 	}
 	else
 	{
@@ -1291,7 +1295,7 @@ void GrainDrive()
 
 				gv.bin[nd].DustDftVel = 0.;
 
-				gv.bin[nd].avdust = gv.bin[nd].tedust;
+				gv.bin[nd].avdust = gv.bin[nd].chrg(0).tedust;
 				gv.bin[nd].avdft = 0.f;
 				gv.bin[nd].avdpot = (realnum)(gv.bin[nd].dstpot*EVRYD);
 				gv.bin[nd].avDGRatio = -1.f;
@@ -1916,12 +1920,14 @@ STATIC void GrainChargeTemp()
 		}
 		fprintf( ioQQQ, "\n" );
 
-		fprintf( ioQQQ, "     Grain temperatures:" );
+		fprintf( ioQQQ, "     Grain temperatures:\n" );
 		for( size_t nd=0; nd < gv.bin.size(); nd++ )
 		{
-			fprintf( ioQQQ, " %.2e", gv.bin[nd].tedust );
+			fprintf( ioQQQ, "       nd=%ld", nd );
+			for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+				fprintf( ioQQQ, " Zg=%ld Td=%.6e", gv.bin[nd].chrg(nz).DustZ, gv.bin[nd].chrg(nz).tedust );
+			fprintf( ioQQQ, "\n" );
 		}
-		fprintf( ioQQQ, "\n" );
 
 		fprintf( ioQQQ, "     GrainCollCool: %.6e\n", gv.GasCoolColl );
 	}
@@ -2630,9 +2636,9 @@ STATIC void UpdatePot(size_t nd,
 	double HighEnergy = 0.;
 	for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
 	{
-		/* >>chng 04 jan 21, changed phycon.te -> MAX2(phycon.te,gv.bin[nd].tedust), PvH */
-		HighEnergy = MAX2(HighEnergy,
-		  MAX2(gv.bin[nd].chrg(nz).ThresInfInc,0.) + BoltzFac*MAX2(phycon.te,gv.bin[nd].tedust));
+		/* >>chng 04 jan 21, changed phycon.te -> MAX2(phycon.te,tedust), PvH */
+		HighEnergy = MAX2(HighEnergy, MAX2(gv.bin[nd].chrg(nz).ThresInfInc,0.) +
+						  BoltzFac*MAX2(phycon.te,gv.bin[nd].chrg(nz).tedust));
 	}
 	HighEnergy = min(HighEnergy,gv.egamry());
 	gv.bin[nd].qnflux2 = gv.ipointF(HighEnergy);
@@ -2783,9 +2789,9 @@ STATIC void GetFracPop(size_t nd,
  *         the model, i.e. do NOT depend on grain temperature, etc.
  */
 STATIC void UpdatePot1(size_t nd,
-		       long nz,
-		       long Zg,
-		       long ipStart)
+					   long nz,
+					   long Zg,
+					   long ipStart)
 {
 	DEBUG_ENTRY( "UpdatePot1()" );
 
@@ -3049,8 +3055,8 @@ STATIC void UpdatePot1(size_t nd,
 		/* >>chng 04 jan 20, use all stages here so that result remains valid throughout the model */
 		UpdateRecomZ0(nd,nz);
 
-		/* >>chng 05 jun 24, use initial estimate for tedust so that thermionic rates are beter, PvH */
-		gv.bin[nd].chrg(nz).tedust = gv.bin[nd].tedust;
+		/* >>chng 05 jun 24, use initial estimate for tedust, PvH */
+		gv.bin[nd].chrg(nz).tedust = 100.;
 	}
 
 	/* invalidate the remaining fields */

@@ -513,7 +513,7 @@ void ParseSave(Parser& p)
 		return;
 	}
 
-	else if( p.nMatch("AVER") )
+	else if( p.nMatch("AVER") && !p.nMatch("GRAI") )
 	{
 		/* save averages */
 		strcpy( save.chSave[save.nsave], "AVER" );
@@ -1193,6 +1193,8 @@ void ParseSave(Parser& p)
 		{
 			/* save temperatures of each grain species */
 			strcpy( save.chSave[save.nsave], "DUST" );
+			/* option to save average grain temperature for each grain size bin */
+			save.lgTgrAverage[save.nsave] = p.nMatch("AVER");
 		}
 		else if( p.nMatch("DRIF") )
 		{
