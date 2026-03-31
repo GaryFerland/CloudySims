@@ -45,7 +45,7 @@
 // than rfield.nflux_with_check for efficiency since an array of that size is plausible to be
 // requested. If the frequency mesh is larger (e.g. due to the SET CONTINUUM RESOLUTION command) the
 // following optimization will be used. The first time an array larger than p_def_size doubles is
-// requested, it will have to allocated. When that array is subsequently released, it is swapped
+// requested, it will have to be allocated. When that array is subsequently released, it is swapped
 // with an unused smaller array with index < p_min_size, and then the smaller array is freed. This
 // gives near optimal performance even for large frequency grids, at the expense of a slight
 // overhead when releasing the scratch array.

@@ -13,7 +13,7 @@ These are not usually used.
 
 The following subsections describe how to set up and then compile some
 external data files that are needed by the code.
-In most cases, the stellar atmosphere
+In some cases, the stellar atmosphere
 files must be compiled if you wish to use some of the
 \cdCommand{table star} emergent radiation fields.
 Most of the other files are included in the code's distribution and only
@@ -120,8 +120,6 @@ This does not need to be done if you only want to use
 the types of grains included in the data distribution.
 You can create other species, with their own size
 distribution and refractive indices, by compiling them with this command.
-It is also necessary to compile the grains if you change the code's
-continuum energy mesh.
 
 This command uses a spherical Mie code originally developed by Peter
 G. Martin using code written by \citet{Hansen1974}, and implemented
@@ -157,17 +155,21 @@ more information and should be consulted.
 \subsection{Compile grains}
 
 With no options this compiles the minimum number of grain types needed
-for the \cdCommand{grains} command to function.
+for the \cdCommand{grains} command to function. These are already included
+in the distribution, so normally there is no need for users to run this
+command without options. The options are described below.
 Examine the output to check
-for problems. If you change the continuum mesh the grains need to be recompiled. 
-This must be done in the data directory.
+for problems. 
 
-The following steps are for running “Compile grains”:\\
-1) \texttt{cd} into the data directory\\
-2) create a \texttt{.in} file and paste the command \texttt{Compile grains} in the file\\
-3) Then run Cloudy like you normally do:
+The opacity file created by this command needs to be installed somewhere
+on the search path (see Section~\ref{sec:ReadingWritingFiles}), usually either
+the data directory or the local directory where you are running the code.
+
+The simplest way to execute this command is as follows:\\
+1) \texttt{cd} into the directory where you want to install the opacity file\\
+2) Then run \Cloudy\ as follows:
 \begin{verbatim}
-~/path to source/cloudy.exe  -r  <name of the .in file>
+~/path to source/cloudy.exe  -e  'compile grains [options]'
 \end{verbatim}
 
 \subsection{Compile grain 10 bins, [filename, ism graphite]}
@@ -275,12 +277,6 @@ the examples below.
   If you run the code in another directory than where you compiled the grains,
   you must make that the files are moved to a location on the search path.
   See Section~\ref{sec:ReadingWritingFiles} for details.
-
-\item
-The grains will need to be recompiled if the energy mesh of the radiation
-field is changed. 
-The input script \cdFilename{compilegrains.in} in the \cdFilename{data}  
-directory will do this.
 
 \item 
 PAHs are much smaller than regular grains and must be paired with a
@@ -1838,7 +1834,7 @@ significantly faster and produces very similar predictions.
 \item[set continuum resolution 0.1]  This changes the resolution of the coarse
 continuum energy mesh by a constant scale factor.  The resolution of the
 continuum mesh as a function of energy is defined by the data file
-\cdFilename{continuum\_mesh.ini}, which is located in the data directory.  Permanent
+\cdFilename{continuum\_mesh.dat}, which is located in the data directory.  Permanent
 changes to the continuum resolution should be made there.
 This command
 allows the continuum mesh to be changed by a temporary scale factor.
@@ -2609,7 +2605,7 @@ is the resolution.
 The
 default behavior is to match $R$ to the resolving power of the coarse continuum
 at the frequency of the line as set in the
-the file \cdFilename{continuum\_mesh.ini}. This assures energy
+the file \cdFilename{continuum\_mesh.dat}. This assures energy
 conservation. If you want to boost weak lines in a plot, you can artificially
 change the resolution of the spectrum by using this command.
 
@@ -3069,11 +3065,6 @@ of many heavy elements.
 The resolution of the coarse continuum mesh affects the execution time
 since photoionization rates and opacities involve repeated sums over it.
 The resolution is changed with the \cdCommand{set continuum resolution} command.
-
-If you change the continuum resolution then the standard stellar SEDs and
-grains that are part of the code distribution will need to be recompiled.
-This is done with the \cdCommand{compile grains} 
-and  \cdCommand{compile stars} commands.
 
 \subsection{Make the iso-sequence model atoms as small as possible}
 

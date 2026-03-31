@@ -200,7 +200,7 @@ STATIC long GrainMakeDiffuseSingle(double Tgrain, double fracpop, avx_ptr<realnu
 	// NB NB -- the loops in this routine consume lots of CPU time, they should be well optimized!!
 	for( long i=0; i < nflux; i++ )
 	{
-		arg[i] = hokT*rfield.anu(i);
+		arg[i] = hokT*gv.anu(i);
 		if( arg[i] > x )
 		{
 			nflux = i;
@@ -236,7 +236,12 @@ void GrainMakeDiffuse()
 
 	vector<double> qtemp(NQGRID);
 	vector<double> qprob(NQGRID);
-	avx_ptr<realnum> flux(rfield.nflux);
+	avx_ptr<realnum> flux(gv.nflux);
+	vector<realnum> flux2(rfield.nflux);
+
+#	ifndef NDEBUG
+	double BolFlux1 = 0.;
+#	endif
 
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
@@ -267,19 +272,19 @@ void GrainMakeDiffuse()
 		}
 
 		long loopmax = 0;
-		memset( flux.data(), 0, size_t(rfield.nflux*sizeof(flux[0])) );
+		memset( flux.data(), 0, size_t(gv.nflux*sizeof(flux[0])) );
 
 		if( lgLocalQHeat && gv.bin[nd].lgUseQHeat )
 		{
 			for( long j=0; j < qnbin; j++ )
 			{
-				long maxi = GrainMakeDiffuseSingle(qtemp[j], qprob[j], flux, rfield.nflux);
+				long maxi = GrainMakeDiffuseSingle(qtemp[j], qprob[j], flux, gv.nflux);
 				loopmax = max(loopmax, maxi);
 			}
 		}
 		else
 		{
-			loopmax = GrainMakeDiffuseSingle(gv.bin[nd].tedust, 1., flux, rfield.nflux);
+			loopmax = GrainMakeDiffuseSingle(gv.bin[nd].tedust, 1., flux, gv.nflux);
 		}
 
 		realnum* gt_ptr;
@@ -298,15 +303,28 @@ void GrainMakeDiffuse()
 		}
 
 		double fac = factor*gv.bin[nd].cnv_H_pCM3;
-		// use two separate loops so that they can be vectorized
 		for( long i=0; i < loopmax; i++ )
-			flux[i] *= realnum(fac*gv.bin[nd].dstab1[i]*rfield.anu2(i)*rfield.widflx(i));
+			flux[i] *= realnum(fac*gv.bin[nd].dstab1[i]*gv.anu2(i));
+
+		loopmax = 1;
+		while( loopmax < gv.nflux && flux[loopmax] > RNM_MIN )
+			++loopmax;
+
+#		ifndef NDEBUG
+		for( long i=0; i < loopmax; i++ )
+		{
+			BolFlux1 += flux[i]*gv.widflx(i)*gv.anu(i)*EN1RYD;
+		}
+#		endif
+
+		loopmax = grain_interpolate(flux.data(), flux2.data(), loopmax);
+
 		for( long i=0; i < loopmax; i++ )
 		{
 			/* remember local emission -- these are zeroed out on each zone 
 			 * above, and now incremented so is unit emission from this zone */
-			gv.GrainEmission[i] += flux[i];
-			gt_ptr[i] += flux[i];
+			gv.GrainEmission[i] += flux2[i]*rfield.widflx(i);
+			gt_ptr[i] += flux2[i]*rfield.widflx(i);
 		}
 	}
 
@@ -319,9 +337,9 @@ void GrainMakeDiffuse()
 	 * soon as any one of the checks fails.
 	 *
 	 * NB NB - despite appearances, these checks do NOT guarantee overall energy
-	 *         conservation in the Cloudy model to the asserted tolerance, see note 1B !
+	 *         conservation in the Cloudy model to the asserted tolerance, see note 1B/C !
 	 *
-	 * Note 1: there are two sources for energy imbalance in the grain code (see A & B).
+	 * Note 1: there are three sources for energy imbalance (see points A thru C below).
 	 *   A: Interpolation in dstems. The code calculates how much energy the grains
 	 *      emit in thermal radiation (gv.bin[nd].GrainHeat), and converts that into
 	 *      an (average) grain temperature by reverse interpolation in dstems. If
@@ -345,11 +363,20 @@ void GrainMakeDiffuse()
 	 *      been moved to qheat, implying that phiTilde now uses the updated version of
 	 *      the OTS fields. The total amount of radiated energy however is still based
 	 *      on gv.bin[nd].GrainHeat which uses the old version of the OTS fields.
-	 *   C: Energy conservation for collisional processes is guaranteed by adding in
+	 *   C: The diffuse grain emission is calculated on the internal grain frequency
+	 *      mesh to conserve CPU time (especially if quantum heating is enabled this is
+	 *      a major CPU time sink). Afterwards it is interpolated onto the regular mesh
+	 *      used by the rest of the code. This interpolation cannot be guaranteed to
+	 *      conserve the integral over all frequencies. The differences are small, but
+	 *      still big enough that they can trip CHECK 1A below, so special care needs
+	 *      to be taken to safeguard against this. Since the interpolated array is
+	 *      used by the rest of the code, energy conservation is limited to the level
+	 *      indicated by CHECK 1B.
+	 *   D: Energy conservation for collisional processes is guaranteed by adding in
 	 *      (very small) correction terms. These corrections are needed to cover up
 	 *      small imperfection in the theory, and cannot be avoided without making the
 	 *      already very complex theory even more complex.
-	 *   D: Photo-electric heating and collisional cooling can have an important effect
+	 *   E: Photo-electric heating and collisional cooling can have an important effect
 	 *      on the total heating balance of the gas. Both processes depend strongly on
 	 *      the grain charge, so assuring proper charge balance is important as well.
 	 *      This is tested in Check 2.
@@ -375,11 +402,11 @@ void GrainMakeDiffuse()
 		}
 	}
 
-	/* CHECK 1: does the grain thermal emission conserve energy ? */
-	double BolFlux = 0.;
+	/* CHECK 1A: does the grain thermal emission conserve energy ? */
+	double BolFlux2 = 0.;
 	for( long i=0; i < rfield.nflux; i++ )
 	{
-		BolFlux += gv.GrainEmission[i]*rfield.anu(i)*EN1RYD;
+		BolFlux2 += gv.GrainEmission[i]*rfield.anu(i)*EN1RYD;
 	}
 	double Comparison1 = 0.;
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
@@ -394,7 +421,10 @@ void GrainMakeDiffuse()
 
 	/* >>chng 04 mar 11, add constant grain temperature to pass assert */
 	/* >>chng 04 jun 01, deleted test for constant grain temperature, PvH */
-	ASSERT( fabs(BolFlux-gv.GrainHeatSum) < Comparison1 );
+	ASSERT( fabs(BolFlux1-gv.GrainHeatSum) < Comparison1 );
+
+	/* CHECK 1B: does the interpolation of the diffuse emission conserve energy? */
+	ASSERT( fabs(BolFlux2/BolFlux1 - 1.) < 3.*CONSERV_TOL );
 
 	/* CHECK 2: assert charging balance */
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
@@ -492,9 +522,9 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 
 	/* >>chng 01 aug 22, allocate space */
 	/* phiTilde is continuum corrected for photo-electric effect, in events/H/s/cell, default depl */
-	vector<double> phiTilde(rfield.nflux_with_check);
-	vector<double> Phi(rfield.nflux_with_check);
-	vector<double> PhiDrv(rfield.nflux_with_check);
+	vector<double> phiTilde(gv.nflux);
+	vector<double> Phi(gv.nflux);
+	vector<double> PhiDrv(gv.nflux);
 	vector<double> dPdlnT(NQGRID);
 
 	qheat_init( nd, phiTilde, &check );
@@ -517,21 +547,21 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 		/* phiTilde has units events/H/s, PhiDrv[i] has units events/grain/s/Ryd */
 		/* there are minus signs here because we are integrating from infinity downwards */
 		y = -phiTilde[i]*gv.bin[nd].cnv_H_pGR;
-		PhiDrv[i] = y/rfield.widflx(i);
+		PhiDrv[i] = y/gv.widflx(i);
 		xx -= y;
-		/* Phi[i] is integral from exactly rfield.anumin(i) to infinity to second-order precision, PvH */
+		/* Phi[i] is integral from exactly gv.anumin(i) to infinity to second-order precision, PvH */
 		/* Phi[i] has units events/grain/s */
 		Phi[i] = xx;
 
 #		ifndef NDEBUG
 		/* trapezoidal rule is not needed for integral, this is also second-order correct */
-		integral += phiTilde[i]*gv.bin[nd].cnv_H_pCM3*rfield.anu(i)*EN1RYD;
+		integral += phiTilde[i]*gv.bin[nd].cnv_H_pCM3*gv.anu(i)*EN1RYD;
 #		endif
 
 		/* c<n> has units Ryd^(n+1)/grain/s */
-		c0 += Phi[i]*rfield.widflx(i);
-		c1 += Phi[i]*rfield.anu(i)*rfield.widflx(i);
-		c2 += Phi[i]*rfield.anu2(i)*rfield.widflx(i);
+		c0 += Phi[i]*gv.widflx(i);
+		c1 += Phi[i]*gv.anu(i)*gv.widflx(i);
+		c2 += Phi[i]*gv.anu2(i)*gv.widflx(i);
 
 		lgNegRate = lgNegRate || ( phiTilde[i] < 0. );
 	}
@@ -556,7 +586,7 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 		sprintf(fnam,"Phi_%2.2ld.asc",nd);
 		file = open_data(fnam,"w");
 		for( i=0; i < gv.bin[nd].qnflux; ++i )
-			fprintf(file,"%e %e\n", rfield.anu(i),Phi[i]);
+			fprintf(file,"%e %e\n", gv.anu(i),Phi[i]);
 		fclose(file);
 	}
 #	endif
@@ -854,7 +884,7 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 
 /* initialize phiTilde */
 STATIC void qheat_init(size_t nd,
-		       /*@out@*/ vector<double>& phiTilde,  /* phiTilde[rfield.nflux_with_check] */
+		       /*@out@*/ vector<double>& phiTilde,  /* phiTilde[gv.nflux] */
 		       /*@out@*/ double *check)
 {
 	long i,
@@ -896,15 +926,15 @@ STATIC void qheat_init(size_t nd,
 		double check1 = 0.;
 		ChargeBin& gptr = gv.bin[nd].chrg(nz);
 
-		// rfield.nPositive may have increased since the last call to GrainDrive()
+		// gv.nPositive may have increased since the last call to GrainDrive()
 		// if so, arrays like gptr.fac1 would not be initialized up to nPositive
-		long limit = min( rfield.nPositive, gptr.nfill );
+		long limit = min( gv.nPositive, gptr.nfill );
 
 		/* integrate over incident continuum for non-ionizing energies */
 		for( i=0; i < min(gptr.ipThresInf,limit); i++ )
 		{
-			check1 += rfield.SummedCon[i]*gv.bin[nd].dstab1[i]*rfield.anu(i);
-			phiTilde[i] += gptr.FracPop*rfield.SummedCon[i]*gv.bin[nd].dstab1[i];
+			check1 += gv.SummedCon[i]*gv.bin[nd].dstab1[i]*gv.anu(i);
+			phiTilde[i] += gptr.FracPop*gv.SummedCon[i]*gv.bin[nd].dstab1[i];
 		}
 
 		/* >>chng 01 mar 02, use new expressions for grain cooling and absorption
@@ -914,9 +944,9 @@ STATIC void qheat_init(size_t nd,
 			long ipLo2 = gptr.ipThresInfVal;
 			double cs1 = ( i >= ipLo2 ) ? gv.bin[nd].dstab1[i]*gptr.yhat_primary[i] : 0.;
 
-			check1 += rfield.SummedCon[i]*gptr.fac1[i];
+			check1 += gv.SummedCon[i]*gptr.fac1[i];
 			/* this accounts for the photons that are fully absorbed by grain */
-			phiTilde[i] += gptr.FracPop*rfield.SummedCon[i]*MAX2(gv.bin[nd].dstab1[i]-cs1,0.);
+			phiTilde[i] += gptr.FracPop*gv.SummedCon[i]*MAX2(gv.bin[nd].dstab1[i]-cs1,0.);
 
 			/* >>chng 01 oct 10, use bisection search to find ip. On C scale now */
 
@@ -944,7 +974,7 @@ STATIC void qheat_init(size_t nd,
 				 * will simply assume a negative rate here. Since secondary electrons
 				 * are generally not important this should have little impact on the
 				 * overall temperature distribution */
-				xx = rfield.anu(i) - (realnum)(ratio*cool1);
+				xx = gv.anu(i) - (realnum)(ratio*cool1);
 				if( xx < 0.f )
 				{
 					xx = -xx;
@@ -954,12 +984,12 @@ STATIC void qheat_init(size_t nd,
 				 * happen that ratio*cool1 is so large that -xx > anu(qnflux-1). In that
 				 * case the contribution to phiTilde would not be counted, which can lead
 				 * to spurious failures of the energy conservation test */
-				long ipLo = rfield.ipointC( min(max(xx,rfield.emm()),rfield.anu(i)) );
+				long ipLo = gv.ipointC( min(max(xx,gv.emm()),gv.anu(i)) );
 				/* for grains in hard X-ray environments, the coarseness of the grid can
 				 * lead to inaccuracies in the integral over phiTilde that would trip the
 				 * sanity check in qheat(), here we correct for the energy mismatch */
-				double corr = xx/rfield.anu(ipLo);
-				phiTilde[ipLo] += sign*corr*gptr.FracPop*rfield.SummedCon[i]*cs1;
+				double corr = xx/gv.anu(ipLo);
+				phiTilde[ipLo] += sign*corr*gptr.FracPop*gv.SummedCon[i]*cs1;
 			}
 
 			/* no need to account for photons that eject an electron from the conduction band */
@@ -975,7 +1005,7 @@ STATIC void qheat_init(size_t nd,
 			double integral = 0.;
 			for( i=0; i < gv.bin[nd].qnflux; i++ )
 			{
-				integral += phiTilde[i]*gv.bin[nd].cnv_H_pCM3*rfield.anu(i)*EN1RYD;
+				integral += phiTilde[i]*gv.bin[nd].cnv_H_pCM3*gv.anu(i)*EN1RYD;
 			}
 			dprintf( ioQQQ, " integral test 1: integral %.6e %.6e\n", integral, sum );
 		}
@@ -1018,7 +1048,7 @@ STATIC void qheat_init(size_t nd,
 			/* this is highest kinetic energy of electron that can be represented in phiTilde */
 			/* >>chng 01 nov 29, rfield.nflux -> gv.qnflux, PvH */
 			/* >>chng 03 jan 26, gv.qnflux -> gv.bin[nd].qnflux, PvH */
-			double Ehi = rfield.anumax(gv.bin[nd].qnflux-1)-Einf;
+			double Ehi = gv.anumax(gv.bin[nd].qnflux-1)-Einf;
 			double yhi = ((E0-Ehi)/fac-1.)*exp(-Ehi/fac);
 			/* renormalize rate so that integral over phiTilde*anu gives correct total energy */
 			rate /= yhi-ylo;
@@ -1033,7 +1063,7 @@ STATIC void qheat_init(size_t nd,
 			/* >>chng 04 jan 21, replaced gv.bin[nd].qnflux -> gv.bin[nd].qnflux2, PvH */
 			for( i=0; i < gv.bin[nd].qnflux2; i++ ) 
 			{
-				Ehi = rfield.anumax(i) - Einf;
+				Ehi = gv.anumax(i) - Einf;
 				if( Ehi >= E0 ) 
 				{
 					/* Ehi is kinetic energy of electron at infinity */
@@ -1041,9 +1071,9 @@ STATIC void qheat_init(size_t nd,
 					/* >>chng 01 mar 24, use MAX2 to protect against roundoff error, PvH */
 					RateArr[i] = rate*MAX2(yhi-ylo,0.);
 					Sum += RateArr[i];
-					ESum += rfield.anu(i)*RateArr[i];
+					ESum += gv.anu(i)*RateArr[i];
 #					ifndef NDEBUG
-					DSum += rfield.widflx(i)*RateArr[i];
+					DSum += gv.widflx(i)*RateArr[i];
 #					endif
 					ylo = yhi;
 				}
@@ -1068,7 +1098,7 @@ STATIC void qheat_init(size_t nd,
 				double integral = 0.;
 				for( i=0; i < gv.bin[nd].qnflux; i++ )
 				{
-					integral += phiTilde[i]*gv.bin[nd].cnv_H_pCM3*rfield.anu(i)*EN1RYD;
+					integral += phiTilde[i]*gv.bin[nd].cnv_H_pCM3*gv.anu(i)*EN1RYD;
 				}
 				dprintf( ioQQQ, " integral test 2: integral %.6e %.6e\n", integral, sum );
 			}
@@ -1117,7 +1147,7 @@ STATIC void qheat_init(size_t nd,
 		/* this is highest energy of incoming/outgoing particle that can be represented in phiTilde */
 		/* >>chng 01 nov 29, rfield.nflux -> gv.qnflux, PvH */
 		/* >>chng 03 jan 26, gv.qnflux -> gv.bin[nd].qnflux, PvH */
-		double Ehi = rfield.anumax(gv.bin[nd].qnflux-1);
+		double Ehi = gv.anumax(gv.bin[nd].qnflux-1);
 		double yhi = -(Ehi/fac+1.)*exp(-Ehi/fac);
 		/* renormalize rate so that integral over phiTilde*anu gives correct total energy */
 		rate /= yhi-ylo;
@@ -1126,8 +1156,8 @@ STATIC void qheat_init(size_t nd,
 		{
 			/* Ehi is kinetic energy of incoming/outgoing particle
 			 * we assume that Ehi-E0 is deposited/extracted from grain */
-			/* Ehi = rfield.anumax(i); */
-			double x = rfield.anumax(i)/fac;
+			/* Ehi = gv.anumax(i); */
+			double x = gv.anumax(i)/fac;
 			/* (1+x)*exp(-x) = 1 - 1/2*x^2 + 1/3*x^3 - 1/8*x^4 + O(x^5)
 			 *               = 1 - Sum_n=2^infty (-x)^n/(n*(n-2)!)      */
 			if( x > LIM3 )
@@ -1149,7 +1179,7 @@ STATIC void qheat_init(size_t nd,
 			double integral = 0.;
 			for( i=0; i < gv.bin[nd].qnflux; i++ )
 			{
-				integral += phiTilde[i]*gv.bin[nd].cnv_H_pCM3*rfield.anu(i)*EN1RYD;
+				integral += phiTilde[i]*gv.bin[nd].cnv_H_pCM3*gv.anu(i)*EN1RYD;
 			}
 			dprintf( ioQQQ, " integral test 3: integral %.6e %.6e\n", integral, sum );
 		}
@@ -1175,7 +1205,7 @@ STATIC void qheat_init(size_t nd,
 			double integral = 0.;
 			for( i=0; i < gv.bin[nd].qnflux; i++ )
 			{
-				integral += phiTilde[i]*gv.bin[nd].cnv_H_pCM3*rfield.anu(i)*EN1RYD;
+				integral += phiTilde[i]*gv.bin[nd].cnv_H_pCM3*gv.anu(i)*EN1RYD;
 			}
 			dprintf( ioQQQ, " integral test 4: integral %.6e %.6e\n", integral, sum );
 		}
@@ -1625,10 +1655,10 @@ STATIC double TryDoubleStep(vector<double>& u1,
 	/* sanity checks */
 	ASSERT( index >= 0 && index < NQGRID-2 && nd < gv.bin.size() && step > 0. );
 
-	ulo = rfield.anumin(0);
+	ulo = gv.anumin(0);
 	/* >>chng 01 nov 29, rfield.nflux -> gv.qnflux, PvH */
 	/* >>chng 03 jan 26, gv.qnflux -> gv.bin[nd].qnflux, PvH */
-	uhi = rfield.anumax(gv.bin[nd].qnflux-1);
+	uhi = gv.anumax(gv.bin[nd].qnflux-1);
 
 	/* >>chng 01 nov 21, skip initial bins if they have very low probability */
 	jlo = 0;
@@ -1667,14 +1697,14 @@ STATIC double TryDoubleStep(vector<double>& u1,
 			}
 			else if( umin > ulo )
 			{
-				/* do a bisection search such that rfield.anumin(ipLo) <= umin < rfield.anumin(ipHi)
+				/* do a bisection search such that gv.anumin(ipLo) <= umin < gv.anumin(ipHi)
 				 * explicit bisection search is faster, which is important here to save CPU time.
 				 * on the first iteration ipLo equals 0 and the first while loop will be skipped;
 				 * after that umin is monotonically decreasing, and ipHi is retained from the
 				 * previous iteration since it is a valid upper limit; ipLo will equal ipHi-1 */
 				long ipStep = 1;
 				/* >>chng 03 feb 03 rjrw: hunt for lower bracket */
-				while( rfield.anumin(ipLo) > umin )
+				while( gv.anumin(ipLo) > umin )
 				{
 					ipHi = ipLo;
 					ipLo -= ipStep;
@@ -1689,13 +1719,13 @@ STATIC double TryDoubleStep(vector<double>& u1,
 				while( ipHi-ipLo > 1 )
 				{
 					long ipMd = (ipLo+ipHi)/2;
-					if( rfield.anumin(ipMd) > umin )
+					if( gv.anumin(ipMd) > umin )
 						ipHi = ipMd;
 					else
 						ipLo = ipMd;
 				}
-				/* Phi[i] is integral of PhiDrv from exactly rfield.anumin(i) to infinity */
-				bval_jk = Phi[ipLo] + (umin - rfield.anumin(ipLo))*PhiDrv[ipLo];
+				/* Phi[i] is integral of PhiDrv from exactly gv.anumin(i) to infinity */
+				bval_jk = Phi[ipLo] + (umin - gv.anumin(ipLo))*PhiDrv[ipLo];
 			}
 			else
 			{
