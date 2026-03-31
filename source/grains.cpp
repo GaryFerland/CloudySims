@@ -1146,28 +1146,54 @@ STATIC void GetFracDep(vector<double>& mult_frac) // pass the material type as a
 {
 	DEBUG_ENTRY( "GetFracDep()" );
 
-	double default_grain_car_abund = 0.0;
-	double default_grain_sil_abund = 0.0;
-	/* grain abundance may be a function of depth */
+	double default_grain_car_mass = 0.0;
+	double default_grain_sil_mass = 0.0;
+	constexpr int car_elements[] = { ipCARBON };
+	constexpr int sil_elements[] = { ipSILICON, ipOXYGEN, ipMAGNESIUM, ipIRON };
+	/* Sum up the total mass of the given elements in each size bin of the default grains */
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
-		default_grain_car_abund += gv.bin[nd].elmAbund[ipCARBON];
-		default_grain_sil_abund += gv.bin[nd].elmAbund[ipSILICON];
+		for (int el : car_elements)
+		{
+			default_grain_car_mass += gv.bin[nd].elmAbund[el]*dense.AtomicWeight[el];
+		}
+
+		for (int el : sil_elements)
+		{
+			default_grain_sil_mass += gv.bin[nd].elmAbund[el]*dense.AtomicWeight[el];
+		}
 	}
 
-	realnum depleted_car_abund = max(0., 1.-abund.DepletionScaleFactor[ipCARBON]) * abund.ReferenceAbun[ipCARBON];
-	realnum depleted_sil_abund = max(0., 1.-abund.DepletionScaleFactor[ipSILICON]) * abund.ReferenceAbun[ipSILICON];
+	/* Sum up the total depleted mass of the given elements for carbonaceous grains. */
+	realnum depleted_abund = 0.0;
+	realnum depleted_car_mass = 0.0;
+	for (int el : car_elements)
+	{
+		depleted_abund = max(0., 1.-abund.DepletionScaleFactor[el]) * abund.ReferenceAbun[el];
+		depleted_car_mass += depleted_abund*dense.AtomicWeight[el];
+	}
+
+	/* Sum up the total depleted mass of the given elements for silicate grains. */
+	realnum depleted_sil_mass = 0.0;
+	for (int el : sil_elements)
+	{
+		depleted_abund = max(0., 1.-abund.DepletionScaleFactor[el]) * abund.ReferenceAbun[el];
+		depleted_sil_mass += depleted_abund*dense.AtomicWeight[el];
+	}
+
 
 	for( size_t mT=0; mT < mult_frac.size(); mT++ )
 		if( mT == MAT_CAR || mT == MAT_CAR2 ||
 			mT == MAT_PAH || mT == MAT_PAH2 ||
 			mT == MAT_SIC
 		)
-			mult_frac[mT] = (abund.DepletionScaleFactor[ipCARBON] == 1.0) ? 1.0 : depleted_car_abund/default_grain_car_abund;
+			mult_frac[mT] = (abund.DepletionScaleFactor[ipCARBON] == 1.0) ? 1.0 : depleted_car_mass/default_grain_car_mass;
 		else if( mT == MAT_SIL || mT == MAT_SIL2 )
-			mult_frac[mT] = (abund.DepletionScaleFactor[ipSILICON] == 1.0) ? 1.0 : depleted_sil_abund/default_grain_sil_abund;
+			mult_frac[mT] = (abund.DepletionScaleFactor[ipSILICON] == 1.0) ? 1.0 : depleted_sil_mass/default_grain_sil_mass;
+		else if( mT == MAT_USR )
+			mult_frac[mT] = 1.0; //To be edited later
 		else
-			mult_frac[mT] = 1.0;
+			TotalInsanity();
 };
 
 /* GrnStdDpth sets the standard behavior of the grain abundance as a function 
