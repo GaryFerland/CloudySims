@@ -931,7 +931,7 @@ STATIC void qheat_init(size_t nd,
 	for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
 	{
 		double check1 = 0.;
-		ChargeBin& gptr = gv.bin[nd].chrg(nz);
+		const ChargeBin& gptr = gv.bin[nd].chrg(nz);
 
 		// gv.nPositive may have increased since the last call to GrainDrive()
 		// if so, arrays like gptr.fac1 would not be initialized up to nPositive

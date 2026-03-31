@@ -438,9 +438,16 @@ void PrtZone(void)
 	{
 		for( size_t nd=0; nd < gv.bin.size(); nd++ )
 		{
+			double TotHeat = 0.;
+			for( long nz=0; nz < gv.bin[nd].nChrg; ++nz )
+			{
+				const ChargeBin& gptr = gv.bin[nd].chrg(nz);
+				TotHeat += gptr.FracPop*(gptr.GasHeatPhotoElCS + gptr.GasHeatThermCS);
+			}
+
 			/*  Change things so the quantum heated dust species are marked with an
-			*  asterisk just after the name (K Volk)
-			*  added QHMARK here and in the write statement */
+			 *  asterisk just after the name (K Volk)
+			 *  added QHMARK here and in the write statement */
 			chQHMark = (char)(( gv.bin[nd].lgQHeat && gv.bin[nd].lgUseQHeat ) ? '*' : ' ');
 			fprintf( ioQQQ, "%-12.12s%c  Pot (Volt)",gv.bin[nd].chDstLab, chQHMark);
 			fprintf(ioQQQ,PrintEfmt("%10.3e", gv.bin[nd].dstpot*EVRYD));
@@ -449,21 +456,25 @@ void PrtZone(void)
 			fprintf( ioQQQ, " drift vel (cm/s)");
 			fprintf(ioQQQ,PrintEfmt("%10.3e", gv.bin[nd].DustDftVel));
 			fprintf( ioQQQ, " Heating (erg/cm^3/s)");
-			fprintf(ioQQQ,PrintEfmt("%10.3e", gv.bin[nd].GasHeatPhotoElBin));
+			fprintf(ioQQQ,PrintEfmt("%10.3e", TotHeat));
 			fprintf( ioQQQ, " Frac tot");
-			fprintf(ioQQQ,PrintEfmt("%10.3e", gv.bin[nd].GasHeatPhotoElBin/thermal.htot));
+			fprintf(ioQQQ,PrintEfmt("%10.3e", TotHeat/thermal.htot));
 			fprintf( ioQQQ, "\n" );
 			fprintf( ioQQQ, "               " );
 			for( long nz=0; nz < gv.bin[nd].nChrg; ++nz )
 			{
-				fprintf( ioQQQ, "nz=%2ld Zg=%4ld FracPop", nz, gv.bin[nd].chrg(nz).DustZ);
-				fprintf(ioQQQ,PrintEfmt("%10.3e", gv.bin[nd].chrg(nz).FracPop));
+				const ChargeBin& gptr = gv.bin[nd].chrg(nz);
+				fprintf( ioQQQ, "nz=%2ld Zg=%4ld Pop", nz, gptr.DustZ);
+				fprintf(ioQQQ,PrintEfmt("%10.3e", gptr.FracPop));
 				fprintf( ioQQQ, " Temp");
-				fprintf(ioQQQ,PrintEfmt("%10.3e", gv.bin[nd].chrg(nz).tedust));
+				fprintf(ioQQQ,PrintEfmt("%10.3e", gptr.tedust));
+				fprintf( ioQQQ, " Heat(%%)");
+				TotHeat = gptr.FracPop*(gptr.GasHeatPhotoElCS + gptr.GasHeatThermCS);
+				fprintf(ioQQQ,"%5.1f", 100.*TotHeat/thermal.htot);
 				if( nz < gv.bin[nd].nChrg-1 )
 				{
 					if( (nz%2) == 0 )
-						fprintf( ioQQQ, "     " );
+						fprintf( ioQQQ, "      " );
 					else
 						fprintf( ioQQQ, "\n               " );
 				}

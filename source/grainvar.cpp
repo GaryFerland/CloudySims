@@ -90,8 +90,6 @@ void GrainBin::p_clear1()
 	/* >>chng 00 jun 19, tedust has to be greater than zero
 	 * to prevent division by zero in GrainElecEmis and GrainCollHeating, PvH */
 	tedust = 1.;
-	TgZoneMin = FLT_MAX;
-	TgZoneMax = FLT_MAX;
 	TeGrainMax = FLT_MAX;
 	avdust = 0.;
 	LowestZg = LONG_MIN;
@@ -106,13 +104,9 @@ void GrainBin::p_clear1()
 	avdpot = 0.;
 	le_thres = FLT_MAX;
 	GrainHeatBin = DBL_MAX/10.;
-	GrainHeatIncBin = -DBL_MAX;
-	GrainHeatDifBin = -DBL_MAX;
 	GrainHeatCollBin = -DBL_MAX;
-	GrainHeatCorBin = -DBL_MAX;
 	GrainCoolThermBin = -DBL_MAX;
 	GasHeatPhotoElBin = -DBL_MAX;
-	GasCoolCollBin = DBL_MAX/10.;
 	lgQHeat = false;
 	lgUseQHeat = false;
 	lgEverQHeat = false;

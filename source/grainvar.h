@@ -265,10 +265,11 @@ public:
 	  GrainHeatCollElecCS,  /**< collisional heating of current grain type by electrons only */
 	  GrainHeatCollIonsCS,  /**< collisional heating of current grain type by ions only */
 	  GrainHeatCollMolCS,   /**< collisional heating of current grain type by molecules only */
+	  GrainHeatCorCS,       /**< correction for imperfections in the n-charge state model */
 	  GrainHeatChemEnCS,    /**< net amount of energy donated by recombining ions */
-	  GrainCoolThermCS,     /**< grain cooling due to thermionic emissions, summed over charge states */
+	  GrainCoolThermCS,     /**< grain cooling due to thermionic emissions */
 	  GasHeatPhotoElCS,     /**< photoelectric heating of the gas, added in GrGH 0 */
-	  GasHeatThermCS,       /**< heating due to thermionic emission */
+	  GasHeatThermCS,       /**< gas heating due to thermionic emission */
 	  GasCoolCollCS;        /**< cooling of the gas by collisions with grains, added in GrGC 0 */
 
 	/** quantum heating */
@@ -367,8 +368,6 @@ public:
 	  dstslp2[NDEMS];       /**< auxiliary array for inverse spline interpolation */
 
 	double tedust;          /**< equilibrium temperature for this zone */
-	double TgZoneMin;       /**< minimum grain temperature over all charge states for this zone, OUTPUT ONLY */
-	double TgZoneMax;       /**< maximum grain temperature over all charge states for this zone, OUTPUT ONLY */
 	double TeGrainMax;      /**< highest equilibrium temperature as a function of radius, OUTPUT ONLY */
 	realnum avdust;         /**< Integral(Tdust*dReff) for average equilibrium temperature, OUTPUT ONLY */
 
@@ -399,13 +398,9 @@ public:
 
 	/** heating/cooling balance, all entries are valid for current zone, actual depl, and are in erg/cm^3/s */
 	double GrainHeatBin,    /**< total heating of current grain type */
-	  GrainHeatIncBin,      /**< grain heating by incident radiation field */
-	  GrainHeatDifBin,      /**< grain heating by diffuse radiation fields */
 	  GrainHeatCollBin,     /**< collisional heating of current grain type */
-	  GrainHeatCorBin,      /**< correction for imperfections in the n-charge state model */
 	  GrainCoolThermBin,    /**< grain cooling due to thermionic emissions, summed over charge states */
-	  GasHeatPhotoElBin,    /**< photoelectric heating of the gas, added in GrGH 0 */
-	  GasCoolCollBin;       /**< gas cooling due to collisions with grains */
+	  GasHeatPhotoElBin;    /**< photoelectric heating of the gas, added in GrGH 0 */
 
 	/** quantum heating physics */
 	bool lgQHeat,           /**< is quantum heating turned on ? */
