@@ -1684,12 +1684,7 @@ void SaveDo(
 						}
 						fprintf( save.params[ipPun].ipPnunit, " %.5e", radius.depth_mid_zone );
 						for( size_t nd=0; nd < gv.bin.size(); ++nd )
-						{
-							double tedust = 0.;
-							for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
-								tedust += gv.bin[nd].chrg(nz).FracPop*gv.bin[nd].chrg(nz).tedust;
-							fprintf( save.params[ipPun].ipPnunit, "\t%.4e", tedust );
-						}
+							fprintf( save.params[ipPun].ipPnunit, "\t%.3e", gv.bin[nd].tedust );
 						fprintf( save.params[ipPun].ipPnunit, "\n" );
 					}
 					else

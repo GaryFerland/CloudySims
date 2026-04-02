@@ -135,11 +135,11 @@ STATIC void GrainScreen(long,size_t,long,double*,double*);
 /* helper function for GrainScreen */
 STATIC double ThetaNu(double);
 /* update items that depend on grain potential */
-STATIC void UpdatePot(size_t,long,long,/*@out@*/double[],/*@out@*/double[]);
+STATIC void UpdatePot(size_t,long,long,double,/*@out@*/double[],/*@out@*/double[]);
 /* calculate charge state populations */
 STATIC void GetFracPop(size_t,long,/*@in@*/double[],/*@in@*/double[],/*@out@*/long*);
 /* this routine updates all quantities that depend only on grain charge and radius */
-STATIC void UpdatePot1(size_t,long,long,long);
+STATIC void UpdatePot1(size_t,long,long,long,double);
 /* this routine updates all quantities that depend on grain charge, radius and temperature */
 STATIC void UpdatePot2(size_t,long);
 /* Helper function to calculate primary and secondary yields and the average electron energy at infinity */
@@ -1190,10 +1190,9 @@ STATIC double GrnStdDpth(long int nd)
 		// abundance depends on temperature relative to sublimation
 		// "grain function sublimation" command
 		// use weighted average of all charge states
-		double tedust = 0.;
-		for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
-			tedust += gv.bin[nd].chrg(nz).FracPop*gv.bin[nd].chrg(nz).tedust;
-		GrnStdDpth_v = sexp( pow3( tedust / gv.bin[nd].Tsublimat ) );
+		// NOTE this branch may be called before tedust is ever evaluated
+		// so tedust needs to be initialized to a safe value
+		GrnStdDpth_v = sexp( pow3( gv.bin[nd].tedust / gv.bin[nd].Tsublimat ) );
 	}
 	else
 	{
@@ -1404,7 +1403,7 @@ STATIC void GrainChargeTemp()
 
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
-		long relax = ( conv.lgSearch ) ? 3 : 1;
+		long relax = ( conv.lgSearch ) ? 5 : 1;
 
 		/* >>chng 02 nov 11, added test for the presence of PAHs in the ionized region, PvH */
 		if( gv.bin[nd].matType == MAT_PAH || gv.bin[nd].matType == MAT_PAH2 )
@@ -1428,7 +1427,7 @@ STATIC void GrainChargeTemp()
 
 		bool lgTryAnotherIter = true;
 		gv.bin[nd].lgChTdConverged = false;
-		for( long l=0; l < 10*relax && !gv.bin[nd].lgChTdConverged; ++l )
+		for( long l=0; l < 20*relax && !gv.bin[nd].lgChTdConverged; ++l )
 		{
 			for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
 			{
@@ -1802,10 +1801,14 @@ STATIC void GrainChargeTemp()
 			if( gv.bin[nd].matType == MAT_PAH || gv.bin[nd].matType == MAT_PAH2 )
 				totalArea += gv.bin[nd].IntArea*gv.bin[nd].dstAbund;
 		for( size_t nd=0; nd < gv.bin.size(); nd++ )
+		{
 			if( totalArea > 0. && ( gv.bin[nd].matType == MAT_PAH || gv.bin[nd].matType == MAT_PAH2 ) )
 				gv.bin[nd].GasHeatPhotoElBin = gv.GasHeatPhotoEl*gv.bin[nd].IntArea*gv.bin[nd].dstAbund/totalArea;
 			else
 				gv.bin[nd].GasHeatPhotoElBin = 0.;
+			for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+				gv.bin[nd].chrg(nz).GasHeatPhotoElCS = gv.bin[nd].GasHeatPhotoElBin;
+		}
  	}
 
 	/* >>chng 04 aug 06, added test of convergence of the net gas heating/cooling, PvH */
@@ -1956,15 +1959,34 @@ STATIC void GrainCharge(size_t nd,
 	/* find dust charge */
 	if( trace.lgTrace && trace.lgDustBug )
 	{
-		fprintf( ioQQQ, "    Charge loop, search %c,", TorF(conv.lgSearch) );
+		fprintf( ioQQQ, "    Charge loop, nd=%ld search %c,", nd, TorF(conv.lgSearch) );
 	}
 
 	ASSERT( nd < gv.bin.size() );
 
-	for( nz=0; nz < NCHS; nz++ )
+	/* determine a reasonable starting guess for the grain temperature of charge
+	 * states that have not been evaluated yet. normally gv.bin[nd].tedust will be
+	 * a very good estimate for that, but during the search phase, gv.bin[nd].tedust
+	 * may not have a good value yet, so we use a different algorithm there */
+	double Tstart = 0.;
+	if( conv.lgSearch )
 	{
-		gv.bin[nd].chrg(nz).FracPop = -DBL_MAX;
+		double sumPop = 0.;
+		/* for bins that have not been evaluated yet, FracPop == 0 */
+		for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+		{
+			sumPop += gv.bin[nd].chrg(nz).FracPop;
+			Tstart += gv.bin[nd].chrg(nz).FracPop*gv.bin[nd].chrg(nz).tedust;
+		}
+		Tstart = ( sumPop > 0. ) ? Tstart/sumPop : 100.;
 	}
+	else
+	{
+		Tstart = gv.bin[nd].tedust;
+	}
+
+	for( nz=0; nz < NCHS; nz++ )
+		gv.bin[nd].chrg(nz).FracPop = 0.;
 
 	/* this algorithm determines the value of Zlo and the charge state populations
 	 * in the n-charge state model as described in:
@@ -2062,7 +2084,7 @@ STATIC void GrainCharge(size_t nd,
 		Zlo = gv.bin[nd].chrg(0).DustZ;
 	}
 	Zlo = max(Zlo,gv.bin[nd].LowestZg);
-	UpdatePot( nd, Zlo, stride, rate_up, rate_dn );
+	UpdatePot( nd, Zlo, stride, Tstart, rate_up, rate_dn );
 
 	/* check if the grain charge is correctly bracketed */
 	for( i=0; i < BRACKET_MAX; i++ )
@@ -2083,7 +2105,7 @@ STATIC void GrainCharge(size_t nd,
 			Zlo -= (gv.bin[nd].nChrg-1)*stride;
 
 		Zlo = MAX2(Zlo,gv.bin[nd].LowestZg);
-		UpdatePot( nd, Zlo, stride, rate_up, rate_dn );
+		UpdatePot( nd, Zlo, stride, Tstart, rate_up, rate_dn );
 	}
 
 	if( netloss0*netloss1 > 0. )
@@ -2111,7 +2133,7 @@ STATIC void GrainCharge(size_t nd,
 
 			netloss0 = netloss1;
 		}
-		UpdatePot( nd, Zlo, stride, rate_up, rate_dn );
+		UpdatePot( nd, Zlo, stride, Tstart, rate_up, rate_dn );
 	}
 
 	ASSERT( netloss0*netloss1 <= 0. );
@@ -2133,7 +2155,7 @@ STATIC void GrainCharge(size_t nd,
 		}
 
 		Zlo = newZlo;
-		UpdatePot( nd, Zlo, 1, rate_up, rate_dn );
+		UpdatePot( nd, Zlo, 1, Tstart, rate_up, rate_dn );
 	}
 
 	/* >>chng 05 jun 24, when thermionic emissions are important, this can destabilize the
@@ -2150,6 +2172,9 @@ STATIC void GrainCharge(size_t nd,
 	{
 		gv.bin[nd].lgChrgConverged = true;
 	}
+
+	if( trace.lgTrace && trace.lgDustBug )
+		fprintf( ioQQQ, " converged: %c\n", TorF(gv.bin[nd].lgChrgConverged) );
 
 	gv.bin[nd].AveDustZ = 0.;
 	crate = csum3 = 0.;
@@ -2173,18 +2198,19 @@ STATIC void GrainCharge(size_t nd,
 	{
 		double d[4];
 
-		fprintf( ioQQQ, "	GrainCharge nd=%ld\n", nd );
+		fprintf( ioQQQ, "    GrainCharge nd=%ld\n", nd );
 
 		crate = csum1a = csum1b = csum2 = csum3 = 0.;
 		for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
 		{
-			crate += gv.bin[nd].chrg(nz).FracPop*
-				GrainElecEmis1(nd,nz,&d[0],&d[1],&d[2],&d[3]);
-			csum1a += gv.bin[nd].chrg(nz).FracPop*d[0];
-			csum1b += gv.bin[nd].chrg(nz).FracPop*d[1];
-			csum2 += gv.bin[nd].chrg(nz).FracPop*d[2];
-			csum3 += gv.bin[nd].chrg(nz).FracPop*d[3];
-			fprintf( ioQQQ, "    nz=%ld rate1a=%.4e, rate1b=%.4e, ", nz, d[0], d[1] );
+			const ChargeBin& gptr = gv.bin[nd].chrg(nz);
+
+			crate += gptr.FracPop*GrainElecEmis1(nd,nz,&d[0],&d[1],&d[2],&d[3]);
+			csum1a += gptr.FracPop*d[0];
+			csum1b += gptr.FracPop*d[1];
+			csum2 += gptr.FracPop*d[2];
+			csum3 += gptr.FracPop*d[3];
+			fprintf( ioQQQ, "    nz=%ld Td=%e rate1a=%.4e, rate1b=%.4e, ", nz, gptr.tedust, d[0], d[1] );
 			fprintf( ioQQQ, "rate2=%.4e, rate3=%.4e, sum=%.4e\n", d[2], d[3], d[0]+d[1]+d[2]+d[3] );
 		}
 
@@ -2548,6 +2574,7 @@ STATIC double ThetaNu(double nu)
 STATIC void UpdatePot(size_t nd,
 					  long Zlo,
 					  long stride,
+					  double Tstart,
 					  /*@out@*/ double rate_up[], /* rate_up[NCHU] */
 					  /*@out@*/ double rate_dn[]) /* rate_dn[NCHU] */
 {
@@ -2603,9 +2630,9 @@ STATIC void UpdatePot(size_t nd,
 		gv.bin[nd].ichrg[nz] = ptr;
 
 		if( gv.bin[nd].chrg(nz).DustZ != Zg )
-			UpdatePot1(nd,nz,Zg,0);
+			UpdatePot1(nd,nz,Zg,0,Tstart);
 		else if( gv.bin[nd].chrg(nz).nfill < gv.nPositive )
-			UpdatePot1(nd,nz,Zg,gv.bin[nd].chrg(nz).nfill);
+			UpdatePot1(nd,nz,Zg,gv.bin[nd].chrg(nz).nfill,Tstart);
 
 		UpdatePot2(nd,nz);
 
@@ -2783,7 +2810,8 @@ STATIC void GetFracPop(size_t nd,
 STATIC void UpdatePot1(size_t nd,
 					   long nz,
 					   long Zg,
-					   long ipStart)
+					   long ipStart,
+					   double Tstart)
 {
 	DEBUG_ENTRY( "UpdatePot1()" );
 
@@ -3048,11 +3076,11 @@ STATIC void UpdatePot1(size_t nd,
 		UpdateRecomZ0(nd,nz);
 
 		/* >>chng 05 jun 24, use initial estimate for tedust, PvH */
-		gv.bin[nd].chrg(nz).tedust = 100.;
+		gv.bin[nd].chrg(nz).tedust = Tstart;
 	}
 
 	/* invalidate the remaining fields */
-	gv.bin[nd].chrg(nz).FracPop = -DBL_MAX;
+	gv.bin[nd].chrg(nz).FracPop = 0.;
 
 	gv.bin[nd].chrg(nz).RSum1 = -DBL_MAX;
 	gv.bin[nd].chrg(nz).RSum2 = -DBL_MAX;

@@ -50,7 +50,7 @@ void ChargeBin::p_clear1()
 {
 	DustZ = LONG_MIN;
 	nfill = 0;
-	FracPop = -DBL_MAX;
+	FracPop = 0.;
 	tedust = 1.;
 	hcon1 = -DBL_MAX;
 	hots1 = -DBL_MAX;
