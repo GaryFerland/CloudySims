@@ -1146,52 +1146,97 @@ STATIC void GetFracDep(vector<double>& mult_frac) // pass the material type as a
 {
 	DEBUG_ENTRY( "GetFracDep()" );
 
+	/* NB NB - this routine computes the fraction of depleted elements to default elements
+	 * in grains by mass. The SiC grians are treated separately, by first computing the
+	 * fraction of silicon and carbon in the default grains, then use that fraction to
+	 * compute the mass of depleted carbon and silicon going into the non-SiC vs SiC grains */
+
+	/* break out of the routine, if there is no depletion */
+	if( abund.DepletionScaleFactor[ipCARBON] == 1.0 && abund.DepletionScaleFactor[ipSILICON] == 1.0 )
+	{
+		fill(mult_frac.begin(), mult_frac.end(), 1.0);
+		return;
+	}
+
 	double default_grain_car_mass = 0.0;
+	double default_grain_sic_mass = 0.0;
 	double default_grain_sil_mass = 0.0;
-	constexpr int car_elements[] = { ipCARBON };
-	constexpr int sil_elements[] = { ipSILICON, ipOXYGEN, ipMAGNESIUM, ipIRON };
+	double default_notsic_c_abund = 0.0;
+	double default_notsic_si_abund = 0.0;
+	double default_sic_c_abund = 0.0;
+	double default_sic_si_abund = 0.0;
+	/* Current grains do not use Nitrogen however, this code included for when future grains
+	*  would use nitrogen, additionally
+	*/
+	constexpr int car_elements[] = { ipNITROGEN };
+	constexpr int sil_elements[] = { ipOXYGEN, ipMAGNESIUM, ipIRON };
 	/* Sum up the total mass of the given elements in each size bin of the default grains */
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
-		for (int el : car_elements)
+		if( gv.bin[nd].matType == MAT_SIC )
 		{
-			default_grain_car_mass += gv.bin[nd].elmAbund[el]*dense.AtomicWeight[el];
+			/* Sum the abundance of C, Si in SiC grains */
+			default_sic_c_abund += gv.bin[nd].elmAbund[ipCARBON];
+			default_sic_si_abund += gv.bin[nd].elmAbund[ipSILICON];
 		}
-
-		for (int el : sil_elements)
+		else
 		{
-			default_grain_sil_mass += gv.bin[nd].elmAbund[el]*dense.AtomicWeight[el];
+			/* Sum the abundance of C in all grains besides Si, C */
+			default_notsic_c_abund += gv.bin[nd].elmAbund[ipCARBON];
+			for (int el : car_elements)
+			{
+				default_grain_car_mass += gv.bin[nd].elmAbund[el]*dense.AtomicWeight[el];
+			}
+
+			default_notsic_si_abund += gv.bin[nd].elmAbund[ipSILICON];
+			/* Sum the mass of all elements in Silicates besides Si, C */
+			for (int el : sil_elements)
+			{
+				default_grain_sil_mass += gv.bin[nd].elmAbund[el]*dense.AtomicWeight[el];
+			}
 		}
 	}
+	/* Compute the fraction of Si, C in SiC grains */
+	double sic_si_frac = (default_sic_si_abund + default_notsic_si_abund == 0.0) ? 0.0 : default_sic_si_abund / (default_sic_si_abund + default_notsic_si_abund);
+	double sic_c_frac = (default_sic_c_abund + default_notsic_c_abund == 0.0) ? 0.0 : default_sic_c_abund / (default_sic_c_abund + default_notsic_c_abund);
 
-	/* Sum up the total depleted mass of the given elements for carbonaceous grains. */
-	realnum depleted_abund = 0.0;
-	realnum depleted_car_mass = 0.0;
+	/* Compute the mass of elements in each grain type in the default grains */
+	default_grain_car_mass += default_notsic_c_abund*dense.AtomicWeight[ipCARBON];
+	default_grain_sil_mass += default_notsic_si_abund*dense.AtomicWeight[ipSILICON];
+	default_grain_sic_mass += default_sic_c_abund*dense.AtomicWeight[ipCARBON];
+	default_grain_sic_mass += default_sic_si_abund*dense.AtomicWeight[ipSILICON];
+
+	/* Sum up the total depleted mass of the given elements. */
+	realnum depleted_abund = max(0., 1.-abund.DepletionScaleFactor[ipCARBON]) * abund.ReferenceAbun[ipCARBON];
+	realnum depleted_car_mass = depleted_abund * dense.AtomicWeight[ipCARBON] * ( 1. - sic_c_frac ); /* mass of depleted C for carbonaceous grains */
+	realnum depleted_sic_mass = depleted_abund * dense.AtomicWeight[ipCARBON] * sic_c_frac; /* mass of depleted C for SiC grains */
 	for (int el : car_elements)
 	{
 		depleted_abund = max(0., 1.-abund.DepletionScaleFactor[el]) * abund.ReferenceAbun[el];
 		depleted_car_mass += depleted_abund*dense.AtomicWeight[el];
 	}
 
-	/* Sum up the total depleted mass of the given elements for silicate grains. */
-	realnum depleted_sil_mass = 0.0;
+	depleted_abund = max(0., 1.-abund.DepletionScaleFactor[ipSILICON]) * abund.ReferenceAbun[ipSILICON];
+	realnum depleted_sil_mass = depleted_abund * dense.AtomicWeight[ipSILICON] * ( 1. - sic_si_frac ); /* mass of depleted Si for silicate grains */
+	depleted_sic_mass += depleted_abund * dense.AtomicWeight[ipSILICON] * sic_si_frac; /* mass of depleted Si for SiC grains */
 	for (int el : sil_elements)
 	{
 		depleted_abund = max(0., 1.-abund.DepletionScaleFactor[el]) * abund.ReferenceAbun[el];
 		depleted_sil_mass += depleted_abund*dense.AtomicWeight[el];
 	}
 
-
 	for( size_t mT=0; mT < mult_frac.size(); mT++ )
 		if( mT == MAT_CAR || mT == MAT_CAR2 ||
-			mT == MAT_PAH || mT == MAT_PAH2 ||
-			mT == MAT_SIC
+			mT == MAT_PAH || mT == MAT_PAH2
 		)
-			mult_frac[mT] = (abund.DepletionScaleFactor[ipCARBON] == 1.0) ? 1.0 : depleted_car_mass/default_grain_car_mass;
+			mult_frac[mT] = (depleted_car_mass == 0.0) ? 1.0 : depleted_car_mass/default_grain_car_mass;
 		else if( mT == MAT_SIL || mT == MAT_SIL2 )
-			mult_frac[mT] = (abund.DepletionScaleFactor[ipSILICON] == 1.0) ? 1.0 : depleted_sil_mass/default_grain_sil_mass;
+			mult_frac[mT] = (depleted_sil_mass == 0.0) ? 1.0 : depleted_sil_mass/default_grain_sil_mass;
+		else if( mT == MAT_SIC )
+			mult_frac[mT] = (depleted_sic_mass == 0.0) ? 1.0
+							: depleted_sic_mass/default_grain_sic_mass;
 		else if( mT == MAT_USR )
-			mult_frac[mT] = 1.0; //To be edited later
+			mult_frac[mT] = 1.0; /* Currently unused */
 		else
 			TotalInsanity();
 };
