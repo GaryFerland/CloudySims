@@ -34,6 +34,8 @@
 #include "parser.h"
 #include "parse_species.h"
 #include "rfield.h"
+#include <cstdlib>  // for strtol
+#include <cerrno>   // for errno
 
 typedef vector< pair<double,long> > DoubleLongPairVector;
 
@@ -234,9 +236,9 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	const int MAX_NUM_LEVELS = 999;
 	const bool DEBUGSTATE = false;
 
-	// old and new magic numbers for the stout files
-	const long iyr_old = 17, imo_old = 9, idy_old = 5;
-	const long iyr_new = 25, imo_new = 10, idy_new = 15;
+	// versions one and two magic numbers for the stout files
+	const long iyr_v1 = 17, imo_v1 = 9, idy_v1 = 5;
+	const long iyr_v2 = 25, imo_v2 = 10, idy_v2 = 15;
 
 	dBaseSpecies[intNS].lgMolecular = false;
 	dBaseSpecies[intNS].lgLTE = false;
@@ -280,10 +282,10 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		cdEXIT( EXIT_FAILURE );
 	}
 	// Split coll files by magic number.
-	// Old magic files are legacy single-file format and do NOT require _blk_.
-	// New magic files must be block files and will be ordered by blk index.
-	vector<string> collFilesOld;
-	vector<string> collFilesNew;
+	// V1 magic files are legacy single-file format and do NOT require _blk_.
+	// V2 magic files must be block files and will be ordered by blk index.
+	vector<string> collFilesV1;
+	vector<string> collFilesV2;
 
 	for( const auto& f : collFiles )
 	{
@@ -296,13 +298,13 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		dp.getToken( mo );
 		dp.getToken( dy );
 
-		if( yr == iyr_old && mo == imo_old && dy == idy_old )
+		if( yr == iyr_v1 && mo == imo_v1 && dy == idy_v1 )
 		{
-			collFilesOld.push_back( f );
+			collFilesV1.push_back( f );
 		}
-		else if( yr == iyr_new && mo == imo_new && dy == idy_new )
+		else if( yr == iyr_v2 && mo == imo_v2 && dy == idy_v2 )
 		{
-			collFilesNew.push_back( f );
+			collFilesV2.push_back( f );
 		}
 		else
 		{
@@ -330,8 +332,8 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	d.getToken(mmo);
 	d.getToken(mdy);
 
-	if( !( (myr == iyr_old && mmo == imo_old && mdy == idy_old) ||
-    		(myr == iyr_new && mmo == imo_new && mdy == idy_new) ) )
+	if( !( (myr == iyr_v1 && mmo == imo_v1 && mdy == idy_v1) ||
+    		(myr == iyr_v2 && mmo == imo_v2 && mdy == idy_v2) ) )
 	{
     	d.errorAbort("invalid magic number in STOUT .nrg file");
 	}
@@ -444,6 +446,11 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 
 	//Sort levels by energy (then by the index in the file if necessary)
 	sort(dBaseStatesOrg.begin(),dBaseStatesOrg.end());
+	// highest level index in file-space that is still retained after truncation
+	//Why here: This value is needed by both the v2 .tp and v2 .coll readers.
+	long maxRetainedIndexInFile = -1;
+	for( long i = 0; i < nMolLevs; ++i )
+		maxRetainedIndexInFile = MAX2( maxRetainedIndexInFile, dBaseStatesOrg[i].index );
 
 	// regular files have the level indices running as 1, 2, 3, ...
 	// (without gaps) and the energies are also already sorted
@@ -545,14 +552,14 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
  	******************************************************/
 
 	/*
-	* NEW vs OLD STOUT .tp handling:
+	*V1 vs V2 STOUT .tp handling:
 	*
-	*   - Old STOUT (magic 17 09 05):
+	*   - V1 STOUT (magic 17 09 05):
 	*       * File is legacy: "<shortName>.tp" (no _blk_)
 	*       * Each data row starts with dataType:  A|G|S
 	*       * End-of-data MUST be the "***" sentinel (exactly as before)
 	*
-	*   - New STOUT (magic 25 10 15):
+	*   - V2 STOUT (magic 25 10 15):
 	*       * File(s) may be split as "<shortName>_blk_<N>.tp"
 	*       * After magic line there is a global dataType line: A|G|S
 	*       * Each data row is: ipLo ipHi value [transType]
@@ -787,10 +794,10 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		d.getToken(mmo);
 		d.getToken(mdy);
 
-		bool lgTPold = (myr == iyr_old && mmo == imo_old && mdy == idy_old);
-		bool lgTPnew = (myr == iyr_new && mmo == imo_new && mdy == idy_new);
+		bool lgTPv1 = (myr == iyr_v1 && mmo == imo_v1 && mdy == idy_v1);
+		bool lgTPv2 = (myr == iyr_v2 && mmo == imo_v2 && mdy == idy_v2);
 
-		if( !lgTPold && !lgTPnew )
+		if( !lgTPv1 && !lgTPv2 )
 			d.errorAbort("invalid magic number in STOUT .tp file");
 
 		if( DEBUGSTATE )
@@ -800,9 +807,9 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		}
 
 		// ==========================================================
-		// OLD FORMAT (17 09 05) -- KEEP EXACTLY AS BEFORE
+		// FORMAT Version 1  (magic number 17 09 05) --
 		// ==========================================================
-		if( lgTPold )
+		if( lgTPv1 )
 		{
 			if( DEBUGSTATE )
 				fprintf(ioQQQ,"Species|File Index (Lo:Hi)|Cloudy Index (Lo:Hi)|Data Type (A,G,S)|Data\n");
@@ -847,7 +854,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 			}
 		}
 		// ==========================================================
-		// NEW FORMAT (25 10 15)
+		// Format Version 2 (magic number 25 10 15). This version has blocks!
 		// ==========================================================
 		else
 		{
@@ -858,8 +865,12 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 			if( globalType != "A" && globalType != "G" && globalType != "S" )
 				d.errorAbort( "invalid global data type in STOUT .tp file" );
 			d.checkEOL();
-
+			
 			lgSentinelReached = false;
+			bool lgEarlyStop = false;
+			long prevHiInFile = -1;
+			long prevLoInFile = -1;
+		
 			while( d.getline() )
 			{
 				if( d.lgEODMarker() )
@@ -868,17 +879,30 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 					break;
 				}
 
-				// allow blank line as end-of-data in new format
-				string first;
-				if( !d.getTokenOptional(first) )
+				// allow blank line as end-of-data in v2 format
+				long ipLoInFile;
+				if( !d.getTokenOptional(ipLoInFile) )
 				{
 					lgSentinelReached = true;
 					break;
 				}
-
-				long ipLoInFile = atol(first.c_str());
 				long ipHiInFile;
 				d.getToken( ipHiInFile );
+				// verify v2 ordering by (upper, lower) file indices
+				if( ipHiInFile < prevHiInFile ||
+			    	( ipHiInFile == prevHiInFile && ipLoInFile < prevLoInFile ) )
+				{
+					d.errorAbort( "STOUT v2 .tp file is not sorted by (upper, lower) level index" );
+				}
+				prevHiInFile = ipHiInFile;
+				prevLoInFile = ipLoInFile;
+
+				// safe early termination: all later rows are beyond retained levels
+				if( ipHiInFile > maxRetainedIndexInFile )
+				{
+					lgEarlyStop = true;
+					break;
+				}
 
 				double tpData;
 				d.getToken( tpData );
@@ -892,10 +916,10 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 				ApplyTPDatum( globalType, ipLoInFile, ipHiInFile, tpData, transType, lgOverrideExisting );
 			}
 
-			if( !lgSentinelReached )
+			if( !lgSentinelReached && !lgEarlyStop)
 			{
 				fprintf( ioQQQ, " PROBLEM End of data sentinel was not reached in file %s\n", thisTP.c_str() );
-				fprintf( ioQQQ, " New-format STOUT .tp expects stars (*****) or an empty line at end-of-data.\n" );
+				fprintf( ioQQQ, " STOUT v2 .tp expects stars (*****) or an empty line at end-of-data.\n" );
 				cdEXIT(EXIT_FAILURE);
 			}
 		}
@@ -928,8 +952,8 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 
 	/*
 	* Decide which collision set to process:
-	*   - New-magic (25 10 15): supports block files named *_blk_<N>.coll
-	*   - Old-magic (17 09 05): legacy single-file format like al_1.coll (NO _blk_)
+	*   - V2-magic (25 10 15): supports block files named *_blk_<N>.coll
+	*   - V1-magic (17 09 05): single-file format like al_1.coll (NO _blk_)
 	*
 	* IMPORTANT:
 	*   We must NOT require _blk_ for legacy files.
@@ -938,22 +962,22 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	vector<string> collToProcess;
 	bool lgUsingNewCollBlocks = false;
 
-	if( !collFilesNew.empty() )
+	if( !collFilesV2.empty() )
 	{
 		/* We have at least one *_blk_<N>.coll candidate -> treat as new block mode */
-		collToProcess = collFilesNew;
+		collToProcess = collFilesV2; /* only blk files have v2 magic, so this is safe */
 		lgUsingNewCollBlocks = true;
 	}
 	else
 	{
 		/* No block files -> legacy mode */
-		collToProcess = collFilesOld;
+		collToProcess = collFilesV1;
 		lgUsingNewCollBlocks = false;
 	}
 
 	/*
-	* In legacy mode we should not “merge” multiple files silently.
-	* If multiple legacy candidates exist, it likely indicates a naming problem.
+	* In v1 mode we should not “merge” multiple files silently.
+	* If multiple v1 candidates exist, it likely indicates a naming problem.
 	* You can relax this if you truly want to read multiple old-format files.
 	*/
 	if( !lgUsingNewCollBlocks && collToProcess.size() > 1 )
@@ -981,8 +1005,8 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 
 	/*
 	* Build processing order:
-	*   - New block mode: sort by numeric blk index (ascending), baseline = lowest blk
-	*   - Legacy mode: just process the single file (or lexicographic order if you later allow >1)
+	*   - New (V2) block mode: sort by numeric blk index (ascending), baseline = lowest blk
+	*   - V1 mode: just process the single file (or lexicographic order if you later allow >1)
 	*/
 	vector<size_t> collOrder(collToProcess.size());
 	for( size_t i=0; i<collOrder.size(); ++i )
@@ -1041,10 +1065,10 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		d.getToken(mmo);
 		d.getToken(mdy);
 
-		bool lgCOLLold = (myr == iyr_old && mmo == imo_old && mdy == idy_old);
-		bool lgCOLLnew = (myr == iyr_new && mmo == imo_new && mdy == idy_new);
+		bool lgCOLLv1 = (myr == iyr_v1 && mmo == imo_v1 && mdy == idy_v1);
+		bool lgCOLLv2 = (myr == iyr_v2 && mmo == imo_v2 && mdy == idy_v2);
 
-		if( !lgCOLLold && !lgCOLLnew )
+		if( !lgCOLLv1 && !lgCOLLv2 )
 			d.errorAbort("Invalid magic number in STOUT .coll file");
 
 		/* Reset per-file state */
@@ -1060,8 +1084,8 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 			fprintf(ioQQQ,"Species|Data Type (CS,RATE)|Collider|File Index (Lo:Hi)|Cloudy Index (Lo:Hi)|Data\n");
 		}
 
-		// ---------------- OLD COLLISION FORMAT (17 09 05) ----------------
-		if( lgCOLLold )
+		// ---------------- Version 1 COLLISION FORMAT (17 09 05) ----------------
+		if( lgCOLLv1 )
 		{
 			lgSentinelReached = false;
 			while( d.getline() )
@@ -1177,11 +1201,11 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 				d.checkEOL();
 			}
 		}
-		// ---------------- NEW COLLISION FORMAT (25 10 15) ----------------
+		// ---------------- Version 2 COLLISION FORMAT (25 10 15) ----------------
 		else
 		{
 			/*
-			* New format: after magic, first non-comment data line is a header:
+			* V2 format: after magic, first non-comment data line is a header:
 			*   "CS ELECTRON"  or  "RATE H"  etc.
 			* Then TEMP lines + transition lines.
 			*/
@@ -1225,7 +1249,11 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 				d.errorAbort( "Collision strengths (CS) are only allowed for electron colliders" );
 
 			lgSentinelReached = false;
+			bool lgEarlyStop = false;
+			long prevHiInFile = -1;
+			long prevLoInFile = -1;
 			numpoints = 0; /* require TEMP before transition rows */
+
 			while( d.getline() )
 			{
 				if( d.lgEODMarker() )
@@ -1263,11 +1291,28 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 				else
 				{
 					if( numpoints <= 0 )
-						d.errorAbort( "First data line after header must be TEMP in new-format .coll file" );
+						d.errorAbort( "First data line after header must be TEMP in v2 .coll file" );
+					char* endptr = nullptr;
+					errno = 0;
+					long ipLoInFile = strtol( first.c_str(), &endptr, 10 );
+					if( errno != 0 || endptr == first.c_str() || *endptr != '\0' )
+						d.errorAbort( "failed to read lower level index in block-format .coll file" );
 
-					long ipLoInFile = atol( first.c_str() );
 					long ipHiInFile, ipLo, ipHi;
 					d.getToken( ipHiInFile );
+					if( ipHiInFile < prevHiInFile ||
+					    ( ipHiInFile == prevHiInFile && ipLoInFile < prevLoInFile ) )
+					{
+						d.errorAbort( "STOUT v2 .coll file is not sorted by (upper, lower) level index" );
+					}
+					prevHiInFile = ipHiInFile;
+					prevLoInFile = ipLoInFile;
+
+					if( ipHiInFile > maxRetainedIndexInFile )
+					{
+						lgEarlyStop = true;
+						break;
+					}
 					processIndices(ipLoInFile, ipHiInFile, lgIsRegular, indexold2new, ipLo, ipHi);
 
 					/* out-of-range/unmapped transitions: consume values and skip */
@@ -1317,7 +1362,13 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 
 				d.checkEOL();
 			}
-		} // end new-coll branch
+			if( !lgSentinelReached && !lgEarlyStop )
+			{
+				fprintf( ioQQQ, " PROBLEM End of data sentinel was not reached in file %s\n", chCOLLFilename.c_str() );
+				fprintf( ioQQQ, " STOUT v2 .coll expects stars (*****) at end-of-data.\n" );
+				cdEXIT(EXIT_FAILURE);
+			}
+		} // end v2-coll branch
 	} // end loop over collToProcess
 
 } // end atmdat_STOUT_readin
