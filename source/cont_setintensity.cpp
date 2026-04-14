@@ -238,7 +238,7 @@ void ContSetIntensity()
 		  rfield.anu(prt.ipeak-1) , peak);
 	}
 
-	if( peak > 1e38 )
+	if( peak > BIGFLOAT )
 	{
 		fprintf( ioQQQ, " PROBLEM DISASTER The continuum is too intense to compute. Use a fainter continuum. (This is the nu*f_nu test)\n" );
 		fprintf( ioQQQ, " Sorry.\n" );
