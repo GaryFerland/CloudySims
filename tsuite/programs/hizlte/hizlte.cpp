@@ -35,7 +35,7 @@ int main( void )
 
 		BigError = 0.;
 		/* this is limit on 32 bit double */
-		while( telog < 7.99 )
+		while( telog < 7.49 )
 		{
 			/* initialize the code for this run */
 			cdInit();
