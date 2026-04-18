@@ -1,3 +1,5 @@
+# >>chng 26 04 18 add command to increase pressuer interations from 3000 to 4000
+set pres ioniz 4000
 title Orion nebula blister with wind
 #
 # commands controlling continuum =========
@@ -31,8 +33,6 @@ turbulence 8 km/sec no pressure
 init "fast.ini"
 # use Bakes & Tielens heating
 set PAH Bakes 
-## init "c84.ini"
-## failures 5
 #
 # commands controlling output    =========
 # want to print line intensities are surface brightness, per arcsec^2
