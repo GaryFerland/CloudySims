@@ -35,6 +35,10 @@ int main( void )
 
 		BigError = 0.;
 		/* this is limit on 32 bit double */
+		/* >>chng 26 apr 18 had been hardwired 1e38 changed to BIGFLOAT ~e36
+		 * highest temperature of 7.99 was ~e37 so trapped. Best to use the
+		 * macro BIGFLOAT and stay away from float limits 
+		 * change in macro in cont_setintensity.cpp rev 94cb3de61063ca43f8dcd1766851ab4de8cb2212*/
 		while( telog < 7.49 )
 		{
 			/* initialize the code for this run */
