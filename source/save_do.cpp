@@ -2467,9 +2467,10 @@ void SaveDo(
 			{
 				fprintf( save.params[ipPun].ipPnunit, "%d\n",save.lgSaveEveryZone[ipPun]);
 				/* save line optical depth */
-				if( save.lgSaveEveryZone[ipPun] || lgLastOnly )
+				if( save.lgSaveEveryZone[ipPun] || lgLastOnly)
 				{
 					fprintf(save.params[ipPun].ipPnunit, "testprint\n");
+					fprintf(save.params[ipPun].ipPnunit,"DEBUG: nzone=%d lgLastOnly=%d\n",nzone, lgLastOnly);
 					save_line(save.params[ipPun].ipPnunit, "PUNO", save.lgEmergent[ipPun], ipPun); 
 				}
 			}

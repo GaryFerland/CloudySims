@@ -1684,8 +1684,6 @@ void ParseSave(Parser& p)
 				strcpy( save.chSave[save.nsave], "LINT" );
 				// option for intrinsic (default) or emergent
 				save.lgEmergent[save.nsave] = false;
-				/* read in the list of lines to examine */
-				parse_save_line(p, false, chHeader, save.nsave);
 				/* "every" option to save this on every zone -
 		 		* not present then only last zone is saved */
 				if( p.nMatch("EVER" ) )
@@ -1699,7 +1697,9 @@ void ParseSave(Parser& p)
 					/* only save last zone */
 					save.lgSaveEveryZone[save.nsave] = false;
 					save.nSaveEveryZone[save.nsave] = 1;
-				}		
+				}
+				/* now read in the list of lines to examine */
+				parse_save_line(p, false, chHeader, save.nsave);		
 			}
 			else
 			{
