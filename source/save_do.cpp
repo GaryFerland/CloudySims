@@ -2465,11 +2465,12 @@ void SaveDo(
 			}
 			else if( strcmp(save.chSave[ipPun],"LINT") == 0 )
 			{
+				fprintf( save.params[ipPun].ipPnunit, "%d\n",save.lgSaveEveryZone[ipPun]);
 				/* save line optical depth */
-				if( ! lgLastOnly )
+				if( save.lgSaveEveryZone[ipPun] || lgLastOnly )
 				{
-					save_line(save.params[ipPun].ipPnunit,"PUNO",
-								 save.lgEmergent[ipPun],ipPun); 
+					fprintf(save.params[ipPun].ipPnunit, "testprint\n");
+					save_line(save.params[ipPun].ipPnunit, "PUNO", save.lgEmergent[ipPun], ipPun); 
 				}
 			}
 

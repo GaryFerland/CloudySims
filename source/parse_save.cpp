@@ -1686,6 +1686,20 @@ void ParseSave(Parser& p)
 				save.lgEmergent[save.nsave] = false;
 				/* read in the list of lines to examine */
 				parse_save_line(p, false, chHeader, save.nsave);
+				/* "every" option to save this on every zone -
+		 		* not present then only last zone is saved */
+				if( p.nMatch("EVER" ) )
+				{
+				/* save every zone */
+					save.lgSaveEveryZone[save.nsave] = true;
+					save.nSaveEveryZone[save.nsave] = 1;
+				}
+				else
+				{
+					/* only save last zone */
+					save.lgSaveEveryZone[save.nsave] = false;
+					save.nSaveEveryZone[save.nsave] = 1;
+				}		
 			}
 			else
 			{
