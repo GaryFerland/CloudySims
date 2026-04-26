@@ -1098,6 +1098,34 @@ namespace {
 				return grnh2tot(this)*(1.-frac_H2star_grains());
 			}
 	};
+	
+	double grnhd(const mole_reaction *)
+	{
+		DEBUG_ENTRY( "grnhd()" );
+		fixit("Remove factor of dense.gas_phase[ipHYDROGEN] factor from"
+				"derivation of rate_h2_form_grains_used to avoid"
+				"division here"); 
+		//Note: HD formation rate does not have 0.5 factor like H2 formation rate.
+		//Assume same mechanism for H2 formation		
+				
+		if( mole.grain_area*deut.xIonDense[0]>0 )
+			return gv.rate_h2_form_grains_used_total*(2.*deut.xIonDense[0]/dense.xIonDense[ipHYDROGEN][0])/(mole.grain_area*dense.xIonDense[ipHYDROGEN][0]);
+		else
+			return 0.;
+	}
+	
+
+	class mole_reaction_grnhd : public mole_reaction
+	{
+		typedef mole_reaction_grnhd T;
+	public:
+		virtual T* Create() const {return new T;}
+		virtual const char* name() {return "grnhd";}
+		double rk() const
+			{
+				return grnhd(this);
+			}
+	};
 
 	class mole_reaction_grnh2s : public mole_reaction
 	{
