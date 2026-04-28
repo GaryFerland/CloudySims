@@ -2465,12 +2465,17 @@ void SaveDo(
 			}
 			else if( strcmp(save.chSave[ipPun],"LINT") == 0 )
 			{
-				/* save line optical depth */
-				if( ! lgLastOnly )
+				/* Handle "LINT" save command:
+				* Save hydrogen line optical depths using save_line().
+				* Depending on flags, this writes either:
+				*   - optical depths at every zone, or
+				*   - only the final zone (integrated result).
+				*/
+				if( (save.lgSaveEveryZone[ipPun] && !lgLastOnly) || (!save.lgSaveEveryZone[ipPun] && lgLastOnly) )
 				{
-					save_line(save.params[ipPun].ipPnunit,"PUNO",
-								 save.lgEmergent[ipPun],ipPun); 
+					save_line(save.params[ipPun].ipPnunit, "PUNO", save.lgEmergent[ipPun], ipPun); 
 				}
+			
 			}
 
 			else if( strcmp(save.chSave[ipPun],"LIND") == 0 )

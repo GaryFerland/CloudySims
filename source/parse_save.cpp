@@ -1684,8 +1684,25 @@ void ParseSave(Parser& p)
 				strcpy( save.chSave[save.nsave], "LINT" );
 				// option for intrinsic (default) or emergent
 				save.lgEmergent[save.nsave] = false;
-				/* read in the list of lines to examine */
-				parse_save_line(p, false, chHeader, save.nsave);
+				if( p.nMatch("EVER" ) )
+				{
+					/* "EVER" keyword detected:"every" option is on.
+					* Save output for every zone in the simulation.
+					*/
+					save.lgSaveEveryZone[save.nsave] = true;
+					save.nSaveEveryZone[save.nsave] = 1;
+				}
+				else
+				{
+					/* Save only the final zone.
+					* This corresponds to the integrated/emergent value at the outer edge
+					* of the cloud (i.e., what escapes the nebula).
+					*/
+					save.lgSaveEveryZone[save.nsave] = false;
+					save.nSaveEveryZone[save.nsave] = 1;
+				}
+				/* now read in the list of lines to examine */
+				parse_save_line(p, false, chHeader, save.nsave);		
 			}
 			else
 			{

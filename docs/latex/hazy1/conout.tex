@@ -2816,13 +2816,35 @@ The format for entering spectral lines is described in Section~\ref{sec:SpecifyS
 
 The save output begins with emission-line labels and wavelengths.  The
 remaining output gives the optical depth structure.  The first column is the
-depth [cm] into the cloud.  The remaining columns give the optical depth for each line.  
+depth [cm] into the cloud.  The remaining columns give the optical depth for each line.  Results are reported for the last computed zone unless the \textbf{every} option appears.
 
-The following illustrates its use;
+The following examples illustrate its use for reporting either the final (last-zone) result or values at every zone, respectively:
+
 \begin{verbatim}
-save lines, optical some, "lines.opt"
+save line optical depth some "lines.opt"
 o  3 5006.84A
 o  1 6300.30A
+H  1 4340.46A
+H  1 4861.32A
+H  1 6562.80A 
+H  1 1.87510m
+H  1 2.16553m 
+H  1 1215.67A
+H  1 1025.72A
+end of lines
+\end{verbatim}
+
+\begin{verbatim}
+save line optical depth some "lines.opte" every
+o  3 5006.84A
+o  1 6300.30A
+H  1 4340.46A
+H  1 4861.32A
+H  1 6562.80A 
+H  1 1.87510m
+H  1 2.16553m 
+H  1 1215.67A
+H  1 1025.72A
 end of lines
 \end{verbatim}
 
