@@ -27,7 +27,7 @@ save convergence reason last "blr_n14_p20.cvr"
 save overview "blr_n14_p20.ovr" last
 save dr "blr_n14_p20.dr" last 
 #
-save line optical depth some "lines.opte" every
+save line optical depth some "lines.opte" every last
 o 3 5006.84A
 o 1 6300.30A
 He 2 4685.68A
@@ -38,7 +38,7 @@ H 1 1.87510m
 H 1 1215.67A
 H 1 1025.72A
 end of lines
-save line optical depth some "lines.opt"
+save line optical depth some "lines.opt" last
 o 3 5006.84A
 o 1 6300.30A
 He 2 4685.68A
