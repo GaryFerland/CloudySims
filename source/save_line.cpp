@@ -69,13 +69,9 @@ void save_line(FILE * ioPUN, /* the file we will write to */
 	vector<double> a(nLinesNow);
 
 	bool lgBadLine = false;
-	/* two cases, save every zone set up lines for first zone,
-	 * second case save last, not SaveEverZone must set up once*/
-	//fprintf(save.params[ipPun].ipPnunit, "DEBUG: linelist[ipPun]->lgMustGetLines=%ld\n", (long)linelist[ipPun]->lgMustGetLines);
-	if( /*(nzone <= 1 || !save.lgSaveEveryZone[ipPun]) &&*/ linelist[ipPun]->lgMustGetLines )
+	/* do one-time initialization of lines */
+	if( linelist[ipPun]->lgMustGetLines )
 	{
-		//fprintf(save.params[ipPun].ipPnunit, 
-		//"DEBUG: save_line setting up lines\n");
 		for( i=0; i < nLinesNow; i++ )
 		{
 			linelist[ipPun]->ipLine[i] = LineSave.findline(linelist[ipPun]->lineids[i]);

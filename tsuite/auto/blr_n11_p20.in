@@ -27,6 +27,28 @@ save convergence reason "blr_n11_p20.cvr"
 save overview "blr_n11_p20.ovr" last
 save dr "blr_n11_p20.dr" last 
 #
+save line optical depth some "lines.opte" every
+o 3 5006.84A
+o 1 6300.30A
+He 2 4685.68A
+H 1 4340.46A
+H 1 4861.32A
+H 1 6562.80A
+H 1 1.87510m
+H 1 1215.67A
+H 1 1025.72A
+end of lines
+save line optical depth some "lines.opt"
+o 3 5006.84A
+o 1 6300.30A
+He 2 4685.68A
+H 1 4340.46A
+H 1 4861.32A
+H 1 6562.80A
+H 1 1.87510m
+H 1 1215.67A
+H 1 1025.72A
+end of lines
 # commands giving the monitors    =========
 ## strong blr lines
 ## >>chng 06 aug 09, from 6.921 to 6.950 Meudon 06, Bowen change
