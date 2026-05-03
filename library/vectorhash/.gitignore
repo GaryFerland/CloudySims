@@ -1,0 +1,11 @@
+*.o
+*.d
+*~
+libvhsum.so*
+tests/TestMain
+unittest-cpp/TestUnitTest++
+libUnitTest++.a
+vh128sum
+vh256sum
+vh512sum
+Makefile.dep
