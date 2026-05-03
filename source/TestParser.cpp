@@ -256,6 +256,11 @@ namespace {
 		// unary minus
 		t = -t_vac(6564.522546600_r);
 		CHECK( fp_equal(t.wavlVac(), -6564.522546600_r) );
+
+		// test custom format
+		t = 6564.522546600_air;
+		CHECK( t.sprt_wl("%.2f") == "6564.52 " );
+		CHECK( t.sprt_wl("%.5e") == "6.56452e+03 " );
 	}
 	TEST(TestReadWave)
 	{
