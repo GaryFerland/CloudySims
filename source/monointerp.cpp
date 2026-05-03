@@ -30,7 +30,7 @@ namespace {
 	}
 }
 
-void MI_SetupData(const vector<double>& d, const vector<double>& h, vector<double> m_g, long n) 
+void MI_SetupData(const vector<double>& d, const vector<double>& h, vector<double>& m_g, long n) 
 {
 	m_g[0] = d[0];
 	for( long k=1; k < n-1; ++k )
