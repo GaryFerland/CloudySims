@@ -14,7 +14,8 @@ diatomics::diatomics( const string& a, const double& e_star, const double* const
 	trans(a, &states), ENERGY_H2_STAR (e_star), dense_total(abund)
 	{
 		DEBUG_ENTRY( "diatomics::diatomics()" );
-		fixit("should probably force path lower and label upper case.");
+		// fixit() is commented out to prevent initialization order fiasco
+		//fixit("should probably force path lower and label upper case.");
 		path = a;
 		label = a;
 		{

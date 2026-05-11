@@ -39,9 +39,11 @@ class ColliderList
 {
 public:
 	vector<t_collider> list;
-	ColliderList(const t_dense &d);
 	void init();
 };
+
+extern ColliderList colliders;
+
 class ColliderDensities
 {
 	double m_dens[ipNCOLLIDER];

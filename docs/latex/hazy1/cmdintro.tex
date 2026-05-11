@@ -82,7 +82,7 @@ A third option is to supply the \Cloudy\ commands on the command line, e.g.
 \cdCommand{test} (the ``smoke test''). This is useful for quickly executing
 short scripts. If you want to execute multiple commands, the commands need to be separated
 by a semicolon and embedded in single quotes (to protect the semicolon from the shell), e.g.
-\cdCommand{cloudy.exe -e 'set continuum resolution 0.1; compile grains'}.
+\cdCommand{cloudy.exe -e 'set continuum resolution 0.1; test'}.
 The code is also designed
 to be used as a subroutine of other, much larger, programs.
 In this case the input stream is entered using
@@ -440,7 +440,7 @@ untouched. This is useful if you want to limit the scope of the modification
 to the current run only (to be precise, all subsequent runs in the directory
 that contains the modified file). One example would be when you want to alter
 the resolution of the \Cloudy\ frequency mesh by modifying the file
-\cdFilename{continuum\_mesh.ini} (see
+\cdFilename{continuum\_mesh.dat} (see
 Section~\ref{Hazy2-sec:ChangingMeshResolution} in Part 2 of \Hazy). If you
 place the modified file in the local directory, it will only affect runs in
 that directory and not globally.
@@ -574,7 +574,7 @@ A series of \cdFilename{*.ini} files are included in the
 data directory included in the \Cloudy\ distribution.
 Do an \cdFilename{ls *.ini} within the data directory
 to list the available files. Note that not all these files
-are init files, e.g., \cdFilename{continuum\_mesh.ini} is not
+are init files, e.g., \cdFilename{continuum\_mesh.dat} is not
 an init file in the sense we discussed here.
 Comments at the start of the files describe
 their purpose.
