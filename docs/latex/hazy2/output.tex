@@ -739,10 +739,15 @@ potential in volt, the average charge in elementary charge units, the drift velo
 (erg~cm$^{-3}$~s$^{-1}$) due to the photoelectric effect as well as thermionic emissions, and the dimensionless fraction
 of the gas heating compared to the total heating rate of the gas.
 The next line(s) give information for specific charge states of the grain.
-Two charge states are listed per line. First the index number for the charge state is given,
-followed by the charge in elementary charge units. Next come the fractional population
+\Cloudy\ uses the hybrid grain charge model described in \citet{vanHoof2004}.
+This limits the number of charge states for each size bin to a fixed number.
+The default is 2 charge states, but this can be changed with the \cdCommand{set nchrg} command
+described in Section~\ref{Hazy1-sec:SetNchrg} of \Hazy~1.
+Two charge states are listed per line. First the index number \cdVariable{nz} for the charge state is given.
+This number is only used for debugging purposes.
+Next comes the actual charge of the grain in elementary charge units. Then the fractional population
 of this charge state and the temperature of this grain in kelvin.
-These populations add up to 1 for all charge states of a given size bin.
+The populations add up to 1 for all charge states of a given size bin.
 For quantum-heated grains the temperature is the weighted average such that
 total amount of emitted energy is conserved.
 Finally the fraction of the total heating (in per cent) contributed by this charge state is given.
