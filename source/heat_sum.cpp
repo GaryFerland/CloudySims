@@ -915,10 +915,6 @@ void HeatSum( void )
 	 * dHTotDT = dHTotDT + heating(1,12) * (-0.5/te) */
 	thermal.dHeatdT += CoolHeavy.brems_heat_total*(-1.5/phycon.te);
 
-	/* >>chng 04 aug 07, use better estimate for heating derivative; needed in PDRs, PvH */
-	/* this includes PE, thermionic, and collisional heating of the gas by the grains */
-	thermal.dHeatdT += gv.dHeatdT;
-
 	/* helium triplets heating */
 	thermal.dHeatdT += thermal.heating(1,2)*oldfac;
 	if( PRT_DERIV )
