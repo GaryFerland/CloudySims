@@ -96,7 +96,8 @@ save element silicon last "orion_hii_pdr.sil"
 save grain extinction last  "orion_hii_pdr.grnext"
 save grain charge last "orion_hii_pdr.grnchr" 
 save grain potential last "orion_hii_pdr.grnpot" 
-save grain temperature last "orion_hii_pdr.grntem" 
+save grain temperature last "orion_hii_pdr.grntemres" 
+save grain temperature average last "orion_hii_pdr.grntem" 
 #
 # commands giving the monitors    =========
 ## >>chng 21 may 21, increase default error - this is more realistic

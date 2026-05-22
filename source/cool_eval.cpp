@@ -86,7 +86,7 @@ void CoolEvaluate(double *tot)
 		thermal.dCooldT += MAX2(0.,gv.GasCoolColl)*3./(2.*phycon.te);
 
 		/* these are the various heat agents from grains */
-		/* options to force gas heating or cooling by grains to zero - for tests only ! */
+		/* options to force gas heating by grains to zero - for tests only ! */
 		if( gv.lgDustOn() && gv.lgDHetOn )
 		{
 			/* rate dust heats gas by photoelectric effect */

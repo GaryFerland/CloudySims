@@ -30,6 +30,8 @@ save overview "pdr_xdr.ovr"
 save leiden "pdr_xdr.leiden"
 save monitors "pdr_xdr.asr" last
 save dr "pdr_xdr.dr"
+save grain temperature "pdr_xdr.grntemres"
+save grain temperature average "pdr_xdr.grntem"
 ##
 ## commands giving the monitors
 ## for PDRs do not expect molecular quantities to be very stable
@@ -65,7 +67,10 @@ monitor column density H2   22 error 0.1
 ## >>chng 21 sep 11, from 17.74 to 17.68, LAMDA update
 ## >>chng 21 nov 04, from 17.68 to 17.73, update co mole data
 ## >>chng 23 may 15, from 17.73 to 17.82, GS updates 21 reactions to UMIST 2012
-monitor column density CO   17.82 error 0.1
+## >>chng 26 apr 02, from 17.82 to 17.88, use charge-dependent grain temperatures
+monitor column density CO   17.88 error 0.1
+## >>chng 26 apr 02, from 10.42 to 9.78, use charge-dependent grain temperatures
+monitor column density "COgrn"  9.78 error 0.1
 ## >>chng 11 jul 22, from 10 to 15.62, first run
 ## >>chng 14 mar 26, from 15.62 to 15.56, move O to external databases
 ## >>chng 20 sep 06, from 15.56 to 15.67, further update to McCall CR-related rates from r14260
@@ -91,11 +96,14 @@ monitor column density HeH+ 11.67 error 0.1
 ## >>chng 12 jun 08, from 16.06 to 16, Updates to grain chemistry
 ## >>chng 14 mar 26, from 16 to 15.96, move O to external databases
 ## >>chng 23 may 15, from 15.96 to 15.89, GS updates 21 reactions to UMIST 2012
-monitor column density O2   15.89 error 0.1
+## >>chng 26 apr 02, from 15.89 to 15.93, use charge-dependent grain temperatures
+monitor column density O2   15.93 error 0.1
 ## >>chng 11 jul 22, from 10 to 16.26, first run
 ## >>chng 12 aug 21, from 16.26 to 16.22, fix CRPHOT botches and HD crash
 ## >>chng 14 mar 26, from 16.22 to 16.14, move O to external databases
 monitor column density H2O  16.14 error 0.1
+## >>chng 26 apr 02, from 17.55 to 16.15, use charge-dependent grain temperatures
+monitor column density "H2Ogrn" 16.15  error 0.1
 ## >>chng 11 jul 22, from 10 to 15.33, first run
 ## >>chng 11 nov 16, from 15.33 to 15.38, adjust newmole monitors
 ## >>chng 12 aug 21, from 15.38 to 15.42, fix CRPHOT botches and HD crash
@@ -105,7 +113,8 @@ monitor column density H2O  16.14 error 0.1
 ## >>chng 21 sep 11, from 15.44 to 14.74, LAMDA update
 ## >>chng 21 nov 04, from 14.74 to 15.28, update co mole data
 ## >>chng 23 may 15, from 15.28 to 15.03, GS updates 21 reactions to UMIST 2012
-monitor column density C2   15.03 error 0.1
+## >>chng 26 apr 02, from 15.03 to 14.99, use charge-dependent grain temperatures
+monitor column density C2   14.99 error 0.1
 ## >>chng 11 jul 22, from 10 to 13.17, first run
 ## >>chng 11 nov 16, from 13.17 to 13.24, adjust newmole monitors
 ## >>chng 12 aug 21, from 13.24 to 13.3, fix CRPHOT botches and HD crash
@@ -115,7 +124,8 @@ monitor column density C2   15.03 error 0.1
 ## >>chng 21 sep 11, from 13.37 to 12.65, LAMDA update
 ## >>chng 21 nov 04, from 12.65 to 13.2, update co mole data
 ## >>chng 23 may 15, from 13.2 to 13.07, GS updates 21 reactions to UMIST 2012
-monitor column density C3   13.07 error 0.1
+## >>chng 26 apr 02, from 13.07 to 13.01, use charge-dependent grain temperatures
+monitor column density C3   13.01 error 0.1
 ## >>chng 11 jul 22, from 10 to 14.94, first run
 ## >>chng 14 mar 26, from 14.94 to 14.81, move O to external databases
 ## >>chng 23 may 15, from 14.81 to 14.74, GS updates 21 reactions to UMIST 2012
@@ -128,6 +138,8 @@ monitor column density SiO  14.74 error 0.1
 ## >>chng 21 sep 11, from 16.84 to 16.88, LAMDA update
 ## >>chng 23 may 15, from 16.88 to 16.8, GS updates 21 reactions to UMIST 2012
 monitor column density OH   16.8 error 0.1
+## >>chng 26 apr 02, from 10.07 to 9.32, use charge-dependent grain temperatures
+monitor column density "OHgrn" 9.32 error 0.1
 ## >>chng 11 jul 22, from 10 to 14.41, first run
 ## >>chng 12 aug 21, from 14.41 to 14.45, fix CRPHOT botches and HD crash
 ## >>chng 13 nov 05, from 14.45 to 14.5, convergence branch changes
@@ -172,7 +184,8 @@ monitor itrzn 3.63
 ## >>chng 21 mar 31, from 877 to 913, add HF+ chemistry, undertainty from 0.03 to default
 ## >>chng 21 sep 11, from 913 to 851, LAMDA update
 ## >>chng 21 nov 04, from 851 to 899, LAMDA update
-monitor nzone 899 error 0.03
+## >>chng 26 apr 02, from 899 to 828, use charge-dependent grain temperatures
+monitor nzone 828 error 0.03
 ##
 ## >>chng 13 jun 27, from -8.869 to -5.357, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
@@ -234,12 +247,14 @@ monitor "CO  " 1300.05m  -4.973 line intensity
 ## >>chng 13 dec 23, from -4.348 to -4.399, C to external databases
 ## >>chng 14 mar 26, from -4.399 to -4.506, move O to external databases
 ## >>chng 23 may 15, from -4.506 to -4.454, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 866.727m  -4.454 line intensity
+## >>chng 26 apr 02, from -4.454 to -4.499, use charge-dependent grain temperatures
+monitor "CO  " 866.727m  -4.499 line intensity
 ## >>chng 13 jun 27, from -6.177 to -4.082, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -4.082 to -4.198, move O to external databases
 ## >>chng 23 may 15, from -4.198 to -4.139, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 650.074m  -4.139 line intensity
+## >>chng 26 apr 02, from -4.139 to -4.183, use charge-dependent grain temperatures
+monitor "CO  " 650.074m  -4.183 line intensity
 ## >>chng 13 jun 27, from -6.485 to -3.918, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 05, from -3.918 to -3.85, convergence branch changes
@@ -272,7 +287,8 @@ monitor "CO  " 371.549m  -3.823 line intensity
 ## >>chng 21 sep 11, from -3.955 to -4.012, LAMDA update
 ## >>chng 21 nov 04, from -4.012 to -3.966, update co mole data
 ## >>chng 23 may 15, from -3.966 to -3.885, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 325.137m  -3.885 line intensity
+## >>chng 26 apr 02, from -3.885 to -3.832, use charge-dependent grain temperatures
+monitor "CO  " 325.137m  -3.832 line intensity
 ## >>chng 13 jun 27, from -7.522 to -5.147, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -5.147 to -5.292, move O to external databases

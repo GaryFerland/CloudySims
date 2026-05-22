@@ -480,10 +480,12 @@ namespace {
 				
 				binding_energy = this->b;
 				double bin_total=0.0;
-				for( size_t nd=0; nd < gv.bin.size() ; nd++ )
+				for( size_t nd=0; nd < gv.bin.size(); nd++ )
 				{
 					double bin_area = gv.bin[nd].IntArea*gv.bin[nd].cnv_H_pCM3;
-					exponent += exp(-binding_energy/gv.bin[nd].tedust)*bin_area;
+					for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+						exponent += exp(-binding_energy/gv.bin[nd].chrg(nz).tedust)*
+							bin_area*gv.bin[nd].chrg(nz).FracPop;
 					bin_total += bin_area;
 				}
 				exponent /= bin_total;
@@ -585,8 +587,11 @@ namespace {
 		for( size_t nd=0; nd < gv.bin.size(); nd++ )
 		{
 			double bin_density = gv.bin[nd].IntArea*gv.bin[nd].cnv_H_pCM3;
-			Exp_i += exp(-E_i/gv.bin[nd].tedust)*bin_density;
-			Exp_j += exp(-E_j/gv.bin[nd].tedust)*bin_density;
+			for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+			{
+				Exp_i += exp(-E_i/gv.bin[nd].chrg(nz).tedust)*bin_density*gv.bin[nd].chrg(nz).FracPop;
+				Exp_j += exp(-E_j/gv.bin[nd].chrg(nz).tedust)*bin_density*gv.bin[nd].chrg(nz).FracPop;
+			}
 			dust_density += bin_density/(4*1e-10);
 		}
 		
