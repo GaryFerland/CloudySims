@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
 make_deps () {
 	out=`echo $2 | sed s/:.*//`
 	if [ "$1" != "src/vectorhash.cc" ]; then
 		counter="${counter}="
-		if [ "$counter" == "===" ]; then
+		if [ "$counter" = "===" ]; then
 			lib64="${lib64} \\\\\\n"
 			lib32="${lib32} \\\\\\n"
 			counter=""
@@ -31,7 +31,7 @@ make_deps_sub () {
 	fi
 	out=`echo $3 | sed s/:.*//`
 	counter="${counter}="
-	if [ "$counter" == "===" ]; then
+	if [ "$counter" = "===" ]; then
 		lib64="${lib64} \\\\\\n"
 		lib32="${lib32} \\\\\\n"
 		counter=""

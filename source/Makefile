@@ -11,7 +11,7 @@ endif
 PWD := ${shell pwd}
 
 SRCDIR = .
-VHROOTDIR = ${SRCDIR}/../library/vectorhash
+VHROOTDIR = $(PWD)/${SRCDIR}/../library/vectorhash
 STD = -std=c++17
 OPT = -O3 -ftrapping-math -fno-math-errno -fno-omit-frame-pointer -fasynchronous-unwind-tables \
 	-Wno-deprecated-declarations
