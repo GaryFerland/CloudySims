@@ -22,7 +22,7 @@ make_deps () {
 
 make_deps_sub () {
 	flag=""
-	if [ $cpu = "intel" ] ; then
+	if [ $cpu = "intel" ]; then
 		case "$2" in
 			*sse2*) flag="-msse2" ;;
 			*avx2*) flag="-mavx2" ;;
@@ -60,10 +60,10 @@ hardware () {
 installdirs () {
 	libdir64="lib"
 	libdir32="lib"
-	if [ -d /usr/lib64 ] ; then
+	if [ -d /usr/lib64 ]; then
 		libdir64="lib64"
 	fi
-	if [ -d /usr/lib32 ] ; then
+	if [ -d /usr/lib32 ]; then
 		libdir32="lib32"
 	fi
 }
