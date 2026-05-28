@@ -55,3 +55,8 @@ guaranteed and the checksums will stay the same (at least for versions v1.x).
 - Improve support for macOS.
 
 #### Release v1.1 was created on 1 May 2026.
+
+- Fix bash-ism in the generate_deps.sh script. This would cause the script
+  to fail on systems where /bin/sh is not a symlink to /bin/bash.
+
+#### Release v1.2 was created on 28 May 2026.

@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
 make_deps () {
 	out=`echo $2 | sed s/:.*//`
 	if [ "$1" != "src/vectorhash.cc" ]; then
 		counter="${counter}="
-		if [ "$counter" == "===" ]; then
+		if [ "$counter" = "===" ]; then
 			lib64="${lib64} \\\\\\n"
 			lib32="${lib32} \\\\\\n"
 			counter=""
@@ -22,7 +22,7 @@ make_deps () {
 
 make_deps_sub () {
 	flag=""
-	if [ $cpu = "intel" ] ; then
+	if [ $cpu = "intel" ]; then
 		case "$2" in
 			*sse2*) flag="-msse2" ;;
 			*avx2*) flag="-mavx2" ;;
@@ -31,7 +31,7 @@ make_deps_sub () {
 	fi
 	out=`echo $3 | sed s/:.*//`
 	counter="${counter}="
-	if [ "$counter" == "===" ]; then
+	if [ "$counter" = "===" ]; then
 		lib64="${lib64} \\\\\\n"
 		lib32="${lib32} \\\\\\n"
 		counter=""
@@ -60,10 +60,10 @@ hardware () {
 installdirs () {
 	libdir64="lib"
 	libdir32="lib"
-	if [ -d /usr/lib64 ] ; then
+	if [ -d /usr/lib64 ]; then
 		libdir64="lib64"
 	fi
-	if [ -d /usr/lib32 ] ; then
+	if [ -d /usr/lib32 ]; then
 		libdir32="lib32"
 	fi
 }
