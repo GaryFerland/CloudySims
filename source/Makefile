@@ -17,9 +17,10 @@ OPT = -O3 -ftrapping-math -fno-math-errno -fno-omit-frame-pointer -fasynchronous
 	-Wno-deprecated-declarations
 DEBUGOPT = -finline -fasynchronous-unwind-tables
 CXX = $(DEFCXX)
+CXXFLAGSINC = -I$(VHROOTDIR)/src
 CXXFLAGSEXC = -fnon-call-exceptions
 # -W is the old name for -Wextra, g++ 3.3 only supports the former
-CXXFLAGS = $(STD) $(OPT) -Wall -W -g $(CXXFLAGSEXC) -I$(VHROOTDIR)/src
+CXXFLAGS = $(STD) $(OPT) -Wall -W -g $(CXXFLAGSEXC)
 LDFLAGS = $(OPT) -Wall -g
 LDLIBS = -lvhsum -L$(VHROOTDIR)/lib64 -Wl,-rpath,$(VHROOTDIR)/lib64
 FSLIB =
@@ -161,7 +162,7 @@ endif
 CXXFLAGS += $(EXTRA)
 LDFLAGS += $(EXTRA)
 
-CXXFLAGS += -DSYS_CONFIG=\"$(CLDCONFIG)\"
+CXXFLAGS += $(CXXFLAGSINC) -DSYS_CONFIG=\"$(CLDCONFIG)\"
 
 # this is a collection of compiler flags that enable FPE traps
 TRAP_FPE_FILTER = -fnonstd -ftrap=common -Ktrap=fp
