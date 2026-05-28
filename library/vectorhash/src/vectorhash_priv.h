@@ -17,7 +17,7 @@
 
 using namespace std;
 
-static const string vh_version( "1.1" );
+static const string vh_version( "1.2" );
 
 #define API_EXPORT __attribute__((visibility("default")))
 
