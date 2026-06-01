@@ -767,6 +767,6 @@ inline bool lgIsLymanLineUnresolved(const TransitionProxy &t)
 inline bool lgIsM1Line(const TransitionProxy &t)
 {
 	long ipISO = t.Lo()->nelem() - t.Lo()->IonStg();
-        return (ipISO == ipH_LIKE && t.Hi()->n() == 2 && t.Lo()->n() == 1 && t.Hi()->l() == 0);
+	return (ipISO == ipH_LIKE && t.Hi()->n() == 2 && t.Lo()->n() == 1 && t.Hi()->l() == 0);
 }
 #endif /* ISO_H_ */
