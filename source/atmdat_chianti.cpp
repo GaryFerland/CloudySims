@@ -159,7 +159,123 @@ inline void processIndices(long ipLoInFile, long ipHiInFile, bool lgIsRegular, c
 	}
 }
 
+STATIC void ApplyTPDatum(
+	DataParser& d,
+	const string& dataType,
+	long ipLoInFile,
+	long ipHiInFile,
+	double tpData,
+	const string& transTypeRaw,
+	bool lgOverrideExisting,
+	long intNS,
+	long nMolLevs,
+	bool lgIsRegular,
+	const map<long,long>& indexFile2Sorted,
+	multi_arr<bool,3,C_TYPE>& lgLineStrengthTT,
+	multi_arr<bool,2,C_TYPE>& lgResetThisTP,
+	const vector<LevelInfo>& dBaseStatesOrg,
+	int numTransitionTypes )
+{
+	DEBUG_ENTRY( "ApplyTPDatum()" );
 
+	long ipLo, ipHi;
+	processIndices( ipLoInFile, ipHiInFile, lgIsRegular, indexFile2Sorted, ipLo, ipHi );
+
+	// unmapped indices from irregular level files are ignored
+	if( ipLo == LONG_MAX || ipHi == LONG_MAX )
+		return;
+
+	if( ipHi >= nMolLevs )
+		return;
+
+	if( tpData < 0. )
+		d.errorAbort( "transition probability data must be >= 0" );
+
+	if( dataType == "A" && tpData < atmdat.aulThreshold )
+		return;
+
+	string transType = transTypeRaw;
+	if( transType.empty() )
+		transType = "NS";
+
+	if( transType == "UT" )
+		transType = "M1+E2";
+
+	if( dataType == "S" )
+	{
+		if( transType == "NS" )
+			d.errorAbort( "line strength specified, but no transition type was found" );
+		if( transType.length() != 2 )
+			d.errorAbort( "invalid transition type" );
+	}
+
+	TransitionList::iterator tr =
+		dBaseTrans[intNS].begin() + ipdBaseTrans[intNS][ipHi][ipLo];
+
+	if( lgOverrideExisting && tr->hasEmis() && !lgResetThisTP[ipLo][ipHi] )
+	{
+		tr->Emis().Aul() = 0.;
+		tr->Emis().gf() = 0.;
+
+		for( int k=0; k < numTransitionTypes; ++k )
+			lgLineStrengthTT[ipLo][ipHi][k] = false;
+
+		lgResetThisTP[ipLo][ipHi] = true;
+	}
+
+	if( !tr->hasEmis() )
+	{
+		tr->AddLine2Stack();
+		tr->Emis().Aul() = 0.;
+		tr->Emis().gf() = 0.;
+	}
+
+	size_t len = transType.length();
+	size_t p = 0;
+	while( p < len )
+	{
+		string tt = transType.substr( p, 2 );
+		int ttCode = getCode( tt );
+		char c = ( p+2 >= len ) ? '+' : transType[p+2];
+
+		if( ttCode < 0 || c != '+' )
+			d.errorAbort( "invalid transition type" );
+
+		if( lgLineStrengthTT[ipLo][ipHi][ttCode] )
+			d.errorAbort( "this transition already has an Aul value set" );
+
+		lgLineStrengthTT[ipLo][ipHi][ttCode] = true;
+		p += 3;
+	}
+
+	if( tr->EnergyWN() > ENERGY_MIN_WN )
+	{
+		if( dataType == "A" )
+		{
+			tr->Emis().Aul() += tpData;
+			tr->Emis().gf() =
+				(realnum)GetGF( tr->Emis().Aul(), tr->EnergyWN(), tr->Hi()->g() );
+		}
+		else if( dataType == "G" )
+		{
+			tr->Emis().gf() += tpData;
+			tr->Emis().Aul() =
+				(realnum)eina( tr->Emis().gf(), tr->EnergyWN(), tr->Hi()->g() );
+		}
+		else
+		{
+			tr->Emis().Aul() +=
+				S2Aul( tpData, tr->WLangVac(), tr->Hi()->g(), transType );
+			tr->Emis().gf() =
+				(realnum)GetGF( tr->Emis().Aul(), tr->EnergyWN(), tr->Hi()->g() );
+		}
+	}
+
+	tr->setComment(
+		db_comment_tran_levels(
+			dBaseStatesOrg[ipLo].config,
+			dBaseStatesOrg[ipHi].config ) );
+}
 /**
  * @brief Extract numeric block index from a STOUT block filename.
  *
@@ -254,7 +370,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	string chNRGFilename = chUnCaps + ".nrg";
 	string chTPFilename  = chUnCaps + ".tp";
 	
-	// ---------- NEW: resolve .coll filename flexibly ----------
+	// Resolve STOUT .coll filenames from the required directory structure.
 	// chUnCaps is something like: "stout/al/al_8/al_8"
 	string basedir;
 	string shortName;
@@ -262,15 +378,16 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	string::size_type pos = chUnCaps.find_last_of('/');
 	if( pos == string::npos )
 	{
-	// no directory component (unlikely for STOUT, but be safe)
-		basedir  = "";
-		shortName = chUnCaps;   // e.g. "al_8"
+		fprintf( ioQQQ,
+				" PROBLEM: STOUT data files must follow the required directory structure.\n"
+				" The supplied STOUT prefix '%s' does not contain a directory component.\n",
+				chUnCaps.c_str() );
+		cdEXIT( EXIT_FAILURE );
 	}
-	else
-	{
-		basedir  = chUnCaps.substr( 0, pos+1 );      // "stout/al/al_8/"
-		shortName = chUnCaps.substr( pos+1 );        // "al_8"
-	}
+
+	basedir  = chUnCaps.substr( 0, pos+1 );      // e.g. "stout/al/al_8/"
+	shortName = chUnCaps.substr( pos+1 );        // e.g. "al_8"
+
 	vector<string> collFiles;
 	string collPattern = basedir + shortName + ".*\\.coll";
 	getFileList( collFiles, collPattern );
@@ -282,7 +399,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		cdEXIT( EXIT_FAILURE );
 	}
 	// Split coll files by magic number.
-	// V1 magic files are legacy single-file format and do NOT require _blk_.
+	// V1 magic files are in single-file format and do NOT require _blk_.
 	// V2 magic files must be block files and will be ordered by blk index.
 	vector<string> collFilesV1;
 	vector<string> collFilesV2;
@@ -332,10 +449,12 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	d.getToken(mmo);
 	d.getToken(mdy);
 
-	if( !( (myr == iyr_v1 && mmo == imo_v1 && mdy == idy_v1) ||
-    		(myr == iyr_v2 && mmo == imo_v2 && mdy == idy_v2) ) )
+	bool lgNRGv1 = ( myr == iyr_v1 && mmo == imo_v1 && mdy == idy_v1 );
+	bool lgNRGv2 = ( myr == iyr_v2 && mmo == imo_v2 && mdy == idy_v2 );
+
+	if( !lgNRGv1 && !lgNRGv2 )
 	{
-    	d.errorAbort("invalid magic number in STOUT .nrg file");
+		d.errorAbort("invalid magic number in STOUT .nrg file");
 	}
 
 	/* Create array for holding energies and statistical weights so that
@@ -444,8 +563,31 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		}
 	}
 
-	//Sort levels by energy (then by the index in the file if necessary)
-	sort(dBaseStatesOrg.begin(),dBaseStatesOrg.end());
+	// STOUT v1 files may be unsorted, so sort them here.
+	// STOUT v2 requires the energy level file to already be sorted.
+	if( lgNRGv1 )
+	{
+		sort(dBaseStatesOrg.begin(), dBaseStatesOrg.end());
+	}
+	else
+	{
+		for( size_t i = 1; i < dBaseStatesOrg.size(); ++i )
+		{
+			if( dBaseStatesOrg[i] < dBaseStatesOrg[i-1] )
+			{
+				fprintf( ioQQQ,
+					" PROBLEM: STOUT v2 .nrg file is not sorted by increasing energy.\n"
+					" Previous level: index %ld, energy %.10e\n"
+					" Current  level: index %ld, energy %.10e\n",
+					dBaseStatesOrg[i-1].index,
+					dBaseStatesOrg[i-1].nrg,
+					dBaseStatesOrg[i].index,
+					dBaseStatesOrg[i].nrg );
+				cdEXIT(EXIT_FAILURE);
+			}
+		}
+	}
+
 	// highest level index in file-space that is still retained after truncation
 	//Why here: This value is needed by both the v2 .tp and v2 .coll readers.
 	long maxRetainedIndexInFile = -1;
@@ -555,7 +697,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	*V1 vs V2 STOUT .tp handling:
 	*
 	*   - V1 STOUT (magic 17 09 05):
-	*       * File is legacy: "<shortName>.tp" (no _blk_)
+	*       * File is version-1-format: "<shortName>.tp" (no _blk_)
 	*       * Each data row starts with dataType:  A|G|S
 	*       * End-of-data MUST be the "***" sentinel (exactly as before)
 	*
@@ -567,35 +709,35 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	*       * Multiple blocks are applied in blk order; later blocks OVERRIDE earlier ones
 	*/
 
-	// ---- discover tp candidates (legacy and/or blk) ----
+	// ---- discover tp candidates (version 1 and/or version 2) ----
 	vector<string> tpFiles;
 	string tpPattern = basedir + shortName + ".*\\.tp";
 	getFileList( tpFiles, tpPattern );
 
-	vector<string> tpFilesNew; // contains _blk_
-	vector<string> tpFilesOld; // legacy (no _blk_)
+	vector<string> tpFilesv2; // contains _blk_
+	vector<string> tpFilesv1; // version 1 (no _blk_)
 	for( const auto& fn : tpFiles )
 	{
 		if( fn.find("_blk_") != string::npos )
-			tpFilesNew.push_back(fn);
+			tpFilesv2.push_back(fn);
 		else
-			tpFilesOld.push_back(fn);
+			tpFilesv1.push_back(fn);
 	}
 
 	vector<string> tpToProcess;
-	bool lgUsingNewTpBlocks = false;
+	bool lgUsingV2TpBlocks = false;
 
-	if( !tpFilesNew.empty() )
+	if( !tpFilesv2.empty() )
 	{
-		// New format uses blk files (only for new magic)
-		tpToProcess = tpFilesNew;
-		lgUsingNewTpBlocks = true;
+		// Version 2 format uses blk files (only for V2 magic)
+		tpToProcess = tpFilesv2;
+		lgUsingV2TpBlocks = true;
 	}
 	else
 	{
-		// Legacy mode (old format)
-		tpToProcess = tpFilesOld;
-		lgUsingNewTpBlocks = false;
+		// version 1 mode (no blocks)
+		tpToProcess = tpFilesv1;
+		lgUsingV2TpBlocks = false;
 	}
 
 	if( tpToProcess.empty() )
@@ -606,8 +748,8 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		cdEXIT( EXIT_FAILURE );
 	}
 
-	// In legacy mode, prefer exact "<shortName>.tp" if multiple matches exist
-	if( !lgUsingNewTpBlocks && tpToProcess.size() > 1 )
+	// In version 1 mode, prefer exact "<shortName>.tp" if multiple matches exist
+	if( !lgUsingV2TpBlocks && tpToProcess.size() > 1 )
 	{
 		string preferred = shortName + ".tp";
 		auto it = find( tpToProcess.begin(), tpToProcess.end(), preferred );
@@ -620,7 +762,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		else
 		{
 			fprintf( ioQQQ,
-				" PROBLEM: Multiple legacy STOUT .tp files found for '%s' but none matches '%s'\n",
+				" PROBLEM: Multiple version 1 STOUT .tp files found for '%s' but none matches '%s'\n",
 				shortName.c_str(), preferred.c_str() );
 			cdEXIT( EXIT_FAILURE );
 		}
@@ -630,7 +772,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	vector<long> tpBlk;
 	long baselineTpBlk = LONG_MAX;
 
-	if( lgUsingNewTpBlocks )
+	if( lgUsingV2TpBlocks )
 	{
 		tpBlk.assign(tpToProcess.size(), LONG_MAX);
 		for( size_t i=0; i<tpToProcess.size(); ++i )
@@ -664,114 +806,10 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	multi_arr<bool,3,C_TYPE> lgLineStrengthTT(nMolLevs, nMolLevs, intNumCols);
 	lgLineStrengthTT = false;
 
-	// ---- NEW: track which transitions have been "reset" for overrides (per file/block pass) ----
+	// ---- track which transitions have been "reset" for overrides (per file/block pass) ----
 	multi_arr<bool,2,C_TYPE> lgResetThisTP(nMolLevs, nMolLevs);
 	lgResetThisTP = false;
 
-	// ---- helper to apply one radiative datum to a transition ----
-	auto ApplyTPDatum =
-	[&]( const string& dataType,
-		long ipLoInFile, long ipHiInFile,
-		double tpData,
-		const string& transTypeRaw,
-		const bool lgOverrideExisting )
-	{
-		long ipLo, ipHi;
-		processIndices(ipLoInFile, ipHiInFile, lgIsRegular, indexold2new, ipLo, ipHi);
-
-		// unmapped indices (irregular level files) -> ignore silently
-		if( ipLo == LONG_MAX || ipHi == LONG_MAX )
-			return;
-
-		if( ipHi >= nMolLevs )
-			return;
-
-		if( tpData < 0. )
-			d.errorAbort( "transition probability data must be >= 0" );
-
-		// apply aul threshold only if input is A-values
-		if( dataType == "A" && tpData < atmdat.aulThreshold )
-			return;
-
-		string transType = transTypeRaw;
-		if( transType.empty() )
-			transType = "NS"; // not set, treat as E1 (NIST behavior)
-		if( transType == "UT" )
-			transType = "M1+E2";
-
-		if( dataType == "S" )
-		{
-			if( transType == "NS" )
-				d.errorAbort( "line strength specified, but no transition type was found" );
-			if( transType.length() != 2 )
-				d.errorAbort( "invalid transition type" );
-		}
-
-		TransitionList::iterator tr = dBaseTrans[intNS].begin() + ipdBaseTrans[intNS][ipHi][ipLo];
-
-		// If this is an override block and this transition already exists, reset it ONCE for this block
-		if( lgOverrideExisting && tr->hasEmis() && !lgResetThisTP[ipLo][ipHi] )
-		{
-			// Reset totals so later blocks truly override earlier ones
-			tr->Emis().Aul() = 0.;
-			tr->Emis().gf()  = 0.;
-
-			// Also clear the line-strength checklist for this transition,
-			// otherwise you will trip the "already has an Aul value set" guard.
-			for( int k=0; k<intNumCols; ++k )
-				lgLineStrengthTT[ipLo][ipHi][k] = false;
-
-			lgResetThisTP[ipLo][ipHi] = true;
-		}
-
-		// ensure transition is in stack and initialize totals
-		if( !tr->hasEmis() )
-		{
-			tr->AddLine2Stack();
-			tr->Emis().Aul() = 0.;
-			tr->Emis().gf()  = 0.;
-		}
-
-		// transition type checklist (prevents double counting within the ACTIVE definition)
-		{
-			size_t len = transType.length();
-			size_t p = 0;
-			while( p < len )
-			{
-				string tt = transType.substr(p,2);
-				int ttCode = getCode(tt);
-				char c = ( p+2 >= len ) ? '+' : transType[p+2];
-				if( ttCode < 0 || c != '+' )
-					d.errorAbort( "invalid transition type" );
-				if( lgLineStrengthTT[ipLo][ipHi][ttCode] )
-					d.errorAbort( "this transition already has an Aul value set" );
-				lgLineStrengthTT[ipLo][ipHi][ttCode] = true;
-				p += 3;
-			}
-		}
-
-		if( tr->EnergyWN() > ENERGY_MIN_WN )
-		{
-			if( dataType == "A" )
-			{
-				tr->Emis().Aul() += tpData;
-				tr->Emis().gf() = (realnum)GetGF(tr->Emis().Aul(), tr->EnergyWN(), tr->Hi()->g());
-			}
-			else if( dataType == "G" )
-			{
-				tr->Emis().gf() += tpData;
-				tr->Emis().Aul() = (realnum)eina(tr->Emis().gf(), tr->EnergyWN(), tr->Hi()->g());
-			}
-			else // "S"
-			{
-				tr->Emis().Aul() += S2Aul(tpData, tr->WLangVac(), tr->Hi()->g(), transType);
-				tr->Emis().gf() = (realnum)GetGF(tr->Emis().Aul(), tr->EnergyWN(), tr->Hi()->g());
-			}
-		}
-
-		tr->setComment( db_comment_tran_levels(
-			dBaseStatesOrg[ipLo].config, dBaseStatesOrg[ipHi].config ) );
-	};
 
 	// ---- now actually read each tp file ----
 	for( size_t iTP=0; iTP<tpToProcess.size(); ++iTP )
@@ -781,9 +819,9 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 
 		const string thisTP = basedir + tpToProcess[iTP];
 
-		// Decide override: only meaningful for NEW block mode, and only after baseline block
+		// Decide override: only meaningful for the block mode (version 2), and only after baseline block
 		const bool lgOverrideExisting =
-			( lgUsingNewTpBlocks && baselineTpBlk != LONG_MAX && tpBlk.size() == tpToProcess.size() &&
+			( lgUsingV2TpBlocks && baselineTpBlk != LONG_MAX && tpBlk.size() == tpToProcess.size() &&
 			tpBlk[iTP] > baselineTpBlk );
 
 		d.open( thisTP, ES_STARS_ONLY );
@@ -842,7 +880,22 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 
 				d.checkEOL(); // legacy strictness stays
 
-				ApplyTPDatum( dataType, ipLoInFile, ipHiInFile, tpData, transType, /*override*/false );
+				ApplyTPDatum(
+					d,
+					dataType,
+					ipLoInFile,
+					ipHiInFile,
+					tpData,
+					transType,
+					false,
+					intNS,
+					nMolLevs,
+					lgIsRegular,
+					indexold2new,
+					lgLineStrengthTT,
+					lgResetThisTP,
+					dBaseStatesOrg,
+					intNumCols );
 			}
 
 			if( !lgSentinelReached )
@@ -854,7 +907,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 			}
 		}
 		// ==========================================================
-		// Format Version 2 (magic number 25 10 15). This version has blocks!
+		// Format Version 2 (magic number 25 10 15): block-based TP format.
 		// ==========================================================
 		else
 		{
@@ -913,10 +966,25 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 
 				d.checkEOL();
 
-				ApplyTPDatum( globalType, ipLoInFile, ipHiInFile, tpData, transType, lgOverrideExisting );
+				ApplyTPDatum(
+					d,
+					globalType,
+					ipLoInFile,
+					ipHiInFile,
+					tpData,
+					transType,
+					lgOverrideExisting,
+					intNS,
+					nMolLevs,
+					lgIsRegular,
+					indexold2new,
+					lgLineStrengthTT,
+					lgResetThisTP,
+					dBaseStatesOrg,
+					intNumCols );
 			}
 
-			if( !lgSentinelReached && !lgEarlyStop)
+			if( !lgSentinelReached && !lgEarlyStop )
 			{
 				fprintf( ioQQQ, " PROBLEM End of data sentinel was not reached in file %s\n", thisTP.c_str() );
 				fprintf( ioQQQ, " STOUT v2 .tp expects stars (*****) or an empty line at end-of-data.\n" );
@@ -956,23 +1024,23 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	*   - V1-magic (17 09 05): single-file format like al_1.coll (NO _blk_)
 	*
 	* IMPORTANT:
-	*   We must NOT require _blk_ for legacy files.
+	*   We must NOT require _blk_ for version-1-format files.
 	*   Numeric blk ordering and override behavior only apply to block files.
 	*/
 	vector<string> collToProcess;
-	bool lgUsingNewCollBlocks = false;
+	bool lgUsingV2CollBlocks = false;
 
 	if( !collFilesV2.empty() )
 	{
 		/* We have at least one *_blk_<N>.coll candidate -> treat as new block mode */
 		collToProcess = collFilesV2; /* only blk files have v2 magic, so this is safe */
-		lgUsingNewCollBlocks = true;
+		lgUsingV2CollBlocks = true;
 	}
 	else
 	{
-		/* No block files -> legacy mode */
+		/* No block files -> version-1-format mode */
 		collToProcess = collFilesV1;
-		lgUsingNewCollBlocks = false;
+		lgUsingV2CollBlocks = false;
 	}
 
 	/*
@@ -980,7 +1048,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	* If multiple v1 candidates exist, it likely indicates a naming problem.
 	* You can relax this if you truly want to read multiple old-format files.
 	*/
-	if( !lgUsingNewCollBlocks && collToProcess.size() > 1 )
+	if( !lgUsingV2CollBlocks && collToProcess.size() > 1 )
 	{
 		/* Prefer the exact "<shortName>.coll" if present, otherwise abort */
 		string preferred = shortName + ".coll";
@@ -993,11 +1061,11 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		else
 		{
 			fprintf( ioQQQ,
-				" PROBLEM: Multiple legacy STOUT .coll files match pattern '%s' for species %s\n",
+				" PROBLEM: Multiple version-1-format STOUT .coll files match pattern '%s' for species %s\n",
 				(basedir + shortName + ".*\\.coll").c_str(),
 				dBaseSpecies[intNS].chLabel );
 			fprintf( ioQQQ,
-				" None is a unique default (expected exactly one legacy file like '%s').\n",
+				" None is a unique default (expected exactly one version-1-format file like '%s').\n",
 				preferred.c_str() );
 			cdEXIT(EXIT_FAILURE);
 		}
@@ -1005,7 +1073,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 
 	/*
 	* Build processing order:
-	*   - New (V2) block mode: sort by numeric blk index (ascending), baseline = lowest blk
+	*   - V2 block mode: sort by numeric blk index (ascending), baseline = lowest blk
 	*   - V1 mode: just process the single file (or lexicographic order if you later allow >1)
 	*/
 	vector<size_t> collOrder(collToProcess.size());
@@ -1015,7 +1083,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	vector<long> collBlk; /* only used in block mode */
 	long baselineBlk = LONG_MIN;
 
-	if( lgUsingNewCollBlocks )
+	if( lgUsingV2CollBlocks )
 	{
 		collBlk.assign( collToProcess.size(), LONG_MAX );
 		for( size_t i=0; i<collToProcess.size(); ++i )
@@ -1033,7 +1101,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	}
 	else
 	{
-		/* Legacy mode: lexicographic is fine (usually only 1 file anyway) */
+		/* version-1-format mode: lexicographic is fine (usually only 1 file anyway) */
 		sort( collOrder.begin(), collOrder.end(),
 			[&](size_t a, size_t b)
 			{
@@ -1050,11 +1118,11 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 
 		/*
 		* Override semantics:
-		*   - Only in new block mode: higher blk overrides lower blk
-		*   - In legacy mode: never override (duplicates are errors as before)
+		*   - Only in the block mode (Version 2 magic number): higher blk overrides lower blk
+		*   - In version 1 mode: never override (duplicates are errors as before)
 		*/
 		bool lgOverrideExisting = false;
-		if( lgUsingNewCollBlocks )
+		if( lgUsingV2CollBlocks )
 			lgOverrideExisting = ( collBlk[iFile] > baselineBlk );
 
 		d.open( chCOLLFilename, ES_STARS_ONLY );
