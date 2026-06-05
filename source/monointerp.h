@@ -21,7 +21,7 @@ namespace {
 // Monointerp m(xvals,yvals, npt); -- Constructor
 // y_interp = m(x_interp);         -- Interpolate value
 
-void MI_SetupData(const vector<double>& d, const vector<double>& h, vector<double> m_g, long n);
+void MI_SetupData(const vector<double>& d, const vector<double>& h, vector<double>& m_g, long n);
 
 class Monointerp {
 	const std::vector<double> m_x, m_y;

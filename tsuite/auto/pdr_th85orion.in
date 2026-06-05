@@ -79,7 +79,8 @@ save hydrogen 21 cm last "pdr_th85orion.21cm"
 # these are for the grains
 save grain extinction last  "pdr_th85orion.grnext"
 save grain potential last   "pdr_th85orion.grnpot"
-save grain temperature last "pdr_th85orion.grntem"
+save grain temperature last "pdr_th85orion.grntemres"
+save grain temperature average last "pdr_th85orion.grntem"
 save grain charge last "pdr_th85orion.grnchr"
 #
 # commands giving the monitors    =========

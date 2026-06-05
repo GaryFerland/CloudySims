@@ -36,7 +36,8 @@ save heating "pdr_co_fully.het"
 save cooling "pdr_co_fully.col"
 save grain charge "pdr_co_fully.grnchr"
 save grain drift "pdr_co_fully.grndft"
-save grain temperature "pdr_co_fully.grntem"
+save grain temperature "pdr_co_fully.grntemres"
+save grain temperature average "pdr_co_fully.grntem"
 save ionization means "pdr_co_fully.ion"
 #
 # commands giving the monitors    =========

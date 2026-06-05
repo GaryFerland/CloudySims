@@ -106,7 +106,8 @@ end of species
 ## these are for the grains
 save grain extinction last  "pdr_th85ism.grnext"
 save grain potential last   "pdr_th85ism.grnpot"
-save grain temperature last "pdr_th85ism.grntem"
+save grain temperature last "pdr_th85ism.grntemres"
+save grain temperature average last "pdr_th85ism.grntem"
 save grain charge last "pdr_th85ism.grnchr"
 #
 # commands giving the monitors    =========

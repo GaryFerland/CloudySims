@@ -28,7 +28,7 @@ save dr "blr_n09_p20.dr" last
 save continuum units Angstroms "blr_n09_p20.con" last 
 save convergence reason "blr_n09_p20.cvr"
 #
-save line optical depth some "lines.opte" every last
+save line optical depth some "blr_n09_p20.opte" every last
 o  3 5006.84A
 o  1 6300.30A
 He 2 4685.68A
@@ -39,7 +39,7 @@ H  1 1.87510m
 H  1 1215.67A
 H  1 1025.72A
 end of lines
-save line optical depth some "lines.opt" last
+save line optical depth some "blr_n09_p20.opt" last
 o  3 5006.84A
 o  1 6300.30A
 He 2 4685.68A

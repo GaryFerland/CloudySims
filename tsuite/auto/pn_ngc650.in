@@ -64,8 +64,10 @@ monitor  "Mg 2"  2795.53A air     -11.9021 line intensity
 monitor  "Mg 2"  2802.71A air     -12.1963 line intensity
 monitor  "Ar 4"  4740.12A air     -12.5788 line intensity
 monitor  "O  3"  5006.84A air      -9.7851 line intensity
-monitor  "N  1"  5197.90A air     -12.0010 line intensity
-monitor  "N  1"  5200.26A air     -11.8853 line intensity
+## >>chng 26 may 07, from -12.0010 to -12.0150, average of all runs
+monitor  "N  1"  5197.90A air     -12.0150 line intensity
+## >>chng 26 may 07, from -11.8853 to -11.9000, average of all runs
+monitor  "N  1"  5200.26A air     -11.9000 line intensity
 monitor  "Cl 3"  5517.71A air     -12.9014 line intensity
 monitor  "S  2"  6716.44A air     -10.9872 line intensity
 monitor  "S  2"  6730.82A air     -11.0916 line intensity
