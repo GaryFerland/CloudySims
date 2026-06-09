@@ -250,6 +250,10 @@ string chIonLbl(const TransitionProxy& t)
 	{
 		chIonLbl_v = chIonLbl( (*t.Hi()).nelem(), (*t.Hi()).IonStg() );
 	}
+
+	if( lgIsM1Line(t) )
+		chIonLbl_v += " M1";
+
 	/* chIonLbl is four char null terminated string */
 	return chIonLbl_v;
 }
@@ -266,6 +270,7 @@ string chIonLbl(const long& nelem, const long& IonStg)
 	string chIonLbl_v = elementnames.chElementSym[nelem-1];
 	/* chIonStage is two char null terminated string, starting with "_1" */
 	chIonLbl_v += elementnames.chIonStage[IonStg-1];
+
 	return chIonLbl_v;
 }
 
@@ -282,8 +287,16 @@ string TransitionProxy::chLabel() const
 	}
 	else
 	{
-		chSpecies = chIonLbl( (*Hi()).nelem(), (*Hi()).IonStg() ); 
+		chSpecies = chIonLbl( (*Hi()).nelem(), (*Hi()).IonStg() );
 	}
+
+	/* Ideally the line above that defines chSpecies should be updated so that it
+	   does not implicitly assume that all Species labels follow the same format.
+	   This would require the use of TransitionListImpl. However, this class also
+	   assumes that there is only one chLabel for all transitions in a species. */
+	long ipISO = (*Lo()).nelem() - (*Lo()).IonStg();
+	if (ipISO == ipH_LIKE && (*Hi()).n() == 2 && (*Lo()).n() == 1 && (*Hi()).l() == 0)
+		chSpecies += " M1";
 
 	chSpecies.resize( NCHLAB-1, ' ' );
 
@@ -365,6 +378,7 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	/*linadd(xIntensity,wl,chLabel,'i');*/
 	/*lindst add line with destruction and outward */
 	rt.fracin = t.Emis().FracInwd();
+
 	lindst(t, extra,
 			 chLabel.c_str(), 
 			 /* this is information only - has been counted in cooling already */
@@ -379,18 +393,12 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	xIntensity_in = xIntensity*t.Emis().FracInwd();
 	xObsIntensity_in = xObsIntensity*t.Emis().FracInwd();
 	ASSERT( xIntensity_in>=0. );
-	if( lgIsM1Line(t) )
-		chLabel = chIonLbl(t) + " M1 Inwd";
-	else
-		chLabel = chIonLbl(t) + " Inwd";
+	chLabel = chIonLbl(t) + " Inwd";
 	linadd(xIntensity_in,xObsIntensity_in,t.twav(),chLabel.c_str(),'i',chComment);
 	
 	/* cooling part of line */
 	other = t.Coll().cool();
-	if( lgIsM1Line(t) )
-		chLabel = chIonLbl(t) + " M1 Coll";
-	else
-		chLabel = chIonLbl(t) + " Coll";
+	chLabel = chIonLbl(t) + " Coll";
 	linadd(other,t.twav(),chLabel.c_str(),'i',chComment);
 	
 	/* fluorescent excited part of line */
@@ -420,18 +428,12 @@ void PutLine(const TransitionProxy& t, const char *chComment, const char *chLabe
 	}
 
 	other = (*t.Lo()).Pop() * t.Emis().pump() * radiative_branching * t.EnergyErg();
-	if( lgIsM1Line(t) )
-		chLabel = chIonLbl(t) + " M1 Pump";
-	else
-		chLabel = chIonLbl(t) + " Pump";
+	chLabel = chIonLbl(t) + " Pump";
 	linadd(other,t.twav(),chLabel.c_str(),'i',chComment);
 
 	/* heating part of line */
 	other = t.Coll().heat();
-	if( lgIsM1Line(t) )
-		chLabel = chIonLbl(t) + " M1 Heat";
-	else
-		chLabel = chIonLbl(t) + " Heat";
+	chLabel = chIonLbl(t) + " Heat";
 	linadd(other,t.twav(),chLabel.c_str(),'i',chComment);
 
 	return;
