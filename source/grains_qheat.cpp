@@ -134,29 +134,29 @@ static const double cval[4]={
 
 
 /* initialize phiTilde */
-STATIC void qheat_init(size_t,/*@out@*/vector<double>&,/*@out@*/double*);
+STATIC void qheat_init(size_t,long,/*@out@*/vector<double>&,/*@out@*/double*);
 /* worker routine, this implements the algorithm of Guhathakurtha & Draine */
-STATIC void GetProbDistr_LowLimit(size_t,double,double,double,/*@in@*/const vector<double>&,
-				  /*@in@*/const vector<double>&,/*@out@*/vector<double>&,
-				  /*@out@*/vector<double>&,/*@out@*/vector<double>&,
-				  /*@out@*/long*,/*@out@*/double*,long*,/*@out@*/QH_Code*);
+STATIC void GetProbDistr_LowLimit(size_t,long,double,double,double,/*@in@*/const vector<double>&,
+								  /*@in@*/const vector<double>&,/*@out@*/vector<double>&,
+								  /*@out@*/vector<double>&,/*@out@*/vector<double>&,
+								  /*@out@*/long*,/*@out@*/double*,long*,/*@out@*/QH_Code*);
 /* try two consecutive integration steps using stepsize "step/2." (yielding p[k]),
  * and also one double integration step using stepsize "step" (yielding p2k). */
 STATIC double TryDoubleStep(vector<double>&,vector<double>&,vector<double>&,vector<double>&,
-			    vector<double>&,const vector<double>&,const vector<double>&,double,
-			    /*@out@*/double*,double,long,size_t,/*@out@*/bool*);
+							vector<double>&,const vector<double>&,const vector<double>&,double,
+							/*@out@*/double*,double,long,size_t,long,/*@out@*/bool*);
 /* calculate logarithmic integral from (x1,y1) to (x2,y2) */
 STATIC double log_integral(double,double,double,double,double,double,double,double);
 /* scan the probability distribution for valid range */
 STATIC void ScanProbDistr(const vector<double>&,const vector<double>&,long,double,long,double,
-			  /*@out@*/long*,/*@out@*/long*,/*@out@*/long*,long*,QH_Code*);
+						  /*@out@*/long*,/*@out@*/long*,/*@out@*/long*,long*,QH_Code*);
 /* rebin the quantum heating results to speed up RT_diffuse */
-STATIC long RebinQHeatResults(size_t,long,long,vector<double>&,vector<double>&,vector<double>&,
-			      vector<double>&,vector<double>&,vector<double>&,vector<double>&,QH_Code*);
+STATIC long RebinQHeatResults(size_t,long,long,long,vector<double>&,vector<double>&,vector<double>&,
+							  vector<double>&,vector<double>&,vector<double>&,vector<double>&,QH_Code*);
 /* calculate approximate probability distribution in high intensity limit */
-STATIC void GetProbDistr_HighLimit(long,double,double,double,/*@out@*/vector<double>&,/*@out@*/vector<double>&,
-				   /*@out@*/vector<double>&,/*@out@*/double*,
-				   /*@out@*/long*,/*@out@*/double*,/*@out@*/QH_Code*);
+STATIC void GetProbDistr_HighLimit(size_t,long,double,double,double,/*@out@*/vector<double>&,
+								   /*@out@*/vector<double>&,/*@out@*/vector<double>&,/*@out@*/double*,
+								   /*@out@*/long*,/*@out@*/double*,/*@out@*/QH_Code*);
 /* derivative of the enthalpy function dU/dT */
 STATIC double uderiv(double,size_t);
 /* enthalpy function */
@@ -245,91 +245,87 @@ void GrainMakeDiffuse()
 
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
-		/* this local copy is necessary to keep lint happy */
-		bool lgLocalQHeat = gv.bin[nd].lgQHeat;
-		/* >>chng 04 nov 09, do not evaluate quantum heating if abundance is negligible, PvH
-		 * this prevents PAH's deep inside molecular regions from failing if GrnVryDepth is used */
-		/* >>chng 04 dec 31, introduced separate thresholds near I-front and in molecular region, PvH */
-		/* >>chng 24 oct 12, replace dstAbund with GrnDpth in test below to avoid false negatives
-		 * in low-metallicity models, also test for fractional surface area in the current bin, PvH */
-		realnum threshold = ( dense.xIonDense[ipHYDROGEN][0]+dense.xIonDense[ipHYDROGEN][1] > hmi.H2_total ) ?
-			gv.dstAbundThresholdNear : gv.dstAbundThresholdFar;
-		long qnbin=-200;
-
-		if( lgLocalQHeat && gv.bin[nd].GrnDpth >= threshold && gv.bin[nd].dustp[5] > 1.e-12 )
+		for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
 		{
-			qheat(qtemp,qprob,&qnbin,nd);
+			ChargeBin& gptr = gv.bin[nd].chrg(nz);
 
-			if( gv.bin[nd].lgUseQHeat )
+			/* >>chng 04 nov 09, do not evaluate quantum heating if abundance is negligible, PvH
+			 * this prevents PAH's deep inside molecular regions from failing if GrnVryDepth is used */
+			/* >>chng 04 dec 31, introduced separate thresholds near I-front and in molecular region, PvH */
+			/* >>chng 24 oct 12, replace dstAbund with GrnDpth in test below to avoid false negatives
+			 * in low-metallicity models, also test for fractional surface area in the current bin, PvH */
+			realnum threshold = ( dense.xIonDense[ipHYDROGEN][0]+dense.xIonDense[ipHYDROGEN][1] > hmi.H2_total ) ?
+				gv.dstAbundThresholdNear : gv.dstAbundThresholdFar;
+			long qnbin=-200;
+
+			if( gv.bin[nd].lgQHeat && gv.bin[nd].GrnDpth >= threshold &&
+				gv.bin[nd].dustp[5] > 1.e-12 && gptr.FracPop > 1.e-6 )
 			{
-				ASSERT( qnbin > 0 );
+				qheat(qtemp,qprob,&qnbin,nd,nz);
+
+				if( gptr.lgUseQHeat )
+				{
+					ASSERT( qnbin > 0 );
+				}
 			}
-		}
-		else
-		{
-			/* >> chng 04 dec 31, repaired bug lgUseQHeat not set when abundance below threshold, PvH */
-			gv.bin[nd].lgUseQHeat = false;
-		}
-
-		long loopmax = 0;
-		memset( flux.data(), 0, size_t(gv.nflux*sizeof(flux[0])) );
-
-		if( lgLocalQHeat && gv.bin[nd].lgUseQHeat )
-		{
-			for( long j=0; j < qnbin; j++ )
+			else
 			{
-				long maxi = GrainMakeDiffuseSingle(qtemp[j], qprob[j], flux, gv.nflux);
-				loopmax = max(loopmax, maxi);
+				/* >> chng 04 dec 31, repaired bug lgUseQHeat not set when abundance below threshold, PvH */
+				gptr.lgUseQHeat = false;
 			}
-		}
-		else
-		{
-			for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+
+			long loopmax = 0;
+			memset( flux.data(), 0, size_t(gv.nflux*sizeof(flux[0])) );
+
+			if( gv.bin[nd].lgQHeat && gptr.lgUseQHeat )
 			{
-				const ChargeBin& gptr = gv.bin[nd].chrg(nz);
-				long maxi = GrainMakeDiffuseSingle(gptr.tedust, gptr.FracPop, flux, gv.nflux);
-				loopmax = max(loopmax, maxi);
+				for( long j=0; j < qnbin; j++ )
+				{
+					long maxi = GrainMakeDiffuseSingle(qtemp[j], qprob[j], flux, gv.nflux);
+					loopmax = max(loopmax, maxi);
+				}
 			}
-		}
+			else
+			{
+				loopmax = GrainMakeDiffuseSingle(gptr.tedust, 1., flux, gv.nflux);
+			}
 
-		realnum* gt_ptr;
-		/* unit emission for each different grain type */
-		strg_type scase = gv.which_strg[gv.bin[nd].matType];
-		switch( scase )
-		{
-		case STRG_SIL:
-			gt_ptr = get_ptr(gv.SilicateEmission);
-			break;
-		case STRG_CAR:
-			gt_ptr = get_ptr(gv.GraphiteEmission);
-			break;
-		default:
-			TotalInsanity();
-		}
+			realnum* gt_ptr;
+			/* unit emission for each different grain type */
+			strg_type scase = gv.which_strg[gv.bin[nd].matType];
+			switch( scase )
+			{
+			case STRG_SIL:
+				gt_ptr = get_ptr(gv.SilicateEmission);
+				break;
+			case STRG_CAR:
+				gt_ptr = get_ptr(gv.GraphiteEmission);
+				break;
+			default:
+				TotalInsanity();
+			}
 
-		double fac = factor*gv.bin[nd].cnv_H_pCM3;
-		for( long i=0; i < loopmax; i++ )
-			flux[i] *= realnum(fac*gv.bin[nd].dstab1[i]*gv.anu2(i));
+			double fac = factor*gv.bin[nd].cnv_H_pCM3;
+			for( long i=0; i < loopmax; i++ )
+				flux[i] *= realnum(fac*gv.bin[nd].dstab1[i]*gv.anu2(i));
 
-		loopmax = 1;
-		while( loopmax < gv.nflux && flux[loopmax] > RNM_MIN )
-			++loopmax;
+			loopmax = 1;
+			while( loopmax < gv.nflux && flux[loopmax] > RNM_MIN )
+				++loopmax;
 
-#		ifndef NDEBUG
-		for( long i=0; i < loopmax; i++ )
-		{
-			BolFlux1 += flux[i]*gv.widflx(i)*gv.anu(i)*EN1RYD;
-		}
-#		endif
+#			ifndef NDEBUG
+			BolFlux1 += gptr.FracPop*reduce_abc(gv.anuptr(), gv.widflxptr(), flux.data(), 0, loopmax)*EN1RYD;
+#			endif
 
-		loopmax = grain_interpolate(flux.data(), flux2.data(), loopmax);
+			loopmax = grain_interpolate(flux.data(), flux2.data(), loopmax);
 
-		for( long i=0; i < loopmax; i++ )
-		{
-			/* remember local emission -- these are zeroed out on each zone 
-			 * above, and now incremented so is unit emission from this zone */
-			gv.GrainEmission[i] += flux2[i]*rfield.widflx(i);
-			gt_ptr[i] += flux2[i]*rfield.widflx(i);
+			for( long i=0; i < loopmax; i++ )
+			{
+				/* remember local emission -- these are zeroed out on each zone 
+				 * above, and now incremented so is unit emission from this zone */
+				gv.GrainEmission[i] += gptr.FracPop*flux2[i]*rfield.widflx(i);
+				gt_ptr[i] += gptr.FracPop*flux2[i]*rfield.widflx(i);
+			}
 		}
 	}
 
@@ -479,9 +475,10 @@ void GrainMakeDiffuse()
 /* this is the new version of the quantum heating code, used starting Cloudy 96 beta 3 */
 
 void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
-	   /*@out@*/ vector<double>& qprob, /* qprob[NQGRID] */
-	   /*@out@*/ long int *qnbin,
-	   size_t nd)
+		   /*@out@*/ vector<double>& qprob, /* qprob[NQGRID] */
+		   /*@out@*/ long int *qnbin,
+		   size_t nd,
+		   long nz)
 {
 	bool lgBoundErr,
 	  lgDelta,
@@ -518,10 +515,13 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 	/* sanity checks */
 	ASSERT( gv.bin[nd].lgQHeat );
 	ASSERT( nd < gv.bin.size() );
+	ASSERT( nz >= 0 && nz < gv.bin[nd].nChrg );
+
+	ChargeBin& gptr = gv.bin[nd].chrg(nz);
 
 	if( trace.lgTrace && trace.lgDustBug )
 	{
-		fprintf( ioQQQ, "\n >>>>qheat called for grain %s\n", gv.bin[nd].chDstLab );
+		fprintf( ioQQQ, "\n >>>>qheat called for grain %s[%ld] Zg=%ld\n", gv.bin[nd].chDstLab, nz, gptr.DustZ );
 	}
 
 	/* >>chng 01 aug 22, allocate space */
@@ -531,9 +531,9 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 	vector<double> PhiDrv(gv.nflux);
 	vector<double> dPdlnT(NQGRID);
 
-	qheat_init( nd, phiTilde, &check );
+	qheat_init( nd, nz, phiTilde, &check );
 
-	check += gv.bin[nd].GrainHeatCollBin-gv.bin[nd].GrainCoolThermBin;
+	check += gptr.GrainHeatCollCS-gptr.GrainCoolThermCS;
 
 	xx = integral = 0.;
 	c0 = c1 = c2 = 0.;
@@ -542,7 +542,7 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 
 	/* >>chng 01 nov 29, rfield.nflux -> gv.qnflux, PvH */
 	/* >>chng 03 jan 26, gv.qnflux -> gv.bin[nd].qnflux, PvH */
-	for( i=gv.bin[nd].qnflux-1; i >= 0; i-- )
+	for( i=gptr.qnflux-1; i >= 0; i-- )
 	{
 		/* >>chng 97 jul 17, to summed continuum */
 		/* >>chng 00 mar 30, to phiTilde, to keep track of photo-electric effect and collisions, by PvH */
@@ -596,7 +596,7 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 #	endif
 
 	/* Tmax is where p(U) will peak (at least in high intensity limit) */
-	Tmax = gv.bin[nd].tedust;
+	Tmax = gptr.tedust;
 	/* grain enthalpy at peak of p(U), in Ryd */
 	Umax = ufunct(Tmax,nd,&lgBoundErr);
 	ASSERT( !lgBoundErr ); /* this should never happen */
@@ -632,27 +632,21 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 
 	if( trace.lgTrace && trace.lgDustBug )
 	{
-		long nz;
-
 		fprintf( ioQQQ, "   grain heating: %.4e, integral %.4e, total rate %.4e lgNegRate %c\n",
-			 gv.bin[nd].GrainHeatBin,integral,Phi[0],TorF(lgNegRate));
-		fprintf( ioQQQ, "   HeatingRate1" );
-		for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
-			fprintf( ioQQQ, " %.6e", gv.bin[nd].chrg(nz).HeatingRate1*gv.bin[nd].cnv_H_pCM3 );
-		fprintf( ioQQQ, " HeatingRate2" );
-		for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
-			fprintf( ioQQQ, " %.6e", gv.bin[nd].chrg(nz).HeatingRate2*gv.bin[nd].cnv_H_pCM3 );
+			 gptr.GrainHeatCS,integral,Phi[0],TorF(lgNegRate));
+		fprintf( ioQQQ, "   HeatingRate1 %.6e", gptr.HeatingRate1*gv.bin[nd].cnv_H_pCM3 );
+		fprintf( ioQQQ, " HeatingRate2 %.6e", gptr.HeatingRate2*gv.bin[nd].cnv_H_pCM3 );
 		fprintf( ioQQQ, "\n" );
 		fprintf( ioQQQ, "   av grain temp %.4e av grain enthalpy (Ryd) %.4e\n",
-			 gv.bin[nd].tedust,Umax);
+			 gptr.tedust,Umax);
 		fprintf( ioQQQ, "   fwhm^2/(4ln2*c2/c0): %.4e fwhm (Ryd) %.4e fwhm/Umax %.4e\n",
 			 NumEvents,fwhm,FwhmRatio );
-		fprintf( ioQQQ, "   lgQHTooWide %c\n", TorF(gv.bin[nd].lgQHTooWide) );
+		fprintf( ioQQQ, "   lgQHTooWide %c\n", TorF(gv.bin[nd].lgQHTooWide[nz]) );
 	}
 
 	/* these two variables will bracket qtmin, they should only be needed during the initial search phase */
 	minBracket = GRAIN_TMIN;
-	maxBracket = gv.bin[nd].tedust;
+	maxBracket = gptr.tedust;
 
 	/* >>chng 02 jan 30, introduced lgTried to avoid running GetProbDistr_HighLimit over and over..., PvH */
 	lgTried = false;
@@ -671,31 +665,31 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 	 * shielded conditions) there is no hope of ever converging GetProbDistr_LowLimit and the code
 	 * will waste a lot of CPU time establishing this for every zone again. So once the distribution
 	 * becomes too wide we immediately skip to the analytic approximation to save time, PvH */
-	for( i=0; i < LOOP_MAX && !lgOK && !gv.bin[nd].lgQHTooWide; i++ )
+	for( i=0; i < LOOP_MAX && !lgOK && !gv.bin[nd].lgQHTooWide[nz]; i++ )
 	{
-		if( gv.bin[nd].qtmin >= gv.bin[nd].tedust )
+		if( gv.bin[nd].qtmin[nz] >= gptr.tedust )
 		{
 			/* >>chng 02 jul 31, was gv.bin[nd].qtmin = 0.7*gv.bin[nd].tedust */
 			/* >>chng 03 nov 10, changed Umax/exp(+... to Umax*exp(-... to avoid overflow, PvH */
 			double Ulo = Umax*exp(-sqrt(-log(PROB_CUTOFF_LO)/(4.*LN_TWO))*fwhm/Umax);
 			double MinEnth = exp(gv.bin[nd].DustEnth[0]);
 			Ulo = MAX2(Ulo,MinEnth);
-			gv.bin[nd].qtmin = inv_ufunct(Ulo,nd,&lgBoundErr);
+			gv.bin[nd].qtmin[nz] = inv_ufunct(Ulo,nd,&lgBoundErr);
 			ASSERT( !lgBoundErr ); /* this should never happen */
 			/* >>chng 02 jul 30, added this test; prevents problems with ASSERT below, PvH */
-			if( gv.bin[nd].qtmin <= minBracket || gv.bin[nd].qtmin >= maxBracket )
-				gv.bin[nd].qtmin = sqrt(minBracket*maxBracket);
+			if( gv.bin[nd].qtmin[nz] <= minBracket || gv.bin[nd].qtmin[nz] >= maxBracket )
+				gv.bin[nd].qtmin[nz] = sqrt(minBracket*maxBracket);
 		}
-		gv.bin[nd].qtmin = MAX2(gv.bin[nd].qtmin,GRAIN_TMIN);
+		gv.bin[nd].qtmin[nz] = max(gv.bin[nd].qtmin[nz],GRAIN_TMIN);
 
-		ASSERT( minBracket <= gv.bin[nd].qtmin && gv.bin[nd].qtmin <= maxBracket );
+		ASSERT( minBracket <= gv.bin[nd].qtmin[nz] && gv.bin[nd].qtmin[nz] <= maxBracket );
 
 		ErrorCode = ErrorStart;
 
 		/* >>chng 01 nov 15, add ( FwhmRatio >= FWHM_RATIO ), PvH */
 		if( FwhmRatio >= FWHM_RATIO && NumEvents <= MAX_EVENTS )
 		{
-			GetProbDistr_LowLimit(nd,rel_tol,Umax,fwhm,Phi,PhiDrv,qtemp,qprob,dPdlnT,qnbin,
+			GetProbDistr_LowLimit(nd,nz,rel_tol,Umax,fwhm,Phi,PhiDrv,qtemp,qprob,dPdlnT,qnbin,
 					      &new_tmin,&nWideFail,&ErrorCode);
 
 			/* >>chng 02 jan 07, various changes to improve convergence for very cold grains, PvH */
@@ -712,7 +706,7 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 				ErrorCode = MAX2(ErrorStart,QH_ANALYTIC);
 				/* use dummy to avoid losing estimate for new_tmin from GetProbDistr_LowLimit */
 				/* >>chng 02 aug 06, introduced STRICT and RELAX, PvH */
-				GetProbDistr_HighLimit(nd,STRICT,Umax,fwhm,qtemp,qprob,dPdlnT,&tol,qnbin,&dummy,
+				GetProbDistr_HighLimit(nd,nz,STRICT,Umax,fwhm,qtemp,qprob,dPdlnT,&tol,qnbin,&dummy,
 						       &ErrorCode);
 
 				if( ErrorCode >= QH_RETRY )
@@ -731,9 +725,9 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 				if( nWideFail < WIDE_FAIL_MAX )
 				{
 					if( new_tmin <= minBracket )
-						new_tmin = sqrt(gv.bin[nd].qtmin*minBracket);
+						new_tmin = sqrt(gv.bin[nd].qtmin[nz]*minBracket);
 					if( new_tmin >= maxBracket )
-						new_tmin = sqrt(gv.bin[nd].qtmin*maxBracket);
+						new_tmin = sqrt(gv.bin[nd].qtmin[nz]*maxBracket);
 				}
 				else
 				{
@@ -747,18 +741,18 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 			}
 			else if( ErrorCode == QH_LOW_FAIL )
 			{
-				double help1 = gv.bin[nd].qtmin*sqrt(DefFac);
-				double help2 = sqrt(gv.bin[nd].qtmin*maxBracket);
-				minBracket = gv.bin[nd].qtmin;
+				double help1 = gv.bin[nd].qtmin[nz]*sqrt(DefFac);
+				double help2 = sqrt(gv.bin[nd].qtmin[nz]*maxBracket);
+				minBracket = gv.bin[nd].qtmin[nz];
 				new_tmin = MIN2(help1,help2);
 				/* increase factor in case we get repeated LOW_FAIL's */
 				DefFac += 1.5;
 			}
 			else if( ErrorCode == QH_HIGH_FAIL )
 			{
-				double help = sqrt(gv.bin[nd].qtmin*minBracket);
-				maxBracket = gv.bin[nd].qtmin;
-				new_tmin = MAX2(gv.bin[nd].qtmin/DEF_FAC,help);
+				double help = sqrt(gv.bin[nd].qtmin[nz]*minBracket);
+				maxBracket = gv.bin[nd].qtmin[nz];
+				new_tmin = MAX2(gv.bin[nd].qtmin[nz]/DEF_FAC,help);
 			}
 			else
 			{
@@ -767,11 +761,11 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 		}
 		else
 		{
-			GetProbDistr_HighLimit(nd,STRICT,Umax,fwhm,qtemp,qprob,dPdlnT,&tol,qnbin,&new_tmin,
+			GetProbDistr_HighLimit(nd,nz,STRICT,Umax,fwhm,qtemp,qprob,dPdlnT,&tol,qnbin,&new_tmin,
 					       &ErrorCode);
 		}
 
-		gv.bin[nd].qtmin = new_tmin;
+		gv.bin[nd].qtmin[nz] = new_tmin;
 
 		lgOK = ( ErrorCode < QH_RETRY );
 
@@ -794,15 +788,11 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 	}
 
 	if( ErrorCode == QH_WIDE_FAIL )
-		gv.bin[nd].lgQHTooWide = true;
+		gv.bin[nd].lgQHTooWide[nz] = true;
 
 	/* >>chng 03 jan 17, added test for !lgDelta, PvH */
-	/* if( gv.bin[nd].lgQHTooWide ) */
-	if( gv.bin[nd].lgQHTooWide && !lgDelta )
+	if( gv.bin[nd].lgQHTooWide[nz] && !lgDelta )
 		ErrorCode = MAX2(ErrorCode,QH_WIDE_FAIL);
-
-/* 	if( ErrorCode >= QH_RETRY ) */
-/* 		printf( "      *** PROBLEM  loop not converged, errorcode %d\n",ErrorCode ); */
 
 	/* The quantum heating code tends to run into trouble when it goes deep into the neutral zone,
 	 * especially if the original spectrum was very hard, as is the case in high excitation PNe or AGN.
@@ -826,13 +816,13 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 			double dummy;
 
 			ErrorCode2 = MAX2(ErrorStart,QH_ANALYTIC);
-			GetProbDistr_HighLimit(nd,RELAX,Umax2,fwhm2,qtemp,qprob,dPdlnT,&tol,qnbin,&dummy,
+			GetProbDistr_HighLimit(nd,nz,RELAX,Umax2,fwhm2,qtemp,qprob,dPdlnT,&tol,qnbin,&dummy,
 					       &ErrorCode2);
 
 			lgOK = ( ErrorCode2 < QH_RETRY );
 			if( lgOK )
 			{
-				gv.bin[nd].qtmin = dummy;
+				gv.bin[nd].qtmin[nz] = dummy;
 				ErrorCode = ErrorCode2;
 				break;
 			}
@@ -845,10 +835,10 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 	}
 
 	if( nzone == 1 )
-		gv.bin[nd].qtmin_zone1 = gv.bin[nd].qtmin;
+		gv.bin[nd].qtmin_z1[nz] = gv.bin[nd].qtmin[nz];
 
-	gv.bin[nd].lgUseQHeat = ( lgOK && !lgDelta );
-	gv.bin[nd].lgEverQHeat = ( gv.bin[nd].lgEverQHeat || gv.bin[nd].lgUseQHeat );
+	gptr.lgUseQHeat = ( lgOK && !lgDelta );
+	gv.bin[nd].lgEverQHeat = ( gv.bin[nd].lgEverQHeat || gptr.lgUseQHeat );
 
 	if( lgOK )
 	{
@@ -859,18 +849,18 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 	{
 		*qnbin = 0;
 		++gv.bin[nd].QHeatFailures;
-		fprintf( ioQQQ, " PROBLEM  qheat did not converge grain %s in zone %ld, error code = %d\n",
-			 gv.bin[nd].chDstLab,nzone,ErrorCode );		
+		fprintf( ioQQQ, " PROBLEM  qheat did not converge grain %s[%ld] Zg=%ld in zone %ld, error code = %d\n",
+				 gv.bin[nd].chDstLab,nz,gptr.DustZ,nzone,ErrorCode );
 	}
 
 	if( gv.QHSaveFile != NULL && ( iterations.lgLastIt || !gv.lgQHPunLast ) ) 
 	{
-		fprintf( gv.QHSaveFile, "\nDust Temperature Distribution: grain %s zone %ld\n",
-			 gv.bin[nd].chDstLab,nzone );
+		fprintf( gv.QHSaveFile, "\nDust Temperature Distribution: grain %s[%ld] Zg=%ld zone %ld\n",
+				 gv.bin[nd].chDstLab,nz,gptr.DustZ,nzone );
 
-		fprintf( gv.QHSaveFile, "Equilibrium temperature: %.2f\n", gv.bin[nd].tedust );
+		fprintf( gv.QHSaveFile, "Equilibrium temperature: %.2f\n", gptr.tedust );
 
-		if( gv.bin[nd].lgUseQHeat ) 
+		if( gptr.lgUseQHeat ) 
 		{
 			/* >>chng 01 oct 09, remove qprob from output, it depends on step size, PvH */
 			fprintf( gv.QHSaveFile, "Number of bins: %ld\n", *qnbin );
@@ -891,11 +881,11 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 
 /* initialize phiTilde */
 STATIC void qheat_init(size_t nd,
-		       /*@out@*/ vector<double>& phiTilde,  /* phiTilde[gv.nflux] */
-		       /*@out@*/ double *check)
+					   long nz,
+					   /*@out@*/ vector<double>& phiTilde,  /* phiTilde[gv.nflux] */
+					   /*@out@*/ double *check)
 {
-	long i,
-	  nz;
+	long i;
 	double sum = 0.;
 
 	/*@-redef@*/
@@ -907,12 +897,15 @@ STATIC void qheat_init(size_t nd,
 	/* sanity checks */
 	ASSERT( gv.bin[nd].lgQHeat );
 	ASSERT( nd < gv.bin.size() );
+	ASSERT( nz >= 0 && nz < gv.bin[nd].nChrg );
+
+	const ChargeBin& gptr = gv.bin[nd].chrg(nz);
 
 	*check = 0.;
 
 	/* >>chng 01 nov 29, rfield.nflux -> gv.qnflux, PvH */
 	/* >>chng 03 jan 26, gv.qnflux -> gv.bin[nd].qnflux, PvH */
-	for( i=0; i < gv.bin[nd].qnflux; i++ )
+	for( i=0; i < gptr.qnflux; i++ )
 	{
 		phiTilde[i] = 0.;
 	}
@@ -928,192 +921,185 @@ STATIC void qheat_init(size_t nd,
 
 	double NegHeatingRate = 0.;
 
-	for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
+	double check1 = 0.;
+
+	// gv.nPositive may have increased since the last call to GrainDrive()
+	// if so, arrays like gptr.fac1 would not be initialized up to nPositive
+	long limit = min( gv.nPositive, gptr.nfill );
+
+	/* integrate over incident continuum for non-ionizing energies */
+	for( i=0; i < min(gptr.ipThresInf,limit); i++ )
 	{
-		double check1 = 0.;
-		const ChargeBin& gptr = gv.bin[nd].chrg(nz);
+		check1 += gv.SummedCon[i]*gv.bin[nd].dstab1[i]*gv.anu(i);
+		phiTilde[i] += gv.SummedCon[i]*gv.bin[nd].dstab1[i];
+	}
 
-		// gv.nPositive may have increased since the last call to GrainDrive()
-		// if so, arrays like gptr.fac1 would not be initialized up to nPositive
-		long limit = min( gv.nPositive, gptr.nfill );
+	/* >>chng 01 mar 02, use new expressions for grain cooling and absorption
+	 * cross sections following the discussion with Joe Weingartner, PvH */
+	for( i=gptr.ipThresInf; i < limit; i++ )
+	{
+		long ipLo2 = gptr.ipThresInfVal;
+		double cs1 = ( i >= ipLo2 ) ? gv.bin[nd].dstab1[i]*gptr.yhat_primary[i] : 0.;
 
-		/* integrate over incident continuum for non-ionizing energies */
-		for( i=0; i < min(gptr.ipThresInf,limit); i++ )
+		check1 += gv.SummedCon[i]*gptr.fac1[i];
+		/* this accounts for the photons that are fully absorbed by grain */
+		phiTilde[i] += gv.SummedCon[i]*max(gv.bin[nd].dstab1[i]-cs1,0.);
+
+		/* >>chng 01 oct 10, use bisection search to find ip. On C scale now */
+
+		/* this accounts for photons that eject an electron from the valence band */
+		if( cs1 > 0. )
 		{
-			check1 += gv.SummedCon[i]*gv.bin[nd].dstab1[i]*gv.anu(i);
-			phiTilde[i] += gptr.FracPop*gv.SummedCon[i]*gv.bin[nd].dstab1[i];
-		}
+			/* we treat photo-ejection and all subsequent de-excitation cascades
+			 * from the conduction/valence band as one simultaneous event */
+			/* the condition cs1 > 0. assures i >= ipLo2 */
+			/* ratio is number of ejected electrons per primary ionization */
+			double ratio = ( gv.lgWD01 ) ? 1. : gptr.yhat[i]/gptr.yhat_primary[i];
+			/* ehat is average energy of ejected electron at infinity */
+			double ehat = gptr.ehat[i];
+			double cool1, sign = 1.;
+			realnum xx;
 
-		/* >>chng 01 mar 02, use new expressions for grain cooling and absorption
-		 * cross sections following the discussion with Joe Weingartner, PvH */
-		for( i=gptr.ipThresInf; i < limit; i++ )
-		{
-			long ipLo2 = gptr.ipThresInfVal;
-			double cs1 = ( i >= ipLo2 ) ? gv.bin[nd].dstab1[i]*gptr.yhat_primary[i] : 0.;
-
-			check1 += gv.SummedCon[i]*gptr.fac1[i];
-			/* this accounts for the photons that are fully absorbed by grain */
-			phiTilde[i] += gptr.FracPop*gv.SummedCon[i]*MAX2(gv.bin[nd].dstab1[i]-cs1,0.);
-
-			/* >>chng 01 oct 10, use bisection search to find ip. On C scale now */
-
-			/* this accounts for photons that eject an electron from the valence band */
-			if( cs1 > 0. )
+			if( gptr.DustZ <= -1 )
+				cool1 = gptr.ThresSurf + gptr.PotSurf + ehat;
+			else
+				cool1 = gptr.ThresSurfVal + gptr.PotSurf + ehat;
+			/* secondary electrons are assumed to have the same Elo and Ehi as the
+			 * primary electrons that excite them. This neglects the threshold for
+			 * the ejection of the secondary electron and can cause xx to become
+			 * negative if Ehi is less than that threshold. To conserve energy we
+			 * will simply assume a negative rate here. Since secondary electrons
+			 * are generally not important this should have little impact on the
+			 * overall temperature distribution */
+			xx = gv.anu(i) - (realnum)(ratio*cool1);
+			if( xx < 0.f )
 			{
-				/* we treat photo-ejection and all subsequent de-excitation cascades
-				 * from the conduction/valence band as one simultaneous event */
-				/* the condition cs1 > 0. assures i >= ipLo2 */
-				/* ratio is number of ejected electrons per primary ionization */
-				double ratio = ( gv.lgWD01 ) ? 1. : gptr.yhat[i]/gptr.yhat_primary[i];
-				/* ehat is average energy of ejected electron at infinity */
-				double ehat = gptr.ehat[i];
-				double cool1, sign = 1.;
-				realnum xx;
-
-				if( gptr.DustZ <= -1 )
-					cool1 = gptr.ThresSurf + gptr.PotSurf + ehat;
-				else
-					cool1 = gptr.ThresSurfVal + gptr.PotSurf + ehat;
-				/* secondary electrons are assumed to have the same Elo and Ehi as the
-				 * primary electrons that excite them. This neglects the threshold for
-				 * the ejection of the secondary electron and can cause xx to become
-				 * negative if Ehi is less than that threshold. To conserve energy we
-				 * will simply assume a negative rate here. Since secondary electrons
-				 * are generally not important this should have little impact on the
-				 * overall temperature distribution */
-				xx = gv.anu(i) - (realnum)(ratio*cool1);
-				if( xx < 0.f )
-				{
-					xx = -xx;
-					sign = -1.;
-				}
-				/* the call to min() is needed because in extreme circumstances it can
-				 * happen that ratio*cool1 is so large that -xx > anu(qnflux-1). In that
-				 * case the contribution to phiTilde would not be counted, which can lead
-				 * to spurious failures of the energy conservation test */
-				long ipLo = gv.ipointC( min(max(xx,gv.emm()),gv.anu(i)) );
-				/* for grains in hard X-ray environments, the coarseness of the grid can
-				 * lead to inaccuracies in the integral over phiTilde that would trip the
-				 * sanity check in qheat(), here we correct for the energy mismatch */
-				double corr = xx/gv.anu(ipLo);
-				phiTilde[ipLo] += sign*corr*gptr.FracPop*gv.SummedCon[i]*cs1;
+				xx = -xx;
+				sign = -1.;
 			}
-
-			/* no need to account for photons that eject an electron from the conduction band */
-			/* >>chng 01 dec 11, cool2 always equal to rfield.anu(i) -> no grain heating */
+			/* the call to min() is needed because in extreme circumstances it can
+			 * happen that ratio*cool1 is so large that -xx > anu(qnflux-1). In that
+			 * case the contribution to phiTilde would not be counted, which can lead
+			 * to spurious failures of the energy conservation test */
+			long ipLo = gv.ipointC( min(max(xx,gv.emm()),gv.anu(i)) );
+			/* for grains in hard X-ray environments, the coarseness of the grid can
+			 * lead to inaccuracies in the integral over phiTilde that would trip the
+			 * sanity check in qheat(), here we correct for the energy mismatch */
+			double corr = xx/gv.anu(ipLo);
+			phiTilde[ipLo] += sign*corr*gv.SummedCon[i]*cs1;
 		}
 
-		*check += gptr.FracPop*check1*EN1RYD*gv.bin[nd].cnv_H_pCM3;
+		/* no need to account for photons that eject an electron from the conduction band */
+		/* >>chng 01 dec 11, cool2 always equal to rfield.anu(i) -> no grain heating */
+	}
 
-		sum += gptr.FracPop*check1*EN1RYD*gv.bin[nd].cnv_H_pCM3;
+	*check += check1*EN1RYD*gv.bin[nd].cnv_H_pCM3;
+
+	sum += check1*EN1RYD*gv.bin[nd].cnv_H_pCM3;
+
+	if( DEBUG_LOC )
+	{
+		double integral = 0.;
+		for( i=0; i < gptr.qnflux; i++ )
+		{
+			integral += phiTilde[i]*gv.bin[nd].cnv_H_pCM3*gv.anu(i)*EN1RYD;
+		}
+		dprintf( ioQQQ, " integral test 1: integral %.6e %.6e\n", integral, sum );
+	}
+
+	/* add quantum heating due to recombination of electrons, subtract thermionic cooling */
+
+	/* gptr.HeatingRate1 is net heating rate in erg/H/s at standard depl
+	 * includes contributions for recombining electrons, autoionizing electrons
+	 * subtracted by thermionic emissions here since it is inverse process
+	 *
+	 * NB - in extreme conditions this rate may be negative (if there
+	 * is an intense radiation field leading to very hot grains, but no ionizing
+	 * photons, hence very few free electrons). we assume that the photon rates
+	 * are high enough under those circumstances to avoid phiTilde becoming negative,
+	 * but we will check that in qheat1 anyway. */
+
+	/* >>chng 03 nov 06, check for extremely low HeatingRate and save CPU time, pah_crash.in, PvH */
+	if( gptr.HeatingRate1*gv.bin[nd].cnv_H_pCM3 > 0.05*CONSERV_TOL*gptr.GrainHeatCS ) 
+	{
+		double Sum,ESum,DSum,E_av2,Corr;
+		double fac = BOLTZMANN/EN1RYD*phycon.te;
+		/* E0 is barrier that electron needs to overcome, zero for positive grains */
+		/* >>chng 03 jan 23, added second term to correctly account for autoionizing states
+		 *                   where ThresInfInc is negative, tested in small_grain.in, PvH */
+		double E0 = -(MIN2(gptr.PotSurfInc,0.) + MIN2(gptr.ThresInfInc,0.));
+		/* >>chng 01 mar 02, this should be energy gap between top electron and infinity, PvH */
+		/* >>chng 01 nov 21, use correct barrier: ThresInf[nz] -> ThresInfInc[nz], PvH */
+		/* >>chng 03 jan 23, replaced -E0 with MIN2(PotSurfInc[nz],0.), PvH */
+		double Einf = gptr.ThresInfInc + MIN2(gptr.PotSurfInc,0.);
+		/* this is average energy deposited by one event, in erg
+		 * this value is derived from distribution assumed here, and may
+		 * not be the same as HeatElectrons/(CollisionRateElectr*eta) !! */
+		/* >>chng 01 nov 21, use correct barrier: ThresInf[nz] -> ThresInfInc[nz], PvH */
+		/* >>chng 03 jan 23, replaced ThresInfInc[nz] with MAX2(ThresInfInc[nz],0.), PvH */
+		double E_av = MAX2(gptr.ThresInfInc,0.)*EN1RYD + 2.*BOLTZMANN*phycon.te;
+		/* this is rate in events/H/s at standard depletion */
+		double rate = gptr.HeatingRate1/E_av;
+
+		double ylo = -exp(-E0/fac);
+		/* this is highest kinetic energy of electron that can be represented in phiTilde */
+		/* >>chng 01 nov 29, rfield.nflux -> gv.qnflux, PvH */
+		/* >>chng 03 jan 26, gv.qnflux -> gv.bin[nd].qnflux, PvH */
+		double Ehi = gv.anumax(gptr.qnflux-1)-Einf;
+		double yhi = ((E0-Ehi)/fac-1.)*exp(-Ehi/fac);
+		/* renormalize rate so that integral over phiTilde*anu gives correct total energy */
+		rate /= yhi-ylo;
+
+		/* >>chng 03 jan 24, add code to correct for discretization errors, hotdust.in, PvH */
+		vector<double> RateArr(gptr.qnflux);
+		Sum = ESum = DSum = 0.;
+
+		/* >>chng 04 jan 21, replaced gv.bin[nd].qnflux -> gv.bin[nd].qnflux2, PvH */
+		for( i=0; i < gptr.qnflux2; i++ ) 
+		{
+			Ehi = gv.anumax(i) - Einf;
+			if( Ehi >= E0 ) 
+			{
+				/* Ehi is kinetic energy of electron at infinity */
+				yhi = ((E0-Ehi)/fac-1.)*exp(-Ehi/fac);
+				/* >>chng 01 mar 24, use MAX2 to protect against roundoff error, PvH */
+				RateArr[i] = rate*MAX2(yhi-ylo,0.);
+				Sum += RateArr[i];
+				ESum += gv.anu(i)*RateArr[i];
+#					ifndef NDEBUG
+				DSum += gv.widflx(i)*RateArr[i];
+#					endif
+				ylo = yhi;
+			}
+			else
+			{
+				RateArr[i] = 0.;
+			}
+		}
+		E_av2 = ESum/Sum*EN1RYD;
+		ASSERT( fabs(E_av-E_av2) <= DSum/Sum*EN1RYD );
+		Corr = E_av/E_av2;
+
+		for( i=0; i < gptr.qnflux2; i++ ) 
+		{
+			phiTilde[i] += RateArr[i]*Corr;
+		}
+
+		sum += gptr.HeatingRate1*gv.bin[nd].cnv_H_pCM3;
 
 		if( DEBUG_LOC )
 		{
 			double integral = 0.;
-			for( i=0; i < gv.bin[nd].qnflux; i++ )
+			for( i=0; i < gptr.qnflux; i++ )
 			{
 				integral += phiTilde[i]*gv.bin[nd].cnv_H_pCM3*gv.anu(i)*EN1RYD;
 			}
-			dprintf( ioQQQ, " integral test 1: integral %.6e %.6e\n", integral, sum );
+			dprintf( ioQQQ, " integral test 2: integral %.6e %.6e\n", integral, sum );
 		}
-
-		/* add quantum heating due to recombination of electrons, subtract thermionic cooling */
-
-		/* gptr.HeatingRate1 is net heating rate in erg/H/s at standard depl
-		 * includes contributions for recombining electrons, autoionizing electrons
-		 * subtracted by thermionic emissions here since it is inverse process
-		 *
-		 * NB - in extreme conditions this rate may be negative (if there
-		 * is an intense radiation field leading to very hot grains, but no ionizing
-		 * photons, hence very few free electrons). we assume that the photon rates
-		 * are high enough under those circumstances to avoid phiTilde becoming negative,
-		 * but we will check that in qheat1 anyway. */
-
-		/* >>chng 03 nov 06, check for extremely low HeatingRate and save CPU time, pah_crash.in, PvH */
-		if( gptr.HeatingRate1*gv.bin[nd].cnv_H_pCM3 > 0.05*CONSERV_TOL*gptr.GrainHeatCS ) 
-		{
-			double Sum,ESum,DSum,E_av2,Corr;
-			double fac = BOLTZMANN/EN1RYD*phycon.te;
-			/* E0 is barrier that electron needs to overcome, zero for positive grains */
-			/* >>chng 03 jan 23, added second term to correctly account for autoionizing states
-			 *                   where ThresInfInc is negative, tested in small_grain.in, PvH */
-			double E0 = -(MIN2(gptr.PotSurfInc,0.) + MIN2(gptr.ThresInfInc,0.));
-			/* >>chng 01 mar 02, this should be energy gap between top electron and infinity, PvH */
-			/* >>chng 01 nov 21, use correct barrier: ThresInf[nz] -> ThresInfInc[nz], PvH */
-			/* >>chng 03 jan 23, replaced -E0 with MIN2(PotSurfInc[nz],0.), PvH */
-			double Einf = gptr.ThresInfInc + MIN2(gptr.PotSurfInc,0.);
-			/* this is average energy deposited by one event, in erg
-			 * this value is derived from distribution assumed here, and may
-			 * not be the same as HeatElectrons/(CollisionRateElectr*eta) !! */
-			/* >>chng 01 nov 21, use correct barrier: ThresInf[nz] -> ThresInfInc[nz], PvH */
-			/* >>chng 03 jan 23, replaced ThresInfInc[nz] with MAX2(ThresInfInc[nz],0.), PvH */
-			double E_av = MAX2(gptr.ThresInfInc,0.)*EN1RYD + 2.*BOLTZMANN*phycon.te;
-			/* this is rate in events/H/s at standard depletion */
-			double rate = gptr.HeatingRate1/E_av;
-
-			double ylo = -exp(-E0/fac);
-			/* this is highest kinetic energy of electron that can be represented in phiTilde */
-			/* >>chng 01 nov 29, rfield.nflux -> gv.qnflux, PvH */
-			/* >>chng 03 jan 26, gv.qnflux -> gv.bin[nd].qnflux, PvH */
-			double Ehi = gv.anumax(gv.bin[nd].qnflux-1)-Einf;
-			double yhi = ((E0-Ehi)/fac-1.)*exp(-Ehi/fac);
-			/* renormalize rate so that integral over phiTilde*anu gives correct total energy */
-			rate /= yhi-ylo;
-
-			/* correct for fractional population of this charge state */
-			rate *= gptr.FracPop;
-
-			/* >>chng 03 jan 24, add code to correct for discretization errors, hotdust.in, PvH */
-			vector<double> RateArr(gv.bin[nd].qnflux);
-			Sum = ESum = DSum = 0.;
-
-			/* >>chng 04 jan 21, replaced gv.bin[nd].qnflux -> gv.bin[nd].qnflux2, PvH */
-			for( i=0; i < gv.bin[nd].qnflux2; i++ ) 
-			{
-				Ehi = gv.anumax(i) - Einf;
-				if( Ehi >= E0 ) 
-				{
-					/* Ehi is kinetic energy of electron at infinity */
-					yhi = ((E0-Ehi)/fac-1.)*exp(-Ehi/fac);
-					/* >>chng 01 mar 24, use MAX2 to protect against roundoff error, PvH */
-					RateArr[i] = rate*MAX2(yhi-ylo,0.);
-					Sum += RateArr[i];
-					ESum += gv.anu(i)*RateArr[i];
-#					ifndef NDEBUG
-					DSum += gv.widflx(i)*RateArr[i];
-#					endif
-					ylo = yhi;
-				}
-				else
-				{
-					RateArr[i] = 0.;
-				}
-			}
-			E_av2 = ESum/Sum*EN1RYD;
-			ASSERT( fabs(E_av-E_av2) <= DSum/Sum*EN1RYD );
-			Corr = E_av/E_av2;
-
-			for( i=0; i < gv.bin[nd].qnflux2; i++ ) 
-			{
-				phiTilde[i] += RateArr[i]*Corr;
-			}
-
-			sum += gptr.FracPop*gptr.HeatingRate1*gv.bin[nd].cnv_H_pCM3;
-
-			if( DEBUG_LOC )
-			{
-				double integral = 0.;
-				for( i=0; i < gv.bin[nd].qnflux; i++ )
-				{
-					integral += phiTilde[i]*gv.bin[nd].cnv_H_pCM3*gv.anu(i)*EN1RYD;
-				}
-				dprintf( ioQQQ, " integral test 2: integral %.6e %.6e\n", integral, sum );
-			}
-		}
-		else
-		{
-			NegHeatingRate += gptr.FracPop*gptr.HeatingRate1*gv.bin[nd].cnv_H_pCM3;
-		}
+	}
+	else
+	{
+		NegHeatingRate += gptr.HeatingRate1*gv.bin[nd].cnv_H_pCM3;
 	}
 
 	/* ============================================================================= */
@@ -1133,13 +1119,8 @@ STATIC void qheat_init(size_t nd,
 	 * if photon rates are not high enough to prevent phiTilde from becoming negative,
 	 * we will raise a flag while calculating the quantum heating in qheat1 */
 
-	fixit("the remaining initialization code should be integrated in previous loop");
-	double HeatingRate2 = 0.;
-	for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
-		HeatingRate2 += gv.bin[nd].chrg(nz).FracPop*gv.bin[nd].chrg(nz).HeatingRate2;
-
 	/* >>chng 03 nov 06, check for extremely low HeatingRate and save CPU time, PvH */
-	if( HeatingRate2*gv.bin[nd].cnv_H_pCM3 > 0.05*CONSERV_TOL*gv.bin[nd].GrainHeatBin )
+	if( gptr.HeatingRate2*gv.bin[nd].cnv_H_pCM3 > 0.05*CONSERV_TOL*gptr.GrainHeatCS )
 	{
 		/* limits for Taylor expansion of (1+x)*exp(-x) */
 		/* these choices will assure only 6 digits precision */
@@ -1149,22 +1130,22 @@ STATIC void qheat_init(size_t nd,
 		 * consider Maxwell-Boltzmann distribution of incoming particles
 		 * and ignore distribution of outgoing particles, if grains
 		 * are hotter than ambient gas, we use reverse treatment */
-		double fac = BOLTZMANN/EN1RYD*MAX2(phycon.te,gv.bin[nd].tedust);
+		double fac = BOLTZMANN/EN1RYD*MAX2(phycon.te,gptr.tedust);
 		/* this is average energy deposited/extracted by one event, in erg */
-		double E_av = 2.*BOLTZMANN*MAX2(phycon.te,gv.bin[nd].tedust);
+		double E_av = 2.*BOLTZMANN*MAX2(phycon.te,gptr.tedust);
 		/* this is rate in events/H/s at standard depletion */
-		double rate = HeatingRate2/E_av;
+		double rate = gptr.HeatingRate2/E_av;
 
 		double ylo = -1.;
 		/* this is highest energy of incoming/outgoing particle that can be represented in phiTilde */
 		/* >>chng 01 nov 29, rfield.nflux -> gv.qnflux, PvH */
 		/* >>chng 03 jan 26, gv.qnflux -> gv.bin[nd].qnflux, PvH */
-		double Ehi = gv.anumax(gv.bin[nd].qnflux-1);
+		double Ehi = gv.anumax(gptr.qnflux-1);
 		double yhi = -(Ehi/fac+1.)*exp(-Ehi/fac);
 		/* renormalize rate so that integral over phiTilde*anu gives correct total energy */
 		rate /= yhi-ylo;
 
-		for( i=0; i < gv.bin[nd].qnflux2; i++ ) 
+		for( i=0; i < gptr.qnflux2; i++ ) 
 		{
 			/* Ehi is kinetic energy of incoming/outgoing particle
 			 * we assume that Ehi-E0 is deposited/extracted from grain */
@@ -1184,12 +1165,12 @@ STATIC void qheat_init(size_t nd,
 			ylo = yhi;
 		}
 
-		sum += HeatingRate2*gv.bin[nd].cnv_H_pCM3;
+		sum += gptr.HeatingRate2*gv.bin[nd].cnv_H_pCM3;
 
 		if( DEBUG_LOC )
 		{
 			double integral = 0.;
-			for( i=0; i < gv.bin[nd].qnflux; i++ )
+			for( i=0; i < gptr.qnflux; i++ )
 			{
 				integral += phiTilde[i]*gv.bin[nd].cnv_H_pCM3*gv.anu(i)*EN1RYD;
 			}
@@ -1198,7 +1179,7 @@ STATIC void qheat_init(size_t nd,
 	}
 	else
 	{
-		NegHeatingRate += HeatingRate2*gv.bin[nd].cnv_H_pCM3;
+		NegHeatingRate += gptr.HeatingRate2*gv.bin[nd].cnv_H_pCM3;
 	}
 
 	/* here we account for the negative heating rates, we simply do that by scaling the entire
@@ -1207,7 +1188,7 @@ STATIC void qheat_init(size_t nd,
 	if( NegHeatingRate < 0. )
 	{
 		double scale_fac = (sum+NegHeatingRate)/sum;
-		for( i=0; i < gv.bin[nd].qnflux; i++ )
+		for( i=0; i < gptr.qnflux; i++ )
 			phiTilde[i] *= scale_fac;
 
 		if( DEBUG_LOC )
@@ -1215,7 +1196,7 @@ STATIC void qheat_init(size_t nd,
 			sum += NegHeatingRate;
 
 			double integral = 0.;
-			for( i=0; i < gv.bin[nd].qnflux; i++ )
+			for( i=0; i < gptr.qnflux; i++ )
 			{
 				integral += phiTilde[i]*gv.bin[nd].cnv_H_pCM3*gv.anu(i)*EN1RYD;
 			}
@@ -1241,18 +1222,19 @@ STATIC void qheat_init(size_t nd,
  *******************************************************************************************/
 
 STATIC void GetProbDistr_LowLimit(size_t nd,
-				  double rel_tol,
-				  double Umax,
-				  double fwhm,
-				  /*@in@*/ const vector<double>& Phi,    /* Phi[NQGRID]      */
-				  /*@in@*/ const vector<double>& PhiDrv, /* PhiDrv[NQGRID]   */
-				  /*@out@*/ vector<double>& qtemp,       /* qtemp[NQGRID]    */
-				  /*@out@*/ vector<double>& qprob,       /* qprob[NQGRID]    */
-				  /*@out@*/ vector<double>& dPdlnT,      /* dPdlnT[NQGRID]   */
-				  /*@out@*/ long int *qnbin,
-				  /*@out@*/ double *new_tmin,
-				  long *nWideFail,
-				  /*@out@*/ QH_Code *ErrorCode)
+								  long nz,
+								  double rel_tol,
+								  double Umax,
+								  double fwhm,
+								  /*@in@*/ const vector<double>& Phi,    /* Phi[NQGRID]      */
+								  /*@in@*/ const vector<double>& PhiDrv, /* PhiDrv[NQGRID]   */
+								  /*@out@*/ vector<double>& qtemp,       /* qtemp[NQGRID]    */
+								  /*@out@*/ vector<double>& qprob,       /* qprob[NQGRID]    */
+								  /*@out@*/ vector<double>& dPdlnT,      /* dPdlnT[NQGRID]   */
+								  /*@out@*/ long int *qnbin,
+								  /*@out@*/ double *new_tmin,
+								  long *nWideFail,
+								  /*@out@*/ QH_Code *ErrorCode)
 {
 	bool lgAllNegSlope,
 	  lgBoundErr;
@@ -1286,14 +1268,18 @@ STATIC void GetProbDistr_LowLimit(size_t nd,
 
 	/* sanity checks */
 	ASSERT( nd < gv.bin.size() );
+	ASSERT( nz >= 0 && nz < gv.bin[nd].nChrg );
+
+	const ChargeBin& gptr = gv.bin[nd].chrg(nz);
 
 	if( trace.lgTrace && trace.lgDustBug )
 	{
-		fprintf( ioQQQ, "   GetProbDistr_LowLimit called for grain %s\n", gv.bin[nd].chDstLab );
-		fprintf( ioQQQ, "    got qtmin1 %.4e\n", gv.bin[nd].qtmin);
+		fprintf( ioQQQ, "   GetProbDistr_LowLimit called for grain %s[%ld] Zg=%ld\n",
+				 gv.bin[nd].chDstLab, nz, gptr.DustZ );
+		fprintf( ioQQQ, "    got qtmin1 %.4e\n", gv.bin[nd].qtmin[nz]);
 	}
 
-	qtmin1 = gv.bin[nd].qtmin;
+	qtmin1 = gv.bin[nd].qtmin[nz];
 	qtemp[0] = qtmin1;
 	/* u1 holds enthalpy in Ryd/grain */
 	u1[0] = ufunct(qtemp[0],nd,&lgBoundErr);
@@ -1338,7 +1324,7 @@ STATIC void GetProbDistr_LowLimit(size_t nd,
 	if( dlnpdlnU < 0. )
 	{
 		/* >>chng 03 nov 06, confirm this by integrating first step..., pah_crash.in, PvH */
-		(void)TryDoubleStep(u1,delu,p,qtemp,Lambda,Phi,PhiDrv,NextStep,&dCool,p_max,k,nd,&lgBoundErr);
+		(void)TryDoubleStep(u1,delu,p,qtemp,Lambda,Phi,PhiDrv,NextStep,&dCool,p_max,k,nd,nz,&lgBoundErr);
 		dPdlnT[2] = p[2]*qtemp[2]*uderiv(qtemp[2],nd);
 
 		if( dPdlnT[2] < dPdlnT[0] )
@@ -1353,7 +1339,7 @@ STATIC void GetProbDistr_LowLimit(size_t nd,
 	/* NB NB -- every break in this loop should set *ErrorCode (except for regular stop criterion) !! */
 	for( l=0; l < MAX_LOOP; ++l )
 	{
-		double rerr = TryDoubleStep(u1,delu,p,qtemp,Lambda,Phi,PhiDrv,NextStep,&dCool,p_max,k,nd,&lgBoundErr);
+		double rerr = TryDoubleStep(u1,delu,p,qtemp,Lambda,Phi,PhiDrv,NextStep,&dCool,p_max,k,nd,nz,&lgBoundErr);
 
 		/* this happens if the grain temperature in qtemp becomes higher than GRAIN_TMAX
 		 * nothing that TryDoubleStep returns can be trusted, so this check should be first */
@@ -1467,7 +1453,7 @@ STATIC void GetProbDistr_LowLimit(size_t nd,
 		}
 
 		/* force thermal equilibrium of the grains */
-		fac = RadCooling*gv.bin[nd].cnv_GR_pCM3*EN1RYD/gv.bin[nd].GrainHeatBin;
+		fac = RadCooling*gv.bin[nd].cnv_GR_pCM3*EN1RYD/gptr.GrainHeatCS;
 
 		/* this is regular stop criterion */
 		if( dPdlnT[k] < dPdlnT[k-1] && dPdlnT[k]/fac < PROB_CUTOFF_HI )
@@ -1555,7 +1541,7 @@ STATIC void GetProbDistr_LowLimit(size_t nd,
 	}
 	*new_tmin = MAX3(*new_tmin,qtmin1/DEF_FAC,GRAIN_TMIN);
 
-	ASSERT( *new_tmin < gv.bin[nd].tedust );
+	ASSERT( *new_tmin < gptr.tedust );
 
 	/* >>chng 02 jan 30, prevent excessive looping when prob distribution simply won't fit, PvH */
 	if( dPdlnT[nbin-1] > SAFETY*PROB_CUTOFF_HI )
@@ -1591,7 +1577,7 @@ STATIC void GetProbDistr_LowLimit(size_t nd,
 	 * probability; rebinning the results on a coarser grid should help reduce the overhead */
 	/* >>chng 02 aug 07, use nstart and nend while rebinning */
 
-	nbin = RebinQHeatResults(nd,nstart,nend,p,qtemp,qprob,dPdlnT,u1,delu,Lambda,ErrorCode);
+	nbin = RebinQHeatResults(nd,nz,nstart,nend,p,qtemp,qprob,dPdlnT,u1,delu,Lambda,ErrorCode);
 
 	/* >>chng 01 jul 13, add fail-safe for failure in RebinQHeatResults */
 	if( nbin == 0 )
@@ -1618,8 +1604,8 @@ STATIC void GetProbDistr_LowLimit(size_t nd,
 	if( trace.lgTrace && trace.lgDustBug )
 	{
 		fprintf( ioQQQ,
-			 "    zone %ld %s nbin %ld nok %ld nbad %ld total prob %.4e rel_tol %.3e new_tmin %.4e\n",
-			 nzone,gv.bin[nd].chDstLab,nbin,nok,nbad,sum,rel_tol,*new_tmin );
+			 "    zone %ld %s[%ld] Zg=%ld nbin %ld nok %ld nbad %ld total prob %.4e rel_tol %.3e new_tmin %.4e\n",
+				 nzone,gv.bin[nd].chDstLab,nz,gptr.DustZ,nbin,nok,nbad,sum,rel_tol,*new_tmin );
 	}
 	return;
 }
@@ -1630,18 +1616,19 @@ STATIC void GetProbDistr_LowLimit(size_t nd,
  * the difference fabs(p2k-p[k])/(3.*p[k]) can be used to estimate the relative
  * accuracy of p[k] and will be used to adapt the stepsize to an optimal value */
 STATIC double TryDoubleStep(vector<double>& u1,
-			    vector<double>& delu,
-			    vector<double>& p,
-			    vector<double>& qtemp,
-			    vector<double>& Lambda,
-			    const vector<double>& Phi,
-			    const vector<double>& PhiDrv,
-			    double step,
-			    /*@out@*/ double *cooling,
-			    double p_max,
-			    long index,
-			    size_t nd,
-			    /*@out@*/ bool *lgBoundFail)
+							vector<double>& delu,
+							vector<double>& p,
+							vector<double>& qtemp,
+							vector<double>& Lambda,
+							const vector<double>& Phi,
+							const vector<double>& PhiDrv,
+							double step,
+							/*@out@*/ double *cooling,
+							double p_max,
+							long index,
+							size_t nd,
+							long nz,
+							/*@out@*/ bool *lgBoundFail)
 {
 	long i,
 	  j,
@@ -1666,11 +1653,14 @@ STATIC double TryDoubleStep(vector<double>& u1,
 
 	/* sanity checks */
 	ASSERT( index >= 0 && index < NQGRID-2 && nd < gv.bin.size() && step > 0. );
+	ASSERT( nz >= 0 && nz < gv.bin[nd].nChrg );
+
+	const ChargeBin& gptr = gv.bin[nd].chrg(nz);
 
 	ulo = gv.anumin(0);
 	/* >>chng 01 nov 29, rfield.nflux -> gv.qnflux, PvH */
 	/* >>chng 03 jan 26, gv.qnflux -> gv.bin[nd].qnflux, PvH */
-	uhi = gv.anumax(gv.bin[nd].qnflux-1);
+	uhi = gv.anumax(gptr.qnflux-1);
 
 	/* >>chng 01 nov 21, skip initial bins if they have very low probability */
 	jlo = 0;
@@ -1681,8 +1671,8 @@ STATIC double TryDoubleStep(vector<double>& u1,
 	{
 		bool lgErr;
 		long ipLo = 0;
-		// using gv.bin[nd].qnflux is OK since gv.bin[nd].qnflux < gv.bin[nd].nflux_with_check
-		long ipHi = gv.bin[nd].qnflux;
+		// using gptr.qnflux is OK since gptr.qnflux < gv.bin[nd].nflux_with_check
+		long ipHi = gptr.qnflux;
 		k = index + i;
 		delu[k] = step/2.;
 		u1[k] = u1[k-1] + delu[k];
@@ -1805,13 +1795,13 @@ STATIC double TryDoubleStep(vector<double>& u1,
 
 /* calculate logarithmic integral from (xx1,yy1) to (xx2,yy2) */
 STATIC double log_integral(double xx1,
-			   double yy1,
-			   double xx2,
-			   double yy2,
-			   double log_xx1,
-			   double log_yy1,
-			   double log_xx2,
-			   double log_yy2)
+						   double yy1,
+						   double xx2,
+						   double yy2,
+						   double log_xx1,
+						   double log_yy1,
+						   double log_xx2,
+						   double log_yy2)
 {
 	DEBUG_ENTRY( "log_integral()" );
 
@@ -1830,16 +1820,16 @@ STATIC double log_integral(double xx1,
 
 /* scan the probability distribution for valid range */
 STATIC void ScanProbDistr(const vector<double>& u1,      /* u1[nbin] */
-			  const vector<double>& dPdlnT,  /* dPdlnT[nbin] */
-			  long nbin,
-			  double maxVal,
-			  long nmax,
-			  double qtmin1,
-			  /*@out@*/long *nstart,
-			  /*@out@*/long *nstart2,
-			  /*@out@*/long *nend,
-			  long *nWideFail,
-			  QH_Code *ErrorCode)
+						  const vector<double>& dPdlnT,  /* dPdlnT[nbin] */
+						  long nbin,
+						  double maxVal,
+						  long nmax,
+						  double qtmin1,
+						  /*@out@*/long *nstart,
+						  /*@out@*/long *nstart2,
+						  /*@out@*/long *nend,
+						  long *nWideFail,
+						  QH_Code *ErrorCode)
 {
 	bool lgSetLo,
 	  lgSetHi;
@@ -1936,16 +1926,17 @@ STATIC void ScanProbDistr(const vector<double>& u1,      /* u1[nbin] */
 
 /* rebin the quantum heating results to speed up RT_diffuse */
 STATIC long RebinQHeatResults(size_t nd,
-			      long nstart,
-			      long nend,
-			      vector<double>& p,
-			      vector<double>& qtemp,
-			      vector<double>& qprob,
-			      vector<double>& dPdlnT,
-			      vector<double>& u1,
-			      vector<double>& delu,
-			      vector<double>& Lambda,
-			      QH_Code *ErrorCode)
+							  long nz,
+							  long nstart,
+							  long nend,
+							  vector<double>& p,
+							  vector<double>& qtemp,
+							  vector<double>& qprob,
+							  vector<double>& dPdlnT,
+							  vector<double>& u1,
+							  vector<double>& delu,
+							  vector<double>& Lambda,
+							  QH_Code *ErrorCode)
 {
 	long i,
 	  newnbin;
@@ -1965,6 +1956,7 @@ STATIC long RebinQHeatResults(size_t nd,
 
 	/* sanity checks */
 	ASSERT( nd < gv.bin.size() );
+	ASSERT( nz >= 0 && nz < gv.bin[nd].nChrg );
 	/* >>chng 02 aug 07, changed oldnbin -> nstart..nend */
 	ASSERT( nstart >= 0 && nstart < nend && nend < NQGRID );
 
@@ -2125,7 +2117,7 @@ STATIC long RebinQHeatResults(size_t nd,
 		return 0;
 	}
 
-	fac = RadCooling*EN1RYD*gv.bin[nd].cnv_GR_pCM3/gv.bin[nd].GrainHeatBin;
+	fac = RadCooling*EN1RYD*gv.bin[nd].cnv_GR_pCM3/gv.bin[nd].chrg(nz).GrainHeatCS;
 
 	if( trace.lgTrace && trace.lgDustBug )
 	{
@@ -2161,17 +2153,18 @@ STATIC long RebinQHeatResults(size_t nd,
 
 
 /* calculate approximate probability distribution in high intensity limit */
-STATIC void GetProbDistr_HighLimit(long nd,
-				   double TolFac,
-				   double Umax,
-				   double fwhm,
-				   /*@out@*/vector<double>& qtemp,
-				   /*@out@*/vector<double>& qprob,
-				   /*@out@*/vector<double>& dPdlnT,
-				   /*@out@*/double *tol,
-				   /*@out@*/long *qnbin,
-				   /*@out@*/double *new_tmin,
-				   /*@out@*/QH_Code *ErrorCode)
+STATIC void GetProbDistr_HighLimit(size_t nd,
+								   long nz,
+								   double TolFac,
+								   double Umax,
+								   double fwhm,
+								   /*@out@*/vector<double>& qtemp,
+								   /*@out@*/vector<double>& qprob,
+								   /*@out@*/vector<double>& dPdlnT,
+								   /*@out@*/double *tol,
+								   /*@out@*/long *qnbin,
+								   /*@out@*/double *new_tmin,
+								   /*@out@*/QH_Code *ErrorCode)
 {
 	bool lgBoundErr,
 	  lgErr;
@@ -2209,7 +2202,8 @@ STATIC void GetProbDistr_HighLimit(long nd,
 
 	if( trace.lgTrace && trace.lgDustBug )
 	{
-		fprintf( ioQQQ, "   GetProbDistr_HighLimit called for grain %s\n", gv.bin[nd].chDstLab );
+		fprintf( ioQQQ, "   GetProbDistr_HighLimit called for grain %s[%ld] Zg=%ld\n",
+				 gv.bin[nd].chDstLab, nz, gv.bin[nd].chrg(nz).DustZ );
 	}
 
 	c1 = sqrt(4.*LN_TWO/PI)/fwhm*exp(-pow2(fwhm/Umax)/(16.*LN_TWO));
@@ -2300,7 +2294,7 @@ STATIC void GetProbDistr_HighLimit(long nd,
 
 	} while( T2 < Thi && nbin < NQGRID );
 
-	fac = RadCooling*EN1RYD*gv.bin[nd].cnv_GR_pCM3/gv.bin[nd].GrainHeatBin;
+	fac = RadCooling*EN1RYD*gv.bin[nd].cnv_GR_pCM3/gv.bin[nd].chrg(nz).GrainHeatCS;
 
 	for( i=0; i < nbin; ++i )
 	{
@@ -2330,8 +2324,8 @@ STATIC void GetProbDistr_HighLimit(long nd,
 	{
 		fprintf( ioQQQ, "     GetProbDistr_HighLimit found tol1 %.4e tol2 %.4e\n",
 			 fabs(sum-1.), fabs(sum/fac-1.) );
-		fprintf( ioQQQ, "    zone %ld %s nbin %ld total prob %.4e new_tmin %.4e\n",
-			 nzone,gv.bin[nd].chDstLab,nbin,sum/fac,*new_tmin );
+		fprintf( ioQQQ, "    zone %ld %s[%ld] Zg=%ld nbin %ld total prob %.4e new_tmin %.4e\n",
+				 nzone,gv.bin[nd].chDstLab,nz,gv.bin[nd].chrg(nz).DustZ,nbin,sum/fac,*new_tmin );
 	}
 	return;
 }
@@ -2339,7 +2333,7 @@ STATIC void GetProbDistr_HighLimit(long nd,
 
 /* calculate derivative of the enthalpy function dU/dT (aka the specific heat) at a given temperature, in Ryd/K */
 STATIC double uderiv(double temp, 
-		     size_t nd)
+					 size_t nd)
 {
 	enth_type ecase;
 	long int i,
@@ -2469,8 +2463,8 @@ STATIC double uderiv(double temp,
 
 /* calculate the enthalpy of a grain at a given temperature, in Ryd */
 STATIC double ufunct(double temp, 
-		     size_t nd,
-		     /*@out@*/ bool *lgBoundErr)
+					 size_t nd,
+					 /*@out@*/ bool *lgBoundErr)
 {
 	double enthalpy,
 	  y;
@@ -2495,8 +2489,8 @@ STATIC double ufunct(double temp,
 
 /* this is the inverse of ufunct: determine grain temperature as a function of enthalpy */
 STATIC double inv_ufunct(double enthalpy, 
-			 size_t nd,
-			 /*@out@*/ bool *lgBoundErr)
+						 size_t nd,
+						 /*@out@*/ bool *lgBoundErr)
 {
 	double temp,
 	  y;
@@ -2573,7 +2567,7 @@ void InitEnthalpy()
 
 /* helper function for calculating specific heat, uses Debye theory */
 STATIC double DebyeDeriv(double x,
-			 long n)
+						 long n)
 {
 	long i,
 	  nn;

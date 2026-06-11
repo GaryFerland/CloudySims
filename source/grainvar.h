@@ -273,6 +273,9 @@ public:
 	  GasCoolCollCS;        /**< cooling of the gas by collisions with grains, added in GrGC 0 */
 
 	/** quantum heating */
+	bool lgUseQHeat;        /**< should quantum heating be used for this zone ? */
+	long qnflux;            /**< like rfield.nflux, but may point to higher energy, for phiTilde and Phi */
+	long qnflux2;           /**< like rfield.nflux, only for max electron energy, for phiTilde and Phi */
 	double HeatingRate1;    /**< quantum heating by electron recomb - thermionic cooling, erg/H/s, default depl */
 	double HeatingRate2;    /**< quantum heating due to molecule/ion collisions, erg/H/s, default depl */
 };
@@ -397,32 +400,27 @@ public:
 	double AccomCoef[LIMELM];/**< accommodation coefficient, needed for collisional heating of grain */
 
 	/** heating/cooling balance, all entries are valid for current zone, actual depl, and are in erg/cm^3/s */
-	double GrainHeatBin,    /**< total heating of current grain type */
-	  GrainHeatCollBin,     /**< collisional heating of current grain type */
-	  GrainCoolThermBin,    /**< grain cooling due to thermionic emissions, summed over charge states */
-	  GasHeatPhotoElBin;    /**< photoelectric heating of the gas, added in GrGH 0 */
+	double GrainHeatBin;    /**< total heating of current grain type */
+	double GasHeatPhotoElBin;/**< photoelectric heating of the gas, added in GrGH 0 */
 
 	/** quantum heating physics */
-	bool lgQHeat,           /**< is quantum heating turned on ? */
-	  lgUseQHeat,           /**< should quantum heating be used for this zone ? */
-	  lgEverQHeat,          /**< was quantum heating used in any zone ? */
-	  lgQHTooWide;          /**< is probability distribution too wide to fit in NQGRID array elements ? */
-	long QHeatFailures,     /**< counter for number of times qheat algorithm failed */
-	  qnflux,               /**< like rfield.nflux, but may point to higher energy, for phiTilde and Phi */
-	  qnflux2;              /**< like rfield.nflux, only for max electron energy, for phiTilde and Phi */
-	double qtmin;           /**< lowest grain temperature used in calculations, set per zone */
-	double qtmin_zone1;     /**< lowest grain temperature used in calculations, initial zone */
-	double DustEnth[NDEMS], /**< grain enthalpy at dsttmp[], in Ryd/grain */
-	  EnthSlp[NDEMS],       /**< auxiliary array for spline interpolation */
-	  EnthSlp2[NDEMS];      /**< auxiliary array for inverse spline interpolation */
+	bool lgQHeat;           /**< is quantum heating turned on ? */
+	bool lgEverQHeat;       /**< was quantum heating used in any zone ? */
+	bool lgQHTooWide[NCHU]; /**< is probability distribution too wide to fit in NQGRID array elements ? */
+	long QHeatFailures;     /**< counter for number of times qheat algorithm failed */
+	double qtmin[NCHU];     /**< lowest grain temperature used in calculations, set per zone */
+	double qtmin_z1[NCHU];  /**< lowest grain temperature used in calculations, initial zone */
+	double DustEnth[NDEMS]; /**< grain enthalpy at dsttmp[], in Ryd/grain */
+	double EnthSlp[NDEMS];  /**< auxiliary array for spline interpolation */
+	double EnthSlp2[NDEMS]; /**< auxiliary array for inverse spline interpolation */
 
 	/** H2 physics - each has units s^-1 */
 	double rate_h2_form_grains_HM79;/**< H2 formation rate, Hollenbach & McKee 79, units s^-1, actual depl */
 	double rate_h2_form_grains_CT02;/**< H2 formation rate, Cazaux & Tielens 02, units s^-1, actual depl */
 	double rate_h2_form_grains_ELRD;/**< H2 formation rate, Rollig et al. 2013 with Eley-Rideal effect,
-				 * units s^-1, actual depl */
+									 * units s^-1, actual depl */
 	double rate_h2_form_grains_used;/**< H2 rate actually used, evaluated in hmole.c, units s^-1, actual depl
-					 * when multiplied with hden, this is formation rate in H2-molecules/cm^3/s */
+									 * when multiplied with hden, this is formation rate in H2-molecules/cm^3/s */
 
 	/** grain drift */
 	realnum DustDftVel,     /**< grain drift velocity for this zone */

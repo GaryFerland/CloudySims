@@ -209,8 +209,6 @@ void GrainStartIter()
 		for( size_t nd=0; nd < gv.bin.size(); nd++ )
 		{
 			gv.bin[nd].ZloSave = gv.bin[nd].chrg(0).DustZ;
-			gv.bin[nd].qtmin = ( gv.bin[nd].qtmin_zone1 > 0. ) ?
-				gv.bin[nd].qtmin_zone1 : DBL_MAX;
 			gv.bin[nd].avdust = 0.;
 			gv.bin[nd].avdpot = 0.;
 			gv.bin[nd].avdft = 0.;
@@ -218,7 +216,11 @@ void GrainStartIter()
 			gv.bin[nd].TeGrainMax = -1.;
 			gv.bin[nd].lgEverQHeat = false;
 			gv.bin[nd].QHeatFailures = 0L;
-			gv.bin[nd].lgQHTooWide = false;
+			for( long nz=0; nz < NCHU; ++nz )
+			{
+				gv.bin[nd].qtmin[nz] = gv.bin[nd].qtmin_z1[nz];
+				gv.bin[nd].lgQHTooWide[nz] = false;
+			}
 			gv.bin[nd].lgPAHsInIonizedRegion = false;
 			gv.bin[nd].nChrgOrg = gv.bin[nd].nChrg;
 		}
@@ -356,10 +358,13 @@ void GrainsInit()
 			gv.bin[nd].lgQHeat = false;
 		}
 
-		if (ENABLE_QUANTUM_HEATING)
+		if( ENABLE_QUANTUM_HEATING )
 		{
-			gv.bin[nd].lgQHTooWide = false;
-			gv.bin[nd].qtmin = DBL_MAX;
+			for( long nz=0; nz < NCHU; nz++ )
+			{
+				gv.bin[nd].lgQHTooWide[nz] = false;
+				gv.bin[nd].qtmin[nz] = DBL_MAX;
+			}
 		}
 
 		gv.bin[nd].lgIterStart = true;
@@ -374,7 +379,8 @@ void GrainsInit()
 
 		gv.bin[nd].GrnDpth = 1.f;
 
-		gv.bin[nd].qtmin_zone1 = -1.;
+		for( long nz=0; nz < NCHU; nz++ )
+			gv.bin[nd].qtmin_z1[nz] = DBL_MAX;
 
 		/* this is threshold in Ryd above which to use X-ray prescription for electron escape length */
 		gv.bin[nd].le_thres = gv.lgWD01 ? FLT_MAX :
@@ -1270,6 +1276,7 @@ void GrainDrive()
 					gv.bin[nd].chrg(nz).FracPop = ( nz == 0 ) ? 1. : 0.;
 					gv.bin[nd].chrg(nz).nfill = 0;
 					gv.bin[nd].chrg(nz).tedust = 100.;
+					gv.bin[nd].chrg(nz).lgUseQHeat = false;
 				}
 
 				gv.bin[nd].AveDustZ = 0.;
@@ -1280,11 +1287,8 @@ void GrainDrive()
 
 				/* set all heating/cooling agents to zero */
 				gv.bin[nd].GrainHeatBin = 0.;
-				gv.bin[nd].GrainHeatCollBin = 0.;
-				gv.bin[nd].GrainCoolThermBin = 0.;
 				gv.bin[nd].GasHeatPhotoElBin = 0.;
 
-				gv.bin[nd].lgUseQHeat = false;
 				gv.bin[nd].lgEverQHeat = false;
 				gv.bin[nd].QHeatFailures = 0;
 
@@ -1708,12 +1712,6 @@ STATIC void GrainChargeTemp()
 
 		/* total heating of current grain type */
 		gv.bin[nd].GrainHeatBin = 0.;
-		/* heating by thermal collisions with gas does work
-		 * they are different since grain surface recombinations
-		 * heat the grains, but do not cool the gas ! */
-		gv.bin[nd].GrainHeatCollBin = 0.;
-		/* grain cooling due to thermionic emissions */
-		gv.bin[nd].GrainCoolThermBin = 0.;
 
 		/* integrate over ionizing continuum; energy goes to dust and gas
 		 * GasHeatPhotoElBin is photoelectric heating of the gas */
@@ -1762,8 +1760,6 @@ STATIC void GrainChargeTemp()
 			gv.TotalEden +=gptr.FracPop*(double)gptr.DustZ*gv.bin[nd].cnv_GR_pCM3;
 
 			gv.bin[nd].GrainHeatBin += gptr.FracPop*gptr.GrainHeatCS;
-			gv.bin[nd].GrainHeatCollBin += gptr.FracPop*gptr.GrainHeatCollCS;
-			gv.bin[nd].GrainCoolThermBin += gptr.FracPop*gptr.GrainCoolThermCS;
 
 			if( gv.lgDHetOn )
 				gv.bin[nd].GasHeatPhotoElBin += gptr.FracPop*gptr.GasHeatPhotoElCS;
@@ -2652,17 +2648,16 @@ STATIC void UpdatePot(size_t nd,
 	/* >>chng 03 jan 26, moved this code from GrainChargeTemp to UpdatePot
 	 *                   since the new code depends on grain potential, HTT91.in, PvH */
 	double BoltzFac = (-log(CONSERV_TOL) + 8.)*BOLTZMANN/EN1RYD;
-	double HighEnergy = 0.;
 	for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
 	{
 		/* >>chng 04 jan 21, changed phycon.te -> MAX2(phycon.te,tedust), PvH */
-		HighEnergy = MAX2(HighEnergy, MAX2(gv.bin[nd].chrg(nz).ThresInfInc,0.) +
-						  BoltzFac*MAX2(phycon.te,gv.bin[nd].chrg(nz).tedust));
+		double HighEnergy = max(gv.bin[nd].chrg(nz).ThresInfInc,0.) +
+			BoltzFac*max(phycon.te,gv.bin[nd].chrg(nz).tedust);
+		HighEnergy = min(HighEnergy,gv.egamry());
+		gv.bin[nd].chrg(nz).qnflux2 = gv.ipointF(HighEnergy);
+		gv.bin[nd].chrg(nz).qnflux = max(gv.nPositive,gv.bin[nd].chrg(nz).qnflux2);
+		gv.bin[nd].chrg(nz).qnflux = min(gv.bin[nd].chrg(nz).qnflux,gv.nflux);
 	}
-	HighEnergy = min(HighEnergy,gv.egamry());
-	gv.bin[nd].qnflux2 = gv.ipointF(HighEnergy);
-	gv.bin[nd].qnflux = max(gv.nPositive,gv.bin[nd].qnflux2);
-	gv.bin[nd].qnflux = min(gv.bin[nd].qnflux,gv.nflux);
 }
 
 

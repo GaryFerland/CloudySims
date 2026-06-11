@@ -445,11 +445,7 @@ void PrtZone(void)
 				TotHeat += gptr.FracPop*(gptr.GasHeatPhotoElCS + gptr.GasHeatThermCS);
 			}
 
-			/*  Change things so the quantum heated dust species are marked with an
-			 *  asterisk just after the name (K Volk)
-			 *  added QHMARK here and in the write statement */
-			chQHMark = (char)(( gv.bin[nd].lgQHeat && gv.bin[nd].lgUseQHeat ) ? '*' : ' ');
-			fprintf( ioQQQ, "%-12.12s%c  Pot (Volt)",gv.bin[nd].chDstLab, chQHMark);
+			fprintf( ioQQQ, "%-13.13s  Pot (Volt)",gv.bin[nd].chDstLab);
 			fprintf(ioQQQ,PrintEfmt("%10.3e", gv.bin[nd].dstpot*EVRYD));
 			fprintf( ioQQQ, " Chrg (e)");
 			fprintf(ioQQQ,PrintEfmt("%10.3e", gv.bin[nd].AveDustZ));
@@ -460,11 +456,14 @@ void PrtZone(void)
 			fprintf( ioQQQ, " Frac tot");
 			fprintf(ioQQQ,PrintEfmt("%10.3e", TotHeat/thermal.htot));
 			fprintf( ioQQQ, "\n" );
-			fprintf( ioQQQ, "               " );
+			fprintf( ioQQQ, "             " );
 			for( long nz=0; nz < gv.bin[nd].nChrg; ++nz )
 			{
 				const ChargeBin& gptr = gv.bin[nd].chrg(nz);
-				fprintf( ioQQQ, "nz=%2ld Zg=%4ld Pop", nz, gptr.DustZ);
+				/*  Change things so the quantum heated dust species are marked with an
+				 *  asterisk just before nz=..., PvH */
+				chQHMark = (char)(( gv.bin[nd].lgQHeat && gptr.lgUseQHeat ) ? '*' : ' ');
+				fprintf( ioQQQ, "%c nz=%2ld Zg=%4ld Pop", chQHMark, nz, gptr.DustZ);
 				fprintf(ioQQQ,PrintEfmt("%10.3e", gptr.FracPop));
 				fprintf( ioQQQ, " Temp");
 				fprintf(ioQQQ,PrintEfmt("%10.3e", gptr.tedust));
@@ -474,9 +473,9 @@ void PrtZone(void)
 				if( nz < gv.bin[nd].nChrg-1 )
 				{
 					if( (nz%2) == 0 )
-						fprintf( ioQQQ, "      " );
+						fprintf( ioQQQ, "    " );
 					else
-						fprintf( ioQQQ, "\n               " );
+						fprintf( ioQQQ, "\n             " );
 				}
 				else
 					fprintf( ioQQQ, "\n" );

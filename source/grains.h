@@ -29,7 +29,7 @@ void GrainsInit();
 void GrainMakeDiffuse();
 
 /** main routine for quantum heating */
-void qheat(/*@out@*/vector<double>&,/*@out@*/vector<double>&,/*@out@*/long*,size_t);
+void qheat(/*@out@*/vector<double>&,/*@out@*/vector<double>&,/*@out@*/long*,size_t,long);
 
 /** initialize interpolation arrays for grain enthalpy */
 void InitEnthalpy();

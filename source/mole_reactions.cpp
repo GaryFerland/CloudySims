@@ -3184,10 +3184,11 @@ STATIC void mole_h2_grain_form(void)
 				/* >>chng 04 feb 21, included quantum heating in calculation of formation rate, PvH */
 				qtemp.resize(NQGRID);
 				qprob.resize(NQGRID);
+
+				fixit("the following code needs to treat things per charge state");
+				qheat(qtemp,qprob,&qnbin,nd,0);
 				
-				qheat(qtemp,qprob,&qnbin,nd);
-				
-				if( gv.bin[nd].lgUseQHeat )
+				if( gv.bin[nd].chrg(0).lgUseQHeat )
 				{
 					ASSERT( qnbin > 0 );
 				}
