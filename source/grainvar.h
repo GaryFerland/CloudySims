@@ -11,7 +11,7 @@
 
 /** flag that determines if quantum heating is to be taken into account in H2
  * grain surface formation rate, set this true to enable quantum heating treatment, PvH */
-const bool ENABLE_QUANTUM_HEATING=false;
+const bool ENABLE_QUANTUM_HEATING = false;
 
 /** number of grid points for which grain emissivity is evaluated in InitEmissivities */
 const int NDEMS = 200;
@@ -415,12 +415,8 @@ public:
 	double EnthSlp2[NDEMS]; /**< auxiliary array for inverse spline interpolation */
 
 	/** H2 physics - each has units s^-1 */
-	double rate_h2_form_grains_HM79;/**< H2 formation rate, Hollenbach & McKee 79, units s^-1, actual depl */
-	double rate_h2_form_grains_CT02;/**< H2 formation rate, Cazaux & Tielens 02, units s^-1, actual depl */
-	double rate_h2_form_grains_ELRD;/**< H2 formation rate, Rollig et al. 2013 with Eley-Rideal effect,
-									 * units s^-1, actual depl */
-	double rate_h2_form_grains_used;/**< H2 rate actually used, evaluated in hmole.c, units s^-1, actual depl
-									 * when multiplied with hden, this is formation rate in H2-molecules/cm^3/s */
+	double rate_h2_form_grains_bin;/**< H2 rate actually used, units s^-1, actual depl
+									* when multiplied with hden, this is formation rate in H2-molecules/cm^3/s */
 
 	/** grain drift */
 	realnum DustDftVel,     /**< grain drift velocity for this zone */
@@ -568,7 +564,7 @@ public:
 	FILE *QHSaveFile;              /**< file pointer for PUNCH QHEAT command */
 
 	/** H2 physics */
-	double rate_h2_form_grains_used_total; /**< rate H2 forms on grains, summed over bins, units s^-1, actual depl
+	double rate_h2_form_grains;    /**< rate H2 forms on grains, summed over bins, units s^-1, actual depl
 	                                * when multiplied with hden, this is formation rate in H2-molecules/cm^3/s */
 
 	/** grain emission */

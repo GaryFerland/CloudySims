@@ -1660,7 +1660,7 @@ void SaveDo(
 						radius.depth_mid_zone );
 					/* grain formation rate for H2 */
 					for( size_t nd=0; nd < gv.bin.size(); ++nd ) 
-						fprintf( save.params[ipPun].ipPnunit, "\t%.3e", gv.bin[nd].rate_h2_form_grains_used );
+						fprintf( save.params[ipPun].ipPnunit, "\t%.3e", gv.bin[nd].rate_h2_form_grains_bin );
 					fprintf( save.params[ipPun].ipPnunit, "\n" );
 				}
 			}
@@ -2826,7 +2826,7 @@ void SaveDo(
 					findspecieslocal("H+")->column,
 					findspecieslocal("H3+")->column,
 					hmi.H2_Solomon_dissoc_rate_used_H2g ,
-					gv.rate_h2_form_grains_used_total,
+					gv.rate_h2_form_grains,
 					hmi.H2_photodissoc_used_H2g,
 					hmi.UV_Cont_rel2_Draine_DB96_depth,
 					/* CO and C dissociation rate */

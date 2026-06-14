@@ -1078,7 +1078,7 @@ namespace {
 				"derivation of rate_h2_form_grains_used to avoid"
 				"division here"); 
 		if( mole.grain_area*dense.xIonDense[ipHYDROGEN][0]>0 )
-			return gv.rate_h2_form_grains_used_total/(mole.grain_area*dense.xIonDense[ipHYDROGEN][0]);
+			return gv.rate_h2_form_grains/(mole.grain_area*dense.xIonDense[ipHYDROGEN][0]);
 		else
 			return 0.;
 	}
@@ -3139,440 +3139,236 @@ void mole_rk_bigchange(void)
 	}
 }
 
-STATIC void mole_h2_grain_form(void)
+/* this routine returns the H2 formation rate on grain surfaces per grain size bin */
+STATIC double mole_h2_grain_rate(double Tgrain, char chJura, size_t nd)
 {
-	DEBUG_ENTRY( "mole_h2_grain_form()" );
+	DEBUG_ENTRY( "mole_h2_grain_rate()" );
 
-	double T_ortho_para_crit,xi_ELRD, beta_alpha_ELRD, recombination_efficiency_ELRD, Td;
 	realnum AveVelH = GetAveVelocity( dense.AtomicWeight[ipHYDROGEN] );
-	realnum AveVelH2 = GetAveVelocity( 2.f * dense.AtomicWeight[ipHYDROGEN] );
+	double sticking_probability_H = sticking_probability_H_func( phycon.te, Tgrain );
 
-	/* H2 formation on grains;
-	 * rate from 
-	 * >>refer	H2	grain formation	Hollenbach, D., & McKee, C.F., 1979, ApJS, 41, 555 eq 3.4 3.8 */
-	if( gv.lgDustOn() )
+	if ( chJura == 'C' )
 	{
+		/* H2 formation on grains from 
+		 * >>refer	H2	form	Cazaux, S., & Tielens, A.G.G.M., 2002, ApJ, 575, L29 */
+		/* number of monolayers per second - only affects efficiency at very low or high temperatures */
+		double f = 1e-10;
+		/* equation 17 
+		   double sqrt_term = POW2( 1. + sqrt( (10000.-200.)/(600.-200.) ) );*/
+		double sqrt_term = 35.399494936611667;
+		double beta_alpha = 0.25 * sqrt_term * exp(-200./Tgrain);
+		/* equation 16 */
+		double xi =  1./ (1. + 1.3e13*exp(-1.5e4/Tgrain)*sqrt_term/(2.*f) );
+		/* expression for beta comes from just after equation 5 */
+		double beta = 3e12 * exp(-320./Tgrain);
+		/* recombination efficiency given by their equation 15, they call
+		 * this epsilon_H2 */
+		double recombination_efficiency_CT02 = beta*xi / (beta + 0.0025*f + beta*beta_alpha);
 
-		if (ENABLE_QUANTUM_HEATING)
+		/* gv.bin[nd].IntArea integrated grain surface area Int(4pi*a^2), normalized per H, in cm^2/H,
+		 * so x/4 is projected area of circle */
+		/* cnv_H_pCM3 converts <unit>/H (default depletion) -> <unit>/cm^3 (actual depletion) */
+		return 0.5 * AveVelH * gv.bin[nd].IntArea/4. * gv.bin[nd].cnv_H_pCM3 *
+			sticking_probability_H * recombination_efficiency_CT02 * hmi.ScaleJura;
+	}
+	else if( chJura == 'E' )
+	{
+		/* H2 formation on grains from 
+		 * >>refer	H2	form	Rollig, M. et al., 2013, A&A, 549, A85 
+		 * improved treatment modifying CT rate above to include Eley-Rideal effect
+		 * data and formalism comes from Appendix C of above reference */
+		/* new rate variable ending stands for "Eley Rideal" */
+
+		if( gv.bin[nd].matType == MAT_CAR || gv.bin[nd].matType == MAT_CAR2 ||
+			gv.bin[nd].matType == MAT_SIC || gv.bin[nd].matType == MAT_PAH ||
+			gv.bin[nd].matType == MAT_PAH2 )
 		{
-			fixit("Is this still necessary?");
-			/* hmole is called before grains, so assure that all the grain stuff is properly initialized */
-			GrainDrive();
+			double beta_alpha_ELRD = exp(-800./Tgrain) / (0.5389970511202651 * exp(-540./Tgrain) +
+														  5.6333909478365e-14*sqrt(Tgrain) ) ;
+			double xi_ELRD = 1./(1. + 4.61e24*sexp(45000./Tgrain));
+			double recombination_efficiency_ELRD = (1. / (1. + beta_alpha_ELRD))*xi_ELRD;
+
+			return 0.5 * AveVelH * gv.bin[nd].IntArea/4. * gv.bin[nd].cnv_H_pCM3 *
+				sticking_probability_H * recombination_efficiency_ELRD * hmi.ScaleJura;
 		}
-
-		/* these are rates (s-1) H2 will be deactivated by collisions with grains 
-		 * will be incremented below 
-		 * H2 ortho - para conversion on grain surface */
-		h2.rate_grain_op_conserve = 0.;
-		/* rate (s-1) v=0, J=1 level goes to 0 */
-		h2.rate_grain_J1_to_J0 = 0.;
-
-		/* loop over all grain species */
-		for( size_t nd=0; nd < gv.bin.size(); nd++ )
+		else if( gv.bin[nd].matType == MAT_SIL || gv.bin[nd].matType == MAT_SIL2 )
 		{
-			/* >>chng 02 feb 15, removed check tedust > 1.01, change in GrainsInit
-			 * guarantees that all relevant parameters are initialized, PvH */
+			double beta_alpha_ELRD = exp(-450./Tgrain) / (0.4266153643741715*exp(-340./Tgrain) +
+														  2.5335919594255e-14*sqrt(Tgrain) ) ;
+			double xi_ELRD = 1./(1. + 7.00e24*sexp(45000./Tgrain));
+			double recombination_efficiency_ELRD = (1. / (1. + beta_alpha_ELRD))*xi_ELRD;
 
-			double sticking_probability_H = sticking_probability_H_func( phycon.te, gv.bin[nd].tedust );
-
-			bool lgUseQHeat = ENABLE_QUANTUM_HEATING && 
-				gv.lgGrainPhysicsOn && gv.bin[nd].lgQHeat;
-			long k, qnbin=0;
-			vector<double> qtemp, qprob;
-			if ( lgUseQHeat )
-			{
-				/* >>chng 04 feb 21, included quantum heating in calculation of formation rate, PvH */
-				qtemp.resize(NQGRID);
-				qprob.resize(NQGRID);
-
-				fixit("the following code needs to treat things per charge state");
-				qheat(qtemp,qprob,&qnbin,nd,0);
-				
-				if( gv.bin[nd].chrg(0).lgUseQHeat )
-				{
-					ASSERT( qnbin > 0 );
-				}
-				else
-				{
-					qnbin = 1;
-					qprob[0] = 1.;
-					qtemp[0] = gv.bin[nd].tedust;
-				}
-				
-				gv.bin[nd].rate_h2_form_grains_HM79 = 0.;
-				
-				for( k=0; k < qnbin; k++ )
-				{
-					/* fraction of impacts that produce H2 before evaporation from grain surface.
-					 * this is equation 3.4 of
-					 * >>refer	grain	phys	Hollenbach, D.J., & McKee, C.F., 1979, ApJS, 41, 555
-					 * 1e4 is ratio of total absorption sites to appropriate sites 
-					 * 920 is D_H and chosen to get f_a = 0.5 at 100 K.
-					 * factor of 0.6252 needed to obtain std ism rate to be 3e-17 at 100 K,
-					 * the value deduced by
-					 * >>refer	H2	grain physics	Jura, M., 1974, ApJ, 197, 581 */
-					double conversion_efficiency_HM79 = 1/(1. + 1e4*sexp(920./qtemp[k]));
-					sticking_probability_H = sticking_probability_H_func( phycon.te, qtemp[k] );
-					
-					gv.bin[nd].rate_h2_form_grains_HM79 += qprob[k] * sticking_probability_H *
-						conversion_efficiency_HM79;
-				}
-				
-				/* NB IntArea is total, not projected, area, must div by 4 */
-				/* gv.bin[nd].rate_h2_form_grains_HM79 has units s^-1 since gv.bin[nd].cnv_H_pCM3 has units cm-3 */
-				/* cnv_H_pCM3 converts <unit>/H (default depletion) -> <unit>/cm^3 (actual depletion), units are cm-3 */
-				gv.bin[nd].rate_h2_form_grains_HM79 *= 0.5 * AveVelH *
-					gv.bin[nd].IntArea/4. * gv.bin[nd].cnv_H_pCM3;
-				
-				ASSERT( gv.bin[nd].rate_h2_form_grains_HM79 > 0. );
-			}
-			else
-			{
-				/* fraction of impacts that produce H2 before evaporation from grain surface.
-				 * this is equation 3.4 of
-				 * >>refer	grain	phys	Hollenbach, D.J., & McKee, C.F., 1979, ApJS, 41, 555
-				 * 1e4 is ratio of total absorption sites to appropriate sites 
-				 * 920 is D_H and chosen to get f_a = 0.5 at 100 K.
-				 * factor of 0.6252 needed to obtain std ism rate to be 3e-17 at 100 K,
-				 * the value deduced by
-				 * >>refer	H2	grain physics	Jura, M., 1974, ApJ, 197, 581 */
-				double conversion_efficiency_HM79 = 1/(1. + 1e4*sexp(920./gv.bin[nd].tedust));
-
-				/* NB IntArea is total area per H for default abundances, not projected area, must div by 4 
-				 * units s^-1 since gv.bin[nd].cnv_H_pCM3 has units H cm-3 
-				 * final units are cm s-1*/
-				gv.bin[nd].rate_h2_form_grains_HM79 = 0.5 * AveVelH * gv.bin[nd].IntArea/4. * 
-					/* cnv_H_pCM3 converts <unit>/H (default depletion) -> <unit>/cm^3 (actual depletion), units are cm-3 */
-					gv.bin[nd].cnv_H_pCM3 * sticking_probability_H * conversion_efficiency_HM79;
-				ASSERT( gv.bin[nd].rate_h2_form_grains_HM79 > 0. );
-			}
-
-			if( lgUseQHeat )
-			{
-				/* H2 formation on grains from 
-				 * >>refer	H2	form	Cazaux, S., & Tielens, A.G.G.M., 2002, ApJ, 575, L29 */
-				/* number of monolayers per second - only affects efficiency at very low or high temperatures */
-				double f = 1e-10;
-				/* equation 17 
-					double sqrt_term = POW2( 1. + sqrt( (10000.-200.)/(600.-200.) ) );*/
-				double sqrt_term = 35.399494936611667;
-
-				gv.bin[nd].rate_h2_form_grains_CT02 = 0.;
-
-				for( k=0; k < qnbin; k++ )
-				{
-					double beta_alpha = 0.25 * sqrt_term *sexp(200./qtemp[k] );
-					/* equation 16 */
-					double xi =  1./ (1. + 1.3e13*sexp(1.5*1e4/qtemp[k])*sqrt_term/(2.*f) );
-					/* expression for beta comes from just after equation 5 */
-					double beta = 3e12 * sexp( 320. / qtemp[k] );
-					/* recombination efficiency given by their equation 15, they call
-					 * this epsilon_H2 */
-					double recombination_efficiency_CT02 = xi / (1. + 0.005*f/2./SDIV(beta) + beta_alpha );
-					sticking_probability_H = sticking_probability_H_func( phycon.te, qtemp[k] );
-
-					/* printf( " k %ld Td %.6e re*sp %.6e\n", k, qtemp[k], recombination_efficiency_CT02* */
-					/* sticking_probability_H ); */
-
-					gv.bin[nd].rate_h2_form_grains_CT02 += qprob[k] * sticking_probability_H *
-						recombination_efficiency_CT02;
-				}
-
-				/* gv.bin[nd].IntArea integrated grain surface area Int(4pi*a^2), normalized per H, in cm^2/H,
-				 * so x/4 is projected area of circle */
-				/* gv.bin[nd].cnv_H_pCM3 is H density [cm-3] times grain depletion factor */
-				/* gv.bin[nd].rate_h2_form_grains_CT02 units s-1 */
-				gv.bin[nd].rate_h2_form_grains_CT02 *= 0.5 * AveVelH * 
-					gv.bin[nd].IntArea/4. * gv.bin[nd].cnv_H_pCM3;
-
-				ASSERT( gv.bin[nd].rate_h2_form_grains_CT02 > 0. );
-			}
-			else
-			{
-				/* H2 formation on grains from 
-				 * >>refer	H2	form	Cazaux, S., & Tielens, A.G.G.M., 2002, ApJ, 575, L29 */
-				/* number of monolayers per second - only affects efficiency at very low or high temperatures */
-				double f = 1e-10;
-				/* equation 17 
-					double sqrt_term = POW2( 1. + sqrt( (10000.-200.)/(600.-200.) ) );*/
-				double sqrt_term = 35.399494936611667;
-				double beta_alpha = 0.25 * sqrt_term * exp(-200./gv.bin[nd].tedust);
-				/* equation 16 */
-				double xi =  1./ (1. + 1.3e13*exp(-1.5e4/gv.bin[nd].tedust)*sqrt_term/(2.*f) );
-				/* expression for beta comes from just after equation 5 */
-				double beta = 3e12 * exp(-320./gv.bin[nd].tedust);
-				/* recombination efficiency given by their equation 15, they call
-				 * this epsilon_H2 */
-				double recombination_efficiency_CT02 = beta*xi / (beta + 0.0025*f + beta*beta_alpha);
-
-				/* gv.bin[nd].IntArea integrated grain surface area Int(4pi*a^2), normalized per H, in cm^2/H,
-				 * so x/4 is projected area of circle */
-				/* gv.bin[nd].cnv_H_pCM3 is H density [cm-3] times grain depletion factor */
-				/* units s-1 */
-				gv.bin[nd].rate_h2_form_grains_CT02 = 0.5 * AveVelH * gv.bin[nd].IntArea/4. * 
-					gv.bin[nd].cnv_H_pCM3 * sticking_probability_H * recombination_efficiency_CT02;
-				ASSERT( gv.bin[nd].rate_h2_form_grains_CT02 >= 0. );
-			}
-
-			if( lgUseQHeat )
-			{
-				/* H2 formation on grains from 
- 				 ** >>refer	H2	form	Rollig, M. et al., 2013, A&A, 549, A85 
- 				 ** >>refer	H2	form	Cazaux, S.; Tielens, A. G. G. M. 2010, 2010ApJ...715..698C
-				 ** improved treatment modifying CT rate above to include Eley-Rideal effect
- 				 ** data and formalism comes from Appendix C of above reference
- 				 ** this branch does quantum heating assuming rates simply scale as grain temperature */
-				/* new rate variable ending stands for "Eley Rideal" */
-
-				gv.bin[nd].rate_h2_form_grains_ELRD= 0.;
-
-				if( gv.bin[nd].matType == MAT_CAR || gv.bin[nd].matType == MAT_CAR2 ||
-				    gv.bin[nd].matType == MAT_SIC || gv.bin[nd].matType == MAT_PAH ||
-				    gv.bin[nd].matType == MAT_PAH2 )
-				{
-					for( k=0; k < qnbin; k++ )
-					{
-						Td = qtemp[k];
-
-						beta_alpha_ELRD = exp(-800./Td) / (0.5389970511202651 * exp(-540./Td) + 5.6333909478365e-14*sqrt(Td) ) ;
-						xi_ELRD= 1./(1. + 4.61e24*sexp(45000./Td));
-						recombination_efficiency_ELRD= (1. / (1. + beta_alpha_ELRD))*xi_ELRD;
-								sticking_probability_H = 1./(1. + 0.04*sqrt(Td+phycon.te) +
-								0.002*phycon.te + 8e-6*phycon.te*phycon.te);
-
-						gv.bin[nd].rate_h2_form_grains_ELRD+= qprob[k] * sticking_probability_H *
-								recombination_efficiency_ELRD;
-					}
-
-					/* gv.bin[nd].IntArea integrated grain surface area Int(4pi*a^2), normalized per H, in cm^2/H,
- 					** so x/4 is projected area of circle */
-					/* gv.bin[nd].cnv_H_pCM3 is H density [cm-3] times grain depletion factor */
-					/* gv.bin[nd].rate_h2_form_grains_ELRD units s-1 */
-	
-					gv.bin[nd].rate_h2_form_grains_ELRD*= 0.5 * AveVelH * 
-						gv.bin[nd].IntArea/4. * gv.bin[nd].cnv_H_pCM3;
-	
-					ASSERT( gv.bin[nd].rate_h2_form_grains_ELRD> 0. );
-				}
-
-				else if( gv.bin[nd].matType == MAT_SIL || gv.bin[nd].matType == MAT_SIL2 )
-				{
- 					for( k=0; k < qnbin; k++ )
-					{
-						Td = qtemp[k];
-
-						beta_alpha_ELRD = exp(-450./Td) / (0.4266153643741715*exp(-340./Td) + 2.5335919594255e-14*sqrt(Td) ) ;
-						xi_ELRD= 1./(1. + 7.00e24*sexp(45000./Td));
-						recombination_efficiency_ELRD= (1. / (1. + beta_alpha_ELRD))*xi_ELRD;
-								sticking_probability_H = 1./(1. + 0.04*sqrt(Td+phycon.te) +
-								0.002*phycon.te + 8e-6*phycon.te*phycon.te);
-
-						gv.bin[nd].rate_h2_form_grains_ELRD+= qprob[k] * sticking_probability_H *
-						recombination_efficiency_ELRD;
-					}
-
-					/* gv.bin[nd].IntArea integrated grain surface area Int(4pi*a^2), normalized per H, in cm^2/H,
- 					** so x/4 is projected area of circle */
-					/* gv.bin[nd].cnv_H_pCM3 is H density [cm-3] times grain depletion factor */
-					/* gv.bin[nd].rate_h2_form_grains_ELRD units s-1 */
-					gv.bin[nd].rate_h2_form_grains_ELRD*= 0.5 * AveVelH * 
-						gv.bin[nd].IntArea/4. * gv.bin[nd].cnv_H_pCM3;
-	
-					ASSERT( gv.bin[nd].rate_h2_form_grains_ELRD> 0. );
-				}
-			}
-			else
-			{
-				/* H2 formation on grains from 
- 				** >>refer	H2	form	Rollig, M. et al., 2013, A&A, 549, A85 
- 				** improved treatment modifying CT rate above to include Eley-Rideal effect
- 				** data and formalism comes from Appendix C of above reference */
-				/* new rate variable ending stands for "Eley Rideal" */
-				gv.bin[nd].rate_h2_form_grains_ELRD= 0.;
-
-				if( gv.bin[nd].matType == MAT_CAR || gv.bin[nd].matType == MAT_CAR2 ||
-				    gv.bin[nd].matType == MAT_SIC || gv.bin[nd].matType == MAT_PAH ||
-				    gv.bin[nd].matType == MAT_PAH2 )
-				{
-					Td = gv.bin[nd].tedust;
-
-					beta_alpha_ELRD = exp(-800./Td) / (0.5389970511202651 * exp(-540./Td) + 5.6333909478365e-14*sqrt(Td) ) ;
-					xi_ELRD= 1./(1. + 4.61e24*sexp(45000./Td));
-					recombination_efficiency_ELRD = (1. / (1. + beta_alpha_ELRD))*xi_ELRD;
-
-					/* gv.bin[nd].IntArea integrated grain surface area Int(4pi*a^2), normalized per H, in cm^2/H,
- 					** so x/4 is projected area of circle */
-					/* gv.bin[nd].cnv_H_pCM3 is H density [cm-3] times grain depletion factor */
-					/* units s-1 */
-					gv.bin[nd].rate_h2_form_grains_ELRD = 0.5 * AveVelH * gv.bin[nd].IntArea/4. * 
-					gv.bin[nd].cnv_H_pCM3 * sticking_probability_H * recombination_efficiency_ELRD;
-
-					ASSERT( gv.bin[nd].rate_h2_form_grains_ELRD > 0. );
-				}
-
-				else if( gv.bin[nd].matType == MAT_SIL || gv.bin[nd].matType == MAT_SIL2 )
-				{
-					Td = gv.bin[nd].tedust;
-
-					beta_alpha_ELRD = exp(-450./Td) / (0.4266153643741715*exp(-340./Td) + 2.5335919594255e-14*sqrt(Td) ) ;
-					xi_ELRD= 1./(1. + 7.00e24*sexp(45000./Td));
-					recombination_efficiency_ELRD = (1. / (1. + beta_alpha_ELRD))*xi_ELRD;
-
-					/* gv.bin[nd].IntArea integrated grain surface area Int(4pi*a^2), normalized per H, in cm^2/H,
- 					** so x/4 is projected area of circle */
-					/* gv.bin[nd].cnv_H_pCM3 is H density [cm-3] times grain depletion factor */
-					/* units s-1 */
-					gv.bin[nd].rate_h2_form_grains_ELRD = 0.5 * AveVelH * gv.bin[nd].IntArea/4. * 
-					gv.bin[nd].cnv_H_pCM3 * sticking_probability_H * recombination_efficiency_ELRD;
-
-					ASSERT( gv.bin[nd].rate_h2_form_grains_ELRD > 0. );
-				}
-			}
-
-			if (ENABLE_QUANTUM_HEATING)
-			{
-				/* reset sticking probability for code below */
-				sticking_probability_H = sticking_probability_H_func( phycon.te, gv.bin[nd].tedust );
-			}
-
-			/* rate (s-1) all H2 v,J levels go to 0 or 1, preserving nuclear spin */
-			/* ortho to para on grain surfaces, taken from 
-			 *>refer	H2	sticking	Le Bourlot, J., 2000, A&A, 360, 656-662 
-			 * >chng 05 apr 30, GS, hmi.H2_total/dense.gas_phase[ipHYDROGEN] is removed
-			 * This is used in h2.c.
-			 * NB IntArea is total are per H, not projected area, must div by 4 
-			 * gv.bin[nd].cnv_H_pCM3 has units H cm-3 to product with above
-			 * is cm2/H H/cm3 or cm-1 or an opacity
-			 * multiply by velocity of H2, cm s-1, so product 
-			 * h2.rate_grain_op_conserve has units s^-1  */
-			h2.rate_grain_op_conserve += AveVelH2 * gv.bin[nd].IntArea/4. *
-				gv.bin[nd].cnv_H_pCM3 * sticking_probability_H;
-
-			/* ortho to para on grain surfaces, taken from 
-			 *>refer	H2	sticking	Le Bourlot, J., 2000, A&A, 360, 656-662 
-			 * For all grain temperatures, this process corresponds to high J going to
-			 * either 0 or 1 preserving nuclear spin.  All ortho go to 1 and para go to 0.
-			 * When the dust temperature is below Tcrit all 1 go to 0 and so all J go to 0.
-
-			 * this temperature depends on grain composition, discussion left column of page 657,
-			 * this is for a bare grain */
-			/** \todo	2	- put in actual composition dependent Tad - this is only valid 
-			 * for bare surfaces - not ice - for ice Tad is 555K 
-			 * hmi.Tad is binding energy expressed as a temperature 
-			 * note that hmi.Tad is set to 800. in zero 
-			 * tau_nu the first equation in section 2.5
-			 * equation one paragraph before equation 2 
-			 * at low grain temperatures all end in para, J=0 */
-
-			/* AveVelH2 is average speed of H2 molecules 
-			 * for now assume that sticking probability for H2 on the grain is equal to
-			 * that for H 
-			 * efficiency factor efficiency_opr is vary fast function of t dust - 
-			 * large at low Td and small at Td > T_ortho_para_crit
-			 * start evaluating just above the critical temperature 
-			 * T_ortho_para_crit this is roughly 24.345 K,GS */
-			T_ortho_para_crit = 2. * hmi.Tad / log( POW2(60. *1.1e11)*hmi.Tad); 
-			if( gv.bin[nd].tedust < T_ortho_para_crit )
-			{
-				double efficiency_opr = sexp(60.*1.1e11*sqrt(hmi.Tad)*sexp(hmi.Tad/gv.bin[nd].tedust));
-				/* rate (s-1) all v,J levels go to 0, regardless of nuclear spin
-				 * see above discussion for how units work out */
-				h2.rate_grain_J1_to_J0 += AveVelH2 * gv.bin[nd].IntArea/4. * 
-					gv.bin[nd].cnv_H_pCM3 * sticking_probability_H * efficiency_opr;
-			}
+			return 0.5 * AveVelH * gv.bin[nd].IntArea/4. * gv.bin[nd].cnv_H_pCM3 *
+				sticking_probability_H * recombination_efficiency_ELRD * hmi.ScaleJura;
 		}
-		/*fprintf(ioQQQ," H2 grain form rate HM79 %.2e  %.2e CT02 %.2e  %.2e O-P grn %.2e %.2e\n", 
-		  gv.bin[nd].rate_h2_form_grains_HM79 , 
-		  gv.bin[nd].rate_h2_form_grains_HM79 ,
-		  gv.bin[nd].rate_h2_form_grains_CT02 , 
-		  gv.bin[nd].rate_h2_form_grains_CT02 , 
-		  h2.rate_grain_J1_to_J0,
-		  hmi.rate_h2_allX_2_J1_grains
-		  );*/
-		/* options to turn off grain collision with atom h2 collisions grains off command */
-		h2.rate_grain_op_conserve *= h2.lgH2_grain_deexcitation;
-		h2.rate_grain_J1_to_J0 *= h2.lgH2_grain_deexcitation;
+		else
+			TotalInsanity();
+	}
+	else if( chJura == 'T' )
+	{
+		/* H2 formation on grains;
+		 * rate from 
+		 * >>refer	H2	grain formation	Hollenbach, D., & McKee, C.F., 1979, ApJS, 41, 555 eq 3.4 3.8 */
+		/* fraction of impacts that produce H2 before evaporation from grain surface.
+		 * this is equation 3.4 of
+		 * >>refer	grain	phys	Hollenbach, D.J., & McKee, C.F., 1979, ApJS, 41, 555
+		 * 1e4 is ratio of total absorption sites to appropriate sites 
+		 * 920 is D_H and chosen to get f_a = 0.5 at 100 K.
+		 * factor of 0.6252 needed to obtain std ism rate to be 3e-17 at 100 K,
+		 * the value deduced by
+		 * >>refer	H2	grain physics	Jura, M., 1974, ApJ, 197, 581 */
+		double conversion_efficiency_HM79 = 1/(1. + 1e4*sexp(920./Tgrain));
 
+		return 0.5 * AveVelH * gv.bin[nd].IntArea/4. * gv.bin[nd].cnv_H_pCM3 *
+			sticking_probability_H * conversion_efficiency_HM79 * hmi.ScaleJura;
+	}
+	else if( chJura == 'S' )
+	{
+		/* H2 formation rate from 
+		 * >>refer	H2	form	Sternberg, A. & Neufeld, D.A. 1999, ApJ, 516, 371 */
+		return 3e-18 * phycon.sqrte / gv.bin.size() * dense.gas_phase[ipHYDROGEN] * hmi.ScaleJura;
+	}
+	/*>>chng 07 jan 10, this had been C for constant, and so could never have been triggered.
+	 * caught by robin Williams, fixed by nick Abel, error was in sense that any set jura rate
+	 * would use Cazaux & Tielens */
+	else if( chJura == 'F' )
+	{
+		/* command "set H2 Jura rate" - enters log of Jura rate
+		 * no dependence on grain properties */
+		return hmi.rate_h2_form_grains_set * dense.gas_phase[ipHYDROGEN] / gv.bin.size();
 	}
 	else
 	{
-		/* grains are not enabled, set these to zero */
-		for( size_t nd=0; nd < gv.bin.size(); nd++ )
-		{
-			gv.bin[nd].rate_h2_form_grains_CT02 = 0.;
-			gv.bin[nd].rate_h2_form_grains_HM79 = 0.;
-		}
-		/* rate all H2 goes to either 0 or 1 depending on ortho/para */
-		h2.rate_grain_op_conserve = 0.;
-		/* at low temp, rate all H2 goes to J=0 */
-		h2.rate_grain_J1_to_J0 = 0.;
+		TotalInsanity();
+	}
+}
+
+STATIC void mole_h2_grain_form()
+{
+	DEBUG_ENTRY( "mole_h2_grain_form()" );
+
+	gv.rate_h2_form_grains = 0.;
+
+	/* these are rates (s-1) H2 will be deactivated by collisions with grains 
+	 * will be incremented below 
+	 * H2 ortho - para conversion on grain surface */
+	h2.rate_grain_op_conserve = 0.;
+	/* rate (s-1) v=0, J=1 level goes to 0 */
+	h2.rate_grain_J1_to_J0 = 0.;
+
+	/* >>chng 04 feb 21, included quantum heating in calculation of formation rate, PvH */
+	long qnbin = 0;
+	vector<double> qtemp, qprob;
+
+	if( gv.lgDustOn() && ENABLE_QUANTUM_HEATING )
+	{
+		qtemp.resize(NQGRID);
+		qprob.resize(NQGRID);
 	}
 
-	/* the H2 catalysis rate on grains that is actually used in calculations
-	 * hmi.ScaleJura is scale factor set with set Jura scale command 
-	 * units are s-1 
-	 * default is 'C' Cazaux & Tielens */
-	gv.rate_h2_form_grains_used_total = 0.;
+	/* loop over all grain species */
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
-		if( hmi.chJura == 'C' )
-		{
-			/* use the new rate by 
-			 * >>refer	H2	form	Cazaux, S., & Tielens, A.G.G.M., 2002, ApJ, 575, L29 
-			 * units are s-1*/
-			gv.bin[nd].rate_h2_form_grains_used = 
-				gv.bin[nd].rate_h2_form_grains_CT02*hmi.ScaleJura;
-			gv.rate_h2_form_grains_used_total += gv.bin[nd].rate_h2_form_grains_used;
-		}
+		gv.bin[nd].rate_h2_form_grains_bin = 0.;
 
-		if( hmi.chJura == 'E' )
+		if( gv.lgDustOn() )
 		{
-			/* use the new revised CT02 rate from
- 			** >>refer	H2	form	Rollig, M. et al., 2013, A&A, 549, A85 
- 			** units are s-1 */
-			gv.bin[nd].rate_h2_form_grains_used = 
-				gv.bin[nd].rate_h2_form_grains_ELRD*hmi.ScaleJura;
-			gv.rate_h2_form_grains_used_total += gv.bin[nd].rate_h2_form_grains_used;
-		}
+			bool lgUseQHeat = ENABLE_QUANTUM_HEATING && gv.lgGrainPhysicsOn && gv.bin[nd].lgQHeat;
 
-		else if( hmi.chJura == 'T' )
-		{
-			/* rate from Hollenbach & McKee 1979  */
-			gv.bin[nd].rate_h2_form_grains_used = 
-				gv.bin[nd].rate_h2_form_grains_HM79*hmi.ScaleJura;
-			gv.rate_h2_form_grains_used_total += gv.bin[nd].rate_h2_form_grains_used;
-		}
-		else if( hmi.chJura == 'S' )
-		{
-			/* H2 formation rate from 
-			 * >>refer	H2	form	Sternberg, A. & Neufeld, D.A. 1999, ApJ, 516, 371 */
-			gv.bin[nd].rate_h2_form_grains_used = 
-				3e-18 * phycon.sqrte / gv.bin.size() * dense.gas_phase[ipHYDROGEN]*hmi.ScaleJura;
-			/* this is simple rate from Sternberg & Neufeld 99 */
-			gv.rate_h2_form_grains_used_total += gv.bin[nd].rate_h2_form_grains_used;
-		}
-		/*>>chng 07 jan 10, this had been C for constant, and so could never have been triggered.
-		 * caught by robin Williams, fixed by nick Abel, error was in sense that any set jura rate
-		 * would use Cazaux & Tielens */
-		else if( hmi.chJura == 'F' )
-		{
-			/* command "set H2 rate" - enters log of Jura rate - C for constant,
-			 * no dependence on grain properties */
-			gv.bin[nd].rate_h2_form_grains_used = hmi.rate_h2_form_grains_set*dense.gas_phase[ipHYDROGEN] / gv.bin.size();
-			gv.rate_h2_form_grains_used_total += gv.bin[nd].rate_h2_form_grains_used;
+			/* >>chng 02 feb 15, removed check tedust > 1.01, change in GrainsInit
+			 * guarantees that all relevant parameters are initialized, PvH */
+			for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+			{
+				const ChargeBin& gptr = gv.bin[nd].chrg(nz);
+
+				double rate1 = 0.;
+				if( lgUseQHeat )
+				{
+					qheat(qtemp,qprob,&qnbin,nd,nz);
+				
+					if( gptr.lgUseQHeat )
+					{
+						ASSERT( qnbin > 0 );
+					}
+					else
+					{
+						qnbin = 1;
+						qprob[0] = 1.;
+						qtemp[0] = gptr.tedust;
+					}
+
+					for( long k=0; k < qnbin; k++ )
+						rate1 += qprob[k] * mole_h2_grain_rate(qtemp[k], hmi.chJura, nd);
+					rate1 *= gptr.FracPop;
+				}
+				else
+				{
+					rate1 = gptr.FracPop * mole_h2_grain_rate(gptr.tedust, hmi.chJura, nd);
+				}
+				gv.bin[nd].rate_h2_form_grains_bin += rate1;
+				gv.rate_h2_form_grains += rate1;
+
+				realnum AveVelH2 = GetAveVelocity( 2.f * dense.AtomicWeight[ipHYDROGEN] );
+				double sticking_probability_H = sticking_probability_H_func( phycon.te, gptr.tedust );
+
+				/* rate (s-1) all H2 v,J levels go to 0 or 1, preserving nuclear spin */
+				/* ortho to para on grain surfaces, taken from 
+				 *>refer	H2	sticking	Le Bourlot, J., 2000, A&A, 360, 656-662 
+				 * >chng 05 apr 30, GS, hmi.H2_total/dense.gas_phase[ipHYDROGEN] is removed
+				 * This is used in h2.c.
+				 * NB IntArea is total are per H, not projected area, must div by 4 
+				 * gv.bin[nd].cnv_H_pCM3 has units H cm-3 to product with above
+				 * is cm2/H H/cm3 or cm-1 or an opacity
+				 * multiply by velocity of H2, cm s-1, so product 
+				 * h2.rate_grain_op_conserve has units s^-1  */
+				h2.rate_grain_op_conserve += gptr.FracPop * AveVelH2 * gv.bin[nd].IntArea/4. *
+					gv.bin[nd].cnv_H_pCM3 * sticking_probability_H;
+
+				/* ortho to para on grain surfaces, taken from 
+				 *>refer	H2	sticking	Le Bourlot, J., 2000, A&A, 360, 656-662 
+				 * For all grain temperatures, this process corresponds to high J going to
+				 * either 0 or 1 preserving nuclear spin.  All ortho go to 1 and para go to 0.
+				 * When the dust temperature is below Tcrit all 1 go to 0 and so all J go to 0.
+
+				 * this temperature depends on grain composition, discussion left column of page 657,
+				 * this is for a bare grain */
+				/** \todo	2	- put in actual composition dependent Tad - this is only valid 
+				 * for bare surfaces - not ice - for ice Tad is 555K 
+				 * hmi.Tad is binding energy expressed as a temperature 
+				 * note that hmi.Tad is set to 800. in zero 
+				 * tau_nu the first equation in section 2.5
+				 * equation one paragraph before equation 2 
+				 * at low grain temperatures all end in para, J=0 */
+
+				/* AveVelH2 is average speed of H2 molecules 
+				 * for now assume that sticking probability for H2 on the grain is equal to
+				 * that for H 
+				 * efficiency factor efficiency_opr is vary fast function of t dust - 
+				 * large at low Td and small at Td > T_ortho_para_crit
+				 * start evaluating just above the critical temperature 
+				 * T_ortho_para_crit this is roughly 24.345 K,GS */
+				double T_ortho_para_crit = 2. * hmi.Tad / log(pow2(60.*1.1e11)*hmi.Tad); 
+				if( gptr.tedust < T_ortho_para_crit )
+				{
+					double efficiency_opr = exp(-60.*1.1e11*sqrt(hmi.Tad)*exp(-double(hmi.Tad)/gptr.tedust));
+					/* rate (s-1) all v,J levels go to 0, regardless of nuclear spin
+					 * see above discussion for how units work out */
+					h2.rate_grain_J1_to_J0 += gptr.FracPop * AveVelH2 * gv.bin[nd].IntArea/4. * 
+						gv.bin[nd].cnv_H_pCM3 * sticking_probability_H * efficiency_opr;
+				}
+			}
+				
+			ASSERT( gv.bin[nd].rate_h2_form_grains_bin > 0. );
 		}
 	}
-	ASSERT( gv.rate_h2_form_grains_used_total >= 0. );
 
-	if (ENABLE_QUANTUM_HEATING)
-	{
-		fprintf(ioQQQ, " fnzone %.2f H2 rate %.4e\n", fnzone, gv.rate_h2_form_grains_used_total );
-	}
+	/* options to turn off grain collision with atom h2 collisions grains off command */
+	h2.rate_grain_op_conserve *= h2.lgH2_grain_deexcitation;
+	h2.rate_grain_J1_to_J0 *= h2.lgH2_grain_deexcitation;
 
-	/* print rate coefficient */
-	/*fprintf(ioQQQ," total grain h2 form rate %.3e\n",gv.rate_h2_form_grains_used_total);*/
-
+	ASSERT( gv.rate_h2_form_grains >= 0. );
 }
+
 /*mole_h_reactions update mole reactions for H */
 STATIC void mole_h_reactions( void )
 {

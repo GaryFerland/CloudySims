@@ -120,11 +120,8 @@ void GrainBin::p_clear1()
 	memset( DustEnth, 0, NDEMS*sizeof(DustEnth[0]) );
 	memset( EnthSlp, 0, NDEMS*sizeof(EnthSlp[0]) );
 	memset( EnthSlp2, 0, NDEMS*sizeof(EnthSlp2[0]) );
-	rate_h2_form_grains_HM79 = 0.;
-	rate_h2_form_grains_CT02 = 0.;
-	rate_h2_form_grains_ELRD = 0.;
 	/* >>chng 04 feb 05, zero this rate in case "no molecules" is set, will.in, PvH */
-	rate_h2_form_grains_used = 0.;
+	rate_h2_form_grains_bin = 0.;
 	DustDftVel = 1.e3f;
 	avdft = 0.;
 	/* NB - this number should not be larger than NCHU */

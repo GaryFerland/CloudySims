@@ -2104,7 +2104,7 @@ bool lgCheckMonitors(
 		else if( chAssertType[i] == "g2" )
 		{
 			/* check Jura rate, rate per vol that H2 forms on grain surfaces */
-			PredQuan[i] = gv.rate_h2_form_grains_used_total;
+			PredQuan[i] = gv.rate_h2_form_grains;
 			/* this is relative error */
 			if (AssertError[i] > 0.)
 				RelError[i] = get_error_ratio( PredQuan[i], AssertQuantity[i] );

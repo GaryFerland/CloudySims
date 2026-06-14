@@ -4511,7 +4511,7 @@ STATIC void GrainCollHeating(size_t nd,
 	long ipH2 = gv.which_H2distr[gv.bin[nd].matType];
 	/* this is rate in erg/cm^3/s */
 	/* >>chng 04 may 26, changed dense.gas_phase[ipHYDROGEN] -> dense.xIonDense[ipHYDROGEN][0], PvH */
-	double HeatChemH2 = gv.bin[nd].rate_h2_form_grains_used*dense.xIonDense[ipHYDROGEN][0]*
+	double HeatChemH2 = gv.bin[nd].rate_h2_form_grains_bin*dense.xIonDense[ipHYDROGEN][0]*
 		H2_FORMATION_GRAIN_HEATING[ipH2]*EN1EV;
 	HeatChemH2 /= gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3;
 #else
