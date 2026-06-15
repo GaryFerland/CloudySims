@@ -3308,63 +3308,63 @@ STATIC void mole_h2_grain_form()
 				gv.bin[nd].rate_h2_form_grains_bin += rate1;
 				gv.rate_h2_form_grains += rate1;
 
-				realnum AveVelH2 = GetAveVelocity( 2.f * dense.AtomicWeight[ipHYDROGEN] );
-				double sticking_probability_H = sticking_probability_H_func( phycon.te, gptr.tedust );
-
-				/* rate (s-1) all H2 v,J levels go to 0 or 1, preserving nuclear spin */
-				/* ortho to para on grain surfaces, taken from 
-				 *>refer	H2	sticking	Le Bourlot, J., 2000, A&A, 360, 656-662 
-				 * >chng 05 apr 30, GS, hmi.H2_total/dense.gas_phase[ipHYDROGEN] is removed
-				 * This is used in h2.c.
-				 * NB IntArea is total are per H, not projected area, must div by 4 
-				 * gv.bin[nd].cnv_H_pCM3 has units H cm-3 to product with above
-				 * is cm2/H H/cm3 or cm-1 or an opacity
-				 * multiply by velocity of H2, cm s-1, so product 
-				 * h2.rate_grain_op_conserve has units s^-1  */
-				h2.rate_grain_op_conserve += gptr.FracPop * AveVelH2 * gv.bin[nd].IntArea/4. *
-					gv.bin[nd].cnv_H_pCM3 * sticking_probability_H;
-
-				/* ortho to para on grain surfaces, taken from 
-				 *>refer	H2	sticking	Le Bourlot, J., 2000, A&A, 360, 656-662 
-				 * For all grain temperatures, this process corresponds to high J going to
-				 * either 0 or 1 preserving nuclear spin.  All ortho go to 1 and para go to 0.
-				 * When the dust temperature is below Tcrit all 1 go to 0 and so all J go to 0.
-
-				 * this temperature depends on grain composition, discussion left column of page 657,
-				 * this is for a bare grain */
-				/** \todo	2	- put in actual composition dependent Tad - this is only valid 
-				 * for bare surfaces - not ice - for ice Tad is 555K 
-				 * hmi.Tad is binding energy expressed as a temperature 
-				 * note that hmi.Tad is set to 800. in zero 
-				 * tau_nu the first equation in section 2.5
-				 * equation one paragraph before equation 2 
-				 * at low grain temperatures all end in para, J=0 */
-
-				/* AveVelH2 is average speed of H2 molecules 
-				 * for now assume that sticking probability for H2 on the grain is equal to
-				 * that for H 
-				 * efficiency factor efficiency_opr is vary fast function of t dust - 
-				 * large at low Td and small at Td > T_ortho_para_crit
-				 * start evaluating just above the critical temperature 
-				 * T_ortho_para_crit this is roughly 24.345 K,GS */
-				double T_ortho_para_crit = 2. * hmi.Tad / log(pow2(60.*1.1e11)*hmi.Tad); 
-				if( gptr.tedust < T_ortho_para_crit )
+				/* options to turn off grain collision with database h2 grain collisions off command */
+				if( h2.lgH2_grain_deexcitation )
 				{
-					double efficiency_opr = exp(-60.*1.1e11*sqrt(hmi.Tad)*exp(-double(hmi.Tad)/gptr.tedust));
-					/* rate (s-1) all v,J levels go to 0, regardless of nuclear spin
-					 * see above discussion for how units work out */
-					h2.rate_grain_J1_to_J0 += gptr.FracPop * AveVelH2 * gv.bin[nd].IntArea/4. * 
-						gv.bin[nd].cnv_H_pCM3 * sticking_probability_H * efficiency_opr;
+					realnum AveVelH2 = GetAveVelocity( 2.f * dense.AtomicWeight[ipHYDROGEN] );
+					double sticking_probability_H = sticking_probability_H_func( phycon.te, gptr.tedust );
+
+					/* rate (s-1) all H2 v,J levels go to 0 or 1, preserving nuclear spin */
+					/* ortho to para on grain surfaces, taken from 
+					 *>refer	H2	sticking	Le Bourlot, J., 2000, A&A, 360, 656-662 
+					 * >chng 05 apr 30, GS, hmi.H2_total/dense.gas_phase[ipHYDROGEN] is removed
+					 * This is used in h2.c.
+					 * NB IntArea is total are per H, not projected area, must div by 4 
+					 * gv.bin[nd].cnv_H_pCM3 has units H cm-3 to product with above
+					 * is cm2/H H/cm3 or cm-1 or an opacity
+					 * multiply by velocity of H2, cm s-1, so product 
+					 * h2.rate_grain_op_conserve has units s^-1  */
+					h2.rate_grain_op_conserve += gptr.FracPop * AveVelH2 * gv.bin[nd].IntArea/4. *
+						gv.bin[nd].cnv_H_pCM3 * sticking_probability_H;
+
+					/* ortho to para on grain surfaces, taken from 
+					 *>refer	H2	sticking	Le Bourlot, J., 2000, A&A, 360, 656-662 
+					 * For all grain temperatures, this process corresponds to high J going to
+					 * either 0 or 1 preserving nuclear spin.  All ortho go to 1 and para go to 0.
+					 * When the dust temperature is below Tcrit all 1 go to 0 and so all J go to 0.
+
+					 * this temperature depends on grain composition, discussion left column of page 657,
+					 * this is for a bare grain */
+					/** \todo	2	- put in actual composition dependent Tad - this is only valid 
+					 * for bare surfaces - not ice - for ice Tad is 555K 
+					 * hmi.Tad is binding energy expressed as a temperature 
+					 * note that hmi.Tad is set to 800. in zero 
+					 * tau_nu the first equation in section 2.5
+					 * equation one paragraph before equation 2 
+					 * at low grain temperatures all end in para, J=0 */
+
+					/* AveVelH2 is average speed of H2 molecules 
+					 * for now assume that sticking probability for H2 on the grain is equal to
+					 * that for H 
+					 * efficiency factor efficiency_opr is vary fast function of t dust - 
+					 * large at low Td and small at Td > T_ortho_para_crit
+					 * start evaluating just above the critical temperature 
+					 * T_ortho_para_crit is roughly 24.345 K,GS */
+					double T_ortho_para_crit = 2. * hmi.Tad / log(pow2(60.*1.1e11)*hmi.Tad); 
+					if( gptr.tedust < T_ortho_para_crit )
+					{
+						double efficiency_opr = exp(-60.*1.1e11*sqrt(hmi.Tad)*exp(-double(hmi.Tad)/gptr.tedust));
+						/* rate (s-1) all v,J levels go to 0, regardless of nuclear spin
+						 * see above discussion for how units work out */
+						h2.rate_grain_J1_to_J0 += gptr.FracPop * AveVelH2 * gv.bin[nd].IntArea/4. * 
+							gv.bin[nd].cnv_H_pCM3 * sticking_probability_H * efficiency_opr;
+					}
 				}
 			}
 				
 			ASSERT( gv.bin[nd].rate_h2_form_grains_bin > 0. );
 		}
 	}
-
-	/* options to turn off grain collision with atom h2 collisions grains off command */
-	h2.rate_grain_op_conserve *= h2.lgH2_grain_deexcitation;
-	h2.rate_grain_J1_to_J0 *= h2.lgH2_grain_deexcitation;
 
 	ASSERT( gv.rate_h2_form_grains >= 0. );
 }

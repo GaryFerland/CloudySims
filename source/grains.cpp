@@ -1198,7 +1198,7 @@ STATIC double GrnStdDpth(long int nd)
 		// use weighted average of all charge states
 		// NOTE this branch may be called before tedust is ever evaluated
 		// so tedust needs to be initialized to a safe value
-		GrnStdDpth_v = sexp( pow3( gv.bin[nd].tedust / gv.bin[nd].Tsublimat ) );
+		GrnStdDpth_v = sexp( pow3( gv.bin[nd].AvTemp / gv.bin[nd].Tsublimat ) );
 	}
 	else
 	{
@@ -1282,7 +1282,7 @@ void GrainDrive()
 				gv.bin[nd].AveDustZ = 0.;
 				gv.bin[nd].dstpot = chrg2pot(0.,nd);
 
-				gv.bin[nd].tedust = 100.;
+				gv.bin[nd].AvTemp = 100.;
 				gv.bin[nd].TeGrainMax = 100.;
 
 				/* set all heating/cooling agents to zero */
@@ -1719,7 +1719,7 @@ STATIC void GrainChargeTemp()
 
 		/* >>chng 04 jan 25, moved initialization of phiTilde to qheat_init(), PvH */
 
-		gv.bin[nd].tedust = 0.;
+		gv.bin[nd].AvTemp = 0.;
 
 		for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
 		{
@@ -1764,7 +1764,7 @@ STATIC void GrainChargeTemp()
 			if( gv.lgDHetOn )
 				gv.bin[nd].GasHeatPhotoElBin += gptr.FracPop*gptr.GasHeatPhotoElCS;
 
-			gv.bin[nd].tedust += gptr.FracPop*gptr.tedust;
+			gv.bin[nd].AvTemp += gptr.FracPop*gptr.tedust;
 			/*  save for later possible printout */
 			gv.bin[nd].TeGrainMax = max(gv.bin[nd].TeGrainMax,gptr.tedust);
 
@@ -1961,8 +1961,8 @@ STATIC void GrainCharge(size_t nd,
 	ASSERT( nd < gv.bin.size() );
 
 	/* determine a reasonable starting guess for the grain temperature of charge
-	 * states that have not been evaluated yet. normally gv.bin[nd].tedust will be
-	 * a very good estimate for that, but during the search phase, gv.bin[nd].tedust
+	 * states that have not been evaluated yet. normally gv.bin[nd].AvTemp will be
+	 * a very good estimate for that, but during the search phase, gv.bin[nd].AvTemp
 	 * may not have a good value yet, so we use a different algorithm there */
 	double Tstart = 0.;
 	if( conv.lgSearch )
@@ -1978,7 +1978,7 @@ STATIC void GrainCharge(size_t nd,
 	}
 	else
 	{
-		Tstart = gv.bin[nd].tedust;
+		Tstart = gv.bin[nd].AvTemp;
 	}
 
 	for( nz=0; nz < NCHS; nz++ )

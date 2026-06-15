@@ -90,9 +90,7 @@ void GrainBin::p_clear1()
 	memset( dstems, 0, NDEMS*sizeof(dstems[0]) );
 	memset( dstslp, 0, NDEMS*sizeof(dstslp[0]) );
 	memset( dstslp2, 0, NDEMS*sizeof(dstslp2[0]) );
-	/* >>chng 00 jun 19, tedust has to be greater than zero
-	 * to prevent division by zero in GrainElecEmis and GrainCollHeating, PvH */
-	tedust = 1.;
+	AvTemp = 1.;
 	TeGrainMax = FLT_MAX;
 	avdust = 0.;
 	LowestZg = LONG_MIN;

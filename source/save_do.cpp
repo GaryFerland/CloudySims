@@ -1684,7 +1684,7 @@ void SaveDo(
 						}
 						fprintf( save.params[ipPun].ipPnunit, " %.5e", radius.depth_mid_zone );
 						for( size_t nd=0; nd < gv.bin.size(); ++nd )
-							fprintf( save.params[ipPun].ipPnunit, "\t%.3e", gv.bin[nd].tedust );
+							fprintf( save.params[ipPun].ipPnunit, "\t%.3e", gv.bin[nd].AvTemp );
 						fprintf( save.params[ipPun].ipPnunit, "\n" );
 					}
 					else

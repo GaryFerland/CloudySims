@@ -412,7 +412,7 @@ void GrainMakeDiffuse()
 	double Comparison1 = 0.;
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
-		if( gv.bin[nd].tedust < gv.bin[nd].Tsublimat )
+		if( gv.bin[nd].AvTemp < gv.bin[nd].Tsublimat )
 			Comparison1 += CONSERV_TOL*gv.bin[nd].GrainHeatBin;
 		else
 			/* for high temperatures the interpolation in dstems

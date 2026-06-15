@@ -370,7 +370,7 @@ public:
 	  dstslp[NDEMS],        /**< auxiliary array for spline interpolation */
 	  dstslp2[NDEMS];       /**< auxiliary array for inverse spline interpolation */
 
-	double tedust;          /**< equilibrium temperature for this zone */
+	double AvTemp;          /**< average temperature of all charge states for this zone */
 	double TeGrainMax;      /**< highest equilibrium temperature as a function of radius, OUTPUT ONLY */
 	realnum avdust;         /**< Integral(Tdust*dReff) for average equilibrium temperature, OUTPUT ONLY */
 
