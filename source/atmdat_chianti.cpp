@@ -293,31 +293,63 @@ STATIC void ApplyTPDatum(
  * If the filename does not contain "_blk_" or no digits follow it,
  * the program aborts with an error.
  */
-static long ExtractBlkIndexOrDie( const string& fn )
+static long ExtractBlkIndexOrDie( const string& fn, const string& shortName, const string& extension )
 {
-	size_t p = fn.rfind("_blk_");
-	if( p == string::npos )
+	DEBUG_ENTRY( "ExtractBlkIndexOrDie()" );
+
+	// v2 block files must use exactly:
+	//   <shortName>_blk_<N><extension>
+	// e.g.
+	//   al_8_blk_10.tp
+	//   al_8_blk_10.coll
+	const string prefix = shortName + "_blk_";
+
+	if( fn.compare( 0, prefix.size(), prefix ) != 0 )
 	{
-		fprintf(ioQQQ, " PROBLEM: Missing _blk_ in STOUT block filename: %s\n", fn.c_str());
-		cdEXIT(EXIT_FAILURE);
+		fprintf( ioQQQ,
+			" PROBLEM: Invalid STOUT v2 block filename '%s'.\n"
+			" Expected filename to start with '%s'.\n",
+			fn.c_str(), prefix.c_str() );
+		cdEXIT( EXIT_FAILURE );
 	}
 
-	p += 5; // after "_blk_"
-	if( p >= fn.size() || !isdigit(fn[p]) )
+	if( fn.size() <= prefix.size() + extension.size() ||
+	    fn.compare( fn.size() - extension.size(), extension.size(), extension ) != 0 )
 	{
-		fprintf(ioQQQ, " PROBLEM: No digits after _blk_ in STOUT block filename: %s\n", fn.c_str());
-		cdEXIT(EXIT_FAILURE);
+		fprintf( ioQQQ,
+			" PROBLEM: Invalid STOUT v2 block filename '%s'.\n"
+			" Expected filename format is '%s<N>%s'.\n",
+			fn.c_str(), prefix.c_str(), extension.c_str() );
+		cdEXIT( EXIT_FAILURE );
 	}
 
-	long n = 0;
-	while( p < fn.size() && isdigit(fn[p]) )
+	const string blockString =
+		fn.substr( prefix.size(), fn.size() - prefix.size() - extension.size() );
+
+	if( blockString.empty() ||
+	    blockString.find_first_not_of( "0123456789" ) != string::npos )
 	{
-		n = 10*n + (fn[p] - '0');
-		++p;
+		fprintf( ioQQQ,
+			" PROBLEM: Invalid STOUT v2 block filename '%s'.\n"
+			" The block index must be a non-negative integer in '%s<N>%s'.\n",
+			fn.c_str(), prefix.c_str(), extension.c_str() );
+		cdEXIT( EXIT_FAILURE );
 	}
-	return n;
+
+	char* endptr = nullptr;
+	errno = 0;
+	long blockIndex = strtol( blockString.c_str(), &endptr, 10 );
+
+	if( errno != 0 || endptr == blockString.c_str() || *endptr != '\0' )
+	{
+		fprintf( ioQQQ,
+			" PROBLEM: Failed to read block index from STOUT v2 filename '%s'.\n",
+			fn.c_str() );
+		cdEXIT( EXIT_FAILURE );
+	}
+
+	return blockIndex;
 }
-
 /**
  * @brief Reads and processes STOUT atomic/molecular data files for a given species.
  *
@@ -563,7 +595,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		}
 	}
 
-	// STOUT v1 files may be unsorted, so sort them here.
+	// STOUT v1 files may be unsorted, so cloudy sorts them here.
 	// STOUT v2 requires the energy level file to already be sorted.
 	if( lgNRGv1 )
 	{
@@ -689,27 +721,27 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 			tr->WLangVac() = 1e30;
 	}
 
-	/******************************************************
- 	************* Transition Probability File ************
- 	******************************************************/
+/******************************************************
+************* Transition Probability File ************
+******************************************************/
 
-	/*
-	*V1 vs V2 STOUT .tp handling:
-	*
-	*   - V1 STOUT (magic 17 09 05):
-	*       * File is version-1-format: "<shortName>.tp" (no _blk_)
-	*       * Each data row starts with dataType:  A|G|S
-	*       * End-of-data MUST be the "***" sentinel (exactly as before)
-	*
-	*   - V2 STOUT (magic 25 10 15):
-	*       * File(s) may be split as "<shortName>_blk_<N>.tp"
-	*       * After magic line there is a global dataType line: A|G|S
-	*       * Each data row is: ipLo ipHi value [transType]
-	*       * End-of-data can be "***" OR an empty line
-	*       * Multiple blocks are applied in blk order; later blocks OVERRIDE earlier ones
-	*/
+/*
+*V1 vs V2 STOUT .tp handling:
+*
+*   - V1 STOUT (magic 17 09 05):
+*       * File is version-1-format: "<shortName>.tp" (no _blk_)
+*       * Each data row starts with dataType:  A|G|S
+*       * End-of-data MUST be the "***" sentinel (exactly as before)
+*
+*   - V2 STOUT (magic 25 10 15):
+*       * File(s) may be split as "<shortName>_blk_<N>.tp"
+*       * After magic line there is a global dataType line: A|G|S
+*       * Each data row is: ipLo ipHi value [transType]
+*       * End-of-data can be "***" OR an empty line
+*       * Multiple blocks are applied in blk order; later blocks OVERRIDE earlier ones
+*/
 
-	// ---- discover tp candidates (version 1 and/or version 2) ----
+// ---- discover tp candidates (version 1 and/or version 2) ----
 	vector<string> tpFiles;
 	string tpPattern = basedir + shortName + ".*\\.tp";
 	getFileList( tpFiles, tpPattern );
@@ -724,81 +756,88 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 			tpFilesv1.push_back(fn);
 	}
 
-	vector<string> tpToProcess;
-	bool lgUsingV2TpBlocks = false;
+	struct TPFileInfo
+	{
+		string filename;
+		long blockIndex;
+		bool lgBlockFile;
+	};
+
+	vector<TPFileInfo> tpFilesToProcess;
+	map<long,string> tpBlockFiles;
+	long baselineTpBlk = LONG_MAX;
 
 	if( !tpFilesv2.empty() )
 	{
-		// Version 2 format uses blk files (only for V2 magic)
-		tpToProcess = tpFilesv2;
-		lgUsingV2TpBlocks = true;
+		// Version 2 format uses block files.
+		for( const string& tpFile : tpFilesv2 )
+		{
+			long blockIndex = ExtractBlkIndexOrDie( tpFile, shortName, ".tp" );
+
+			if( tpBlockFiles.find( blockIndex ) != tpBlockFiles.end() )
+			{
+				fprintf( ioQQQ,
+					" PROBLEM: Duplicate STOUT v2 .tp block index %ld found:\n"
+					"  %s\n"
+					"  %s\n",
+					blockIndex,
+					tpBlockFiles[blockIndex].c_str(),
+					tpFile.c_str() );
+				cdEXIT( EXIT_FAILURE );
+			}
+
+			tpBlockFiles[blockIndex] = tpFile;
+		}
+
+		baselineTpBlk = tpBlockFiles.begin()->first;
+
+		for( const auto& tpBlock : tpBlockFiles )
+		{
+			TPFileInfo tpInfo;
+			tpInfo.filename = tpBlock.second;
+			tpInfo.blockIndex = tpBlock.first;
+			tpInfo.lgBlockFile = true;
+			tpFilesToProcess.push_back( tpInfo );
+		}
 	}
 	else
 	{
-		// version 1 mode (no blocks)
-		tpToProcess = tpFilesv1;
-		lgUsingV2TpBlocks = false;
-	}
-
-	if( tpToProcess.empty() )
-	{
-		fprintf( ioQQQ,
-			" PROBLEM: No STOUT .tp file found matching pattern '%s'\n",
-			tpPattern.c_str() );
-		cdEXIT( EXIT_FAILURE );
-	}
-
-	// In version 1 mode, prefer exact "<shortName>.tp" if multiple matches exist
-	if( !lgUsingV2TpBlocks && tpToProcess.size() > 1 )
-	{
-		string preferred = shortName + ".tp";
-		auto it = find( tpToProcess.begin(), tpToProcess.end(), preferred );
-		if( it != tpToProcess.end() )
+		// Version 1 format uses a single non-block file.
+		if( tpFilesv1.empty() )
 		{
-			vector<string> tmp;
-			tmp.push_back(*it);
-			tpToProcess.swap(tmp);
+			fprintf( ioQQQ,
+				" PROBLEM: No STOUT .tp file found matching pattern '%s'\n",
+				tpPattern.c_str() );
+			cdEXIT( EXIT_FAILURE );
+		}
+
+		string tpFile;
+
+		if( tpFilesv1.size() == 1 )
+		{
+			tpFile = tpFilesv1.front();
 		}
 		else
 		{
-			fprintf( ioQQQ,
-				" PROBLEM: Multiple version 1 STOUT .tp files found for '%s' but none matches '%s'\n",
-				shortName.c_str(), preferred.c_str() );
-			cdEXIT( EXIT_FAILURE );
+			const string preferred = shortName + ".tp";
+			auto it = find( tpFilesv1.begin(), tpFilesv1.end(), preferred );
+
+			if( it == tpFilesv1.end() )
+			{
+				fprintf( ioQQQ,
+					" PROBLEM: Multiple version 1 STOUT .tp files found for '%s' but none matches '%s'\n",
+					shortName.c_str(), preferred.c_str() );
+				cdEXIT( EXIT_FAILURE );
+			}
+
+			tpFile = *it;
 		}
-	}
 
-	// If using blocks, sort by blk index (lowest blk = baseline)
-	vector<long> tpBlk;
-	long baselineTpBlk = LONG_MAX;
-
-	if( lgUsingV2TpBlocks )
-	{
-		tpBlk.assign(tpToProcess.size(), LONG_MAX);
-		for( size_t i=0; i<tpToProcess.size(); ++i )
-			tpBlk[i] = ExtractBlkIndexOrDie(tpToProcess[i]); // safe: only called on *_blk_*
-
-		vector<size_t> order(tpToProcess.size());
-		for( size_t i=0; i<order.size(); ++i )
-			order[i] = i;
-
-		sort( order.begin(), order.end(),
-			[&](size_t a, size_t b){ return tpBlk[a] < tpBlk[b]; } );
-
-		vector<string> sorted;
-		vector<long>   sortedBlk;
-		sorted.reserve(tpToProcess.size());
-		sortedBlk.reserve(tpToProcess.size());
-
-		for( size_t i=0; i<order.size(); ++i )
-		{
-			sorted.push_back( tpToProcess[order[i]] );
-			sortedBlk.push_back( tpBlk[order[i]] );
-		}
-		tpToProcess.swap(sorted);
-		tpBlk.swap(sortedBlk);
-
-		baselineTpBlk = tpBlk.front();
+		TPFileInfo tpInfo;
+		tpInfo.filename = tpFile;
+		tpInfo.blockIndex = LONG_MAX;
+		tpInfo.lgBlockFile = false;
+		tpFilesToProcess.push_back( tpInfo );
 	}
 
 	// ---- line-strength bookkeeping (shared across all tp blocks/files) ----
@@ -812,17 +851,17 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 
 
 	// ---- now actually read each tp file ----
-	for( size_t iTP=0; iTP<tpToProcess.size(); ++iTP )
+	for( const TPFileInfo& tpInfo : tpFilesToProcess )
 	{
-		// Reset per-block override bookkeeping (so each block can reset each transition once)
+		// Reset per-block override bookkeeping so each block can reset each transition once.
 		lgResetThisTP = false;
 
-		const string thisTP = basedir + tpToProcess[iTP];
+		const string thisTP = basedir + tpInfo.filename;
 
-		// Decide override: only meaningful for the block mode (version 2), and only after baseline block
+		// In v2 block mode, blocks after the baseline block override earlier data.
 		const bool lgOverrideExisting =
-			( lgUsingV2TpBlocks && baselineTpBlk != LONG_MAX && tpBlk.size() == tpToProcess.size() &&
-			tpBlk[iTP] > baselineTpBlk );
+			( tpInfo.lgBlockFile && tpInfo.blockIndex > baselineTpBlk );
+	
 
 		d.open( thisTP, ES_STARS_ONLY );
 
@@ -991,7 +1030,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 				cdEXIT(EXIT_FAILURE);
 			}
 		}
-	} // end loop over tpToProcess
+	} // end loop over tpFilesToProcess
 
 
 
@@ -1032,7 +1071,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 
 	if( !collFilesV2.empty() )
 	{
-		/* We have at least one *_blk_<N>.coll candidate -> treat as new block mode */
+		/* We have at least one *_blk_<N>.coll candidate -> treat as v2 block mode */
 		collToProcess = collFilesV2; /* only blk files have v2 magic, so this is safe */
 		lgUsingV2CollBlocks = true;
 	}
@@ -1046,11 +1085,11 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	/*
 	* In v1 mode we should not “merge” multiple files silently.
 	* If multiple v1 candidates exist, it likely indicates a naming problem.
-	* You can relax this if you truly want to read multiple old-format files.
+	* We can relax this if you truly want to read multiple V1-format files.
 	*/
 	if( !lgUsingV2CollBlocks && collToProcess.size() > 1 )
 	{
-		/* Prefer the exact "<shortName>.coll" if present, otherwise abort */
+	/* Prefer the exact "<shortName>.coll" if present, otherwise abort */
 		string preferred = shortName + ".coll";
 		auto it = find( collToProcess.begin(), collToProcess.end(), preferred );
 		if( it != collToProcess.end() )
@@ -1088,7 +1127,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		collBlk.assign( collToProcess.size(), LONG_MAX );
 		for( size_t i=0; i<collToProcess.size(); ++i )
 		{
-			collBlk[i] = ExtractBlkIndexOrDie( collToProcess[i] ); /* requires _blk_ */
+			collBlk[i] = ExtractBlkIndexOrDie( collToProcess[i], shortName, ".coll" ); /* requires _blk_ */
 		}
 
 		sort( collOrder.begin(), collOrder.end(),
@@ -1101,7 +1140,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 	}
 	else
 	{
-		/* version-1-format mode: lexicographic is fine (usually only 1 file anyway) */
+	/* version-1-format mode: lexicographic is fine (usually only 1 file anyway) */
 		sort( collOrder.begin(), collOrder.end(),
 			[&](size_t a, size_t b)
 			{
@@ -1116,11 +1155,11 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 
 		string chCOLLFilename = basedir + collToProcess[iFile];
 
-		/*
-		* Override semantics:
-		*   - Only in the block mode (Version 2 magic number): higher blk overrides lower blk
-		*   - In version 1 mode: never override (duplicates are errors as before)
-		*/
+	/*
+	* Override semantics:
+	*   - Only in the block mode (Version 2 magic number): higher blk overrides lower blk
+	*   - In version 1 mode: never override (duplicates are errors as before)
+	*/
 		bool lgOverrideExisting = false;
 		if( lgUsingV2CollBlocks )
 			lgOverrideExisting = ( collBlk[iFile] > baselineBlk );
@@ -1139,7 +1178,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 		if( !lgCOLLv1 && !lgCOLLv2 )
 			d.errorAbort("Invalid magic number in STOUT .coll file");
 
-		/* Reset per-file state */
+	/* Reset per-file state */
 		numpoints = 0;
 		temps.clear();
 		ipCollider = -1;
@@ -1152,13 +1191,13 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 			fprintf(ioQQQ,"Species|Data Type (CS,RATE)|Collider|File Index (Lo:Hi)|Cloudy Index (Lo:Hi)|Data\n");
 		}
 
-		// ---------------- Version 1 COLLISION FORMAT (17 09 05) ----------------
+	// ---------------- Version 1 COLLISION FORMAT (17 09 05) ----------------
 		if( lgCOLLv1 )
 		{
 			lgSentinelReached = false;
 			while( d.getline() )
 			{
-				/* Stop on *** */
+	/* Stop on *** */
 				if( d.lgEODMarker() )
 				{
 					lgSentinelReached = true;
@@ -1168,7 +1207,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 				string dataType;
 				d.getToken( dataType );
 
-				// Temperature line
+	// Temperature line
 				if( dataType == "TEMP" )
 				{
 					if( DEBUGSTATE )
@@ -1269,14 +1308,14 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 				d.checkEOL();
 			}
 		}
-		// ---------------- Version 2 COLLISION FORMAT (25 10 15) ----------------
+	// ---------------- Version 2 COLLISION FORMAT (25 10 15) ----------------
 		else
 		{
-			/*
-			* V2 format: after magic, first non-comment data line is a header:
-			*   "CS ELECTRON"  or  "RATE H"  etc.
-			* Then TEMP lines + transition lines.
-			*/
+	/*
+	* V2 format: after magic, first non-comment data line is a header:
+	*   "CS ELECTRON"  or  "RATE H"  etc.
+	* Then TEMP lines + transition lines.
+	*/
 			d.getline();
 			string dataTypeHeader;
 			d.getToken( dataTypeHeader );
@@ -1364,7 +1403,7 @@ void atmdat_STOUT_readin( long intNS, const string& chPrefix )
 					errno = 0;
 					long ipLoInFile = strtol( first.c_str(), &endptr, 10 );
 					if( errno != 0 || endptr == first.c_str() || *endptr != '\0' )
-						d.errorAbort( "failed to read lower level index in block-format .coll file" );
+						d.errorAbort( "failed to read lower level index in STOUT v2 .coll file" );
 
 					long ipHiInFile, ipLo, ipHi;
 					d.getToken( ipHiInFile );
