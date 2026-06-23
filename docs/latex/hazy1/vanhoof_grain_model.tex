@@ -232,7 +232,7 @@ astrophysical interest, and using 0.5 should be a reasonably safe guess. Next
 comes the sublimation temperature in Kelvin. Then comes a line with a keyword
 which identifies what type of refractive index file is being read. It
 determines what the remainder of the file will look like. Allowed values are
-\cdVariable{rfi\_tbl}, \cdVariable{opc\_tbl}, \cdVariable{grey},
+\cdVariable{rfi\_tbl}, \cdVariable{opc\_tbl}, \cdVariable{chd\_tbl}, \cdVariable{grey},
 \cdVariable{pah1}, \cdVariable{ph2n}, \cdVariable{ph2c}, \cdVariable{ph3n},
 and \cdVariable{ph3c}. In the \cdVariable{grey}, \cdVariable{pah1},
 \cdVariable{ph2n}, \cdVariable{ph2c}, \cdVariable{ph3n}, and \cdVariable{ph3c}
@@ -496,6 +496,62 @@ Logarithmic interpolation or extrapolation will be performed where needed.
 {\em It is the users responsibility to ensure that the frequency grid contains
   sufficient points to make this process meaningful; only minimal checks will
   be performed by Cloudy. }
+
+\subsection{chd\_tbl}
+
+For some grain materials (usually PAHs) the refractive index or opacity will
+depend on the grain charge. This format allows you to define the data for such
+grains. After the keyword \cdVariable{chd\_tbl} (which stands for ``charge
+dependency table'') first a line containing the number of entries in the table
+needs to be supplied, followed by one line for each entry, each containing three
+tokens. The first two are grain charges $Z_{\rm lo}$ and $Z_{\rm hi}$ in
+elementary charge units (so 0 for a neutral grain, $-1$ for a grain with one
+extra electron, etc.). The third token is the name of a refractive index file
+between double quotes. The data in that file will be used for all grain charges
+$Z$ such that $Z_{\rm lo} \leq Z \leq Z_{\rm hi}$. The entries need to be set up
+such that all possible grain charges have an associated refractive index file.
+To enable this, on the first line $Z_{\rm lo}$ will need to have the special
+value \cdVariable{-inf}, and on the last line $Z_{\rm hi}$ will need to have the
+special value \cdVariable{inf} or \cdVariable{+inf}. For obvious reasons, the
+refractive index files listed in this table should not have type
+\cdVariable{chd\_tbl} themselves. All refractive index files contained in the
+table should have the same number of principal axes (for PAHs this will always
+be one).
+
+The file containing the charge dependency table will define all general grain
+properties such as default abundance, sublimation temperature, etc. (i.e., all
+properties defined prior to the keyword \cdVariable{chd\_tbl}). The equivalent
+entries in the subordinate refractive index files that are listed in the table
+will be ignored. An example of a charge dependency table is shown in
+Table~\ref{chdfile}.
+
+\begin{table}
+\caption[Example of a charge dependency table.]
+{Example of a charge dependency table (\cdFilename{pah3.rfi}).}
+\label{chdfile}
+\begin{verbatim}
+# Draine & Li PAH grains 
+# based on: 
+#>>refer  PAH opacities Draine, B.T., & Li, A., 2007 ApJ, 657, 810
+1030103  # magic number for version control
+C        # the hydrogen atoms are neglected in the atomic weight
+# chemical formulas are case sensitive and fractional indices are allowed,
+# (e.g., Mg0.6Fe0.4SiO3). Use no brackets or spaces.
+3.31e-4  # default abundance
+0.009    # default depletion
+2.24     # material density in g/cm^3
+6        # material type for enthalpy function, 1=carbonaceous, etc...
+0.3235   # work function in Rydberg
+0.0000   # gap between valence and conduction band in Rydberg
+0.5      # thermionic efficiency ( 0. < efficiency <= 1. )
+2000.    # sublimation temperature in K
+chd_tbl  # type of data in this file, rfi_tbl, opc_tbl, chd_tbl, etc...
+3        # number of entries in the table
+-inf   -1    "ph3c.rfi"
+0      0     "ph3n.rfi"
+1      +inf  "ph3c.rfi"
+\end{verbatim}
+\end{table}
 
 \section{Description of the mixed medium files}
 \label{mix:descr}

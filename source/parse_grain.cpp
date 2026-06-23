@@ -286,13 +286,13 @@ void ParseGrain(Parser &p)
 			if( lgC120 )
 			{
 				chOption = "PAH C120 ";
-				mie_read_opc("pah1_c120.opc",gp);
+				mie_read_opc("pah3_c120.opc",gp);
 			}
 			/* only turn on the small PAH */
 			else if( lgC15 )
 			{
 				chOption = "PAH C15 ";
-				mie_read_opc("pah1_c15.opc",gp);
+				mie_read_opc("pah3_c15.opc",gp);
 			}
 			/* turn on size-distributed PAHs */
 			else
@@ -302,11 +302,11 @@ void ParseGrain(Parser &p)
 				chOption = "PAH ";
 				if( lgSizeDistribution )
 				{
-					mie_read_opc("pah1_ab08_10.opc",gp);
+					mie_read_opc("pah3_ab08_10.opc",gp);
 				}
 				else
 				{
-					mie_read_opc("pah1_ab08_01.opc",gp);
+					mie_read_opc("pah3_ab08_01.opc",gp);
 				}
 			}
 		}

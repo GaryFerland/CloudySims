@@ -160,8 +160,8 @@ void ParseCompile(Parser &p)
 			}
 			else if( p.nMatch( " PAH" ) )
 			{
-				/* original PAHs */
-				chRFI = "pah1.rfi";
+				/* Draine & Li PAHs */
+				chRFI = "pah3.rfi";
 			}
 			else if( p.nMatch( "GREY" ) || p.nMatch( "GRAY" ))
 			{
@@ -290,6 +290,30 @@ void ParseCompile(Parser &p)
 
 			/* single pah */
 			mie_write_opc( "pah1.rfi" , "ab08.szd" , 1 );
+
+			/* small pah */
+			mie_write_opc( "pah2.rfi" , "c15.szd" , 1 );
+
+			/* large pah */
+			mie_write_opc( "pah2.rfi" , "c120.szd" , 1 );
+
+			/* distributed pah */
+			mie_write_opc( "pah2.rfi" , "ab08.szd" , 10 );
+
+			/* single pah */
+			mie_write_opc( "pah2.rfi" , "ab08.szd" , 1 );
+
+			/* small pah */
+			mie_write_opc( "pah3.rfi" , "c15.szd" , 1 );
+
+			/* large pah */
+			mie_write_opc( "pah3.rfi" , "c120.szd" , 1 );
+
+			/* distributed pah */
+			mie_write_opc( "pah3.rfi" , "ab08.szd" , 10 );
+
+			/* single pah */
+			mie_write_opc( "pah3.rfi" , "ab08.szd" , 1 );
 		}
 		/* this option is to compile a single type of grain */
 		else

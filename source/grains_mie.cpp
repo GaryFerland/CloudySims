@@ -34,7 +34,7 @@
  * the first digit is file type, the rest is date (YYMMDD) */
 static const long MAGIC_RFI = 1030103L;
 static const long MAGIC_SZD = 2010403L;
-static const long MAGIC_OPC = 3251019L;
+static const long MAGIC_OPC = 3260621L;
 static const long MAGIC_MIX = 4030103L;
 
 /* >>chng 02 may 28, by Ryan, moved struct complex to cddefines.h to make it available to entire code. */
@@ -66,7 +66,7 @@ static const int ipGSig  = 3; /**< 1-sigma width of gaussian distribution */
 
 /* these are the types of refractive index files we recognize */
 typedef enum {
-	RFI_TABLE, OPC_TABLE, OPC_GREY, OPC_PAH1, OPC_PAH2N, OPC_PAH2C, OPC_PAH3N, OPC_PAH3C
+	RFI_TABLE, OPC_TABLE, CHD_TABLE, OPC_GREY, OPC_PAH1, OPC_PAH2N, OPC_PAH2C, OPC_PAH3N, OPC_PAH3C
 } rfi_type;
 
 /* these are the types of EMT's we recognize */
@@ -125,6 +125,23 @@ public:
 static const int NAX = 3;
 static const int NDAT = 4;
 
+class grain_data;
+
+class chBracket {
+	void p_clear0()
+	{
+		Z[0] = 0;
+		Z[1] = -1;
+		gd = NULL;
+	}
+	void p_clear1();
+public:
+	long int Z[2];  /**< lower/upper limit of charge bracket (inclusive, in e) */
+	grain_data* gd; /**< rfi data for this bracket */
+	chBracket() { p_clear0(); }
+	~chBracket() { p_clear1(); }
+};
+
 class grain_data {
 	void p_clear0()
 	{
@@ -144,8 +161,9 @@ class grain_data {
 			opcData[j].clear();
 	}
 public:
+	vector<chBracket> bracket;       /**< rfi data bracket for charge-dependent grains */
 	vector<double> wavlen[NAX];      /**< wavelength grid for rfi for all axes (micron) */
-	vector< complex<double> > n[NAX];/**< refractive index n for all axes */
+	vector<complex<double>> n[NAX];  /**< refractive index n for all axes */
 	vector<double> nr1[NAX];         /**< re(n)-1 for all axes */
 	vector<double> opcAnu;           /**< energies for data points in OPC_TABLE file */
 	vector<double> opcData[NDAT];    /**< data values from OPC_TABLE file */
@@ -170,6 +188,10 @@ public:
 	long int charge;                 /**< grain charge, needed for charge dependent cross sections (e) */
 	mat_type matType;                /**< material type, determines enthalpy function, etc. */
 	rfi_type rfiType;                /**< type of data in rfi file: rfi table, grey grain, pah, etc. */
+	size_t nCharge()
+	{
+		return bracket.size();
+	}
 	void clear()
 	{
 		p_clear1();
@@ -181,6 +203,13 @@ public:
 	}
 };
 
+// this dtor needs to be defined outside the chBracket class since grain_data needs
+// to be fully defined for the delete statement below to be implemented safely...
+void chBracket::p_clear1()
+{
+	delete gd;
+}
+
 /* maximum size for grain type labels */
 static const int LABELSUB1 = 3;
 static const int LABELSUB2 = 5;
@@ -190,38 +219,39 @@ static const int LABELSIZE = LABELSUB1 + LABELSUB2 + 4;
 static const long MIX_TABLE_SIZE = 2000L;
 
 STATIC void mie_auxiliary(/*@partial@*/sd_data*,/*@in@*/const grain_data*,/*@in@*/const char*);
-STATIC bool mie_auxiliary2(/*@partial@*/vector<int>&,/*@partial@*/multi_arr<double,2>&,
-						   /*@partial@*/multi_arr<double,2>&,/*@partial@*/multi_arr<double,2>&,long,long);
+STATIC bool mie_auxiliary2(/*@partial@*/vector<int>&,/*@partial@*/multi_arr<double,3>&,
+						   /*@partial@*/multi_arr<double,3>&,/*@partial@*/multi_arr<double,3>&,long,long,long);
 STATIC void mie_integrate(/*@partial@*/sd_data*,double,double,/*@out@*/double*);
-STATIC void mie_cs_size_distr(double,/*@partial@*/sd_data*,/*@in@*/const grain_data*,
+STATIC void mie_cs_size_distr(double,/*@partial@*/sd_data*,/*@in@*/const grain_data*,/*@in@*/const grain_data*,
 							  void(*)(double,/*@in@*/const sd_data*,/*@in@*/const grain_data*,
-									  /*@out@*/double*,/*@out@*/double*,/*@out@*/double*,/*@out@*/int*),
+									  /*@in@*/const grain_data*,/*@out@*/double*,/*@out@*/double*,
+									  /*@out@*/double*,/*@out@*/int*),
 							  /*@out@*/double*,/*@out@*/double*,/*@out@*/double*,/*@out@*/int*);
-STATIC void mie_step(double,/*@partial@*/sd_data*,/*@in@*/const grain_data*,
-					 void(*)(double,/*@in@*/const sd_data*,/*@in@*/const grain_data*,
+STATIC void mie_step(double,/*@partial@*/sd_data*,/*@in@*/const grain_data*,/*@in@*/const grain_data*,
+					 void(*)(double,/*@in@*/const sd_data*,/*@in@*/const grain_data*,/*@in@*/const grain_data*,
 							 /*@out@*/double*,/*@out@*/double*,/*@out@*/double*,/*@out@*/int*),
 					 /*@partial@*/double*,/*@partial@*/double*,/*@in@*/const double[],/*@out@*/double*,
 					 /*@out@*/double*,/*@out@*/double*,/*@out@*/int*);
-STATIC void mie_cs(double,/*@in@*/const sd_data*,/*@in@*/const grain_data*,/*@out@*/double*,/*@out@*/double*,
-				   /*@out@*/double*,/*@out@*/int*);
-STATIC void ld01_fun(/*@in@*/void(*)(double,const sd_data*,const grain_data[],double*,double*,double*,int*),
-					 /*@in@*/double,/*@in@*/double,double,/*@in@*/const sd_data*,/*@in@*/const grain_data[],
+STATIC void mie_cs(double,/*@in@*/const sd_data*,/*@in@*/const grain_data*,/*@in@*/const grain_data*,
+				   /*@out@*/double*,/*@out@*/double*,/*@out@*/double*,/*@out@*/int*);
+STATIC void ld01_fun(/*@in@*/void(*)(double,const sd_data*,const grain_data*,double*,double*,double*,int*),
+					 /*@in@*/double,/*@in@*/double,double,/*@in@*/const sd_data*,/*@in@*/const grain_data*,
+					 /*@in@*/const grain_data*,/*@out@*/double*,/*@out@*/double*,/*@out@*/double*,/*@out@*/int*);
+inline void car1_fun(double,/*@in@*/const sd_data*,/*@in@*/const grain_data*,/*@in@*/const grain_data*,
 					 /*@out@*/double*,/*@out@*/double*,/*@out@*/double*,/*@out@*/int*);
-inline void car1_fun(double,/*@in@*/const sd_data*,/*@in@*/const grain_data[],/*@out@*/double*,/*@out@*/double*,
-					 /*@out@*/double*,/*@out@*/int*);
 STATIC void pah1_fun(double,/*@in@*/const sd_data*,/*@in@*/const grain_data*,/*@out@*/double*,/*@out@*/double*,
 					 /*@out@*/double*,/*@out@*/int*);
-inline void car2_fun(double,/*@in@*/const sd_data*,/*@in@*/const grain_data[],/*@out@*/double*,/*@out@*/double*,
-					 /*@out@*/double*,/*@out@*/int*);
+inline void car2_fun(double,/*@in@*/const sd_data*,/*@in@*/const grain_data*,/*@in@*/const grain_data*,
+					 /*@out@*/double*,/*@out@*/double*,/*@out@*/double*,/*@out@*/int*);
 STATIC void pah2_fun(double,/*@in@*/const sd_data*,/*@in@*/const grain_data*,/*@out@*/double*,/*@out@*/double*,
 					 /*@out@*/double*,/*@out@*/int*);
-inline void car3_fun(double,/*@in@*/const sd_data*,/*@in@*/const grain_data[],/*@out@*/double*,/*@out@*/double*,
-					 /*@out@*/double*,/*@out@*/int*);
+inline void car3_fun(double,/*@in@*/const sd_data*,/*@in@*/const grain_data*,/*@in@*/const grain_data*,
+					 /*@out@*/double*,/*@out@*/double*,/*@out@*/double*,/*@out@*/int*);
 STATIC void pah3_fun(double,/*@in@*/const sd_data*,/*@in@*/const grain_data*,/*@out@*/double*,/*@out@*/double*,
 					 /*@out@*/double*,/*@out@*/int*);
 inline double Drude(double,double,double,double);
-STATIC void tbl_fun(double,/*@in@*/const sd_data*,/*@in@*/const grain_data*,/*@out@*/double*,/*@out@*/double*,
-					/*@out@*/double*,/*@out@*/int*);
+STATIC void tbl_fun(double,/*@in@*/const sd_data*,/*@in@*/const grain_data*,/*@in@*/const grain_data*,
+					/*@out@*/double*,/*@out@*/double*,/*@out@*/double*,/*@out@*/int*);
 STATIC double size_distr(double,/*@in@*/const sd_data*);
 STATIC double search_limit(double,double,double,sd_data);
 STATIC void mie_calc_ial(/*@in@*/const grain_data*,long,/*@out@*/vector<double>&,/*@in@*/const string&,/*@in@*/bool*);
@@ -247,6 +277,8 @@ STATIC void mie_read_number(/*@in@*/const string&,/*@in@*/const string&,/*@out@*
 STATIC void mie_read_form(/*@in@*/const string&,/*@out@*/double[],/*@out@*/double*,/*@out@*/double*);
 STATIC void mie_write_form(/*@in@*/const double[],/*@out@*/string&);
 STATIC void mie_read_word(/*@in@*/const string&,/*@out@*/string&,bool);
+STATIC void mie_read_quoted_word(/*@in@*/const string&,/*@in@*/const string&,/*@out@*/string&,long int);
+STATIC void mie_read_charge_range(/*@in@*/const string&,/*@in@*/const string&,/*@out@*/long int[2],long int);
 STATIC void mie_next_data(/*@in@*/const string&,/*@in@*/FILE*,/*@out@*/string&,/*@in@*/long int*);
 STATIC void mie_next_line(/*@in@*/const string&,/*@in@*/FILE*,/*@out@*/string&,/*@in@*/long int*);
 
@@ -370,9 +402,9 @@ void mie_write_opc(/*@in@*/ const char *rfi_file,
 	double volnorm = sd.vol;
 	double volfrac = 1.;
 
-	multi_arr<double,2> acs_abs( sd.nPart, gv.ncells() );
-	multi_arr<double,2> acs_sct( acs_abs.clone() );
-	multi_arr<double,2> a1g( acs_abs.clone() );
+	multi_arr<double,3> acs_abs( max(gd.nCharge(),1ul), sd.nPart, gv.ncells() );
+	multi_arr<double,3> acs_sct( acs_abs.clone() );
+	multi_arr<double,3> a1g( acs_abs.clone() );
 	vector<double> inv_att_len( gv.ncells() );
 
 	fprintf( ioQQQ, "\n Starting mie_write_opc, output will be written to %s\n\n", chFile.c_str() );
@@ -491,18 +523,6 @@ void mie_write_opc(/*@in@*/ const char *rfi_file,
 	lgErr = lgErr || ( fprintf(fdes,"%32ld # gv.ncells()\n",gv.ncells()) < 0 );
 	lgErr = lgErr || ( fprintf(fdes,"%32ld # number of size distr. bins\n#\n",sd.nPart) < 0 );
 
-	if( gd.rfiType == OPC_PAH1 )
-	{
-		gd2.clear();
-		mie_read_rfi("graphite.rfi",&gd2);
-	}
-	else if( gd.rfiType == OPC_PAH2N || gd.rfiType == OPC_PAH2C ||
-		 gd.rfiType == OPC_PAH3N || gd.rfiType == OPC_PAH3C )
-	{
-		gd2.clear();
-		mie_read_rfi("gdraine.rfi",&gd2);
-	}
-
 	vector<int> ErrorIndex( gv.ncells() );
 
 	for( long p=0; p < sd.nPart; p++ ) 
@@ -521,9 +541,9 @@ void mie_write_opc(/*@in@*/ const char *rfi_file,
 			double frac = sd.unity_bin/sd.unity;
 			volfrac = sd.vol*frac/volnorm;
 			fprintf( ioQQQ, " Starting size bin %ld, amin=%.5f amax=%.5f micron\n",
-				 p+1,sd.clim[ipBLo],sd.clim[ipBHi] );
+					 p+1,sd.clim[ipBLo],sd.clim[ipBHi] );
 			lgErr = lgErr || ( fprintf(fdes,"# size bin %ld, amin=%.5f amax=%.5f micron\n",
-						   p+1,sd.clim[ipBLo],sd.clim[ipBHi]) < 0 );
+									   p+1,sd.clim[ipBLo],sd.clim[ipBHi]) < 0 );
 			lgErr = lgErr || ( fprintf(fdes,"%.6e # average grain ",3.*sd.vol/sd.area) < 0 );
 			lgErr = lgErr || ( fprintf(fdes,"radius <a^3>/<a^2>, this bin (cm)\n") < 0 );
 			lgErr = lgErr || ( fprintf(fdes,"%.6e # average ",sd.area) < 0 );
@@ -537,114 +557,142 @@ void mie_write_opc(/*@in@*/ const char *rfi_file,
 			lgErr = lgErr || ( fprintf(fdes,"%.6e # total grain volume ",sd.vol*frac/gd.norm) < 0 );
 			lgErr = lgErr || ( fprintf(fdes,"Int(4/3pi*a^3) per H, this bin (cm^3/H)\n#\n") < 0 );
 		}
+	}
 
-		bool lgErrorOccurred = false;
+	grain_data* gdp = &gd;
 
-		/* calculate the opacity data */
-		for( long i=0; i < gv.ncells(); i++ ) 
+	for( size_t c=0; c < max(gd.nCharge(),1ul); c++ )
+	{
+		if( gd.nCharge() > 0 )
+			gdp = gd.bracket[c].gd;
+
+		mie_auxiliary(&sd,gdp,"init");
+
+		gd2.clear();
+		if( gdp->rfiType == OPC_PAH1 )
 		{
-			double wavlen = WAVNRYD/gv.anu(i)*1.e4;
+			mie_read_rfi("graphite.rfi",&gd2);
+		}
+		else if( gdp->rfiType == OPC_PAH2N || gdp->rfiType == OPC_PAH2C ||
+				 gdp->rfiType == OPC_PAH3N || gdp->rfiType == OPC_PAH3C )
+		{
+			mie_read_rfi("gdraine.rfi",&gd2);
+		}
 
-			ErrorIndex[i] = 0;
-			acs_abs[p][i] = 0.;
-			acs_sct[p][i] = 0.;
-			a1g[p][i] = 0.;
+		for( long p=0; p < sd.nPart; p++ ) 
+		{
+			sd.cPart = p;
 
-			int Error = 0;
-			double cosb, cs_abs, cs_sct;
+			mie_auxiliary(&sd,gdp,"step");
 
-			switch( gd.rfiType )
+			bool lgErrorOccurred = false;
+
+			/* calculate the opacity data */
+			for( long i=0; i < gv.ncells(); i++ ) 
 			{
-			case RFI_TABLE:
-				for( gd.cAxis=0; gd.cAxis < gd.nAxes; gd.cAxis++ ) 
-				{
-					mie_cs_size_distr(wavlen,&sd,&gd,mie_cs,&cs_abs,&cs_sct,&cosb,&Error);
-					ErrorIndex[i] = max(ErrorIndex[i],Error);
-					acs_abs[p][i] += cs_abs*gd.wt[gd.cAxis];
-					acs_sct[p][i] += cs_sct*gd.wt[gd.cAxis];
-					a1g[p][i] += cs_sct*(1.-cosb)*gd.wt[gd.cAxis];
-				}
-				lgErrorOccurred = mie_auxiliary2(ErrorIndex,acs_abs,acs_sct,a1g,p,i);
-				break;
-			case OPC_TABLE:
-				gd.cAxis = 0;
-				mie_cs_size_distr(wavlen,&sd,&gd,tbl_fun,&cs_abs,&cs_sct,&cosb,&Error);
-				ErrorIndex[i] = min(Error,2);
-				lgErrorOccurred = lgErrorOccurred || ( Error > 0 );
-				acs_abs[p][i] = cs_abs*gd.norm;
-				acs_sct[p][i] = cs_sct*gd.norm;
-				a1g[p][i] = 1.-cosb;
-				break;
-			case OPC_GREY:
+				double wavlen = WAVNRYD/gv.anu(i)*1.e4;
+
 				ErrorIndex[i] = 0;
-				acs_abs[p][i] = 1.3121e-23*volfrac*gd.norm;
-				acs_sct[p][i] = 2.6242e-23*volfrac*gd.norm;
-				a1g[p][i] = 1.;
-				break;
-			case OPC_PAH1:
-				gd.cAxis = 0;
-				for( gd2.cAxis=0; gd2.cAxis < gd2.nAxes; gd2.cAxis++ ) 
+				acs_abs[c][p][i] = 0.;
+				acs_sct[c][p][i] = 0.;
+				a1g[c][p][i] = 0.;
+
+				int Error = 0;
+				double cosb, cs_abs, cs_sct;
+
+				switch( gdp->rfiType )
 				{
-					mie_cs_size_distr(wavlen,&sd,&gd,car1_fun,&cs_abs,&cs_sct,&cosb,&Error);
-					ErrorIndex[i] = max(ErrorIndex[i],Error);
-					acs_abs[p][i] += cs_abs*gd2.wt[gd2.cAxis];
-					acs_sct[p][i] += 0.1*cs_abs*gd2.wt[gd2.cAxis];
-					a1g[p][i] += 0.1*cs_abs*1.*gd2.wt[gd2.cAxis];
+				case RFI_TABLE:
+					for( gdp->cAxis=0; gdp->cAxis < gdp->nAxes; gdp->cAxis++ ) 
+					{
+						mie_cs_size_distr(wavlen,&sd,gdp,NULL,mie_cs,&cs_abs,&cs_sct,&cosb,&Error);
+						ErrorIndex[i] = max(ErrorIndex[i],Error);
+						acs_abs[c][p][i] += cs_abs*gdp->wt[gdp->cAxis];
+						acs_sct[c][p][i] += cs_sct*gdp->wt[gdp->cAxis];
+						a1g[c][p][i] += cs_sct*(1.-cosb)*gdp->wt[gdp->cAxis];
+					}
+					lgErrorOccurred = mie_auxiliary2(ErrorIndex,acs_abs,acs_sct,a1g,c,p,i);
+					break;
+				case OPC_TABLE:
+					gdp->cAxis = 0;
+					mie_cs_size_distr(wavlen,&sd,gdp,NULL,tbl_fun,&cs_abs,&cs_sct,&cosb,&Error);
+					ErrorIndex[i] = min(Error,2);
+					lgErrorOccurred = lgErrorOccurred || ( Error > 0 );
+					acs_abs[c][p][i] = cs_abs*gd.norm;
+					acs_sct[c][p][i] = cs_sct*gd.norm;
+					a1g[c][p][i] = 1.-cosb;
+					break;
+				case OPC_GREY:
+					ErrorIndex[i] = 0;
+					acs_abs[c][p][i] = 1.3121e-23*volfrac*gd.norm;
+					acs_sct[c][p][i] = 2.6242e-23*volfrac*gd.norm;
+					a1g[c][p][i] = 1.;
+					break;
+				case OPC_PAH1:
+					gdp->cAxis = 0;
+					for( gd2.cAxis=0; gd2.cAxis < gd2.nAxes; gd2.cAxis++ ) 
+					{
+						mie_cs_size_distr(wavlen,&sd,gdp,&gd2,car1_fun,&cs_abs,&cs_sct,&cosb,&Error);
+						ErrorIndex[i] = max(ErrorIndex[i],Error);
+						acs_abs[c][p][i] += cs_abs*gd2.wt[gd2.cAxis];
+						acs_sct[c][p][i] += 0.1*cs_abs*gd2.wt[gd2.cAxis];
+						a1g[c][p][i] += 0.1*cs_abs*1.*gd2.wt[gd2.cAxis];
+					}
+					lgErrorOccurred = mie_auxiliary2(ErrorIndex,acs_abs,acs_sct,a1g,c,p,i);
+					break;
+				case OPC_PAH2N:
+				case OPC_PAH2C:
+					gdp->cAxis = 0;
+					// any non-zero charge will do in the OPC_PAH2C case
+					gdp->charge = ( gdp->rfiType == OPC_PAH2N ) ? 0 : 1;
+					for( gd2.cAxis=0; gd2.cAxis < gd2.nAxes; gd2.cAxis++ ) 
+					{
+						mie_cs_size_distr(wavlen,&sd,gdp,&gd2,car2_fun,&cs_abs,&cs_sct,&cosb,&Error);
+						ErrorIndex[i] = max(ErrorIndex[i],Error);
+						acs_abs[c][p][i] += cs_abs*gd2.wt[gd2.cAxis];
+						acs_sct[c][p][i] += 0.1*cs_abs*gd2.wt[gd2.cAxis];
+						a1g[c][p][i] += 0.1*cs_abs*1.*gd2.wt[gd2.cAxis];
+					}
+					lgErrorOccurred = mie_auxiliary2(ErrorIndex,acs_abs,acs_sct,a1g,c,p,i);
+					break;
+				case OPC_PAH3N:
+				case OPC_PAH3C:
+					gdp->cAxis = 0;
+					// any non-zero charge will do in the OPC_PAH3C case
+					gdp->charge = ( gdp->rfiType == OPC_PAH3N ) ? 0 : 1;
+					for( gd2.cAxis=0; gd2.cAxis < gd2.nAxes; gd2.cAxis++ ) 
+					{
+						mie_cs_size_distr(wavlen,&sd,gdp,&gd2,car3_fun,&cs_abs,&cs_sct,&cosb,&Error);
+						ErrorIndex[i] = max(ErrorIndex[i],Error);
+						acs_abs[c][p][i] += cs_abs*gd2.wt[gd2.cAxis];
+						acs_sct[c][p][i] += 0.1*cs_abs*gd2.wt[gd2.cAxis];
+						a1g[c][p][i] += 0.1*cs_abs*1.*gd2.wt[gd2.cAxis];
+					}
+					lgErrorOccurred = mie_auxiliary2(ErrorIndex,acs_abs,acs_sct,a1g,c,p,i);
+					break;
+				default:
+					TotalInsanity();
 				}
-				lgErrorOccurred = mie_auxiliary2(ErrorIndex,acs_abs,acs_sct,a1g,p,i);
-				break;
-			case OPC_PAH2N:
-			case OPC_PAH2C:
-				gd.cAxis = 0;
-				// any non-zero charge will do in the OPC_PAH2C case
-				gd.charge = ( gd.rfiType == OPC_PAH2N ) ? 0 : 1;
-				for( gd2.cAxis=0; gd2.cAxis < gd2.nAxes; gd2.cAxis++ ) 
-				{
-					mie_cs_size_distr(wavlen,&sd,&gd,car2_fun,&cs_abs,&cs_sct,&cosb,&Error);
-					ErrorIndex[i] = max(ErrorIndex[i],Error);
-					acs_abs[p][i] += cs_abs*gd2.wt[gd2.cAxis];
-					acs_sct[p][i] += 0.1*cs_abs*gd2.wt[gd2.cAxis];
-					a1g[p][i] += 0.1*cs_abs*1.*gd2.wt[gd2.cAxis];
-				}
-				lgErrorOccurred = mie_auxiliary2(ErrorIndex,acs_abs,acs_sct,a1g,p,i);
-				break;
-			case OPC_PAH3N:
-			case OPC_PAH3C:
-				gd.cAxis = 0;
-				// any non-zero charge will do in the OPC_PAH3C case
-				gd.charge = ( gd.rfiType == OPC_PAH3N ) ? 0 : 1;
-				for( gd2.cAxis=0; gd2.cAxis < gd2.nAxes; gd2.cAxis++ ) 
-				{
-					mie_cs_size_distr(wavlen,&sd,&gd,car3_fun,&cs_abs,&cs_sct,&cosb,&Error);
-					ErrorIndex[i] = max(ErrorIndex[i],Error);
-					acs_abs[p][i] += cs_abs*gd2.wt[gd2.cAxis];
-					acs_sct[p][i] += 0.1*cs_abs*gd2.wt[gd2.cAxis];
-					a1g[p][i] += 0.1*cs_abs*1.*gd2.wt[gd2.cAxis];
-				}
-				lgErrorOccurred = mie_auxiliary2(ErrorIndex,acs_abs,acs_sct,a1g,p,i);
-				break;
-			default:
-				TotalInsanity();
 			}
-		}
 
-		/* extrapolate/interpolate for missing data */
-		if( lgErrorOccurred ) 
-		{
-			chString = "absorption cs";
-			mie_repair(chString,gv.ncells(),2,0,gv.anuptr(),&acs_abs[p][0],ErrorIndex,false,&lgWarning);
-			chString = "scattering cs";
-			mie_repair(chString,gv.ncells(),2,1,gv.anuptr(),&acs_sct[p][0],ErrorIndex,false,&lgWarning);
-			chString = "asymmetry parameter";
-			mie_repair(chString,gv.ncells(),1,1,gv.anuptr(),&a1g[p][0],ErrorIndex,true,&lgWarning);
-		}
+			/* extrapolate/interpolate for missing data */
+			if( lgErrorOccurred ) 
+			{
+				chString = "absorption cs";
+				mie_repair(chString,gv.ncells(),2,0,gv.anuptr(),&acs_abs[c][p][0],ErrorIndex,false,&lgWarning);
+				chString = "scattering cs";
+				mie_repair(chString,gv.ncells(),2,1,gv.anuptr(),&acs_sct[c][p][0],ErrorIndex,false,&lgWarning);
+				chString = "asymmetry parameter";
+				mie_repair(chString,gv.ncells(),1,1,gv.anuptr(),&a1g[c][p][0],ErrorIndex,true,&lgWarning);
+			}
 
-		for( long i=0; i < gv.ncells(); i++ ) 
-		{
-			acs_abs[p][i] /= gd.norm;
-			/* >>chng 02 dec 30, do not multiply with (1-g) and write this factor out
-			 * separately; this is useful for calculating extinction properties of grains, PvH */
-			acs_sct[p][i] /= gd.norm;
+			for( long i=0; i < gv.ncells(); i++ ) 
+			{
+				acs_abs[c][p][i] /= gd.norm;
+				/* >>chng 02 dec 30, do not multiply with (1-g) and write this factor out
+				 * separately; this is useful for calculating extinction properties of grains, PvH */
+				acs_sct[c][p][i] /= gd.norm;
+			}
 		}
 	}
 
@@ -652,43 +700,76 @@ void mie_write_opc(/*@in@*/ const char *rfi_file,
 	lgErr = lgErr || ( fprintf(fdes,"# ===========================================\n") < 0 );
 	lgErr = lgErr || ( fprintf(fdes,"# anu (Ryd) abs_cs_01 (cm^2/H) abs_cs_02.....\n#\n") < 0 );
 
-	for( long i=0; i < gv.ncells(); i++ ) 
+	for( size_t c=0; c < max(gd.nCharge(),1ul); c++ )
 	{
-		lgErr = lgErr || ( fprintf(fdes,"%.6e ",gv.anu(i)) < 0 );
-		for( long p=0; p < sd.nPart; p++ ) 
+		long Zlo = LONG_MIN, Zhi = LONG_MAX;
+		if( gd.nCharge() > 0 )
 		{
-			lgErr = lgErr || ( fprintf(fdes,"%.6e ",acs_abs[p][i]) < 0 );
+			Zlo = gd.bracket[c].Z[0];
+			Zhi = gd.bracket[c].Z[1];
 		}
-		lgErr = lgErr || ( fprintf(fdes,"\n") < 0 );
+		lgErr = lgErr || ( fprintf(fdes,"%ld %ld\n",Zlo,Zhi) < 0 );
+
+		for( long i=0; i < gv.ncells(); i++ ) 
+		{
+			lgErr = lgErr || ( fprintf(fdes,"%.6e ",gv.anu(i)) < 0 );
+			for( long p=0; p < sd.nPart; p++ ) 
+			{
+				lgErr = lgErr || ( fprintf(fdes,"%.6e ",acs_abs[c][p][i]) < 0 );
+			}
+			lgErr = lgErr || ( fprintf(fdes,"\n") < 0 );
+		}
 	}
 
 	lgErr = lgErr || ( fprintf(fdes,"#\n") < 0 );
 	lgErr = lgErr || ( fprintf(fdes,"# ===========================================\n") < 0 );
 	lgErr = lgErr || ( fprintf(fdes,"# anu (Ryd) sct_cs_01 (cm^2/H) sct_cs_02.....\n#\n") < 0 );
 
-	for( long i=0; i < gv.ncells(); i++ ) 
+	for( size_t c=0; c < max(gd.nCharge(),1ul); c++ )
 	{
-		lgErr = lgErr || ( fprintf(fdes,"%.6e ",gv.anu(i)) < 0 );
-		for( long p=0; p < sd.nPart; p++ ) 
+		long Zlo = LONG_MIN, Zhi = LONG_MAX;
+		if( gd.nCharge() > 0 )
 		{
-			lgErr = lgErr || ( fprintf(fdes,"%.6e ",acs_sct[p][i]) < 0 );
+			Zlo = gd.bracket[c].Z[0];
+			Zhi = gd.bracket[c].Z[1];
 		}
-		lgErr = lgErr || ( fprintf(fdes,"\n") < 0 );
+		lgErr = lgErr || ( fprintf(fdes,"%ld %ld\n",Zlo,Zhi) < 0 );
+
+		for( long i=0; i < gv.ncells(); i++ ) 
+		{
+			lgErr = lgErr || ( fprintf(fdes,"%.6e ",gv.anu(i)) < 0 );
+			for( long p=0; p < sd.nPart; p++ ) 
+			{
+				lgErr = lgErr || ( fprintf(fdes,"%.6e ",acs_sct[c][p][i]) < 0 );
+			}
+			lgErr = lgErr || ( fprintf(fdes,"\n") < 0 );
+		}
 	}
 
 	lgErr = lgErr || ( fprintf(fdes,"#\n") < 0 );
 	lgErr = lgErr || ( fprintf(fdes,"# ===========================================\n") < 0 );
 	lgErr = lgErr || ( fprintf(fdes,"# anu (Ryd) (1-g)_bin_01 (1-g)_bin_02.....\n#\n") < 0 );
 
-	for( long i=0; i < gv.ncells(); i++ ) 
+	for( size_t c=0; c < max(gd.nCharge(),1ul); c++ )
 	{
-		lgErr = lgErr || ( fprintf(fdes,"%.6e ",gv.anu(i)) < 0 );
-		for( long p=0; p < sd.nPart; p++ ) 
+		long Zlo = LONG_MIN, Zhi = LONG_MAX;
+		if( gd.nCharge() > 0 )
 		{
-			// cap of 1-g is needed when g is negative...
-			lgErr = lgErr || ( fprintf(fdes,"%.6e ",min(a1g[p][i],1.)) < 0 );
+			Zlo = gd.bracket[c].Z[0];
+			Zhi = gd.bracket[c].Z[1];
 		}
-		lgErr = lgErr || ( fprintf(fdes,"\n") < 0 );
+		lgErr = lgErr || ( fprintf(fdes,"%ld %ld\n",Zlo,Zhi) < 0 );
+
+		for( long i=0; i < gv.ncells(); i++ ) 
+		{
+			lgErr = lgErr || ( fprintf(fdes,"%.6e ",gv.anu(i)) < 0 );
+			for( long p=0; p < sd.nPart; p++ ) 
+			{
+				// cap of 1-g is needed when g is negative...
+				lgErr = lgErr || ( fprintf(fdes,"%.6e ",min(a1g[c][p][i],1.)) < 0 );
+			}
+			lgErr = lgErr || ( fprintf(fdes,"\n") < 0 );
+		}
 	}
 
 	fprintf( ioQQQ, " Starting calculation of inverse attenuation length\n" );
@@ -878,9 +959,10 @@ STATIC void mie_auxiliary(/*@partial@*/ sd_data *sd,
 }
 
 STATIC bool mie_auxiliary2(vector<int>& ErrorIndex,
-						   multi_arr<double,2>& acs_abs,
-						   multi_arr<double,2>& acs_sct,
-						   multi_arr<double,2>& a1g,
+						   multi_arr<double,3>& acs_abs,
+						   multi_arr<double,3>& acs_sct,
+						   multi_arr<double,3>& a1g,
+						   long c,
 						   long p,
 						   long i)
 {
@@ -897,16 +979,16 @@ STATIC bool mie_auxiliary2(vector<int>& ErrorIndex,
 	{
 		/*lint -e616 */
 	case 2:
-		acs_abs[p][i] = 0.;
-		acs_sct[p][i] = 0.;
+		acs_abs[c][p][i] = 0.;
+		acs_sct[c][p][i] = 0.;
 		/*lint -fallthrough */
 		/* controls is supposed to flow to the next case */
 	case 1:
-		a1g[p][i] = 0.;
+		a1g[c][p][i] = 0.;
 		break;
 		/*lint +e616 */
 	case 0:
-		a1g[p][i] /= acs_sct[p][i];
+		a1g[c][p][i] /= acs_sct[c][p][i];
 		break;
 	default:
 		TotalInsanity();
@@ -914,9 +996,9 @@ STATIC bool mie_auxiliary2(vector<int>& ErrorIndex,
 
 	/* sanity checks */
 	if( ErrorIndex[i] < 2 )
-		ASSERT( acs_abs[p][i] > 0. && acs_sct[p][i] > 0. );
+		ASSERT( acs_abs[c][p][i] > 0. && acs_sct[c][p][i] > 0. );
 	if( ErrorIndex[i] < 1 )
-		ASSERT( a1g[p][i] > 0. );
+		ASSERT( a1g[c][p][i] > 0. );
 
 	return lgErrorOccurred;
 }
@@ -1298,38 +1380,51 @@ void mie_read_opc(/*@in@*/const char *chFile,
 	for( i=0; i < 5; i++ )
 		mie_next_line(chFile,io2,chLine,&dl);
 
+	long Z[2];
+
 	/* now read absorption opacities */
-	for( i=0; i < nup; i++ ) 
+	while( true )
 	{
-		/* read in energy scale and then opacities */
-		if( (res = fscanf(io2,"%le",&anu)) != 1 ) 
+		mie_next_line(chFile,io2,chLine,&dl);
+		mie_read_charge_range(chFile,chLine,Z,dl);
+
+		for( i=0; i < nup; i++ ) 
 		{
-			fprintf( ioQQQ, " Read failed on %s\n",chFile );
-			if( res == EOF )
-				fprintf( ioQQQ, " EOF reached prematurely\n" );
-			cdEXIT(EXIT_FAILURE);
-		}
-		// check that frequency grid matches, frequencies are printed with 7 significant digits
-		if( !fp_equal_tol(anu,gv.anu(i),1e-6*gv.anu(i)) )
-		{
-			fprintf(ioQQQ,"\n\n PROBLEM while reading frequencies: point %li should "
-				"have value %e, but actually has %e\n", (unsigned long)i, gv.anu(i), anu );
-			fprintf(ioQQQ," Please recompile the grain opacity file %s.\n", chFile );
-			cdEXIT(EXIT_FAILURE);
-		}
-		for( j=0; j < nbin; j++ ) 
-		{
-			nd2 = nd + j;
-			if( (res = fscanf(io2,"%le",&gv.bin[nd2].dstab1[i])) != 1 ) 
+			/* read in energy scale and then opacities */
+			if( (res = fscanf(io2,"%le",&anu)) != 1 ) 
 			{
 				fprintf( ioQQQ, " Read failed on %s\n",chFile );
 				if( res == EOF )
 					fprintf( ioQQQ, " EOF reached prematurely\n" );
 				cdEXIT(EXIT_FAILURE);
 			}
-			ASSERT( gv.bin[nd2].dstab1[i] > 0. );
-			gv.bin[nd2].dstab1_x_anu[i] = gv.bin[nd2].dstab1[i]*gv.anu(i);
+			// check that frequency grid matches, frequencies are printed with 7 significant digits
+			if( !fp_equal_tol(anu,gv.anu(i),1e-6*gv.anu(i)) )
+			{
+				fprintf(ioQQQ,"\n\n PROBLEM while reading frequencies: point %li should "
+						"have value %e, but actually has %e\n", (unsigned long)i, gv.anu(i), anu );
+				fprintf(ioQQQ," Please recompile the grain opacity file %s.\n", chFile );
+				cdEXIT(EXIT_FAILURE);
+			}
+			for( j=0; j < nbin; j++ ) 
+			{
+				nd2 = nd + j;
+				if( (res = fscanf(io2,"%le",&gv.bin[nd2].dstab1[i])) != 1 ) 
+				{
+					fprintf( ioQQQ, " Read failed on %s\n",chFile );
+					if( res == EOF )
+						fprintf( ioQQQ, " EOF reached prematurely\n" );
+					cdEXIT(EXIT_FAILURE);
+				}
+				ASSERT( gv.bin[nd2].dstab1[i] > 0. );
+				gv.bin[nd2].dstab1_x_anu[i] = gv.bin[nd2].dstab1[i]*gv.anu(i);
+			}
 		}
+
+		if( Z[1] == LONG_MAX )
+			break;
+
+		mie_next_line(chFile,io2,chLine,&dl);
 	}
 
 	/* skip to end-of-line and then skip next 4 lines */
@@ -1337,27 +1432,38 @@ void mie_read_opc(/*@in@*/const char *chFile,
 		mie_next_line(chFile,io2,chLine,&dl);
 
 	/* now read scattering opacities */
-	for( i=0; i < nup; i++ ) 
+	while( true )
 	{
-		if( (res = fscanf(io2,"%le",&anu)) != 1 ) 
+		mie_next_line(chFile,io2,chLine,&dl);
+		mie_read_charge_range(chFile,chLine,Z,dl);
+
+		for( i=0; i < nup; i++ ) 
 		{
-			fprintf( ioQQQ, " Read failed on %s\n",chFile );
-			if( res == EOF )
-				fprintf( ioQQQ, " EOF reached prematurely\n" );
-			cdEXIT(EXIT_FAILURE);
-		}
-		for( j=0; j < nbin; j++ ) 
-		{
-			nd2 = nd + j;
-			if( (res = fscanf(io2,"%le",&gv.bin[nd2].pure_sc1[i])) != 1 ) 
+			if( (res = fscanf(io2,"%le",&anu)) != 1 ) 
 			{
 				fprintf( ioQQQ, " Read failed on %s\n",chFile );
 				if( res == EOF )
 					fprintf( ioQQQ, " EOF reached prematurely\n" );
 				cdEXIT(EXIT_FAILURE);
 			}
-			ASSERT( gv.bin[nd2].pure_sc1[i] > 0. );
+			for( j=0; j < nbin; j++ ) 
+			{
+				nd2 = nd + j;
+				if( (res = fscanf(io2,"%le",&gv.bin[nd2].pure_sc1[i])) != 1 ) 
+				{
+					fprintf( ioQQQ, " Read failed on %s\n",chFile );
+					if( res == EOF )
+						fprintf( ioQQQ, " EOF reached prematurely\n" );
+					cdEXIT(EXIT_FAILURE);
+				}
+				ASSERT( gv.bin[nd2].pure_sc1[i] > 0. );
+			}
 		}
+
+		if( Z[1] == LONG_MAX )
+			break;
+
+		mie_next_line(chFile,io2,chLine,&dl);
 	}
 
 	/* skip to end-of-line and then skip next 4 lines */
@@ -1365,29 +1471,40 @@ void mie_read_opc(/*@in@*/const char *chFile,
 		mie_next_line(chFile,io2,chLine,&dl);
 
 	/* now read asymmetry factor */
-	for( i=0; i < nup; i++ ) 
+	while( true )
 	{
-		if( (res = fscanf(io2,"%le",&anu)) != 1 ) 
+		mie_next_line(chFile,io2,chLine,&dl);
+		mie_read_charge_range(chFile,chLine,Z,dl);
+
+		for( i=0; i < nup; i++ ) 
 		{
-			fprintf( ioQQQ, " Read failed on %s\n",chFile );
-			if( res == EOF )
-				fprintf( ioQQQ, " EOF reached prematurely\n" );
-			cdEXIT(EXIT_FAILURE);
-		}
-		for( j=0; j < nbin; j++ ) 
-		{
-			nd2 = nd + j;
-			if( (res = fscanf(io2,"%le",&gv.bin[nd2].asym[i])) != 1 ) 
+			if( (res = fscanf(io2,"%le",&anu)) != 1 ) 
 			{
 				fprintf( ioQQQ, " Read failed on %s\n",chFile );
 				if( res == EOF )
 					fprintf( ioQQQ, " EOF reached prematurely\n" );
 				cdEXIT(EXIT_FAILURE);
 			}
-			ASSERT( gv.bin[nd2].asym[i] > 0. );
-			// just in case we read an old opacity file...
-			gv.bin[nd2].asym[i] = min(gv.bin[nd2].asym[i],1.);
+			for( j=0; j < nbin; j++ ) 
+			{
+				nd2 = nd + j;
+				if( (res = fscanf(io2,"%le",&gv.bin[nd2].asym[i])) != 1 ) 
+				{
+					fprintf( ioQQQ, " Read failed on %s\n",chFile );
+					if( res == EOF )
+						fprintf( ioQQQ, " EOF reached prematurely\n" );
+					cdEXIT(EXIT_FAILURE);
+				}
+				ASSERT( gv.bin[nd2].asym[i] > 0. );
+				// just in case we read an old opacity file...
+				gv.bin[nd2].asym[i] = min(gv.bin[nd2].asym[i],1.);
+			}
 		}
+
+		if( Z[1] == LONG_MAX )
+			break;
+
+		mie_next_line(chFile,io2,chLine,&dl);
 	}
 
 	/* skip to end-of-line and then skip next 4 lines */
@@ -1424,7 +1541,9 @@ void mie_read_opc(/*@in@*/const char *chFile,
 STATIC void mie_cs_size_distr(double wavlen, /* micron */
 							  /*@partial@*/ sd_data *sd,
 							  /*@in@*/ const grain_data *gd,
+							  /*@in@*/ const grain_data *gd2,
 							  void(*cs_fun)(double,/*@in@*/const sd_data*,
+											/*@in@*/const grain_data*,
 											/*@in@*/const grain_data*,
 											/*@out@*/double*,/*@out@*/double*,
 											/*@out@*/double*,/*@out@*/int*),
@@ -1450,7 +1569,7 @@ STATIC void mie_cs_size_distr(double wavlen, /* micron */
 		/* do single sized grain */
 		ASSERT( sd->a[ipSize] > 0. );
 		sd->cSize = sd->a[ipSize];
-		(*cs_fun)(wavlen,sd,gd,cs_abs,cs_sct,cosb,error);
+		(*cs_fun)(wavlen,sd,gd,gd2,cs_abs,cs_sct,cosb,error);
 		break;
 	case SD_POWERLAW:
 		/* simple powerlaw distribution */
@@ -1478,7 +1597,7 @@ STATIC void mie_cs_size_distr(double wavlen, /* micron */
 		toler[2] = -TOLER;
 		do
 		{
-			mie_step(wavlen,sd,gd,cs_fun,&rr,&h,toler,&absval,&sctval,&mycosb,error);
+			mie_step(wavlen,sd,gd,gd2,cs_fun,&rr,&h,toler,&absval,&sctval,&mycosb,error);
 			if( *error >= 2 ) 
 			{
 				/* mie_cs or mie_step failed to converge -> integration is invalid */
@@ -1530,7 +1649,9 @@ STATIC void mie_cs_size_distr(double wavlen, /* micron */
 STATIC void mie_step(double wavlen, /* micron */
 					 /*@partial@*/ sd_data* sd,
 					 /*@in@*/ const grain_data* gd,
+					 /*@in@*/ const grain_data* gd2,
 					 void(*cs_fun)(double,/*@in@*/const sd_data*,
+								   /*@in@*/const grain_data*,
 								   /*@in@*/const grain_data*,
 								   /*@out@*/double*,/*@out@*/double*,
 								   /*@out@*/double*,/*@out@*/int*),
@@ -1578,7 +1699,7 @@ STATIC void mie_step(double wavlen, /* micron */
 						sd->cSize = max(*x - h1*double(j),sd->clim[ipBLo]);
 						int myerror;
 						double myabsval, mysctval, myg;
-						(*cs_fun)(wavlen,sd,gd,&myabsval,&mysctval,&myg,&myerror);
+						(*cs_fun)(wavlen,sd,gd,gd2,&myabsval,&mysctval,&myg,&myerror);
 						double weight = size_distr(sd->cSize,sd);
 						y1a[index] = weight*myabsval;
 						y2a[index] = weight*mysctval;
@@ -1672,6 +1793,7 @@ STATIC void mie_step(double wavlen, /* micron */
 STATIC void mie_cs(double wavlen,  /* micron */
 				   /*@in@*/ const sd_data *sd,
 				   /*@in@*/ const grain_data *gd,
+				   /*@in@*/ const grain_data *, /* NOT USED -- MUST BE KEPT FOR COMPATIBILITY */
 				   /*@out@*/ double *cs_abs, /* cm^2 */
 				   /*@out@*/ double *cs_sct, /* cm^2 */
 				   /*@out@*/ double *cosb,
@@ -1799,12 +1921,13 @@ STATIC void mie_cs(double wavlen,  /* micron */
 
 /* this routine calculates the absorption cross sections of carbonaceous grains, it is based on Eq. 2 of:
  * >>refer	grain	physics	Li, A., & Draine, B.T. 2001 ApJ, 554, 778 */
-STATIC void ld01_fun(/*@in@*/ void(*pah_fun)(double,const sd_data*,const grain_data[],double*,double*,double*,int*),
+STATIC void ld01_fun(/*@in@*/ void(*pah_fun)(double,const sd_data*,const grain_data*,double*,double*,double*,int*),
 					 /*@in@*/ double q_gra,   /* defined in LD01 */
 					 /*@in@*/ double wmin,    /* below wmin use pure graphite */
 					 /*@in@*/ double wavl,    /* in micron */
 					 /*@in@*/ const sd_data *sd,
-					 /*@in@*/ const grain_data gdArr[], /* gdArr[2] */
+					 /*@in@*/ const grain_data *gd,
+					 /*@in@*/ const grain_data *gd2,
 					 /*@out@*/ double *cs_abs,
 					 /*@out@*/ double *cs_sct,
 					 /*@out@*/ double *cosb,
@@ -1820,7 +1943,7 @@ STATIC void ld01_fun(/*@in@*/ void(*pah_fun)(double,const sd_data*,const grain_d
 	double xi_PAH, cs_abs1, cs_abs2;
 	if( wavl >= wmin )
 	{
-		(*pah_fun)(wavl,sd,&gdArr[0],&cs_abs1,cs_sct,cosb,error);
+		(*pah_fun)(wavl,sd,gd,&cs_abs1,cs_sct,cosb,error);
 		xi_PAH = (1.-q_gra)*min(1.,pow3(a_xi/sd->cSize));
 	}
 	else
@@ -1830,7 +1953,7 @@ STATIC void ld01_fun(/*@in@*/ void(*pah_fun)(double,const sd_data*,const grain_d
 	}
 	// ignore cs_sct, cosb, and error from pah2_fun and return the graphite ones instead.
 	// pah2_fun never returns errors and the other two values are ignored by the upstream code
-	mie_cs(wavl,sd,&gdArr[1],&cs_abs2,cs_sct,cosb,error);
+	mie_cs(wavl,sd,gd2,NULL,&cs_abs2,cs_sct,cosb,error);
 	*cs_abs = xi_PAH*cs_abs1 + (1.-xi_PAH)*cs_abs2;
 	return;
 }
@@ -1839,13 +1962,14 @@ STATIC void ld01_fun(/*@in@*/ void(*pah_fun)(double,const sd_data*,const grain_d
  * change from pah1_fun defined below at small grain radii to graphite-like behavior at large radii */
 inline void car1_fun(double wavl,    /* in micron */
 					 /*@in@*/ const sd_data *sd,
-					 /*@in@*/ const grain_data gdArr[], /* gdArr[2] */
+					 /*@in@*/ const grain_data *gd,
+					 /*@in@*/ const grain_data *gd2,
 					 /*@out@*/ double *cs_abs,
 					 /*@out@*/ double *cs_sct,
 					 /*@out@*/ double *cosb,
 					 /*@out@*/ int *error)
 {
-	ld01_fun(pah1_fun,0.,0.,wavl,sd,gdArr,cs_abs,cs_sct,cosb,error);
+	ld01_fun(pah1_fun,0.,0.,wavl,sd,gd,gd2,cs_abs,cs_sct,cosb,error);
 }
 
 /* this routine calculates the absorption cross sections of PAH molecules, it is based on:
@@ -2065,13 +2189,14 @@ STATIC void pah1_fun(double wavl,    /* in micron */
  * >>refer	grain	physics	Li, A., & Draine, B.T. 2001 ApJ, 554, 778 */
 inline void car2_fun(double wavl,    /* in micron */
 					 /*@in@*/ const sd_data *sd,
-					 /*@in@*/ const grain_data gdArr[], /* gdArr[2] */
+					 /*@in@*/ const grain_data *gd,
+					 /*@in@*/ const grain_data *gd2,
 					 /*@out@*/ double *cs_abs,
 					 /*@out@*/ double *cs_sct,
 					 /*@out@*/ double *cosb,
 					 /*@out@*/ int *error)
 {
-	ld01_fun(pah2_fun,0.01,1./17.25,wavl,sd,gdArr,cs_abs,cs_sct,cosb,error);
+	ld01_fun(pah2_fun,0.01,1./17.25,wavl,sd,gd,gd2,cs_abs,cs_sct,cosb,error);
 }
 
 // these values are taken from Table 1 of LD01
@@ -2199,13 +2324,14 @@ STATIC void pah2_fun(double wavl,    /* in micron */
  * >>refer	grain	physics	Draine, B.T., & Li, A., 2007 ApJ, 657, 810 */
 inline void car3_fun(double wavl,    /* in micron */
 					 /*@in@*/ const sd_data *sd,
-					 /*@in@*/ const grain_data gdArr[], /* gdArr[2] */
+					 /*@in@*/ const grain_data *gd,
+					 /*@in@*/ const grain_data *gd2,
 					 /*@out@*/ double *cs_abs,
 					 /*@out@*/ double *cs_sct,
 					 /*@out@*/ double *cosb,
 					 /*@out@*/ int *error)
 {
-	ld01_fun(pah3_fun,0.01,1./17.25,wavl,sd,gdArr,cs_abs,cs_sct,cosb,error);
+	ld01_fun(pah3_fun,0.01,1./17.25,wavl,sd,gd,gd2,cs_abs,cs_sct,cosb,error);
 }
 
 // these values are taken from Table 1 of DL07
@@ -2340,8 +2466,9 @@ inline double Drude(double lambda,  // wavelength (in micron)
 }
 
 STATIC void tbl_fun(double wavl,    /* in micron */
-					/*@in@*/ const sd_data *sd, /* NOT USED -- MUST BE KEPT FOR COMPATIBILITY */
+					/*@in@*/ const sd_data *, /* NOT USED -- MUST BE KEPT FOR COMPATIBILITY */
 					/*@in@*/ const grain_data *gd,
+					/*@in@*/ const grain_data *, /* NOT USED -- MUST BE KEPT FOR COMPATIBILITY */
 					/*@out@*/ double *cs_abs,
 					/*@out@*/ double *cs_sct,
 					/*@out@*/ double *cosb,
@@ -2352,10 +2479,6 @@ STATIC void tbl_fun(double wavl,    /* in micron */
 	double anu = WAVNRYD/wavl*1.e4;
 
 	DEBUG_ENTRY( "tbl_fun()" );
-
-	/* >>chng 02 nov 17, add this test to prevent warning that this var not used */
-	if( sd == NULL )
-		TotalInsanity();
 
 	/** \todo	2	include code for interpolating inv_att_len somewhere!! */
 
@@ -2965,6 +3088,8 @@ STATIC void mie_read_rfi(/*@in@*/  const string& chFile,
 		gd->rfiType = RFI_TABLE;
 	else if( chWord.find( "OPC_" ) != string::npos )
 		gd->rfiType = OPC_TABLE;
+	else if( chWord.find( "CHD_" ) != string::npos )
+		gd->rfiType = CHD_TABLE;
 	else if( chWord.find( "GREY" ) != string::npos )
 		gd->rfiType = OPC_GREY;
 	else if( chWord.find( "PAH1" ) != string::npos )
@@ -2981,10 +3106,13 @@ STATIC void mie_read_rfi(/*@in@*/  const string& chFile,
 	{
 		fprintf( ioQQQ, " Illegal keyword in %s\n",chFile.c_str() );
 		fprintf( ioQQQ, " Line #%ld, value=%s\n",dl,chWord.c_str());
-		fprintf( ioQQQ, " Allowed values are: RFI_TBL, OPC_TBL, GREY, PAH1, PH2N, PH2C, PH3N, PH3C\n");
+		fprintf( ioQQQ, " Allowed values are: RFI_TBL, OPC_TBL, CHD_TBL, GREY, PAH1, PH2N, PH2C, PH3N, PH3C\n");
 		cdEXIT(EXIT_FAILURE);
 	}
 
+	bool lgChargeRangeOK = true, lgNAxesOK = true;
+	long int nCharge;
+	string chFile2;
 	switch( gd->rfiType )
 	{
 	case RFI_TABLE:
@@ -3307,6 +3435,47 @@ STATIC void mie_read_rfi(/*@in@*/  const string& chFile,
 		}
 		gd->nAxes = 1;
 		break;
+	case CHD_TABLE:
+		mie_next_data(chFile,io2,chLine,&dl);
+		mie_read_number(chFile,chLine,&nCharge,true,dl,"number of charge table entries");
+		gd->bracket.resize(nCharge);
+		for( i=0; i < nCharge; i++ )
+		{
+			mie_next_data(chFile,io2,chLine,&dl);
+			mie_read_charge_range(chFile,chLine,gd->bracket[i].Z,dl);
+
+			mie_read_quoted_word(chFile,chLine,chFile2,dl);
+			gd->bracket[i].gd = new grain_data;
+			mie_read_ocn(chFile2,gd->bracket[i].gd);
+			if( gd->bracket[i].gd->rfiType == CHD_TABLE )
+			{
+				fprintf( ioQQQ, " RFI type CHD_TABLE is not allowed in %s\n",chFile.c_str());
+				fprintf( ioQQQ, " Line #%ld: %s\n",dl,chLine.c_str());
+				cdEXIT(EXIT_FAILURE);
+			}
+		}
+		if( gd->bracket.front().Z[0] != LONG_MIN || gd->bracket.back().Z[1] != LONG_MAX )
+			lgChargeRangeOK = false;
+		for( i=0; i < nCharge; i++ )
+		{
+			if( gd->bracket[i].Z[0] > gd->bracket[i].Z[1] )
+				lgChargeRangeOK = false;
+			if( i > 0 && gd->bracket[i].Z[0] != gd->bracket[i-1].Z[1]+1 )
+				lgChargeRangeOK = false;
+			if( i > 0 && gd->bracket[i].gd->nAxes != gd->bracket[i-1].gd->nAxes )
+				lgNAxesOK = false;
+		}
+		if( !lgChargeRangeOK )
+		{
+			fprintf( ioQQQ, " There are errors in the charge ranges in %s\n",chFile.c_str());
+			cdEXIT(EXIT_FAILURE);
+		}
+		if( !lgNAxesOK )
+		{
+			fprintf( ioQQQ, " All rfi files in %s must have the same number of principal axes\n",chFile.c_str());
+			cdEXIT(EXIT_FAILURE);
+		}
+		break;
 	case OPC_GREY:
 	case OPC_PAH1:
 	case OPC_PAH2N:
@@ -3382,35 +3551,15 @@ STATIC void mie_read_mix(/*@in@*/  const string& chFile,
 	sumAxes = 0;
 	for( i=0; i < nMaterial; i++ )
 	{
-		string chFile2;
-
 		/* each line contains relative fraction of volume occupied by each material,
 		 * followed by the name of the refractive index file between double quotes */
 		mie_next_data(chFile,io2,chLine,&dl);
 		mie_read_number(chFile,chLine,&frac[i],true,dl,"relative fraction of volume");
-		if( frac[i] <= 0. )
-		{
-			fprintf( ioQQQ, " Invalid volume fraction was found on line #%ld of file %s\n",dl,chFile.c_str() );
-			fprintf( ioQQQ, " Please supply a positive value\n" );
-			cdEXIT(EXIT_FAILURE);
-		}
 
 		sum += frac[i];
 
-		auto pp = chLine.find( '\"' );
-		if( pp != string::npos )
-		{
-			chFile2 = chLine.substr(++pp);
-			pp = chFile2.find( '\"' );
-			if( pp != string::npos )
-				chFile2.erase(pp);
-		}
-		if( pp == string::npos )
-		{
-			fprintf( ioQQQ, " No pair of double quotes was found on line #%ld of file %s\n",dl,chFile.c_str() );
-			fprintf( ioQQQ, " Please supply the refractive index file name between double quotes\n" );
-			cdEXIT(EXIT_FAILURE);
-		}
+		string chFile2;
+		mie_read_quoted_word(chFile,chLine,chFile2,dl);
 
 		mie_read_ocn( chFile2, &gdArr[i] );
 		if( gdArr[i].rfiType != RFI_TABLE )
@@ -4406,6 +4555,61 @@ STATIC void mie_read_word(/*@in@*/  const string& chLine,
 			chWord.push_back( toupper(chLine[ip++]) );
 		else
 			chWord.push_back( chLine[ip++] );
+}
+
+STATIC void mie_read_quoted_word(/*@in@*/  const string& chFile,
+								 /*@in@*/  const string& chLine,
+								 /*@out@*/ string& chWord,
+								 long int dl)
+{
+	DEBUG_ENTRY( "mie_read_quoted_word()" );
+
+	auto pp = chLine.find( '\"' );
+	if( pp != string::npos )
+	{
+		chWord = chLine.substr(++pp);
+		pp = chWord.find( '\"' );
+		if( pp != string::npos )
+			chWord.erase(pp);
+	}
+	if( pp == string::npos )
+	{
+		fprintf( ioQQQ, " No pair of double quotes was found on line #%ld of file %s\n",dl,chFile.c_str() );
+		fprintf( ioQQQ, " Please supply the file name between double quotes\n" );
+		cdEXIT(EXIT_FAILURE);
+	}
+}
+
+STATIC void mie_read_charge_range(/*@in@*/  const string& chFile,
+								  /*@in@*/  const string& chLine,
+								  /*@out@*/ long int Z[2],
+								  long int dl)
+{
+	DEBUG_ENTRY( "mie_read_charge_range()" );
+
+	istringstream iss(chLine);
+	for( int i=0; i < 2; i++ )
+	{
+		string word;
+		iss >> word;
+		caps(word);
+		if( word == "-INF" )
+			Z[i] = LONG_MIN;
+		else if( word == "INF" || word == "+INF" )
+			Z[i] = LONG_MAX;
+		else
+		{
+			// can't use mie_read_number() here as negative values are allowed
+			istringstream iss2(word);
+			iss2 >> Z[i];
+			if( iss2.fail() )
+			{
+				fprintf( ioQQQ, " Syntax error in %s\n",chFile.c_str());
+				fprintf( ioQQQ, " Line #%ld: %s\n",dl,word.c_str());
+				cdEXIT(EXIT_FAILURE);
+			}
+		}
+	}
 }
 
 /*=====================================================================*/
