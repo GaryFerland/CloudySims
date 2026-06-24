@@ -1374,12 +1374,14 @@ void mie_read_opc(/*@in@*/const char *chFile,
 		gv.bin[nd2].asym.resize(nup);
 		gv.bin[nd2].dstab1_x_anu.resize(nup);
 		gv.bin[nd2].inv_att_len.resize(nup);
+		gv.bin[nd2].opc.reserve(4);
 	}
 
 	/* skip the next 5 lines */
 	for( i=0; i < 5; i++ )
 		mie_next_line(chFile,io2,chLine,&dl);
 
+	size_t c = 0;
 	long Z[2];
 
 	/* now read absorption opacities */
@@ -1387,6 +1389,16 @@ void mie_read_opc(/*@in@*/const char *chFile,
 	{
 		mie_next_line(chFile,io2,chLine,&dl);
 		mie_read_charge_range(chFile,chLine,Z,dl);
+
+		for( j=0; j < nbin; j++ )
+		{
+			nd2 = nd + j;
+			gv.bin[nd2].opc.resize(c+1);
+			gv.bin[nd2].opc[c].Z[0] = Z[0];
+			gv.bin[nd2].opc[c].Z[1] = Z[1];
+			gv.bin[nd2].opc[c].dstab1.resize(nup);
+			gv.bin[nd2].opc[c].dstab1_x_anu.resize(nup);
+		}
 
 		for( i=0; i < nup; i++ ) 
 		{
@@ -1406,18 +1418,18 @@ void mie_read_opc(/*@in@*/const char *chFile,
 				fprintf(ioQQQ," Please recompile the grain opacity file %s.\n", chFile );
 				cdEXIT(EXIT_FAILURE);
 			}
-			for( j=0; j < nbin; j++ ) 
+			for( j=0; j < nbin; j++ )
 			{
 				nd2 = nd + j;
-				if( (res = fscanf(io2,"%le",&gv.bin[nd2].dstab1[i])) != 1 ) 
+				if( (res = fscanf(io2,"%le",&gv.bin[nd2].opc[c].dstab1[i])) != 1 ) 
 				{
 					fprintf( ioQQQ, " Read failed on %s\n",chFile );
 					if( res == EOF )
 						fprintf( ioQQQ, " EOF reached prematurely\n" );
 					cdEXIT(EXIT_FAILURE);
 				}
-				ASSERT( gv.bin[nd2].dstab1[i] > 0. );
-				gv.bin[nd2].dstab1_x_anu[i] = gv.bin[nd2].dstab1[i]*gv.anu(i);
+				ASSERT( gv.bin[nd2].opc[c].dstab1[i] > 0. );
+				gv.bin[nd2].opc[c].dstab1_x_anu[i] = gv.bin[nd2].opc[c].dstab1[i]*gv.anu(i);
 			}
 		}
 
@@ -1425,11 +1437,14 @@ void mie_read_opc(/*@in@*/const char *chFile,
 			break;
 
 		mie_next_line(chFile,io2,chLine,&dl);
+		++c;
 	}
 
 	/* skip to end-of-line and then skip next 4 lines */
 	for( i=0; i < 5; i++ )
 		mie_next_line(chFile,io2,chLine,&dl);
+
+	c = 0;
 
 	/* now read scattering opacities */
 	while( true )
@@ -1437,6 +1452,24 @@ void mie_read_opc(/*@in@*/const char *chFile,
 		mie_next_line(chFile,io2,chLine,&dl);
 		mie_read_charge_range(chFile,chLine,Z,dl);
 
+		for( j=0; j < nbin; j++ )
+		{
+			nd2 = nd + j;
+			if( gv.bin[nd2].opc.size() < c+1 )
+			{
+				fprintf(ioQQQ, "mie_read_opc: error reading file %s\n", chFile);
+				fprintf(ioQQQ, "inconsistent number of charge brackets. Bailing out.\n");
+				cdEXIT(EXIT_FAILURE);
+			}
+			if( gv.bin[nd2].opc[c].Z[0] != Z[0] || gv.bin[nd2].opc[c].Z[1] != Z[1] )
+			{
+				fprintf(ioQQQ, "mie_read_opc: error reading file %s\n", chFile);
+				fprintf(ioQQQ, "inconsistent charge bracket. Bailing out.\n");
+				cdEXIT(EXIT_FAILURE);
+			}				
+			gv.bin[nd2].opc[c].pure_sc1.resize(nup);
+		}
+
 		for( i=0; i < nup; i++ ) 
 		{
 			if( (res = fscanf(io2,"%le",&anu)) != 1 ) 
@@ -1449,14 +1482,14 @@ void mie_read_opc(/*@in@*/const char *chFile,
 			for( j=0; j < nbin; j++ ) 
 			{
 				nd2 = nd + j;
-				if( (res = fscanf(io2,"%le",&gv.bin[nd2].pure_sc1[i])) != 1 ) 
+				if( (res = fscanf(io2,"%le",&gv.bin[nd2].opc[c].pure_sc1[i])) != 1 ) 
 				{
 					fprintf( ioQQQ, " Read failed on %s\n",chFile );
 					if( res == EOF )
 						fprintf( ioQQQ, " EOF reached prematurely\n" );
 					cdEXIT(EXIT_FAILURE);
 				}
-				ASSERT( gv.bin[nd2].pure_sc1[i] > 0. );
+				ASSERT( gv.bin[nd2].opc[c].pure_sc1[i] > 0. );
 			}
 		}
 
@@ -1464,11 +1497,14 @@ void mie_read_opc(/*@in@*/const char *chFile,
 			break;
 
 		mie_next_line(chFile,io2,chLine,&dl);
+		++c;
 	}
 
 	/* skip to end-of-line and then skip next 4 lines */
 	for( i=0; i < 5; i++ )
 		mie_next_line(chFile,io2,chLine,&dl);
+
+	c = 0;
 
 	/* now read asymmetry factor */
 	while( true )
@@ -1476,6 +1512,24 @@ void mie_read_opc(/*@in@*/const char *chFile,
 		mie_next_line(chFile,io2,chLine,&dl);
 		mie_read_charge_range(chFile,chLine,Z,dl);
 
+		for( j=0; j < nbin; j++ )
+		{
+			nd2 = nd + j;
+			if( gv.bin[nd2].opc.size() < c+1 )
+			{
+				fprintf(ioQQQ, "mie_read_opc: error reading file %s\n", chFile);
+				fprintf(ioQQQ, "inconsistent number of charge brackets. Bailing out.\n");
+				cdEXIT(EXIT_FAILURE);
+			}
+			if( gv.bin[nd2].opc[c].Z[0] != Z[0] || gv.bin[nd2].opc[c].Z[1] != Z[1] )
+			{
+				fprintf(ioQQQ, "mie_read_opc: error reading file %s\n", chFile);
+				fprintf(ioQQQ, "inconsistent charge bracket. Bailing out.\n");
+				cdEXIT(EXIT_FAILURE);
+			}				
+			gv.bin[nd2].opc[c].asym.resize(nup);
+		}
+
 		for( i=0; i < nup; i++ ) 
 		{
 			if( (res = fscanf(io2,"%le",&anu)) != 1 ) 
@@ -1488,16 +1542,14 @@ void mie_read_opc(/*@in@*/const char *chFile,
 			for( j=0; j < nbin; j++ ) 
 			{
 				nd2 = nd + j;
-				if( (res = fscanf(io2,"%le",&gv.bin[nd2].asym[i])) != 1 ) 
+				if( (res = fscanf(io2,"%le",&gv.bin[nd2].opc[c].asym[i])) != 1 ) 
 				{
 					fprintf( ioQQQ, " Read failed on %s\n",chFile );
 					if( res == EOF )
 						fprintf( ioQQQ, " EOF reached prematurely\n" );
 					cdEXIT(EXIT_FAILURE);
 				}
-				ASSERT( gv.bin[nd2].asym[i] > 0. );
-				// just in case we read an old opacity file...
-				gv.bin[nd2].asym[i] = min(gv.bin[nd2].asym[i],1.);
+				ASSERT( gv.bin[nd2].opc[c].asym[i] > 0. );
 			}
 		}
 
@@ -1505,6 +1557,17 @@ void mie_read_opc(/*@in@*/const char *chFile,
 			break;
 
 		mie_next_line(chFile,io2,chLine,&dl);
+		++c;
+	}
+
+	// TEMPORARY CODE!!!!
+	for( j=0; j < nbin; j++ )
+	{
+		nd2 = nd + j;
+		gv.bin[nd2].dstab1 = gv.bin[nd2].opc[0].dstab1;
+		gv.bin[nd2].pure_sc1 = gv.bin[nd2].opc[0].pure_sc1;
+		gv.bin[nd2].asym = gv.bin[nd2].opc[0].asym;
+		gv.bin[nd2].dstab1_x_anu = gv.bin[nd2].opc[0].dstab1_x_anu;
 	}
 
 	/* skip to end-of-line and then skip next 4 lines */

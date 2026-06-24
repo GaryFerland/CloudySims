@@ -179,6 +179,36 @@ public:
 	vector<vector<double>> Energy;/**< Energy[nSubShell][nData[ns]]: energy of electron in Ryd */
 };
 
+/** this class stores charge dependent grain opacity data for one specific charge bracket
+ * the data will be stored in the GrainBin class since that will be stable throughout the model run
+ * that class will use a vector of OpcBracket instances to represent the full charge dependency of the opacities
+ * the ChargeBin class will contain pointers to the appriopriate data for the charge that instance represents */
+class OpcBracket
+{
+	void p_clear0() { Z[0] = LONG_MIN; Z[1] = LONG_MAX; }
+
+public:
+	OpcBracket()
+	{
+		p_clear0();
+	}
+
+	long Z[2];                   /**< lower/upper bound for the charge range for which these data are valid, in e */
+
+	/** grain opacities */
+	/** >>chng 02 dec 30, separated scattering cross section and asymmetry factor (1-g),
+	 * NB NB NB -- note that pure_sc1 DOES NOT contain the asymmetry factor, while gv.dstsc DOES !!! */
+	vector<double> dstab1;       /**< absorption cross section per grain species, for default depl */
+	vector<double> pure_sc1;     /**< scattering cross section per grain species, for default depl */
+	vector<double> asym;         /**< asymmetry factor (1-g) */
+	vector<double> dstab1_x_anu; /**< helper array, dstab1[i]*anu[i] for default depl */
+
+	/** equilibrium temperature */
+	double dstems[NDEMS];        /**< grain emissivity at dsttmp[], default depl, normalized per H */
+	double dstslp[NDEMS];        /**< auxiliary array for spline interpolation */
+	double dstslp2[NDEMS];       /**< auxiliary array for inverse spline interpolation */
+};
+
 /** NB NB NB NB NB NB
  *
  * this is the data structure for all grain data that depends on the charge state
@@ -361,6 +391,7 @@ public:
 	vector<double> pure_sc1;/**< scattering cross section per grain species, for default depl */
 	vector<double> asym;    /**< asymmetry factor (1-g) */
 	vector<double> dstab1_x_anu; /**< helper array, dstab1[i]*anu[i] for default depl */
+	vector<OpcBracket> opc; /**< charge-dependent opacity data */
 
 	/** equilibrium temperature */
 	double dstems[NDEMS],   /**< grain emissivity at dsttmp[], default depl, normalized per H */
