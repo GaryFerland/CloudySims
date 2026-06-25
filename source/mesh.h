@@ -6,6 +6,7 @@
 
 #include "thirdparty.h"
 #include "energy.h"
+#include "vhfile.h"
 
 class t_basic_mesh {
 

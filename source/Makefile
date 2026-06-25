@@ -8,21 +8,25 @@ ifeq ($(DEFCXX),)
   DEFCXX := ${shell which clang++ 2> /dev/null}
 endif
 
+PWD := ${shell pwd}
+
+SRCDIR = .
+VHROOTDIR = $(PWD)/${SRCDIR}/../library/vectorhash
 STD = -std=c++17
 OPT = -O3 -ftrapping-math -fno-math-errno -fno-omit-frame-pointer -fasynchronous-unwind-tables \
 	-Wno-deprecated-declarations
 DEBUGOPT = -finline -fasynchronous-unwind-tables
 CXX = $(DEFCXX)
+CXXFLAGSINC = -I$(VHROOTDIR)/src
 CXXFLAGSEXC = -fnon-call-exceptions
 # -W is the old name for -Wextra, g++ 3.3 only supports the former
 CXXFLAGS = $(STD) $(OPT) -Wall -W -g $(CXXFLAGSEXC)
 LDFLAGS = $(OPT) -Wall -g
-LDLIBS =
+LDLIBS = -lvhsum -L$(VHROOTDIR)/lib64 -Wl,-rpath,$(VHROOTDIR)/lib64
 FSLIB =
 NO_TRAP_FLAGS =
 # this is intended for supplying extra command line parameters, e.g. extra -D flags
 EXTRA = 
-SRCDIR = .
 OBJEXT = o
 LIBEXT = a
 
@@ -36,7 +40,7 @@ all: default
 # worrying if it doesn't)
 -include Makefile.conf
 
-main := maincl.cpp vh128sum.cpp
+main := maincl.cpp
 fullsource := ${notdir ${wildcard ${SRCDIR}/*.cpp}}
 source := ${filter-out Test%,${fullsource}}
 testsource := ${filter Test%,${fullsource}}
@@ -138,8 +142,6 @@ else
   RANLIB = ar ts
 endif
 
-PWD := ${shell pwd}
-
 ifneq ($(word 2,$(PWD)),)
   $(error Error: an installation path containing whitespace is invalid. See https://nublado.org/wiki/DownLoad)
 endif
@@ -160,7 +162,7 @@ endif
 CXXFLAGS += $(EXTRA)
 LDFLAGS += $(EXTRA)
 
-CXXFLAGS += -DSYS_CONFIG=\"$(CLDCONFIG)\"
+CXXFLAGS += $(CXXFLAGSINC) -DSYS_CONFIG=\"$(CLDCONFIG)\"
 
 # this is a collection of compiler flags that enable FPE traps
 TRAP_FPE_FILTER = -fnonstd -ftrap=common -Ktrap=fp
@@ -190,7 +192,7 @@ ifeq ($(findstring g++,$(CXX)),g++)
 endif
 
 # Makefile.targets can override or add to the DEFAULT variable.
-DEFAULT = cloudy.exe data vh128sum.exe
+DEFAULT = cloudy.exe data $(VHROOTDIR)/bin/vh128sum
 
 # include additional targets from file if one exists (or carry on without
 # worrying if it doesn't)
@@ -200,7 +202,7 @@ debug: default
 
 default: $(DEFAULT)
 
-cloudy.exe: ${preobjects} maincl.${OBJEXT} libcloudy.${LIBEXT}
+cloudy.exe: ${preobjects} maincl.${OBJEXT} libcloudy.${LIBEXT} $(VHROOTDIR)/lib64/libvhsum.so
 	${CXX} ${LDFLAGS} -o cloudy.exe maincl.${OBJEXT} -L. -lcloudy ${LDLIBS}
 
 libcloudy.${LIBEXT}: ${libobjects}
@@ -210,8 +212,10 @@ libcloudy.${LIBEXT}: ${libobjects}
 data:
 	cd ${SRCDIR}/../data/cdms+jpl && $(MAKE)
 
-vh128sum.exe: vh128sum.${OBJEXT} vectorhash.${OBJEXT}
-	${CXX} ${LDFLAGS} -o vh128sum.exe vh128sum.${OBJEXT} vectorhash.${OBJEXT} ${FSLIB}
+$(VHROOTDIR)/bin/vh128sum:
+	cd $(VHROOTDIR) && $(MAKE)
+
+$(VHROOTDIR)/lib64/libvhsum.so: $(VHROOTDIR)/bin/vh128sum
 
 testclean:
 	rm -f Test*.${OBJEXT}
@@ -224,11 +228,12 @@ clean: testclean
 	rm -f *.${OBJEXT}
 	rm -f *.d
 	rm -f *.h.gch
+	rm -f *.gcda
+	rm -f *.gcno
 	rm -rf SunWS_cache
 	rm -rf cloudy.exe.dSYM
-	rm -rf vh128sum.exe.dSYM
 	rm -f libcloudy.${LIBEXT}
-	rm -f $(DEFAULT)
+	rm -f cloudy.exe
 	rm -f tmp_ccf.tmp
 	rm -rf tmp_cloudyconfig.*
 	rm -f cloudyconfig.h
@@ -237,6 +242,7 @@ distclean: clean
 	rm -f ${SRCDIR}/Makefile.conf
 	rm -rf lib
 	rm -rf include
+	cd ${SRCDIR}/../library/vectorhash && $(MAKE) clean
 	cd ${SRCDIR}/../library/UnitTest++ && $(MAKE) clean
 	cd ${SRCDIR}/../data/cdms+jpl && $(MAKE) clean
 

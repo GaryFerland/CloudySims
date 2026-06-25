@@ -356,7 +356,8 @@ void radius_increment(void)
 			gv.bin[nd].pure_sc1[rfield.ipV_filter]*gv.bin[nd].asym[rfield.ipV_filter])*
 			double(gv.bin[nd].dstAbund)*double(dense.gas_phase[ipHYDROGEN]) * OPTDEP2EXTIN;
 
-		gv.bin[nd].avdust += gv.bin[nd].tedust*(realnum)radius.drad_x_fillfac;
+		for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+			gv.bin[nd].avdust += realnum(gv.bin[nd].chrg(nz).tedust*gv.bin[nd].chrg(nz).FracPop*radius.drad_x_fillfac);
 		gv.bin[nd].avdft += gv.bin[nd].DustDftVel*(realnum)radius.drad_x_fillfac;
 		gv.bin[nd].avdpot += (realnum)(gv.bin[nd].dstpot*EVRYD*radius.drad_x_fillfac);
 		gv.bin[nd].avDGRatio += (realnum)(gv.bin[nd].dustp[1]*gv.bin[nd].dustp[2]*
