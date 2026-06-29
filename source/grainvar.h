@@ -179,22 +179,80 @@ public:
 	vector<vector<double>> Energy;/**< Energy[nSubShell][nData[ns]]: energy of electron in Ryd */
 };
 
+template<typename T>
+class ChrgBracket
+{
+public:
+	ChrgBracket()
+	{
+		Z[0] = LONG_MIN;
+		Z[1] = LONG_MAX;
+		p = new T;
+	}
+	~ChrgBracket()
+	{
+		delete p;
+	}
+
+	long Z[2];                 /**< lower/upper bound for the charge range, in e */
+	T* p;                      /**< pointer to the remaining data */
+};
+
+/** check whether charge brackets are continuous and range from LONG_MIN to LONG_MAX */
+template<typename T>
+inline void CheckBrackets(const vector<ChrgBracket<T>>& br, const string& chFile)
+{
+	DEBUG_ENTRY( "CheckBrackets()" );
+
+	if( br.front().Z[0] != LONG_MIN )
+	{
+		fprintf( ioQQQ, " There are errors in the charge brackets in %s\n",chFile.c_str());
+		fprintf( ioQQQ, " The first bracket should start with -inf or %ld\n",LONG_MIN);
+		cdEXIT(EXIT_FAILURE);
+	}
+	if( br.back().Z[1] != LONG_MAX )
+	{
+		fprintf( ioQQQ, " There are errors in the charge brackets in %s\n",chFile.c_str());
+		fprintf( ioQQQ, " The last bracket should end with +inf or %ld\n",LONG_MAX);
+		cdEXIT(EXIT_FAILURE);
+	}
+		
+	for( size_t i=0; i < br.size(); i++ )
+	{
+		if( br[i].Z[0] > br[i].Z[1] )
+		{
+			fprintf( ioQQQ, " There are errors in the charge brackets in %s\n",chFile.c_str());
+			fprintf( ioQQQ, " The bracket is not in increasing order, found %ld -> %ld\n",br[i].Z[0],br[i].Z[1]);
+			cdEXIT(EXIT_FAILURE);
+		}
+		if( i > 0 && br[i].Z[0] != br[i-1].Z[1]+1 )
+		{
+			fprintf( ioQQQ, " There are errors in the charge brackets in %s\n",chFile.c_str());
+			fprintf( ioQQQ, " The brackets are not contiguous, found  %ld -> %ld\n",br[i-1].Z[1],br[i].Z[0]);
+			cdEXIT(EXIT_FAILURE);
+		}
+	}
+}
+
+/** find the correct bracket corresponding to dust charge DustZ */
+template<typename T>
+inline const T* FindBracket(const vector<ChrgBracket<T>>& br, long DustZ)
+{
+	for( size_t i=0; i < br.size(); i++ )
+		if( br[i].Z[0] <= DustZ && DustZ <= br[i].Z[1] )
+			return br[i].p;
+	/* CheckBrackets() should have been called before this routine is used
+	 * that would assure that it is impossible to reach this point... */
+	TotalInsanity();
+}
+	
 /** this class stores charge dependent grain opacity data for one specific charge bracket
  * the data will be stored in the GrainBin class since that will be stable throughout the model run
  * that class will use a vector of OpcBracket instances to represent the full charge dependency of the opacities
  * the ChargeBin class will contain pointers to the appriopriate data for the charge that instance represents */
-class OpcBracket
+class OpcData
 {
-	void p_clear0() { Z[0] = LONG_MIN; Z[1] = LONG_MAX; }
-
 public:
-	OpcBracket()
-	{
-		p_clear0();
-	}
-
-	long Z[2];                   /**< lower/upper bound for the charge range for which these data are valid, in e */
-
 	/** grain opacities */
 	/** >>chng 02 dec 30, separated scattering cross section and asymmetry factor (1-g),
 	 * NB NB NB -- note that pure_sc1 DOES NOT contain the asymmetry factor, while gv.dstsc DOES !!! */
@@ -208,6 +266,8 @@ public:
 	double dstslp[NDEMS];        /**< auxiliary array for spline interpolation */
 	double dstslp2[NDEMS];       /**< auxiliary array for inverse spline interpolation */
 };
+
+typedef ChrgBracket<OpcData> OpcBracket;
 
 /** NB NB NB NB NB NB
  *
@@ -271,6 +331,9 @@ public:
 	double ESum1a;          /**< cache for PE rate from band and inner shells (incl. Auger elec. & secondaries) */
 	double ESum1b;          /**< cache for PE rate from conduction band */
 	double ESum2;           /**< cache for electron loss due to recombination with colliding ions */
+
+	/** grain opacities */
+	const OpcData* opc;     /**< pointer to the opacity data applicable for this charge state */
 
 	/** grain heating */
 	bool lgTdustConverged;  /**< is dust temperature converged ? */

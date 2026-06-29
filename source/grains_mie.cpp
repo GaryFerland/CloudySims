@@ -125,24 +125,8 @@ public:
 static const int NAX = 3;
 static const int NDAT = 4;
 
-class grain_data;
-
-class chBracket {
-	void p_clear0()
-	{
-		Z[0] = 0;
-		Z[1] = -1;
-		gd = NULL;
-	}
-	void p_clear1();
-public:
-	long int Z[2];  /**< lower/upper limit of charge bracket (inclusive, in e) */
-	grain_data* gd; /**< rfi data for this bracket */
-	chBracket() { p_clear0(); }
-	~chBracket() { p_clear1(); }
-};
-
-class grain_data {
+class grain_data
+{
 	void p_clear0()
 	{
 		nAxes = 0;
@@ -161,7 +145,7 @@ class grain_data {
 			opcData[j].clear();
 	}
 public:
-	vector<chBracket> bracket;       /**< rfi data bracket for charge-dependent grains */
+	vector<ChrgBracket<grain_data>> bracket; /**< rfi data bracket for charge-dependent grains */
 	vector<double> wavlen[NAX];      /**< wavelength grid for rfi for all axes (micron) */
 	vector<complex<double>> n[NAX];  /**< refractive index n for all axes */
 	vector<double> nr1[NAX];         /**< re(n)-1 for all axes */
@@ -202,13 +186,6 @@ public:
 		p_clear0();
 	}
 };
-
-// this dtor needs to be defined outside the chBracket class since grain_data needs
-// to be fully defined for the delete statement below to be implemented safely...
-void chBracket::p_clear1()
-{
-	delete gd;
-}
 
 /* maximum size for grain type labels */
 static const int LABELSUB1 = 3;
@@ -564,7 +541,7 @@ void mie_write_opc(/*@in@*/ const char *rfi_file,
 	for( size_t c=0; c < max(gd.nCharge(),1ul); c++ )
 	{
 		if( gd.nCharge() > 0 )
-			gdp = gd.bracket[c].gd;
+			gdp = gd.bracket[c].p;
 
 		mie_auxiliary(&sd,gdp,"init");
 
@@ -1396,8 +1373,8 @@ void mie_read_opc(/*@in@*/const char *chFile,
 			gv.bin[nd2].opc.resize(c+1);
 			gv.bin[nd2].opc[c].Z[0] = Z[0];
 			gv.bin[nd2].opc[c].Z[1] = Z[1];
-			gv.bin[nd2].opc[c].dstab1.resize(nup);
-			gv.bin[nd2].opc[c].dstab1_x_anu.resize(nup);
+			gv.bin[nd2].opc[c].p->dstab1.resize(nup);
+			gv.bin[nd2].opc[c].p->dstab1_x_anu.resize(nup);
 		}
 
 		for( i=0; i < nup; i++ ) 
@@ -1421,15 +1398,15 @@ void mie_read_opc(/*@in@*/const char *chFile,
 			for( j=0; j < nbin; j++ )
 			{
 				nd2 = nd + j;
-				if( (res = fscanf(io2,"%le",&gv.bin[nd2].opc[c].dstab1[i])) != 1 ) 
+				if( (res = fscanf(io2,"%le",&gv.bin[nd2].opc[c].p->dstab1[i])) != 1 ) 
 				{
 					fprintf( ioQQQ, " Read failed on %s\n",chFile );
 					if( res == EOF )
 						fprintf( ioQQQ, " EOF reached prematurely\n" );
 					cdEXIT(EXIT_FAILURE);
 				}
-				ASSERT( gv.bin[nd2].opc[c].dstab1[i] > 0. );
-				gv.bin[nd2].opc[c].dstab1_x_anu[i] = gv.bin[nd2].opc[c].dstab1[i]*gv.anu(i);
+				ASSERT( gv.bin[nd2].opc[c].p->dstab1[i] > 0. );
+				gv.bin[nd2].opc[c].p->dstab1_x_anu[i] = gv.bin[nd2].opc[c].p->dstab1[i]*gv.anu(i);
 			}
 		}
 
@@ -1467,7 +1444,7 @@ void mie_read_opc(/*@in@*/const char *chFile,
 				fprintf(ioQQQ, "inconsistent charge bracket. Bailing out.\n");
 				cdEXIT(EXIT_FAILURE);
 			}				
-			gv.bin[nd2].opc[c].pure_sc1.resize(nup);
+			gv.bin[nd2].opc[c].p->pure_sc1.resize(nup);
 		}
 
 		for( i=0; i < nup; i++ ) 
@@ -1482,14 +1459,14 @@ void mie_read_opc(/*@in@*/const char *chFile,
 			for( j=0; j < nbin; j++ ) 
 			{
 				nd2 = nd + j;
-				if( (res = fscanf(io2,"%le",&gv.bin[nd2].opc[c].pure_sc1[i])) != 1 ) 
+				if( (res = fscanf(io2,"%le",&gv.bin[nd2].opc[c].p->pure_sc1[i])) != 1 ) 
 				{
 					fprintf( ioQQQ, " Read failed on %s\n",chFile );
 					if( res == EOF )
 						fprintf( ioQQQ, " EOF reached prematurely\n" );
 					cdEXIT(EXIT_FAILURE);
 				}
-				ASSERT( gv.bin[nd2].opc[c].pure_sc1[i] > 0. );
+				ASSERT( gv.bin[nd2].opc[c].p->pure_sc1[i] > 0. );
 			}
 		}
 
@@ -1527,7 +1504,7 @@ void mie_read_opc(/*@in@*/const char *chFile,
 				fprintf(ioQQQ, "inconsistent charge bracket. Bailing out.\n");
 				cdEXIT(EXIT_FAILURE);
 			}				
-			gv.bin[nd2].opc[c].asym.resize(nup);
+			gv.bin[nd2].opc[c].p->asym.resize(nup);
 		}
 
 		for( i=0; i < nup; i++ ) 
@@ -1542,14 +1519,14 @@ void mie_read_opc(/*@in@*/const char *chFile,
 			for( j=0; j < nbin; j++ ) 
 			{
 				nd2 = nd + j;
-				if( (res = fscanf(io2,"%le",&gv.bin[nd2].opc[c].asym[i])) != 1 ) 
+				if( (res = fscanf(io2,"%le",&gv.bin[nd2].opc[c].p->asym[i])) != 1 ) 
 				{
 					fprintf( ioQQQ, " Read failed on %s\n",chFile );
 					if( res == EOF )
 						fprintf( ioQQQ, " EOF reached prematurely\n" );
 					cdEXIT(EXIT_FAILURE);
 				}
-				ASSERT( gv.bin[nd2].opc[c].asym[i] > 0. );
+				ASSERT( gv.bin[nd2].opc[c].p->asym[i] > 0. );
 			}
 		}
 
@@ -1560,14 +1537,16 @@ void mie_read_opc(/*@in@*/const char *chFile,
 		++c;
 	}
 
+	CheckBrackets(gv.bin[nd].opc, chFile);
+
 	// TEMPORARY CODE!!!!
 	for( j=0; j < nbin; j++ )
 	{
 		nd2 = nd + j;
-		gv.bin[nd2].dstab1 = gv.bin[nd2].opc[0].dstab1;
-		gv.bin[nd2].pure_sc1 = gv.bin[nd2].opc[0].pure_sc1;
-		gv.bin[nd2].asym = gv.bin[nd2].opc[0].asym;
-		gv.bin[nd2].dstab1_x_anu = gv.bin[nd2].opc[0].dstab1_x_anu;
+		gv.bin[nd2].dstab1 = gv.bin[nd2].opc[0].p->dstab1;
+		gv.bin[nd2].pure_sc1 = gv.bin[nd2].opc[0].p->pure_sc1;
+		gv.bin[nd2].asym = gv.bin[nd2].opc[0].p->asym;
+		gv.bin[nd2].dstab1_x_anu = gv.bin[nd2].opc[0].p->dstab1_x_anu;
 	}
 
 	/* skip to end-of-line and then skip next 4 lines */
@@ -3173,7 +3152,6 @@ STATIC void mie_read_rfi(/*@in@*/  const string& chFile,
 		cdEXIT(EXIT_FAILURE);
 	}
 
-	bool lgChargeRangeOK = true, lgNAxesOK = true;
 	long int nCharge;
 	string chFile2;
 	switch( gd->rfiType )
@@ -3508,36 +3486,15 @@ STATIC void mie_read_rfi(/*@in@*/  const string& chFile,
 			mie_read_charge_range(chFile,chLine,gd->bracket[i].Z,dl);
 
 			mie_read_quoted_word(chFile,chLine,chFile2,dl);
-			gd->bracket[i].gd = new grain_data;
-			mie_read_ocn(chFile2,gd->bracket[i].gd);
-			if( gd->bracket[i].gd->rfiType == CHD_TABLE )
+			mie_read_ocn(chFile2,gd->bracket[i].p);
+			if( gd->bracket[i].p->rfiType == CHD_TABLE )
 			{
 				fprintf( ioQQQ, " RFI type CHD_TABLE is not allowed in %s\n",chFile.c_str());
 				fprintf( ioQQQ, " Line #%ld: %s\n",dl,chLine.c_str());
 				cdEXIT(EXIT_FAILURE);
 			}
 		}
-		if( gd->bracket.front().Z[0] != LONG_MIN || gd->bracket.back().Z[1] != LONG_MAX )
-			lgChargeRangeOK = false;
-		for( i=0; i < nCharge; i++ )
-		{
-			if( gd->bracket[i].Z[0] > gd->bracket[i].Z[1] )
-				lgChargeRangeOK = false;
-			if( i > 0 && gd->bracket[i].Z[0] != gd->bracket[i-1].Z[1]+1 )
-				lgChargeRangeOK = false;
-			if( i > 0 && gd->bracket[i].gd->nAxes != gd->bracket[i-1].gd->nAxes )
-				lgNAxesOK = false;
-		}
-		if( !lgChargeRangeOK )
-		{
-			fprintf( ioQQQ, " There are errors in the charge ranges in %s\n",chFile.c_str());
-			cdEXIT(EXIT_FAILURE);
-		}
-		if( !lgNAxesOK )
-		{
-			fprintf( ioQQQ, " All rfi files in %s must have the same number of principal axes\n",chFile.c_str());
-			cdEXIT(EXIT_FAILURE);
-		}
+		CheckBrackets(gd->bracket,chFile);
 		break;
 	case OPC_GREY:
 	case OPC_PAH1:

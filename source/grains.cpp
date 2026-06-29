@@ -2831,6 +2831,8 @@ STATIC void UpdatePot1(size_t nd,
 	{
 		gv.bin[nd].chrg(nz).DustZ = Zg;
 
+		gv.bin[nd].chrg(nz).opc = FindBracket(gv.bin[nd].opc, Zg);
+
 		/* invalidate eta and xi storage */
 		memset( gv.bin[nd].chrg(nz).eta, 0, (LIMELM+2)*sizeof(double) );
 		memset( gv.bin[nd].chrg(nz).xi, 0, (LIMELM+2)*sizeof(double) );
