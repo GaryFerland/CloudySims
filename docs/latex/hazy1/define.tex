@@ -179,9 +179,13 @@ computed if the \cdCommand{sphere} command (see section \ref{sec:CommandSphere})
 
 \subsection{Covering factor}
 
+\subsubsection{Spherical geometry}
+
+This section discusses the default geometry considered by \Cloudy.
+The special case of a cylinder geometry is covered further down.
 The \cdTerm{covering factor} is the fraction of $4\pi$~sr
-covered by gas, as viewed
-from the central source of radiation.
+covered by gas when viewed
+from the center of the nebula.
 It is normally written as $\Omega/4\pi$ (AGN3 Section 5.9),
 has the limits $0\le\Omega /4\pi\le 1$,
 and is the fraction of the
@@ -193,6 +197,22 @@ $\Omega$~sr while \cdTerm{line intensities} give
 the energy emitted per unit area of cloud.
 Line luminosities scale nearly linearly with increasing covering factor
 while line intensities are only weakly dependent on it.
+
+\subsubsection{Cylinder geometry}
+\label{cov_cylinder}
+
+Users can set up a special geometry using the \cdCommand{cylinder} command
+(see Section~\ref{cmd:cylinder}). In this setup the gas will not cover the
+full $4\pi$~sr when viewed from the center of the nebula. However, since all
+the necessary information is already specified with the \cdCommand{cylinder}
+command, this is automatically taken into account and normally no further
+action is needed.
+
+It is however possible to combine the \cdCommand{cylinder} command with a
+\cdCommand{covering factor} command. This would then indicate that the
+cylinder is incomplete. In that case the covering factor would be defined as
+the fraction of $\Omega$~sr that is actually covered by gas, where $\Omega$
+is the solid angle that would be covered by a full cylinder.
 
 \subsection{Open vs. closed geometry}
 \label{sec:GeometryOpenClosed}
