@@ -8,23 +8,30 @@ ifeq ($(DEFCXX),)
   DEFCXX := ${shell which clang++ 2> /dev/null}
 endif
 
-STD = -std=c++11
-OPT = -O3 -ftrapping-math -fno-math-errno -fasynchronous-unwind-tables -Wno-deprecated-declarations
+PWD := ${shell pwd}
+
+SRCDIR = .
+VHROOTDIR = $(PWD)/${SRCDIR}/../library/vectorhash
+STD = -std=c++17
+OPT = -O3 -ftrapping-math -fno-math-errno -fno-omit-frame-pointer -fasynchronous-unwind-tables \
+	-Wno-deprecated-declarations
 DEBUGOPT = -finline -fasynchronous-unwind-tables
 CXX = $(DEFCXX)
-# -W is the old name for -Wextra, g++ 3.3 only supports the former
-CXXFLAGS = $(STD) $(OPT) -Wall -W -g
+CXXFLAGSINC = -I$(VHROOTDIR)/src
 CXXFLAGSEXC = -fnon-call-exceptions
+# -W is the old name for -Wextra, g++ 3.3 only supports the former
+CXXFLAGS = $(STD) $(OPT) -Wall -W -g $(CXXFLAGSEXC)
 LDFLAGS = $(OPT) -Wall -g
-LDLIBS =
+LDLIBS = -lvhsum -L$(VHROOTDIR)/lib64 -Wl,-rpath,$(VHROOTDIR)/lib64
+FSLIB =
 NO_TRAP_FLAGS =
 # this is intended for supplying extra command line parameters, e.g. extra -D flags
 EXTRA = 
-SRCDIR = .
 OBJEXT = o
 LIBEXT = a
 
-.PHONY: all default data debug testclean clean distclean debug-test test valgrind-test depend echo-cxx echo-cxxflags
+.PHONY: all default data debug testclean clean distclean debug-test test valgrind-test depend \
+        echo-cxx echo-cxxflags echo-ldlibs
 
 # Default rule comes first -- having this implement 'make all' is standard
 all: default
@@ -33,7 +40,7 @@ all: default
 # worrying if it doesn't)
 -include Makefile.conf
 
-main := maincl.cpp vh128sum.cpp
+main := maincl.cpp
 fullsource := ${notdir ${wildcard ${SRCDIR}/*.cpp}}
 source := ${filter-out Test%,${fullsource}}
 testsource := ${filter Test%,${fullsource}}
@@ -54,21 +61,21 @@ CXXDEPEND = $(DEFCXX)
 
 # check compiler capabilities
 CAPABILITIES := $(shell $(SRCDIR)/capabilities.pl $(CXX))
+FAILURE := $(filter upgrade,$(CAPABILITIES))
+ifneq ($(FAILURE),)
+  $(error $(CAPABILITIES))
+endif
 PRECOMPILE := $(filter precompile,$(CAPABILITIES))
 VECTORIZE := $(filter vectorize,$(CAPABILITIES))
-NOPIE := $(filter -no-pie,$(CAPABILITIES))
-FNOPIE := $(filter -fno-pie,$(CAPABILITIES))
 NATIVE := $(filter native,$(CAPABILITIES))
 DYNAMIC := $(filter dynamic,$(CAPABILITIES))
 DEMANGLE := $(filter demangle%,$(CAPABILITIES))
 RPATH := $(filter rpath=%,$(CAPABILITIES))
+NEEDFSLIB := $(filter need_stdc++fs,$(CAPABILITIES))
 
 # DEP_GOALS will be an empty string for targets that don't need dependencies
 NODEP_GOALS = clean distclean data
 DEP_GOALS = ${filter-out ${NODEP_GOALS},${MAKECMDGOALS}}
-
-CXXFLAGS += $(NOPIE) $(FNOPIE)
-LDFLAGS += $(NOPIE) $(FNOPIE)
 
 # the default target does need dependencies
 ifeq (${MAKECMDGOALS},)
@@ -79,8 +86,11 @@ ifeq ($(VECTORIZE),vectorize)
   OPT += -ftree-vectorize
 endif
 
+# prevent using native optimizations for valgrind runs as valgrind may not support all hardware instructions
 ifeq ($(NATIVE),native)
-  OPT += -march=native
+  ifeq ($(filter -DVALGRIND,$(CXXFLAGS)),)
+    OPT += -march=native
+  endif
 endif
 
 ifeq ($(DYNAMIC),dynamic)
@@ -98,6 +108,11 @@ endif
 DEBUG_GOALS = $(filter debug%,$(MAKECMDGOALS))
 ifneq ($(DEBUG_GOALS),)
   OPT = $(DEBUGOPT)
+endif
+
+ifneq ($(NEEDFSLIB),)
+  FSLIB = -lstdc++fs
+  LDLIBS += $(FSLIB)
 endif
 
 CXXDEFINES = ${filter -D%,${CXXFLAGS}}
@@ -127,8 +142,6 @@ else
   RANLIB = ar ts
 endif
 
-PWD := ${shell pwd}
-
 ifneq ($(word 2,$(PWD)),)
   $(error Error: an installation path containing whitespace is invalid. See https://nublado.org/wiki/DownLoad)
 endif
@@ -149,7 +162,7 @@ endif
 CXXFLAGS += $(EXTRA)
 LDFLAGS += $(EXTRA)
 
-CXXFLAGS += -DSYS_CONFIG=\"$(CLDCONFIG)\"
+CXXFLAGS += $(CXXFLAGSINC) -DSYS_CONFIG=\"$(CLDCONFIG)\"
 
 # this is a collection of compiler flags that enable FPE traps
 TRAP_FPE_FILTER = -fnonstd -ftrap=common -Ktrap=fp
@@ -179,7 +192,7 @@ ifeq ($(findstring g++,$(CXX)),g++)
 endif
 
 # Makefile.targets can override or add to the DEFAULT variable.
-DEFAULT = cloudy.exe data vh128sum.exe
+DEFAULT = cloudy.exe data $(VHROOTDIR)/bin/vh128sum
 
 # include additional targets from file if one exists (or carry on without
 # worrying if it doesn't)
@@ -189,7 +202,7 @@ debug: default
 
 default: $(DEFAULT)
 
-cloudy.exe: ${preobjects} maincl.${OBJEXT} libcloudy.${LIBEXT}
+cloudy.exe: ${preobjects} maincl.${OBJEXT} libcloudy.${LIBEXT} $(VHROOTDIR)/lib64/libvhsum.so
 	${CXX} ${LDFLAGS} -o cloudy.exe maincl.${OBJEXT} -L. -lcloudy ${LDLIBS}
 
 libcloudy.${LIBEXT}: ${libobjects}
@@ -199,8 +212,10 @@ libcloudy.${LIBEXT}: ${libobjects}
 data:
 	cd ${SRCDIR}/../data/cdms+jpl && $(MAKE)
 
-vh128sum.exe: vh128sum.${OBJEXT} vectorhash.${OBJEXT}
-	${CXX} ${LDFLAGS} -o vh128sum.exe vh128sum.${OBJEXT} vectorhash.${OBJEXT}
+$(VHROOTDIR)/bin/vh128sum:
+	cd $(VHROOTDIR) && $(MAKE)
+
+$(VHROOTDIR)/lib64/libvhsum.so: $(VHROOTDIR)/bin/vh128sum
 
 testclean:
 	rm -f Test*.${OBJEXT}
@@ -213,11 +228,13 @@ clean: testclean
 	rm -f *.${OBJEXT}
 	rm -f *.d
 	rm -f *.h.gch
+	rm -f *.gcda
+	rm -f *.gcno
 	rm -rf SunWS_cache
 	rm -rf cloudy.exe.dSYM
-	rm -rf vh128sum.exe.dSYM
 	rm -f libcloudy.${LIBEXT}
-	rm -f $(DEFAULT)
+	rm -f cloudy.exe
+	rm -f tmp_ccf.tmp
 	rm -rf tmp_cloudyconfig.*
 	rm -f cloudyconfig.h
 
@@ -225,6 +242,7 @@ distclean: clean
 	rm -f ${SRCDIR}/Makefile.conf
 	rm -rf lib
 	rm -rf include
+	cd ${SRCDIR}/../library/vectorhash && $(MAKE) clean
 	cd ${SRCDIR}/../library/UnitTest++ && $(MAKE) clean
 	cd ${SRCDIR}/../data/cdms+jpl && $(MAKE) clean
 
@@ -234,11 +252,16 @@ version.${OBJEXT}: ${main} ${libsource} ${includes}
 DEPCMD := ${CXXDEPEND} ${STD} -MM -MG -DMM ${CXXDEFINES}
 
 cpu.${OBJEXT}: ${SRCDIR}/cpu.cpp ${CLDCONFIG} ${preobjects}
-	${CXX} ${CXXFLAGS} ${CXXFLAGSEXC} -DCLOUDY_ROOT=\"${CIP}\" -c -o $@ $<
+	${CXX} ${CXXFLAGS} -DCLOUDY_ROOT=\"${CIP}\" -c -o $@ $<
 	${SRCDIR}/make_depend.pl "${DEPCMD} $<" ${presource} ${substname} ${CLDCONFIG} ${@:.${OBJEXT}=.d}
 
 # an explicit -O0 is needed for some compilers like icc
 parse_crashdo.${OBJEXT}: ${SRCDIR}/parse_crashdo.cpp ${CLDCONFIG} ${preobjects}
+	${CXX} ${CXXFLAGSNOOPT} ${DEBUGOPT} -c -o $@ $<
+	${SRCDIR}/make_depend.pl "${DEPCMD} $<" ${presource} ${substname} ${CLDCONFIG} ${@:.${OBJEXT}=.d}
+
+# the same goes for random_crash.cpp
+random_crash.${OBJEXT}: ${SRCDIR}/random_crash.cpp ${CLDCONFIG} ${preobjects}
 	${CXX} ${CXXFLAGSNOOPT} ${DEBUGOPT} -c -o $@ $<
 	${SRCDIR}/make_depend.pl "${DEPCMD} $<" ${presource} ${substname} ${CLDCONFIG} ${@:.${OBJEXT}=.d}
 
@@ -298,6 +321,9 @@ echo-cxx:
 
 echo-cxxflags:
 	@echo "$(CXXFLAGS)"
+
+echo-ldlibs:
+	@echo "${LDLIBS}"
 
 # only include dependencies when we really need them, this prevents unnecessary builds of the dependencies
 # the way we create dependency files is discussed in http://scottmcpeak.com/autodepend/autodepend.html

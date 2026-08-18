@@ -35,8 +35,8 @@ Database atomic/molecular models
 Cloudy draws the majority of its atomic and molecular data from external
 databases, namely:
 
-* the _Chianti_ database (v10.0.1),
-[Del Zanna et al. 2021 ApJ, 909, 38](https://ui.adsabs.harvard.edu/abs/2021ApJ...909...38D)
+* the _Chianti_ database (v10.1),
+[Dere et al. 2023 APJ, 268, 52](https://ui.adsabs.harvard.edu/abs/2023ApJS..268...52D)
 
 * the _Stout_ database,
 [Lykins et al. 2015 ApJ, 807, 118](https://ui.adsabs.harvard.edu/abs/2015ApJ...807..118L)
@@ -127,7 +127,7 @@ PDR models given in Roellig et al.
 
 ### FeII bands in the output
 
-The data file _FeII\_bands.ini_ is used to specify a series of FeII bands that
+The data file _FeII\_bands.dat_ is used to specify a series of FeII bands that
 are entered into the main emission line output.
 These bands are described further in the dat file and in the part of Hazy where
 FeII is discussed.
@@ -135,7 +135,7 @@ FeII is discussed.
 
 ### Continuum bands in the output
 
-The data file _continuum\_bands.ini_ is used to define a series of wavelength
+The data file _continuum\_bands.dat_ is used to define a series of wavelength
 bands.
 Each band has a lower and upper wavelength and the code will integrate all
 emission over these bands.
@@ -201,6 +201,9 @@ Mewe files
 The files mewe\_fluor.dat and mewe\_nelectron.dat are tables 2 and 3 of the
 atomic data from 
 [Kaastra, J.S., & Mewe, R., 1993, A&AS, 97, 443](https://ui.adsabs.harvard.edu/abs/1993A%26AS...97..443K).
+
+The Si and S K flourescence line energies have been updated as described in
+[Camilloni, F., Bianchi, S., Amato, R., et al., 2021, RNAAS, 5, 6, 149](https://ui.adsabs.harvard.edu/abs/2021RNAAS...5..149C)
 
 The file mewe\_gbar.dat  is the Mewe data files for g-bar collision strengths.
 

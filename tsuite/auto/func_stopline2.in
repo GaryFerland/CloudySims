@@ -11,7 +11,7 @@ init file "ism.ini"
 #
 # commands controlling geometry  =========
 # stop calc at line ratio, the point of this test 
-stop line "c  2" 157.636m reaches 0.002 relative to "o  3"  5006.84 A
+stop line "c  2" 157.636m air reaches 0.002 relative to "o  3" 5008.24 vacuum
 #
 # other commands for details     =========
 constant temperature 10000 K

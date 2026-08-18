@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*main program calling cloudy to produce a table giving ionization vs temperature */
 #include "cddefines.h"
@@ -72,7 +72,7 @@ int main( void )
 				/*cdNoExec( );*/
 				printf("%s  Te = %g\n",chElementName[nelem],telog);
 				
-				sprintf(chLine,"coronal %3.1f ",telog);
+				snprintf(chLine,sizeof(chLine),"coronal %3.1f ",telog);
 				cdRead( chLine  );
 
 				/* just do the first zone - only want ionization distribution */
@@ -80,7 +80,7 @@ int main( void )
 				cdRead( "set dr 0 "  );
 
 				/* the hydrogen density entered as a log */
-				sprintf(chLine,"hden %i ",int(hden));
+				snprintf(chLine,sizeof(chLine),"hden %i ",int(hden));
 				cdRead( chLine  );
 
 				cdRead( "set dr 0"  );
@@ -90,7 +90,7 @@ int main( void )
 				cdRead( "element helium abundance -9"  );
 				cdRead( "metals -9"  );
 
-				sprintf(chLine,"element %.11s abundance %f ",chElementName[nelem],element_abund);
+				snprintf(chLine,sizeof(chLine),"element %.11s abundance %f ",chElementName[nelem],element_abund);
 				cdRead( chLine  );
 
 				cdRead( "set eden 0"  );

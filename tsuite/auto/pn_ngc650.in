@@ -1,0 +1,105 @@
+title PN model for NGC 650
+set save prefix "pn_ngc650"
+# model of the torus of the PN NGC 650
+#
+# commands controlling continuum =========
+table star Rauch H-Ca solar 5.317493 log 8.000000
+luminosity 35.994549 log range -7.999566 6.866524
+cmb
+#
+# commands for density & abundances =========
+hden 2.139592 log
+constant density
+abundances planetary no grains
+element helium abundance -0.96 log
+element carbon abundance -3.06 log
+element nitrogen abundance -3.80 log
+element oxygen abundance -3.38 log
+element neon abundance -4.03 log
+element magnesium abundance -5.40 log
+element silicon abundance -5.44 log
+element phosphorus abundance -6.59 log
+element sulphur abundance -5.21 log
+element chlorine abundance -7.08 log
+element argon abundance -5.63 log
+grain abund 0.425984 log "graphite_0m100.opc"
+#
+# commands controlling geometry  =========
+radius 17.455679 LOG
+cylinder semi-height 17.474 log
+sphere
+stop temperature off
+stop continuum flux at 350 micron 0.62 jansky
+#
+# other commands for details     =========
+cosmic rays background
+distance 1200 linear parsec
+iterate
+set nFnu add 60 micron
+set nFnu add 100 micron
+set nFnu add 160 micron
+set nFnu add 250 micron
+set nFnu add 500 micron
+set nFnu add 6.181 cm
+set nFnu add 21.41 cm
+# include dust/radio emission both from the near and far side of the torus
+set nFnu diffuse inward, diffuse outward
+#
+# commands controlling output    =========
+print line flux seen at earth
+print line sort wavelength
+normalize to "H  1" 4861.32 scale factor 100
+save continuum last units micron ".con"
+save physical conditions ".phy"
+save monitors last ".asr"
+save grain temperature last ".grntem"
+#
+# commands giving the asserts    =========
+monitor  "He 2"  1640.41A vacuum  -10.2343 line intensity
+monitor  "C  3"  1906.68A vacuum  -10.1220 line intensity
+monitor  "C  3"  1908.73A vacuum  -10.3029 line intensity
+monitor  "Ne 4"  2421.66A air     -11.6768 line intensity
+monitor  "Ne 4"  2424.28A air     -11.5103 line intensity
+monitor  "Mg 2"  2795.53A air     -11.9021 line intensity
+monitor  "Mg 2"  2802.71A air     -12.1963 line intensity
+monitor  "Ar 4"  4740.12A air     -12.5788 line intensity
+monitor  "O  3"  5006.84A air      -9.7851 line intensity
+## >>chng 26 may 07, from -12.0010 to -12.0150, average of all runs
+monitor  "N  1"  5197.90A air     -12.0150 line intensity
+## >>chng 26 may 07, from -11.8853 to -11.9000, average of all runs
+monitor  "N  1"  5200.26A air     -11.9000 line intensity
+monitor  "Cl 3"  5517.71A air     -12.9014 line intensity
+monitor  "S  2"  6716.44A air     -10.9872 line intensity
+monitor  "S  2"  6730.82A air     -11.0916 line intensity
+monitor  "He 1"  7065.18A air     -12.8631 line intensity
+monitor  "S  3"  9530.62A air     -10.9011 line intensity
+monitor  "Ar 5"  13.0985m air     -12.7869 line intensity
+monitor  "Ne 3"  15.5509m air     -10.8201 line intensity
+monitor  "P  3"  17.8797m air     -12.9386 line intensity
+monitor  "O  4"  25.8863m air     -10.2711 line intensity
+monitor  "Si 2"  34.8046m air     -11.5949 line intensity
+monitor  "nFnu"  60.0000m vacuum   -9.5592 line intensity
+monitor  "nFnu"  100.000m vacuum   -9.5896 line intensity
+monitor  "nFnu"  160.000m vacuum  -10.0272 line intensity
+monitor  "nFnu"  250.000m vacuum  -10.7094 line intensity
+monitor  "nFnu"  350.000m vacuum  -11.2721 line intensity
+monitor  "nFnu"  500.000m vacuum  -11.8539 line intensity
+monitor  "nFnu"  6.18100c vacuum  -14.2427 line intensity
+monitor  "nFnu"  21.4100c vacuum  -14.7293 line intensity
+#
+# pn_ngc650.in
+# class pn
+# ========================================
+# 
+
+NGC 650 is a carbon-rich bipolar PN where the dominant feature is
+the equatorial density enhancement or torus, which is what this
+model is trying to reproduce using the cylinder command. The gas
+abundances and grains are fairly typical for a type IIa C-rich
+PN. The model is set up to stop when the FIR flux observed with
+Herschel PACS and SPIRE is reached, which happens to be roughly
+at the ionization front.
+
+This is a slightly modified version of the model that has been
+published in van Hoof et al. (2013)
+https://ui.adsabs.harvard.edu/abs/2013A%26A...560A...7V/abstract

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef ATMDAT_H_
@@ -353,10 +353,10 @@ struct t_atmdat : public module {
 	 * first dimension is atomic number of C scale, H is 0
 	 * next two are upper and lower configurations on physics 
 	 * scale - Lya is 2-1, Lyb is 3-1, Ha is 3-2, etc */
-	realnum WaveLengthCaseB[8][25][24];
+	t_wavl WaveLengthCaseB[8][25][24];
 
 	/** wavelengths for HeI case b */
-	vector<realnum> CaseBWlHeI;
+	vector<t_wavl> CaseBWlHeI;
 
 	const long nDefaultPhotoLevelsFe;
 	/** Default number of non-iron levels when not using the coronal command */
@@ -375,8 +375,15 @@ struct t_atmdat : public module {
 	bool lgChiantiLvl2Hybrid;
 	/** true if Cloudy will print which Chianti species are being used as well as number of levels */
 	bool lgChiantiPrint;
-	/** true if Cloudy will use no theoretical energy levels from Chianti, only experimental. False means that only theoretical energy levels are used */
-	bool lgChiantiExp;
+
+	/** use experimental, theoretical, or mixed Chianti energy levels */
+	enum chianti_type { 
+		CHIANTI_EXP, // only use experimental energy levels, our default
+		CHIANTI_THEO, // theo is theoretical where possible, experimental if none, set with DATABASE CHIANTI THEO
+		CHIANTI_MIXED }; // mixed is experimental where possible, theoretical if none, set with DATABASE CHIANTI MIXED
+	/** specified EXP, THEO, or MIXED */
+	chianti_type ChiantiType;
+
 	/**CloudyChianti filename variable **/
 	char chCloudyChiantiFile[FILENAME_PATH_LENGTH];
 	/** The maximum number of chianti energy levels used for Fe */

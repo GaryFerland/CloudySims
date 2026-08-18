@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cddefines.h"
 #include "conv.h"
@@ -98,6 +98,7 @@ ConvergenceCounter t_conv::register_(const string name)
 	size_t newtype = m_counters.size();
 	m_counters.push_back(0);
 	m_counters_zone.push_back(0);
+	m_counters_max.push_back(0);
 	m_labels.push_back(name);
 	return ConvergenceCounter(this, newtype);
 }

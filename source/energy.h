@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef ENERGY_H_
@@ -74,25 +74,26 @@ public:
 	{
 		return Hz()*1e-9;
 	}
-	double Angstrom() const
+	// all remaining methods return vacuum wavelengths
+	double angstromVac() const
 	{
 		return RYDLAM/m_energy;
 	}
-	double nm() const
+	double nmVac() const
 	{
-		return Angstrom()*1e-1;
+		return angstromVac()*1e-1;
 	}
-	double micron() const
+	double micronVac() const
 	{
-		return Angstrom()*1e-4;
+		return angstromVac()*1e-4;
 	}
-	double mm() const
+	double mmVac() const
 	{
-		return Angstrom()*1e-7;
+		return angstromVac()*1e-7;
 	}
-	double cm() const
+	double cmVac() const
 	{
-		return Angstrom()*1e-8;
+		return angstromVac()*1e-8;
 	}
 };
 

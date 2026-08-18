@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef MESH_H_
@@ -6,8 +6,9 @@
 
 #include "thirdparty.h"
 #include "energy.h"
+#include "vhfile.h"
 
-class t_mesh {
+class t_basic_mesh {
 
 	/** ================================================================================= */
 	/** the following define the continuum energy scale and its limits */
@@ -17,22 +18,6 @@ class t_mesh {
 
 	/** the energy of the upper limit high-energy limit of the continuum */
 	double p_egamry;
-
-	/** factor to reset continuum resolution from continuum_mesh.ini,
-	 * default is unity, reset with set continuum resolution command */
-	double p_ResolutionScaleFactor;
-
-	/** MD5 sum of the continuum_mesh.ini file */
-	string p_mesh_md5sum;
-
-	/** this is information needed to set the energy binning,
-	 * full continuum is described by series of ranges where resolution is
-	 * constant over that range */
-	vector<double> p_RangeUpperLimit;
-	vector<double> p_RangeResolution;
-
-	/** a list of major ionization edges that need to be fiddled into the frequency mesh */
-	vector<Energy> p_edges;
 
 	/** energy in Ryd of center of cell */
 	vector<double> p_anu;
@@ -50,17 +35,33 @@ class t_mesh {
 	vector<double> p_anu2;
 	vector<double> p_anu3;
 
-	/* this routine reads continuum_mesh.ini */
+	/* this routine reads the mesh definition file */
 	void p_ReadResolution();
 
 	/* this routine defines the frequency mesh */
 	void p_SetupMesh(bool lgUnitCell);
 
-	// Set up special edges that need to be merged into the frequency mesh
-	void p_SetupEdges();
-public:
+protected:
+	/** name of the mesh definition file */
+	string p_mesh_defname;
+	/** checksum of the mesh definition file */
+	string p_mesh_cksum;
+
+	/** factor to reset continuum resolution from kesh definition file,
+	 * default is unity, reset with set continuum resolution command */
+	double p_ResolutionScaleFactor;
+
+	/** this is information needed to set the energy binning,
+	 * full continuum is described by series of ranges where resolution is
+	 * constant over that range */
+	vector<double> p_RangeUpperLimit;
+	vector<double> p_RangeResolution;
+
+	/** a list of major ionization edges that need to be fiddled into the frequency mesh */
+	vector<Energy> p_edges;
+
 	/* set up the frequency mesh */
-	void InitMesh(bool lgUnitCell)
+	void p_InitBasicMesh1()
 	{
 		if( lgMeshSetUp() )
 			return;
@@ -70,17 +71,19 @@ public:
 		p_emm = Elo.Ryd();
 		Energy Ehi( 100., "MeV" );
 		p_egamry = Ehi.Ryd();
+	}
+	void p_InitBasicMesh2(bool lgUnitCell)
+	{
+		if( lgMeshSetUp() )
+			return;
 
-		p_mesh_md5sum = MD5datafile( "continuum_mesh.ini" );
+		p_mesh_cksum = VHdatafile(p_mesh_defname);
 
-		p_SetupEdges();
 		p_ReadResolution();
 		p_SetupMesh(lgUnitCell);
 	}
-	/* perform sanity checks on the frequency mesh */
-	void ValidateEdges() const;
-	void CheckMesh() const;
 
+public:
 	bool lgMeshSetUp() const
 	{
 		return ( p_anu.size() > 0 );
@@ -98,20 +101,9 @@ public:
 	{
 		return p_egamry;
 	}
-	double getResolutionScaleFactor() const
+	string mesh_cksum() const
 	{
-		return p_ResolutionScaleFactor;
-	}
-	void setResolutionScaleFactor(double fac)
-	{
-		if( !lgMeshSetUp() )
-			p_ResolutionScaleFactor = fac;
-		else
-			ASSERT( fp_equal(fac,p_ResolutionScaleFactor) );
-	}
-	string mesh_md5sum() const
-	{
-		return p_mesh_md5sum;
+		return p_mesh_cksum;
 	}
 	const double* anuptr() const
 	{
@@ -136,7 +128,7 @@ public:
 	const double* anulog10ptr() const
 	{
 		return get_ptr(p_anulog10);
-	}	
+	}
 	double anulog10(size_t i) const
 	{
 		return p_anulog10[i];
@@ -190,15 +182,54 @@ public:
 	{
 		return en.Ryd() > emm() && en.Ryd() < egamry();
 	}
-
 	// constructor
-	t_mesh()
+	t_basic_mesh() : p_ResolutionScaleFactor(1.) {}
+};
+
+class t_mesh : public t_basic_mesh {
+
+	// Set up special edges that need to be merged into the frequency mesh
+	void p_SetupEdges();
+public:
+	void InitMesh(bool lgUnitCell)
 	{
-		// these will be initialized in InitMesh()
-		p_emm = 0.;
-		p_egamry = 0.;
-		// this is set with the set continuum resolution command
-		p_ResolutionScaleFactor = 1.;
+		p_InitBasicMesh1();
+		p_SetupEdges();
+		p_InitBasicMesh2(lgUnitCell);
+	}
+	/* perform sanity checks on the frequency mesh */
+	void ValidateEdges() const;
+	void CheckMesh() const;
+
+	double getResolutionScaleFactor() const
+	{
+		return p_ResolutionScaleFactor;
+	}
+	void setResolutionScaleFactor(double fac)
+	{
+		if( !lgMeshSetUp() )
+			p_ResolutionScaleFactor = fac;
+		else
+			ASSERT( fp_equal(fac,p_ResolutionScaleFactor) );
+	}
+	// constructor
+	t_mesh() : t_basic_mesh()
+	{
+		p_mesh_defname = "continuum_mesh.dat";
+	}
+};
+
+class t_grainmesh : public t_basic_mesh {
+public:
+	void InitMesh()
+	{
+		p_InitBasicMesh1();
+		p_InitBasicMesh2(false);
+	}
+	// constructor
+	t_grainmesh() : t_basic_mesh()
+	{
+		p_mesh_defname = "grain_mesh.dat";
 	}
 };
 

@@ -31,6 +31,7 @@ print lines surface brightness arcsec
 print line optical depths
 # want to print line intensities are surface brightness, per arcsec^2
 print lines surface brightness arcsec
+save pressure "orion_hii_open.pre"
 save performance "orion_hii_open.per"
 save overview last "orion_hii_open.ovr"
 save dr last "orion_hii_open.dr"
@@ -298,25 +299,30 @@ monitor line "GraL" 1215.67A 22.03
 ##
 ## grain emission 
 ## >>chng 13 jul 26, wl from 60.83m to 60.8322m, increased wl precision to 6 sig. fig.
-monitor line "nFnu"  60.8322m  15.68
+## >>chng 24 oct 05, wl from 60.8322m to 60.8157m, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  60.8157m  15.68
 ##
 ## >>chng 07 oct 26, from 148.2 to 141.2, very close to botch after recent changes
 ## >>chng 08 jul 08, from 141.2 to 148.3 line radiation pressure
 ## >>chng 13 jul 26, wl from 21.42m to 21.4199m, increased wl precision to 6 sig. fig.
-monitor line "nFnu"  21.4199m 148.3
+## >>chng 24 oct 05, wl from 21.4199m to 21.4141m, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  21.4141m 148.3
 ##
 ## >>chng 07 jan 20, from 49.9 to 47.2 e2 bug
 ## >>chng 08 jul 08, from 47.2 to 49.7 line radiation pressure
-monitor line "nFnu"  12.43m  49.7
+## >>chng 24 oct 05, wl from 12.43m to 12.4266m, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  12.4266m  49.7
 ##
 ## >>chng 07 jan 20, from 6.15 to 5.68 e2 bug
 ## >>chng 08 mar 20, from 5.68 to 5.94 value drifted but did not throw assert
 ## >>chng 09 feb 23, from 5.94 to 6.471, remove otslin, otscon dampers (PR #84, r2758)
 ## >>chng 23 sep 08, from 6.471 to 5.873, fix SQRTPI in Lya destprob
-monitor line "nFnu"  7.580m   5.873
+## >>chng 24 oct 05, wl from 7.580m to 7.57793m, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  7.57793m   5.873
 ##
 ## >>chng 13 jul 26, wl from 1.436m to 1.43649m, increased wl precision to 6 sig. fig.
-monitor line "nFnu"  1.43649m   1.441
+## >>chng 24 oct 05, wl from 1.43649m to 1.43610m, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  1.43610m   1.441
 ##
 ## >>chng 07 oct 26, from 0.0470 to 0.0508, due to changes in r1472
 ## >>chng 07 dec 14, from 0.0508 to 0.0532 RP update is seq
@@ -332,7 +338,8 @@ monitor line "nFnu"  1.43649m   1.441
 ## >>chng 19 jul 30, from 0.0309 to 0.0271, split He I 2 ^3P_J
 ## >>chng 20 jan 13, from 0.0271 to 0.0258, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
 ## >>chng 23 sep 08, from 0.0258 to 0.054, fix SQRTPI in Lya destprob
-monitor Pradmax 0.054
+## >>chng 24 jan 09, from 0.054 to 0.0506, resolve 1 electron Ly doublets
+monitor Pradmax 0.0506
 ## 
 ## >>chng 05 oct 01, from 0.0702 to 0.0519, RP update He levels
 ## >>chng 15 mar 07, from 0.0519 to 0.0718, merging newmesh branch
@@ -350,7 +357,8 @@ monitor hheicf 0.0718 error 0.02
 ## >>chng 13 nov 05, from 30.79 to 17.34, convergence branch changes
 ## >>chng 13 nov 19, from 17.34 to 15.7, fix CT bug in mole_eval_balance
 ## >>chng 14 apr 07, from 15.7 to 11.07, move H/C out of ConvBase loop
-monitor itrzn 11.07 error 0.10
+## >>chng 24 jan 09, from 11.07 to 12.29, resolve 1 electron Ly doublets
+monitor itrzn 12.29 error 0.10
 ##
 ## >>chng 08 dec 08, from 220 to 182, upper limit -> equals (r2515)
 ## >>chng 09 jan 08, from 182 to 165, minor changes in iter/zn, iterations, and zone that crept in over last month

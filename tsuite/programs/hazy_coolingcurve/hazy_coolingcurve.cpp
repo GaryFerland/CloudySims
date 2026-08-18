@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /* runs pure collisional models at range of temperatures, prints cooling */
 #include "cddefines.h"
@@ -73,11 +73,11 @@ int main( void )
 			cdRead( "stop zone 1 "  );
 
 			/* set the hydrogen density */
-			sprintf(chLine,"hden %f ",hden);
+			snprintf(chLine,sizeof(chLine),"hden %f ",hden);
 			cdRead( chLine  );
 
 			/* sets the gas kinetic temperature */
-			sprintf(chLine,"constant temper %f ",telog);
+			snprintf(chLine,sizeof(chLine),"constant temper %f ",telog);
 			cdRead( chLine  );
 
 			/* identify sources of heating and cooling */

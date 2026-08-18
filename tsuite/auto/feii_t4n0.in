@@ -28,7 +28,7 @@ save overview ".ovr"
 save performance ".per"
 save monitors ".asr" last
 save species continuum last ".con" "Fe+" units angstroms
-save species bands ".fe2b" "FeII_bands.ini" "Fe+" last no hash
+save species bands ".fe2b" "FeII_bands.dat" "Fe+" last no hash
 #
 # commands giving the monitors    =========
 ## >>chng 14 jul 08, from 1 to -19.67, first monitors

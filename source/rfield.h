@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef RFIELD_H_
@@ -27,8 +27,8 @@ void rfield_opac_zero( long lo , long ihi );
 /** set true when allocated, init to false */
 extern bool lgRfieldAllocated;
 
-namespace Illuminate {
-	typedef enum { FORWARD , REVERSE , ISOTROPIC } IlluminationType ;
+namespace Illumination {
+	typedef enum { FORWARD, REVERSE, SYMMETRIC } IlluminationType;
 }
 
 namespace Accumulate {
@@ -411,7 +411,7 @@ struct t_rfield : public module, public t_mesh {
 	 * default is angle=zero, normal illumination, DirectCos = 1 */
 	realnum OpticalDepthScaleFactor[LIMSPC];
 
-	Illuminate::IlluminationType Illumination[LIMSPC];
+	Illumination::IlluminationType Illumination[LIMSPC];
 
 	/** nShape is SED shape index number, this must equal the number
 	 * of field intensities that are specified
@@ -518,8 +518,6 @@ public:
 	 * flow.  Evaluated in RT_line_all */
 	long int ipFineConVelShift;
 
-	/** option to turn off fine opacities with no fine opacity command */
-	bool lgOpacityFine;
 	/** says that fine optical depths will be saved, so save them */
 	bool lgSaveOpacityFine;
 

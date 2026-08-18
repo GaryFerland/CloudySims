@@ -39,7 +39,8 @@ monitor pressure error < 0.002
 ## >>chng 14 apr 08, from 4.464 to 4.514, O excit state photo back in
 ## >>chng 16 mar 24, from 4.514 to 4.564, FeII cooling using Stout 80 levels
 ## >>chng 16 aug 07, from 4.564 to 4.492, Fran bug fix
-monitor line "nFnu" 122.4m luminosity 4.492 error 0.1
+## >>chng 24 oct 05, wl from 122.4m to 122.367m, reinterpret PredCont wl as vacuum
+monitor line "nFnu" 122.367m luminosity 4.492 error 0.1
 ##
 ## >>chng 04 dec 08, from 4.71 to 4.66, co-ion feedback, check converg
 ## >>chng 07 oct 27, from 4.66 to 4.70 add up lev opac to WNW FeII model
@@ -49,7 +50,8 @@ monitor line "nFnu" 122.4m luminosity 4.492 error 0.1
 ## >>chng 14 apr 08, from 4.73 to 4.787, O excit state photo back in
 ## >>chng 16 mar 24, from 4.787 to 4.843, FeII cooling using Stout 80 levels
 ## >>chng 16 aug 07, from 4.843 to 4.765, Fran bug fix
-monitor line "nFnu" 60.8322m luminosity 4.765 error 0.1
+## >>chng 24 oct 05, wl from 60.8322m to 60.8157m, reinterpret PredCont wl as vacuum
+monitor line "nFnu" 60.8157m luminosity 4.765 error 0.1
 ##
 ## >>chng 04 dec 08, from 4.86 to 4.80, co-ion feedback, check converg
 ## >>chng 06 aug 09, from 4.80 to 4.84 Meudon 06, Bowen change
@@ -59,7 +61,8 @@ monitor line "nFnu" 60.8322m luminosity 4.765 error 0.1
 ## >>chng 14 apr 08, from 4.882 to 4.942, O excit state photo back in
 ## >>chng 16 mar 24, from 4.942 to 5.001, FeII cooling using Stout 80 levels
 ## >>chng 16 aug 07, from 5.001 to 4.923, Fran bug fix
-monitor line "nFnu" 41.2152m luminosity 4.923 error 0.1
+## >>chng 24 oct 05, wl from 41.2152m to 41.2039m, reinterpret PredCont wl as vacuum
+monitor line "nFnu" 41.2039m luminosity 4.923 error 0.1
 ##
 ## >>chng 04 dec 08, from 5.82 to 5.77, co-ion feedback, check converg
 ## >>chng 07 oct 22, from 5.77 to 5.71, resolve l-levels of h-like sequence
@@ -151,7 +154,7 @@ monitor line luminosity "H  1" 4861.32A 5.881,
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-monitor line luminosity "Inwd" 4861.32A 5.788, 
+monitor line luminosity "H  1 Inwd" 4861.32A 5.788,
 ##
 ## >>chng 06 jul 25, from 6.059 to 5.999 HN update OIII collision data
 ## >>chng 06 aug 09, from 5.999 to 6.024 Meudon 06, Bowen change

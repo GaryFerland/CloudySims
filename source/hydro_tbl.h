@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef ATMDAT_HYDR_TP_H
@@ -46,10 +46,14 @@ class t_hydro_tbl : public Singleton<t_hydro_tbl>
 	multi_arr<double,3> p_en;
 	multi_arr<double,3> p_cs;
 
+	size_t p_Zmaxm1;
+	vector<realnum> p_tpwn;
+
 	void p_initn(long nu);
 	void p_initnl(long nu);
 	void p_initnn();
 	void p_initcs();
+	void p_initwn();
 
 	realnum p_RM(long Z) const;
 protected:
@@ -76,6 +80,7 @@ public:
 	realnum tp(long nl, long nu, long Z);
 	realnum tp(long nl, long ll, long nu, long lu, long Z);
 	realnum tp(long n, long ll, long lu, long Z);
+	realnum m1wn(long n, long l, long Z);
 	double wn(long n, long ll, long lu, long Z);
 	double cs(double e, long n, long l, long Z);
 };

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /* test case to show behavior of very high metals environmet going to lte
  * cloud irradiated by STE blackbody, should equilibriate at continuum temperature
@@ -35,7 +35,11 @@ int main( void )
 
 		BigError = 0.;
 		/* this is limit on 32 bit double */
-		while( telog < 7.99 )
+		/* >>chng 26 apr 18 had been hardwired 1e38 changed to BIGFLOAT ~e36
+		 * highest temperature of 7.99 was ~e37 so trapped. Best to use the
+		 * macro BIGFLOAT and stay away from float limits 
+		 * change in macro in cont_setintensity.cpp rev 94cb3de61063ca43f8dcd1766851ab4de8cb2212*/
+		while( telog < 7.49 )
 		{
 			/* initialize the code for this run */
 			cdInit();
@@ -50,10 +54,10 @@ int main( void )
 			cdRead( "set dr 0"  );
 			cdRead( "abundances starburst 10 "  );
 
-			sprintf(chLine,"blackbody lte %f ",telog);
+			snprintf(chLine,sizeof(chLine),"blackbody lte %f ",telog);
 			cdRead( chLine  );
 
-			sprintf(chLine,"hden %f ",hden);
+			snprintf(chLine,sizeof(chLine),"hden %f ",hden);
 			cdRead( chLine  );
 			cdRead( "stop zone 1 "  );
 

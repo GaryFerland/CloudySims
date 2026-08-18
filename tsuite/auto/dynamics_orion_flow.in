@@ -203,7 +203,8 @@ monitor velocity -0.1337
 ## >>chng 14 jun 11, from 23.94 to 25.68, BUGFIX 14 jan 05, N to external databases, did not include N I, Mg II excited state photo
 ## >>chng 15 oct 14, from 25.68 to 24.19, update DR suppression in r10716
 ## >>chng 21 mar 22, error from 0.05 to 0.10, drift after update to NIST energies & ionization potentials
-monitor itrzn 24.19 error 0.10
+## >>chng 24 jan 09, from 24.19 to 26.89, resolve 1 electron Ly doublets
+monitor itrzn 26.89 error 0.10
 ##
 ## >>chng 06 jul 06, from 900 to 1000 sim goes much deeper, CO chem now
 ## includes dynamics but no cross talk between CO and H2 in H2 part

@@ -100,51 +100,60 @@ monitor line "BaC " 3646 = 18.26 ##Balmer continuum rel to h-beta
 ## >>chng 02 may 27, from 0.582 to 0.631, improved gaunt factors
 ## >>chng 06 nov 29, from 0.631 to 0.603, use Badnell DR by default
 ## >>chng 13 jul 25, wl from 2.324m to 2.32440m, increased wl precision to 6 sig. fig.
-monitor line "nFnu" 2.32440m  0.603
+## >>chng 24 oct 05, wl from 2.32440m to 2.32377m, reinterpret PredCont wl as vacuum
+monitor line "nFnu" 2.32377m  0.603
 ## 
 ## >>chng 08 apr 19, incr error from 0.05 to 0.1, fewer levels less emission
 ## >>chng 02 may 27, from 0.795 to 0.849, improved gaunt factors
 ## >>chng 13 jul 25, wl from 1.643m to 1.64313m, increased wl precision to 6 sig. fig.
-monitor line "nFnu" 1.64313m  0.849 error 0.1
+## >>chng 24 oct 05, wl from 1.64313m to 1.64268m, reinterpret PredCont wl as vacuum
+monitor line "nFnu" 1.64268m  0.849 error 0.1
 ## 
 ## >>chng 00 sep 18 continuum energy grid changed
 ## >>chng 02 may 27, from 0.816 to 0.835, improved gaunt factors
 ## >>chng 07 dec 14, from 0.835 to 0.795 RP update is seq
 ## >>chng 13 jul 25, wl from 1.480m to 1.48022m, increased wl precision to 6 sig. fig.
 ## >>chng 17 sep 09, from 0.795 to 0.8367, fix bug in high n collisional excitation rates for H-like iso-sequences
-monitor line "nFnu" 1.48022m  0.8367
+## >>chng 24 oct 05, wl from 1.48022m to 1.47981m, reinterpret PredCont wl as vacuum
+monitor line "nFnu" 1.47981m  0.8367
 ## 
 ## >>chng 00 sep 18 continuum energy grid changed
 ## >>chng 02 may 27, from 1.429 to 1.444, improved gaunt factors
 ## >>chng 13 jul 25, wl from 1.436m to 1.43649m, increased wl precision to 6 sig. fig.
-monitor line "nFnu" 1.43649m   1.444
+## >>chng 24 oct 05, wl from 1.43649m to 1.43610m, reinterpret PredCont wl as vacuum
+monitor line "nFnu" 1.43610m   1.444
 ## 
 ## >>chng 02 may 27, from 1.243 to 1.310 improved gaunt factors
 ## >>chng 13 jul 25, wl from 1.119m to 1.11867m, increased wl precision to 6 sig. fig.
-monitor line "nFnu" 1.11867m   1.310
+## >>chng 24 oct 05, wl from 1.11867m to 1.11836m, reinterpret PredCont wl as vacuum
+monitor line "nFnu" 1.11836m   1.310
 ##
 ## >>chng 00 sep 18 continuum energy grid changed
 ## >>chng 07 dec 06, from 1.045 to 0.970, changes in h-like collisions
 ## >>chng 13 jul 25, wl from 8330 to 8329.68A, increased wl precision to 6 sig. fig.
 ## >>chng 16 oct 21, from 0.97 to 1.022, new l-changing rates from Hlike_HS87 reintegration
-monitor line "nFnu"  8329.68A   1.022
+## >>chng 24 oct 05, wl from 8329.68A to 8327.39A, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  8327.39A   1.022
 ##
 ## >>chng 00 sep 18 continuum energy grid changed
 ## >>chng 13 jul 25, wl from 8079 to 8078.61A, increased wl precision to 6 sig. fig.
-monitor line "nFnu"  8078.61A   3.504
+## >>chng 24 oct 05, wl from 8078.61A to 8076.39A, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  8076.39A   3.504
 ##
 ## >>chng 06 feb 03, from 2.294 to 2.398, guess dr to Badnell mean
 ## >>chng 07 dec 06, from 2.398 to 2.267, changes in h-like collisions
 ## >>chng 13 jul 25, wl from 6210 to 6209.66A, increased wl precision to 6 sig. fig.
 ## >>chng 16 oct 21, from 2.267 to 2.373, new l-changing rates from Hlike_HS87 reintegration
-monitor line "nFnu"  6209.66A   2.373
+## >>chng 24 oct 05, wl from 6209.66A to 6207.94A, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  6207.94A   2.373
 ##
 ## >>chng 01 sep 24, from 1.444 to 1.521, 2s2p br chng => 2nu stronger
 ## >>chng 07 dec 06, from 1.521 to 1.301, changes in h-like collisions
 ## >>chng 13 jul 25, wl from 4885 to 4885.36A, increased wl precision to 6 sig. fig.
 ## >>chng 16 may 13, from 1.301 to 1.361, "PS64 only dipole l-changing calculations"
 ## >>chng 16 oct 21, from 1.361 to 1.429, new l-changing rates from Hlike_HS87 reintegration
-monitor line "nFnu"  4885.36A   1.429
+## >>chng 24 oct 05, wl from 4885.36A to 4884.00A, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  4884.00A   1.429
 ##
 ## >>chng 00 sep 18 continuum energy grid changed
 ## >>chng 02 jul 19, from 0.934 to 0.983, better two photon
@@ -152,11 +161,13 @@ monitor line "nFnu"  4885.36A   1.429
 ## >>chng 13 jul 25, wl from 3704 to 3704.34A, increased wl precision to 6 sig. fig.
 ## >>chng 15 may 27, from 0.553 to 0.6115, PS64 fixes
 ## >>chng 16 oct 21, from 0.6115 to 0.7472, new l-changing rates from Hlike_HS87 reintegration
-monitor line "nFnu"  3704.34A   0.7472
+## >>chng 24 oct 05, wl from 3704.34A to 3703.28A, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  3703.28A   0.7472
 ##
 ## >>chng 00 sep 18 continuum energy grid changed
 ## >>chng 13 jul 25, wl from 3588 to 3587.67A, increased wl precision to 6 sig. fig.
-monitor line "nFnu"  3587.67A   18.3
+## >>chng 24 oct 05, wl from 3587.67A to 3586.64A, reinterpret PredCont wl as vacuum
+monitor line "nFnu"  3586.64A   18.3
 ##
 ## >>chng 13 jul 25, wl from 1196 to 1196.33A, increased wl precision to 6 sig. fig.
 monitor line "nFnu"  1196.33A 0.00142844 error 0.1

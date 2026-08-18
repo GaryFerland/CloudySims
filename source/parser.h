@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef PARSER_H_
@@ -28,6 +28,7 @@ struct CloudyCommand {
 };
 
 bool isBoundaryChar(char c);
+bool isSeparatorChar(char c);
 
 class Symbol {
 public:
@@ -173,15 +174,16 @@ public:
 		}
 		return i>0;
 	}
-	bool GetRange(const char *chKey, double *val1, double *val2)
+	bool GetRange(const char* chKey, t_wavl& val1, t_wavl& val2)
 	{
 		int i = nMatch1(chKey);
-		if (i > 0) {
+		if( i > 0 )
+		{
 			m_off = i-1;
-			*val1 = FFmtRead();
-			*val2 = FFmtRead();
+			val1 = getWaveOpt();
+			val2 = getWaveOpt();
 		}
-		return i>0;
+		return ( i > 0 );
 	}
 	bool nMatchErase(const char *chKey)
 	{
@@ -201,6 +203,11 @@ public:
 		}		
 		return found;
 	}
+	// returns true if a given key is found as the first key after the current position
+	// there must be at least one separator character in front of the key as well as
+	// after the key. chKey must contain the full keyword, but abbreviation to nmin
+	// chars is supported.
+	bool nMatchSkip(const string& chKey, size_t nmin = 4);
 	bool hasCommand(const string& s2);
 	bool peekNextCommand(const string& s2);
 	bool Command(const char *name, OptionParser doOpts)
@@ -234,8 +241,8 @@ public:
 		return m_card_raw.substr(m_off);
 	}
 	void help(FILE *fp) const;
-	double getWave();
-	double getWaveOpt();
+	t_wavl getWave();
+	t_wavl getWaveOpt();
 	LineID getLineID(bool lgAtStart=true);
 	Symbol getSymbol();
 	int getElement();
@@ -244,62 +251,102 @@ public:
 	void readLaw(DepthTable& table);
 };
 
+//! lightweight variant of istringstream to be used in DataParser
+//! the main objective is to speed up execution by removing unnecessary overhead
+//! note that the functionality is not always exactly equal to istringstream
+//! even when the method has the same name as the corresponding method in istringstream
+class mystream {
+	const char* p_line;
+	size_t p_len;
+	size_t p_pos;
+	bool p_fail;
+	bool p_eof;
+public:
+	mystream() : p_line(NULL), p_len(0), p_pos(0), p_fail(false), p_eof(false) {}
+	char peek() { p_eof = ( p_eof || p_pos >= p_len ); return p_line[p_pos]; }
+	char get() { char c = p_line[p_pos++]; p_eof = ( p_eof || p_pos >= p_len ); return c; }
+	bool good() const { return ( !p_fail && !p_eof ); }
+	bool fail() const { return p_fail; }
+	void fail(bool f) { p_fail = f; }
+	bool eof() const { return p_eof; }
+	void eof(bool e) { p_eof = e; }
+	size_t tellg() const { return p_pos; }
+	void seekg(size_t p) { p_pos = p; p_eof = ( p_eof || p >= p_len ); }
+	const char* str() const { return p_line; }
+	void str(const string& s) { clear(); p_line = s.data(); p_len = s.length(); }
+	size_t length() const { return p_len; }
+	void clear() { p_line = NULL, p_len = 0; p_pos = 0; p_fail = false; p_eof = false; }
+};
+
 // helper functions for the DataParser class, do not call these directly
 template<typename T>
-inline void getTokenOptionalImpl(istringstream& iss, const string&, T& var)
+inline void getTokenOptionalImpl(mystream& ms, const string&, T& var)
 {
+	istringstream iss(ms.str());
+	iss.seekg(ms.tellg());
 	iss >> var;
-	if( iss.fail() )
+	if( iss.fail() ) {
+		ms.fail(true);
 		var = T();
+	}
+	ms.eof(iss.eof());
+	iss.clear();
+	ms.seekg(iss.tellg());
 }
 
 // optimized specializations for the most common types
 template<>
-inline void getTokenOptionalImpl(istringstream& iss, const string& s, double& var)
+inline void getTokenOptionalImpl(mystream& ms, const string& s, double& var)
 {
-	FPRead(iss, s, var);
+	FPRead(ms, s, var);
 }
 
 template<>
-inline void getTokenOptionalImpl(istringstream& iss, const string& s, sys_float& var)
+inline void getTokenOptionalImpl(mystream& ms, const string& s, sys_float& var)
 {
-	FPRead(iss, s, var);
+	FPRead(ms, s, var);
 }
 
 template<>
-inline void getTokenOptionalImpl(istringstream& iss, const string& s, long long& var)
+inline void getTokenOptionalImpl(mystream& ms, const string& s, long long& var)
 {
-	IntRead(iss, s, var);
+	IntRead(ms, s, var);
 }
 
 template<>
-inline void getTokenOptionalImpl(istringstream& iss, const string& s, unsigned long long& var)
+inline void getTokenOptionalImpl(mystream& ms, const string& s, unsigned long long& var)
 {
-	IntRead(iss, s, var);
+	IntRead(ms, s, var);
 }
 
 template<>
-inline void getTokenOptionalImpl(istringstream& iss, const string& s, long& var)
+inline void getTokenOptionalImpl(mystream& ms, const string& s, long& var)
 {
-	IntRead(iss, s, var);
+	IntRead(ms, s, var);
 }
 
 template<>
-inline void getTokenOptionalImpl(istringstream& iss, const string& s, unsigned long& var)
+inline void getTokenOptionalImpl(mystream& ms, const string& s, unsigned long& var)
 {
-	IntRead(iss, s, var);
+	IntRead(ms, s, var);
 }
 
 template<>
-inline void getTokenOptionalImpl(istringstream& iss, const string& s, int& var)
+inline void getTokenOptionalImpl(mystream& ms, const string& s, int& var)
 {
-	IntRead(iss, s, var);
+	IntRead(ms, s, var);
 }
 
 template<>
-inline void getTokenOptionalImpl(istringstream& iss, const string& s, unsigned int& var)
+inline void getTokenOptionalImpl(mystream& ms, const string& s, unsigned int& var)
 {
-	IntRead(iss, s, var);
+	IntRead(ms, s, var);
+}
+
+template<>
+inline void getTokenOptionalImpl(mystream& ms, const string& s, string& var)
+{
+	StringRead(ms, s, var);
 }
 
 //! ES_NONE means that neither blank lines nor a field of stars are end-of-data (EOD)
@@ -316,7 +363,7 @@ class DataParser {
 	eod_style p_es;      //! what are the allowed EOD markers?
 	string p_line;       //! the current line being read
 	size_t p_nr;         //! number of the line we are parsing
-	istringstream p_ls;  //! stream for reading current line
+	mystream p_ls;       //! stream for reading current line
 	bool p_lgEOF;        //! have we passed beyond the EOF?
 
 	void p_open(const string& name, eod_style es, access_scheme as);
@@ -339,11 +386,13 @@ class DataParser {
 	// than blank lines, depending on the value of p_es...
 	bool p_blankLine() const
 	{
-		for( size_t i=0; i < p_line.length(); ++i )
+		const char* begin = p_line.data();
+		const char* end = begin + p_line.size();
+		for( auto p=begin; p < end; ++p )
 		{
-			if( i > 0 && p_line[i] == '#' )
+			if( UNLIKELY(p > begin && *p == '#') )
 				return true;
-			else if( !isspace(p_line[i]) )
+			else if( LIKELY(!isspace(*p)) )
 				return false;
 		}
 		return true;
@@ -351,18 +400,12 @@ class DataParser {
 	// get the position on the current line
 	size_t p_pos()
 	{
-		long p = p_ls.tellg();
-		if( p < 0 )
-			return p_line.length();
-		else
-			return size_t(p);
+		return p_ls.tellg();
 	}
 	// set the position on the current line (i.e. skip to position p)
 	void p_pos(size_t p)
 	{
 		p_ls.seekg(p);
-		if( p >= p_line.length() )
-			p_ls.setstate(ios_base::eofbit);
 	}
 	// skip whitespace on the current line
 	void p_skipWS()
@@ -396,6 +439,8 @@ class DataParser {
 	void p_showLocation(size_t p, FILE *io);
 	// this implements reading a quoted string
 	void p_getQuoteOptional(string& str);
+	// helper routine for errorAbort() and warning()
+	void p_printMsg(const string& severity, const string& msg, FILE *io);
 public:
 	// default constructor
 	DataParser() : p_es(ES_INVALID), p_nr(0), p_lgEOF(false) {}	
@@ -441,7 +486,7 @@ public:
 		if( p_ls.fail() )
 			return false;
 		else if( !isspace(p_ls.peek()) && !p_ls.eof() )
-			errorAbort("found trailing junk after token");
+			errorAbort("found unrecognized input after token");
 		else
 			return true;
 	}
@@ -485,7 +530,7 @@ public:
 		if( p_ls.fail() )
 			return false;
 		else if( !isspace(p_ls.peek()) && !p_ls.eof() )
-			errorAbort("found trailing junk after token");
+			errorAbort("found unrecognized input after token");
 		else
 			return true;
 	}
@@ -509,9 +554,13 @@ public:
 			errorAbort("failed to read a keyword");
 	}
 	// read line label plus wavelength
-	void getLineID(LineID& line);
+	void getLineID(LineID& line, bool lgAtStart=true);
+	// read (possibly theoretical) level energy
+	bool getLvlEnergy(double& En);
+	// get the current position on the line
+	long getposLine() { return p_pos(); }
 	// skip to a specified position on the line
-	void skipTo(size_t p)
+	void setposLine(size_t p)
 	{
 		if( p < p_pos() )
 			errorAbort("skipping to requested position failed");
@@ -523,7 +572,7 @@ public:
 		auto cp = p_pos();
 		auto p = p_line.substr(cp).find(s);
 		if( p != string::npos )
-			skipTo(cp + p + s.length());
+			setposLine(cp + p + s.length());
 		else
 		{
 			ostringstream oss;
@@ -543,7 +592,7 @@ public:
 	void checkEOL()
 	{
 		if( !lgEOL() )
-			errorAbort("found trailing junk at the end of this line");
+			errorAbort("found unrecognized input at the end of this line");
 	}
 	// returns true if the end of the file is reached
 	bool lgEOF() const { return p_lgEOF; }
@@ -566,14 +615,20 @@ public:
 		p_io.seekg(0);
 		p_line.clear();
 		p_nr = 0;
-		p_ls.str("");
 		p_ls.clear();
 		p_lgEOF = false;
 	}
 	// abort with specific error message
-	NORETURN void errorAbort(const string& msg, FILE *io = ioQQQ);
+	NORETURN void errorAbort(const string& msg, FILE *io = ioQQQ)
+	{
+		p_printMsg("PROBLEM ERROR", msg, io);
+		cdEXIT(EXIT_FAILURE);
+	}
 	// non-fatal warning message
-	void warning(const string& msg, FILE *io = ioQQQ);
+	void warning(const string& msg, FILE *io = ioQQQ)
+	{
+		p_printMsg("WARNING", msg, io);
+	}
 };
 
 /** Links text string to an action on a specified argument */
@@ -615,7 +670,7 @@ public:
 	}
 };
 
-/** Interate through a list of KeyActions: apply the first which
+/** Iterate through a list of KeyActions: apply the first which
 	 matches and then quit */
 template <typename T, typename V>
 bool parserProcess(Parser &p, T *list, unsigned long nlist, V *value)
@@ -632,6 +687,18 @@ bool parserProcess(Parser &p, T *list, unsigned long nlist, V *value)
 	}
 	return lgFound;
 }
+
+/** parse_input_time
+ *  Parse the given time, and convert it to seconds.
+ * \param p
+ */
+realnum parse_input_time( Parser &p );
+
+/** parse_input_time_unit
+ *  Parse the given time unit, and return its value in seconds.
+ * \param p
+ */
+realnum parse_input_time_unit( Parser &p );
 
 /**ParseCosmicRays parse the cosmic rays command 
 \param *chCard
@@ -806,8 +873,8 @@ void ParseTrace(Parser &p);
 /*ParseExtinguish parse the extinguish command */
 void ParseExtinguish( Parser &p );
 
-/*ParseIlluminate parse the illuminate command */
-void ParseIlluminate( Parser &p );
+/*ParseIllumination parse the illumination command */
+void ParseIllumination( Parser &p );
 
 /*ParseCaseB - parse the Case B command */
 void ParseCaseB(Parser &p );

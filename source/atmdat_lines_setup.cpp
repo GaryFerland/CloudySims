@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*lines_setup convert level 1 and level 2 line parameters and pointers into internal form 
  * used by code, line data were read in by atmdat_readin */
@@ -46,15 +46,15 @@ void lines_setup(void)
 			}
 
 			/*now put into standard format */
-			TauLine2[i].WLAng() = wn2ang( double( TauLine2[i].EnergyWN() ) );
+			TauLine2[i].WLangVac() = wn2angVac( double( TauLine2[i].EnergyWN() ) );
 			(*TauLine2[i].Lo()).Pop() = 0.;
 			(*TauLine2[i].Hi()).Pop() = 0.;
 			TauLine2[i].Emis().iRedisFun() = ipPRD;
 
 			/* these are line optical depth arrays
 			 * inward optical depth */
-			TauLine2[i].Emis().TauIn() = opac.taumin;
-			TauLine2[i].Emis().TauCon() = opac.taumin;
+			TauLine2[i].Emis().TauIn() = TAUMIN;
+			TauLine2[i].Emis().TauCon() = TAUMIN;
 			TauLine2[i].Emis().ColOvTot() = 0.;
 			/* outward optical depth */
 			TauLine2[i].Emis().TauTot() = 1e20f;
@@ -106,8 +106,8 @@ void lines_setup(void)
 
 		/* these are line optical depth arrays
 		 * inward optical depth */
-		UTALines[i].Emis().TauIn() = opac.taumin;
-		UTALines[i].Emis().TauCon() = opac.taumin;
+		UTALines[i].Emis().TauIn() = TAUMIN;
+		UTALines[i].Emis().TauCon() = TAUMIN;
 		UTALines[i].Emis().ColOvTot() = 0.;
 		/* outward optical depth */
 		UTALines[i].Emis().TauTot() = 1e20f;
@@ -164,7 +164,7 @@ void lines_setup(void)
 		}
 
 		/*now put into standard format */
-		HFLines[i].WLAng() = 1.e8f/HFLines[i].EnergyWN();
+		HFLines[i].WLangVac() = 1.e8f/HFLines[i].EnergyWN();
 		(*HFLines[i].Lo()).Pop() = 0.;
 		(*HFLines[i].Hi()).Pop() = 0.;
 		/* change from partial to complete redistribution */
@@ -172,8 +172,8 @@ void lines_setup(void)
 
 		/* these are line optical depth arrays
 		 * inward optical depth */
-		HFLines[i].Emis().TauIn() = opac.taumin;
-		HFLines[i].Emis().TauCon() = opac.taumin;
+		HFLines[i].Emis().TauIn() = TAUMIN;
+		HFLines[i].Emis().TauCon() = TAUMIN;
 		HFLines[i].Emis().ColOvTot()=0;
 		/* outward optical depth */
 		HFLines[i].Emis().TauTot() = 1e20f;

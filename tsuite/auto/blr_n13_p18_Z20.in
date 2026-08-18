@@ -230,7 +230,8 @@ monitor line luminosity "Na 1"      5889.95A    6.116
 ## >>chng 13 nov 05, from 10.36 to 6.39, convergence branch changes
 ## >>chng 13 nov 25, from 6.39 to 5.801, convergence branch changes
 ## >>chng 14 apr 07, from 5.801 to 4.878, move H/C out of ConvBase loop
-monitor itrzn 4.878 error 0.10
+## >>chng 24 jan 09, from 4.878 to 5.466, resolve 1 electron Ly doublets
+monitor itrzn 5.466 error 0.10
 ##
 ## number of iterations required
 ## >>chng 03 dec 08, from <11 to <7 chng zones, ots
@@ -274,7 +275,8 @@ monitor niter  >2
 ## >>chng 14 may 31, re-enable as things should be more stable
 ## >>chng 23 may 15, from 737 to 773, GS updates 21 reactions to UMIST 2012
 ## >>chng 23 jul 15, from 773 to 858, GS update UMIST to 2012 and set upper limit on T
-monitor nzone 858
+## >>chng 25 jan 15, from 858 to 738, GS removes destabilizing reactions, updates others to current UMIST
+monitor nzone 738
 ##
 ## >>chng 14 jul 10, from 1.01 to 2.949, Add monitors for WillsNetzerWills FeII Lines
 ## >>chng 16 mar 23, drop WillsNetzerWills FeII Lines

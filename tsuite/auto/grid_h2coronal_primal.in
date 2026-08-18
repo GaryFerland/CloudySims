@@ -1,4 +1,5 @@
 title coronal equilibrium
+set save prefix "grid_h2coronal_primal"
 # vary temperature in coronal equilibrium, monitor coolnd
 #
 # commands controlling continuum =========
@@ -20,9 +21,9 @@ set dr 0
 #
 # commands controlling output    =========
 no blends
-save grid "grid_hcoronal_primal.grd" last no hash
-save monitors "grid_h2coronal_primal.asr" last
-save cooling "grid_h2coronal_primal.col" last no hash
+save grid ".grd" last no hash
+save monitors ".asr" last
+save cooling ".col" last no hash
 ## >>chng 15 mar 07, 1st sim, from -33.9996 to -33.7975, merging newmesh branch
 ## >>chng 15 mar 07, 2nd sim, from -33.6695 to -33.5326, merging newmesh branch
 ## >>chng 15 mar 07, 3rd sim, from -33.3068 to -33.2375, merging newmesh branch

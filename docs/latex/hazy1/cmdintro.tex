@@ -82,7 +82,7 @@ A third option is to supply the \Cloudy\ commands on the command line, e.g.
 \cdCommand{test} (the ``smoke test''). This is useful for quickly executing
 short scripts. If you want to execute multiple commands, the commands need to be separated
 by a semicolon and embedded in single quotes (to protect the semicolon from the shell), e.g.
-\cdCommand{cloudy.exe -e 'set continuum resolution 0.1; compile grains'}.
+\cdCommand{cloudy.exe -e 'set continuum resolution 0.1; test'}.
 The code is also designed
 to be used as a subroutine of other, much larger, programs.
 In this case the input stream is entered using
@@ -440,7 +440,7 @@ untouched. This is useful if you want to limit the scope of the modification
 to the current run only (to be precise, all subsequent runs in the directory
 that contains the modified file). One example would be when you want to alter
 the resolution of the \Cloudy\ frequency mesh by modifying the file
-\cdFilename{continuum\_mesh.ini} (see
+\cdFilename{continuum\_mesh.dat} (see
 Section~\ref{Hazy2-sec:ChangingMeshResolution} in Part 2 of \Hazy). If you
 place the modified file in the local directory, it will only affect runs in
 that directory and not globally.
@@ -448,9 +448,15 @@ that directory and not globally.
 \section{The Search Path for Input Files}
 \label{sec:SearchPath}
 
-The code uses a search path to locate input files, as was discussed in the
-previous section. The default search path is to look in the local directory
-first and then in the data directory included in the distribution. The user
+The code uses a search path to locate input and data files. 
+The default search path is to look in the local directory
+first and then in the data directory included in the distribution. 
+The code creates the default search path on the fly when the code starts up. 
+The makefile sets the path to the root of the Cloudy installation. 
+This section described how to set your own search path if you want to extend
+our default setup..
+
+The user
 can override that setting by defining the environment variable
 \cdVariable{CLOUDY\_DATA\_PATH}. How you can do that depends on the operating
 system and the shell you are using. For csh/tcsh under Linux/UNIX use:
@@ -507,6 +513,9 @@ Note that we put \cdFilename{/path/to/non\_standard\_data} up front (this is
 the directory containing data for a non-standard spectral resolution). This
 assures that the non-standard resolution version of a file is picked up first,
 before the standard version.
+
+You can verify your search path using the \cdCommand{print path} command
+described in Section~\ref{sec:PrintPath}.
 
 \section{The \cdCommand{init} command}
 
@@ -565,7 +574,7 @@ A series of \cdFilename{*.ini} files are included in the
 data directory included in the \Cloudy\ distribution.
 Do an \cdFilename{ls *.ini} within the data directory
 to list the available files. Note that not all these files
-are init files, e.g., \cdFilename{continuum\_mesh.ini} is not
+are init files, e.g., \cdFilename{continuum\_mesh.dat} is not
 an init file in the sense we discussed here.
 Comments at the start of the files describe
 their purpose.
@@ -578,8 +587,8 @@ numbers. A PRNG creates a deterministic sequence of numbers starting from a
 given seed. However, on each invocation the bits in the number are so
 efficiently scrambled that for all intents and purposes they can be considered
 a truly random sequence of numbers. The PRNG in \Cloudy\ is by default a fully
-vectorized version of xoshiro256** (Blackman and Vigna, 2018, in
-press)\footnote{http://xoshiro.di.unimi.it.}, while the random numbers with a
+vectorized version of xoshiro256** \citep{2018arXiv180501407B}
+\footnote{http://xoshiro.di.unimi.it.}, while the random numbers with a
 normal distribution are now generated using the Ziggurat algorithm
 \citep{MarsagliaTsang00}. Both methods are very fast. An additional advantage
 is that the new code is fully aware of parallelization in the code, meaning

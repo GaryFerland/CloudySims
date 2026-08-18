@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ConvBase main routine to drive ionization solution for all species, find total opacity
  * called by ConvIoniz */
@@ -1109,6 +1109,8 @@ void ConvBase(
 	 * number of calls in this zone so first call is zero
 	 * reset to zero each time ConvPresTempEdenIoniz is called */
 	++conv.nPres2Ioniz;
+	static ConvergenceCounter cctrn = conv.register_("NPRES2IONIZ");
+	++cctrn;
 
 	/* this is abort option set with SET PRES IONIZ command,
 	 * test on nzone since init can take many iterations
@@ -1279,7 +1281,7 @@ void UpdateUTAs()
 				if( DEBUG_LOC /*&& UTALines[i].nelem==ipIRON+1 && (UTALines[i].IonStg==15||UTALines[i].IonStg==14)*/ )
 				{
 					fprintf(ioQQQ,"DEBUG UTA %3i %3i %.3f %.2e %.2e %.2e\n",
-						(*UTALines[i].Hi()).nelem() , (*UTALines[i].Hi()).IonStg() , UTALines[i].WLAng() ,
+						(*UTALines[i].Hi()).nelem() , (*UTALines[i].Hi()).IonStg() , UTALines[i].WLangVac() ,
 						rateone, UTALines[i].Coll().heat(), 
 						UTALines[i].Coll().heat()*dense.xIonDense[(*UTALines[i].Hi()).nelem()-1][(*UTALines[i].Hi()).IonStg()-1] );
 				}

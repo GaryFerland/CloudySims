@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*atom_levelN compute an arbitrary N level atom */
 #include "cddefines.h"
@@ -16,6 +16,7 @@
 #include "prt.h"
 #include "save.h"
 #include "species.h"
+#include "service.h"
 
 // Enable eigen-analysis of interaction matrix, also need to link with
 // -llapack (and have appropriate development package installed to
@@ -864,8 +865,18 @@ void Atom_LevelN::operator()(
 
 		if( !lgLTE )
 		{
+			long nelem, IonStg;
+			parsespect( chLabel, nelem, IonStg );
 			string species;
-			spectral_to_chemical( species, chLabel );
+			if( nelem >= 0 && nelem < LIMELM && IonStg >= 1 && IonStg <= nelem+2 )
+				// this is an atom or ion, so convert to species notation
+				species = makeChemical(nelem, IonStg-1);
+			else
+			{
+				// this is a molecule, so remove spaces but do not touch otherwise
+				species = chLabel;
+				trimWhiteSpace(species);
+			}
 			save.img_matrix.createImage( species, iteration, nzone, nlev,
 							Save_amat, Save_bvec, true );
 

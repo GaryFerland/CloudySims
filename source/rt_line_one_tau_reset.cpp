@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*RT_line_one_tau_reset computes average of old and new optical depths for new scale at end of iter,
  * called by update, also FeIILevelPops */
@@ -63,9 +63,9 @@ void RT_line_one_tau_reset(const TransitionProxy& t)
 	if( geometry.lgSphere && geometry.lgStatic )
 		t.Emis().TauIn() = TauNext/2.f;
 	else
-		t.Emis().TauIn() = opac.taumin;
+		t.Emis().TauIn() = TAUMIN;
 
-	t.Emis().TauInSpecific() = opac.taumin;
+	t.Emis().TauInSpecific() = TAUMIN;
 
 	t.Emis().TauTot() = TauNext;
 
@@ -80,7 +80,7 @@ void RT_line_one_tau_reset(const TransitionProxy& t)
 	t.Emis().Pelec_esc() = 0.;
 
 	/* optical depth to the continuum source */
-	t.Emis().TauCon() = opac.taumin;
+	t.Emis().TauCon() = TAUMIN;
 
 	/* >>chng 01 sep 01, zero out some pops and energies */
 	(*t.Lo()).Pop() = 0.;

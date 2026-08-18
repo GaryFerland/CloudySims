@@ -451,8 +451,6 @@ static const unsigned int NMD5 = 32;
 string MD5file(const char* fnam, access_scheme scheme=AS_DEFAULT);
 /** non-standard MD5 algorithm that skips eol characters and comments lines */
 string MD5datafile(const char* fnam, access_scheme scheme=AS_DEFAULT);
-/** same as MD5datafile(), but operates on an already open fstream */
-string MD5datastream(fstream& ioFile);
 /** calculate the MD5 sum of a string */
 string MD5string(const string& str);
 void MD5string(const string& str, uint64 md5sum[2]);

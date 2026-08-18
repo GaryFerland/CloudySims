@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*PrtLinePres print line radiation pressures for current conditions */
 #include "cddefines.h"
@@ -26,7 +26,8 @@ void PrtLinePres( FILE *ioPRESSURE )
 	const int nLine	= 100;
 	/* labels, wavelengths, and fraction of total pressure, for important lines */
 	string chLab[nLine];
-	realnum wl[nLine] , frac[nLine];
+	t_wavl wl[nLine];
+	realnum frac[nLine];
 	long int iperm[nLine];
 
 	/* will be used to check on size of opacity, was capped at this value */
@@ -43,7 +44,6 @@ void PrtLinePres( FILE *ioPRESSURE )
 	for(long i=0; i<nLine; ++i)
 	{
 		frac[i] = FLT_MAX;
-		wl[i] = FLT_MAX;
 	}
 
 	if( pressure.pres_radiation_lines_curr > 1e-30 )
@@ -78,7 +78,7 @@ void PrtLinePres( FILE *ioPRESSURE )
 
 								if( RadPres1 > pressure.pres_radiation_lines_curr*THRESH )
 								{
-									wl[ip] = iso_sp[ipISO][nelem].trans(ipHi,ipLo).WLAng();
+									wl[ip] = iso_sp[ipISO][nelem].trans(ipHi,ipLo).twav();
 
 									/* put null terminated line label into chLab using line array*/
 									chLab[ip] = chIonLbl(iso_sp[ipISO][nelem].trans(ipHi,ipLo));
@@ -108,7 +108,7 @@ void PrtLinePres( FILE *ioPRESSURE )
 
 				if( RadPres1 > pressure.pres_radiation_lines_curr*THRESH )
 				{
-					wl[ip] = TauLine2[i].WLAng();
+					wl[ip] = TauLine2[i].twav();
 
 					/* put null terminated line label into chLab using line array*/
 					chLab[ip] = chIonLbl(TauLine2[i]);
@@ -132,7 +132,7 @@ void PrtLinePres( FILE *ioPRESSURE )
 
 			if( RadPres1 > pressure.pres_radiation_lines_curr*THRESH )
 			{
-				wl[ip] = HFLines[i].WLAng();
+				wl[ip] = HFLines[i].twav();
 
 				/* put null terminated line label into chLab using line array*/
 				chLab[ip] = chIonLbl(HFLines[i]);
@@ -165,7 +165,7 @@ void PrtLinePres( FILE *ioPRESSURE )
 					
 					if( RadPres1 > pressure.pres_radiation_lines_curr*THRESH )
 					{
-						wl[ip] = (*tr).WLAng();
+						wl[ip] = tr->twav();
 						
 						/* put null terminated line label into chLab using line array*/
 						chLab[ip] = chIonLbl(*tr );
@@ -183,7 +183,7 @@ void PrtLinePres( FILE *ioPRESSURE )
 			RadPres1 = (*diatom)->H2_RadPress();
 			if( RadPres1 > pressure.pres_radiation_lines_curr*THRESH )
 			{
-				wl[ip] = 0;
+				wl[ip] = 0_vac;
 
 				/* put null terminated 4 char line label into chLab using line array*/
 				chLab[ip] = "H2  ";
@@ -220,7 +220,7 @@ void PrtLinePres( FILE *ioPRESSURE )
 		{
 			int ipline = iperm[i];
 			fprintf( ioPRESSURE, "(%4.4s ", chLab[ipline].c_str());
-			prt_wl(ioPRESSURE, wl[ipline] );
+			wl[ipline].prt_wl(ioPRESSURE);
 			fprintf(ioPRESSURE," %.2f) ",frac[ipline]);
 		}
 

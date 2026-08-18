@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*PrtLineSum parse print line sum command to enter set of lines into sum  */
 #include "cddefines.h"
@@ -52,10 +52,6 @@ double PrtLineSum()
 	DEBUG_ENTRY( "PrtLineSum()" );
 
 	double sum = 0.;
-	/* this can be called during setup mode, in which case we do nothing */
-	if( LineSave.ipass < 0 )
-		return sum;
-	
 	if( LineSave.ipass == 0 )
 	{
 		bool lgFail = false;

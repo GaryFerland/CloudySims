@@ -66,7 +66,8 @@ save monitors last "igm_primal.asr"
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-monitor line luminosity "H  1" 4861.32A -5.569 error 0.1
+## >>chng 25 jan 15, from -5.569 to -5.53, GS removes destabilizing reactions, updates others to current UMIST
+monitor line luminosity "H  1" 4861.32A -5.53 error 0.1
 ##
 ## >>chng 02 apr 03, from 0.721 to 0.758, bound compton
 ## >>chng 02 jul 19, from 0.758 to 0.717, better two photon
@@ -104,7 +105,8 @@ monitor line "Q(H)" 4861.32A 0.4636 error 0.1
 ## >>chng 13 nov 19, from -3.961 to -4.009, fix CT bug in mole_eval_balance
 ## >>chng 16 aug 07, from -4.009 to -4.058, Marios bug fixes
 ## >>chng 17 may 26, wl from 1215.68A to 1215.67A, update Rydberg constant
-monitor line luminosity "h  1" 1215.67A -4.058 error 0.1
+## >>chng 25 jan 15, from -4.058 to -4.02, GS removes destabilizing reactions, updates others to current UMIST
+monitor line luminosity "h  1" 1215.67A -4.02 error 0.1
 ##
 ## >>chng 02 apr 03, from 3.46 to 3.22 bound compton
 ## >>chng 03 may 22, fron intensity to luminosity
@@ -155,7 +157,8 @@ monitor line luminosity "h  1" 6562.80A -4.98 error 0.1
 ## >>chng 17 may 25, wl from 4340.49A to 4340.46A, up Rydberg constant
 ## >>chng 21 mar 16, wl from 4340.46A to 4340.47A, update NIST energies
 ## >>chng 21 aug 18, wl from 4340.47A to 4340.46A, revert to PvH energies for H
-monitor line luminosity "H  1" 4340.46A -5.927 error 0.1
+## >>chng 25 jan 15, from -5.927 to -5.869, GS removes destabilizing reactions, updates others to current UMIST
+monitor line luminosity "H  1" 4340.46A -5.869 error 0.1
 ##
 ## H 2 pht very sensitive to J-bar in Lya
 ## >>chng 01 jun 15, from 20.8 to 15.7, H ct rates
@@ -170,7 +173,9 @@ monitor line luminosity "H  1" 4340.46A -5.927 error 0.1
 ## >>chng 13 sep 17, from -4.64 to -4.443, D chem off by default
 ## >>chng 16 aug 07, from -4.443 to -4.362, Marios bug fixes
 ## >>chng 18 feb 13, wl from 0 to 2431.34A, update two-photon wl 
-monitor line luminosity "H  1" 2431.34A -4.362 error 0.2
+## >>chng 24 feb 04, wl from 2431.34A to 2431.35A, resolve 1 electron Lya doublets
+## >>chng 24 oct 01, wl from 2431.35A to 2430.61A, treat H I two-photon cont. wl as vacuum
+monitor line luminosity "H  1" 2430.61A -4.362 error 0.2
 ##
 ## very sensitive to J-bar in Lya
 ## >>chng 02 apr 03, from 60.8 to 48.1 bound compton
@@ -378,7 +383,8 @@ monitor H2 column density 26.58 error 0.15
 ## >>chng 16 aug 07, from -6.725 to -6.83, Marios bug fixes
 ## >>chng 18 feb 20, updated spectral label from "He 1" 5875.64A to "Blnd" 5877.29A, update He-like triplet labels and wl
 ## >>chng 18 mar 06, wl from 5877.29A to 5875.66A, adjust multiplet Blend WL for refraction index
-monitor line luminosity "Blnd" 5875.66A -6.83
+## >>chng 25 jan 26, from -6.83 to -6.796, merge master updated cham"
+monitor line luminosity "Blnd" 5875.66A -6.796
 ##
 ## >>chng 01 may 07, from 1.111 to 1.046, chng in he+ H ct rate
 ## >>chng 02 apr 03, from 1.046 to 1.135 bound compton
@@ -441,7 +447,8 @@ monitor temperature "H+" 1.657 error 0.1
 ## >>chng 13 sep 17, from 3.423 to 3.326, D chem off by default
 ## >>chng 13 nov 19, from 3.326 to 3.372, fix CT bug in mole_eval_balance
 ## >>chng 15 jun 03, from 3.372 to 2.441, exact LTE H2 cooling (not big model)
-monitor temperature "He+" 2.441
+## >>chng 25 jan 26, from 2.441 to 2.476, merge master updated cham"
+monitor temperature "He+" 2.476
 ##
 ## >>chng 05 sep 15, add this assert, eden for last zone
 ## >>chng 05 dec 08, from -0.661 to -0.748, update to Elwert Solomon rate

@@ -62,7 +62,8 @@ monitor column density H2  21.9 error 0.1
 ## >>chng 12 jan 06, from 13.22 to 12.06, several H2 model changes
 ## >>chng 13 aug 22, from 12.06 to 11.36, enable D chem in r8030
 ## >>chng 13 sep 17, from 11.36 to 12.06, D chemistry off by default
-monitor column density HeH+ 12.06 error 0.1
+## >>chng 25 jan 26, from 12.06 to 10.61, master merg
+monitor column density HeH+ 10.61 error 0.1
 ## >>chng 11 jul 16, from 10 to 17.57, add column density monitors
 ## >>chng 20 aug 03, from 17.57 to 17.68, update H3+ rates Indriola+ 2012
 monitor column density O2   17.68 error 0.1
@@ -90,7 +91,8 @@ monitor column density OH   16.19 error 0.1
 ## >>chng 20 aug 03, from 13.35 to 13.29, update H3+ rates Indriola+ 2012
 ## >>chng 21 sep 11, from 13.29 to 13.74, LAMDA update
 ## >>chng 21 nov 04, from 13.74 to 14.17, update co mole data
-monitor column density CH   14.17 error 0.1
+## >>chng 25 jul 11, from 14.17 to 14.13, GS Si moles, UMIST2022
+monitor column density CH   14.13 error 0.1
 ## 
 ## >>chng 05 jun 21, from 21.83 to 21.79, chng cr, grn deex
 ## >>chng 11 nov 16, from 21.79 to 21.74, adjust newmole monitors

@@ -74,12 +74,14 @@ monitor line luminosity "O  3" 702.337A  1.222
 ## >>chng 14 mar 26, add these two strong lines
 ## >>chng 15 oct 14, from 1.771 to 1.792, update DR suppression in r10716
 ## >>chng 16 aug 18, from 1.792 to 1.851, enhanced coll ion from highest n
-monitor line luminosity "O  3" 833.749A  1.851
+## >>chng 25 jul 25, from 1.851 to 1.802, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line luminosity "O  3" 833.749A  1.802
 ##
 ## >>chng 14 mar 26, add these two strong lines
 ## >>chng 15 oct 14, from 2.042 to 2.062, update DR suppression in r10716
 ## >>chng 16 aug 18, from 2.062 to 2.121, enhanced coll ion from highest n
-monitor line luminosity "O  3" 835.289A  2.121
+## >>chng 25 jul 25, from 2.121 to 2.069, Fixed to match Del Zana+2025 clike data-C25 release
+monitor line luminosity "O  3" 835.289A  2.069
 ## 
 monitor line luminosity "TotH"    0   3.500
 ##

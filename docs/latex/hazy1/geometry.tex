@@ -17,6 +17,7 @@ A covering or filling factor can be specified and the
 cloud can be either static or expanding.
 
 \section{Age 44 years [off]}
+\label{sec:AgeCommand}
 
 For an equilibrium geometry the code assumes that the cloud is old enough for
 atomic processes to have become time steady.
@@ -29,8 +30,10 @@ seconds.
 The keyword \cdCommand{log} will force the code to interpret the number as
 a log.
 The keywords \cdCommand{minutes}, \cdCommand{days}, \cdCommand{weeks},
-\cdCommand{fortnights}, \cdCommand{months}, \cdCommand{years},
-\cdCommand{centuries}, and \cdCommand{millennia} change the units.
+\cdCommand{fortnights}, \cdCommand{months} (defined as 1/12 of a year),
+\cdCommand{years} (we adopt the Julian year, or 365.25 days, as our definition
+of the year), \cdCommand{centuries}, \cdCommand{millennia}, \cdCommand{Myr},
+and \cdCommand{Gyr} change the units.
 
 The code keeps track of many timescales during a calculation.
 After the calculation is complete it will check that none of the
@@ -80,7 +83,7 @@ the calculation of conditions in the gas.
 It also does {\em not} affect the spectral energy distribution
 predicted with the \cdCommand{save continuum} commands.
 This will always be integrated over the entire nebula.
-The continuum bands in the file \cdFilename{data/continuum\_bands.ini} are not
+The continuum bands in the file \cdFilename{data/continuum\_bands.dat} are not
 predicted when the \cdCommand{aperture} command is used, for this reason.
 
 This command only affects the line luminosities in the luminosity case.
@@ -226,11 +229,13 @@ as described there.
 \section{Covering factor 0.3}
 \label{cov_factor}
 
-This sets a covering factor $\Omega/4\pi$ for the emission-line region
+In the default geometry this sets a covering factor $\Omega/4\pi$ for the emission-line region
 (see AGN3 section 5.9).
 The argument is the log of the covering factor
 if less than or equal to zero and the linear covering factor if positive.
-It is impossible to specify a covering factor of zero.
+It is impossible to specify a covering factor of zero. The interaction of
+this command with the \cdCommand{cylinder} command described below is
+discussed in Section~\ref{cov_cylinder}.
 
 The covering factor affects both the luminosity of the emitted spectrum
 and the radiative transfer of lines and continua.
@@ -260,6 +265,7 @@ continuum source) but a radiative covering factor of zero (i.e., an open
 geometry).
 
 \section{Cylinder log semi height =9.12}
+\label{cmd:cylinder}
 
 \noindent The model will be spherical,
 but truncated so as to simulate a cylinder
@@ -365,23 +371,32 @@ a filling factor of unity if a value greater than one is entered.   The
 code will complain (but compute the model) if a filling factor is set in
 a constant pressure model since this makes no physical sense.
 
-\section{Illumination angle 45 deg [radians]}
+\section{Illumination isotropic \OR\ angle 45 deg [radian]}
 
-The plane-parallel slab is illuminated by a beam $\theta $
+This command specifies the orientation of the radiation field with respect
+to the slab that is being illuminated. It applies {\em only}
+to the last radiation field that was specified preceding this command.
+If the keyword \cdCommand{isotropic} is present, it indicates that the
+radiation field is isotropic, i.e.\ coming from all directions.
+Alternatively, if this keyword is absent, you can specify that the
+slab is illuminated by a unidirectional beam at an angle $\theta$
 away from the normal.
-The default is $\theta  = 0$ (normal illumination).
+The default is $\theta = 0$ (illumination perpendicular to the slab).
 The angle is in degrees unless
 the keyword \cdCommand{radian} appears.
 
 The only effect of this command is to cause the beam of incident radiation
-to be attenuated by $\tau n / \cos(\theta )$ where $\tau n$
-is the normal optical depth of the zone.
+to be attenuated by $\tau_{\rm n} / \cos\theta$ where $\tau_{\rm n}$
+is the optical depth of the zone in the direction of the normal.
 The line and diffuse continua optical depth scale, which is
-defined normal to the plane, are not directly affected by this command.
+defined normal to the plane, are not directly affected by this command
+as these are not part of the incident radiation.
 
-\emph{N.B.}  If this is used with the \cdCommand{grid} or
-\cdCommand{vary} options the angle must be given in radians.
-See the discussion of the commands with a \cdCommand{vary} option.
+This command also accepts the optional keywords \cdCommand{forward},
+\cdCommand{reverse}, and \cdCommand{symmetric}, indicating whether the
+the front face, the rear face, or both faces, of the gas are illuminated.
+Illumination from the rear is currently not implemented, so these options
+have no effect and a caution to that effect will be printed.
 
 \section{Radius r(inner)  [r(outer), thickness; parsec; linear]}
 \label{sec:RadiusCommand}

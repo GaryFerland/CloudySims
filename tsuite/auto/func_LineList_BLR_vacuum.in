@@ -1,0 +1,5 @@
+test
+print line precision 6
+print lines vacuum
+table lines "LineList_BLR.dat"
+

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParseSave parse the save command */
 /*SaveFilesInit initialize save file pointers, called from cdInit */
@@ -513,7 +513,7 @@ void ParseSave(Parser& p)
 		return;
 	}
 
-	else if( p.nMatch("AVER") )
+	else if( p.nMatch("AVER") && !p.nMatch("GRAI") )
 	{
 		/* save averages */
 		strcpy( save.chSave[save.nsave], "AVER" );
@@ -920,7 +920,7 @@ void ParseSave(Parser& p)
 			strcpy( save.chSave[save.nsave], "CORA" );
 
 			sncatf( chHeader, 
-				"#Raw Con anu\tflux\totslin\totscon\tConRefIncid\tConEmitReflec\tConInterOut\toutlin\tConEmitOut\tline\tcont\tnLines\n" );
+				"#Raw Con anu\tflux\totslin\totscon\treflin\tConRefIncid\tConEmitReflec\tConInterOut\toutlin\toutlin_noplot\tConEmitOut\tline\tcont\tnLines\n" );
 		}
 
 		else if( p.nMatch("REFL") )
@@ -1193,6 +1193,8 @@ void ParseSave(Parser& p)
 		{
 			/* save temperatures of each grain species */
 			strcpy( save.chSave[save.nsave], "DUST" );
+			/* option to save average grain temperature for each grain size bin */
+			save.lgTgrAverage[save.nsave] = p.nMatch("AVER");
 		}
 		else if( p.nMatch("DRIF") )
 		{
@@ -1291,7 +1293,7 @@ void ParseSave(Parser& p)
 			"#depth cm\tTemp K\tHtot erg/cm3/s\tCtot erg/cm3/s\tAdve Htot erg/cm3/s\theat fracs\n" );
 	}
 
-	else if( p.nMatch("HELI") &&!( p.nMatch("IONI")))
+	else if( p.nMatch("HELI") && !p.nMatch("IONI") )
 	{
 		/* save helium & helium-like iso sequence, but not save helium ionization rate
 		 * save helium line wavelengths */
@@ -1328,7 +1330,7 @@ void ParseSave(Parser& p)
 		}
 
 		/* save information on 21 cm excitation processes - accept either keyword 21cm or 21 cm */
-		else if( p.nMatch("21 CM") ||p.nMatch("21CM"))
+		else if( p.nMatch("21 CM") || p.nMatch("21CM") )
 		{
 			/* save information about 21 cm line */
 			strcpy( save.chSave[save.nsave], "21CM" );
@@ -1544,10 +1546,8 @@ void ParseSave(Parser& p)
 				else
 					sncatf( chHeader, "\t" );
 				sncatf( chHeader,
-					 "%s ", save.LineList[save.nsave][j].chLabel.c_str() );
-				string chTemp;
-				sprt_wl( chTemp, save.LineList[save.nsave][j].wave );
-				sncatf( chHeader, "%s", chTemp.c_str() );
+						"%s ", save.LineList[save.nsave][j].chLabel().c_str() );
+				sncatf( chHeader, "%s", save.LineList[save.nsave][j].twav().sprt_wl().c_str() );
 			}
 		}
 		sncatf( chHeader, "\n" );
@@ -1686,8 +1686,25 @@ void ParseSave(Parser& p)
 				strcpy( save.chSave[save.nsave], "LINT" );
 				// option for intrinsic (default) or emergent
 				save.lgEmergent[save.nsave] = false;
-				/* read in the list of lines to examine */
-				parse_save_line(p, false, chHeader, save.nsave);
+				if( p.nMatch("EVER" ) )
+				{
+					/* "EVER" keyword detected:"every" option is on.
+					* Save output for every zone in the simulation.
+					*/
+					save.lgSaveEveryZone[save.nsave] = true;
+					save.nSaveEveryZone[save.nsave] = 1;
+				}
+				else
+				{
+					/* Save only the final zone.
+					* This corresponds to the integrated/emergent value at the outer edge
+					* of the cloud (i.e., what escapes the nebula).
+					*/
+					save.lgSaveEveryZone[save.nsave] = false;
+					save.nSaveEveryZone[save.nsave] = 1;
+				}
+				/* now read in the list of lines to examine */
+				parse_save_line(p, false, chHeader, save.nsave);		
 			}
 			else
 			{
@@ -1784,10 +1801,8 @@ void ParseSave(Parser& p)
 				for( long int j=0; j<save.nLineList[save.nsave]; ++j )
 				{
 					sncatf( chHeader, "%s ",
-						save.LineList[save.nsave][j].chLabel.c_str() );
-					string chTemp;
-					sprt_wl( chTemp, save.LineList[save.nsave][j].wave );
-					sncatf( chHeader, "%s", chTemp.c_str() );
+							save.LineList[save.nsave][j].chLabel().c_str() );
+					sncatf( chHeader, "%s", save.LineList[save.nsave][j].twav().sprt_wl().c_str() );
 					if( j != save.nLineList[save.nsave] )
 					{
 						sncatf( chHeader, "\t" );
@@ -2077,10 +2092,10 @@ void ParseSave(Parser& p)
 
 		else if( p.nMatch("EFFI") )
 		{
-			/* save recombination efficiency */
+			/* save recombination efficiency, rate and escaping fraction for 1s and 2p of H */
 			strcpy( save.chSave[save.nsave], "RECE" );
 			sncatf( chHeader, 
-				"#Recom effic H, Heo, He+\n" );
+				"#Recom rate, esc frac, H 1S 2P\n" );
 		}
 
 		else
@@ -2809,20 +2824,16 @@ void CloseSaveFiles( bool lgFinal )
 		 * this means ignoring "no clobber" options */
 		if( save.params[i].ipPnunit != NULL && ( !save.lgNoClobber[i] || lgFinal ) )
 		{
+			fclose( save.params[i].ipPnunit );
+
 			/* Test that any FITS files are the right size! */ 
 			if( save.lgFITS[i] && !save.lgXSPEC[i] )
 			{
-				/* \todo 2 This overflows for file sizes larger (in bytes) than
-				 * a long int can represent (about 2GB on most 2007 systems)  */
-				fseek(save.params[i].ipPnunit, 0, SEEK_END);
-				long file_size = ftell(save.params[i].ipPnunit);
-				if( file_size%2880 )
-				{
-					fprintf( ioQQQ, " PROBLEM  FITS file is wrong size!\n" );
-				}
+				auto file_size = FileSize(save.chFileName[i]);
+				if( file_size == FS_UNKNOWN || file_size%2880 != 0 )
+					fprintf( ioQQQ, " PROBLEM FITS file %s has the wrong size!\n", save.chFileName[i].c_str() );
 			}
 
-			fclose( save.params[i].ipPnunit );
 			save.params[i].ipPnunit = NULL;
 		}
 	}

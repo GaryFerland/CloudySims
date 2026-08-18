@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParseCommands main command line parser, decode command, then call other routines to read */
 #include "cddefines.h"
@@ -79,7 +79,6 @@ void ParsePhi(Parser &p);
 void ParseQH(Parser &p);
 void ParseRoberto(Parser &);
 void ParseSpecial(Parser &);
-void ParseTauMin(Parser &p);
 void ParseTitle(Parser &);
 void ParseTolerance(Parser &);
 void ParseVLaw(Parser &p);
@@ -268,8 +267,7 @@ void ParseCommands(void)
 		{"HIGH",ParseConvHighT},
 		/* approach equilibrium from high te */
 		{"HYDROGEN",ParseHydrogen},
-		{"ILLUMINATION",ParseIlluminate},
-		// illuminate command
+		{"ILLUMINATION",ParseIllumination},
 		{"INIT",ParseInitCount},
 		{"INTENSITY",ParseIntensity},
 		{"INTERPOLATE",ParseInterp},
@@ -342,7 +340,6 @@ void ParseCommands(void)
 		 * input stored in big BLOCK data
 		 * first check that this is the one and only INTERP command
 		 * in readsun */
-		{"TAUMIN",ParseTauMin}, // not in Hazy 1
 		{"TEST",ParseTest},
 		/* parse the test command and its options */
 		{"TIME",ParseDynaTime},
@@ -648,24 +645,22 @@ void ParseCommands(void)
 			"NOTE exchange with the NO GRAIN GAS COLLISIONAL ENERGY EXCHANGE command.\n\n\n");
 	}
 
-	if( !rfield.lgDoLineTrans && rfield.lgOpacityFine )
+	if( !rfield.lgDoLineTrans)
 	{
 		if( called.lgTalk )
 		{
 			fprintf( ioQQQ, " NOTE NO LINE TRANSER set but fine opacities still computed.\n" );
 			fprintf( ioQQQ, " NOTE Turning off fine opacities.\n\n" );
 		}
-		rfield.lgOpacityFine = false;
 	}
 
-	if( h2.lgEnabled && (!rfield.lgDoLineTrans || !rfield.lgOpacityFine) )
+	if( h2.lgEnabled && (!rfield.lgDoLineTrans) )
 	{
 		if( called.lgTalk )
 		{
 			fprintf( ioQQQ, " NOTE Large H2 molecule turned on but line transfer and fine opacities are not.\n" );
 			fprintf( ioQQQ, " NOTE Turning on line transfer and fine opacities.\n\n" );
 		}
-		rfield.lgOpacityFine = true;
 		rfield.lgDoLineTrans = true;
 	}
 
@@ -954,7 +949,7 @@ void ParseDatabase(Parser &p)
 	}
 
 	/* enable models from CHIANTI database */
-	else if (p.nMatch("CHIANTI"))
+	else if (p.nMatch("CHIA"))
 	{
 		// option to specify different CloudyChianti.ini file, was initialized
 		// with string CloudyChianti.ini
@@ -974,15 +969,23 @@ void ParseDatabase(Parser &p)
 			atmdat.lgChiantiLvl2Hybrid = false;
 
 		// Print which species are being used in output and # of levels
-		if (p.nMatch("PRINT"))
+		if (p.nMatch("PRIN"))
 			atmdat.lgChiantiPrint = true;
 
-		// Use Experimental energies exclusively. Default use experimental.
-		if (p.nMatch("THEOR"))
-			atmdat.lgChiantiExp = false;
+		// Use theoretical energies exclusively. Default uses experimental.
+		if (p.nMatch("THEO"))
+			atmdat.ChiantiType = t_atmdat::CHIANTI_THEO;
+
+		// mixed, use experimental energies where available, theory if only available
+		if( p.nMatch("MIXE"))
+			atmdat.ChiantiType = t_atmdat::CHIANTI_MIXED;
+
+		// Use only experimental energies, the defaulte
+		if( p.nMatch("EXPE"))
+			atmdat.ChiantiType = t_atmdat::CHIANTI_EXP;
 
 		// Input the maximum number of Chianti levels to use
-		if (p.nMatch("LEVEL"))
+		if (p.nMatch("LEVE"))
 		{
 			if (p.nMatch(" MAX"))
 			{
@@ -2178,13 +2181,6 @@ void ParseSpecial(Parser &)
 	DEBUG_ENTRY( "ParseSpecial()" );
 	/* special key, can do anything */
 	cdEXIT(EXIT_FAILURE);
-}
-void ParseTauMin(Parser &p)
-{
-	/* taumin command minimum optical depths for lines dafault 1e-20 */
-	opac.taumin = (realnum)exp10(p.FFmtRead());
-	if( p.lgEOL() )
-		p.NoNumb("minimum optical depth");	
 }
 void ParseTitle(Parser &p)
 {

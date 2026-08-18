@@ -790,7 +790,7 @@ monitor line "Blnd" 1397    2.628
 ## >>chng 07 oct 26, from 0.632 to 0.581, due to changes in r1472
 ## >>chng 08 apr 30, from 0.58 to 0.63 H, He topoff change
 ## >>chng 13 jan 10, from 0.63 to 0.5695, fix in-zone continuum shielding
-monitor line "FeKa"    1.78    0.5695 error 0.10
+#monitor line "FeKa"    1.78    0.5695 error 0.10
 ##
 ## >>chng 03 nov 20, from 500 to 525
 ## >>chng 03 dec 07, from 525 to 670, dr update for resolving metals

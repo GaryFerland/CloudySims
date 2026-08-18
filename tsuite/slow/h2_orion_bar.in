@@ -127,7 +127,8 @@ monitor column density H2*  18.35 error 0.1
 ## >>chng 14 aug 28, from 12.58 to 12.53, EleyRideal H2 formation
 ## >>chng 14 dec 04, from 12.53 to 12.49, fix double-counting of big-H2 Solomon rate
 ## >>chng 20 jul 21, from 12.49 to 12.44, update DR H2 diss as per  2020RNAAS...4...78S
-monitor column density HeH+ 12.44 error 0.1
+## >>chng 25 jan 26, from 12.44 to 12.09, master merg
+monitor column density HeH+ 12.09 error 0.1
 ## >>chng 11 jul 16, from 10 to 16.43, add column density monitors
 ## >>chng 11 nov 16, from 16.43 to 15.98, adjust newmole monitors
 ## >>chng 12 jan 06, from 15.98 to 16.49, several H2 model changes
@@ -182,6 +183,8 @@ monitor column density C3   14.01 error 0.1
 ## >>chng 14 dec 04, from 15.21 to 15.31, fix double-counting of big-H2 Solomon rate
 ## >>chng 20 jul 21, from 15.31 to 15.9, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 21 apr 10, from 15.9 to 15.85, update chemistry and LAMDA
+## >>chng 24 apr 21, from 15.85 to 15.77, GS updates chemistry
+## >>chng 24 jun 08, from 15.77 to 15.85, GS rm 3 TiO reactions
 monitor column density SiO  15.85 error 0.1
 ## >>chng 11 jul 16, from 10 to 17.23, add column density monitors
 ## >>chng 11 nov 16, from 17.23 to 16.75, adjust newmole monitors
@@ -200,7 +203,8 @@ monitor column density OH   18.08 error 0.1
 ## >>chng 14 aug 28, from 15.04 to 15.08, EleyRideal H2 formation
 ## >>chng 20 jul 21, from 15.08 to 15.26, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 21 sep 11, from 15.26 to 15.19, LAMDA update
-monitor column density CN   15.19 error 0.1
+## >>chng 25 jul 11, from 15.19 to 15.67, GS Si moles, UMIST2022
+monitor column density CN   15.67 error 0.1
 ## >>chng 11 jul 16, from 10 to 17.76, add column density monitors
 ## >>chng 11 nov 16, from 17.76 to 17.89, adjust newmole monitors
 ## >>chng 12 jan 06, from 17.89 to 17.72, several H2 model changes
@@ -234,7 +238,8 @@ monitor "H2O " 538.142m line intensity 33.97
 ## >>chng 14 dec 04, from 31.32 to 31.39, fix double-counting of big-H2 Solomon rate
 ## >>chng 20 jul 21, from 31.39 to 31.66, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 21 sep 11, from 31.66 to 31.5, LAMDA update
-monitor "HNC " 1652.90m  line intensity 31.5
+## >>chng 25 jul 11, from 31.5 to 31.55, GS Si moles, UMIST2022
+monitor "HNC " 1652.90m  line intensity 31.55
 ## >>chng 13 jun 27, from -8.563 to 31.34, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1756m to 1755.88m, increased wl precision to 6 sig. fig.
 ## >>chng 13 oct 30, from 31.34 to 31.4, change H2/HD secondary scale factors
@@ -301,7 +306,8 @@ monitor "^13CO" 906.599m  33.42 line intensity
 ## >>chng 20 jul 21, from 32.75 to 32.81, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 21 sep 11, from 32.81 to 31.97, LAMDA update
 ## >>chng 21 sep 15, from 31.97 to 32.78, go back to unresolved model
-monitor "CN  " 880.858m  32.78  line intensity
+## >>chng 25 jul 11, from 32.78 to 33.01, GS Si moles, UMIST2022
+monitor "CN  " 880.858m  33.01  line intensity
 ## >>chng 14 dec 04, from 21.76 to 21.83, fix double-counting of big-H2 Solomon rate
 ## >>chng 20 jul 21, from 21.83 to 22.05, update DR H2 diss as per  2020RNAAS...4...78S
 monitor H2 column density level 0  0  22.05 error 0.1

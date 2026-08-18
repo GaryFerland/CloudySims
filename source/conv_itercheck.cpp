@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ConvIterCheck check whether model has converged or whether more iterations
  * are needed - implements the iter to converg comnd */
@@ -46,7 +46,7 @@ void ConvIterCheck( void )
 
 	double a, total, BeamedIn;
 	long int ipTotal = cdLine( "H  1" , Hbeta_WavLen, &a , &total );
-	long int ipInwd  = cdLine( "Inwd" , Hbeta_WavLen, &a , &BeamedIn );
+	long int ipInwd  = cdLine( "H  1 Inwd" , Hbeta_WavLen, &a , &BeamedIn );
 
 	/* 2014 aug 23, mchatzikos
 	 * when cdLine returned -37 for log of zero intensity, the ratio below evaluated to 0;
@@ -183,19 +183,19 @@ void ConvIterCheck( void )
 							
 							/* for iterate to convergence, print reason why it was not converged
 							 * on 3rd and higher iterations */
-							sprintf( conv.chNotConverged, "database %s %.1f",
-										dBaseSpecies[ipSpecies].chLabel ,
-										(*tr).WLAng() );
+							sprintf( conv.chNotConverged, "database %s %s",
+									 dBaseSpecies[ipSpecies].chLabel,
+									 tr->twav().sprt_wl().c_str() );
 							
 							if( save.lgPunConv )
 							{
 								lgReasonGiven = true;
-								fprintf( save.ipPunConv, " database  %s %.1f iteration %li old %.3e new %.3e \n",
-											dBaseSpecies[ipSpecies].chLabel ,
-											(*tr).WLAng(),
-											iteration,
-											(*tr).Emis().TauTot() ,
-											(*tr).Emis().TauIn());
+								fprintf( save.ipPunConv, " database  %s %s iteration %li old %.3e new %.3e \n",
+										 dBaseSpecies[ipSpecies].chLabel,
+										 tr->twav().sprt_wl().c_str(),
+										 iteration,
+										 (*tr).Emis().TauTot() ,
+										 (*tr).Emis().TauIn());
 							}
 						}
 					}

@@ -1,7 +1,9 @@
 -33.8032
 -33.5407
--32.6743
--30.8056
+## >>chng 25 jan 26, from -32.6743 to -32.6943
+-32.6943
+## >>chng 25 jan 26, from -30.8056 to -30.8276
+-30.8276
 -29.1675
 -27.8555
 -26.8114
@@ -9,9 +11,11 @@
 -24.9215
 -24.1249
 ## >> 23 may 15,from -24.6857 to -23.9438, GS updates 21 reactions to UMIST 2012
--23.9438
+## >> 25 may 25,from -23.9438 to -24.6845, GS adjust Te extrapolation UMISR
+-24.6845
 ## >> 23 may 15,from -25.6762 to -25.4177, GS updates 21 reactions to UMIST 2012
--25.4177
+## >> 25 may 25,from -25.4177 to -24.5405, GS adjust Te extrapolation UMISR
+-25.5405
 -25.9533
 -21.8853
 -22.2996

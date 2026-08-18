@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParseBlackbody parse parameters off black body command */
 #include "cddefines.h"
@@ -108,7 +108,14 @@ void ParseBlackbody(
 		lgIntensitySet = true;
 
 		if (p.nMatch(" STE") || p.nMatch("STE "))
-			rfield.Illumination[p.m_nqh] = Illuminate::ISOTROPIC;
+		{
+			// uncommenting the following line would make an STE BB field isotropic
+			// doing that currently results in numerous problems in the test suite
+			// this line should be uncommented once this ticket is fixed
+			// https://gitlab.nublado.org/cloudy/cloudy/-/issues/491
+			// rfield.lgBeamed[p.m_nqh] = false;
+			rfield.Illumination[p.m_nqh] = Illumination::SYMMETRIC;
+		}
 	}
 
 	/* a second number was entered, what was it? */

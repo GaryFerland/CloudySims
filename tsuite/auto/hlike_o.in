@@ -20,6 +20,10 @@ stop zone 1
 case b hummer no photoionization
 no induced processes (OK)
 constant temperature = 1.e5
+# Resolve O 8 Lya doublet
+database h-like lyman extra resolution 0.01
+database h-like oxygen resolved levels 10
+database h-like oxygen collapsed levels 10
 #
 # commands controlling output    =========
 ## >>chng 13 jul 24, wl from 75.89a to 75.8927A, increased wl precision to 6 sig. fig.
@@ -28,6 +32,8 @@ constant temperature = 1.e5
 ## >>chng 21 mar 16, wl from 75.8858A to 75.8966A, update NIST energies
 ## >>chng 21 apr 08, wl from 75.8966A to 75.9015A, up 1-e energies to np
 normalize to "O  8" 75.9015A ## the balmer alpha transition
+print lines sort wavelength
+print lines column
 save overview "hlike_o.ovr"
 save performance "hlike_o.per"
 save results "hlike_o.rlt"
@@ -37,8 +43,16 @@ save monitors "hlike_o.asr"
 ## >>chng 03 apr 28, changed model to have different density and thickness
 ## >>chng 03 apr 30, from -6.991 to -1.795, bug in csupra at very high Z
 monitor oxygen 8 ionization -1.795
+## >>chng 24 feb 06, added monitor
+monitor line luminosity "O  8" 18.9671A -20.378 0.05
+## >>chng 24 feb 06, added monitor
+monitor line luminosity "O  8" 18.9725A -20.676 0.05
+## >>chng 24 feb 06, added monitor
+monitor line luminosity "O  8" 14.2280A -20.334 0.05
+## >>chng 24 feb 06, added monitor
+monitor line luminosity "O  8 M1" 18.9722A -23.516 0.05
 ##
-# caseb_o.in
+# hlike_o.in
 # class limit 
 # ========================================
 # 

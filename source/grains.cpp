@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*grain main routine to converge grains thermal solution */
 #include "cddefines.h"
@@ -22,15 +22,12 @@
 #include "dense.h"
 #include "vectorize.h"
 #include "parser.h"
+#include "iter_track.h"
 
 /* the next three defines are for debugging purposes only, uncomment to activate */
 /*  #define WD_TEST2 1 */
 /*  #define IGNORE_GRAIN_ION_COLLISIONS 1 */
 /*  #define IGNORE_THERMIONIC 1 */
-
-/* no parentheses around PTR needed since it needs to be an lvalue */
-#define FREE_CHECK(PTR) { ASSERT( PTR != NULL ); free( PTR ); PTR = NULL; }
-#define FREE_SAFE(PTR) { if( PTR != NULL ) free( PTR ); PTR = NULL; }
 
 static const long MAGIC_AUGER_DATA = 20060126L;
 
@@ -126,7 +123,7 @@ STATIC void NewChargeData(long);
 STATIC double GrnStdDpth(long);
 /* iterate grain charge and temperature */
 STATIC void GrainChargeTemp();
-/* GrainCharge compute grains charge */
+/* GrainCharge computes grain charge */
 STATIC void GrainCharge(size_t,/*@out@*/double*);
 /* grain electron recombination rates for single charge state */
 STATIC double GrainElecRecomb1(size_t,long,/*@out@*/double*,/*@out@*/double*);
@@ -138,11 +135,11 @@ STATIC void GrainScreen(long,size_t,long,double*,double*);
 /* helper function for GrainScreen */
 STATIC double ThetaNu(double);
 /* update items that depend on grain potential */
-STATIC void UpdatePot(size_t,long,long,/*@out@*/double[],/*@out@*/double[]);
+STATIC void UpdatePot(size_t,long,long,double,/*@out@*/double[],/*@out@*/double[]);
 /* calculate charge state populations */
 STATIC void GetFracPop(size_t,long,/*@in@*/double[],/*@in@*/double[],/*@out@*/long*);
 /* this routine updates all quantities that depend only on grain charge and radius */
-STATIC void UpdatePot1(size_t,long,long,long);
+STATIC void UpdatePot1(size_t,long,long,long,double);
 /* this routine updates all quantities that depend on grain charge, radius and temperature */
 STATIC void UpdatePot2(size_t,long);
 /* Helper function to calculate primary and secondary yields and the average electron energy at infinity */
@@ -178,14 +175,18 @@ STATIC void GrainChrgTransferRates(long);
 STATIC void GrainUpdateRadius1();
 /* this routine adds all the grain opacities in gv.dstab and gv.dstsc */
 STATIC void GrainUpdateRadius2();
-/* GrainTemperature computes grains temperature, and gas cooling */
-STATIC void GrainTemperature(size_t,/*@out@*/realnum*,/*@out@*/double*,/*@out@*/double*,
-			     /*@out@*/double*);
+/* GrainTemperature computes grain temperature, and gas cooling */
+STATIC void GrainTemperature(size_t,long);
 /* helper routine for initializing quantities related to the photo-electric effect */
 STATIC void PE_init(size_t,long,long,/*@out@*/double*,/*@out@*/double*,/*@out@*/double*,
 		    /*@out@*/double*,/*@out@*/double*,/*@out@*/double*,/*@out@*/double*);
-/* GrainCollHeating computes grains collisional heating cooling */
-STATIC void GrainCollHeating(size_t,/*@out@*/realnum*,/*@out@*/realnum*);
+/* GrainCollHeating computes grain collisional heating/cooling for a single charge state */
+STATIC void GrainCollHeating(size_t,long);
+/* calculate the correction to the grain heating due to imperfections in the n-charge state model */
+STATIC void GrainHeatCor(size_t);
+/* RebinFlux rebins a flux array from the standard to the internal grain frequency mesh */
+template<typename T>
+STATIC void RebinFlux(const vector<T>&, vector<double>&);
 /* GrnVryDpth user supplied function for the grain abundance as a function of depth into cloud */
 STATIC double GrnVryDpth(size_t);
 
@@ -214,7 +215,7 @@ void GrainStartIter()
 			gv.bin[nd].avdpot = 0.;
 			gv.bin[nd].avdft = 0.;
 			gv.bin[nd].avDGRatio = 0.;
-			gv.bin[nd].TeGrainMax = -1.f;
+			gv.bin[nd].TeGrainMax = -1.;
 			gv.bin[nd].lgEverQHeat = false;
 			gv.bin[nd].QHeatFailures = 0L;
 			gv.bin[nd].lgQHTooWide = false;
@@ -222,7 +223,6 @@ void GrainStartIter()
 			gv.bin[nd].nChrgOrg = gv.bin[nd].nChrg;
 		}
 	}
-	return;
 }
 
 
@@ -240,7 +240,6 @@ void GrainRestartIter()
 			gv.bin[nd].nChrg = gv.bin[nd].nChrgOrg;
 		}
 	}
-	return;
 }
 
 
@@ -251,7 +250,6 @@ void SetNChrgStates(long nChrg)
 
 	ASSERT( nChrg >= 2 && nChrg <= NCHU );
 	gv.nChrgRequested = nChrg;
-	return;
 }
 
 
@@ -271,7 +269,9 @@ void GrainsInit()
 		fprintf( ioQQQ, " GrainsInit called.\n" );
 	}
 
+	gv.dstab0.resize( gv.nflux );
 	gv.dstab.resize( rfield.nflux_with_check );
+	gv.dstsc0.resize( gv.nflux );
 	gv.dstsc.resize( rfield.nflux_with_check );
 	gv.GrainEmission.resize( rfield.nflux_with_check );
 	gv.GraphiteEmission.resize( rfield.nflux_with_check );
@@ -299,8 +299,8 @@ void GrainsInit()
 		gv.GrainHeatInc = 0.;
 		gv.GrainHeatDif = 0.;
 		gv.GrainHeatLya = 0.;
-		gv.GrainHeatCollSum = 0.;
-		gv.GrainHeatSum = 0.;
+		gv.GrainHeatColl = 0.;
+		gv.GrainHeat = 0.;
 		gv.GasCoolColl = 0.;
 		thermal.setHeating(0,13,0.);
 		thermal.setHeating(0,14,0.);
@@ -320,7 +320,6 @@ void GrainsInit()
 	HEAT_TOLER = conv.HeatCoolRelErrorAllowed / 3.;
 	HEAT_TOLER_BIN = HEAT_TOLER / sqrt((double)gv.bin.size());
 	CHRG_TOLER = conv.EdenErrorAllowed / 3.;
-	/* CHRG_TOLER_BIN = CHRG_TOLER / sqrt(gv.bin.size()); */
 
 	ReadAugerData();
 
@@ -332,7 +331,7 @@ void GrainsInit()
 		/* sanity checks */
 		ASSERT( gv.bin[nd].nChrg >= 2 && gv.bin[nd].nChrg <= NCHU );
 
-		if( gv.bin[nd].DustWorkFcn < rfield.emm() || gv.bin[nd].DustWorkFcn > rfield.egamry() )
+		if( gv.bin[nd].DustWorkFcn < gv.emm() || gv.bin[nd].DustWorkFcn > gv.egamry() )
 		{
 			fprintf( ioQQQ, " Grain work function for %s has insane value: %.4e\n",
 				 gv.bin[nd].chDstLab,gv.bin[nd].DustWorkFcn );
@@ -478,17 +477,17 @@ void GrainsInit()
 			double Ethres = ( ns == 0 ) ? ThresInfVal : gv.bin[nd].sd[ns].ionPot;
 			ShellData *sptr = &gv.bin[nd].sd[ns];
 
-			sptr->ipLo = rfield.ithreshC( Ethres );
+			sptr->ipLo = gv.ithreshC( Ethres );
 
 			ipLo = sptr->ipLo;
-			// allow room for adjustment of rfield.nPositive later on
-			long len = rfield.nflux_with_check - ipLo;
+			// allow room for adjustment of gv.nPositive later on
+			long len = gv.nflux - ipLo;
 
 			sptr->p.reserve( len );
-			sptr->p.alloc( ipLo, rfield.nPositive );
+			sptr->p.alloc( ipLo, gv.nPositive );
 
 			sptr->y01.reserve( len );
-			sptr->y01.alloc( ipLo, rfield.nPositive );
+			sptr->y01.alloc( ipLo, gv.nPositive );
 
 			/* there are no Auger electrons from the band structure */
 			if( ns > 0 )
@@ -504,16 +503,16 @@ void GrainsInit()
 					sptr->Ener[n] = gv.AugerData[sptr->nelem].Energy[sptr->ns][n];
 
 					sptr->y01A[n].reserve( len );
-					sptr->y01A[n].alloc( ipLo, rfield.nPositive );
+					sptr->y01A[n].alloc( ipLo, gv.nPositive );
 				}
 			}
 		}
 
-		gv.bin[nd].y0b06.resize( rfield.nflux_with_check );
+		gv.bin[nd].y0b06.resize( gv.nflux );
 
-		InitBinAugerData( nd, 0, rfield.nPositive );
+		InitBinAugerData( nd, 0, gv.nPositive );
 
-		gv.bin[nd].nfill = rfield.nPositive;
+		gv.bin[nd].nfill = gv.nPositive;
 
 		/* >>chng 00 jul 13, new sticking probability for electrons */
 		/* the second term is chance that electron passes through grain,
@@ -623,9 +622,9 @@ void GrainsInit()
 		}
 		fprintf( ioQQQ, "\n" );
 
-		for( i=0; i < rfield.nflux_with_check; i += 40 )
+		for( i=0; i < gv.nflux; i += 10 )
 		{
-			fprintf( ioQQQ, "%10.2e", rfield.anu(i) );
+			fprintf( ioQQQ, "%10.2e", gv.anu(i) );
 			for( size_t nd=0; nd < gv.bin.size(); nd++ )
 			{
 				fprintf( ioQQQ, " %10.2e  ", gv.bin[nd].dstab1[i] );
@@ -642,9 +641,9 @@ void GrainsInit()
 		}
 		fprintf( ioQQQ, "\n" );
 
-		for( i=0; i < rfield.nflux_with_check; i += 40 )
+		for( i=0; i < gv.nflux; i += 10 )
 		{
-			fprintf( ioQQQ, "%10.2e", rfield.anu(i) );
+			fprintf( ioQQQ, "%10.2e", gv.anu(i) );
 			for( size_t nd=0; nd < gv.bin.size(); nd++ )
 			{
 				fprintf( ioQQQ, " %10.2e  ", gv.bin[nd].pure_sc1[i] );
@@ -661,9 +660,9 @@ void GrainsInit()
 		}
 		fprintf( ioQQQ, "\n" );
 
-		for( i=0; i < rfield.nflux_with_check; i += 40 )
+		for( i=0; i < gv.nflux; i += 10 )
 		{
-			fprintf( ioQQQ, "%10.2e", rfield.anu(i) );
+			fprintf( ioQQQ, "%10.2e", gv.anu(i) );
 			for( size_t nd=0; nd < gv.bin.size(); nd++ )
 			{
 				fprintf( ioQQQ, " %10.2e  ", gv.bin[nd].dstab1[i]*4./gv.bin[nd].IntArea );
@@ -680,9 +679,9 @@ void GrainsInit()
 		}
 		fprintf( ioQQQ, "\n" );
 
-		for( i=0; i < rfield.nflux_with_check; i += 40 )
+		for( i=0; i < gv.nflux; i += 10 )
 		{
-			fprintf( ioQQQ, "%10.2e", rfield.anu(i) );
+			fprintf( ioQQQ, "%10.2e", gv.anu(i) );
 			for( size_t nd=0; nd < gv.bin.size(); nd++ )
 			{
 				fprintf( ioQQQ, " %10.2e  ", gv.bin[nd].pure_sc1[i]*4./gv.bin[nd].IntArea );
@@ -699,9 +698,9 @@ void GrainsInit()
 		}
 		fprintf( ioQQQ, "\n" );
 
-		for( i=0; i < rfield.nflux_with_check; i += 40 )
+		for( i=0; i < gv.nflux; i += 10 )
 		{
-			fprintf( ioQQQ, "%10.2e", rfield.anu(i) );
+			fprintf( ioQQQ, "%10.2e", gv.anu(i) );
 			for( size_t nd=0; nd < gv.bin.size(); nd++ )
 			{
 				fprintf( ioQQQ, " %10.2e  ", gv.bin[nd].asym[i] );
@@ -711,7 +710,6 @@ void GrainsInit()
 
 		fprintf( ioQQQ, " GrainsInit exits.\n" );
 	}
-	return;
 }
 
 /* read data for electron energy spectrum of Auger electrons */
@@ -790,7 +788,7 @@ STATIC void InitBinAugerData(size_t nd,
 	temp.zero();
 
 	/* this converts gv.bin[nd].elmAbund[nelem] to particle density inside the grain */
-	double norm = gv.bin[nd].cnv_H_pGR/gv.bin[nd].AvVol;
+	double norm = gv.bin[nd].cnv_H_pGR/double(gv.bin[nd].AvVol);
 
 	/* this loop calculates the probability that photoionization occurs in a given shell */
 	for( ns=0; ns < gv.bin[nd].sd.size(); ns++ )
@@ -806,7 +804,7 @@ STATIC void InitBinAugerData(size_t nd,
 			long nel,nsh;
 			double phot_ev,cs;
 
-			phot_ev = rfield.anu(i)*EVRYD;
+			phot_ev = gv.anu(i)*EVRYD;
 
 			if( ns == 0 )
 			{
@@ -849,7 +847,7 @@ STATIC void InitBinAugerData(size_t nd,
 	for( i=ipBegin; i < ipEnd && !gv.lgWD01; i++ )
 	{
 		/* this is Eq. 10 of WDB06 */
-		if( rfield.anu(i) > 20./EVRYD )
+		if( gv.anu(i) > 20./EVRYD )
 			gv.bin[nd].inv_att_len[i] = temp[i];
 	}
 
@@ -882,7 +880,7 @@ STATIC void InitBinAugerData(size_t nd,
 		{
 			double elec_en,yzero,yone;
 
-			elec_en = MAX2(rfield.anu(i) - sptr->ionPot,0.);
+			elec_en = MAX2(gv.anu(i) - sptr->ionPot,0.);
 			yzero = y0psa( nd, ns, i, elec_en );
 
 			/* this is size-dependent geometrical yield enhancement
@@ -999,7 +997,6 @@ STATIC void InitEmissivities()
 	}
 	cdEXIT(EXIT_SUCCESS);
 #	endif
-	return;
 }
 
 
@@ -1012,7 +1009,7 @@ STATIC double PlanckIntegral(double tdust,
 
 	/******************************************************************
 	 *
-	 * >>>chng 99 mar 12, this sub rewritten following Peter van Hoof
+	 * >>chng 99 mar 12, this sub rewritten following Peter van Hoof
 	 * comments.  Original coding was in single precision, and for
 	 * very low temperature the exponential was set to zero.  As 
 	 * a result Q was far too large for grain temperatures below 10K
@@ -1022,12 +1019,12 @@ STATIC double PlanckIntegral(double tdust,
 	/* Boltzmann factors for Planck integration */
 	double TDustRyg = TE1RYD/tdust;
 	double x = 0.999*log(DBL_MAX);
-	long mini = 0, maxi = rfield.nflux_with_check;
-	avx_ptr<double> arg(rfield.nflux_with_check), expval(rfield.nflux_with_check);
-	for( long i=0; i < rfield.nflux_with_check; i++ )
+	long mini = 0, maxi = gv.nflux;
+	avx_ptr<double> arg(gv.nflux), expval(gv.nflux);
+	for( long i=0; i < gv.nflux; i++ )
 	{
 		/* this is hnu/kT for grain at this temp and photon energy */
-		arg[i] = TDustRyg*rfield.anu(i);
+		arg[i] = TDustRyg*gv.anu(i);
 		if( arg[i] < 0.9999e-5 )
 			++mini;
 		if( arg[i] > x+0.0001 )
@@ -1057,14 +1054,14 @@ STATIC double PlanckIntegral(double tdust,
 		}
 
 		double Planck1 = PI4*2.*HPLANCK/POW2(SPEEDLIGHT)*POW2(FR1RYD)*POW2(FR1RYD)*
-			rfield.anu3(i)/ExpM1*rfield.widflx(i);
+			gv.anu3(i)/ExpM1*gv.widflx(i);
 		double Planck2 = Planck1*gv.bin[nd].dstab1[i];
 
 		/* add integral over RJ tail, maybe useful for extreme low temps */
 		if( i == 0 ) 
 		{
-			integral1 = Planck1/rfield.widflx(0)*rfield.anu(0)/3.;
-			integral2 = Planck2/rfield.widflx(0)*rfield.anu(0)/5.;
+			integral1 = Planck1/gv.widflx(0)*gv.anu(0)/3.;
+			integral2 = Planck2/gv.widflx(0)*gv.anu(0)/5.;
 		}
 		/* if we are in the Wien tail - exit */
 		if( Planck1/integral1 < DBL_EPSILON && Planck2/integral2 < DBL_EPSILON )
@@ -1089,11 +1086,9 @@ STATIC double PlanckIntegral(double tdust,
 /* invalidate charge dependent data from previous iteration */
 STATIC void NewChargeData(long nd)
 {
-	long nz;
-
 	DEBUG_ENTRY( "NewChargeData()" );
 
-	for( nz=0; nz < NCHS; nz++ )
+	for( long nz=0; nz < NCHS; nz++ )
 	{
 		gv.bin[nd].chrg(nz).RSum1 = -DBL_MAX;
 		gv.bin[nd].chrg(nz).RSum2 = -DBL_MAX;
@@ -1102,18 +1097,21 @@ STATIC void NewChargeData(long nd)
 		gv.bin[nd].chrg(nz).ESum2 = -DBL_MAX;
 
 		gv.bin[nd].chrg(nz).hots1 = -DBL_MAX;
-		gv.bin[nd].chrg(nz).bolflux1 = -DBL_MAX;
-		gv.bin[nd].chrg(nz).pe1 = -DBL_MAX;
 
 		/** \todo	2	should any of the following 3 statements be removed? */
 		gv.bin[nd].chrg(nz).ThermRate = -DBL_MAX;
-		gv.bin[nd].chrg(nz).GrainHeat = -DBL_MAX;
+		gv.bin[nd].chrg(nz).HeatingRate1 = -DBL_MAX;
 		gv.bin[nd].chrg(nz).HeatingRate2 = -DBL_MAX;
+
+		gv.bin[nd].chrg(nz).GrainHeatCS = DBL_MAX/10.;
+		gv.bin[nd].chrg(nz).GasCoolCollCS = -DBL_MAX;
+
+		gv.bin[nd].chrg(nz).lgTdustConverged = false;
 	}
 
 	if( !fp_equal(phycon.te,gv.GrnRecomTe) )
 	{
-		for( nz=0; nz < NCHS; nz++ )
+		for( long nz=0; nz < NCHS; nz++ )
 		{
 			memset( gv.bin[nd].chrg(nz).eta, 0, (LIMELM+2)*sizeof(double) );
 			memset( gv.bin[nd].chrg(nz).xi, 0, (LIMELM+2)*sizeof(double) );
@@ -1122,12 +1120,11 @@ STATIC void NewChargeData(long nd)
 
 	if( nzone != gv.nzone )
 	{
-		for( nz=0; nz < NCHS; nz++ )
+		for( long nz=0; nz < NCHS; nz++ )
 		{
 			gv.bin[nd].chrg(nz).hcon1 = -DBL_MAX;
 		}
 	}
-	return;
 }
 
 
@@ -1192,6 +1189,9 @@ STATIC double GrnStdDpth(long int nd)
 	{
 		// abundance depends on temperature relative to sublimation
 		// "grain function sublimation" command
+		// use weighted average of all charge states
+		// NOTE this branch may be called before tedust is ever evaluated
+		// so tedust needs to be initialized to a safe value
 		GrnStdDpth_v = sexp( pow3( gv.bin[nd].tedust / gv.bin[nd].Tsublimat ) );
 	}
 	else
@@ -1269,24 +1269,20 @@ void GrainDrive()
 					gv.bin[nd].chrg(nz).DustZ = nz;
 					gv.bin[nd].chrg(nz).FracPop = ( nz == 0 ) ? 1. : 0.;
 					gv.bin[nd].chrg(nz).nfill = 0;
-					gv.bin[nd].chrg(nz).tedust = 100.f;
+					gv.bin[nd].chrg(nz).tedust = 100.;
 				}
 
 				gv.bin[nd].AveDustZ = 0.;
 				gv.bin[nd].dstpot = chrg2pot(0.,nd);
 
-				gv.bin[nd].tedust = 100.f;
+				gv.bin[nd].tedust = 100.;
 				gv.bin[nd].TeGrainMax = 100.;
 
 				/* set all heating/cooling agents to zero */
-				gv.bin[nd].BolFlux = 0.;
-				gv.bin[nd].GrainCoolTherm = 0.;
-				gv.bin[nd].GasHeatPhotoEl = 0.;
-				gv.bin[nd].GrainHeat = 0.;
-				gv.bin[nd].GrainHeatColl = 0.;
-				gv.bin[nd].ChemEn = 0.;
-				gv.bin[nd].ChemEnH2 = 0.;
-				gv.bin[nd].thermionic = 0.;
+				gv.bin[nd].GrainHeatBin = 0.;
+				gv.bin[nd].GrainHeatCollBin = 0.;
+				gv.bin[nd].GrainCoolThermBin = 0.;
+				gv.bin[nd].GasHeatPhotoElBin = 0.;
 
 				gv.bin[nd].lgUseQHeat = false;
 				gv.bin[nd].lgEverQHeat = false;
@@ -1294,27 +1290,10 @@ void GrainDrive()
 
 				gv.bin[nd].DustDftVel = 0.;
 
-				gv.bin[nd].avdust = gv.bin[nd].tedust;
+				gv.bin[nd].avdust = 100.;
 				gv.bin[nd].avdft = 0.f;
 				gv.bin[nd].avdpot = (realnum)(gv.bin[nd].dstpot*EVRYD);
 				gv.bin[nd].avDGRatio = -1.f;
-
-				/* >>chng 06 jul 21, add this here as well as in GrainTemperature so that can
-				 * get fake heating when grain physics is turned off */
-				if( 0 && gv.lgBakesPAH_heat )
-				{
-					/* this is a dirty hack to get BT94 PE heating rate
-					 * for PAH's included, for Lorentz Center 2004 PDR meeting, PvH */
-					/*>>>refer	PAH	heating	Bakes, E.L.O., & Tielens, A.G.G.M. 1994, ApJ, 427, 822 */
-					/* >>chng 05 aug 12, change from +=, which added additional heating to what exists already,
-					 * to simply = to set the heat, this equation gives total heating */
-					gv.bin[nd].GasHeatPhotoEl = 1.e-24*hmi.UV_Cont_rel2_Habing_TH85_depth*
-						dense.gas_phase[ipHYDROGEN]*(4.87e-2/(1.0+4e-3*pow((hmi.UV_Cont_rel2_Habing_TH85_depth*
-						sqrt(phycon.te)/dense.eden),0.73)) + 3.65e-2*pow(phycon.te/1.e4,0.7)/
-						(1.+2.e-4*(hmi.UV_Cont_rel2_Habing_TH85_depth*sqrt(phycon.te)/dense.eden)))/gv.bin.size() *
-						gv.GrainHeatScaleFactor;
-					gv.GasHeatPhotoEl += gv.bin[nd].GasHeatPhotoEl;
-				}
 			}
 
 			gv.TotalEden = 0.;
@@ -1336,9 +1315,9 @@ void GrainDrive()
 			gv.GrainHeatInc = 0.;
 			gv.GrainHeatDif = 0.;
 			gv.GrainHeatLya = 0.;
-			gv.GrainHeatCollSum = 0.;
-			gv.GrainHeatSum = 0.;
-			gv.GrainHeatChem = 0.;
+			gv.GrainHeatColl = 0.;
+			gv.GrainHeat = 0.;
+			gv.GrainHeatChemEn = 0.;
 			gv.GasCoolColl = 0.;
 			gv.TotalDustHeat = 0.f;
 			gv.dphmax = 0.f;
@@ -1357,7 +1336,6 @@ void GrainDrive()
 	}
 
 	++gv.nCalledGrainDrive;
-	return;
 }
 
 /* iterate grain charge and temperature */
@@ -1368,20 +1346,11 @@ STATIC void GrainChargeTemp()
 	  ion_to,
 	  nelem,
 	  nz;
-	realnum dccool = FLT_MAX;
-	double delta,
-	  GasHeatNet,
-	  hcon = DBL_MAX,
-	  hla = DBL_MAX,
-	  hots = DBL_MAX,
+	double GasHeatNet,
 	  oldtemp,
 	  oldTotalEden,
 	  ratio,
 	  ThermRatio;
-
-	static long int oldZone = -1;
-	static double oldTe = -DBL_MAX,
-	  oldHeat = -DBL_MAX;
 
 	DEBUG_ENTRY( "GrainChargeTemp()" );
 
@@ -1393,16 +1362,18 @@ STATIC void GrainChargeTemp()
 	oldTotalEden = gv.TotalEden;
 
 	/* these will sum heating agents over grain populations */
+	gv.BolFlux = 0.;
+
+	gv.GrainHeat = 0.;
 	gv.GrainHeatInc = 0.;
 	gv.GrainHeatDif = 0.;
 	gv.GrainHeatLya = 0.;
-	gv.GrainHeatCollSum = 0.;
-	gv.GrainHeatSum = 0.;
-	gv.GrainHeatChem = 0.;
+	gv.GrainHeatColl = 0.;
+	gv.GrainHeatChemEn = 0.;
 
-	gv.GasCoolColl = 0.;
 	gv.GasHeatPhotoEl = 0.;
 	gv.GasHeatTherm = 0.;
+	gv.GasCoolColl = 0.;
 
 	gv.TotalEden = 0.;
 
@@ -1417,14 +1388,22 @@ STATIC void GrainChargeTemp()
 		}
 	}
 
+	/* rebin the radiation fields to the grain frequency mesh to speed up the calculations */
+	RebinFlux(rfield.flux[0], gv.flux);
+	RebinFlux(rfield.SummedCon, gv.SummedCon);
+	RebinFlux(rfield.SummedDif, gv.SummedDif);
+
+	/* update gv.nPositive */
+	for( gv.nPositive=gv.nflux; gv.nPositive > 0; gv.nPositive-- )
+		if( gv.flux[gv.nPositive-1] > 0. || gv.SummedCon[gv.nPositive-1] > 0. || gv.SummedDif[gv.nPositive-1] > 0. )
+			break;
+
 	/* this sets dstAbund and conversion factors, but not gv.dstab and gv.dstsc! */
 	GrainUpdateRadius1();
 
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
-		double one;
-		double ChTdBracketLo = 0., ChTdBracketHi = -DBL_MAX;
-		long relax = ( conv.lgSearch ) ? 3 : 1;
+		long relax = ( conv.lgSearch ) ? 5 : 1;
 
 		/* >>chng 02 nov 11, added test for the presence of PAHs in the ionized region, PvH */
 		if( gv.bin[nd].matType == MAT_PAH || gv.bin[nd].matType == MAT_PAH2 )
@@ -1443,187 +1422,279 @@ STATIC void GrainChargeTemp()
 		if( trace.lgTrace && trace.lgDustBug )
 		{
 			fprintf( ioQQQ, " >>GrainChargeTemp starting grain %s\n",
-				 gv.bin[nd].chDstLab );
+					 gv.bin[nd].chDstLab );
 		}
 
-		delta = 2.*TOLER;
-		/* >>chng 01 nov 29, relax max no. of iterations during initial search */
-		for( i=0; i < relax*CT_LOOP_MAX && delta > TOLER; ++i )
+		bool lgTryAnotherIter = true;
+		gv.bin[nd].lgChTdConverged = false;
+		for( long l=0; l < 20*relax && !gv.bin[nd].lgChTdConverged; ++l )
 		{
-			string which;
-			long j;
-			double TdBracketLo = 0., TdBracketHi = -DBL_MAX;
-			double ThresEst = 0.;
-			oldtemp = gv.bin[nd].tedust;
-
-			/* solve for charge using previous estimate for grain temp
-			 * grain temp only influences thermionic emissions
-			 * Thermratio is fraction thermionic emissions contribute
-			 * to the total electron loss rate of the grain */
-			GrainCharge(nd,&ThermRatio);
-
-			ASSERT( gv.bin[nd].GrainHeat > 0. );
-			ASSERT( gv.bin[nd].tedust >= GRAIN_TMIN && gv.bin[nd].tedust <= GRAIN_TMAX );
-
-			/* >>chng 04 may 31, in conditions where collisions become an important
-			 * heating/cooling source (e.g. gas that is predominantly heated by cosmic
-			 * rays), the heating rate depends strongly on the assumed dust temperature.
-			 * hence it is necessary to iterate for the dust temperature. PvH */
-			gv.bin[nd].lgTdustConverged = false;
-			for( j=0; j < relax*T_LOOP_MAX; ++j )
-			{
-				double oldTemp2 = gv.bin[nd].tedust;
-				double oldHeat2 = gv.bin[nd].GrainHeat;
-				double oldCool = gv.bin[nd].GrainGasCool;
-
-				/* now solve grain temp using new value for grain potential */
-				GrainTemperature(nd,&dccool,&hcon,&hots,&hla);
-
-				gv.bin[nd].GrainGasCool = dccool;
-
-				if( trace.lgTrace && trace.lgDustBug )
-				{
-					fprintf( ioQQQ, "  >>loop %ld BracketLo %.6e BracketHi %.6e",
-						 j, TdBracketLo, TdBracketHi );
-				}
-
-				/* this test assures that convergence can only happen if GrainHeat > 0
-				 * and therefore the value of tedust is guaranteed to be valid as well */
-				/* >>chng 04 aug 05, test that gas cooling is converged as well,
-				 * in deep PDRs gas cooling depends critically on grain temperature, PvH */
-				if( fabs(gv.bin[nd].GrainHeat-oldHeat2) < HEAT_TOLER*gv.bin[nd].GrainHeat &&
-				    fabs(gv.bin[nd].GrainGasCool-oldCool) < HEAT_TOLER_BIN*thermal.ctot )
-				{
-					gv.bin[nd].lgTdustConverged = true;
-					if( trace.lgTrace && trace.lgDustBug )
-						fprintf( ioQQQ, " converged\n" );
-					break;
-				}
-
-				/* update the bracket for the solution */
-				if( gv.bin[nd].tedust < oldTemp2 )
-					TdBracketHi = oldTemp2;
-				else
-					TdBracketLo = oldTemp2;
-
-				/* GrainTemperature yields a new estimate for tedust, and initially
-				 * that estimate will be used. In most zones this will converge quickly.
-				 * However, sometimes the solution will oscillate and converge very
-				 * slowly. So, as soon as j >= 2 and the bracket is set up, we will
-				 * force convergence by using a bisection search within the bracket */
-				/** \todo	2	this algorithm might be more efficient with Brent */
-
-				/* this test assures that TdBracketHi is initialized */
-				if( TdBracketHi > TdBracketLo )
-				{
-					/* if j >= 2, the solution is converging too slowly
-					 * so force convergence by doing a bisection search */
-					if( ( j >= 2 && TdBracketLo > 0. ) ||
-					    gv.bin[nd].tedust <= TdBracketLo ||
-					    gv.bin[nd].tedust >= TdBracketHi )
-					{
-						gv.bin[nd].tedust = (realnum)(0.5*(TdBracketLo + TdBracketHi));
-						if( trace.lgTrace && trace.lgDustBug )
-							fprintf( ioQQQ, " bisection\n" );
-					}
-					else
-					{
-						if( trace.lgTrace && trace.lgDustBug )
-							fprintf( ioQQQ, " iteration\n" );
-					}
-				}
-				else
-				{
-					if( trace.lgTrace && trace.lgDustBug )
-						fprintf( ioQQQ, " iteration\n" );
-				}
-
-				ASSERT( gv.bin[nd].tedust >= GRAIN_TMIN && gv.bin[nd].tedust <= GRAIN_TMAX );
-			}
-
-			if( gv.bin[nd].lgTdustConverged )
-			{
-				/* update the bracket for the solution */
-				if( gv.bin[nd].tedust < oldtemp )
-					ChTdBracketHi = oldtemp;
-				else
-					ChTdBracketLo = oldtemp;
-			}
-			else
-			{
-				bool lgBoundErr;
-				double y, x = log(gv.bin[nd].tedust);
-				/* make sure GrainHeat is consistent with value of tedust */
-				splint_safe(gv.dsttmp,gv.bin[nd].dstems,gv.bin[nd].dstslp2,NDEMS,x,&y,&lgBoundErr);
-				gv.bin[nd].GrainHeat = exp(y)*gv.bin[nd].cnv_H_pCM3;
-
-				fprintf( ioQQQ," PROBLEM  temperature of grain species %s (Tg=%.3eK) not converged\n",
-					 gv.bin[nd].chDstLab , gv.bin[nd].tedust );
-				ConvFail("grai","");
-			}
-
-			ASSERT( gv.bin[nd].GrainHeat > 0. );
-			ASSERT( gv.bin[nd].tedust >= GRAIN_TMIN && gv.bin[nd].tedust <= GRAIN_TMAX );
-
-			/* delta estimates relative change in electron emission rate
-			 * due to the update in the grain temperature, if it is small
-			 * we won't bother to iterate (which is usually the case)
-			 * the formula assumes that thermionic emission is the only
-			 * process that depends on grain temperature */
-			/** \todo	2	should collisional heating/cooling be included here? */
-			ratio = gv.bin[nd].tedust/oldtemp;
 			for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
 			{
-				ThresEst += gv.bin[nd].chrg(nz).FracPop*gv.bin[nd].chrg(nz).ThresInf;
-			}
-			delta = ThresEst*TE1RYD/gv.bin[nd].tedust*(ratio - 1.);
-			/** \todo	2	use something like log(ThermRatio) + log(delta) ???? */
-			delta = ( delta < 0.9*log(DBL_MAX) ) ?
-				ThermRatio*fabs(POW2(ratio)*exp(delta)-1.) : DBL_MAX;
-
-			/* >>chng 06 feb 07, bracket grain temperature to force convergence when oscillating, PvH */
-			if( delta > TOLER )
-			{
-				if( trace.lgTrace && trace.lgDustBug )
-					which = "iteration";
-
-				/* The loop above yields a new estimate for tedust, and initially that
-				 * estimate will be used. In most zones this will converge very quickly.
-				 * However, sometimes the solution will oscillate and converge very
-				 * slowly. So, as soon as i >= 2 and the bracket is set up, we will
-				 * force convergence by using a bisection search within the bracket */
-				/** \todo	2	this algorithm might be more efficient with Brent */
-
-				/* this test assures that ChTdBracketHi is initialized */
-				if( ChTdBracketHi > ChTdBracketLo )
+				double mul_toler = 0.1;
+				double delta = 2.*TOLER;
+				for( int k=0; k < 3 && delta > TOLER; ++k )
 				{
-					/* if i >= 2, the solution is converging too slowly
-					 * so force convergence by doing a bisection search */
-					if( ( i >= 2 && ChTdBracketLo > 0. ) ||
-					    gv.bin[nd].tedust <= ChTdBracketLo ||
-					    gv.bin[nd].tedust >= ChTdBracketHi )
+					double ChTdBracketLo = 0., ChTdBracketHi = -DBL_MAX;
+
+					/* >>chng 01 nov 29, relax max no. of iterations during initial search */
+					for( i=0; i < relax*CT_LOOP_MAX && delta > TOLER; ++i )
 					{
-						gv.bin[nd].tedust = (realnum)(0.5*(ChTdBracketLo + ChTdBracketHi));
+						/* solve for charge using previous estimate for grain temp
+						 * grain temp only influences thermionic emissions
+						 * Thermratio is fraction thermionic emissions contribute
+						 * to the total electron loss rate of the grain */
+						GrainCharge(nd,&ThermRatio);
+
+						/* GrainCharge() may change the charge bracket, so this assignment needs to be later */
+						ChargeBin& gptr = gv.bin[nd].chrg(nz);
+
+						string which;
+						long j;
+						double TdBracketLo = 0., TdBracketHi = -DBL_MAX;
+						oldtemp = gptr.tedust;
+
+						/* when thermionic emissions are important, this can destabilize the
+						 * grain charge algorithm since thermionic rates depend critically on
+						 * the grain temperature, which has not been determined accurately yet */
+						if( gv.bin[nd].lgChrgConverged )
+							GrainHeatCor(nd);
+						else
+						{
+							gv.bin[nd].RateUp = 1.e100;
+							gv.bin[nd].RateDn = 1.e100;
+							for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+								gv.bin[nd].chrg(nz).GrainHeatCorCS = 0.;
+						}
+
+						ASSERT( gptr.GrainHeatCS > 0. );
+						ASSERT( gptr.tedust >= GRAIN_TMIN && gptr.tedust <= GRAIN_TMAX );
+
+						/* >>chng 04 may 31, in conditions where collisions become an important
+						 * heating/cooling source (e.g. gas that is predominantly heated by cosmic
+						 * rays), the heating rate depends strongly on the assumed dust temperature.
+						 * hence it is necessary to iterate for the dust temperature. PvH */
+						gptr.lgTdustConverged = false;
+						for( j=0; j < relax*T_LOOP_MAX; ++j )
+						{
+							double oldTemp2 = gptr.tedust;
+							double oldHeat2 = gptr.GrainHeatCS;
+							double oldCool = gptr.GasCoolCollCS;
+							double oldThermionic = gptr.GasHeatThermCS;
+
+							/* now solve grain temp using new value for grain potential */
+							GrainTemperature(nd,nz);
+
+							if( gptr.tedust > 0. )
+							{
+								/* >>chng 05 jun 24, update ThermRate for new tedust
+								 * (will.in), this creates a charging imbalance which
+								 * is tested at the end of the loop over nz, PvH */
+								UpdatePot2( nd, nz );
+							}
+
+							if( trace.lgTrace && trace.lgDustBug )
+							{
+								fprintf( ioQQQ, "  >>loop %ld BracketLo %.6e BracketHi %.6e",
+										 j, TdBracketLo, TdBracketHi );
+							}
+
+							/* this test assures that convergence can only happen if GrainHeat > 0
+							 * and therefore the value of tedust is guaranteed to be valid as well */
+							/* >>chng 04 aug 05, test that gas cooling is converged as well,
+							 * in deep PDRs gas cooling depends critically on grain temperature, PvH */
+							/* >>chng 25 oct 31, add test for thermionic heating of the gas. In extreme
+							 * conditions the themionic rate can become important for the charge and
+							 * temperature balance of the grain and needs to be converged carefully, PvH */
+							if( fabs(gptr.GrainHeatCS-oldHeat2) < HEAT_TOLER*gptr.GrainHeatCS &&
+								fabs(gptr.GasCoolCollCS-oldCool) < HEAT_TOLER_BIN*thermal.ctot &&
+								fabs(gptr.GasHeatThermCS-oldThermionic) < mul_toler*HEAT_TOLER*gptr.GrainHeatCS )
+							{
+								if( trace.lgTrace && trace.lgDustBug )
+									fprintf( ioQQQ, " converged\n" );
+								if( gptr.lgTdustConverged )
+									break;
+							}
+							else
+							{
+								gptr.lgTdustConverged = false;
+							}
+
+							/* update the bracket for the solution */
+							if( gptr.tedust < oldTemp2 )
+								TdBracketHi = oldTemp2;
+							else
+								TdBracketLo = oldTemp2;
+
+							/* GrainTemperature yields a new estimate for tedust, and initially
+							 * that estimate will be used. In most zones this will converge quickly.
+							 * However, sometimes the solution will oscillate and converge very
+							 * slowly. So, as soon as j >= 2 and the bracket is set up, we will
+							 * force convergence by using a bisection search within the bracket */
+							/** \todo	2	this algorithm might be more efficient with Brent */
+
+							/* this test assures that TdBracketHi is initialized */
+							if( TdBracketHi > TdBracketLo )
+							{
+								/* if j >= 2, the solution is converging too slowly
+								 * so force convergence by doing a bisection search */
+								if( ( j >= 2 && TdBracketLo > 0. ) ||
+									gptr.tedust <= TdBracketLo ||
+									gptr.tedust >= TdBracketHi )
+								{
+									gptr.tedust = 0.5*(TdBracketLo + TdBracketHi);
+									/* >>chng 05 jun 22, update ThermRate for new tedust
+									 * (orion_pdr10.in), this creates a charging imbalance
+									 * which is tested after the loop over nz, PvH */
+									UpdatePot2( nd, nz );
+
+									if( trace.lgTrace && trace.lgDustBug )
+										fprintf( ioQQQ, " bisection\n" );
+								}
+								else
+								{
+									if( trace.lgTrace && trace.lgDustBug )
+										fprintf( ioQQQ, " iteration\n" );
+								}
+							}
+							else
+							{
+								if( trace.lgTrace && trace.lgDustBug )
+									fprintf( ioQQQ, " iteration\n" );
+							}
+
+							ASSERT( gptr.tedust >= GRAIN_TMIN && gptr.tedust <= GRAIN_TMAX );
+						}
+
+						if( gptr.lgTdustConverged )
+						{
+							/* update the bracket for the solution */
+							if( gptr.tedust < oldtemp )
+								ChTdBracketHi = oldtemp;
+							else
+								ChTdBracketLo = oldtemp;
+						}
+						else
+						{
+							bool lgBoundErr;
+							double y, x = log(gptr.tedust);
+							/* make sure GrainHeatCS is consistent with value of tedust */
+							splint_safe(gv.dsttmp,gv.bin[nd].dstems,gv.bin[nd].dstslp2,NDEMS,x,&y,&lgBoundErr);
+							gptr.GrainHeatCS = exp(y)*gv.bin[nd].cnv_H_pCM3;
+						}
+
+						ASSERT( gptr.GrainHeatCS > 0. );
+						ASSERT( gptr.tedust >= GRAIN_TMIN && gptr.tedust <= GRAIN_TMAX );
+
+						/* delta estimates relative change in electron emission rate
+						 * due to the update in the grain temperature, if it is small
+						 * we won't bother to iterate (which is usually the case)
+						 * the formula assumes that thermionic emission is the only
+						 * process that depends on grain temperature */
+						ratio = gptr.tedust/oldtemp;
+						double ThresEst = gptr.FracPop*gptr.ThresInf;
+						delta = ThresEst*TE1RYD/gptr.tedust*(ratio - 1.);
+						/** \todo	2	use something like log(ThermRatio) + log(delta) ???? */
+						delta = ( delta < 0.9*log(DBL_MAX) ) ?
+							ThermRatio*fabs(POW2(ratio)*exp(delta)-1.) : DBL_MAX;
+
+						lgTryAnotherIter = ( delta > TOLER );
+
+						/* >>chng 06 feb 07, bracket grain temperature to force convergence when oscillating, PvH */
+						if( delta > TOLER )
+						{
+							if( trace.lgTrace && trace.lgDustBug )
+								which = "iteration";
+
+							/* The loop above yields a new estimate for tedust, and initially that
+							 * estimate will be used. In most zones this will converge very quickly.
+							 * However, sometimes the solution will oscillate and converge very
+							 * slowly. So, as soon as i >= 2 and the bracket is set up, we will
+							 * force convergence by using a bisection search within the bracket */
+							/** \todo	2	this algorithm might be more efficient with Brent */
+
+							/* this test assures that ChTdBracketHi is initialized */
+							if( ChTdBracketHi > ChTdBracketLo )
+							{
+								/* if i >= 2, the solution is converging too slowly
+								 * so force convergence by doing a bisection search */
+								if( ( i >= 2 && ChTdBracketLo > 0. ) ||
+									gptr.tedust <= ChTdBracketLo ||
+									gptr.tedust >= ChTdBracketHi )
+								{
+									gptr.tedust = 0.5*(ChTdBracketLo + ChTdBracketHi);
+									if( trace.lgTrace && trace.lgDustBug )
+										which = "bisection";
+								}
+							}
+						}
+
 						if( trace.lgTrace && trace.lgDustBug )
-							which = "bisection";
+						{
+							fprintf( ioQQQ, " >>GrainChargeTemp finds %s[%ld] Zg=%ld delta=%.4e, old/new "
+									 "temp=%e %e, bracket lo, hi=%e %e, mul_toler=%e, ",
+									 gv.bin[nd].chDstLab, nz, gptr.DustZ, delta, oldtemp, gptr.tedust,
+									 ChTdBracketLo, ChTdBracketHi, mul_toler );
+							if( delta > TOLER )
+								fprintf( ioQQQ, "doing another %s\n", which.c_str() );
+							else 
+								fprintf( ioQQQ, "converged\n" );
+						}
 					}
+					/* if convergence failed, try again with stricter convergence of the thermionic emissions */
+					mul_toler /= 10.;
+				}
+				if( delta > TOLER )
+				{
+					/* make sure GrainHeatCS is consistent with tedust in case this is the last iteration */
+					bool lgBoundErr;
+					double y, x = log(gv.bin[nd].chrg(nz).tedust);
+					/* make sure GrainHeatCS is consistent with value of tedust */
+					splint_safe(gv.dsttmp,gv.bin[nd].dstems,gv.bin[nd].dstslp2,NDEMS,x,&y,&lgBoundErr);
+					gv.bin[nd].chrg(nz).GrainHeatCS = exp(y)*gv.bin[nd].cnv_H_pCM3;
 				}
 			}
 
+			string reason;
+			if( lgTryAnotherIter )
+				reason += " delta";
+
+			/* double-check the charge convergence */
+			auto oldZ0 = gv.bin[nd].chrg(0).DustZ;
+			GrainCharge(nd, &ThermRatio);
+			if( gv.bin[nd].chrg(0).DustZ != oldZ0 )
+			{
+				lgTryAnotherIter = true;
+				reason += " Z0";
+			}
+
+			gv.bin[nd].lgChTdConverged = gv.bin[nd].lgChrgConverged && !lgTryAnotherIter;
+			for( long nz=0; nz < gv.bin[nd].nChrg; ++nz )
+			{
+				if( !gv.bin[nd].chrg(nz).lgTdustConverged )
+				{
+					gv.bin[nd].lgChTdConverged = false;
+					ostringstream oss;
+					oss << " Td[" << nz << "]";
+					reason += oss.str();
+				}
+				/* this test indicates that this charge state was never evaluated at all -> do it now */
+				if( gv.bin[nd].chrg(nz).GasCoolCollCS < -1e100 )
+					GrainTemperature(nd,nz);
+			}
 			if( trace.lgTrace && trace.lgDustBug )
 			{
-				fprintf( ioQQQ, " >>GrainChargeTemp finds delta=%.4e, ", delta );
-				fprintf( ioQQQ, " old/new temp=%.5e %.5e, ", oldtemp, gv.bin[nd].tedust );
-				if( delta > TOLER ) 
-					fprintf( ioQQQ, "doing another %s\n", which.c_str() );
-				else 
-					fprintf( ioQQQ, "converged\n" );
+				if( reason.size() == 0 )
+					reason = " none";
+				fprintf( ioQQQ, " >>GrainChargeTemp overall convergence: %c reason:%s\n",
+						 TorF(gv.bin[nd].lgChTdConverged), reason.c_str());
 			}
 		}
-		if( delta > TOLER )
+		
+		if( !gv.bin[nd].lgChTdConverged )
 		{
 			fprintf( ioQQQ, " PROBLEM  charge/temperature not converged for %s zone %.2f\n",
-				 gv.bin[nd].chDstLab , fnzone );
+					 gv.bin[nd].chDstLab , fnzone );
 			ConvFail("grai","");
 		}
 
@@ -1635,86 +1706,113 @@ STATIC void GrainChargeTemp()
 
 		/* >>chng 04 jan 31, moved call to UpdateRadius2 outside loop, PvH */
 
-		/* following used to keep track of heating agents in printout
-		 * no physics done with GrainHeatInc
-		 * dust heating by incident continuum, and elec friction before ejection */
-		gv.GrainHeatInc += hcon;
-		/* remember total heating by diffuse fields, for printout (includes Lya) */
-		gv.GrainHeatDif += hots;
-		/* GrainHeatLya - total heating by LA in this zone, erg cm-3 s-1, only here
-		 * for eventual printout, hots is total ots line heating */
-		gv.GrainHeatLya += hla;
+		/* total heating of current grain type */
+		gv.bin[nd].GrainHeatBin = 0.;
+		/* heating by thermal collisions with gas does work
+		 * they are different since grain surface recombinations
+		 * heat the grains, but do not cool the gas ! */
+		gv.bin[nd].GrainHeatCollBin = 0.;
+		/* grain cooling due to thermionic emissions */
+		gv.bin[nd].GrainCoolThermBin = 0.;
 
-		/* this will be total collisional heating, for printing in lines */
-		gv.GrainHeatCollSum += gv.bin[nd].GrainHeatColl;
+		/* integrate over ionizing continuum; energy goes to dust and gas
+		 * GasHeatPhotoElBin is photoelectric heating of the gas */
+		gv.bin[nd].GasHeatPhotoElBin = 0.;
 
-		/* GrainHeatSum is total heating of all grain types in this zone,
-		 * will be carried by total cooling, only used in lines to print tot heat
-		 * printed as entry "GraT    0 " */
-		gv.GrainHeatSum += gv.bin[nd].GrainHeat;
+		/* >>chng 04 jan 25, moved initialization of phiTilde to qheat_init(), PvH */
 
-		/* net amount of chemical energy donated by recombining ions and molecule formation */
-		gv.GrainHeatChem += gv.bin[nd].ChemEn + gv.bin[nd].ChemEnH2;
+		gv.bin[nd].tedust = 0.;
 
-		/* dccool is gas cooling due to collisions with grains - negative if net heating 
-		 * zero if NO GRAIN GAS COLLISIONAL EXCHANGE command included */
-		gv.GasCoolColl += dccool;
-		gv.GasHeatPhotoEl += gv.bin[nd].GasHeatPhotoEl;
-		gv.GasHeatTherm += gv.bin[nd].thermionic;
-
-		/* this is grain charge in e/cm^3, positive number means grain supplied free electrons */
-		/* >>chng 01 mar 24, changed DustZ+1 to DustZ, PvH */
-		one = 0.;
 		for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
 		{
-			one += gv.bin[nd].chrg(nz).FracPop*(double)gv.bin[nd].chrg(nz).DustZ*
-				gv.bin[nd].cnv_GR_pCM3;
-		}
-		/* electron density contributed by grains, cm-3 */
-		gv.TotalEden += one;
-		{
-			/*@-redef@*/
-			enum {DEBUG_LOC=false};
-			/*@+redef@*/
-			if( DEBUG_LOC )
+			const ChargeBin& gptr = gv.bin[nd].chrg(nz);
+
+			/* BolFlux is total energy absorbed from all radiation fields,
+			 * this is a *ficticious* number since it neglects the PE effect! */
+			gv.BolFlux += gptr.FracPop*gptr.BolFluxCS;
+
+			/* GrainHeat is total heating of all grain types in this zone,
+			 * will be carried by total cooling, only used in lines to print tot heat
+			 * printed as entry "GraT    0 " */
+			gv.GrainHeat += gptr.FracPop*gptr.GrainHeatCS;
+			/* following used to keep track of heating agents in printout
+			 * no physics done with GrainHeatInc
+			 * dust heating by incident continuum, and elec friction before ejection */
+			gv.GrainHeatInc += gptr.FracPop*gptr.GrainHeatIncCS;
+			/* remember total heating by diffuse fields, for printout (includes Lya) */
+			gv.GrainHeatDif += gptr.FracPop*gptr.GrainHeatDifCS;
+			/* GrainHeatLya - total heating by LA in this zone, erg cm-3 s-1, only here
+			 * for eventual printout, GrainHeatDif is total ots line heating */
+			gv.GrainHeatLya += gptr.FracPop*gptr.GrainHeatLyaCS;
+			/* this will be total collisional heating, for printing in lines */
+			gv.GrainHeatColl += gptr.FracPop*gptr.GrainHeatCollCS;
+			/* net amount of chemical energy donated by recombining ions and molecule formation */
+			gv.GrainHeatChemEn += gptr.FracPop*gptr.GrainHeatChemEnCS;
+
+			if( gv.lgDHetOn )
+				gv.GasHeatPhotoEl += gptr.FracPop*gptr.GasHeatPhotoElCS;
+			gv.GasHeatTherm += gptr.FracPop*gptr.GasHeatThermCS;
+			/* GasCoolColl is gas cooling due to collisions with grains
+			 * zero if NO GRAIN GAS COLLISIONAL EXCHANGE command included */
+			if( gv.lgDColOn )
+				gv.GasCoolColl += gptr.FracPop*gptr.GasCoolCollCS;
+
+			/* this is grain charge in e/cm^3, positive number means grain supplied free electrons */
+			/* >>chng 01 mar 24, changed DustZ+1 to DustZ, PvH */
+			gv.TotalEden +=gptr.FracPop*(double)gptr.DustZ*gv.bin[nd].cnv_GR_pCM3;
+
+			gv.bin[nd].GrainHeatBin += gptr.FracPop*gptr.GrainHeatCS;
+			gv.bin[nd].GrainHeatCollBin += gptr.FracPop*gptr.GrainHeatCollCS;
+			gv.bin[nd].GrainCoolThermBin += gptr.FracPop*gptr.GrainCoolThermCS;
+
+			if( gv.lgDHetOn )
+				gv.bin[nd].GasHeatPhotoElBin += gptr.FracPop*gptr.GasHeatPhotoElCS;
+
+			gv.bin[nd].tedust += gptr.FracPop*gptr.tedust;
+			/*  save for later possible printout */
+			gv.bin[nd].TeGrainMax = max(gv.bin[nd].TeGrainMax,gptr.tedust);
+
+			if( trace.lgTrace && trace.lgDustBug )
 			{
-				fprintf(ioQQQ," DEBUG grn chr nz\t%.2f\teden\t%.3e\tnd\t%li",
-					fnzone,
-					dense.eden,
-					(unsigned long)nd);
-				fprintf(ioQQQ,"\tne\t%.2e\tAveDustZ\t%.2e\t%.2e\t%.2e\t%.2e",
-					one,
-					gv.bin[nd].AveDustZ,
-					gv.bin[nd].chrg(0).FracPop,(double)gv.bin[nd].chrg(0).DustZ,
-					gv.bin[nd].cnv_GR_pCM3);
-				fprintf(ioQQQ,"\n");
+				fprintf(ioQQQ,"     %s[%ld] Zg=%ld FracPop %.6f Grainheat %.5e GasCoolColl %.5e" , 
+						gv.bin[nd].chDstLab, nz, gptr.DustZ, gptr.FracPop, gptr.GrainHeatCS, gptr.GasCoolCollCS );
+				fprintf(ioQQQ," GasHeatPhotoEl %.5e GasHeatTherm %.5e GrainHeatChem %.5e\n\n" , 
+						gptr.GasHeatPhotoElCS, gptr.GasHeatThermCS, gptr.GrainHeatChemEnCS );
 			}
 		}
-
-		if( trace.lgTrace && trace.lgDustBug )
-		{
-			fprintf(ioQQQ,"     %s Pot %.5e Thermal %.5e GasCoolColl %.5e" , 
-				gv.bin[nd].chDstLab, gv.bin[nd].dstpot, gv.bin[nd].GrainHeat, dccool );
-			fprintf(ioQQQ," GasPEHeat %.5e GasThermHeat %.5e ChemHeat %.5e\n\n" , 
-				gv.bin[nd].GasHeatPhotoEl, gv.bin[nd].thermionic, gv.bin[nd].ChemEn );
-		}
 	}
+
+ 	if( gv.lgBakesPAH_heat && gv.lgDHetOn )
+ 	{
+ 		/* this is a dirty hack to get BT94 PE heating rate for PAH's,
+ 		 * for Lorentz Center 2004 PDR meeting, this violates energy conservation! PvH */
+ 		/*>>refer	PAH	heating	Bakes, E.L.O., & Tielens, A.G.G.M. 1994, ApJ, 427, 822 */
+ 		/* >>chng 05 aug 12, change from +=, which added additional heating to what exists already,
+ 		 * to simply = to set the heat, this equation gives total heating */
+		realnum G0 = hmi.UV_Cont_rel2_Habing_TH85_depth;
+
+ 		gv.GasHeatPhotoEl = 1.e-24*G0*dense.gas_phase[ipHYDROGEN]*
+ 			(4.87e-2/(1.0 + 4e-3*pow(G0*phycon.sqrte/dense.eden,0.73)) +
+			 3.65e-2*pow(phycon.te/1.e4,0.7)/(1.+2.e-4*(G0*phycon.sqrte/dense.eden)));
+
+		/* distribute the PE heating over all PAH bins scaled by the integrated surface area */
+		double totalArea = 0.;
+		for( size_t nd=0; nd < gv.bin.size(); nd++ )
+			if( gv.bin[nd].matType == MAT_PAH || gv.bin[nd].matType == MAT_PAH2 )
+				totalArea += gv.bin[nd].IntArea*gv.bin[nd].dstAbund;
+		for( size_t nd=0; nd < gv.bin.size(); nd++ )
+		{
+			if( totalArea > 0. && ( gv.bin[nd].matType == MAT_PAH || gv.bin[nd].matType == MAT_PAH2 ) )
+				gv.bin[nd].GasHeatPhotoElBin = gv.GasHeatPhotoEl*gv.bin[nd].IntArea*gv.bin[nd].dstAbund/totalArea;
+			else
+				gv.bin[nd].GasHeatPhotoElBin = 0.;
+			for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+				gv.bin[nd].chrg(nz).GasHeatPhotoElCS = gv.bin[nd].GasHeatPhotoElBin;
+		}
+ 	}
 
 	/* >>chng 04 aug 06, added test of convergence of the net gas heating/cooling, PvH */
 	GasHeatNet = gv.GasHeatPhotoEl + gv.GasHeatTherm - gv.GasCoolColl;
-
-	if( !fp_equal(phycon.te,gv.GrnRecomTe) )
-	{
-		oldZone = gv.nzone;
-		oldTe = gv.GrnRecomTe;
-		oldHeat = gv.GasHeatNet;
-	}
-
-	/* >>chng 04 aug 07, added estimate for heating derivative, PvH */
-	if( nzone == oldZone && !fp_equal(phycon.te,oldTe) )
-	{
-		gv.dHeatdT = (GasHeatNet-oldHeat)/(phycon.te-oldTe);
-	}
 
 	/* >>chng 04 sep 15, add test for convergence of gv.TotalEden, PvH */
 	if( nzone != gv.nzone || !fp_equal(phycon.te,gv.GrnRecomTe) ||
@@ -1797,7 +1895,7 @@ STATIC void GrainChargeTemp()
 		fprintf( ioQQQ, "     %.2f Grain contribution to electron density %.2e\n", 
 			fnzone , gv.TotalEden );
 
-		fprintf( ioQQQ, "     Grain electons: " );
+		fprintf( ioQQQ, "     Grain electrons: " );
 		for( size_t nd=0; nd < gv.bin.size(); nd++ )
 		{
 			double sum = 0.;
@@ -1817,28 +1915,22 @@ STATIC void GrainChargeTemp()
 		}
 		fprintf( ioQQQ, "\n" );
 
-		fprintf( ioQQQ, "     Grain temperatures:" );
+		fprintf( ioQQQ, "     Grain temperatures:\n" );
 		for( size_t nd=0; nd < gv.bin.size(); nd++ )
 		{
-			fprintf( ioQQQ, " %.2e", gv.bin[nd].tedust );
+			fprintf( ioQQQ, "       nd=%ld", nd );
+			for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+				fprintf( ioQQQ, " Zg=%ld Td=%.6e", gv.bin[nd].chrg(nz).DustZ, gv.bin[nd].chrg(nz).tedust );
+			fprintf( ioQQQ, "\n" );
 		}
-		fprintf( ioQQQ, "\n" );
 
 		fprintf( ioQQQ, "     GrainCollCool: %.6e\n", gv.GasCoolColl );
 	}
-
-	/*if( nzone > 900) 
-		fprintf(ioQQQ,"DEBUG cool\t%.2f\t%e\t%e\t%e\n",
-		fnzone,
-		phycon.te ,
-		dense.eden,
-		gv.GasCoolColl );*/
-	return;
 }
 
 
 STATIC void GrainCharge(size_t nd,
-			/*@out@*/double *ThermRatio) /* ratio of thermionic to total rate */
+						double *ThermRatio) /* ratio of thermionic to total rate */
 {
 	bool lgBigError;
 	long backup,
@@ -1867,15 +1959,34 @@ STATIC void GrainCharge(size_t nd,
 	/* find dust charge */
 	if( trace.lgTrace && trace.lgDustBug )
 	{
-		fprintf( ioQQQ, "    Charge loop, search %c,", TorF(conv.lgSearch) );
+		fprintf( ioQQQ, "    Charge loop, nd=%ld search %c,", nd, TorF(conv.lgSearch) );
 	}
 
 	ASSERT( nd < gv.bin.size() );
 
-	for( nz=0; nz < NCHS; nz++ )
+	/* determine a reasonable starting guess for the grain temperature of charge
+	 * states that have not been evaluated yet. normally gv.bin[nd].tedust will be
+	 * a very good estimate for that, but during the search phase, gv.bin[nd].tedust
+	 * may not have a good value yet, so we use a different algorithm there */
+	double Tstart = 0.;
+	if( conv.lgSearch )
 	{
-		gv.bin[nd].chrg(nz).FracPop = -DBL_MAX;
+		double sumPop = 0.;
+		/* for bins that have not been evaluated yet, FracPop == 0 */
+		for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+		{
+			sumPop += gv.bin[nd].chrg(nz).FracPop;
+			Tstart += gv.bin[nd].chrg(nz).FracPop*gv.bin[nd].chrg(nz).tedust;
+		}
+		Tstart = ( sumPop > 0. ) ? Tstart/sumPop : 100.;
 	}
+	else
+	{
+		Tstart = gv.bin[nd].tedust;
+	}
+
+	for( nz=0; nz < NCHS; nz++ )
+		gv.bin[nd].chrg(nz).FracPop = 0.;
 
 	/* this algorithm determines the value of Zlo and the charge state populations
 	 * in the n-charge state model as described in:
@@ -1937,10 +2048,10 @@ STATIC void GrainCharge(size_t nd,
 		{
 			// this is the very first time the grain charge is determined
 			// so here we try to get a rough first estimate of the charge
-			long ilo = rfield.ipointC(0.9);
-			long ihi = rfield.nflux;
+			long ilo = gv.ipointC(0.9);
+			long ihi = gv.nflux;
 			// determine average photon energy above 0.9 Ryd to ionize grain
-			double sum1, sum2 = reduce_ab_a( get_ptr(rfield.flux[0]), rfield.anuptr(), ilo, ihi, &sum1 );
+			double sum1, sum2 = reduce_ab_a( gv.flux.data(), gv.anuptr(), ilo, ihi, &sum1 );
 			double anuav = safe_div( sum2, sum1, 0. );
 			if( anuav > 1. )
 			{
@@ -1973,7 +2084,7 @@ STATIC void GrainCharge(size_t nd,
 		Zlo = gv.bin[nd].chrg(0).DustZ;
 	}
 	Zlo = max(Zlo,gv.bin[nd].LowestZg);
-	UpdatePot( nd, Zlo, stride, rate_up, rate_dn );
+	UpdatePot( nd, Zlo, stride, Tstart, rate_up, rate_dn );
 
 	/* check if the grain charge is correctly bracketed */
 	for( i=0; i < BRACKET_MAX; i++ )
@@ -1994,10 +2105,11 @@ STATIC void GrainCharge(size_t nd,
 			Zlo -= (gv.bin[nd].nChrg-1)*stride;
 
 		Zlo = MAX2(Zlo,gv.bin[nd].LowestZg);
-		UpdatePot( nd, Zlo, stride, rate_up, rate_dn );
+		UpdatePot( nd, Zlo, stride, Tstart, rate_up, rate_dn );
 	}
 
-	if( netloss0*netloss1 > 0. ) {
+	if( netloss0*netloss1 > 0. )
+	{
 		fprintf( ioQQQ, " insanity: could not bracket grain charge for %s\n", gv.bin[nd].chDstLab );
 		ShowMe();
 		cdEXIT(EXIT_FAILURE);
@@ -2021,7 +2133,7 @@ STATIC void GrainCharge(size_t nd,
 
 			netloss0 = netloss1;
 		}
-		UpdatePot( nd, Zlo, stride, rate_up, rate_dn );
+		UpdatePot( nd, Zlo, stride, Tstart, rate_up, rate_dn );
 	}
 
 	ASSERT( netloss0*netloss1 <= 0. );
@@ -2043,14 +2155,26 @@ STATIC void GrainCharge(size_t nd,
 		}
 
 		Zlo = newZlo;
-		UpdatePot( nd, Zlo, 1, rate_up, rate_dn );
+		UpdatePot( nd, Zlo, 1, Tstart, rate_up, rate_dn );
 	}
 
-	if( lgBigError ) {
-		fprintf( ioQQQ, " insanity: could not converge grain charge for %s\n", gv.bin[nd].chDstLab );
-		ShowMe();
-		cdEXIT(EXIT_FAILURE);
+	/* >>chng 05 jun 24, when thermionic emissions are important, this can destabilize the
+	 * grain charge algorithm since thermionic rates depend critically on the grain temperature,
+	 * which has not been determined accurately yet -> return safe values for FracPop so that
+	 * the GrainChargeTemp algorithm can determine better values for the grain temperature, PvH */
+	if( lgBigError )
+	{
+		for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
+			gv.bin[nd].chrg(nz).FracPop = 1./(double)gv.bin[nd].nChrg;
+		gv.bin[nd].lgChrgConverged = false;
 	}
+	else
+	{
+		gv.bin[nd].lgChrgConverged = true;
+	}
+
+	if( trace.lgTrace && trace.lgDustBug )
+		fprintf( ioQQQ, " converged: %c\n", TorF(gv.bin[nd].lgChrgConverged) );
 
 	gv.bin[nd].AveDustZ = 0.;
 	crate = csum3 = 0.;
@@ -2074,17 +2198,20 @@ STATIC void GrainCharge(size_t nd,
 	{
 		double d[4];
 
-		fprintf( ioQQQ, "\n" );
+		fprintf( ioQQQ, "    GrainCharge nd=%ld\n", nd );
 
 		crate = csum1a = csum1b = csum2 = csum3 = 0.;
 		for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
 		{
-			crate += gv.bin[nd].chrg(nz).FracPop*
-				GrainElecEmis1(nd,nz,&d[0],&d[1],&d[2],&d[3]);
-			csum1a += gv.bin[nd].chrg(nz).FracPop*d[0];
-			csum1b += gv.bin[nd].chrg(nz).FracPop*d[1];
-			csum2 += gv.bin[nd].chrg(nz).FracPop*d[2];
-			csum3 += gv.bin[nd].chrg(nz).FracPop*d[3];
+			const ChargeBin& gptr = gv.bin[nd].chrg(nz);
+
+			crate += gptr.FracPop*GrainElecEmis1(nd,nz,&d[0],&d[1],&d[2],&d[3]);
+			csum1a += gptr.FracPop*d[0];
+			csum1b += gptr.FracPop*d[1];
+			csum2 += gptr.FracPop*d[2];
+			csum3 += gptr.FracPop*d[3];
+			fprintf( ioQQQ, "    nz=%ld Td=%e rate1a=%.4e, rate1b=%.4e, ", nz, gptr.tedust, d[0], d[1] );
+			fprintf( ioQQQ, "rate2=%.4e, rate3=%.4e, sum=%.4e\n", d[2], d[3], d[0]+d[1]+d[2]+d[3] );
 		}
 
 		fprintf( ioQQQ, "    ElecEm  rate1a=%.4e, rate1b=%.4e, ", csum1a, csum1b );
@@ -2101,6 +2228,7 @@ STATIC void GrainCharge(size_t nd,
 			crate += gv.bin[nd].chrg(nz).FracPop*GrainElecRecomb1(nd,nz,&d[0],&d[1]);
 			csum1 += gv.bin[nd].chrg(nz).FracPop*d[0];
 			csum2 += gv.bin[nd].chrg(nz).FracPop*d[1];
+			fprintf( ioQQQ, "    nz=%ld rate1=%.4e, rate2=%.4e, sum=%.4e\n", nz, d[0], d[1], d[0]+d[1] );
 		}
 
 		fprintf( ioQQQ, "    ElecRc  rate1=%.4e, rate2=%.4e, sum=%.4e\n", csum1, csum2, crate );
@@ -2121,7 +2249,7 @@ STATIC void GrainCharge(size_t nd,
 			 fnzone, (unsigned long)nd, gv.bin[nd].AveDustZ );
 		for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
 		{
-			fprintf( ioQQQ, "    Zg %ld %.5f", Zlo+nz, gv.bin[nd].chrg(nz).FracPop );
+			fprintf( ioQQQ, "    Zg %ld %.5f", gv.bin[nd].chrg(nz).DustZ, gv.bin[nd].chrg(nz).FracPop );
 		}
 		fprintf( ioQQQ, "\n" );
 
@@ -2135,7 +2263,6 @@ STATIC void GrainCharge(size_t nd,
 		}
 		fprintf( ioQQQ, "\n" );
 	}
-	return;
 }
 
 
@@ -2262,11 +2389,11 @@ STATIC double GrainElecEmis1(size_t nd,
 	ChargeBin& gptr = gv.bin[nd].chrg(nz);
 
 	long ipLo = gptr.ipThresInfVal;
-	long ipHi = rfield.nPositive;
+	long ipHi = gv.nPositive;
 #	ifdef WD_TEST2
-	*sum1a = reduce_abc( get_ptr(gv.bin[nd].dstab1), get_ptr(rfield.flux[0]), gptr.yhat.ptr0(), ipLo, ipHi );
+	*sum1a = reduce_abc( get_ptr(gv.bin[nd].dstab1), gv.flux.data(), gptr.yhat.ptr0(), ipLo, ipHi );
 #	else
-	*sum1a = reduce_abc( get_ptr(gv.bin[nd].dstab1), get_ptr(rfield.SummedCon), gptr.yhat.ptr0(), ipLo, ipHi );
+	*sum1a = reduce_abc( get_ptr(gv.bin[nd].dstab1), gv.SummedCon.data(), gptr.yhat.ptr0(), ipLo, ipHi );
 #	endif
 	/* normalize to rates per cm^2 of projected grain area */
 	*sum1a /= gv.bin[nd].IntArea/4.;
@@ -2277,9 +2404,9 @@ STATIC double GrainElecEmis1(size_t nd,
 		ipLo = gptr.ipThresInf;
 		/* >>chng 00 jul 17, use description of Weingartner & Draine, 2001 */
 #		ifdef WD_TEST2
-		*sum1b = reduce_ab( gptr.cs_pdt.ptr0(), get_ptr(rfield.flux[0]), ipLo, ipHi );
+		*sum1b = reduce_ab( gptr.cs_pdt.ptr0(), gv.flux.data(), ipLo, ipHi );
 #		else
-		*sum1b = reduce_ab( gptr.cs_pdt.ptr0(), get_ptr(rfield.SummedCon), ipLo, ipHi );
+		*sum1b = reduce_ab( gptr.cs_pdt.ptr0(), gv.SummedCon.data(), ipLo, ipHi );
 #		endif
 		*sum1b /= gv.bin[nd].IntArea/4.;
 	}
@@ -2385,7 +2512,7 @@ STATIC void GrainScreen(long ion,
 		else 
 		{
 			double theta_nu = ThetaNu(nu);
-			/* >>>chng 00 jul 27, avoid passing functions to macro so set to local temp var */
+			/* >>chng 00 jul 27, avoid passing functions to macro so set to local temp var */
 			double xxx = 1. + 1./sqrt(4.*tau+3.*nu);
 			*eta = POW2(xxx)*exp(-theta_nu/tau);
 #			ifdef WD_TEST2
@@ -2405,8 +2532,6 @@ STATIC void GrainScreen(long ion,
 
 	gv.bin[nd].chrg(nz).eta[ind] = *eta;
 	gv.bin[nd].chrg(nz).xi[ind] = *xi;
-
-	return;
 }
 
 
@@ -2447,10 +2572,11 @@ STATIC double ThetaNu(double nu)
 
 /* update items that depend on grain potential */
 STATIC void UpdatePot(size_t nd,
-		      long Zlo,
-		      long stride,
-		      /*@out@*/ double rate_up[], /* rate_up[NCHU] */
-		      /*@out@*/ double rate_dn[]) /* rate_dn[NCHU] */
+					  long Zlo,
+					  long stride,
+					  double Tstart,
+					  /*@out@*/ double rate_up[], /* rate_up[NCHU] */
+					  /*@out@*/ double rate_dn[]) /* rate_dn[NCHU] */
 {
 	DEBUG_ENTRY( "UpdatePot()" );
 
@@ -2472,10 +2598,10 @@ STATIC void UpdatePot(size_t nd,
 		fprintf( ioQQQ, " %ld/%ld", Zlo, stride );
 	}
 
-	if( gv.bin[nd].nfill < rfield.nPositive )
+	if( gv.bin[nd].nfill < gv.nPositive )
 	{
-		InitBinAugerData( nd, gv.bin[nd].nfill, rfield.nPositive );
-		gv.bin[nd].nfill = rfield.nPositive;
+		InitBinAugerData( nd, gv.bin[nd].nfill, gv.nPositive );
+		gv.bin[nd].nfill = gv.nPositive;
 	}
 
 	for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
@@ -2504,9 +2630,9 @@ STATIC void UpdatePot(size_t nd,
 		gv.bin[nd].ichrg[nz] = ptr;
 
 		if( gv.bin[nd].chrg(nz).DustZ != Zg )
-			UpdatePot1(nd,nz,Zg,0);
-		else if( gv.bin[nd].chrg(nz).nfill < rfield.nPositive )
-			UpdatePot1(nd,nz,Zg,gv.bin[nd].chrg(nz).nfill);
+			UpdatePot1(nd,nz,Zg,0,Tstart);
+		else if( gv.bin[nd].chrg(nz).nfill < gv.nPositive )
+			UpdatePot1(nd,nz,Zg,gv.bin[nd].chrg(nz).nfill,Tstart);
 
 		UpdatePot2(nd,nz);
 
@@ -2516,7 +2642,7 @@ STATIC void UpdatePot(size_t nd,
 
 		/* sanity checks */
 		ASSERT( gv.bin[nd].chrg(nz).DustZ == Zg );
-		ASSERT( gv.bin[nd].chrg(nz).nfill >= rfield.nPositive );
+		ASSERT( gv.bin[nd].chrg(nz).nfill >= gv.nPositive );
 		ASSERT( rate_up[nz] >= 0. && rate_dn[nz] >= 0. );
 	}
 
@@ -2529,24 +2655,23 @@ STATIC void UpdatePot(size_t nd,
 	double HighEnergy = 0.;
 	for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
 	{
-		/* >>chng 04 jan 21, changed phycon.te -> MAX2(phycon.te,gv.bin[nd].tedust), PvH */
-		HighEnergy = MAX2(HighEnergy,
-		  MAX2(gv.bin[nd].chrg(nz).ThresInfInc,0.) + BoltzFac*MAX2(phycon.te,gv.bin[nd].tedust));
+		/* >>chng 04 jan 21, changed phycon.te -> MAX2(phycon.te,tedust), PvH */
+		HighEnergy = MAX2(HighEnergy, MAX2(gv.bin[nd].chrg(nz).ThresInfInc,0.) +
+						  BoltzFac*MAX2(phycon.te,gv.bin[nd].chrg(nz).tedust));
 	}
-	HighEnergy = min(HighEnergy,rfield.anu(rfield.nflux));
-	gv.bin[nd].qnflux2 = ipoint(HighEnergy);
-	gv.bin[nd].qnflux = max(rfield.nPositive,gv.bin[nd].qnflux2);
-	gv.bin[nd].qnflux = min(gv.bin[nd].qnflux,rfield.nflux);
-	return;
+	HighEnergy = min(HighEnergy,gv.egamry());
+	gv.bin[nd].qnflux2 = gv.ipointF(HighEnergy);
+	gv.bin[nd].qnflux = max(gv.nPositive,gv.bin[nd].qnflux2);
+	gv.bin[nd].qnflux = min(gv.bin[nd].qnflux,gv.nflux);
 }
 
 
 /* calculate charge state populations */
 STATIC void GetFracPop(size_t nd,
-		       long Zlo,
-		       /*@in@*/ double rate_up[], /* rate_up[NCHU] */
-		       /*@in@*/ double rate_dn[], /* rate_dn[NCHU] */
-		       /*@out@*/ long *newZlo)
+					   long Zlo,
+					   /*@in@*/ double rate_up[], /* rate_up[NCHU] */
+					   /*@in@*/ double rate_dn[], /* rate_dn[NCHU] */
+					   /*@out@*/ long *newZlo)
 {
 	DEBUG_ENTRY( "GetFracPop()" );
 
@@ -2630,7 +2755,7 @@ STATIC void GetFracPop(size_t nd,
 		}
 
 #		if 0
-		printf( " fnzone %.2f nd %ld Zlo %ld newZlo %ld netloss %.4e %.4e nChrg %ld lgRedo %d\n",
+		printf( "\n fnzone %.2f nd %ld Zlo %ld newZlo %ld netloss %.4e %.4e nChrg %ld lgRedo %d\n",
 			fnzone, nd, Zlo, *newZlo, netloss[0], netloss[1], gv.bin[nd].nChrg, lgRedo );
 #		endif
 	}
@@ -2670,7 +2795,6 @@ STATIC void GetFracPop(size_t nd,
 		ASSERT( MAX2(x1,x2) < 10.*sqrt((double)gv.bin[nd].nChrg)*DBL_EPSILON );
 #		endif
 	}
-	return;
 }
 
 
@@ -2684,9 +2808,10 @@ STATIC void GetFracPop(size_t nd,
  *         the model, i.e. do NOT depend on grain temperature, etc.
  */
 STATIC void UpdatePot1(size_t nd,
-		       long nz,
-		       long Zg,
-		       long ipStart)
+					   long nz,
+					   long Zg,
+					   long ipStart,
+					   double Tstart)
 {
 	DEBUG_ENTRY( "UpdatePot1()" );
 
@@ -2720,7 +2845,7 @@ STATIC void UpdatePot1(size_t nd,
 		GetPotValues(nd,Zg-1,&gv.bin[nd].chrg(nz).ThresInfInc,&d[0],&gv.bin[nd].chrg(nz).ThresSurfInc,
 			     &d[1],&gv.bin[nd].chrg(nz).PotSurfInc,&gv.bin[nd].chrg(nz).EminInc,NO_TUNNEL);
 
-		gv.bin[nd].chrg(nz).ipThresInfVal = rfield.ithreshC( gv.bin[nd].chrg(nz).ThresInfVal );
+		gv.bin[nd].chrg(nz).ipThresInfVal = gv.ithreshC( gv.bin[nd].chrg(nz).ThresInfVal );
 	}
 
 	ASSERT( gv.bin[nd].chrg(nz).DustZ == Zg );
@@ -2728,11 +2853,11 @@ STATIC void UpdatePot1(size_t nd,
 	long ipLo = gv.bin[nd].chrg(nz).ipThresInfVal;
 
 	/* remember how far the yhat(_primary), ehat, cs_pdt, fac1, and fac2 arrays were filled in */
-	gv.bin[nd].chrg(nz).nfill = rfield.nPositive;
+	gv.bin[nd].chrg(nz).nfill = gv.nPositive;
 	long nfill = gv.bin[nd].chrg(nz).nfill;
 
 	/* >>chng 04 feb 07, only allocate arrays from ipLo to nfill to save memory, PvH */
-	long len = rfield.nflux_with_check - ipLo;
+	long len = gv.nflux - ipLo;
 	if( ipStart == 0 )
 	{
 		gv.bin[nd].chrg(nz).yhat.reserve( len );
@@ -2750,7 +2875,7 @@ STATIC void UpdatePot1(size_t nd,
 	}
 
 	double GrainPot = chrg2pot(Zg,nd);
-	const double *anu = rfield.anuptr();
+	const double *anu = gv.anuptr();
 
 	if( nfill > ipLo )
 	{
@@ -2884,12 +3009,12 @@ STATIC void UpdatePot1(size_t nd,
 		/* >>chng 01 jan 08, ThresInf[nz] and ThresInfVal[nz] may become zero in
 		 * initial stages of grain potential search, PvH */
 		/* >>chng 01 oct 10, use bisection search to find ipThresInf, ipThresInfVal. On C scale now */
-		gv.bin[nd].chrg(nz).ipThresInf = rfield.ithreshC( gv.bin[nd].chrg(nz).ThresInf );
+		gv.bin[nd].chrg(nz).ipThresInf = gv.ithreshC( gv.bin[nd].chrg(nz).ThresInf );
 	}
 
 	ipLo = gv.bin[nd].chrg(nz).ipThresInf;
 
-	len = rfield.nflux_with_check - ipLo;
+	len = gv.nflux - ipLo;
 
 	if( Zg <= -1 )
 	{
@@ -2897,13 +3022,13 @@ STATIC void UpdatePot1(size_t nd,
 		if( ipStart == 0 )
 		{
 			gv.bin[nd].chrg(nz).cs_pdt.reserve( len );
-			gv.bin[nd].chrg(nz).cs_pdt.alloc( ipLo, rfield.nflux );
+			gv.bin[nd].chrg(nz).cs_pdt.alloc( ipLo, gv.nflux );
 
 			double c1 = -CS_PDT*(double)Zg;
 			double ThresInf = gv.bin[nd].chrg(nz).ThresInf;
 			double cnv_GR_pH = gv.bin[nd].cnv_GR_pH;
 
-			for( long i=ipLo; i < rfield.nflux; i++ )
+			for( long i=ipLo; i < gv.nflux; i++ )
 			{
 				double x = (anu[i] - ThresInf)*INV_DELTA_E;
 				double cs = c1*x/POW2(1.+(1./3.)*POW2(x));
@@ -2949,10 +3074,13 @@ STATIC void UpdatePot1(size_t nd,
 		/* >>chng 00 jul 05, determine ionization stage Z0 the ion recombines to */
 		/* >>chng 04 jan 20, use all stages here so that result remains valid throughout the model */
 		UpdateRecomZ0(nd,nz);
+
+		/* >>chng 05 jun 24, use initial estimate for tedust, PvH */
+		gv.bin[nd].chrg(nz).tedust = Tstart;
 	}
 
 	/* invalidate the remaining fields */
-	gv.bin[nd].chrg(nz).FracPop = -DBL_MAX;
+	gv.bin[nd].chrg(nz).FracPop = 0.;
 
 	gv.bin[nd].chrg(nz).RSum1 = -DBL_MAX;
 	gv.bin[nd].chrg(nz).RSum2 = -DBL_MAX;
@@ -2960,27 +3088,33 @@ STATIC void UpdatePot1(size_t nd,
 	gv.bin[nd].chrg(nz).ESum1b = -DBL_MAX;
 	gv.bin[nd].chrg(nz).ESum2 = -DBL_MAX;
 
-	gv.bin[nd].chrg(nz).tedust = 1.f;
+	gv.bin[nd].chrg(nz).lgTdustConverged = false;
 
 	gv.bin[nd].chrg(nz).hcon1 = -DBL_MAX;
 	gv.bin[nd].chrg(nz).hots1 = -DBL_MAX;
-	gv.bin[nd].chrg(nz).bolflux1 = -DBL_MAX;
 	gv.bin[nd].chrg(nz).pe1 = -DBL_MAX;
+	gv.bin[nd].chrg(nz).bolflux1 = -DBL_MAX;
 
-	gv.bin[nd].chrg(nz).BolFlux = -DBL_MAX;
-	gv.bin[nd].chrg(nz).GrainHeat = -DBL_MAX;
-	gv.bin[nd].chrg(nz).GrainHeatColl = -DBL_MAX;
-	gv.bin[nd].chrg(nz).GasHeatPhotoEl = -DBL_MAX;
-	gv.bin[nd].chrg(nz).GasHeatTherm = -DBL_MAX;
-	gv.bin[nd].chrg(nz).GrainCoolTherm = -DBL_MAX;
-	gv.bin[nd].chrg(nz).ChemEnIon = -DBL_MAX;
-	gv.bin[nd].chrg(nz).ChemEnH2 = -DBL_MAX;
+	gv.bin[nd].chrg(nz).BolFluxCS = -DBL_MAX;
+	gv.bin[nd].chrg(nz).GrainHeatCS = DBL_MAX/10.;
+	gv.bin[nd].chrg(nz).GrainHeatIncCS = -DBL_MAX;
+	gv.bin[nd].chrg(nz).GrainHeatDifCS = -DBL_MAX;
+	gv.bin[nd].chrg(nz).GrainHeatLyaCS = -DBL_MAX;
+	gv.bin[nd].chrg(nz).GrainHeatCollCS = -DBL_MAX;
+	gv.bin[nd].chrg(nz).GrainHeatCollElecCS = -DBL_MAX;
+	gv.bin[nd].chrg(nz).GrainHeatCollIonsCS = -DBL_MAX;
+	gv.bin[nd].chrg(nz).GrainHeatCollMolCS = -DBL_MAX;
+	gv.bin[nd].chrg(nz).GrainHeatChemEnCS = -DBL_MAX;
+	gv.bin[nd].chrg(nz).GrainCoolThermCS = -DBL_MAX;
+	gv.bin[nd].chrg(nz).GasHeatPhotoElCS = -DBL_MAX;
+	gv.bin[nd].chrg(nz).GasHeatThermCS = -DBL_MAX;
+	gv.bin[nd].chrg(nz).GasCoolCollCS = -DBL_MAX;
 
+	gv.bin[nd].chrg(nz).HeatingRate1 = -DBL_MAX;
 	gv.bin[nd].chrg(nz).HeatingRate2 = -DBL_MAX;
 
 	/* sanity check */
 	ASSERT( gv.bin[nd].chrg(nz).ipThresInf <= gv.bin[nd].chrg(nz).ipThresInfVal );
-	return;
 }
 
 
@@ -2994,18 +3128,17 @@ STATIC void UpdatePot1(size_t nd,
  *         e.g. because of a dependence on grain temperature
  */
 STATIC void UpdatePot2(size_t nd,
-		       long nz)
+					   long nz)
 {
 	DEBUG_ENTRY( "UpdatePot2()" );
 
 	/* >>chng 00 jun 19, add in loss rate due to thermionic emission of electrons, PvH */
-	double ThermExp = gv.bin[nd].chrg(nz).ThresInf*TE1RYD/gv.bin[nd].tedust;
+	double ThermExp = gv.bin[nd].chrg(nz).ThresInf*TE1RYD/gv.bin[nd].chrg(nz).tedust;
 	/* ThermExp is guaranteed to be >= 0. */
-	gv.bin[nd].chrg(nz).ThermRate = THERMCONST*gv.bin[nd].ThermEff*POW2(gv.bin[nd].tedust)*exp(-ThermExp);
+	gv.bin[nd].chrg(nz).ThermRate = THERMCONST*gv.bin[nd].ThermEff*POW2(gv.bin[nd].chrg(nz).tedust)*exp(-ThermExp);
 #	if defined( WD_TEST2 ) || defined( IGNORE_THERMIONIC )
 	gv.bin[nd].chrg(nz).ThermRate = 0.;
 #	endif
-	return;
 }
 
 
@@ -3178,8 +3311,8 @@ STATIC void y0b(size_t nd,
 	{
 		realnum Ethres_low = 20./EVRYD;
 		realnum Ethres_high = 50./EVRYD;
-		long ip20 = rfield.ithreshC(Ethres_low);
-		long ip50 = rfield.ithreshC(Ethres_high);
+		long ip20 = gv.ithreshC(Ethres_low);
+		long ip50 = gv.ithreshC(Ethres_high);
 		long ipr1a = ilo;
 		//long ipr1b = min(ip20,ihi);
 		long ipr2a = max(ilo,ip20);
@@ -3190,7 +3323,7 @@ STATIC void y0b(size_t nd,
 		y0b01( nd, nz, yzero, ipr1a, ipr2b );
 		avx_ptr<realnum> arg(ipr2a, ipr2b), val(ipr2a, ipr2b), val2(ipr2a, ipr2b);
 		for( int i=ipr2a; i < ipr2b; i++ )
-			arg[i] = realnum(rfield.anu(i))/Ethres_low;
+			arg[i] = realnum(gv.anu(i))/Ethres_low;
 		vlog( arg.ptr0(), val.ptr0(), ipr2a, ipr2b );
 		for( int i=ipr2a; i < ipr2b; i++ )
 			arg[i] = gv.bin[nd].y0b06[i]/yzero[i];
@@ -3227,7 +3360,7 @@ STATIC void y0b01(size_t nd,
 		/* >>refer	grain	physics	Bakes & Tielens, 1994, ApJ, 427, 822 */
 		for( int i=ilo; i < ihi; i++ )
 		{
-			double xv = max((rfield.anu(i)-gv.bin[nd].chrg(nz).ThresSurfVal)/gv.bin[nd].DustWorkFcn,0.);
+			double xv = max((gv.anu(i)-gv.bin[nd].chrg(nz).ThresSurfVal)/gv.bin[nd].DustWorkFcn,0.);
 			double xv2 = xv*xv;
 			xv = xv2*xv2*xv;
 			yzero[i] = realnum(xv/((1./9.e-3) + (3.7e-2/9.e-3)*xv));
@@ -3237,7 +3370,7 @@ STATIC void y0b01(size_t nd,
 		/* >>refer	grain	physics	Weingartner & Draine, 2001 */
 		for( int i=ilo; i < ihi; i++ )
 		{
-			double xv = max((rfield.anu(i)-gv.bin[nd].chrg(nz).ThresSurfVal)/gv.bin[nd].DustWorkFcn,0.);
+			double xv = max((gv.anu(i)-gv.bin[nd].chrg(nz).ThresSurfVal)/gv.bin[nd].DustWorkFcn,0.);
 			yzero[i] = realnum(xv/(2.+10.*xv));
 		}
 		break;
@@ -3551,7 +3684,6 @@ STATIC void UpdateRecomZ0(size_t nd,
 			}
 		}
 	}
-	return;
 }
 
 STATIC void GetPotValues(size_t nd,
@@ -3639,7 +3771,6 @@ STATIC void GetPotValues(size_t nd,
 		*PotSurf = dstpot;
 		*Emin = 0.;
 	}
-	return;
 }
 
 
@@ -3716,8 +3847,6 @@ STATIC void GrainIonColl(size_t nd,
 		*ChemEn = 0.f;
 		*Z0 = ion;
 	}
-/*  	printf(" GrainIonColl: nelem %ld ion %ld -> %ld, ChEn %.6f\n",nelem,save,*Z0,*ChEn); */
-	return;
 }
 
 
@@ -3732,7 +3861,7 @@ STATIC void GrainChrgTransferRates(long nd)
 
 	for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
 	{
-		ChargeBin& gptr = gv.bin[nd].chrg(nz);
+		const ChargeBin& gptr = gv.bin[nd].chrg(nz);
 		double fac1 = gptr.FracPop*fac0;
 
 		if( fac1 == 0. )
@@ -3761,7 +3890,6 @@ STATIC void GrainChrgTransferRates(long nd)
 		}
 	}
 #	endif
-	return;
 }
 
 
@@ -3798,7 +3926,6 @@ STATIC void GrainUpdateRadius1()
 			gv.elmSumAbund[nelem] += gv.bin[nd].elmAbund[nelem]*(realnum)gv.bin[nd].cnv_H_pCM3;
 		}
 	}
-	return;
 }
 
 
@@ -3808,8 +3935,8 @@ STATIC void GrainUpdateRadius2()
 {
 	DEBUG_ENTRY( "GrainUpdateRadius2()" );
 
-	memset( get_ptr(gv.dstab), 0, size_t(rfield.nflux_with_check*sizeof(gv.dstab[0])) );
-	memset( get_ptr(gv.dstsc), 0, size_t(rfield.nflux_with_check*sizeof(gv.dstsc[0])) );
+	vzero(gv.dstab0);
+	vzero(gv.dstsc0);
 
 	/* >>chng 06 oct 05 rjrw, reorder loops */
 	/* >>chng 11 dec 12 reorder loops so they can be vectorized, PvH */
@@ -3818,7 +3945,7 @@ STATIC void GrainUpdateRadius2()
 		double dstAbund = gv.bin[nd].dstAbund;
 
 		/* >>chng 01 mar 26, from nupper to nflux */
-		for( long i=0; i < rfield.nflux; i++ )
+		for( long i=0; i < gv.nflux; i++ )
 		{
 			/* these are total absorption and scattering cross sections,
 			 * the latter should contain the asymmetry factor (1-g) */
@@ -3826,277 +3953,251 @@ STATIC void GrainUpdateRadius2()
 			 * dareff(nd) = darea(nd) * dstAbund(nd) */
 			/* grain abundance may be a function of depth */
 			/* >>chng 02 dec 30, separated scattering cross section and asymmetry factor, PvH */
-			gv.dstab[i] += gv.bin[nd].dstab1[i]*dstAbund;
+			gv.dstab0[i] += gv.bin[nd].dstab1[i]*dstAbund;
 		}
-		for( long i=0; i < rfield.nflux; i++ )
+		for( long i=0; i < gv.nflux; i++ )
 		{
-			gv.dstsc[i] += gv.bin[nd].pure_sc1[i]*gv.bin[nd].asym[i]*dstAbund;
+			gv.dstsc0[i] += gv.bin[nd].pure_sc1[i]*gv.bin[nd].asym[i]*dstAbund;
 		}
 
 		for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
 		{
-			ChargeBin& gptr = gv.bin[nd].chrg(nz);
+			const ChargeBin& gptr = gv.bin[nd].chrg(nz);
 			if( gptr.DustZ <= -1 )
 			{
 				double FracAbund = gptr.FracPop*dstAbund;
 
-				for( long i=gptr.ipThresInf; i < rfield.nflux; i++ )
-					gv.dstab[i] += FracAbund*gptr.cs_pdt[i];
+				for( long i=gptr.ipThresInf; i < gv.nflux; i++ )
+					gv.dstab0[i] += FracAbund*gptr.cs_pdt[i];
 			}
 		}
 	}
+
+	grain_interpolate(gv.dstab0.data(), gv.dstab.data(), gv.nflux);
+	grain_interpolate(gv.dstsc0.data(), gv.dstsc.data(), gv.nflux);
 
 	for( long i=0; i < rfield.nflux; i++ )
 	{
 		/* this must be positive, zero in case of uncontrolled underflow */
 		ASSERT( gv.dstab[i] > 0. && gv.dstsc[i] > 0. );
 	}
-	return;
 }
 
 
-/* GrainTemperature computes grains temperature, and gas cooling */
+/* master routine for converging the temperature of a single grain charge state */
 STATIC void GrainTemperature(size_t nd,
-			     /*@out@*/ realnum *dccool,
-			     /*@out@*/ double *hcon,
-			     /*@out@*/ double *hots,
-			     /*@out@*/ double *hla)
+							 long nz)
 {
 	DEBUG_ENTRY( "GrainTemperature()" );
 
-	/* sanity checks */
-	ASSERT( nd < gv.bin.size() );
-
 	if( trace.lgTrace && trace.lgDustBug )
 	{
-		fprintf( ioQQQ, "    GrainTemperature starts for grain %s\n", gv.bin[nd].chDstLab );
+		fprintf( ioQQQ, "    GrainTemperature starts for grain %s[%ld] Zg=%ld\n",
+				 gv.bin[nd].chDstLab, nz, gv.bin[nd].chrg(nz).DustZ );
 	}
 
-	/* >>chng 01 may 07, this routine now completely supports the hybrid grain
-	 * charge model, and the average charge state is not used anywhere anymore, PvH */
+	/* sanity checks */
+	ASSERT( nd < gv.bin.size() );
+	ASSERT( nz >= 0 && nz < gv.bin[nd].nChrg );
 
-	/* direct heating by incident continuum (all energies) */
-	*hcon = 0.;
-	/* heating by diffuse ots fields */
-	*hots = 0.;
-	/* heating by Ly alpha alone, for output only, is already included in hots */
-	*hla = 0.;
+	ChargeBin& gptr = gv.bin[nd].chrg(nz);
+
+	/* >>chng 04 may 31, introduced lgReEvaluate2 to save time when iterating Tdust, PvH */
+	bool lgReEvaluate1 = gptr.hcon1 < 0.;
+	bool lgReEvaluate2 = gptr.hots1 < 0.;
+
+	long ip0 = 0;
+	long ip1 = min(gptr.ipThresInf, gv.nPositive);
+	long ip2 = gv.nPositive;
+	if( lgReEvaluate1 )
+	{
+		gptr.hcon1 = reduce_ab( get_ptr(gv.bin[nd].dstab1_x_anu), gv.flux.data(), ip0, ip1 ) +
+			reduce_ab( gptr.fac1.ptr0(), gv.flux.data(), ip1, ip2 );
+	}
+	if( lgReEvaluate2 )
+	{
+		gptr.hots1 = reduce_ab( get_ptr(gv.bin[nd].dstab1_x_anu), gv.SummedDif.data(), ip0, ip1 ) +
+			reduce_ab( gptr.fac1.ptr0(), gv.SummedDif.data(), ip1, ip2 );
+#		ifdef WD_TEST2
+		gptr.pe1 = reduce_ab( gptr.fac2.ptr0(), gv.flux.data(), ip1, ip2 );
+#		else
+		gptr.pe1 = reduce_ab( gptr.fac2.ptr0(), gv.SummedCon.data(), ip1, ip2 );
+#		endif
+#		ifndef NDEBUG
+		gptr.bolflux1 = reduce_ab( get_ptr(gv.bin[nd].dstab1_x_anu), gv.SummedCon.data(), ip0, ip2 );
+		if( gptr.DustZ <= -1 )
+			gptr.bolflux1 +=
+				reduce_abc( gptr.cs_pdt.ptr0(), gv.anuptr(), gv.SummedCon.data(), ip1, ip2 );
+#		else
+		gptr.bolflux1 = 0.;
+#		endif
+	}
+
+	/* always recalculate GrainHeatIncCS since cnv_H_pCM3 may change sooner than hcon1 */
+	gptr.GrainHeatIncCS = gptr.hcon1*EN1RYD*gv.bin[nd].cnv_H_pCM3;
+	gptr.GrainHeatDifCS = gptr.hots1*EN1RYD*gv.bin[nd].cnv_H_pCM3;
+	gptr.GasHeatPhotoElCS = gptr.pe1*EN1RYD*gv.bin[nd].cnv_H_pCM3;
+	gptr.BolFluxCS = gptr.bolflux1*EN1RYD*gv.bin[nd].cnv_H_pCM3;
+
+	/* >>chng 06 jun 01, add optional scale factor, set with command
+	 * set grains heat, to rescale PE heating as per Allers et al. 2005 */
+	gptr.GasHeatPhotoElCS *= gv.GrainHeatScaleFactor;
+
+	ASSERT( gptr.GrainHeatIncCS >= 0. && gptr.GrainHeatDifCS >= 0. );
+	ASSERT( gptr.BolFluxCS >= 0. && gptr.GasHeatPhotoElCS >= 0. );
+
+#	ifndef NDEBUG
+	if( trace.lgTrace && trace.lgDustBug )
+	{
+		fprintf( ioQQQ, "    Zg %ld bolflux: %.4e\n", gptr.DustZ, gptr.FracPop*gptr.BolFluxCS );
+	}
+#	endif
 
 	long ipLya = iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).ipCont() - 1;
+	double ELyaRyd = iso_sp[ipH_LIKE][ipHYDROGEN].trans(ipH2p,ipH1s).EnergyRyd();
+	long ipgvLya = gv.ipointC(ELyaRyd);
 
-	/* integrate over ionizing continuum; energy goes to dust and gas
-	 * GasHeatPhotoEl is what heats the gas */
-	gv.bin[nd].GasHeatPhotoEl = 0.;
-
-	gv.bin[nd].GrainCoolTherm = 0.;
-	gv.bin[nd].thermionic = 0.;
-
-	realnum dcheat = 0.f;
-	*dccool = 0.f;
-
-	gv.bin[nd].BolFlux = 0.;
-
-	/* >>chng 04 jan 25, moved initialization of phiTilde to qheat_init(), PvH */
-
-	for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+	/*  heating by Ly A on dust in this zone,
+	 *  only used for printout; Ly-a is already in OTS fields */
+	/* >>chng 00 apr 18, moved calculation of GrainHeatLyaCS, by PvH */
+	/* >>chng 04 feb 01, moved calculation of GrainHeatLyaCS outside loop for optimization, PvH */
+	if( ipLya < rfield.nPositive && ipgvLya < gptr.ipThresInf )
 	{
-		ChargeBin& gptr = gv.bin[nd].chrg(nz);
+		gptr.GrainHeatLyaCS = rfield.otslin[ipLya]*gv.bin[nd].dstab1_x_anu[ipgvLya];
+	}
+	else if( ipLya < rfield.nPositive )
+	{
+		/* >>chng 00 apr 18, include photo-electric effect, by PvH */
+		gptr.GrainHeatLyaCS = rfield.otslin[ipLya]*gptr.fac1[ipgvLya];
+	}
+	else
+	{
+		gptr.GrainHeatLyaCS = 0.;
+	}
 
-		/* >>chng 04 may 31, introduced lgReEvaluate2 to save time when iterating Tdust, PvH */
-		bool lgReEvaluate1 = gptr.hcon1 < 0.;
-		bool lgReEvaluate2 = gptr.hots1 < 0.;
+	gptr.GrainHeatLyaCS *= EN1RYD*gv.bin[nd].cnv_H_pCM3;
 
-		long ip0 = 0;
-		long ip1 = min(gptr.ipThresInf,rfield.nPositive);
-		long ip2 = rfield.nPositive;
-		double hcon1, hots1, pe1, bolflux1, hla1;
-		if( lgReEvaluate1 )
-		{
-			hcon1 = reduce_ab( get_ptr(gv.bin[nd].dstab1_x_anu), get_ptr(rfield.flux[0]), ip0, ip1 ) +
-				reduce_ab( gptr.fac1.ptr0(), get_ptr(rfield.flux[0]), ip1, ip2 );
-			gptr.hcon1 = hcon1;
-		}
-		else
-		{
-			hcon1 = gptr.hcon1;
-		}
-		if( lgReEvaluate2 )
-		{
-			hots1 = reduce_ab( get_ptr(gv.bin[nd].dstab1_x_anu), get_ptr(rfield.SummedDif), ip0, ip1 ) +
-				reduce_ab( gptr.fac1.ptr0(), get_ptr(rfield.SummedDif), ip1, ip2 );
-#			ifdef WD_TEST2
-			pe1 = reduce_ab( gptr.fac2.ptr0(), get_ptr(rfield.flux[0]), ip1, ip2 );
-#			else
-			pe1 = reduce_ab( gptr.fac2.ptr0(), get_ptr(rfield.SummedCon), ip1, ip2 );
-#			endif
-#			ifndef NDEBUG
-			bolflux1 = reduce_ab( get_ptr(gv.bin[nd].dstab1_x_anu), get_ptr(rfield.SummedCon), ip0, ip2 );
-			if( gptr.DustZ <= -1 )
-				bolflux1 +=
-					reduce_abc( gptr.cs_pdt.ptr0(), rfield.anuptr(), get_ptr(rfield.SummedCon), ip1, ip2 );
-#			else
-			bolflux1 = 0.;
-#			endif
-			gptr.hots1 = hots1;
-			gptr.pe1 = pe1;
-			gptr.bolflux1 = bolflux1;
-		}
-		else
-		{
-			hots1 = gptr.hots1;
-			pe1 = gptr.pe1;
-			bolflux1 = gptr.bolflux1;
-		}
+	ASSERT( gptr.GrainHeatLyaCS >= 0. );
 
-		/*  heating by Ly A on dust in this zone,
-		 *  only used for printout; Ly-a is already in OTS fields */
-		/* >>chng 00 apr 18, moved calculation of hla, by PvH */
-		/* >>chng 04 feb 01, moved calculation of hla1 outside loop for optimization, PvH */
-		if( ipLya < MIN2(gptr.ipThresInf,rfield.nPositive) )
-		{
-			hla1 = rfield.otslin[ipLya]*gv.bin[nd].dstab1_x_anu[ipLya];
-		}
-		else if( ipLya < rfield.nPositive )
-		{
-			/* >>chng 00 apr 18, include photo-electric effect, by PvH */
-			hla1 = rfield.otslin[ipLya]*gptr.fac1[ipLya];
-		}
-		else
-		{
-			hla1 = 0.;
-		}
+	GrainCollHeating(nd,nz);
 
-		ASSERT( hcon1 >= 0. && hots1 >= 0. && hla1 >= 0. && bolflux1 >= 0. && pe1 >= 0. );
+	/* thermionic emissions can become a very important cooling agent for extremely hot grains
+	 * and possibly also for grains at the most negative allowed charging state. for such grains
+	 * it can be benificial to make sure that grain temperature and the thermionic rates agree
+	 * with each other using this convergence loop. since calculating thermionic rates and the
+	 * resulting temperature is extremely fast, we do not need to be stingy in this loop */
+	iter_track_basic<double> tr;
+	double OldTg;
+	double OldGH, NewGH = -1.e100;
+	for( int n=0; n < 50; ++n )
+	{
+		OldTg = gptr.tedust;
+		OldGH = NewGH;
 
-		*hcon += gptr.FracPop*hcon1;
-		*hots += gptr.FracPop*hots1;
-		*hla += gptr.FracPop*hla1;
-		gv.bin[nd].BolFlux += gptr.FracPop*bolflux1;
-		if( gv.lgDHetOn )
-			gv.bin[nd].GasHeatPhotoEl += gptr.FracPop*pe1;
-
-#		ifndef NDEBUG
-		if( trace.lgTrace && trace.lgDustBug )
-		{
-			fprintf( ioQQQ, "    Zg %ld bolflux: %.4e\n", gptr.DustZ,
-			  gptr.FracPop*bolflux1*EN1RYD*gv.bin[nd].cnv_H_pCM3 );
-		}
-#		endif
-
+		/* make sure thermionic rates agree with current grain temperature */
+		UpdatePot2(nd, nz);
+		
 		/* add in thermionic emissions (thermal evaporation of electrons), it gives a cooling
 		 * term for the grain. thermionic emissions will not be treated separately in quantum
 		 * heating since they are only important when grains are heated to near-sublimation 
 		 * temperatures; under those conditions quantum heating effects will never be important.
 		 * in order to maintain energy balance they will be added to the ion contribution though */
 		/* ThermRate is normalized per cm^2 of grain surface area, scales with total grain area */
-		double rate = gptr.FracPop*gptr.ThermRate*gv.bin[nd].IntArea*gv.bin[nd].cnv_H_pCM3;
+		double rate = gptr.ThermRate*gv.bin[nd].IntArea*gv.bin[nd].cnv_H_pCM3;
 		/* >>chng 01 mar 02, PotSurf[nz] term was incorrectly taken into account, PvH */
-		double EhatThermionic = 2.*BOLTZMANN*gv.bin[nd].tedust + MAX2(gptr.PotSurf*EN1RYD,0.);
-		gv.bin[nd].GrainCoolTherm += rate * (EhatThermionic + gptr.ThresSurf*EN1RYD);
-		gv.bin[nd].thermionic += rate * (EhatThermionic - gptr.PotSurf*EN1RYD);
+		double EhatThermionic = 2.*BOLTZMANN*gptr.tedust + MAX2(gptr.PotSurf*EN1RYD,0.);
+		gptr.GrainCoolThermCS = rate * (EhatThermionic + gptr.ThresSurf*EN1RYD);
+		gptr.GasHeatThermCS = rate * (EhatThermionic - gptr.PotSurf*EN1RYD);
+
+		/*  now find temperature, GrainHeatCS is sum of total heating of this charge state */
+		/* >>chng 04 feb 08, calculate grain temperature for each charge state, PvH */
+		gptr.GrainHeatCS = gptr.GrainHeatIncCS + gptr.GrainHeatDifCS +
+			gptr.GrainHeatCollCS - gptr.GrainCoolThermCS;
+
+		/* >>chng 04 may 31, replace ASSERT of GrainHeatCS > 0. with if-statement and let
+		 * GrainChargeTemp sort out the consquences of GrainHeatCS becoming negative, PvH */
+		/* in case where the thermionic rates become very large,
+		 * or collisional cooling dominates, this may become negative */
+		double NextTg;
+		if( gptr.GrainHeatCS > 0. )
+		{
+			bool lgOutOfBounds;
+			/*  now find temperature, GrainHeatCS is sum of total heating of grain
+			 *  >>chng 97 jul 17, divide by abundance here */
+			double y, x = log(MAX2(DBL_MIN,gptr.GrainHeatCS*gv.bin[nd].cnv_CM3_pH));
+			/* >>chng 96 apr 27, as per Peter van Hoof comment */
+			splint_safe(gv.bin[nd].dstems,gv.dsttmp,gv.bin[nd].dstslp,NDEMS,x,&y,&lgOutOfBounds);
+			NextTg = exp(y);
+		}
+		else
+		{
+			NextTg = gptr.tedust/2.;
+		}
+		NextTg = tr.next_val(OldTg, NextTg);
+		NewGH =	gptr.GrainHeatCS;
+
+		gptr.lgTdustConverged = ( min(NewGH, OldGH) > 0. && fabs(NewGH-OldGH) <= 1.e-4*CONSERV_TOL*NewGH );
+
+		if( gptr.lgTdustConverged || NextTg < GRAIN_TMIN || NextTg > GRAIN_TMAX )
+			break;
+
+		gptr.tedust = NextTg;
 	}
 
-	/* norm is used to convert all heating rates to erg/cm^3/s */
-	double norm = EN1RYD*gv.bin[nd].cnv_H_pCM3;
-
-	/* hcon is radiative heating by incident radiation field */
-	*hcon *= norm;
-
-	/* hots is total heating of the grain by diffuse fields */
-	*hots *= norm;
-
-	/* heating by Ly alpha alone, for output only, is already included in hots */
-	*hla *= norm;
-
-	gv.bin[nd].BolFlux *= norm;
-
-	/* heating by thermal collisions with gas does work
-	 * DCHEAT is grain collisional heating by gas
-	 * DCCOOL is gas cooling due to collisions with grains
-	 * they are different since grain surface recombinations
-	 * heat the grains, but do not cool the gas ! */
-	/* >>chng 03 nov 06, moved call after renorm of BolFlux, so that GrainCollHeating can look at it, PvH */
-	GrainCollHeating(nd,&dcheat,dccool);
-
-	/* GasHeatPhotoEl is what heats the gas */
-	gv.bin[nd].GasHeatPhotoEl *= norm;
-
-	if( gv.lgBakesPAH_heat )
-	{
-		/* this is a dirty hack to get BT94 PE heating rate
-		 * for PAH's included, for Lorentz Center 2004 PDR meeting, PvH */
-		/*>>>refer	PAH	heating	Bakes, E.L.O., & Tielens, A.G.G.M. 1994, ApJ, 427, 822 */
-		/* >>chng 05 aug 12, change from +=, which added additional heating to what exists already,
-		 * to simply = to set the heat, this equation gives total heating */
-		gv.bin[nd].GasHeatPhotoEl = 1.e-24*hmi.UV_Cont_rel2_Habing_TH85_depth*
-			dense.gas_phase[ipHYDROGEN]*(4.87e-2/(1.0+4e-3*pow((hmi.UV_Cont_rel2_Habing_TH85_depth*
-			/*>>chng 06 jul 21, use phycon.sqrte in next two lines */
-			phycon.sqrte/dense.eden),0.73)) + 3.65e-2*pow(phycon.te/1.e4,0.7)/
-			(1.+2.e-4*(hmi.UV_Cont_rel2_Habing_TH85_depth*phycon.sqrte/dense.eden)))/gv.bin.size();
-
-	}
-
-	/* >>chng 06 jun 01, add optional scale factor, set with command
-	 * set grains heat, to rescale PE heating as per Allers et al. 2005 */
-	gv.bin[nd].GasHeatPhotoEl *= gv.GrainHeatScaleFactor;
-
-	/*  find power absorbed by dust and resulting temperature
-	 *
-	 * hcon is heating from incident continuum (all energies)
-	 * hots is heating from ots continua and lines
-	 * dcheat is net grain collisional and chemical heating by
-	 *    particle collisions and recombinations
-	 * GrainCoolTherm is grain cooling by thermionic emissions
-	 *
-	 * GrainHeat is net heating of this grain type,
-	 *    to be balanced by radiative cooling */
-	gv.bin[nd].GrainHeat = *hcon + *hots + dcheat - gv.bin[nd].GrainCoolTherm;
-
-	/* remember collisional heating for this grain species */
-	gv.bin[nd].GrainHeatColl = dcheat;
-
-	/* >>chng 04 may 31, replace ASSERT of GrainHeat > 0. with if-statement and let
-	 * GrainChargeTemp sort out the consquences of GrainHeat becoming negative, PvH */
-	/* in case where the thermionic rates become very large,
-	 * or collisional cooling dominates, this may become negative */
-	if( gv.bin[nd].GrainHeat > 0. )
-	{
-		bool lgOutOfBounds;
-		/*  now find temperature, GrainHeat is sum of total heating of grain
-		 *  >>chng 97 jul 17, divide by abundance here */
-		double y, x = log(MAX2(DBL_MIN,gv.bin[nd].GrainHeat*gv.bin[nd].cnv_CM3_pH));
-		/* >>chng 96 apr 27, as per Peter van Hoof comment */
-		splint_safe(gv.bin[nd].dstems,gv.dsttmp,gv.bin[nd].dstslp,NDEMS,x,&y,&lgOutOfBounds);
-		gv.bin[nd].tedust = (realnum)exp(y);
-	}
-	else
-	{
-		gv.bin[nd].GrainHeat = -1.;
-		gv.bin[nd].tedust = -1.;
-	}
-
-	if( thermal.ConstGrainTemp > 0. )
+	if( !gptr.lgTdustConverged || thermal.ConstGrainTemp > 0. )
 	{
 		bool lgOutOfBounds;
 		/* use temperature set with constant grain temperature command */
-		gv.bin[nd].tedust = thermal.ConstGrainTemp;
-		/* >>chng 04 jun 01, make sure GrainHeat is consistent with value of tedust, PvH */
-		double y, x = log(gv.bin[nd].tedust);
+		if( thermal.ConstGrainTemp > 0. )
+			gptr.tedust = thermal.ConstGrainTemp;
+		/* >>chng 04 jun 01, make sure GrainHeatCS is consistent with value of tedust, PvH */
+		double y, x = log(gptr.tedust);
 		splint_safe(gv.dsttmp,gv.bin[nd].dstems,gv.bin[nd].dstslp2,NDEMS,x,&y,&lgOutOfBounds);
-		gv.bin[nd].GrainHeat = exp(y)*gv.bin[nd].cnv_H_pCM3;
+		gptr.GrainHeatCS = exp(y)*gv.bin[nd].cnv_H_pCM3;
 	}
 
-	/*  save for later possible printout */
-	gv.bin[nd].TeGrainMax = (realnum)MAX2(gv.bin[nd].TeGrainMax,gv.bin[nd].tedust);
+	/* add quantum heating due to recombination of electrons, subtract thermionic cooling */
+
+	/* calculate net heating rate in erg/H/s at standard depl
+	 * include contributions for recombining electrons, autoionizing electrons
+	 * and subtract thermionic emissions here since it is inverse process
+	 *
+	 * NB - in extreme conditions this rate may become negative (if there
+	 * is an intense radiation field leading to very hot grains, but no ionizing
+	 * photons, hence very few free electrons). we assume that the photon rates
+	 * are high enough under those circumstances to avoid phiTilde becoming negative,
+	 * but we will check that in qheat1 anyway. */
+
+	gptr.HeatingRate1 = (gptr.GrainHeatCollElecCS - gptr.GrainCoolThermCS)*gv.bin[nd].cnv_CM3_pH;
+
+	/* >>chng 04 jan 25, moved inclusion into phitilde to qheat_init(), PvH */
+
+	/* add quantum heating due to molecule/ion collisions */
+
+	/* calculate heating rate in erg/H/s at standard depl
+	 * include contributions from molecules/neutral atoms and recombining ions
+	 *
+	 * in fully ionized conditions electron heating rates will be much higher
+	 * than ion and molecule rates since electrons are so much faster and grains
+	 * tend to be positive. in non-ionized conditions the main contribution will
+	 * come from neutral atoms and molecules, so it is appropriate to treat both
+	 * the same. in fully ionized conditions we don't care since unimportant.
+	 *
+	 * NB - if grains are hotter than ambient gas, the heating rate may become negative.
+	 * if photon rates are not high enough to prevent phiTilde from becoming negative,
+	 * we will raise a flag while calculating the quantum heating in qheat1 */
+	/* >>chng 01 nov 26, add in HeatCor as well, otherwise energy imbalance will result, PvH */
+	gptr.HeatingRate2 = (gptr.GrainHeatCollIonsCS+gptr.GrainHeatCollMolCS)*gv.bin[nd].cnv_CM3_pH;
+
+	/* >>chng 04 jan 25, moved inclusion into phiTilde to qheat_init(), PvH */
 
 	if( trace.lgTrace && trace.lgDustBug )
 	{
-		fprintf( ioQQQ, "  >GrainTemperature finds %s Tdst %.5e hcon %.4e ",
-			 gv.bin[nd].chDstLab, gv.bin[nd].tedust, *hcon);
-		fprintf( ioQQQ, "hots %.4e dcheat %.4e GrainCoolTherm %.4e\n", 
-			 *hots, dcheat, gv.bin[nd].GrainCoolTherm );
+		fprintf( ioQQQ, "  >GrainTemperature finds %s[%ld] Zg=%ld Tdst %.5e GrainHeatIncCS %.4e ",
+				 gv.bin[nd].chDstLab, nz, gptr.DustZ, gptr.tedust, gptr.GrainHeatIncCS );
+		fprintf( ioQQQ, "GrainHeatDifCS %.4e GrainHeatCollCS %.4e GrainCoolThermCS %.4e\n",
+			 gptr.GrainHeatDifCS, gptr.GrainHeatCollCS, gptr.GrainCoolThermCS );
 	}
-	return;
 }
 
 
@@ -4114,14 +4215,14 @@ STATIC void PE_init(size_t nd,
 {
 	DEBUG_ENTRY( "PE_init()" );
 
-	ChargeBin& gptr = gv.bin[nd].chrg(nz);
+	const ChargeBin& gptr = gv.bin[nd].chrg(nz);
 	long ipLo1 = gptr.ipThresInfVal;
 	long ipLo2 = gptr.ipThresInf;
 
 	/* sanity checks */
 	ASSERT( nd < gv.bin.size() );
 	ASSERT( nz >= 0 && nz < gv.bin[nd].nChrg );
-	ASSERT( i >= 0 && i < rfield.nPositive );
+	ASSERT( i >= 0 && i < gv.nPositive );
 
 	/** \todo xray - add fluoresence in energy balance */
 
@@ -4173,9 +4274,9 @@ STATIC void PE_init(size_t nd,
 		/* effective cross section for photo-detechment */
 		*cs2 = gptr.cs_pdt[i];
 		/* ehat2 is the average energy of the escaping electron at infinity */
-		*ehat2 = rfield.anu(i) - gptr.ThresSurf - gptr.PotSurf;
+		*ehat2 = gv.anu(i) - gptr.ThresSurf - gptr.PotSurf;
 		/* cool2 is the amount by which photo-detechment cools the grain */
-		*cool2 = rfield.anu(i);
+		*cool2 = gv.anu(i);
 
 		ASSERT( *ehat2 >= 0. && *cool2 > 0. );
 	}
@@ -4187,51 +4288,18 @@ STATIC void PE_init(size_t nd,
 	}
 
 	*cs_tot = gv.bin[nd].dstab1[i] + *cs2;		
-	return;
 }
 
 
 /* GrainCollHeating compute grains collisional heating cooling */
 STATIC void GrainCollHeating(size_t nd,
-			     /*@out@*/ realnum *dcheat,
-			     /*@out@*/ realnum *dccool)
+							 long nz)
 {
-	long int ion,
-	  nelem,
-	  nz;
-	H2_type ipH2;
-	double Accommodation,
-	  CollisionRateElectr,      /* rate electrons strike grains */
-	  CollisionRateMol,         /* rate molecules strike grains */
-	  CollisionRateIon,         /* rate ions strike grains */
-	  CoolTot,
-	  CoolBounce,
-	  CoolEmitted,
-	  CoolElectrons,
-	  CoolMolecules,
-	  CoolPotential,
-	  CoolPotentialGas,
-	  eta,
-	  HeatTot,
-	  HeatBounce,
-	  HeatCollisions,
-	  HeatElectrons,
-	  HeatIons,
-	  HeatMolecules,
-	  HeatRecombination, /* sum of abundances of ions times velocity times ionization potential times eta */
-	  HeatChem,
-	  HeatCor,
-	  Stick,
-	  ve,
-	  WeightMol,
-	  xi;
-
 	/* energy deposited into grain by formation of a single H2 molecule, in eV,
 	 * >>refer	grain	physics	Takahashi J., Uehara H., 2001, ApJ, 561, 843 */
 	const double H2_FORMATION_GRAIN_HEATING[H2_TOP] = { 0.20, 0.4, 1.72 };
 
 	DEBUG_ENTRY( "GrainCollHeating()" );
-
 
 	/* >>chng 01 may 07, this routine now completely supports the hybrid grain
 	 * charge model, and the average charge state is not used anywhere anymore, PvH */
@@ -4243,256 +4311,219 @@ STATIC void GrainCollHeating(size_t nd,
 	 * the physics is described in 
 	 * >>refer	grain	physics	Baldwin, Ferland, Martin et al., 1991, ApJ 374, 580 */
 
-	HeatTot = 0.;
-	CoolTot = 0.;
+	ChargeBin& gptr = gv.bin[nd].chrg(nz);
 
-	HeatIons = 0.;
+	/* HEAT1 will be rate collisions heat the grain
+	 * COOL1 will be rate collisions cool the gas kinetics */
+	double Heat1 = 0.;
+	double Cool1 = 0.;
+	double ChemEn1 = 0.;
+	double HeatRecombination, HeatCollisions, CoolPotential, CoolEmitted, eta, xi;
 
-	gv.bin[nd].ChemEn = 0.;
+	/* ============================================================================= */
+	/* heating/cooling due to neutrals and positive ions */
 
-	/* loop over the charge states */
-	for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
+	/* loop over all stages of ionization */
+	for( long ion=0; ion <= LIMELM; ion++ )
 	{
-		ChargeBin& gptr = gv.bin[nd].chrg(nz);
-
-		/* HEAT1 will be rate collisions heat the grain
-		 * COOL1 will be rate collisions cool the gas kinetics */
-		double Heat1 = 0.;
-		double Cool1 = 0.;
-		double ChemEn1 = 0.;
-
-		/* ============================================================================= */
-		/* heating/cooling due to neutrals and positive ions */
-
-		/* loop over all stages of ionization */
-		for( ion=0; ion <= LIMELM; ion++ )
-		{
-			/* this is heating of grains due to recombination energy of species,
-			 * and assumes that every ion is fully neutralized upon striking the grain surface.
-			 * all radiation produced in the recombination process is absorbed within the grain
-			 *
-			 * ion=0 are neutrals, ion=1 are single ions, etc
-			 * each population is weighted by the AVERAGE velocity
-			 * */
-			CollisionRateIon = 0.;
-			CoolPotential = 0.;
-			CoolPotentialGas = 0.;
-			HeatRecombination = 0.;
-			HeatChem = 0.;
-
-			/* >>chng 00 jul 19, replace classical results with results including image potential
-			 * to correct for polarization of the grain as charged particle approaches. */
-			GrainScreen(ion,nd,nz,&eta,&xi);
-
-			for( nelem=MAX2(0,ion-1); nelem < LIMELM; nelem++ )
-			{
-				if( dense.lgElmtOn[nelem] && dense.xIonDense[nelem][ion] > 0. )
-				{
-					double CollisionRateOne;
-
-					/* >>chng 00 apr 05, use correct accomodation coefficient, by PvH
-					 * the coefficient is defined at the end of appendix A.10 of BFM
-					 * assume ion sticking prob is unity */
-#if defined( IGNORE_GRAIN_ION_COLLISIONS )
-					Stick = 0.;
-#elif defined( WD_TEST2 )
-					Stick = ( ion == gptr.RecomZ0[nelem][ion] ) ?
-						0. : STICK_ION;
-#else
-					Stick = ( ion == gptr.RecomZ0[nelem][ion] ) ?
-						gv.bin[nd].AccomCoef[nelem] : STICK_ION;
-#endif
-					/* this is rate with which charged ion strikes grain */
-					/* >>chng 00 may 02, this had left 2./SQRTPI off */
-					/* >>chng 00 may 05, use average speed instead of 2./SQRTPI*Doppler, PvH */
-					CollisionRateOne = Stick*dense.xIonDense[nelem][ion]*
-						GetAveVelocity( dense.AtomicWeight[nelem] );
-					CollisionRateIon += CollisionRateOne;
-					/* >>chng 01 nov 26, use PotSurfInc when appropriate:
-					 * the values for the surface potential used here make it
-					 * consistent with the rest of the code and preserve energy.
-					 * NOTE: For incoming particles one should use PotSurfInc with
-					 * Schottky effect for positive ion, for outgoing particles
-					 * one should use PotSurf for Zg+ion-Z_0-1 (-1 because PotSurf
-					 * assumes electron going out), these corrections are small
-					 * and will be neglected for now, PvH */
-					if( ion >= gptr.RecomZ0[nelem][ion] )
-					{
-						CoolPotential += CollisionRateOne * (double)ion *
-							gptr.PotSurf;
-						CoolPotentialGas += CollisionRateOne *
-							(double)gptr.RecomZ0[nelem][ion] *
-							gptr.PotSurf;
-					}
-					else
-					{
-						CoolPotential += CollisionRateOne * (double)ion *
-							gptr.PotSurfInc;
-						CoolPotentialGas += CollisionRateOne *
-							(double)gptr.RecomZ0[nelem][ion] *
-							gptr.PotSurfInc;
-					}
-					/* this is sum of all energy liberated as ion recombines to Z0 in grain */
-					/* >>chng 00 jul 05, subtract energy needed to get 
-					 * electron out of grain potential well, PvH */
-					/* >>chng 01 may 09, chemical energy now calculated in GrainIonColl, PvH */
-					HeatRecombination += CollisionRateOne *
-						gptr.RecomEn[nelem][ion];
-					HeatChem += CollisionRateOne * gptr.ChemEn[nelem][ion];
-				}
-			}
-
-			/* >>chng 00 may 01, Boltzmann factor had multiplied all of factor instead
-			 * of only first and last term.  pvh */
-
-			/* equation 29 from Balwin et al 91 */
-			/* this is direct collision rate, 2kT * xi, first term in eq 29 */
-			HeatCollisions = CollisionRateIon * 2.*BOLTZMANN*phycon.te*xi;
-			/* this is change in energy due to charge acceleration within grain's potential 
-			 * this is exactly balanced by deceleration of incoming electrons and accelaration
-			 * of outgoing photo-electrons and thermionic emissions; all these terms should
-			 * add up to zero (total charge of grain should remain constant) */
-			CoolPotential *= eta*EN1RYD;
-			CoolPotentialGas *= eta*EN1RYD;
-			/* this is recombination energy released within grain */
-			HeatRecombination *= eta*EN1RYD;
-			HeatChem *= eta*EN1RYD;
-			/* energy carried away by neutrals after recombination, so a cooling term */
-			CoolEmitted = CollisionRateIon * 2.*BOLTZMANN*gv.bin[nd].tedust*eta;
-
-			/* total GraC 0 in the emission line output */
-			Heat1 += HeatCollisions - CoolPotential + HeatRecombination - CoolEmitted;
-
-			/* rate kinetic energy lost from gas - gas cooling - eq 32 in BFM */
-			/* this GrGC 0 in the main output */
-			/* >>chng 00 may 05, reversed sign of gas cooling contribution */
-			Cool1 += HeatCollisions - CoolEmitted - CoolPotentialGas;
-
-			ChemEn1 += HeatChem;
-		}
-
-		/* remember grain heating by ion collisions for quantum heating treatment */
-		HeatIons += gptr.FracPop*Heat1;
-
-		if( trace.lgTrace && trace.lgDustBug )
-		{
-			fprintf( ioQQQ, "    Zg %ld ions heat/cool: %.4e %.4e\n", gptr.DustZ,
-			  gptr.FracPop*Heat1*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3,
-			  gptr.FracPop*Cool1*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3 );
-		}
-
-		/* ============================================================================= */
-		/* heating/cooling due to electrons */
-
-		ion = -1;
-		Stick = ( gptr.DustZ <= -1 ) ? gv.bin[nd].StickElecNeg : gv.bin[nd].StickElecPos;
-		/* VE is mean (not RMS) electron velocity */
-		/*ve = TePowers.sqrte*6.2124e5;*/
-		ve = sqrt(8.*BOLTZMANN/PI/ELECTRON_MASS*phycon.te);
-
-		/* electron arrival rate - eqn 29 again */
-		CollisionRateElectr = Stick*dense.eden*ve;
+		/* this is heating of grains due to recombination energy of species,
+		 * and assumes that every ion is fully neutralized upon striking the grain surface.
+		 * all radiation produced in the recombination process is absorbed within the grain
+		 *
+		 * ion=0 are neutrals, ion=1 are single ions, etc
+		 * each population is weighted by the AVERAGE velocity
+		 * */
+		double CollisionRateIon = 0.; /* rate ions strike grains */
+		CoolPotential = 0.;
+		double CoolPotentialGas = 0.;
+		/* sum of abundances of ions times velocity times ionization potential times eta */
+		HeatRecombination = 0.;
+		double HeatChem = 0.;
 
 		/* >>chng 00 jul 19, replace classical results with results including image potential
 		 * to correct for polarization of the grain as charged particle approaches. */
 		GrainScreen(ion,nd,nz,&eta,&xi);
 
-		if( gptr.DustZ > gv.bin[nd].LowestZg )
+		for( long nelem=MAX2(0,ion-1); nelem < LIMELM; nelem++ )
 		{
-			HeatCollisions = CollisionRateElectr*2.*BOLTZMANN*phycon.te*xi;
-			/* this is change in energy due to charge acceleration within grain's potential 
-			 * this term (perhaps) adds up to zero when summed over all charged particles */
-			CoolPotential = CollisionRateElectr * (double)ion*gptr.PotSurfInc*eta*EN1RYD;
-			/* >>chng 00 jul 05, this is term for energy released due to recombination, PvH */
-			HeatRecombination = CollisionRateElectr * gptr.ThresSurfInc*eta*EN1RYD;
-			HeatBounce = 0.;
-			CoolBounce = 0.;
+			if( dense.lgElmtOn[nelem] && dense.xIonDense[nelem][ion] > 0. )
+			{
+				/* >>chng 00 apr 05, use correct accomodation coefficient, by PvH
+				 * the coefficient is defined at the end of appendix A.10 of BFM
+				 * assume ion sticking prob is unity */
+#if defined( IGNORE_GRAIN_ION_COLLISIONS )
+				double Stick = 0.;
+#elif defined( WD_TEST2 )
+				double Stick = ( ion == gptr.RecomZ0[nelem][ion] ) ? 0. : STICK_ION;
+#else
+				double Stick = ( ion == gptr.RecomZ0[nelem][ion] ) ?
+					gv.bin[nd].AccomCoef[nelem] : STICK_ION;
+#endif
+				/* this is rate with which charged ion strikes grain */
+				/* >>chng 00 may 02, this had left 2./SQRTPI off */
+				/* >>chng 00 may 05, use average speed instead of 2./SQRTPI*Doppler, PvH */
+				double CollisionRateOne = Stick*dense.xIonDense[nelem][ion]*
+					GetAveVelocity( dense.AtomicWeight[nelem] );
+				CollisionRateIon += CollisionRateOne;
+				/* >>chng 01 nov 26, use PotSurfInc when appropriate:
+				 * the values for the surface potential used here make it
+				 * consistent with the rest of the code and preserve energy.
+				 * NOTE: For incoming particles one should use PotSurfInc with
+				 * Schottky effect for positive ion, for outgoing particles
+				 * one should use PotSurf for Zg+ion-Z_0-1 (-1 because PotSurf
+				 * assumes electron going out), these corrections are small
+				 * and will be neglected for now, PvH */
+				if( ion >= gptr.RecomZ0[nelem][ion] )
+				{
+					CoolPotential += CollisionRateOne * (double)ion * gptr.PotSurf;
+					CoolPotentialGas += CollisionRateOne *
+						(double)gptr.RecomZ0[nelem][ion] * gptr.PotSurf;
+				}
+				else
+				{
+					CoolPotential += CollisionRateOne * (double)ion * gptr.PotSurfInc;
+					CoolPotentialGas += CollisionRateOne *
+						(double)gptr.RecomZ0[nelem][ion] * gptr.PotSurfInc;
+				}
+				/* this is sum of all energy liberated as ion recombines to Z0 in grain */
+				/* >>chng 00 jul 05, subtract energy needed to get 
+				 * electron out of grain potential well, PvH */
+				/* >>chng 01 may 09, chemical energy now calculated in GrainIonColl, PvH */
+				HeatRecombination += CollisionRateOne * gptr.RecomEn[nelem][ion];
+				HeatChem += CollisionRateOne * gptr.ChemEn[nelem][ion];
+			}
 		}
-		else
-		{
-			HeatCollisions = 0.;
-			CoolPotential = 0.;
-			HeatRecombination = 0.;
-			/* >>chng 00 jul 05, add in terms for electrons that bounce off grain, PvH */
-			/* >>chng 01 mar 09, remove these terms, their contribution is negligible, and replace
-			 * them with similar terms that describe electrons that are captured by grains at Z_min,
-			 * these electrons are not in a bound state and the grain will quickly autoionize, PvH */
-			HeatBounce = CollisionRateElectr * 2.*BOLTZMANN*phycon.te*xi;
-			/* >>chng 01 mar 14, replace (2kT_g - phi_g) term with -EA; for autoionizing states EA is
-			 * usually higher than phi_g, so more energy is released back into the electron gas, PvH */ 
-			CoolBounce = CollisionRateElectr *
-				(-gptr.ThresSurfInc-gptr.PotSurfInc)*EN1RYD*eta;
-			CoolBounce = MAX2(CoolBounce,0.);
-		}
 
-		/* >>chng 00 may 02, CoolPotential had not been included */
-		/* >>chng 00 jul 05, HeatRecombination had not been included */
-		HeatElectrons = HeatCollisions-CoolPotential+HeatRecombination+HeatBounce-CoolBounce;
-		Heat1 += HeatElectrons;
+		/* >>chng 00 may 01, Boltzmann factor had multiplied all of factor instead
+		 * of only first and last term.  pvh */
 
-		CoolElectrons = HeatCollisions+HeatBounce-CoolBounce;
-		Cool1 += CoolElectrons;
+		/* equation 29 from Balwin et al 91 */
+		/* this is direct collision rate, 2kT * xi, first term in eq 29 */
+		HeatCollisions = CollisionRateIon * 2.*BOLTZMANN*phycon.te*xi;
+		/* this is change in energy due to charge acceleration within grain's potential 
+		 * this is exactly balanced by deceleration of incoming electrons and accelaration
+		 * of outgoing photo-electrons and thermionic emissions; all these terms should
+		 * add up to zero (total charge of grain should remain constant) */
+		CoolPotential *= eta*EN1RYD;
+		CoolPotentialGas *= eta*EN1RYD;
+		/* this is recombination energy released within grain */
+		HeatRecombination *= eta*EN1RYD;
+		HeatChem *= eta*EN1RYD;
+		/* energy carried away by neutrals after recombination, so a cooling term */
+		/* >>chng 05 jun 22, replaced gv.bin[nd].tedust -> gptr.tedust, PvH */
+		double CoolEmitted = CollisionRateIon * 2.*BOLTZMANN*gptr.tedust*eta;
 
-		if( trace.lgTrace && trace.lgDustBug )
-		{
-			fprintf( ioQQQ, "    Zg %ld electrons heat/cool: %.4e %.4e\n", gptr.DustZ,
-			  gptr.FracPop*HeatElectrons*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3,
-			  gptr.FracPop*CoolElectrons*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3 );
-		}
+		/* total GraC 0 in the emission line output */
+		Heat1 += HeatCollisions - CoolPotential + HeatRecombination - CoolEmitted;
 
-		/* add quantum heating due to recombination of electrons, subtract thermionic cooling */
+		/* rate kinetic energy lost from gas - gas cooling - eq 32 in BFM */
+		/* this GrGC 0 in the main output */
+		/* >>chng 00 may 05, reversed sign of gas cooling contribution */
+		Cool1 += HeatCollisions - CoolEmitted - CoolPotentialGas;
 
-		/* calculate net heating rate in erg/H/s at standard depl
-		 * include contributions for recombining electrons, autoionizing electrons
-		 * and subtract thermionic emissions here since it is inverse process
-		 *
-		 * NB - in extreme conditions this rate may become negative (if there
-		 * is an intense radiation field leading to very hot grains, but no ionizing
-		 * photons, hence very few free electrons). we assume that the photon rates
-		 * are high enough under those circumstances to avoid phiTilde becoming negative,
-		 * but we will check that in qheat1 anyway. */
-		gptr.HeatingRate2 = HeatElectrons*gv.bin[nd].IntArea/4. -
-			gv.bin[nd].GrainCoolTherm*gv.bin[nd].cnv_CM3_pH;
-
-		/* >>chng 04 jan 25, moved inclusion into phitilde to qheat_init(), PvH */
-
-		/* heating/cooling above is in erg/s/cm^2 -> multiply with projected grain area per cm^3 */
-		/* GraC 0 is integral of dcheat, the total collisional heating of the grain */
-		HeatTot += gptr.FracPop*Heat1;
-
-		/* GrGC 0 total cooling of gas integrated */
-		CoolTot += gptr.FracPop*Cool1;
-
-		gv.bin[nd].ChemEn += gptr.FracPop*ChemEn1;
+		ChemEn1 += HeatChem;
 	}
+
+	/* remember grain heating by ion collisions for quantum heating treatment */
+	gptr.GrainHeatCollIonsCS = Heat1*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3;
+
+	if( trace.lgTrace && trace.lgDustBug )
+	{
+		fprintf( ioQQQ, "    Zg %ld ions heat/cool: %.4e %.4e\n", gptr.DustZ,
+			 gptr.FracPop*Heat1*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3,
+			 gptr.FracPop*Cool1*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3 );
+	}
+
+	/* ============================================================================= */
+	/* heating/cooling due to electrons */
+
+	long ion = -1;
+	double Stick = ( gptr.DustZ <= -1 ) ? gv.bin[nd].StickElecNeg : gv.bin[nd].StickElecPos;
+	/* VE is mean (not RMS) electron velocity */
+	/*ve = TePowers.sqrte*6.2124e5;*/
+	double ve = sqrt(8.*BOLTZMANN/PI/ELECTRON_MASS*phycon.te);
+
+	/* electron arrival rate - eqn 29 again */
+	double CollisionRateElectr = Stick*dense.eden*ve;
+
+	/* >>chng 00 jul 19, replace classical results with results including image potential
+	 * to correct for polarization of the grain as charged particle approaches. */
+	GrainScreen(ion,nd,nz,&eta,&xi);
+
+	double CoolBounce, HeatBounce;
+	if( gptr.DustZ > gv.bin[nd].LowestZg )
+	{
+		HeatCollisions = CollisionRateElectr*2.*BOLTZMANN*phycon.te*xi;
+		/* this is change in energy due to charge acceleration within grain's potential 
+		 * this term (perhaps) adds up to zero when summed over all charged particles */
+		CoolPotential = CollisionRateElectr * (double)ion*gptr.PotSurfInc*eta*EN1RYD;
+		/* >>chng 00 jul 05, this is term for energy released due to recombination, PvH */
+		HeatRecombination = CollisionRateElectr * gptr.ThresSurfInc*eta*EN1RYD;
+		HeatBounce = 0.;
+		CoolBounce = 0.;
+	}
+	else
+	{
+		HeatCollisions = 0.;
+		CoolPotential = 0.;
+		HeatRecombination = 0.;
+		/* >>chng 00 jul 05, add in terms for electrons that bounce off grain, PvH */
+		/* >>chng 01 mar 09, remove these terms, their contribution is negligible, and replace
+		 * them with similar terms that describe electrons that are captured by grains at Z_min,
+		 * these electrons are not in a bound state and the grain will quickly autoionize, PvH */
+		HeatBounce = CollisionRateElectr * 2.*BOLTZMANN*phycon.te*xi;
+		/* >>chng 01 mar 14, replace (2kT_g - phi_g) term with -EA; for autoionizing states EA is
+		 * usually higher than phi_g, so more energy is released back into the electron gas, PvH */
+		/* >>chng 26 feb 02, reverted the above change as it was causing problems in bautista.in
+		 * the CoolBounce term was causing GrainHeatCS to become negative, and since it only depended
+		 * on the grain charge there was no way for the temperature solver to fix that problem, PvH */
+		CoolBounce = CollisionRateElectr * (2.*BOLTZMANN*gptr.tedust-gptr.PotSurfInc)*EN1RYD*eta;
+		CoolBounce = MAX2(CoolBounce,0.);
+	}
+
+	/* >>chng 00 may 02, CoolPotential had not been included */
+	/* >>chng 00 jul 05, HeatRecombination had not been included */
+	double HeatElectrons = HeatCollisions-CoolPotential+HeatRecombination+HeatBounce-CoolBounce;
+	Heat1 += HeatElectrons;
+
+	double CoolElectrons = HeatCollisions+HeatBounce-CoolBounce;
+	Cool1 += CoolElectrons;
+
+	if( trace.lgTrace && trace.lgDustBug )
+	{
+		fprintf( ioQQQ, "    Zg %ld electrons heat/cool: %.4e %.4e\n", gptr.DustZ,
+			 gptr.FracPop*HeatElectrons*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3,
+			 gptr.FracPop*CoolElectrons*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3 );
+	}
+
+	/* remember heating by electrons, this is needed for quantum heating */
+	gptr.GrainHeatCollElecCS = HeatElectrons*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3;
 
 	/* ============================================================================= */
 	/* heating/cooling due to molecules */
 
-	/* these rates do not depend on charge, hence they are outside of nz loop */
-
 	/* sticking prob for H2 onto grain,
 	 * estimated from accomodation coefficient defined at end of A.10 in BFM */
-	WeightMol = 2.*dense.AtomicWeight[ipHYDROGEN];
-	Accommodation = 2.*gv.bin[nd].atomWeight*WeightMol/POW2(gv.bin[nd].atomWeight+WeightMol);
+	double WeightMol = 2.*dense.AtomicWeight[ipHYDROGEN];
+	double Accommodation = 2.*gv.bin[nd].atomWeight*WeightMol/POW2(gv.bin[nd].atomWeight+WeightMol);
 	/* molecular hydrogen onto grains */
 #ifndef IGNORE_GRAIN_ION_COLLISIONS
 	/*CollisionRateMol = Accommodation*findspecies("H2")->den* */
-	CollisionRateMol = Accommodation*hmi.H2_total*
+	double CollisionRateMol = Accommodation*hmi.H2_total*
 		sqrt(8.*BOLTZMANN/PI/ATOMIC_MASS_UNIT/WeightMol*phycon.te);
 	/* >>chng 03 feb 12, added grain heating by H2 formation on the surface, PvH 
 	 * >>refer	grain	H2 heat	Takahashi & Uehara, ApJ, 561, 843 */
-	ipH2 = gv.which_H2distr[gv.bin[nd].matType];
+	long ipH2 = gv.which_H2distr[gv.bin[nd].matType];
 	/* this is rate in erg/cm^3/s */
 	/* >>chng 04 may 26, changed dense.gas_phase[ipHYDROGEN] -> dense.xIonDense[ipHYDROGEN][0], PvH */
-	gv.bin[nd].ChemEnH2 = gv.bin[nd].rate_h2_form_grains_used*dense.xIonDense[ipHYDROGEN][0]*
+	double HeatChemH2 = gv.bin[nd].rate_h2_form_grains_used*dense.xIonDense[ipHYDROGEN][0]*
 		H2_FORMATION_GRAIN_HEATING[ipH2]*EN1EV;
-	/* convert to rate per cm^2 of projected grain surface area used here */
-	gv.bin[nd].ChemEnH2 /=	gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3;
+	HeatChemH2 /= gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3;
 #else
-	CollisionRateMol = 0.;
-	gv.bin[nd].ChemEnH2 = 0.;
+	double CollisionRateMol = 0.;
+	double HeatChemH2 = 0.;
 #endif
+	ChemEn1 += HeatChemH2;
 
 	/* now add in CO */
 	WeightMol = dense.AtomicWeight[ipCARBON] + dense.AtomicWeight[ipOXYGEN];
@@ -4506,106 +4537,96 @@ STATIC void GrainCollHeating(size_t nd,
 
 	/* xi and eta are unity for neutrals and so ignored */
 	HeatCollisions = CollisionRateMol * 2.*BOLTZMANN*phycon.te;
-	CoolEmitted = CollisionRateMol * 2.*BOLTZMANN*gv.bin[nd].tedust;
+	/* >>chng 05 jun 22, replaced gv.bin[nd].tedust -> gptr.tedust, PvH */
+	CoolEmitted = CollisionRateMol * 2.*BOLTZMANN*gptr.tedust;
 
-	HeatMolecules = HeatCollisions - CoolEmitted + gv.bin[nd].ChemEnH2;
-	HeatTot += HeatMolecules;
+	double HeatMolecules = HeatCollisions - CoolEmitted + HeatChemH2;
+	Heat1 += HeatMolecules;
 
 	/* >>chng 00 may 05, reversed sign of gas cooling contribution */
-	CoolMolecules = HeatCollisions - CoolEmitted;
-	CoolTot += CoolMolecules;
+	double CoolMolecules = HeatCollisions - CoolEmitted;
+	Cool1 += CoolMolecules;
+
+	/* remember heating by molecules, this is needed for quantum heating */
+	gptr.GrainHeatCollMolCS = HeatMolecules*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3;
+
+	/* >>chng 01 nov 24, correct for imperfections in the n-charge state model,
+	 * these corrections should add up to zero, but are actually small but non-zero, PvH */
+	double HeatCor = gptr.GrainHeatCorCS/(gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3);
+
+	Heat1 += HeatCor;
+
+	gptr.GrainHeatCollMolCS += gptr.GrainHeatCorCS;
+
+	if( trace.lgTrace && trace.lgDustBug )
+	{
+		fprintf( ioQQQ, "    Zg %ld molecules heat/cool: %.4e %.4e heatcor: %.4e\n", gptr.DustZ,
+				 gptr.FracPop*HeatMolecules*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3,
+				 gptr.FracPop*CoolMolecules*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3,
+				 gptr.FracPop*HeatCor*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3 );
+	}
+
+	/* Heat1/Cool1 is in erg/cm^2/s -> needs to be multiplied with projected grain area per cm^3 */
+	/* GraC 0 is integral of GrainHeatCollCS, the total collisional heating of the grain */
+	gptr.GrainHeatCollCS = Heat1*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3;
+
+	/* GrGC 0 is integral of GasCoolCollCS, the total cooling of the gas */
+	gptr.GasCoolCollCS = Cool1*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3;
+
+	gptr.GrainHeatChemEnCS = ChemEn1*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3;
+}
+
+
+/* calculate the correction to the grain heating due to imperfections in the n-charge state model */
+STATIC void GrainHeatCor(size_t nd)
+{
+	DEBUG_ENTRY( "GrainHeatCor()" );
 
 	gv.bin[nd].RateUp = 0.;
 	gv.bin[nd].RateDn = 0.;
-	HeatCor = 0.;
-	for( nz=0; nz < gv.bin[nd].nChrg; nz++ )
+	double CorBin = 0.;
+	for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
 	{
 		double d[4];
 		double rate_dn = GrainElecRecomb1(nd,nz,&d[0],&d[1]);
 		double rate_up = GrainElecEmis1(nd,nz,&d[0],&d[1],&d[2],&d[3]);
+		const ChargeBin& gptr = gv.bin[nd].chrg(nz);
 
-		gv.bin[nd].RateUp += gv.bin[nd].chrg(nz).FracPop*rate_up;
-		gv.bin[nd].RateDn += gv.bin[nd].chrg(nz).FracPop*rate_dn;
+		gv.bin[nd].RateUp += gptr.FracPop*rate_up;
+		gv.bin[nd].RateDn += gptr.FracPop*rate_dn;
 
-		 /** \todo	2	a self-consistent treatment for the heating by Compton recoil should be used */
-		HeatCor += (gv.bin[nd].chrg(nz).FracPop*rate_up*gv.bin[nd].chrg(nz).ThresSurf -
-			    gv.bin[nd].chrg(nz).FracPop*rate_dn*gv.bin[nd].chrg(nz).ThresSurfInc +
-			    gv.bin[nd].chrg(nz).FracPop*rate_up*gv.bin[nd].chrg(nz).PotSurf -
-			    gv.bin[nd].chrg(nz).FracPop*rate_dn*gv.bin[nd].chrg(nz).PotSurfInc)*EN1RYD;
+		/** \todo	2	a self-consistent treatment for the heating by Compton recoil should be used */
+		CorBin += gptr.FracPop*( rate_up*gptr.ThresSurf - rate_dn*gptr.ThresSurfInc +
+								 rate_up*gptr.PotSurf - rate_dn*gptr.PotSurfInc )*EN1RYD;
 	}
-	/* >>chng 01 nov 24, correct for imperfections in the n-charge state model,
-	 * these corrections should add up to zero, but are actually small but non-zero, PvH */
-	HeatTot += HeatCor;
+	CorBin *= gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3;
 
-	if( trace.lgTrace && trace.lgDustBug )
-	{
-		fprintf( ioQQQ, "    molecules heat/cool: %.4e %.4e heatcor: %.4e\n",
-			 HeatMolecules*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3,
-			 CoolMolecules*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3,
-			 HeatCor*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3 );
-	}
+	for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+		gv.bin[nd].chrg(nz).GrainHeatCorCS = CorBin;
 
-	*dcheat = (realnum)(HeatTot*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3);
-	*dccool = ( gv.lgDColOn ) ? (realnum)(CoolTot*gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3) : 0.f;
-
-	gv.bin[nd].ChemEn *= gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3;
-	gv.bin[nd].ChemEnH2 *= gv.bin[nd].IntArea/4.*gv.bin[nd].cnv_H_pCM3;
-
-	/* add quantum heating due to molecule/ion collisions */
-
-	/* calculate heating rate in erg/H/s at standard depl
-	 * include contributions from molecules/neutral atoms and recombining ions
-	 *
-	 * in fully ionized conditions electron heating rates will be much higher
-	 * than ion and molecule rates since electrons are so much faster and grains
-	 * tend to be positive. in non-ionized conditions the main contribution will
-	 * come from neutral atoms and molecules, so it is appropriate to treat both
-	 * the same. in fully ionized conditions we don't care since unimportant.
-	 *
-	 * NB - if grains are hotter than ambient gas, the heating rate may become negative.
-	 * if photon rates are not high enough to prevent phiTilde from becoming negative,
-	 * we will raise a flag while calculating the quantum heating in qheat1 */
-	/* >>chng 01 nov 26, add in HeatCor as well, otherwise energy imbalance will result, PvH */
-	gv.bin[nd].HeatingRate1 = (HeatMolecules+HeatIons+HeatCor)*gv.bin[nd].IntArea/4.;
-
-	/* >>chng 04 jan 25, moved inclusion into phiTilde to qheat_init(), PvH */
-	return;
+	ASSERT( gv.bin[nd].RateUp > 0. && gv.bin[nd].RateDn > 0. );
 }
 
 
 /* GrainDrift computes grains drift velocity */
 void GrainDrift()
 {
-	long int i, 
-	  loop; 
-	double alam, 
-	  corr, 
-	  dmomen, 
-	  fac, 
-	  fdrag, 
-	  g0, 
-	  g2, 
-	  phi2lm, 
-	  psi, 
-	  rdust, 
-	  si, 
-	  vdold, 
-	  volmom;
-
 	DEBUG_ENTRY( "GrainDrift()" );
 
-	vector<realnum> help( rfield.nPositive );
-	for( i=0; i < rfield.nPositive; i++ )
+	vector<realnum> help0(rfield.nPositive);
+	vector<double> help(gv.nflux);
+	for( long i=0; i < rfield.nPositive; i++ )
 	{
-		help[i] = (rfield.flux[0][i]+rfield.ConInterOut[i]+rfield.outlin[0][i]+rfield.outlin_noplot[i])*
+		help0[i] = (rfield.flux[0][i]+rfield.ConInterOut[i]+rfield.outlin[0][i]+rfield.outlin_noplot[i])*
 			rfield.anu(i);
 	}
+	RebinFlux(help0, help);
 
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
 		/* find momentum absorbed by grain */
-		dmomen = 0.;
-		for( i=0; i < rfield.nPositive; i++ )
+		double dmomen = 0.;
+		for( long i=0; i < gv.nPositive; i++ )
 		{
 			/* >>chng 02 dec 30, separated scattering cross section and asymmetry factor, PvH */
 			dmomen += help[i]*(gv.bin[nd].dstab1[i] + gv.bin[nd].pure_sc1[i]*gv.bin[nd].asym[i]);
@@ -4614,14 +4635,15 @@ void GrainDrift()
 		dmomen *= EN1RYD*4./gv.bin[nd].IntArea;
 
 		/* now find force on grain, and drift velocity */
-		fac = 2*BOLTZMANN*phycon.te;
+		double fac = 2*BOLTZMANN*phycon.te;
 
 		/* now PSI defined by 
 		 * >>refer	grain	physics	Draine and Salpeter 79 Ap.J. 231, 77 (1979) */
-		psi = gv.bin[nd].dstpot*TE1RYD/phycon.te;
+		double psi = gv.bin[nd].dstpot*TE1RYD/phycon.te;
+		double alam;
 		if( psi > 0. )
 		{
-			rdust = 1.e-6;
+			double rdust = 1.e-6;
 			alam = log(20.702/rdust/psi*phycon.sqrte/dense.SqrtEden);
 		}
 		else
@@ -4629,21 +4651,21 @@ void GrainDrift()
 			alam = 0.;
 		}
 
-		phi2lm = POW2(psi)*alam;
-		corr = 2.;
+		double phi2lm = POW2(psi)*alam;
+		double corr = 2.;
 		/* >>chng 04 jan 31, increased loop limit 10 -> 50, precision -> 0.001, PvH */
-		for( loop = 0; loop < 50 && fabs(corr-1.) > 0.001; loop++ )
+		for( long loop=0; loop < 50 && fabs(corr-1.) > 0.001; loop++ )
 		{
-			vdold = gv.bin[nd].DustDftVel;
+			double vdold = gv.bin[nd].DustDftVel;
 
 			/* interactions with protons */
-			si = gv.bin[nd].DustDftVel/phycon.sqrte*7.755e-5;
-			g0 = 1.5045*si*sqrt(1.+0.4418*si*si);
-			g2 = si/(1.329 + POW3(si));
+			double si = gv.bin[nd].DustDftVel/phycon.sqrte*7.755e-5;
+			double g0 = 1.5045*si*sqrt(1.+0.4418*si*si);
+			double g2 = si/(1.329 + POW3(si));
 
 			/* drag force due to protons, both linear and square in velocity
 			 * equation 4 from D+S Ap.J. 231, p77. */
-			fdrag = fac*dense.xIonDense[ipHYDROGEN][1]*(g0 + phi2lm*g2);
+			double fdrag = fac*dense.xIonDense[ipHYDROGEN][1]*(g0 + phi2lm*g2);
 
 			/* drag force due to interactions with electrons */
 			si = gv.bin[nd].DustDftVel/phycon.sqrte*1.816e-6;
@@ -4665,7 +4687,7 @@ void GrainDrift()
 			/* this term does not work
 			 *  2      HEIII*(G0+4.*PSI**2*(ALAM-0.693)*G2) )
 			 * this is total momentum absorbed by dust per unit vol */
-			volmom = dmomen/SPEEDLIGHT;
+			double volmom = dmomen/SPEEDLIGHT;
 
 			if( fdrag > 0. )
 			{
@@ -4686,7 +4708,37 @@ void GrainDrift()
 			}
 		}
 	}
-	return;
+}
+
+/* RebinFlux rebins a flux array arr1 on the standard frequency mesh onto an
+ * array arr2 on the internal grain frequency mesh -- arr1 can be a vector
+ * of realnums or doubles, but arr2 always needs to be a vector of doubles */
+template<typename T>
+STATIC void RebinFlux(const vector<T>& arr1, vector<double>& arr2)
+{
+	DEBUG_ENTRY( "RebinFlux()" );
+
+	arr2.resize(gv.nflux);
+	vzero(arr2);
+
+	long i1 = 0;
+	long i1end = min(rfield.nflux, long(arr1.size()));
+	// this algorithm implicitly assumes that rfield.anumin[0] == gv.anumin[0]
+	// which is guaranteed by design
+	double transfer = 0.;
+	for( long i2=0; i2 < gv.nflux; ++i2 )
+	{
+		arr2[i2] += transfer;
+		while( i1 < i1end && rfield.anumax(i1) <= gv.anumax(i2) )
+			arr2[i2] += arr1[i1++];
+		if( i1 >= i1end )
+			break;
+		// this rfield freq cell extends beyond the gv freq cell, so split it up
+		// f is the fraction of the rfield cell that is contained in the current gv cell
+		double f = (gv.anumax(i2) - rfield.anumin(i1))/rfield.widflx(i1);
+		arr2[i2] += f*arr1[i1];
+		transfer = (1.-f)*arr1[i1++];
+	}
 }
 
 /* GrnVryDpth sets the grain abundance as a function of depth into cloud 

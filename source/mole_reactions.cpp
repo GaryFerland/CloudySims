@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cdstd.h"
 #include "cddefines.h"
@@ -208,6 +208,27 @@ namespace {
 		return 0.;
 	}
 	/*hmrate - evalurate UMIST expression for rate coefficient */
+	/**
+	 * @brief Computes the reaction rate for a given molecular reaction using UMIST formalism.
+	 *
+	 * This function calculates the rate coefficient for a molecular reaction based on the UMIST database
+	 * formula:
+	 *   rate = alpha * (T/300)^beta * exp(-gamma/T)
+	 * where:
+	 *   - alpha = rate->a
+	 *   - beta  = rate->b
+	 *   - gamma = rate->c
+	 *   - T     = electron temperature (with possible non-equilibrium offset)
+	 *
+	 * The temperature used in the calculation is adjusted by the function noneq_offset(rate),
+	 * which accounts for non-equilibrium effects specific to the reaction. This offset allows
+	 * the rate calculation to reflect physical conditions where the electron temperature may
+	 * differ from the kinetic temperature due to non-equilibrium processes.
+	 * Normally zero, it is set with SET CHEMISTRY NON-EQUILIBRIUM command
+	 *
+	 * @param rate Pointer to a mole_reaction structure containing the reaction parameters.
+	 * @return The computed reaction rate coefficient [cm^3 s^-1].
+	 */
 	double hmrate(const mole_reaction *rate) 
 	{
 		double te;
@@ -215,27 +236,20 @@ namespace {
 		DEBUG_ENTRY( "hmrate()" );
 		/* the UMIST equation is
 		 * rate = alpha \times (T/300)^beta \times exp( -gamma/T 
-		 alpha==rate->a; beta== rate->b; gamma==rate->c */  
-		
-		te = phycon.te+noneq_offset(rate);
-		/* UMIST rates are simple temperature power laws that
-	 	 * can become large at the high temperatures Cloudy
-	 	 * may encounter. Do not extrapolate to above T>2.5e3K */ 
-		/* rate-b is the power beta in (T/300)^beta, positive beta
-		 * can diverge at high temperatures */
-		/* THIS CODE MUST BE KEPT PARALLEL WITH HMRATE4 IN MOLE.H */ 
-		if( rate->b > 0.)	
-			te = min(te, 2500.);
-		/* rate->c is gamma in expontntial */
-		if( rate->c < 0. )
-			ASSERT( -rate->c/te < 10. );
+		 alpha==rate->a; beta== rate->b; gamma==rate->c
 
-		double r = 1.;
-		if( rate->b != 0. )
-			r *= pow(te/300.,rate->b);
-		if( rate->c != 0. )
-			r *= exp(-rate->c/te);
-		return r;
+		 rate = rate->a * pow( te/300. , rate->b) * exp( -rate->c/te )
+		 where te is the electron temperature in K.
+		 */  
+		
+		 /* noneq_offset is possible temperature hack to account for
+		  * turbulent heating */
+		/* option to use effective temperature as defined in
+		 * >>refer	CO	chemistry	Zsargo, J. & Federman, S. R. 2003, ApJ, 589, 319
+		 * By default, this is zero - changed with set chemistry command */
+		te = phycon.te+noneq_offset(rate);
+		/** hmrate is multiplied by rate->a when used so we do not pass rate->a as first coefficient */
+		return hmrate4( 1., rate->b, rate->c , te);
 	}
 	
 	class mole_reaction_hmrate_exo : public mole_reaction
@@ -466,10 +480,12 @@ namespace {
 				
 				binding_energy = this->b;
 				double bin_total=0.0;
-				for( size_t nd=0; nd < gv.bin.size() ; nd++ )
+				for( size_t nd=0; nd < gv.bin.size(); nd++ )
 				{
 					double bin_area = gv.bin[nd].IntArea*gv.bin[nd].cnv_H_pCM3;
-					exponent += exp(-binding_energy/gv.bin[nd].tedust)*bin_area;
+					for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+						exponent += exp(-binding_energy/gv.bin[nd].chrg(nz).tedust)*
+							bin_area*gv.bin[nd].chrg(nz).FracPop;
 					bin_total += bin_area;
 				}
 				exponent /= bin_total;
@@ -571,8 +587,11 @@ namespace {
 		for( size_t nd=0; nd < gv.bin.size(); nd++ )
 		{
 			double bin_density = gv.bin[nd].IntArea*gv.bin[nd].cnv_H_pCM3;
-			Exp_i += exp(-E_i/gv.bin[nd].tedust)*bin_density;
-			Exp_j += exp(-E_j/gv.bin[nd].tedust)*bin_density;
+			for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+			{
+				Exp_i += exp(-E_i/gv.bin[nd].chrg(nz).tedust)*bin_density*gv.bin[nd].chrg(nz).FracPop;
+				Exp_j += exp(-E_j/gv.bin[nd].chrg(nz).tedust)*bin_density*gv.bin[nd].chrg(nz).FracPop;
+			}
 			dust_density += bin_density/(4*1e-10);
 		}
 		
@@ -1202,19 +1221,39 @@ namespace {
 			}
 	};
 
+	/**
+	 * @brief Calculates the rate of H2 dissociation in the gas phase.
+	 *
+	 * This function computes the dissociation rate of molecular hydrogen (H2) in the gas phase,
+	 * based on the provided reaction rate data.
+	 *
+	 * @param rate Pointer to a mole_reaction structure containing the reaction parameters.
+	 * NB this is not currently used, hard coded rate in place
+	 * @return The calculated dissociation rate of H2 as a double.
+	 */
 	double rh2g_dis_h2(const mole_reaction *rate)
 	{
 		DEBUG_ENTRY( "rh2g_dis_h2()" );
+		/** resolve ground and excited states when big H2 is enabled,
+		 * use ground dissociation rate here 
+		 */
 		if( h2.lgEnabled && h2.lgEvaluated && hmi.lgH2_Chemistry_BigH2 )
-		{
+		{ 
 			return h2.Average_collH2_dissoc_g;
 		}
 		else
 		{
+			/** GS reports that Palla+83 do not give this reactions. She was not able to find
+			 * the rate fits given in the call to hmrate4 in the literature.
+			 * Does comment mean we derived the rate from detailed balance?
+			 */
 			/* >>refer	H2	chemistry Palla, F., Salpeter, E.E., & Stahler, S.W., 1983, ApJ,271, 632-641 + detailed balance relation */
 			if( ! fp_equal( rate->a, 1. ) )
 			{
-				fprintf( ioQQQ, "invalid parameter for rh2g_dis_h2\n" );
+				/** this clause checked on the rate structure value but we do not
+				 * use the contents of *rate, so this is not needed
+				 */
+				fprintf( ioQQQ, " PROBLEM invalid parameter for rh2g_dis_h2\n" );
 				cdEXIT(EXIT_FAILURE);
 			}
 			return hmrate4(5.5e-29*0.5/(SAHA*3.634e-5)*sqrt(300.),0.5,5.195e4,phycon.te); 
@@ -1738,7 +1777,7 @@ namespace {
 			}
 	};
 
-	enum {exclude, base, umisthack, federman, lithium, deuterium, ti, misc, in_code, generated};
+	enum {exclude, base, umisthack, federman, lithium, deuterium, ti, misc, in_code, generated, phosphorus};
 	static int source;
 
 
@@ -1861,14 +1900,20 @@ void mole_create_react( void )
 	
 	source = deuterium;
 	read_data("mole_deuterium.dat",parse_base);
-	
-#if 0
-	source = ti;
-	read_data("mole_ti.dat",parse_base);
-#endif
+
+	/* 23 mar 01, GS adding TiO */
+	if( mole_global.lgTiO )
+	{
+		source = ti;
+		read_data("mole_ti.dat",parse_base);
+	}
 	
 	source = misc;
 	read_data("mole_misc.dat",parse_base);
+	
+	/* 25 apr 22, GS adding P-chemistry */
+	source = phosphorus;
+	read_data("mole_Phosphorus.dat",parse_base);
 
 	/* Load null reaction to delete real rate from database */
 	if (!mole_global.lgProtElim) 
@@ -2430,6 +2475,7 @@ STATIC void newreact(const char label[], const char fun[], double a, double b, d
 
 	const char *rateLabelPtr = rate->label.c_str();
 	
+	/* conservation check uses data in chem_species.dat */
 	ASSERT(lgReactBalance(rate)); /* Verify rate conserves particles and charge */
 	
 	rate->udfastate = ABSENT;
@@ -2775,7 +2821,9 @@ STATIC bool lgReactBalance(const shared_ptr<mole_reaction> &rate)
 	{
 		fprintf(stderr,"Reaction %s charge out of balance by %d\n",
 				  rate->label.c_str(),dcharge);
-		lgOK = false;
+		fprintf(ioQQQ,"Reaction %s charge out of balance by %d\n",
+			rate->label.c_str(),dcharge);
+		  lgOK = false;
 	}
 	
 	for( nNucs_i it = nel.begin(); it != nel.end(); ++it )
@@ -2790,7 +2838,11 @@ STATIC bool lgReactBalance(const shared_ptr<mole_reaction> &rate)
 					  rate->label.c_str(),sign==1?"destroys":"creates",
 					  sign*it->second,
 					  it->first->label().c_str() );
-			lgOK = false;
+			fprintf(ioQQQ,"Error: reaction %s %s %d of element %s\n",
+					rate->label.c_str(),sign==1?"destroys":"creates",
+					sign*it->second,
+					it->first->label().c_str() );
+			  lgOK = false;
 		}
 	}
 	return lgOK;

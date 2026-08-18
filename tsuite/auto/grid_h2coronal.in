@@ -10,8 +10,8 @@ hden 0
 # use all databases
 database H2
 database chianti levels max
-database stout  levels max
-species "Fe+" levels=all
+# disable maxing out the Stout database for now as it uses too much memory
+# database stout  levels max
 #
 # must include cosmic ray background since going below 1e4 K
 cosmic ray background

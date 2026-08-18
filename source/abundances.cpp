@@ -1,8 +1,7 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*AbundancesPrt print all abundances, both gas phase and grains */
 /*AbundancesSet sets initial abundances after parameters are entered by reading input */
-/*AbundancesTable interpolate on table of points to do 'element table' command, */
 /*PrtElem print chemical composition at start of calculation */
 #include "cddefines.h"
 #include "phycon.h"
@@ -231,10 +230,9 @@ void AbundancesSet(void)
 	{
 		for( nelem=ipHELIUM; nelem < LIMELM; ++nelem )
 		{
-			if( abund.lgAbunTabl[nelem] )
+			if( abund.AbunTab[nelem].nvals() > 0 )
 			{
-				abund.GasPhase[nelem] = (realnum)(AbundancesTable(radius.Radius,
-				  radius.depth,nelem+1));
+				abund.GasPhase[nelem] = abund.AbunTab[nelem].tabval(radius.Radius, radius.depth);
 			}
 		}
 	}
@@ -477,75 +475,3 @@ STATIC void PrtElem(
 	}
 	return;
 }
-
-
-/*AbundancesTable interpolate on table of points to do 'element table' command, */
-double AbundancesTable(double r0, 
-  double depth, 
-  long int iel)
-{
-	bool lgHit;
-	long int j;
-	double frac, 
-	  tababun_v, 
-	  x;
-
-	DEBUG_ENTRY( "AbundancesTable()" );
-	/* interpolate on table of points to do 'element table' command, based 
-	 * on code by K Volk, each line is log radius and abundance. */
-
-	/* interpolate on radius or depth? */
-	if( abund.lgAbTaDepth[iel-1] )
-	{
-		/* depth key appeared = we want depth */
-		x = log10(depth);
-	}
-	else
-	{
-		/* use radius */
-		x = log10(r0);
-	}
-
-	/* this will be reset below, but is here as a safety check */
-	tababun_v = -DBL_MAX;
-
-	if( x < abund.AbTabRad[0][iel-1] || x >= abund.AbTabRad[abund.nAbunTabl-1][iel-1] )
-	{
-		fprintf( ioQQQ, " requested radius outside range of AbundancesTable\n" );
-		fprintf( ioQQQ, " radius was%10.2e min, max=%10.2e%10.2e\n", 
-		  x, abund.AbTabRad[0][iel-1], abund.AbTabRad[abund.nAbunTabl-1][iel-1] );
-		cdEXIT(EXIT_FAILURE);
-	}
-
-	else
-	{
-		lgHit = false;
-		j = 1;
-
-		while( !lgHit && j <= abund.nAbunTabl - 1 )
-		{
-			if( abund.AbTabRad[j-1][iel-1] <= (realnum)x && 
-				abund.AbTabRad[j][iel-1] > (realnum)x )
-			{
-				frac = (x - abund.AbTabRad[j-1][iel-1])/(abund.AbTabRad[j][iel-1] - 
-				  abund.AbTabRad[j-1][iel-1]);
-				tababun_v = abund.AbTabFac[j-1][iel-1] + frac*
-				  (abund.AbTabFac[j][iel-1] - abund.AbTabFac[j-1][iel-1]);
-				lgHit = true;
-			}
-			++j;
-		}
-
-		if( !lgHit )
-		{
-			fprintf( ioQQQ, " radius outran dlaw table scale, requested=%6.2f largest=%6.2f\n", 
-			  x, abund.AbTabRad[abund.nAbunTabl-1][iel-1] );
-			cdEXIT(EXIT_FAILURE);
-		}
-	}
-
-	/* got it, now return value, not log of density */
-	tababun_v = exp10(tababun_v);
-	return( tababun_v );
-}
-

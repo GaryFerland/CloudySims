@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #include "cddefines.h"
@@ -78,12 +78,12 @@ void TauZero( EmissionList::reference t )
 
 	/* total optical depth in all overlapping lines to illuminated face,
 	 * used for pumping */
-	t.TauCon() = opac.taumin;
+	t.TauCon() = TAUMIN;
 
 	/* inward and total line optical depths */
-	/* >>chng 03 feb 14, from 0 to opac.taumin */
-	t.TauIn() = opac.taumin;
-	t.TauInSpecific() = opac.taumin;
+	/* >>chng 03 feb 14, from 0 to TAUMIN */
+	t.TauIn() = TAUMIN;
+	t.TauInSpecific() = TAUMIN;
 
 	/* total optical depths */
 	t.TauTot() = 1e20f;

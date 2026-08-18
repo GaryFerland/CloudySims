@@ -1,0 +1,297 @@
+title dust-free dense PDR
+set save prefix "pdr_no_dust"
+# This started as one of the tests in Rollig et al. 2007, A&A, 467, 187 
+# but with no dust or depletion to test TiO, PN, PO chemistry. A high density is
+# needed to allow molecules to form. There is little Balmer continuum opacity
+# since grains are not present, so we extend to a large column density.
+#
+# commands controlling continuum =========
+# Use the Draine 1978 field, for a semi-infinite slab we have to use half
+# the requested value, so the actual value
+# they want for the model is actually twice the value below
+table draine 5
+extinguish 24
+cosmic rays background
+set chemistry TiO on
+#
+# commands for density & abundances =========
+# hydrogen density 
+hden 7.
+#
+# commands controlling geometry  =========
+#
+# other commands for details     =========
+failures 3
+# This sets the gas kinetic temperature to a constant 50 Kelvin
+constant temperature 50 linear
+stop column density 22
+stop temperature off
+#
+# commands controlling output    =========
+print line optical depths 
+save performance ".per"
+save overview ".ovr"
+save continuum ".con"
+save leiden lines ".lin"
+save leiden ".lei"
+save dr ".dr" 
+save molecules ".mol"
+save monitors ".asr"
+save chemistry rates ".COr" "CO"
+save chemistry rates ".H2r" "H2"
+save chemistry rates ".H2a" "H2" all
+save chemistry rates ".H2ds" "H2" destruction
+save chemistry rates ".H2cr" "H2" creation
+save chemistry rates ".H2ca" "H2" catalytic 
+save secondaries ".sec"
+save species column densities ".col" all
+#
+# commands giving the monitors    =========
+## >> chng 20 sep 06 change default error to acknowledge stability of ISM chemistry
+monitor set error 0.1
+##
+## >>chng 25 aug 11, from -7.101 to -4.67, Sim without dust incr column density
+monitor line luminosity "Si 2" 34.8046m  -4.67
+## >>chng 25 aug 11, from -8.676 to -3.941, Sim without dust incr column density
+monitor "H2O " 538.142m line intensity -3.941
+## >>chng 25 aug 11, from -7.889 to -8.621, Sim without dust incr column density
+monitor "HNC " 1652.90m  line intensity -8.621 
+## >>chng 25 aug 11, from -8.233 to -12.03, Sim without dust incr column density
+monitor "HCS+" 1755.88m  -12.03 line intensity
+## >>chng 25 aug 11, from -7.348 to -8.167, Sim without dust incr column density
+monitor "CS  " 3058.86m  -8.167 line intensity
+## >>chng 25 aug 11, from -7.281 to -6.069, Sim without dust incr column density
+monitor "CO  " 2600.05m  -6.069 line intensity
+## >>chng 25 aug 11, from -6.455 to -5.091, Sim without dust incr column density
+monitor "CO  " 1300.05m  -5.091 line intensity
+## >>chng 25 aug 11, from -6.139 to -4.55, Sim without dust incr column density
+monitor "CO  " 866.727m  -4.55 line intensity
+## >>chng 25 aug 11, from -6.213 to -4.189, Sim without dust incr column density
+monitor "CO  " 650.074m  -4.189 line intensity
+## >>chng 25 aug 11, from -6.529 to -3.927, Sim without dust incr column density
+monitor "CO  " 520.089m  -3.927 line intensity
+## >>chng 25 aug 11, from -7 to -3.732, Sim without dust incr column density
+monitor "CO  " 433.438m  -3.732 line intensity
+## >>chng 25 aug 11, from -7.524 to -3.587, Sim without dust incr column density
+monitor "CO  " 371.549m  -3.587 line intensity
+## >>chng 25 aug 11, from -8.094 to -3.484, Sim without dust incr column density
+monitor "CO  " 325.137m  -3.484 line intensity
+## >>chng 25 aug 11, from -7.557 to -4.939, Sim without dust incr column density
+monitor "^13CO" 906.599m  -4.939 line intensity
+## >>chng 25 aug 11, from -7.915 to -7.051, Sim without dust incr column density
+monitor "CN  " 880.858m  -7.051  line intensity
+#
+# Ti-bearing column densities
+## >>chng 25 aug 11, from 21.9 to 14.73, Sim without dust incr column density
+monitor "TiO" column density 14.73 error 0.1
+## >>chng 25 aug 11, from 10 to 1.644, Sim without dust incr column density
+monitor column density "HNTi+" 1.644
+## >>chng 25 aug 11, from 10 to 3.612, Sim without dust incr column density
+monitor column density "TiNC+" 3.612
+## >>chng 25 aug 11, from 10 to 14.73, Sim without dust incr column density
+monitor column density "TiO" 14.73
+## >>chng 25 aug 11, from 10 to 9.06, Sim without dust incr column density
+monitor column density "TiO+" 9.06
+## >>chng 25 aug 11, from 10 to 8.933, Sim without dust incr column density
+monitor column density "TiOH+" 8.933
+## >>chng 25 aug 11, from 10 to 13.93, Sim without dust incr column density
+monitor column density "TiO2" 13.93
+## >>chng 25 aug 11, from 10 to 8.306, Sim without dust incr column density
+monitor column density "TiF+" 8.306
+## >>chng 25 aug 11, from 10 to 7.263, Sim without dust incr column density
+monitor column density "TiS" 7.263
+## >>chng 25 aug 11, from 10 to 3.236, Sim without dust incr column density
+monitor column density "TiS+" 3.236
+## >>chng 25 aug 11, from 10 to 2.072, Sim without dust incr column density
+monitor column density "HTiS+" 2.072
+# P-bearing column densities
+## >>chng 25 aug 11, from 10 to 7.174, Sim without dust incr column density
+monitor column densitty "PH" 7.174
+## >>chng 25 aug 11, from 10 to 5.229, Sim without dust incr column density
+monitor column densitty "PH+" 5.229
+## >>chng 25 aug 11, from 10 to 1.028, Sim without dust incr column density
+monitor column densitty "PH2" 1.028
+## >>chng 25 aug 11, from 10 to 5.003, Sim without dust incr column density
+monitor column densitty "PH2+" 5.003
+## >>chng 25 aug 11, from 10 to 4.108, Sim without dust incr column density
+monitor column densitty "PH3" 4.108
+## >>chng 25 aug 11, from 10 to 3.808, Sim without dust incr column density
+monitor column densitty "CP" 3.808
+## >>chng 25 aug 11, from 10 to 15.15, Sim without dust incr column density
+monitor column densitty "PN" 15.15
+## >>chng 25 aug 11, from 10 to 7.993, Sim without dust incr column density
+monitor column densitty "PN+" 7.993
+## >>chng 25 aug 11, from 10 to 11.41, Sim without dust incr column density
+monitor column densitty "PO" 11.41
+## >>chng 25 aug 11, from 10 to 7.687, Sim without dust incr column density
+monitor column densitty "PO+" 7.687
+## >>chng 25 aug 11, from 21.9 to 20.92, Sim without dust incr column density
+monitor H2 column density 20.92 error 0.1
+## >>chng 25 aug 11, from 16.97 to 18.39, Sim without dust incr column density
+monitor CO column density 18.39 error 0.1
+## >>chng 25 aug 11, from 13.77 to 16.09, Sim without dust incr column density
+monitor O2 column density 16.09 error 0.1
+## >>chng 25 aug 11, from 13.93 to 14.16, Sim without dust incr column density
+monitor OH column density 14.16 error 0.1
+## >>chng 25 aug 11, from 14.88 to 16.24, Sim without dust incr column density
+monitor SiO column density 16.24 error 0.1
+## >>chng 25 aug 11, from 11.72 to 7.721, Sim without dust incr column density
+monitor column density H2+  7.721 error 0.1
+## >>chng 25 aug 11, from 14.69 to 9.363, Sim without dust incr column density
+monitor column density H3+  9.363 error 0.1
+## >>chng 25 aug 11, from 21.9 to 20.92, Sim without dust incr column density
+monitor column density H2g  20.92 error 0.1
+## >>chng 25 aug 11, from 14 to 13.28, Sim without dust incr column density
+monitor column density H2*  13.28 error 0.1
+## >>chng 25 aug 11, from 7.918 to 5.272, Sim without dust incr column density
+monitor column density HeH+ 5.272  error 0.1
+## >>chng 25 aug 11, from 10.03 to 6.379, Sim without dust incr column density
+monitor column density "C2+"       6.379  
+## >>chng 25 aug 11, from 16.38 to 10.6, Sim without dust incr column density
+monitor column density "C2"        10.6  
+## >>chng 25 aug 11, from 10.26 to 3.172, Sim without dust incr column density
+monitor column density "C2H+"      3.172  
+## >>chng 25 aug 11, from 15.84 to 7.746, Sim without dust incr column density
+monitor column density "C2H"       7.746
+## >>chng 25 aug 11, from 12.7 to 1.457, Sim without dust incr column density
+monitor column density "C2H2"      1.457  
+## >>chng 25 aug 11, from 12.77 to 2.145, Sim without dust incr column density
+monitor column density "C2H2+"     2.145  
+## >>chng 25 aug 11, from 15.27 to 3.339, Sim without dust incr column density
+monitor column density "C3"        3.339  
+## >>chng 25 aug 11, from 13.72 to 1.508, Sim without dust incr column density
+monitor column density "C3H"       1.508  
+## >>chng 25 aug 11, from 10.47 to 5.179, Sim without dust incr column density
+monitor column density "CCl+"      5.179  
+## >>chng 25 aug 11, from 11.22 to 0.7182, Sim without dust incr column density
+monitor column density "CCl"       0.7182  
+## >>chng 25 aug 11, from 10.87 to 6.025, Sim without dust incr column density
+monitor column density "CH+"       6.025  
+## >>chng 25 aug 11, from 15.8 to 12.13, Sim without dust incr column density
+monitor column density "CH"        12.13  
+## >>chng 25 aug 11, from 10.95 to 4.874, Sim without dust incr column density
+monitor column density "CH2+"      4.874  
+## >>chng 25 aug 11, from 15.04 to 9.683, Sim without dust incr column density
+monitor column density "CH2"       9.683  
+## >>chng 25 aug 11, from 13.23 to 5.515, Sim without dust incr column density
+monitor column density "CH3+"      5.515
+## >>chng 25 aug 11, from 14.94 to 8.742, Sim without dust incr column density
+monitor column density "CH3"       8.742  
+## >>chng 25 aug 11, from 9.846 to 1.694, Sim without dust incr column density
+monitor column density "CH4+"      1.694  
+## >>chng 25 aug 11, from 14.86 to 6.355, Sim without dust incr column density
+monitor column density "CH4"       6.355  
+## >>chng 25 aug 11, from 11.51 to 1.776, Sim without dust incr column density
+monitor column density "CH5+"      1.776  
+## >>chng 25 aug 11, from 15.67 to 11.88, Sim without dust incr column density
+monitor column density "CN"        11.88  
+## >>chng 25 aug 11, from 10.69 to 7.468, Sim without dust incr column density
+monitor column density "CS+"       7.468  
+## >>chng 25 aug 11, from 17.06 to 12.77, Sim without dust incr column density
+monitor column density "CS"        12.77  
+## >>chng 25 aug 11, from 12.04 to 8.004, Sim without dust incr column density
+monitor column density "H2Cl+"     8.004  
+## >>chng 25 aug 11, from 10.42 to 9.016, Sim without dust incr column density
+monitor column density "H2O+"      9.016  
+## >>chng 25 aug 11, from 14.05 to 15.96, Sim without dust incr column density
+monitor column density "H2O"       15.96  
+## >>chng 25 aug 11, from 11.41 to 9.752, Sim without dust incr column density
+monitor column density "H3O+"      9.752  
+## >>chng 25 aug 11, from 11.29 to 7.998, Sim without dust incr column density
+monitor column density "HCl+"      7.998  
+## >>chng 25 aug 11, from 13.41 to 12.68, Sim without dust incr column density
+monitor column density "HCl"       12.68  
+## >>chng 25 aug 11, from 15.2 to 10.68, Sim without dust incr column density
+monitor column density "HCN"       10.68  
+## >>chng 25 aug 11, from 12.59 to 3.652, Sim without dust incr column density
+monitor column density "HCNH+"     3.652  
+## >>chng 25 aug 11, from 12.87 to 8.63, Sim without dust incr column density
+monitor column density "HCO+"      8.63  
+## >>chng 25 aug 11, from 14.06 to 7.836, Sim without dust incr column density
+monitor column density "HCS+"      7.836 
+## >>chng 25 aug 11, from 15.12 to 10.49, Sim without dust incr column density
+monitor column density "HNC"       10.49
+## >>chng 25 aug 11, from 11.91 to 5.607, Sim without dust incr column density
+monitor column density "HNO"       5.607  
+## >>chng 25 aug 11, from 12.68 to 6.107, Sim without dust incr column density
+monitor column density "HS+"       6.107  
+## >>chng 25 aug 11, from 13.67 to 12.4, Sim without dust incr column density
+monitor column density "HS"        12.4  
+## >>chng 25 aug 11, from 12.49 to 5.748, Sim without dust incr column density
+monitor column density "N2+"       5.748  
+## >>chng 25 aug 11, from 17.44 to 16.32, Sim without dust incr column density
+monitor column density "N2"        16.32  
+## >>chng 25 aug 11, from 13.92 to 6.59, Sim without dust incr column density
+monitor column density "N2H+"      6.59
+## >>chng 25 aug 11, from 10.62 to 8.587, Sim without dust incr column density
+monitor column density "N2O"       8.587
+## >>chng 25 aug 11, from 15.42 to 10.1, Sim without dust incr column density
+monitor column density "NH"        10.1  
+## >>chng 25 aug 11, from 10.31 to 6.479, Sim without dust incr column density
+monitor column density "NH2+"      6.479  
+## >>chng 25 aug 11, from 14.67 to 9.973, Sim without dust incr column density
+monitor column density "NH2"       9.973  
+## >>chng 25 aug 11, from 12.38 to 6.975, Sim without dust incr column density
+monitor column density "NH3+"      6.975
+## >>chng 25 aug 11, from 14.8 to 9.387, Sim without dust incr column density
+monitor column density "NH3"       9.387  
+## >>chng 25 aug 11, from 10.94 to 3.725, Sim without dust incr column density
+monitor column density "NH4+"      3.725  
+## >>chng 25 aug 11, from 13.57 to 14.69, Sim without dust incr column density
+monitor column density "NO"        14.69
+## >>chng 25 aug 11, from 11.19 to 7.146, Sim without dust incr column density
+monitor column density "NS+"       7.146  
+## >>chng 25 aug 11, from 14.14 to 12.33, Sim without dust incr column density
+monitor column density "NS"        12.33
+## >>chng 25 aug 11, from 9.509 to 4.374, Sim without dust incr column density
+monitor column density "OCN"       4.374  
+## >>chng 25 aug 11, from 11.07 to 13.09, Sim without dust incr column density
+monitor column density "OCS"       13.09  
+## >>chng 25 aug 11, from 10.33 to 7.256, Sim without dust incr column density
+monitor column density "OH+"       7.256  
+## >>chng 25 aug 11, from 12.23 to 9.648, Sim without dust incr column density
+monitor column density "SiH"       9.648  
+## >>chng 25 aug 11, from 10.19 to 7.239, Sim without dust incr column density
+monitor column density "SiH2+"     7.239  
+## >>chng 25 aug 11, from 12.61 to 5.773, Sim without dust incr column density
+monitor column density "SiN+"      5.773  
+## >>chng 25 aug 11, from 13.66 to 9.765, Sim without dust incr column density
+monitor column density "SiN"       9.765  
+## >>chng 25 aug 11, from 11.16 to 9.951, Sim without dust incr column density
+monitor column density "SiOH+"     9.951
+## >>chng 25 aug 11, from 9.981 to 10.19, Sim without dust incr column density
+monitor column density "SO+"       10.19  
+## >>chng 25 aug 11, from 12.67 to 14.81, Sim without dust incr column density
+monitor column density "SO"        14.81  
+## >>chng 25 aug 11, from -4.682 to -7.796, Sim without dust incr column density
+monitor line luminosity "C  2" 157.636m -7.796
+## >>chng 25 aug 11, from -5.105 to -6.286, Sim without dust incr column density
+monitor line luminosity "C  1" 370.269m -6.286
+## >>chng 25 aug 11, from -5.477 to -6.911, Sim without dust incr column density
+monitor line luminosity "C  1" 609.590m -6.911
+## >>chng 25 aug 11, from -5.721 to -2.477, Sim without dust incr column density
+monitor line luminosity "O  1" 63.1679m -2.477
+## >>chng 25 aug 11, from -7.243 to -3.85, Sim without dust incr column density
+monitor line luminosity "O  1" 145.495m -3.85
+monitor temperature "H" 50 error 0.05
+monitor temperature "H+" 50 error 0.05
+monitor temperature "H2" 50 error 0.05
+monitor temperature "H2O" 50 error 0.05
+monitor temperature "CO+" 50 error 0.05
+monitor temperature "TeNe" 50 error 0.050
+monitor temperature "" 50 error 0.050
+monitor 21cm temperature mean 50 error 0.1
+monitor 21cm temperature optical 50 error 0.1
+monitor 21cm temperature spin 50 error 0.1
+monitor itrzn 1.939
+monitor nzone 373 
+## >>chng 25 aug 11, from -8.829 to -7.279, Sim without dust incr column density
+monitor "SiS " 4127.23m -7.279 line intensity
+## >>chng 25 aug 11, from -8.799 to -6.917, Sim without dust incr column density
+monitor "SiS " 3301.81m -6.917 line intensity
+# pdr_mpDust.in
+# class pdr  
+# ========================================
+# 
+
+

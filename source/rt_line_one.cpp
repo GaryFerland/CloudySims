@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*RT_line_escape do line radiative transfer,
  * evaluates escape and destruction probability */
@@ -18,6 +18,7 @@
 #include "iso.h"
 #include "wind.h"
 #include "geometry.h"
+#include "taulines.h"
 
 /*RT_line_pumping pumping by external and locally emitted radiation fields */
 STATIC void RT_line_pumping(
@@ -111,12 +112,15 @@ STATIC void RT_line_escape(
 		throw cloudy_abort("large negative optical depth");
 	}
 
+	auto TauIn = t.Emis().TauIn();
+	auto TauTot = t.Emis().TauTot();
+
 	if( cosmology.lgDo )
 	{
 		/* Sobolev escape */
 		if( conv.lgFirstSweepThisZone && lgGoodTau )
 		{
-			realnum tau_Sobolev =  t.Emis().TauTot();
+			realnum tau_Sobolev =  TauTot;
 
 			if( tau_Sobolev < 1E-5 )
 			{
@@ -144,7 +148,7 @@ STATIC void RT_line_escape(
 			// value is used, or use other means to handle overlap
 			if( 0 && 
 				 t.Emis().ipFine()>=0 && ipLineCenter>0 && 
-				 ipLineCenter<rfield.nfine && rfield.lgOpacityFine )
+				 ipLineCenter<rfield.nfine )
 			{
 				OpacityEffective = rfield.fine_opac_zone[ipLineCenter];
 			}
@@ -183,7 +187,7 @@ STATIC void RT_line_escape(
 		/* incomplete redistribution with wings */
 		if( conv.lgFirstSweepThisZone && lgGoodTau )
 		{
-			t.Emis().Pesc() = (realnum)esc_PRD( t.Emis().TauIn(), t.Emis().TauTot(), t.Emis().damp() );
+			t.Emis().Pesc() = (realnum)esc_PRD( TauIn, TauTot, t.Emis().damp() );
 
 			/* >>chng 03 jun 07, do not clobber esp prob when line is masing -
 			* this had effect of preventing total escape prob from getting larger than 1 */
@@ -204,7 +208,7 @@ STATIC void RT_line_escape(
 			/* >>chng 01 mar -6, escsub will call any of several esc prob routines,
 			* depending of how core is set.  We always want core-only for this option,
 			* so call  esca0k2(tau) directly */
-			t.Emis().Pesc() = (realnum)esc_CRDcore( t.Emis().TauIn(), t.Emis().TauTot() );
+			t.Emis().Pesc() = (realnum)esc_CRDcore( TauIn, TauTot );
 
 			if( pestrk > 0.f && t.Emis().Pesc() < 1.f )
 				t.Emis().Pesc() = min( 1.f, t.Emis().Pesc() + pestrk );
@@ -221,7 +225,7 @@ STATIC void RT_line_escape(
 		/* complete redistribution with damping wings */
 		if( conv.lgFirstSweepThisZone && lgGoodTau )
 		{
-			t.Emis().Pesc() = (realnum)esc_CRDwing( t.Emis().TauIn(), t.Emis().TauTot(), t.Emis().damp() );
+			t.Emis().Pesc() = (realnum)esc_CRDwing( TauIn, TauTot, t.Emis().damp() );
 
 			if( pestrk > 0.f && t.Emis().Pesc() < 1.f )
 				t.Emis().Pesc() = min( 1.f, t.Emis().Pesc() + pestrk );
@@ -289,11 +293,9 @@ STATIC void RT_line_fine_opacity(
 	long int ipLineCenter = t.Emis().ipFine() + rfield.ipFineConVelShift;
 
 	/* define fine opacity fine grid fine mesh */
-	/* rfield.lgOpacityFine flag set false with no fine opacities command */
 	/* opacities can be negative if masers are allowed */
-	ASSERT (conv.lgLastSweepThisZone);
 	if( ipLineCenter < 0 || abs(t.Emis().PopOpc()) < SMALLFLOAT ||
-		ipLineCenter>rfield.nfine || !rfield.lgOpacityFine )
+		ipLineCenter>rfield.nfine )
 	{
 		return;
 	}
@@ -307,12 +309,9 @@ STATIC void RT_line_fine_opacity(
 	 * which is realnum */
 	realnum opac_line = (realnum)t.Emis().PopOpc() * t.Emis().opacity() / DopplerWidth;
 
-	// this is effective optical depth to this point. Do not do line if 
-	// this product is less than SMALLFLOAT
+	// this is effective optical depth to this point.
 	// negative optical depth due to maser effect are allowed.
 	double dTauEffec = opac_line*radius.depth_x_fillfac;
-	if( abs(dTauEffec) < SMALLFLOAT )
-		return;
 
 	/* core width of optically thick line, do 4x with exponential Doppler core,
 	 * must be at least one cell, but profile is symmetric */
@@ -401,7 +400,8 @@ void RT_line_one_escape(
 	bool lgShield_this_zone,
 	/* Stark escape probability to be added to Pesc */
 	realnum pestrk,
-	realnum DopplerWidth )
+	realnum DopplerWidth,
+	bool )
 {
 	DEBUG_ENTRY( "RT_line_one_escape()" );
 
@@ -460,14 +460,10 @@ void RT_line_one_escape(
 void RT_line_one_fine(
 	/* the em line we will work on  */
 	const TransitionProxy &t,
-	/* this is option to not include line self shielding across this zone.
-	 * this can cause pump to depend on zone thickness, and leads to unstable
-	 * feedback in some models with the large H2 molecule, due to Solomon
-	 * process depending on zone thickness and level populations. */
-	bool /* lgShield_this_zone */,
-	/* Stark escape probability to be added to Pesc */
+	bool,
 	realnum /* pestrk */ ,
-	realnum DopplerWidth )
+	realnum DopplerWidth,
+	bool lgKeepLyman )
 {
 	DEBUG_ENTRY( "RT_line_one_fine()" );
 
@@ -481,6 +477,9 @@ void RT_line_one_fine(
 	/* line damping constant at current temperature  */
 	t.Emis().damp() = t.Emis().dampXvel() / DopplerWidth;
 	ASSERT( t.Emis().damp() > 0. );
+
+	if( !lgKeepLyman )
+		return;
 
 	/* option to keep track of population values during calls,
 	 * print out data to make histogram */

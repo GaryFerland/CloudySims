@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*PrtZone print out individual zone results, call by iter_end_check at very
  * end of zone calculations */
@@ -30,6 +30,7 @@
 #include "rfield.h"
 #include "freebound.h"
 #include "dense.h"
+#include "taulines.h"
 
 void PrtZone(void)
 {
@@ -437,23 +438,49 @@ void PrtZone(void)
 	{
 		for( size_t nd=0; nd < gv.bin.size(); nd++ )
 		{
+			double TotHeat = 0.;
+			for( long nz=0; nz < gv.bin[nd].nChrg; ++nz )
+			{
+				const ChargeBin& gptr = gv.bin[nd].chrg(nz);
+				TotHeat += gptr.FracPop*(gptr.GasHeatPhotoElCS + gptr.GasHeatThermCS);
+			}
+
 			/*  Change things so the quantum heated dust species are marked with an
-			*  asterisk just after the name (K Volk)
-			*  added QHMARK here and in the write statement */
+			 *  asterisk just after the name (K Volk)
+			 *  added QHMARK here and in the write statement */
 			chQHMark = (char)(( gv.bin[nd].lgQHeat && gv.bin[nd].lgUseQHeat ) ? '*' : ' ');
-			fprintf( ioQQQ, "%-12.12s%c  DustTemp",gv.bin[nd].chDstLab, chQHMark);
-			fprintf(ioQQQ,PrintEfmt("%9.2e", gv.bin[nd].tedust));
-			fprintf( ioQQQ, " Pot Volt");
-			fprintf(ioQQQ,PrintEfmt("%9.2e", gv.bin[nd].dstpot*EVRYD));
+			fprintf( ioQQQ, "%-12.12s%c  Pot (Volt)",gv.bin[nd].chDstLab, chQHMark);
+			fprintf(ioQQQ,PrintEfmt("%10.3e", gv.bin[nd].dstpot*EVRYD));
 			fprintf( ioQQQ, " Chrg (e)");
-			fprintf(ioQQQ,PrintEfmt("%9.2e", gv.bin[nd].AveDustZ));
-			fprintf( ioQQQ, " drf cm/s");
-			fprintf(ioQQQ,PrintEfmt("%9.2e", gv.bin[nd].DustDftVel));
-			fprintf( ioQQQ, " Heating:");
-			fprintf(ioQQQ,PrintEfmt("%9.2e", gv.bin[nd].GasHeatPhotoEl));
+			fprintf(ioQQQ,PrintEfmt("%10.3e", gv.bin[nd].AveDustZ));
+			fprintf( ioQQQ, " drift vel (cm/s)");
+			fprintf(ioQQQ,PrintEfmt("%10.3e", gv.bin[nd].DustDftVel));
+			fprintf( ioQQQ, " Heating (erg/cm^3/s)");
+			fprintf(ioQQQ,PrintEfmt("%10.3e", TotHeat));
 			fprintf( ioQQQ, " Frac tot");
-			fprintf(ioQQQ,PrintEfmt("%9.2e", gv.bin[nd].GasHeatPhotoEl/thermal.htot));
+			fprintf(ioQQQ,PrintEfmt("%10.3e", TotHeat/thermal.htot));
 			fprintf( ioQQQ, "\n" );
+			fprintf( ioQQQ, "               " );
+			for( long nz=0; nz < gv.bin[nd].nChrg; ++nz )
+			{
+				const ChargeBin& gptr = gv.bin[nd].chrg(nz);
+				fprintf( ioQQQ, "nz=%2ld Zg=%4ld Pop", nz, gptr.DustZ);
+				fprintf(ioQQQ,PrintEfmt("%10.3e", gptr.FracPop));
+				fprintf( ioQQQ, " Temp");
+				fprintf(ioQQQ,PrintEfmt("%10.3e", gptr.tedust));
+				fprintf( ioQQQ, " Heat(%%)");
+				TotHeat = gptr.FracPop*(gptr.GasHeatPhotoElCS + gptr.GasHeatThermCS);
+				fprintf(ioQQQ,"%5.1f", 100.*TotHeat/thermal.htot);
+				if( nz < gv.bin[nd].nChrg-1 )
+				{
+					if( (nz%2) == 0 )
+						fprintf( ioQQQ, "      " );
+					else
+						fprintf( ioQQQ, "\n               " );
+				}
+				else
+					fprintf( ioQQQ, "\n" );
+			}
 		}
 	}
 	/* >>chng 00 apr 20, moved save-out of quantum heating data to qheat(), by PvH */

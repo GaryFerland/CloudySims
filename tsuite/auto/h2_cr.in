@@ -208,7 +208,8 @@ monitor "^13CO" 906.599m  -20.91 line intensity
 ## >>chng 20 jul 21, from -21.49 to -21.47, update CR H2 dissoc as per  2020RNAAS...4...78S
 ## >>chng 21 sep 11, from -21.47 to -22.46, LAMDA update
 ## >>chng 21 sep 15, from -22.46 to -21.41, go back to unresolved model
-monitor "CN  " 880.858m  -21.41  line intensity
+## >>chng 25 jan 15, from -21.41 to -21.45, GS removes destabilizing reactions, updates others to current UMIST
+monitor "CN  " 880.858m  -21.45  line intensity
 # 
 # h2_cr.in
 # class limit  

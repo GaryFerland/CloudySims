@@ -1,0 +1,69 @@
+title test large iso sequence model atom
+#
+# commands controlling continuum =========
+blackbody 5e4
+ionization parameter -2
+CMB
+#
+# commands for density & abundances =========
+hden = 2.3
+eden = 2.3
+metals .3 log
+#
+# commands controlling geometry  =========
+sphere
+stop zone 10
+#
+# other commands for details     =========
+database H-like levels large element hydrogen
+database He-like levels large element helium
+#
+# commands controlling output    =========
+print every 1
+database H-like levels print
+save monitors "func_iso_large.asr"
+save performance "func_iso_large.per"
+save dr "func_iso_large.dr"
+save overview "func_iso_large.ovr"
+save line labels "func_iso_large.lbl"
+#
+# commands giving the monitors    =========
+##
+monitor line intensity "H  1" 1215.67A -1.603
+##
+monitor line intensity "H  1" 1025.72A -3.405
+##
+monitor line intensity "H  1" 6562.80A air -2.508
+##
+monitor line intensity "H  1" 1.87510m air -3.382
+##
+monitor line intensity "H  1" 4.05115m air -3.980
+##
+monitor line intensity "H  1" 911.782A index=1, 960 -6.629 ## 1^2S - n=180
+##
+monitor line intensity "H  1" 3646.43A air index=2, 960 -7.457 ## 2^2S - n=180
+##
+monitor line intensity "He 1" 584.334A -3.013
+##
+monitor line intensity "He 1" 537.030A -3.745
+##
+monitor line intensity "He 1" 1.08302m air index=2, 5 -4.108
+##
+monitor line intensity "He 1" 2.05813m air -5.099
+##
+monitor line intensity "He 1" 504.268A vacuum index=1, 1781 -7.383 ## 1^1S - n=180
+##
+monitor line intensity "He 1" 2599.91A air index=2, 1781 -9.158 ## 2^3S - n=180
+##
+monitor line intensity "He 1" 3121.18A air index=3, 1781 -9.648 ## 2^1S - n=180
+# 
+# func_iso_large.in
+# class function
+# ========================================
+# 
+
+this model tests the large model atoms for the iso sequences.
+the large models are used for H I and He I.
+monitor lines from both low-lying and Rydberg levels to test the full model.
+the lines from Rydberg states as well as the He I 10830 line are ambiguous
+so this also exercises line disambiguation

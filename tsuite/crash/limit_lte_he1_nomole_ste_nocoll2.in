@@ -36,7 +36,10 @@ save overview "limit_lte_he1_nomole_ste_nocoll2.ovr"
 save performance "limit_lte_he1_nomole_ste_nocoll2.per"
 save heating "limit_lte_he1_nomole_ste_nocoll2.het" 
 save cooling "limit_lte_he1_nomole_ste_nocoll2.col" 
-save dr "limit_lte_he1_nomole_ste_nocoll2.dr" 
+save dr "limit_lte_he1_nomole_ste_nocoll2.dr"
+save fits "limit_lte_he1_nomole_ste_nocoll2.fit"
+save xspec atable "limit_lte_he1_nomole_ste_nocoll2.atb"
+save iron element "limit_lte_he1_nomole_ste_nocoll2.fe" last separate
 # limit_lte_he1_nomole_ste_nocoll2.in 
 # class limit 
 # ========================================

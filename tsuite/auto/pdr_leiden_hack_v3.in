@@ -34,7 +34,8 @@ save monitors "pdr_leiden_hack_v3.asr"
 save leiden lines "pdr_leiden_hack_v3.lin"
 save leiden "pdr_leiden_hack_v3.lei"
 save dr "pdr_leiden_hack_v3.dr" 
-save grain temperature "pdr_leiden_hack_v3.grn"
+save grain temperature "pdr_leiden_hack_v3.grnr"
+save grain temperature average "pdr_leiden_hack_v3.grn"
 save overview "pdr_leiden_hack_v3.ovr"
 save heating "pdr_leiden_hack_v3.het"
 save cooling "pdr_leiden_hack_v3.col"
@@ -68,7 +69,8 @@ monitor O2 column density 17.65 error 0.1
 ## >>chng 10 jun 17, from 15.18 to 14.48, fix botches due to recent dBase cooling changes
 ## >>chng 10 aug 25, from 14.48 to 15.36, bugfix r4165 & r4167
 ## >>chng 11 nov 16, from 15.36 to 15.25, adjust newmole monitors
-monitor OH column density 15.25 error 0.2
+## >>chng 25 may 25, from 15.25 to 14.46, limit to UMIST Te extrapolation
+monitor OH column density 14.46 error 0.2
 ## 
 ## >>chng 05 jun 26, from 19.96 to 22.22, make Federman chem the default
 ## >>chng 05 jul 02, from 22.22 to 21.04, A_V zoning was not exact
@@ -158,7 +160,8 @@ monitor itrzn 5.149
 ## >>chng 13 aug 20, from 544 to 535, enable D chem by default
 ## >>chng 13 sep 17, from 535 to 541, D chem off by default
 ## >>chng 23 may 15, from 541 to 525, GS updates 21 reactions to UMIST 2012
-monitor nzone 525 error 0.01
+## >>chng 26 jun 02, from 525 to 530, Fix M1 label
+monitor nzone 530 error 0.01
 ##
 ## >>chng 13 jun 27, from -8.869 to -6.631, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.

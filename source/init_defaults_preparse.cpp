@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*InitDefaultsPreparse initialization at start of simulation, called from cloudy
 * before parser, sets initial values of quantities changed by parser 
@@ -61,8 +61,10 @@ void InitDefaultsPreparse( void )
 	atmdat.lgChiantiPrint = false;
 	//Use gbar to fill in dBase transitions if they lack collision strengths
 	atmdat.lgGbarOn = true;
-	//Tells Cloudy to exclusively use experimental energies in Chianti.
-	atmdat.lgChiantiExp = true;
+
+	// by default, exclusively use experimental energy levels in Chianti.
+	atmdat.ChiantiType = t_atmdat::CHIANTI_EXP;
+
 	// Set the default number of Chianti energy levels to use for Fe for photoionization case
 	atmdat.nChiantiMaxLevelsFe = atmdat.nDefaultPhotoLevelsFe;
 	// Set the default number of Chianti energy levels to use for all other elements
@@ -263,11 +265,10 @@ void InitDefaultsPreparse( void )
 
 	abund.lgAbTaON = false;
 
-	/* option to turn off an element */
 	for( nelem=0; nelem < LIMELM; nelem++ )
 	{
 		/* option to have abundances from table */
-		abund.lgAbunTabl[nelem] = false;
+		abund.AbunTab[nelem].clear();
 	}
 
 	/* threshold for faintest heating cooling to save with save heating or 
@@ -486,6 +487,8 @@ void InitDefaultsPreparse( void )
 	/* stop iterations, used to stop time dependent command */
 	StopCalc.TempLoStopIteration = -1.;
 
+	StopCalc.TimeStop = -1.;
+
 	/* ending column densities */
 	StopCalc.HColStop = COLUMN_INIT;
 	StopCalc.colpls = COLUMN_INIT;
@@ -511,8 +514,8 @@ void InitDefaultsPreparse( void )
 	StopCalc.lgStop21cm = false;
 	/* stop when absolute value of velocity falls below this */
 	StopCalc.StopVelocity = 0.;
-	/* number of stop line commands entered */
-	StopCalc.nstpl = 0;
+	/* erase stop line commands entered */
+	StopCalc.sle.clear();
 
 	/* initialize some variables for the optimizer */
 	optimize.nIterOptim = 400;
@@ -613,9 +616,6 @@ void InitDefaultsPreparse( void )
 	* Case B command */
 	opac.tlamin = 0.f;
 
-	/* taumin command minimum optical depths for lines default 1e-20 */
-	opac.taumin = 0.f;
-
 	opac.eeFreeFreeTemp = -1.;
 
 	/* set false with no induced processes */
@@ -634,7 +634,7 @@ void InitDefaultsPreparse( void )
 		/* most continua enter as a beam rather than isotropic */
 		rfield.lgBeamed[i] = true;
 		// default is radiation from the "illuminated" face
-		rfield.Illumination[i] = Illuminate::FORWARD;
+		rfield.Illumination[i] = Illumination::FORWARD;
 		// optical depth = normal optical depth * this scale factor,
 		// is 1 / cos theta
 		rfield.OpticalDepthScaleFactor[i] = 1.;
@@ -649,9 +649,6 @@ void InitDefaultsPreparse( void )
 		rfield.lgSphericalDilution[i] = false;
 		rfield.ncont[i] = 0;
 	}
-
-	/* line overlap opacity, turn off with no fine opacity command */
-	rfield.lgOpacityFine = true;
 
 	pseudoContDef.wlLo = 1000.;
 	pseudoContDef.wlHi = 7000.;
@@ -695,6 +692,8 @@ void InitDefaultsPreparse( void )
 	}
 
 	gv.clear();
+
+	clear_lines_table();
 
 	return;
 }

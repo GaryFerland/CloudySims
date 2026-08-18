@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParseAbundances parse and read in composition as set by abundances command */
 #include "cddefines.h"
@@ -24,6 +24,28 @@ void ParseAbundances(Parser &p)
 	double absav[LIMELM];
 
 	DEBUG_ENTRY( "ParseAbundances()" );
+
+	if( p.nMatch("AVAI") )
+	{
+		/* ABUNDANCE AVAILABLE: This command makes a list of all the abundance files that were found.
+		 * It only checks for files with a file name ending with *.abn. Further checks are not
+		 * possible as these files do not have a magic number */
+
+		fprintf(ioQQQ, "\nI will now list all abundance files that were found in alphabetical order.\n");
+		fprintf(ioQQQ, "Note that it is not possible to check whether these are valid abundance files.\n\n");
+
+		vector<string> matches;
+		string basedir = "abundances"s + cpu.i().chDirSeparator();
+		string pattern = basedir + ".*\\.abn"s;
+		getFileList(matches, pattern);
+		for( string& fnam : matches )
+			(void)FindAndErase(fnam, basedir);
+		sort(matches.begin(), matches.end());
+		for( const string& fnam : matches )
+			fprintf(ioQQQ, "%s\n", fnam.c_str());
+		fprintf(ioQQQ, "\n");
+		cdEXIT(EXIT_SUCCESS);
+	}
 
 	/* abundances no longer set at reference value */
 	abund.lgAbnReference = false;

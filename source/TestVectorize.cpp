@@ -3,7 +3,7 @@
 #include "cddefines.h"
 #include "ran.h"
 #include "vectorize.h"
-#include "vectorhash.h"
+#include "vhfile.h"
 
 namespace {
 
@@ -1947,11 +1947,11 @@ namespace {
 	{
 		string test;
 		// vh128sum of an empty file...
-		CHECK( VHstring( test ) == "30a574ab9824cb4358b310345eb60ab0" );
+		CHECK( VHstring( test ) == "fe82e7d9998e9819c7ac954ea0a0ea8e" );
 		CHECK( VHstring( test ).length() == 32 );
 		// check that leading zeros are printed correctly
-		test = "aaaaaaaaaaaaaaaaaaaaaa\n";
-		CHECK( VHstring( test ) == "0ba6d0f084b09afac9413c8c59f4b2ae" );
+		test = "aaaaaaaaaaaaaaaa";
+		CHECK( VHstring( test ) == "083b4a8de8c8e989a140e51141b34615" );
 		CHECK( VHstring( test ).length() == 32 );
 	}
 }

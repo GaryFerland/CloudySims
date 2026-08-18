@@ -22,7 +22,9 @@ constant temperature 4
 stop zone 1
 #
 # commands controlling output    =========
-normalize to "o  3"  5006.84 
+#>>chng 23 oct 13 add this command to test somewhere in tsuite
+print lines vacuum
+normalize to "o  3"  5006.84 air
 save overview "func_set_ion.ovr"
 save performance "func_set_ion.per"
 save monitors "func_set_ion.asr" 

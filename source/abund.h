@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 
@@ -6,6 +6,7 @@
 #define ABUND_H_
 
 #include "module.h"
+#include "depth_table.h"
 
  /**
   AbundancesSet sets initial abundances after parameters are entered by reading input
@@ -23,17 +24,6 @@ void AbundancesPrt( void );
 */
 class Parser;
 void abund_starburst(Parser &p);
-
- /**
-  AbundancesTable interpolate on table of points to do 'element table' command, 
-  \param  r0 
-  \param  depth 
-  \param  iel
- */ 
-double AbundancesTable(double r0, 
-  double depth, 
-  long int iel);
-
 
 
 typedef struct isotope
@@ -217,27 +207,12 @@ struct t_abund : public module {
 	/* isotope fractions */
 	t_isotope IsoAbn[LIMELM];
 
-	/**lgAbunTabl says whether this element is to have its abundance
-	 *determined from a table (true) or stored constant (false)
-	 *set true with element table command */
-	bool lgAbunTabl[LIMELM], 
+	/** general flag saying whether any element has its abundance
+	 * determined from a table */
+	bool lgAbTaON;
 
-	  /** lgAbTaDepth says whether depth or radius, true is depth */
-	  lgAbTaDepth[LIMELM], 
-
-	  /** general flag saying this option turned on */
-	  lgAbTaON;
-
-#	define	LIMTABD	500
-
-	/**AbTabFac abundances for element table*/
-	realnum AbTabFac[LIMTABD][LIMELM], 
-
-	/**AbTabRad depth scale 
-	 *parameters for dlaw table command*/
-	  AbTabRad[LIMTABD][LIMELM];
-
-	long int nAbunTabl;
+	/** AbunTab: data for element abundance table*/
+	DepthTable AbunTab[LIMELM];
 
 	/** scale factors to alter abundances of elements, set with element scale */
 	realnum ScaleElement[LIMELM];

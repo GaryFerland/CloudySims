@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cddefines.h"
 #include "h2.h"
@@ -14,7 +14,8 @@ diatomics::diatomics( const string& a, const double& e_star, const double* const
 	trans(a, &states), ENERGY_H2_STAR (e_star), dense_total(abund)
 	{
 		DEBUG_ENTRY( "diatomics::diatomics()" );
-		fixit("should probably force path lower and label upper case.");
+		// fixit() is commented out to prevent initialization order fiasco
+		//fixit("should probably force path lower and label upper case.");
 		path = a;
 		label = a;
 		{

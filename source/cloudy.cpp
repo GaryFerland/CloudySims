@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*cloudy the main routine, this IS Cloudy, return 0 normal exit, 1 error exit,
  * called by maincl when used as standalone program */
@@ -26,6 +26,8 @@
 #include "ionbal.h"
 #include "called.h"
 #include "dense.h"
+#include "phycon.h"
+#include "struc.h"
 
 
 /* returns 1 if disaster strikes, 0 if everything appears ok */
@@ -160,7 +162,7 @@ bool cloudy()
 	ASSERT(lgElemsConserved());
 
 	/* find the initial temperature, punt if initial conditions outside range of code */
-	ConvInitSolution();
+	ConvInitSolution(-1.);
 
 	// create line stacks ...
 	LineStackCreate();
@@ -170,6 +172,13 @@ bool cloudy()
 
 	/* find thickness of next zone */
 	radius_next();
+
+	/* Make sure fine opacities are set up early */
+	RT_line_all( RT_line_one_fine, true );
+	/* Setting up the fine opacities changes the solution,
+	   so we need find the initial solution again. */
+	ConvInitSolution(phycon.te);
+	RT_line_all( RT_line_one_fine, true );
 
 	/* set up some zone variables, correct continuum for sphericity, 
 	 * after return, radius is equal to the inner radius, not outer radius
@@ -305,9 +314,16 @@ bool cloudy()
 		ZoneStart("init");
 
 		/* find new initial temperature, punt if initial conditions outside range of code */
-		ConvInitSolution();
+		ConvInitSolution(struc.testr[0]);
 
 		radius_next();
+
+		/* Make sure fine opacities are set up early */
+		RT_line_all( RT_line_one_fine, true );
+		/* Setting up the fine opacities changes the solution,
+	       so we need find the initial solution again. */
+		ConvInitSolution(phycon.te);
+		RT_line_all( RT_line_one_fine, true );
 	}
 
 	CloseSaveFiles( false );

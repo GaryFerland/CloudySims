@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /* test case to vary density at constant temperature, to show how line ratios change */
 #include "cddefines.h"
@@ -40,7 +40,7 @@ int main( void )
 			/* inputs */
 			cdRead( "title vary density at constant temperature"  );
 
-			sprintf(chLine,"hden %f ",hden);
+			snprintf(chLine,sizeof(chLine),"hden %f ",hden);
 			cdRead( chLine  );
 
 			cdRead( "table agn "  );
@@ -54,15 +54,15 @@ int main( void )
 				exit_status = ES_FAILURE;
 
 			/* now get the lines */
-			cdLine( "O  2" , 3726.03 , &relint , & absint  );
+			cdLine( "O  2" , 3726.03_air , &relint , & absint  );
 			fprintf(ioRES, "\t%e", relint );
-			cdLine( "O  2" , 3728.81 , &relint , & absint  );
+			cdLine( "O  2" , 3728.81_air , &relint , & absint  );
 			fprintf(ioRES, "\t%e", relint );
-			cdLine( "O  2" , 2470.34 , &relint , & absint  );
+			cdLine( "O  2" , 2470.34_air , &relint , & absint  );
 			fprintf(ioRES, "\t%e", relint );
-			cdLine( "O  2" , 7319.99 , &relint , & absint  );
+			cdLine( "O  2" , 7319.99_air , &relint , & absint  );
 			fprintf(ioRES, "\t%e", relint );
-			cdLine( "O  2" , 7330.73 , &relint , & absint  );
+			cdLine( "O  2" , 7330.73_air , &relint , & absint  );
 			fprintf(ioRES, "\t%e", relint );
 			fprintf(ioRES, "\n");
 

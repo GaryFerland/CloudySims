@@ -27,9 +27,9 @@ if( -r "skip.dat" ) {
 $list = "";
 
 # this funny sequence is to assure that the heavy jobs are upfront...
-while( defined( $input = glob("orion_hii_pdr.in blr_n13_p18_Z20.in hii_hiU_StaticSphere_noGrains.in " .
-							  "grid_h2coronal.in limit_conserve.in blr*.in time*.in dyn*.in nova*.in " .
-							  "p*.in n*.in orion*.in h2*.in limit_lowden.in func_globule.in " .
+while( defined( $input = glob("dynamics_orion_flow.in orion_hii_pdr.in limit_conserve.in blr_n13_p18_Z20.in " .
+							  "time*.in hii_hiU_StaticSphere_noGrains.in func_iso_large.in grid_h2coronal.in " .
+							  "blr*.in dyn*.in n*.in orion*.in p*.in h2*.in limit_lowden.in func_globule.in " .
 							  "limit_lte_he1_nomole_ste_nocoll2.in igm*.in *grid*.in *optimize*.in *.in") ) ) {
 #     prevent input scripts from being added twice
     if( ! ( $list =~ / $input / ) && ! ( $skip =~ / $input / ) ) {

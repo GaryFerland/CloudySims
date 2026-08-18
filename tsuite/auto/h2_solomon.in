@@ -121,7 +121,8 @@ monitor "HCS+" 1755.88m  -23.5 line intensity
 ## >>chng 15 aug 03, from -22.84 to -22.87, update LAMDA to 2015
 ## >>chng 21 sep 11, from -22.87 to -22.32, LAMDA update
 ## >>chng 23 may 15, from -22.32 to -22.37, GS updates 21 reactions to UMIST 2012
-monitor "CS  " 3058.86m  -22.37 line intensity
+## >>chng 24 apr 21, from -22.37 to -22.32, GS updates chemistry
+monitor "CS  " 3058.86m  -22.32 line intensity
 ## >>chng 13 jun 27, from -7.288 to -21.64, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 monitor "CO  " 2600.05m  -21.64 line intensity

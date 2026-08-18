@@ -660,7 +660,7 @@ monitor line luminosity "blnd"  3727 38.12
 ## >>chng 13 jul 24, wl from 1025.7A to 1025.73A, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 18, from 37.93 to 37.89, fixes to Federman shielding
 ## >>chng 17 may 25, wl from 1025.73A to 1025.72A, up Rydberg constant
-monitor line luminosity "Pump"  1025.72A 37.89
+monitor line luminosity "H  1 Pump"  1025.72A 37.89
 # 
 ## >>chng 11 aug 05, from 1.019 to 1.002, make PRD redis func for h-like ions; LY_A func is now for H only
 ## >>chng 12 oct 22, from 1.002 to 1.022, zone tau in rt_line_one

@@ -8,6 +8,8 @@
 \#*\#
 *.dep
 *.gch
+*.gcda
+*.gcno
 # LaTeX temporary files
 *.aux
 *.log
@@ -41,3 +43,4 @@ gtsuite
 ltsuite
 itsuite
 tfile
+source/lib

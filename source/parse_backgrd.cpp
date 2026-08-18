@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParseBackgrd parse options for the BACKGROUND command - this actually enters two continua*/
 #include "cddefines.h"
@@ -50,7 +50,7 @@ void ParseBackgrd(Parser &p)
 	strcpy( rfield.chSpNorm[p.m_nqh], "FLUX" );
 	/* this is an isotropic radiation field */
 	rfield.lgBeamed[p.m_nqh] = false;
-	rfield.Illumination[p.m_nqh] = Illuminate::ISOTROPIC;
+	rfield.Illumination[p.m_nqh] = Illumination::SYMMETRIC;
 
 	/* this will be the redshift */
 	z = p.FFmtRead();

@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef CONTINUUM_H_
@@ -85,10 +85,10 @@ struct t_continuum : public module {
 	realnum fbeta;
 
 	/** these are number, labels, and bounds of continuum bands
-	 * they are specified in continuum_bands.ini in the data dir */
+	 * they are specified in continuum_bands.dat in the data dir */
 	long int nContBand;
 	vector<string> chContBandLabels;
-	vector<realnum> ContBandWavelength;
+	vector<t_wavl> ContBandWavelength;
 	vector<long> ipContBandLow, ipContBandHi;
 	/** these are fractions of first and last bin to include in the 
 	 * band */

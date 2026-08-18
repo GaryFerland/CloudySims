@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParsePrint parse the print command  */
 /*prt_constants print physical constants */
@@ -303,8 +303,11 @@ void ParsePrint(
 	
 	else if( p.nMatch("PATH") )
 	{
-		/* print the path */
-		cpu.i().printDataPath();
+		string pattern;
+		p.GetQuote(pattern);
+		/* print the path, the case where the quoted string is absent will be handled in printDataPath() */
+		cpu.i().printDataPath(pattern);
+		cdEXIT(EXIT_SUCCESS);
 	}
 
 	/*else if( p.nMatch("H-LI"))*/
@@ -523,19 +526,15 @@ void ParsePrint(
 
 				/* wavelength has range option */
 				/* option to only certain print range of lines */
-				if( p.nMatch("RANG") )
+				if( p.GetRange("RANG", prt.wlSort1, prt.wlSort2) )
 				{
-					prt.wlSort1 = (realnum)p.getWave();
-
-					prt.wlSort2 = (realnum)p.getWave();
-
 					if( p.lgEOL() )
 					{
 						fprintf( ioQQQ, " There must be two numbers for the RANGE option, the lower and upper wavelength.  Sorry.\n" );
 						cdEXIT(EXIT_FAILURE);
 					}
-					if( prt.wlSort1 <0. || prt.wlSort2 <0. || 
-						prt.wlSort1 >= prt.wlSort2 )
+					if( prt.wlSort1.wavlVac() < 0. || prt.wlSort2.wavlVac() < 0. || 
+						prt.wlSort1.wavlVac() >= prt.wlSort2.wavlVac() )
 					{
 						fprintf( ioQQQ, " The lower and upper wavelength must be positive and in the correct order.  Sorry.\n" );
 						cdEXIT(EXIT_FAILURE);
@@ -543,8 +542,8 @@ void ParsePrint(
 				}
 				else
 				{
-					prt.wlSort1 = -1;
-					prt.wlSort2 = 1e30f;
+					prt.wlSort1 = -1_vac;
+					prt.wlSort2 = 1e30_vac;
 				}
 			}
 			else if( p.nMatch("INTE") )
@@ -592,8 +591,8 @@ void ParsePrint(
 
 		else if( p.nMatch("VACUUM") )
 		{
-			/* print lines vacuum - use vacuum wavelengths */
-			prt.lgPrintLineAirWavelengths = false;
+			/* this was already handled in cdRead() */
+			(void)0;
 		}
 
 		else
@@ -674,7 +673,7 @@ void ParsePrint(
 
 	else if( p.nMatch("COOL") )
 	{
-		/* print cooling array for a specified one */
+		/* print cooling array for a specified zone */
 		prt.nzdump = (long int)p.FFmtRead();
 
 		/* dump all zones if argument is zero or not present  */

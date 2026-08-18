@@ -17,7 +17,7 @@ stop zone 1
 optimize tolerance 0.03
 constant temper 4.3 vary
 optimize phymir sequential
-optimize iteration 500
+optimize iteration 750
 # the following spectrum was derived by running this sim at hden 5, t=4,
 # and T_star=51200
 # resulting eden was 5.040 and T=4, which we shall assert that we find

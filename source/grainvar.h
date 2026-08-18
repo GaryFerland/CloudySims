@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef GRAINVAR_H_
@@ -7,6 +7,7 @@
 /* grainvar.h */
 
 #include "container_classes.h"
+#include "mesh.h"
 
 /** flag that determines if quantum heating is to be taken into account in H2
  * grain surface formation rate, set this true to enable quantum heating treatment, PvH */
@@ -147,7 +148,7 @@ public:
 	long nData;             /**< number of Auger electrons with different energies */
 	vector<double> AvNr;    /**< AvNr[nData[ns]]: no. of electrons per primary ionization */
 	vector<double> Ener;    /**< Ener[nData[ns]]: energy of electron in Ryd */
-	vector< flex_arr<realnum> > y01A;/**< y0*y1 for Auger electrons */
+	vector<flex_arr<realnum>> y01A;/**< y0*y1 for Auger electrons */
 };
 
 /** this struct stores the data for the energy spectrum
@@ -170,12 +171,12 @@ public:
 		p_clear1();
 	}
 
-	unsigned int nSubShell;  /**< number of subshells of this element for which data is present */
+	unsigned int nSubShell;    /**< number of subshells of this element for which data is present */
 	vector<unsigned int> nData;/**< nData[nSubShell]: number of data points for each subshell */
-	vector<double> IonThres; /**< IonThres[nSubShell]: ionization threshold for electron in this subshell in Ryd */
-	vector< vector<double> > AvNumber;
-	                         /**< AvNumber[nSubShell][nData[ns]]: no. of electrons per primary ionization */
-	vector< vector<double> > Energy;/**< Energy[nSubShell][nData[ns]]: energy of electron in Ryd */
+	vector<double> IonThres;   /**< IonThres[nSubShell]: ionization threshold for electron in this subshell in Ryd */
+	vector<vector<double>> AvNumber;
+	                           /**< AvNumber[nSubShell][nData[ns]]: no. of electrons per primary ionization */
+	vector<vector<double>> Energy;/**< Energy[nSubShell][nData[ns]]: energy of electron in Ryd */
 };
 
 /** NB NB NB NB NB NB
@@ -183,7 +184,7 @@ public:
  * this is the data structure for all grain data that depends on the charge state
  * (i.e. all data that used to have an [NCHS] dependance in days of old),
  *
- * each data item will be referenced as:   gv.bin[nd]->chrg[nz]->data_item
+ * each data item will be referenced as:   gv.bin[nd].chrg(nz).data_item
  *
  * this structure is allocated for each charge state at run time.
  *
@@ -242,29 +243,38 @@ public:
 	double ESum2;           /**< cache for electron loss due to recombination with colliding ions */
 
 	/** grain heating */
-	realnum tedust;         /**< equilibrium temperature for this zone */
+	bool lgTdustConverged;  /**< is dust temperature converged ? */
+	double tedust;          /**< equilibrium temperature for this zone */
 	double hcon1;           /**< reminder of heating integral over incident flux, Ryd/H/s at default depl */
 	double hots1;           /**< reminder of heating integral over diffuse fields, Ryd/H/s at default depl */
-	double bolflux1;        /**< reminder of heating integral over all fields, Ryd/H/s at default depl */
 	double pe1;             /**< reminder of photoelectric heating integral, Ryd/H/s at default depl */
+	double bolflux1;        /**< reminder of heating integral over all fields, Ryd/H/s at default depl */
 	flex_arr<double> fac1;  /**< auxiliary data for GrainTemperature */
 	flex_arr<double> fac2;  /**< auxiliary data for GrainTemperature */
 
 	realnum RecomEn[LIMELM][LIMELM+1];/**< chemical energy released into grain upon impact, in Ryd */
-	realnum ChemEn[LIMELM][LIMELM+1];/**< net contribution of ion recomb to grain heating, in Ryd */
+	realnum ChemEn[LIMELM][LIMELM+1]; /**< net contribution of ion recomb to grain heating, in Ryd */
 
 	/** heating/cooling balance, all entries are valid for current zone, actual depl, and are in erg/cm^3/s */
-	double BolFlux,         /**< total photon flux absorbed, used for energy conservation test */
-	  GrainHeat,            /**< total heating of current grain type */
-	  GrainHeatColl,        /**< collisional heating of current grain type */
-	  GasHeatPhotoEl,       /**< photoelectric heating of the gas, added in GrGH 0 */
-	  GasHeatTherm,         /**< heating due to thermionic emission */
-	  GrainCoolTherm,       /**< grain cooling due to thermionic emissions, summed over charge states */
-	  ChemEnIon,            /**< net amount of energy donated by recombining ions */
-	  ChemEnH2;             /**< net amount of energy donated by H2 formation on grain surface */
+	double BolFluxCS,       /**< total photon flux absorbed, used for energy conservation test */
+	  GrainHeatCS,          /**< total heating of current grain type */
+	  GrainHeatIncCS,       /**< grain heating by incident radiation field */
+	  GrainHeatDifCS,       /**< grain heating by diffuse radiation fields */
+	  GrainHeatLyaCS,       /**< grain heating by Ly alpha, already included in GrainHeatDifCS */
+	  GrainHeatCollCS,      /**< collisional heating of current grain type */
+	  GrainHeatCollElecCS,  /**< collisional heating of current grain type by electrons only */
+	  GrainHeatCollIonsCS,  /**< collisional heating of current grain type by ions only */
+	  GrainHeatCollMolCS,   /**< collisional heating of current grain type by molecules only */
+	  GrainHeatCorCS,       /**< correction for imperfections in the n-charge state model */
+	  GrainHeatChemEnCS,    /**< net amount of energy donated by recombining ions */
+	  GrainCoolThermCS,     /**< grain cooling due to thermionic emissions */
+	  GasHeatPhotoElCS,     /**< photoelectric heating of the gas, added in GrGH 0 */
+	  GasHeatThermCS,       /**< gas heating due to thermionic emission */
+	  GasCoolCollCS;        /**< cooling of the gas by collisions with grains, added in GrGC 0 */
 
 	/** quantum heating */
-	double HeatingRate2;    /**< quantum heating by electron recomb - thermionic cooling, erg/H/s, default depl */
+	double HeatingRate1;    /**< quantum heating by electron recomb - thermionic cooling, erg/H/s, default depl */
+	double HeatingRate2;    /**< quantum heating due to molecule/ion collisions, erg/H/s, default depl */
 };
 
 /** NB NB NB NB NB NB
@@ -272,7 +282,7 @@ public:
  * this is the data structure for all grain data that depends on grain type
  * (i.e. all data that can differ from one grain bin to the next),
  *
- * each data item will be referenced as:   gv.bin[nd]->data_item
+ * each data item will be referenced as:   gv.bin[nd].data_item
  *
  * this structure is allocated for each grain bin at run time.
  *
@@ -307,16 +317,17 @@ public:
 	char chDstLab[13];      /**< label for the species */
 	double eec;             /**< pow(dustp[0],-0.85), needed for electron esacpe length */
 	double eyc;             /**< 1./AvRadius + 1.e7, needed for electron yield */
-	realnum dustp[5],       /**< 0 = specific weight (g/cm^3), 1 = mol. weight (amu), 2 = default abundance,
-	                         *   3 = default depletion, 4 = fraction of the mass in this grain bin */
-	  AvRadius,             /**< average grain radius, <a^3>/<a^2>, in cm */
+	double dustp[6];        /**< 0 = specific weight (g/cm^3), 1 = mol. weight (amu), 2 = default abundance,
+	                         *   3 = default depletion, 4 = fraction of the mass in this grain bin
+							 *   5 = fraction of the surface area in this grain bin */
+	realnum AvRadius,       /**< average grain radius, <a^3>/<a^2>, in cm */
 	  AvArea,               /**< average grain surface area, <4pi*a^2>, in cm^2, CURRENTLY NOT USED */
-	  AvVol,                /**< average grain volume, <4/3pi*a^3>, in cm^3 */
-	  IntRadius,            /**< integrated grain radius Int(a), normalized per H, in cm/H */
+	  AvVol;                /**< average grain volume, <4/3pi*a^3>, in cm^3 */
+	double IntRadius,       /**< integrated grain radius Int(a), normalized per H, in cm/H */
 	  IntArea,              /**< integrated grain surface area Int(4pi*a^2), normalized per H, in cm^2/H */
 	  IntVol,               /**< integrated grain volume Int(4/3pi*a^3), normalized per H, in cm^3/H */
-	  elmAbund[LIMELM],     /**< chemical composition, abundance at default depl, see comment below */ 
-	  atomWeight,           /**< molecular weight per atom, in amu */
+	  elmAbund[LIMELM];     /**< chemical composition, abundance at default depl, see comment below */ 
+	realnum atomWeight,     /**< molecular weight per atom, in amu */
 	  Tsublimat,            /**< sublimation temperature */
 	  DustWorkFcn,          /**< work function, in Ryd */
 	  BandGap,              /**< gap between valence and conduction band, in Ryd */
@@ -335,7 +346,7 @@ public:
 	realnum dstfactor,      /**< grain depletion factor, dep from GRAINS command */
 	  dstAbund,             /**< grain abundance in zone, dstfactor*GrainMetal*GrnVryDpth(radius) */
 	  GrnDpth;              /**< grain abundance scale factor in zone, GrnStdDpth(radius),
-				 *   used by set PAH constant / H0 commands */
+							 *   used by set PAH constant / H0 commands */
 	double cnv_H_pGR,       /**< grain unit conversion, \<unit\>/H (default depl) -> \<unit\>/grain */
 	  cnv_H_pCM3,           /**< grain unit conversion, \<unit\>/H (default depl) -> \<unit\>/cm^3 (actual depl) */
 	  cnv_CM3_pGR,          /**< grain unit conversion, \<unit\>/cm^3 (actual depl) -> \<unit\>/grain */
@@ -344,8 +355,6 @@ public:
 	  cnv_GR_pCM3;          /**< grain unit conversion, \<unit\>/grain -> \<unit\>/cm^3 (actual depl) */
 
 	/** grain opacities */
-	double RSFCheck;        /**< save resolution scale factor for later check */
-
 	/** >>chng 02 dec 30, separated scattering cross section and asymmetry factor (1-g),
 	 * NB NB NB -- note that pure_sc1 DOES NOT contain the asymmetry factor, while gv.dstsc DOES !!! */
 	vector<double> dstab1;  /**< absorption cross section per grain species, for default depl */
@@ -358,10 +367,9 @@ public:
 	  dstslp[NDEMS],        /**< auxiliary array for spline interpolation */
 	  dstslp2[NDEMS];       /**< auxiliary array for inverse spline interpolation */
 
-	bool lgTdustConverged;  /**< is dust temperature converged ? */
-	realnum tedust,         /**< equilibrium temperature for this zone */
-	  TeGrainMax,           /**< highest equilibrium temperature as a function of radius */
-	  avdust;               /**< Integral(Tdust*dReff) for average equilibrium temperature, OUTPUT ONLY */
+	double tedust;          /**< equilibrium temperature for this zone */
+	double TeGrainMax;      /**< highest equilibrium temperature as a function of radius, OUTPUT ONLY */
+	realnum avdust;         /**< Integral(Tdust*dReff) for average equilibrium temperature, OUTPUT ONLY */
 
 	/** grain charging, photoelectric effect, thermionic emissions
 	 *
@@ -369,6 +377,8 @@ public:
 	 * integral charge states. To implement this, certain parameters have been moved into the ChargeBin
 	 * structure, currently limiting the maximum number of charge states the code can handle. For details see:
 	 * >>refer	grain	physics	van Hoof et al., 2001, ASP Conf. Series 247, p. 353 (astroph/0107183) */
+	bool lgChrgConverged;   /**< did grain charge algorithm converge ? */
+	bool lgChTdConverged;   /**< did the combined grain charge/temperature algorithm converge ? */
 	long LowestZg;          /**< lowest charge a grain can ever have, in e */
 	long nfill;             /**< remember how far the flex_arr's in the ShellData were filled in */
 	vector<ShellData> sd;   /**< specific data for each atomic shell in this grain material */
@@ -387,15 +397,10 @@ public:
 	double AccomCoef[LIMELM];/**< accommodation coefficient, needed for collisional heating of grain */
 
 	/** heating/cooling balance, all entries are valid for current zone, actual depl, and are in erg/cm^3/s */
-	double BolFlux,         /**< total photon flux absorbed, used for energy conservation test */
-	  GrainCoolTherm,       /**< grain cooling due to thermionic emissions, summed over charge states */
-	  GasHeatPhotoEl,       /**< photoelectric heating of the gas, added in GrGH 0 */
-	  GrainHeat,            /**< total heating of current grain type */
-	  GrainHeatColl,        /**< collisional heating of current grain type */
-	  GrainGasCool,         /**< gas cooling due to collisions with grains */
-	  ChemEn,               /**< net amount of energy donated by recombining ions */
-	  ChemEnH2,             /**< net amount of energy donated by H2 formation on grain surface */
-	  thermionic;           /**< heating due to thermionic emission */
+	double GrainHeatBin,    /**< total heating of current grain type */
+	  GrainHeatCollBin,     /**< collisional heating of current grain type */
+	  GrainCoolThermBin,    /**< grain cooling due to thermionic emissions, summed over charge states */
+	  GasHeatPhotoElBin;    /**< photoelectric heating of the gas, added in GrGH 0 */
 
 	/** quantum heating physics */
 	bool lgQHeat,           /**< is quantum heating turned on ? */
@@ -407,7 +412,6 @@ public:
 	  qnflux2;              /**< like rfield.nflux, only for max electron energy, for phiTilde and Phi */
 	double qtmin;           /**< lowest grain temperature used in calculations, set per zone */
 	double qtmin_zone1;     /**< lowest grain temperature used in calculations, initial zone */
-	double HeatingRate1;    /**< quantum heating due to molecule/ion collisions, erg/H/s, default depl */
 	double DustEnth[NDEMS], /**< grain enthalpy at dsttmp[], in Ryd/grain */
 	  EnthSlp[NDEMS],       /**< auxiliary array for spline interpolation */
 	  EnthSlp2[NDEMS];      /**< auxiliary array for inverse spline interpolation */
@@ -418,7 +422,7 @@ public:
 	double rate_h2_form_grains_ELRD;/**< H2 formation rate, Rollig et al. 2013 with Eley-Rideal effect,
 				 * units s^-1, actual depl */
 	double rate_h2_form_grains_used;/**< H2 rate actually used, evaluated in hmole.c, units s^-1, actual depl
-                                 * when multiplied with hden, this is formation rate in H2-molecules/cm^3/s */
+					 * when multiplied with hden, this is formation rate in H2-molecules/cm^3/s */
 
 	/** grain drift */
 	realnum DustDftVel,     /**< grain drift velocity for this zone */
@@ -439,7 +443,7 @@ public:
  *
  * NB NB NB NB NB NB */
 
-class GrainVar
+class GrainVar : public t_grainmesh
 {
 	void p_clear0();
 	void p_clear1();
@@ -466,20 +470,19 @@ public:
 	  lgGrainPhysicsOn,            /**< this is option to turn off all grain physics while leaving
 	                                *   the opacity in, set false with no grain physics command */
 	  lgAnyDustVary,               /**< do any of the grain abundances vary with depth */
-	  lgBakesPAH_heat;             /**< turn on simple formula for PAH heating of gas */
-	bool lgNegGrnDrg;              /**< flag set if negative grin drag force encountered */
+	  lgBakesPAH_heat;             /**< turn on simple fitting formula for PAH heating of gas */
+	bool lgNegGrnDrg;              /**< flag set if negative grain drag force encountered */
 
 	/** test logic */
-	bool lgDHetOn,                 /**< default true, turned off with GRAIN NO HEATING */
-	  lgQHeatOn;                   /**< default true, turned off with GRAIN NO QHEAT */
-
-	/** turn off grain gas collisional energy exchange, set false with 
-	 * NO GRAIN COLLISIONAL ENERGY EXCHANGE */
-	bool lgDColOn;                 /**< default true, turned off with GRAIN NO COOLING */
-
-	/** should electrons from/to grains be included in the total electron sum? 
-	 * del true, set false with no grain electrons command */
-	bool lgGrainElectrons;
+	bool lgDHetOn;                 /**< default true, turned off with GRAIN NO HEATING
+									*   this turns off photoelectric heating */
+	bool lgDColOn;                 /**< default true, turned off with GRAIN NO COOLING
+									*   as well as NO GRAIN GAS COLLISIONAL ENERGY EXCHANGE
+									*   this turns off grain gas collisional energy exchange */
+	bool lgGrainElectrons;         /**< default true, set false with NO GRAIN ELECTRONS command 
+									*   should electrons from/to grains be included in the total electron sum? */
+	bool lgQHeatOn;                /**< default true, turned off with GRAIN NO QHEAT
+									*   this turns off stochastic heating effects */
 
 	long nCalledGrainDrive;        /**< count how many times GrainDrive has been called */
 
@@ -506,10 +509,21 @@ public:
 	strg_type which_strg[MAT_TOP]; /**< defines where the emitted spectrum is stored */
 	H2_type which_H2distr[MAT_TOP];/**< defines expression for H2 ro-vib distribution at formation */
 
+	/** grain frequency mesh */
+	long nflux;                    /**< number of frequency cells in the mesh */
+	long nPositive;                /**< number of cells to include highest continuum cell with non-zero photon flux */
+
+	/** incident radiation field */
+	vector<double> flux;           /**< rfield.flux[0] rebinned onto the grain mesh */
+	vector<double> SummedCon;      /**< rfield.SummedCon rebinned onto the grain mesh */
+	vector<double> SummedDif;      /**< rfield.SummedDif rebinned onto the grain mesh */
+
 	/** grain opacities */
 	long nzone;                    /**< remember in what zone grain quantities were last updated */
-	vector<double> dstab;          /**< total absorption cross section, current depl is factored in */
-	vector<double> dstsc;          /**< total scattering cross section, current depl and asymmetry factored in */
+	vector<double> dstab0;         /**< total absorption cs, current depl is factored in, internal freq mesh */
+	vector<double> dstab;          /**< total absorption cs, current depl is factored in, regular freq mesh */
+	vector<double> dstsc0;         /**< total scattering cs, current depl and asymmetry factored in, internal mesh */
+	vector<double> dstsc;          /**< total scattering cs, current depl and asymmetry factored in, regular mesh */
 
 	/** grain charging */
 	double TotalEden;              /**< contribution to eden from all grain species, a positive number means
@@ -527,19 +541,18 @@ public:
 	realnum GrainChTrRate[LIMELM][LIMELM+1][LIMELM+1];
 	
 	/** heating/cooling balance, all entries are valid for current zone, actual depl, and are in erg/cm^3/s */
-	double GasCoolColl,            /**< cooling of the gas by collisions with all grains, summed in GrGC 0 */
+	double BolFlux,                /**< total photon flux absorbed, used for energy conservation test */
+	  GrainHeat,                   /**< total heating of all grain types, added in GraT 0 */
+	  GrainHeatInc,                /**< heating of all grains by incident continuum, added in GraI 0 */
+	  GrainHeatDif,                /**< heating of all grains by all diffuse fields (incl Lya), added in GraD 0 */
+	  GrainHeatLya,                /**< heating of all grains by Lya, added in GraL 1216 */
+	  GrainHeatColl,               /**< collisional heating of all grains, added in GraC 0 */
+	  GrainHeatChemEn,             /**< net amount of energy donated by recombining ions to all grains */
 	  GasHeatPhotoEl,              /**< heating of the gas by photoelectric effect of all grains */
 	  GasHeatTherm,                /**< heating of the gas by thermionic emissions of all grains */
 	  GasHeatNet,                  /**< net heating of the gas: PhotoEl + Therm - CoolColl */
-	  GrainHeatSum,                /**< total heating of all grain types, added in GraT 0 */
-	  GrainHeatLya,                /**< heating of all grains by Lya, added in GraL 1216 */
-	  GrainHeatDif,                /**< heating of all grains by all diffuse fields (incl Lya), added in GraD 0 */
-	  GrainHeatInc,                /**< heating of all grains by incident continuum, added in GraI 0 */
-	  GrainHeatCollSum,            /**< collisional heating of all grains, added in GraC 0 */
-	  GrainHeatChem;               /**< net amount of energy donated by recombining ions to all grains */
+	  GasCoolColl;                 /**< cooling of the gas by collisions with all grains, summed in GrGC 0 */
 
-	double dHeatdT;                /**< gas heating derivative for all grains, in erg/cm^3/s/K */
-	
 	realnum GrainHeatScaleFactor;  /**< scale factor for PE heating as per Allers et al. 2005 (SET GRAINS HEAT) */
 
 	realnum TotalDustHeat,         /**< total PE heating integrated over model, erg/s or erg/cm^2/s, actual depl */
@@ -566,7 +579,7 @@ public:
 	vector<realnum> SilicateEmission;/**< silicate emission from this zone only */
 
 	/** per bin grain data */
-	vector<GrainBin> bin;          /**< pointers to memory allocated for bins */
+	vector<GrainBin> bin;          /**< data for individual grain size bins */
 };
 
 extern GrainVar gv;

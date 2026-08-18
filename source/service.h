@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 
 #ifndef SERVICE_H_
@@ -6,6 +6,8 @@
 
 #include <string>
 #include <vector>
+
+class mystream;
 
 extern const double pos_pow10[];
 extern const int max_pow10;
@@ -20,53 +22,56 @@ void trimTrailingWhiteSpace( char *str );
 void trimWhiteSpace( string &str );
 
 // helper routine for DataParser -- efficiently read double
-void FPRead(istringstream& iss, const string& s, double& value);
+void FPRead(mystream& ms, const string& s, double& value);
 
 // helper routine for DataParser -- efficiently read sys_float
-inline void FPRead(istringstream& iss, const string& s, sys_float& value)
+inline void FPRead(mystream& ms, const string& s, sys_float& value)
 {
 	double x;
-	FPRead(iss, s, x);
+	FPRead(ms, s, x);
 	value = sys_float(x);
 }
 
 // helper routine for DataParser -- efficiently read signed 64-bit integer
-void IntRead(istringstream& iss, const string& s, long long& value);
+void IntRead(mystream& ms, const string& s, long long& value);
 
 // helper routine for DataParser -- efficiently read long
-inline void IntRead(istringstream& iss, const string& s, long& value)
+inline void IntRead(mystream& ms, const string& s, long& value)
 {
 	long long x;
-	IntRead(iss, s, x);
+	IntRead(ms, s, x);
 	value = long(x);
 }
 
 // helper routine for DataParser -- efficiently read int
-inline void IntRead(istringstream& iss, const string& s, int& value)
+inline void IntRead(mystream& ms, const string& s, int& value)
 {
 	long long x;
-	IntRead(iss, s, x);
+	IntRead(ms, s, x);
 	value = int(x);
 }
 
 // helper routine for DataParser -- efficiently read unsigned 64-bit integer
-void IntRead(istringstream& iss, const string& s, unsigned long long& value);
+void IntRead(mystream& ms, const string& s, unsigned long long& value);
 
 // helper routine for DataParser -- efficiently read unsigned int
-inline void IntRead(istringstream& iss, const string& s, unsigned long& value)
+inline void IntRead(mystream& ms, const string& s, unsigned long& value)
 {
 	unsigned long long x;
-	IntRead(iss, s, x);
+	IntRead(ms, s, x);
 	value = (unsigned long)x;
 }
 
 // helper routine for DataParser -- efficiently read unsigned int
-inline void IntRead(istringstream& iss, const string& s, unsigned int& value)
+inline void IntRead(mystream& ms, const string& s, unsigned int& value)
 {
 	unsigned long long x;
-	IntRead(iss, s, x);
+	IntRead(ms, s, x);
 	value = (unsigned int)x;
 }
+
+// helper routine for DataParser -- read C++-style string
+void StringRead(mystream& ms, const string& s, string& str);
 
 /** split_mode defines how the routine Split generates substrings
  * SPM_RELAX: multiple adjacent separators will be coalesced into one
@@ -102,11 +107,12 @@ void service(double tau, double a, double beta);
 
 /** wr_block: write <len> bytes of data from buffer <*ptr> into open binary FILE* <fdes> */
 inline void wr_block(const void *ptr,
-		     size_t len,
-		     FILE *fdes)
+					 size_t len,
+					 FILE *fdes,
+					 const string& fnam = string())
 {
 	if( fwrite(ptr,len,size_t(1),fdes) != 1 ) {
-		printf( "wr_block: error writing to file\n" );
+		fprintf( ioQQQ, "wr_block: error writing to file %s\n", fnam.c_str() );
 		fclose(fdes);
 		cdEXIT(EXIT_FAILURE);
 	}
@@ -114,21 +120,22 @@ inline void wr_block(const void *ptr,
 
 /** wr_block: write <len> bytes of data from buffer <*ptr> into unformatted file <fnam> */
 inline void wr_block(const void *ptr,
-		     size_t len,
-		     const char *fnam)
+					 size_t len,
+					 const string& fnam)
 {
 	FILE *fdes = open_data( fnam, "wb" );
-	wr_block( ptr, len, fdes );
+	wr_block( ptr, len, fdes, fnam );
 	fclose(fdes);
 }
 
 /** rd_block: read <len> bytes of data into buffer <*ptr> from open binary FILE* <fdes> */
 inline void rd_block(void *ptr,
-		     size_t len,
-		     FILE *fdes)
+					 size_t len,
+					 FILE *fdes,
+					 const string& fnam)
 {
 	if( fread(ptr,len,size_t(1),fdes) != 1 ) {
-		printf( "rd_block: error reading from file\n" );
+		fprintf( ioQQQ, "rd_block: error reading from file %s\n", fnam.c_str() );
 		fclose(fdes);
 		cdEXIT(EXIT_FAILURE);
 	}
@@ -136,12 +143,18 @@ inline void rd_block(void *ptr,
 
 /** rd_block: read <len> bytes of data into buffer <*ptr> from unformatted file <fnam> */
 inline void rd_block(void *ptr,
-		     size_t len,
-		     const char *fnam)
+					 size_t len,
+					 const string& fnam)
 {
 	FILE *fdes = open_data( fnam, "rb", AS_LOCAL_ONLY );
-	rd_block( ptr, len, fdes );
+	rd_block( ptr, len, fdes, fnam );
 	fclose(fdes);
 }
+
+/** the routine FileSize() returns FS_UNKNOWN if the file size could not be determined */
+const uintmax_t FS_UNKNOWN = static_cast<uintmax_t>(-1);
+
+/** FileSize: portable and reliable way to get the size of a file */
+uintmax_t FileSize(const string& fpath);
 
 #endif /* SERVICE_ */

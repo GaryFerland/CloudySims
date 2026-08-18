@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*PresTotCurrent determine the gas and line radiation pressures for current conditions,
  * this sets values of pressure.PresTotlCurr, also calls tfidle */
@@ -23,7 +23,16 @@
 #include "doppvel.h"
 #include "rt_escprob.h"
 
-/* this sets values of pressure.PresTotlCurr, also calls tfidle */
+/**
+ * @brief Evaluates the current total pressure and related physical quantities in the simulation zone.
+ *
+ * This function computes the total pressure at the current zone, including contributions from gas, ram, turbulent,
+ * magnetic, and radiation (line and continuum) pressures. It also updates related quantities such as radiative
+ * acceleration, enthalpy density, and tracks the dominant contributors to the radiation pressure. The function
+ * manages evaluation frequency based on simulation state and flags, and ensures physical consistency of the results.
+ * 
+ * The function is central to the equation of state calculations in the simulation and is called once per zone.
+ */
 void PresTotCurrent()
 {
 	static long int
@@ -234,12 +243,6 @@ void PresTotCurrent()
 				/* wind.DiskRadius normally zero, set with disk option on wind command */
 				(1.-wind.DiskRadius/reff) );
 		}
-
-#		if 0
-		if( fudge(-1) )
-			fprintf(ioQQQ,"DEBUG pressure_total updates AccelTotalOutward to %.2e grav %.2e\n",
-			wind.AccelTotalOutward , wind.AccelGravity );
-#		endif
 	}
 
 	/* must always evaluate H La width since used elsewhere */

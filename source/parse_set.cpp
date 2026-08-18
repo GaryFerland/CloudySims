@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*ParseSet scan parameters off SET command */
 #include "cddefines.h"
@@ -14,7 +14,6 @@
 #include "secondaries.h"
 #include "rfield.h"
 #include "ionbal.h"
-#include "numderiv.h"
 #include "dynamics.h"
 #include "iso.h"
 #include "predcont.h"
@@ -89,13 +88,13 @@ void ParseSet(Parser &p)
 			if( chString_quotes_lowercase.length() > NCHLAB-1 )
 				fprintf( ioQQQ, " WARNING blend label is too long, truncated to: \"%s\"\n", blnd.chLabel.c_str() );
 		}
-		blnd.wave = p.FFmtRead();
+		blnd.wave = p.getWave();
 		if( p.lgEOL() )
-			blnd.wave = -1_r;
+			blnd.wave = -1_vac;
 		else
-			if( blnd.wave < 0_r )
+			if( blnd.wave.wavlVac() < 0_r )
 			{
-				fprintf( ioQQQ, " PROBLEM invalid wavelength supplied: %g\n", blnd.wave );
+				fprintf( ioQQQ, " PROBLEM negative wavelength supplied\n" );
 				cdEXIT(EXIT_FAILURE);
 			}
 		/* option to quietly ignore blend if database lines are not loaded for any atomic species in the blend */
@@ -271,6 +270,28 @@ void ParseSet(Parser &p)
 			}
 		}
 
+		else if( p.nMatch("TIO") )
+		{
+			/* turn on TiO chemistry, which is off by default */
+			if( p.nMatch(" ON ") )
+			{
+				mole_global.lgTiO = true;
+			}
+			else if( p.nMatch(" OFF") )
+			{
+				mole_global.lgTiO = false;
+			}
+			else
+			{
+				/* this is the default when command used - true */
+				mole_global.lgTiO = true;
+			}
+		}
+
+		else if( p.nMatch("STAN") )
+		{
+			mole_global.lgStancil = true;
+		}
 		else
 		{
 			/* should not have happened ... */
@@ -934,41 +955,6 @@ void ParseSet(Parser &p)
 			if (hmi.Tad <= 10. && !p.nMatch("LINE"))
 				hmi.Tad = exp10(hmi.Tad);
 		}
-
-		else if (p.nMatch("FRAC"))
-		{
-			/* this is special option to force H2 abundance to value for testing
-			 * this factor will multiply the hydrogen density to become the H2 density
-			 * no attempt to conserve particles, or do the rest of the molecular equilibrium
-			 * set consistently is made */
-			hmi.H2_frac_abund_set = p.FFmtRead();
-			if (p.lgEOL())
-				p.NoNumb("H2 fractional abundance");
-
-			/* a number <= 0 is the log of the ratio */
-			if (hmi.H2_frac_abund_set <= 0.)
-				hmi.H2_frac_abund_set = exp10(hmi.H2_frac_abund_set);
-			/* don't let it exceed 0.5 */
-			/* >>chng 03 jul 19, from 0.5 to 0.4999, do not want atomic density exactly zero */
-			hmi.H2_frac_abund_set = MIN2(0.49999, hmi.H2_frac_abund_set);
-		}
-#if 0
-		else if( p.nMatch("FORM") && p.nMatch("SCAL") )
-		{
-			/* this is special option to scale H2 formation rate. 
-			 * In the fully molecular or fully ionized limits,
-			 * this should supercede the above "FRAC" option because
-			 * it allows the same thing without breaking the chemistry
-			 * or any conservation checks */
-			hmi.H2_formation_scale = p.FFmtRead();
-			if (p.lgEOL())
-				p.NoNumb("H2 formation scale");
-
-			/* a number <= 0 is the log of the ratio */
-			if (hmi.H2_formation_scale <= 0.)
-				hmi.H2_formation_scale = exp10(hmi.H2_frac_abund_set);
-		}
-#endif
 	}
 
 	/* this is a scale factor that changes the n(H0)*1.7e-4 that is added to the
@@ -1731,12 +1717,6 @@ void ParseSet(Parser &p)
 		}
 	}
 
-	else if (p.nMatch("NUME") && p.nMatch("DERI"))
-	{
-		/* this is an option to use numerical derivatives for heating and cooling */
-		NumDeriv.lgNumDeriv = true;
-	}
-
 	else if (p.nMatch("PATH"))
 	{
 		fprintf(ioQQQ, " The SET PATH command is no longer supported.\n");
@@ -1892,7 +1872,7 @@ void ParseSet(Parser &p)
 		if (p.nMatch("RESO"))
 		{
 			/* set resolution, get factor that will multiply continuum resolution that
-			 * is contained in the file continuum_mesh.ini */
+			 * is contained in the mesh definition file */
 			(void)p.FFmtRead();
 			if (p.lgEOL())
 			{

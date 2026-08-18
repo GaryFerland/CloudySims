@@ -83,7 +83,7 @@ while( defined( $input = glob("*.in") ) )
 			}
 			if( /botch/ )
 			{
-				if( /itrz/ || /zone/ || /iter/ )
+				if( /itrz/ || /itrm/ || /zone/ || /iter/ || /cstp/ || /csls/ )
 				{
 					print PERFORMANCE "$output: $_";
 				}
@@ -141,6 +141,19 @@ while( defined( $input = glob("*.in") ) )
 			{
 				print WARNING "$output: $_";
 				++$nWarnMsg;
+			}
+			if( /==Line Disambiguation==/ )
+			{
+# cannot use do-while for the inner loop as the "last" command would break out of the outer loop then 
+				print WARNING "$output: $_";
+				++$nWarnMsg;
+				while( <OUTP> ) {
+					print WARNING "$output: $_";
+					++$nWarnMsg;
+					if( /======/ ) {
+						last;
+					}
+				}
 			}
 		}
 		close( OUTP );

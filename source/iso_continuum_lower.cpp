@@ -1,4 +1,4 @@
-/* This file is part of Cloudy and is copyright (C)1978-2023 by Gary J. Ferland and
+/* This file is part of Cloudy and is copyright (C)1978-2025 by Gary J. Ferland and
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 /*iso_continuum_lower - limit max prin. quan. no. due to continuum lowering processes	*/
 #include "cddefines.h"
@@ -110,6 +110,12 @@ void iso_continuum_lower( long ipISO, long nelem )
 
 	/* Lyman lines can not be greater than original allocation or critical pqn. */
 	iso_ctrl.nLyman[ipISO] = MIN2( nc, iso_ctrl.nLyman_max[ipISO]);
+
+	/* H-like Lyman lines can not be greater than original allocation or critical pqn. */
+	if( ipISO == ipH_LIKE )
+	{
+		iso_ctrl.nLymanHLike[nelem] = MIN2( nc, iso_ctrl.nLymanHLike_max[nelem]);
+	}
 
 	// zero out cooling and heating terms involving unused levels
 	for( long ipHi=sp->numLevels_local; ipHi < sp->numLevels_max; ++ipHi )

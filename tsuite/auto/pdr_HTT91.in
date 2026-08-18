@@ -39,7 +39,7 @@ Database H-like Lyman pumping off
 turbulence 1.5 km/sec
 # 
 # commands controlling output    =========
-normalize to 157.636m "C  2" 
+normalize to "C  2" 157.636m 
 # uv lines are strongly pumped by stellar continuum, break out contribution
 print line pump
 print line optical depths
@@ -208,7 +208,8 @@ monitor temperature "H2" 39.06
 ## >>chng 13 nov 22, from 11.13 to 11.25, collapsed branch merge r8609
 ## >>chng 13 dec 09, from 11.25 to 11.13, force nfine to nfine_malloc
 ## >>chng 16 apr 26, from 11.13 to 11.07, replace \"case B\" with \"Database H-like Lyman pumping off\"
-monitor column density HeH+ 11.07 error 0.1
+## >>chng 25 jan 26, from 11.07 to 10.99, merge master updated cham"
+monitor column density HeH+ 10.99 error 0.1
 ##
 ## >>chng 11 jul 15 add following molecular column densities
 ## >>chng 11 jul 15, from 10 to 10.72, add column densities
@@ -254,7 +255,10 @@ monitor column density C3   9.139
 ## >>chng 14 aug 28, from 8.781 to 8.761, EleyRideal H2 formation
 ## >>chng 20 aug 03, from 8.761 to 8.81, update H3+ rates Indriola+ 2012
 ## >>chng 20 sep 06, from 8.81 to 8.836, further update to McCall CR-related rate
-monitor column density SiO  8.836
+## >>chng 24 apr 21, from 8.836 to 8.552, GS updates chemistry
+## >>chng 24 jun 08, from 8.552 to 8.683, GS rm 3 TiO reactions
+## >>chng 25 jul 11, from 8.683 to 8.607, GS Si chemistry, UMIST 2022
+monitor column density SiO  8.607
 ## >>chng 11 jul 15, from 10 to 12.38, add column densities
 ## >>chng 11 nov 16, from 12.38 to 12.36, adjust newmole monitors
 ## >>chng 12 apr 09, from 12.36 to 13.23, update CR backbround to Indriolo+07, ~8x larger
@@ -270,7 +274,8 @@ monitor column density OH   12.88
 ## >>chng 17 feb 10, from 5.814 to 5.97, default size of N 1 model atom set to 50
 ## >>chng 21 sep 11, from 5.97 to 6.032, LAMDA update
 ## >>chng 21 nov 04, from 6.032 to 5.96, update mole co data
-monitor column density CN   5.96
+## >>chng 25 jul 11, from 5.96 to 9.26, GS Si chemistry, UMIST 2022
+monitor column density CN   9.26
 ## >>chng 11 jul 15, from 10 to 12.72, add column densities
 ## >>chng 12 apr 09, from 12.72 to 12.69, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 13 dec 23, from 12.69 to 12.66, C to external databases
@@ -294,7 +299,8 @@ monitor column density CH   12.66
 ## >>chng 18 jun 17, from 418 to 397, improve zone 0 thermal relaxation
 ## >>chng 18 jun 20, from 397 to 389, #bugfixes at front face r12134:12136
 ## >>chng 21 apr 10, from 389 to 384, update chemistry and lamba
-monitor nzone 384 error 0.01
+## >>chng 25 jul 11, from 384 to 413, GS Si chemistry, UMIST 2022
+monitor nzone 413 error 0.01
 ##
 ## >>chng 02 dec 13, from 4.6 to 3.5, better conv
 ## >>chng 03 may 17, from 4.6 to 5.5, actual 4.85, reeval pump
@@ -413,7 +419,8 @@ monitor "^13CO" 906.599m  -10.27 line intensity
 ## >>chng 21 sep 11, from -16.95 to -17.56, LAMDA update
 ## >>chng 21 sep 15, from -17.56 to -16.87, go back to unresolved model
 ## >>chng 21 nov 04, from -16.87 to -16.93, update mole co data
-monitor "CN  " 880.858m  -16.93  line intensity
+## >>chng 25 jul 11, from -16.93 to -13.92, GS Si chemistry, UMIST 2022
+monitor "CN  " 880.858m  -13.92  line intensity
 ##
 # pdr_HTT91.in
 # class pdr 
