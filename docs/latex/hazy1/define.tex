@@ -333,19 +333,21 @@ relatively little dependence on cloud properties.
 \section{Intensity \& luminosity cases }
 \label{sec:IntensityLuminosityCases}
 
-The external radiation field is usually specified with
+The code allows the user to define zero, one, or even multiple external radiation fields.
+An external radiation field is usually specified with
 two different commands.
 One specifies the shape of the incident radiation field.
 A second command will set the brightness of the light.
 \Cloudy\ must be able to deduce the flux of photons
 [cm$^{-2}$ s$^{-1}$]
 striking the illuminated face of the cloud.
-There are two ways to specify the brightness of the external radiation field.
+There are two ways to specify the brightness of an external radiation field.
 
 \subsection{Luminosity case}
 
-If the brightness of the external radiation field is specified as a ``luminosity'',
-the light radiated by the central object into $4\pi$~sr, then it is also
+If the brightness of at least one of the external radiation fields is specified as a ``luminosity'',
+the light radiated by the central object into $4\pi$~sr, then the luminosity case will be in effect.
+In that case it is also
 necessary to specify an inner or starting radius so that the flux of
 photons can be derived.
 
@@ -359,10 +361,12 @@ The external radiation field can be specified as an ``intensity'',
 the energy
 incident upon a unit area of cloud, with units
 something like photons cm$^{-2}$~s$^{-1}$.
+If there is no external radiation field, or if all external radiation fields are specified as an intensity,
+then the intensity case will be in effect.
 It is not necessary to specify a starting radius in the intensity case
 although it is possible to do so.
 Line intensities (energy emitted per
-unit area of cloud, related to $4\pi J$)), are predicted in this case.
+unit area of cloud, related to $4\pi J$), are predicted in this case.
 
 If the ``intensity'' of the external radiation field is set then a starting radius does not
 need to be specified.
