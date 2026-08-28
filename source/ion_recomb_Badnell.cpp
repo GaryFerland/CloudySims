@@ -665,7 +665,12 @@ void Badnell_rec_init( void )
 		"UTA/nrb00_h_co26ic12.dat",
 		"UTA/nrb00_h_ni27ic12.dat",
 		"UTA/nrb00_h_cu28ic12.dat",
-		"UTA/nrb00_h_zn29ic12.dat"
+		"UTA/nrb00_h_zn29ic12.dat",
+	    // No files for ipGALLIUM through ipXENON.
+        "","","","","","",
+        "","","","","","",
+        "","","","","","",
+        "","","","","",""
 	};
 	//End of modification
 
@@ -816,9 +821,18 @@ void Badnell_rec_init( void )
 				}   
 			}
 
+			// If the data file is NOT opened above, the INDX value will not be increased from 0 inside the while loop,
+			// and maxINDX will be set to 0, which will cause an assertion failure below.
+
 			maxINDX =INDX;
-			ASSERT( maxINDX > 0 );
-			ASSERT( maxINDX < BIGGEST_INDEX_TO_USE );
+
+			// Kenny Gilmore and Francisco Guzman 8-6-2026 Since we do not have data files for ipGALLIUM through ipXENON,
+			// we have bypassed the ASSERT statements below, if lgFlag is false.
+			if(lgFlag)
+			{
+				ASSERT( maxINDX > 0 );
+				ASSERT( maxINDX < BIGGEST_INDEX_TO_USE );
+			}
 			/* reset INDX */
 			INDX = 0;
 			lgFlag = true;
@@ -885,9 +899,14 @@ void Badnell_rec_init( void )
 					lgFlag = false;
 			}  
 			fclose(ioDATA);
-			ASSERT( maxINDX > 0 );
-			ASSERT( maxINDX < BIGGEST_INDEX_TO_USE );
-			ASSERT( max_N_of_data > 0 );
+			// Kenny Gilmore and Francisco Guzman 8-6-2026 Since we do not have data files for ipGALLIUM through ipXENON,
+			// we have bypassed the ASSERT statements below, if lgFlag is false.
+			if(lgFlag)
+			{
+				ASSERT( maxINDX > 0 );
+				ASSERT( maxINDX < BIGGEST_INDEX_TO_USE );
+				ASSERT( max_N_of_data > 0 );
+			}
 
 			if( max_N_of_data < iso_sp[ipHE_LIKE][nelem].n_HighestResolved_max + iso_sp[ipHE_LIKE][nelem].nCollapsed_max )
 			{

@@ -4074,9 +4074,9 @@ STATIC void SaveResults(FILE* ioPUN)
 	fprintf( ioPUN, "BEGIN COLUMN DENSITIES\n" );
 
 	/* this dumps out the whole array,*/
-	/* following loop relies on LIMELM being 30, assert it here in case
+	/* following loop relies on LIMELM being 54, assert it here in case
 	 * this is ever changed */
-	ASSERT( LIMELM == 30 );
+	ASSERT( LIMELM == 54 );
 	/* this order of indices is to keep 30 as the fastest variable,
 	 * and the 32 (LIMELM+1) as the slower one */
 	for( nelem=0; nelem<LIMELM; nelem++ )
@@ -4085,7 +4085,7 @@ STATIC void SaveResults(FILE* ioPUN)
 		{
 			fprintf( ioPUN, " %10.3e", mean.xIonMean[0][nelem][ion][0] );
 			/* throw line feed every 10 numbers */
-			if( nelem==9|| nelem==19 || nelem==29 )
+			if( nelem==9|| nelem==19 || nelem==29 || nelem==39 || nelem==49)
 			{
 				fprintf( ioPUN, "\n" );
 			}

@@ -268,7 +268,7 @@ struct t_opac : public module {
 	 * last dim is atomic number of element, 0 for H
 	 *\endverbatim
 	 */
-	ipElement[LIMELM][LIMELM][7][3], 
+	ipElement[LIMELM][LIMELM][NSHELLS][3],
 
 	/** in1 is [NI] excited state*/
 	in1[3], 

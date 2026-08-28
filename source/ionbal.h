@@ -58,7 +58,7 @@ void IonNelem(bool lgPrintIt, long int nelem);
 void IonHelium( void );
 
 /** max number of shells we ever have to deal with */
-static const int NSHELLS = 7;
+//static const int NSHELLS = 7;
 
 /** class for vars dealing with ionization balance */
 class t_ionbal : public module

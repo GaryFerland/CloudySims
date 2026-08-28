@@ -366,8 +366,8 @@ double t_ADfA::phfit(long int nz,
 	 ****************************************************************************** */
 
 	crs = 0.0;
-	if( nz < 1 || nz > 30 )
-	{ 
+	// Kenny Gilmore and Francisco Guzman 4/6/2026: Increased nz > 30 to LIMELN(54)
+	if( nz < 1 || nz > LIMELM ) 	{
 		return crs;
 	}
 
@@ -388,7 +388,8 @@ double t_ADfA::phfit(long int nz,
 		return crs;
 	}
 
-	ASSERT( is >= 1 && is <= 7 );
+	//4-14-2026, Kenny Gilmore: Changed 1 and 7 to 10, to allow for 4s shell in 4th row elements
+	ASSERT( is >= 1 && is <= 10);
 
 	double ethres = getEthresh( is, ne, nz );
 
@@ -720,6 +721,7 @@ double t_ADfA::rad_rec(long int iz,
 
 	DEBUG_ENTRY( "rad_rec()" );
 
+	/* iz > 30 - removed hardcored value with new element limit.  Kenny Gilmore 1/12/26 */
 	if( iz < 1 || iz > LIMELM )
 	{
 		fprintf( ioQQQ, " rad_rec called with insane atomic number, =%4ld\n", 

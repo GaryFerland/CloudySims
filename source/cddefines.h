@@ -335,6 +335,10 @@ const int NCHLAB = 20;
 /* Aug 19, 2025 FG: changes LIMELM to 54 */
 const int LIMELM = 54;
 
+/*Aug 25, 2026 FG:  This is the number of shells included in the ions,
+ * also used to set lengths of many vectors */
+const int NSHELLS = 10;
+
 /** the number of iso sequences now in the code */
 const int NISO = 2;
 

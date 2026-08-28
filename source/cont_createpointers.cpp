@@ -87,13 +87,13 @@ void ContCreatePointers(void)
 	}
 
 	/* we will generate a set of array indices to ionization edges for
-	 * the first thirty elements.  First set all array indices to
+	 * the elements.  First set all array indices to
 	 * totally bogus values so we will crash if misused */
 	for( long nelem=0; nelem<LIMELM; ++nelem )
 	{
 		for( long ion=0; ion<LIMELM; ++ion )
 		{
-			for( long nshells=0; nshells<7; ++nshells )
+			for( long nshells=0; nshells<NSHELLS; ++nshells )
 			{
 				for( long j=0; j<3; ++j )
 				{
@@ -1039,8 +1039,11 @@ STATIC void ipShells(
 				ASSERT( opac.ipElement[nelem][ion][nshell][1] > 0);
 			}
 		}
-
-		ASSERT( imax > 0 && imax <= 7 );
+		/* Kenny Gilmore and Francisco Guzman 6/8/2026 increased upper limit to 10 to
+		accomodate more shells in heavy elements, but this should be checked if more shells are added in the future.
+		 If this assertion fails, check that the number of shells for this ion is not greater than 8, and if it is,
+		increase the upper limit in this assertion and in the declaration of ipElement in the header file.*/
+		ASSERT( imax > 0 && imax <= 10 );
 
 		/* this will be index pointing to valence edge */
 		/* [0] is pointer to threshold in energy array */
@@ -1189,6 +1192,17 @@ STATIC long LimitSh(long int ion,
 		LimitSh_v = opac.ipElement[nelem-1][ion-1][2][0] - 1;
 
 	}
+	/* CHANGE: March 2026 Added 4p shell for Ga-Kr from old sterling branch
+	 * for the moment we keep it at 2s, but that needs to be looked at*/
+	else if( nshell == 8 )
+		/* this is 4p shell, upper limit set to 2s (as for 4s) */
+		LimitSh_v = opac.ipElement[nelem-1][ion-1][2][0] - 1;
+    else if( nshell == 9 ) // 4d
+		// TODO Rb-Pd, same as 4s for now.
+		LimitSh_v = opac.ipElement[nelem-1][ion-1][2][0] - 1;
+    else if( nshell == 10 ) // 4f
+		// TODO Ag - Xe, same as 4s for now.
+		LimitSh_v = opac.ipElement[nelem-1][ion-1][2][0] - 1;
 	else
 	{
 		fprintf( ioQQQ, " LimitSh cannot handle nshell as large as%4ld\n", 

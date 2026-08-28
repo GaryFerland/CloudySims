@@ -806,6 +806,11 @@ STATIC double Opacity_iso_photo_cs(
 			double EgammaEV = MAX2(EgammaRyd, atmdat.getIonPot(nelem, nelem)) * EVRYD;
 			crs = t_ADfA::Inst().phfit(nelem+1,1,1,EgammaEV)* 1e-18;
 			/* make sure cross section is reasonable */
+			if (crs <= 0. || crs >= 1e-10)
+			{
+				fprintf(ioQQQ, "Opacity_iso_photo_cs: Invalid cross section for H-like ion. EgammaRyd=%e, nelem=%ld, crs=%e\n",
+					EgammaRyd, nelem, crs);
+			}
 			ASSERT( crs > 0. && crs < 1e-10 );
 		}
 		else if( index < iso_sp[ipISO][nelem].numLevels_max - iso_sp[ipISO][nelem].nCollapsed_max )

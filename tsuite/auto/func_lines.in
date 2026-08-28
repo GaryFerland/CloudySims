@@ -5,6 +5,54 @@ species "Fe+" levels=all
 # report all species in use
 database print
 test
+element gallium on
+element germanium on
+element arsenic on
+element Selenium on
+element Bromine on
+element Krypton on
+element Rubidium on
+element Strontium on
+element Yttrium on
+element Zirconium on
+element Niobium on
+element Molybdenum on
+element Technetium on
+element Ruthenium on
+element Rhodium on
+element Palladium on
+element Silver on
+element Cadmium on
+element Indium on
+element Tin on
+element Antimony on
+element Tellurium on
+element Iodine on
+element Xenon on
+element gallium abundance -10
+element germanium abundance -10
+element arsenic abundance -10
+element Selenium abundance -10
+element Bromine abundance -10
+element Krypton abundance -10
+element Rubidium abundance -10
+element Strontium abundance -10
+element Yttrium abundance -10
+element Zirconium abundance -10
+element Niobium abundance -10
+element Molybdenum abundance -10
+element Technetium abundance -10
+element Ruthenium abundance -10
+element Rhodium abundance -10
+element Palladium abundance -10
+element Silver abundance -10
+element Cadmium abundance -10
+element Indium abundance -10
+element Tin abundance -10
+element Antimony abundance -10
+element Tellurium abundance -10
+element Iodine abundance -10
+element Xenon abundance -10
 #
 # commands controlling continuum =========
 # commands for density & abundances =========
