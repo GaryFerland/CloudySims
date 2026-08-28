@@ -282,12 +282,6 @@ void open_data( fstream& stream, const string& fname, ios_base::openmode mode, a
 MPI_File open_data( const string& fname, int mode, access_scheme scheme=AS_DEFAULT, string* rpath=nullptr );
 void check_data( const string& fpath, const string& fname );
 
-// take checksum of the contents of a string
-void VHstring(const string& s, void* out);
-string VHstring(const string& s);
-// take checksum of a datafile by stripping eol chars and comment lines
-string VHdatafile(const string& fnam, access_scheme scheme=AS_DEFAULT);
-
 /* this class is deliberately kept global so that the constructor is executed before
  * any of the user code; this assures a correct FP environment right from the start */
 class t_cpu_i

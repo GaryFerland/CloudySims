@@ -1551,6 +1551,13 @@ STATIC void mie_step(double wavlen, /* micron */
 	double y1[MAX_DIVS+1], y2[MAX_DIVS+1], y3[MAX_DIVS+1];
 	double y1a[MAX_ABS], y2a[MAX_ABS], y3a[MAX_ABS];
 
+	// this routine guarantees that *absval, *sctval, and *cosb are properly initialized
+	// when *error < 2, however compilers may get confused and give warnings nonetheless
+	// about potentially uninitialized variables -- these statements prevent that...
+	*absval = -1.;
+	*sctval = -1.;
+	*cosb = -2.;
+
 	for( int k=0; k < MAX_ITER; ++k )
 	{
 		for( int i=0; i <= MAX_DIVS; ++i )
@@ -4322,7 +4329,7 @@ STATIC void mie_read_form(/*@in@*/  const string& chWord,
 	{
 		double frac = 0.;
 		string chElmName(elementnames.chElementSym[nelem]);
-		if( chElmName[1] == ' ' )
+		if( chElmName.back() == ' ' )
 			chElmName.pop_back();
 		string::size_type ptr = chWord.find( chElmName );
 		if( ptr != string::npos )
@@ -4364,7 +4371,7 @@ STATIC void mie_write_form(/*@in@*/  const double elmAbun[], /* elmAbun[LIMELM] 
 		if( elmAbun[nelem] > 0. )
 		{
 			string chElmName(elementnames.chElementSym[nelem]);
-			if( chElmName[1] == ' ' )
+			if( chElmName.back() == ' ' )
 				chElmName.pop_back();
 
 			long index100 = nint(100.*elmAbun[nelem]);

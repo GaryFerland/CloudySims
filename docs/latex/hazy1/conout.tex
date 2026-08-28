@@ -574,7 +574,7 @@ for $\lambda_{\rm vac} \le 2000$\,\AA\ and STP air wavelengths for $\lambda_{\rm
 This command will change the behavior to use vacuum wavelengths for all wavelengths.
 Note that this will only affect the wavelengths of atomic and molecular lines
 printed in the output. Internally the code always uses vacuum wavelengths.\footnote{This
-  was not the case in Cloudy versions C23 and older where the code would use air wavelengths
+  was not the case in \Cloudy\ versions C23 and older where the code would use air wavelengths
   internally unless this command was used.}
 This includes the \cdCommand{save continuum} family of commands which will
 always report the SED (including emission lines) in vacuum wavelengths.
@@ -966,7 +966,7 @@ command.
 Whereas the latter generates a table, the former creates a FITS file that
 contains three {\it images}, one for each of the rate matrix, the vector of
 creation rates, and the computed level populations.
-In terms of the linear algebra system, $A x = b$, which Cloudy solves, these
+In terms of the linear algebra system, $A x = b$, which \Cloudy\ solves, these
 images hold the $A$ matrix, the $b$ vector, and the computed $x = A^{-1} b$
 vector, respectively.
 
@@ -1273,7 +1273,7 @@ are given in air or vacuum, has no effect on \cdCommand{save continuum} output.
 
 \subsection{Units of the save output in intensity and luminosity cases}
 The units of the predicted continuum depend on whether the intensity
-or luminosity case is used.
+or luminosity case is used. See Section~\ref{sec:IntensityLuminosityCases} for a definition of these cases.
 In the intensity
 case continua are given as the intensity per octave
 $ 4\pi \,\nu J_\nu [\ergpscmps ]$.
@@ -1287,7 +1287,7 @@ in the luminosity case was per unit
 cloud area at the inner radius rather than the true luminosity,
 and so had units $\ergpscmps$.
 This was to avoid processor limits on older computers.
-Beginning in C16 output is in true luminosity units, $\nu L_\nu$, in the luminosity case.
+Beginning in C17 output is in true luminosity units, $\nu L_\nu$, in the luminosity case.
 The old behavior will the used if the
 \cdCommand{set save luminosity old} option, described in
 Section~\ref{sec:SetSaveLuminosity}, is used.
@@ -2021,9 +2021,27 @@ holds for the scattering efficiency, keeping in mind that the scattering cross
 section has been multiplied by $(1-g)$, i.e., we print: $Q_{\rm scat} (1-g) =
 \sigma_{\rm scat} (1-g) / \sigma_{\rm g}$. See also Chapter 7 of AGN3.
 
-\subsection{Save grain temperature}
+\subsection{Save grain temperature [ average ]}
 
-The temperature of each grain species is printed for each zone.
+This command has two output modes. The default mode will print multiple lines
+per zone. The first line for each zone will start with the depth (in cm)
+followed by the label of the first grain size bin. The remainder of the line
+will show pairs of numbers giving the charge of the grain (in elementary
+charge units) and the temperature of the grain (in K). Such pairs will be
+shown for every charge state that is modeled by the code. Subsequent lines
+will give similar output for the remaining grain size bins, except that the
+depth of the zone will not be repeated and is replaced by a field of spaces
+for easy readability.
+
+If the keyword \cdCommand{average} is included on the command line, a
+different output mode will be used that is very similar to the output mode
+that was the default in \Cloudy\ versions C25 and before. Here only one line
+of output will be produced for every zone. This line starts with the depth of
+the zone (in cm) followed by a weighted average of the grain temperature over
+all charge states (in K) for all size bins. The advantage of this mode is that
+it is easier to plot, but it has the disadvantage that it does not output the
+actual grain temperatures, only a weighted average over all charge states
+which has no strict physical meaning.
 
 \section{Save grid}
 \label{sec:save:grid}
@@ -2816,13 +2834,35 @@ The format for entering spectral lines is described in Section~\ref{sec:SpecifyS
 
 The save output begins with emission-line labels and wavelengths.  The
 remaining output gives the optical depth structure.  The first column is the
-depth [cm] into the cloud.  The remaining columns give the optical depth for each line.  
+depth [cm] into the cloud.  The remaining columns give the optical depth for each line.  Results are reported for the last computed zone unless the \textbf{every} option appears.
 
-The following illustrates its use;
+The following examples illustrate its use for reporting either the final (last-zone) result or values at every zone, respectively:
+
 \begin{verbatim}
-save lines, optical some, "lines.opt"
+save line optical depth some "lines.opt"
 o  3 5006.84A
 o  1 6300.30A
+H  1 4340.46A
+H  1 4861.32A
+H  1 6562.80A 
+H  1 1.87510m
+H  1 2.16553m 
+H  1 1215.67A
+H  1 1025.72A
+end of lines
+\end{verbatim}
+
+\begin{verbatim}
+save line optical depth some "lines.opte" every
+o  3 5006.84A
+o  1 6300.30A
+H  1 4340.46A
+H  1 4861.32A
+H  1 6562.80A 
+H  1 1.87510m
+H  1 2.16553m 
+H  1 1215.67A
+H  1 1025.72A
 end of lines
 \end{verbatim}
 
@@ -3336,7 +3376,7 @@ page \pageref{sec:SpeciesDefine} above.
 \textbf{\textit{Warning about ortho/para resolved LAMDA models}}
 Several molecule models in the third-party database LAMDA separate species 
 into ortho- and para- systems.  
-The  \cdCommand{save species} command in this version of Cloudy has the limitation that 
+The  \cdCommand{save species} command in this version of \Cloudy\ has the limitation that 
 only the last system in the LAMDA masterlist will be reported in the output.
 This affects only the output of these commands.
 All recognized systems will be included in the simulation.
@@ -3829,6 +3869,7 @@ Keyword& Routine\\
 \cdCommand{temperature}& ConvTempEdenIoniz\\
 \cdCommand{eden}& ConvEdenIoniz\\
 \cdCommand{ionization}& ConvIoniz\\
+\cdCommand{convergence}&top level convergence \\
 \hline
 \end{tabular}
 \end{table}

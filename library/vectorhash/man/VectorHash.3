@@ -1,0 +1,97 @@
+.TH VectorHash "3" "April 2026" "Peter van Hoof" "Library Functions"
+.SH NAME
+VectorHash, VectorHashSIMD \- very fast routine to checksum the data in a buffer
+.SH LIBRARY
+VectorHash library
+.RI ( libvhsum ", " \-lvhsum )
+.SH SYNOPSIS
+.nf
+.B #include <vectorhash.h>
+.PP
+.BI "void VectorHash(const void *\fIbuf\fP, size_t \fIlen\fP, uint32_t \fIseed\fP, void *\fIout\fP, size_t \fIhw\fP);"
+.BI "void VectorHashSIMD(const void *\fIbuf\fP, size_t \fIlen\fP, uint32_t \fIseed\fP, void *\fIout\fP, is_type \fISIMDtype\fP, size_t \fIhw\fP);"
+.fi
+.SH ARGUMENTS
+.TP
+\fB\fIbuf\fP\fR
+Pointer to the buffer that needs to be checksummed.
+.TP
+\fB\fIlen\fP\fR
+The length of the buffer in bytes. Can be any value, including zero.
+.TP
+\fB\fIseed\fP\fR
+The seed for the checksum algorithm. Can be any 32-bit value, including zero.
+.TP
+\fB\fIout\fP\fR
+Pointer to the memory area where the checksum will be written. Needs to be at
+least \fIhw\fP bits wide.
+.TP
+\fB\fISIMDtype\fP\fR
+An enum that indicates the SIMD instruction set that should be used. Allowed
+values are \fIIS_SCALAR\fP, \fIIS_SSE2\fP, \fIIS_AVX2\fP, and \fIIS_AVX512\fP.
+Note that VectorHashSIMD may choose a lower SIMD instruction set if the buffer
+alignment is not suitable for the chosen instrtuction set (see below for more
+details).
+.TP
+\fB\fIhw\fP\fR
+Width of the checksum in bits. Allowed values are any multiple of 32 between
+32 and 1024.
+.SH DESCRIPTION
+VectorHash is a very fast, non-cryptographic algorithm to produce a checksum of
+the data in a buffer. Its speed in part results from the fact that it can take
+advantage of SIMD instructions from the SSE2, AVX2, or AVX512f instruction sets
+on hardware that supports these instructions, but it also supports a scalar
+version for non-Intel platforms (which still is very fast). The hardware
+capabilities will be detected automatically at runtime by the routine
+VectorHash, while VectorHashSIMD allows you to hardwire the choice of the SIMD
+instruction set. Normally the former routine is preferred, but the latter can be
+useful in some circumstances, such as speed tests. The algorithm can produce
+checksums of varying width as discussed above. The scalar and the SIMD versions
+of the algorithm will produce identical checksums.
+
+VectorHash has in part been inspired by the PRNG algorithm xoroshiro128++
+written by David Blackman and Sebastiano Vigna (for the core of the hashing
+function) and MurmurHash3 written by Austin Appleby (for the finalization mix
+and some support routines).
+
+Use 0xfd4c799d as a \fIseed\fP to replicate the behavior of the vh128sum, etc,
+command line functions.
+.SH RETURN VALUE
+The checksum is written into the memory area pointed to by \fIout\fP.
+.SH CAVEATS
+Do not use the VectorHash algorithm for security related purposes.
+
+If the memory area pointed to by \fIout\fP is not big enough to hold the
+resulting checksum, undefined behavior will result.
+
+The buffer pointed to by \fIbuf\fP needs to be correctly aligned to take full
+advantage of the SIMD instruction sets. Assuming your processor supports AVX512f
+instructions, it will need to read 512 bits of data at once from memory. For
+this the memory address (and hence also the start of the buffer) will need to
+aligned on a 512-bit = 64-byte boundary. For AVX2 instructions a 32-byte
+alignment is needed, and for SSE2 instructions a 16-byte alignment. The scalar
+version can work on any buffer alignment (even odd addresses). If the buffer
+is not correctly aligned, the code will automatically revert to a lower
+algorithm that does support the provided buffer alignment.
+
+The routine VectorHashSIMD can crash if the chosen SIMD instruction set is not
+supported by the processor.
+.SH AUTHOR
+Written by Peter van Hoof.
+.SH "REPORTING BUGS"
+Bugs can be reported in the gitlab repository at
+<https://gitlab-as.oma.be/pvh/vectorhash/>.
+.SH COPYRIGHT
+Copyright \(co 2018-2026 Peter van Hoof,
+.br
+License: zlib.
+
+The distribution includes support libraries written by steinwurf (cpuid),
+Noel Llopis, and Charles Nicholson (unittest-cpp).
+.br
+Licences: BSD and MIT/X, respectively..
+
+This is open source software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH SEE ALSO
+vh128sum(1), vh256sum(1), vh512sum(1)

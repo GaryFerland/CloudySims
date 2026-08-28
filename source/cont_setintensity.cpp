@@ -238,7 +238,10 @@ void ContSetIntensity()
 		  rfield.anu(prt.ipeak-1) , peak);
 	}
 
-	if( peak > 1e38 )
+	/* >>chng 26 apr 16 test had used 1e38, BIGFLOAT	3.40282359315035e+36 for default compile.
+	 * tsuite / programs / hizlte evaluated ~1e37 at highest point which failed. 
+	 * Lowered upper limit to temperaturetelog < 7.49 from 7.99*/
+	if( peak > BIGFLOAT )
 	{
 		fprintf( ioQQQ, " PROBLEM DISASTER The continuum is too intense to compute. Use a fainter continuum. (This is the nu*f_nu test)\n" );
 		fprintf( ioQQQ, " Sorry.\n" );
