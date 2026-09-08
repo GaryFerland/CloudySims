@@ -13,11 +13,24 @@ void atmdat_outer_shell(long int iz, /* atomic number from 1 to 30 */
 {
 	long int kg;
 
-	static long iss[30]={1,1,2,2,3,3,3,3,3,3,4,4,5,5,5,5,5,5,6,6,6,
-	  6,6,6,6,6,6,6,7,7};
+	/* CHANGE: Aug. 2011 Expanded iss and ig1 to include 4p shell. NCS */
+	static long iss[54]={1,1,2,2,3,3,3,3,3,3,4,4,5,5,5,5,5,5,6,6,6,
+			     6,6,6,6,6,6,6,7,7,
+			     // Ga - Kr
+			     8,8,8,8,8,8,
+			     // Rb - Xe
+			     9,9,9,9,9,9,
+			     9,9,9,9,10,10,
+			     10,10,10,10,10,10};
 
-	static long igl[30]={2,1,2,1,2,1,4,5,4,1,2,1,2,1,4,5,4,1,4,5,4,
-	  1,6,9,10,9,6,1,2,1};
+	static long igl[54]={2,1,2,1,2,1,4,5,4,1,2,1,2,1,4,5,4,1,4,5,4,
+			     1,6,9,10,9,6,1,2,1,
+			     // Ga - Kr
+			     2,1,4,5,4,1,
+			     // Rb - Xe
+			     2,1,4,5,2,7,
+			     6,11,10,1,2,1,
+			     2,1,4,5,4,1};
 
 	static long iga[12]={2,1,4,5,4,7,6,9,10,9,2,1};
 
@@ -31,7 +44,7 @@ void atmdat_outer_shell(long int iz, /* atomic number from 1 to 30 */
 	 ***          ig1  - statistical weight of (iz,in-1) ground state
 	 ****************************************************************************** */
 
-	if( iz < 1 || iz > 54 )
+	if( iz < 1 || iz > LIMELM )
 	{
 		fprintf( ioQQQ, " ***ERROR: wrong atomic number\n" );
 		return;
@@ -65,7 +78,9 @@ void atmdat_outer_shell(long int iz, /* atomic number from 1 to 30 */
 		return;
 	}
 
-	if( in > 18 && iz == in )
+	/* CHANGE: Aug. 2011 Added in < 31 to if statement so that *imax=7 is not set
+	 * for 4p valence shell ions NCS */
+	if( in > 18 && in < 31 && iz == in )
 	{
 		*imax = 7;
 		kg = iz - 18;
