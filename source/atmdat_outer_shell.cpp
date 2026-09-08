@@ -14,7 +14,7 @@ void atmdat_outer_shell(long int iz, /* atomic number from 1 to 30 */
 	long int kg;
 
 	/* CHANGE: Aug. 2011 Expanded iss and ig1 to include 4p shell. NCS */
-	static long iss[54]={1,1,2,2,3,3,3,3,3,3,4,4,5,5,5,5,5,5,6,6,6,
+	static long iss[LIMELM]={1,1,2,2,3,3,3,3,3,3,4,4,5,5,5,5,5,5,6,6,6,
 			     6,6,6,6,6,6,6,7,7,
 			     // Ga - Kr
 			     8,8,8,8,8,8,
@@ -23,7 +23,7 @@ void atmdat_outer_shell(long int iz, /* atomic number from 1 to 30 */
 			     9,9,9,9,10,10,
 			     10,10,10,10,10,10};
 
-	static long igl[54]={2,1,2,1,2,1,4,5,4,1,2,1,2,1,4,5,4,1,4,5,4,
+	static long igl[LIMELM]={2,1,2,1,2,1,4,5,4,1,2,1,2,1,4,5,4,1,4,5,4,
 			     1,6,9,10,9,6,1,2,1,
 			     // Ga - Kr
 			     2,1,4,5,4,1,
