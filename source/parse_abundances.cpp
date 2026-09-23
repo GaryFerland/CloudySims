@@ -47,9 +47,6 @@ void ParseAbundances(Parser &p)
 		cdEXIT(EXIT_SUCCESS);
 	}
 
-	/* abundances no longer set at reference value */
-	abund.lgAbnReference = false;
-
 	if( p.nMatch("STAR") )
 	{
 		/* Fred Hamann's star burst galaxy mixture -- includes a number which isn't an abundance */
@@ -139,7 +136,9 @@ void ParseAbundances(Parser &p)
 			dense.lgElmtSetOff[nelem] = lgSave;
 		}
 
-		FILE *ioDATA = open_abn_file( chFile );
+		/* check if have a magic number, if so then, check if abundances are depleted or not */
+		string chPath = "abundances" + cpu.i().chDirSeparator() + chFile;
+		DataParser d(chPath, ES_STARS_ONLY);
 
 		/* Sets abundance of Hydrogen to 1.0 in the expectation
 		 * that other values are abundances relative to Hydrogen,
@@ -148,35 +147,38 @@ void ParseAbundances(Parser &p)
 		 * case it is assumed */
 		abund.ReferenceAbun[ipHYDROGEN] = 1.0;//The value found in abund.ReferenceAbun[0] before this point is found to be 1.0 as well
 
-		string chLine;
-		while( read_whole_line( chLine, ioDATA ) )
+		string element, abundance;
+		while( d.getline() )
 		{
-			if( chLine.size() == 0 || chLine[0]=='\n' || chLine[0]=='\r' )
-			{
-				fprintf(ioQQQ, "PROBLEM in ABUNDANCES: Encountered unexpected empty line.\n");
-				cdEXIT(EXIT_FAILURE);
-			}
-
-			if( chLine[0]=='*' )
+			if( d.lgEODMarker() )
 				break;
 
-			/* skip comment */
-			if( chLine[0]=='#' )
-				continue;
+			d.getKeyword(element);
 
-			size_t pp;
-			/* erase EOL character */
-			if( (pp = chLine.find_first_of("\n\r")) != string::npos )
-				chLine.erase(pp);
+			string magic = element;
+			if( magic == "20260427" )
+			{
+				d.getline();
+				d.getKeyword(element);
+				if( element.substr(0,4) == "DEPL" )
+					abund.lgAbnReference = false;
+				else if( element.substr(0,4) == "UNDE" )
+					abund.lgAbnReference = true;
+				continue;
+			}
+
+			d.getToken(abundance);
 
 			// If keyword "grains" is found on a line, calls grain command
 			// NO QHEAT may have been on the line in the input deck, or in the abn file
-			string chCAPS = chLine;
-			caps(chCAPS);
+			string chCAPS = element;
 			if( chCAPS.find("GRAINS") != string::npos )
 			{
+				caps(abundance);
+				chCAPS += " ";
+				chCAPS += abundance;
 				if( lgPrint )
-					fprintf(ioQQQ,"%s\n",chLine.c_str());
+					fprintf(ioQQQ,"%s\n",element.c_str());
 
 				//Makes sure grains have not already been set and are on
 				//Either way it skips to the next loop iteration and does
@@ -185,7 +187,6 @@ void ParseAbundances(Parser &p)
 				{
 					if( !lgQHeat )
 						chCAPS += " NO QHEAT";
-
 					p.setline(chCAPS);
 					ParseGrain(p);
 					continue;
@@ -202,11 +203,11 @@ void ParseAbundances(Parser &p)
 					lgFound = true;
 					i = 1;
 					bool lgEOL;
-					abund.ReferenceAbun[nelem] = FFmtRead(chLine.c_str(),&i,chLine.length(),&lgEOL);
+					abund.ReferenceAbun[nelem] = FFmtRead(abundance.c_str(),&i,abundance.length(),&lgEOL);
 					if( abund.ReferenceAbun[nelem] <= 0. )
 					{
 						fprintf(ioQQQ, "PROBLEM in ABUNDANCES: negative abundance not allowed.\n");
-						fprintf(ioQQQ, "Non-positive abundance found on this line: %s\n", chLine.c_str());
+						fprintf(ioQQQ, "Non-positive abundance found on this line: %s\n", element.c_str());
 						cdEXIT(EXIT_FAILURE);
 					}
 
@@ -227,7 +228,7 @@ void ParseAbundances(Parser &p)
 			if( !lgFound )
 			{
 				fprintf(ioQQQ, "PROBLEM in ABUNDANCES: did not identify element name on this line: %s\n",
-					chLine.c_str());
+					element.c_str());
 				cdEXIT(EXIT_FAILURE);
 			}
 		}
@@ -241,7 +242,6 @@ void ParseAbundances(Parser &p)
 				fprintf(ioQQQ,"%s\t%.3e\t%.3f\n",elementnames.chElementName[nelem],
 						abund.ReferenceAbun[nelem] , log10(SDIV(abund.ReferenceAbun[nelem])) );
 		}
-		fclose( ioDATA );
 		return;
 	}
 	else if( !lgIsotp )

@@ -40,8 +40,6 @@ void ParseElement( Parser &p)
 			}
 		}
 	}
-	/* say that abundances have been changed */
-	abund.lgAbnReference = false;
 
 	/* find which element - will be used in remainder of routine to 
 	 * adjust aspects of this element */
@@ -90,6 +88,8 @@ void ParseElement( Parser &p)
 			}
 			abund.ScaleElement[nelem] = (realnum)param;
 		}
+		/* say that abundances have been changed */
+		abund.lgAbnReference = false;
 	}
 
 	else if( p.nMatch("ABUN") )
@@ -132,6 +132,8 @@ void ParseElement( Parser &p)
 					" Please check the abundance of this element.  It seems high to me.\n" );
 			}
 		}
+		/* say that abundances have been changed */
+		abund.lgAbnReference = false;
 	}
 
 	else if( p.nMatch("ISOT") )
@@ -258,6 +260,8 @@ void ParseElement( Parser &p)
 				cdEXIT(EXIT_FAILURE);
 			}
 		}
+		/* say that abundances have been changed */
+		abund.lgAbnReference = false;
 	}
 
 	/* specify an ionization distribution */
@@ -389,7 +393,10 @@ void ParseElement( Parser &p)
 		abund.lgAbTaON = true;
 
 		/* read pairs giving depth/radius and abundance */
-		p.readLaw(abund.AbunTab[nelem]);	  
+		p.readLaw(abund.AbunTab[nelem]);
+
+		/* say that abundances have been changed */
+		abund.lgAbnReference = false;
 	}
 
 	else
@@ -405,6 +412,9 @@ void ParseElement( Parser &p)
 	/* vary option */
 	if( optimize.lgVarOn )
 	{
+		/* say that abundances have been changed */
+		abund.lgAbnReference = false;
+
 		ASSERT(optimize.nparm < LIMPAR);
 		if( p.nMatch("SCAL") )
 		{

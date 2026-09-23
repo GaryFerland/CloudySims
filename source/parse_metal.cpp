@@ -243,7 +243,7 @@ void ParseMetal(Parser &p)
 	double DxLimit = 1e38;
 
 	/* parse the metals command */
-	abund.lgAbnReference = false;	
+	abund.lgAbnReference = false;
 	if( p.nMatch("DEPL") )
 	{
 		/* keyword depletion is present

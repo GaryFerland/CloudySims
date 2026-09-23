@@ -976,7 +976,7 @@ void PrtComment(void)
 	if( gv.lgDustOn() && abund.lgAbnReference )
 	{
 		sprintf( chLine, 
-			"  !Grains are present, but the gas phase abundances were left at the solar default.  This is not physical." );
+			"  C-Grains are present, but the gas phase abundances were left at the solar default.  This is not physical." );
 		bangin(chLine);
 	}
 
