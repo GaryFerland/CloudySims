@@ -3973,8 +3973,11 @@ STATIC void GrainUpdateRadius2()
 		}
 	}
 
-	grain_interpolate(gv.dstab0.data(), gv.dstab.data(), gv.nflux);
-	grain_interpolate(gv.dstsc0.data(), gv.dstsc.data(), gv.nflux);
+	// enable extrapolation so that the ASSERT below does not trip at the high-frequency end of the array
+	const bool lgEXTRAPOLATE = true;
+	long n1 = grain_interpolate(gv.dstab0.data(), gv.dstab.data(), gv.nflux, lgEXTRAPOLATE);
+	long n2 = grain_interpolate(gv.dstsc0.data(), gv.dstsc.data(), gv.nflux, lgEXTRAPOLATE);
+	ASSERT( n1 == rfield.nflux && n2 == rfield.nflux );
 
 	for( long i=0; i < rfield.nflux; i++ )
 	{
@@ -4725,19 +4728,23 @@ STATIC void RebinFlux(const vector<T>& arr1, vector<double>& arr2)
 	long i1end = min(rfield.nflux, long(arr1.size()));
 	// this algorithm implicitly assumes that rfield.anumin[0] == gv.anumin[0]
 	// which is guaranteed by design
-	double transfer = 0.;
 	for( long i2=0; i2 < gv.nflux; ++i2 )
 	{
-		arr2[i2] += transfer;
+		double f;
 		while( i1 < i1end && rfield.anumax(i1) <= gv.anumax(i2) )
-			arr2[i2] += arr1[i1++];
+		{
+			// if this rfield freq cell starts at a lower frequency than the gv freq cell,
+			// f is the fraction of the rfield cell that is contained in the current gv cell
+			// if rfield.anumin(i1) > gv.anumin(i2), f is guaranteed to always be 1.
+			f = (rfield.anumax(i1) - max(gv.anumin(i2),rfield.anumin(i1)))/rfield.widflx(i1);
+			arr2[i2] += f*arr1[i1++];
+		}
 		if( i1 >= i1end )
 			break;
 		// this rfield freq cell extends beyond the gv freq cell, so split it up
 		// f is the fraction of the rfield cell that is contained in the current gv cell
-		double f = (gv.anumax(i2) - rfield.anumin(i1))/rfield.widflx(i1);
+		f = (gv.anumax(i2) - max(rfield.anumin(i1),gv.anumin(i2)))/rfield.widflx(i1);
 		arr2[i2] += f*arr1[i1];
-		transfer = (1.-f)*arr1[i1++];
 	}
 }
 

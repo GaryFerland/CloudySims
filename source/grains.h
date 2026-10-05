@@ -88,7 +88,7 @@ void find_arr(double,const vector<double>&,long int,/*@out@*/long int*,/*@out@*/
 
 /* grain_interpolate: interpolate on an array on the grain frequency mesh to create an array on the standard mesh */
 template<typename T>
-inline long grain_interpolate(const T arr1[], T arr2[], long n1) // arr1[n1], n1 <= gv.nflux
+inline long grain_interpolate(const T arr1[], T arr2[], long n1, bool lgExtrapolate=false) // arr1[n1], n1 <= gv.nflux
 {
 	DEBUG_ENTRY( "grain_interpolate()" );
 
@@ -121,9 +121,16 @@ inline long grain_interpolate(const T arr1[], T arr2[], long n1) // arr1[n1], n1
 	double hh = h[0];
 	// at the low-frequency end we need to do a bit of extrapolation. we will not use
 	// monotic cubic splines for that, but rather linear extrapolation in log-log space.
-	// at the high-frequency end this is not needed as the algorithm will stop once the
+	// if lgExtrapolate is true, we will do the same thing at the high-frequency end.
+	// if lgExtrapolate is false, this is not needed as the algorithm will stop once the
 	// end of the input array is reached and will not fill in the output array further
 	double deriv0 = (arr1ln[1] - arr1ln[0])/(gv.anuln(1) - gv.anuln(0));
+	double derivn = 0.;
+	if( lgExtrapolate )
+	{
+		ASSERT( n1 == gv.nflux );
+		derivn = (arr1ln[n1-1] - arr1ln[n1-2])/(gv.anuln(n1-1) - gv.anuln(n1-2));
+	}
 	for( i2=0; i2 < rfield.nflux; ++i2 )
 	{
 		double x = rfield.anuln(i2);
@@ -131,6 +138,11 @@ inline long grain_interpolate(const T arr1[], T arr2[], long n1) // arr1[n1], n1
 		{
 			// use linear extrapolation
 			arr2ln[i2] = arr1ln[0] + deriv0*(rfield.anuln(i2) - gv.anuln(0));
+		}
+		else if( lgExtrapolate && x >= gv.anuln(n1-1) )
+		{
+			// use linear extrapolation
+			arr2ln[i2] = arr1ln[n1-1] + derivn*(rfield.anuln(i2) - gv.anuln(n1-1));
 		}
 		else
 		{
