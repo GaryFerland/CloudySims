@@ -1,0 +1,43 @@
+title test grain mesh (lo-res version)
+# this sim tests whether resampling between the standard frequency mesh and the
+# grain frequency mesh is done correctly when the standard mesh has low resolution
+#
+# commands controlling continuum =========
+blackbody 5e4
+luminosity 37
+# commands for density & abundances =========
+#
+hden 4
+grains
+# commands controlling geometry  =========
+#
+radius 17
+# other commands for details     =========
+#
+set continuum resolution 10
+stop zone 1
+set dr 1
+# commands controlling output    =========
+#
+set save prefix "func_grainmesh_lores"
+save monitors ".asr"
+save performance ".per"
+save overview ".ovr"
+# commands giving the asserts    =========
+#
+init "func_grainmesh.ini"
+#
+# func_grainmesh_lores.in 
+# class function
+# ========================================
+# 
+
+This sim tests if resampling the grain frequency mesh onto the regular mesh
+works correctly for an extremely low resolving power of the main mesh.
+These sims below all do the same thing, except that the main frequency mesh differs:
+func_grainmesh_lores.in uses a very low resolution main frequency mesh,
+func_grainmesh_standard.in uses a standard resolution main frequency mesh,
+func_grainmesh_hires.in uses a very high resolution main frequency mesh.
+These sims should give essentially identical results (though minor differences
+are expected). This is why all three sims should use identical monitors that
+are contained in a special init file called func_grainmesh.ini.

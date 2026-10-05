@@ -10,6 +10,7 @@ while( defined( $input = glob("*") ) ) {
 	@ll = split( /\./, "$input" );
 	if( $#ll != 1
 	    or ( $ll[1] ne "in"
+		 and $ll[1] ne "ini"
 		 and $ll[1] ne "pl"
 		 and $ll[1] ne "pm"
 		 and $ll[1] ne "htm"
