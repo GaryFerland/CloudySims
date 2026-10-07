@@ -4329,7 +4329,7 @@ STATIC void mie_read_form(/*@in@*/  const string& chWord,
 	{
 		double frac = 0.;
 		string chElmName(elementnames.chElementSym[nelem]);
-		if( chElmName[1] == ' ' )
+		if( chElmName.back() == ' ' )
 			chElmName.pop_back();
 		string::size_type ptr = chWord.find( chElmName );
 		if( ptr != string::npos )
@@ -4371,7 +4371,7 @@ STATIC void mie_write_form(/*@in@*/  const double elmAbun[], /* elmAbun[LIMELM] 
 		if( elmAbun[nelem] > 0. )
 		{
 			string chElmName(elementnames.chElementSym[nelem]);
-			if( chElmName[1] == ' ' )
+			if( chElmName.back() == ' ' )
 				chElmName.pop_back();
 
 			long index100 = nint(100.*elmAbun[nelem]);
