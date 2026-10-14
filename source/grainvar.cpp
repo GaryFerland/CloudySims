@@ -56,6 +56,9 @@ void ChargeBin::p_clear1()
 	hcon1 = -DBL_MAX;
 	hots1 = -DBL_MAX;
 	GrainHeatCS = DBL_MAX/10.;
+	lgUseQHeat = false;
+	qnflux = LONG_MAX;
+	qnflux2 = LONG_MAX;
 }
 
 void GrainBin::p_clear0()
@@ -88,9 +91,7 @@ void GrainBin::p_clear1()
 	memset( dstems, 0, NDEMS*sizeof(dstems[0]) );
 	memset( dstslp, 0, NDEMS*sizeof(dstslp[0]) );
 	memset( dstslp2, 0, NDEMS*sizeof(dstslp2[0]) );
-	/* >>chng 00 jun 19, tedust has to be greater than zero
-	 * to prevent division by zero in GrainElecEmis and GrainCollHeating, PvH */
-	tedust = 1.;
+	AvTemp = 1.;
 	TeGrainMax = FLT_MAX;
 	avdust = 0.;
 	LowestZg = LONG_MIN;
@@ -105,26 +106,21 @@ void GrainBin::p_clear1()
 	avdpot = 0.;
 	le_thres = FLT_MAX;
 	GrainHeatBin = DBL_MAX/10.;
-	GrainHeatCollBin = -DBL_MAX;
-	GrainCoolThermBin = -DBL_MAX;
 	GasHeatPhotoElBin = -DBL_MAX;
 	lgQHeat = false;
-	lgUseQHeat = false;
 	lgEverQHeat = false;
-	lgQHTooWide = false;
 	QHeatFailures = 0;
-	qnflux = LONG_MAX;
-	qnflux2 = LONG_MAX;
-	qtmin = -DBL_MAX;
-	qtmin_zone1 = -DBL_MAX;
+	for( long nz=0; nz < NCHU; ++nz )
+	{
+		lgQHTooWide[nz] = false;
+		qtmin[nz] = -DBL_MAX;
+		qtmin_z1[nz] = DBL_MAX;
+	}
 	memset( DustEnth, 0, NDEMS*sizeof(DustEnth[0]) );
 	memset( EnthSlp, 0, NDEMS*sizeof(EnthSlp[0]) );
 	memset( EnthSlp2, 0, NDEMS*sizeof(EnthSlp2[0]) );
-	rate_h2_form_grains_HM79 = 0.;
-	rate_h2_form_grains_CT02 = 0.;
-	rate_h2_form_grains_ELRD = 0.;
 	/* >>chng 04 feb 05, zero this rate in case "no molecules" is set, will.in, PvH */
-	rate_h2_form_grains_used = 0.;
+	rate_h2_form_grains_bin = 0.;
 	DustDftVel = 1.e3f;
 	avdft = 0.;
 	/* NB - this number should not be larger than NCHU */

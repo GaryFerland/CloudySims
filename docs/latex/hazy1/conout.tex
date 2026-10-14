@@ -1273,7 +1273,7 @@ are given in air or vacuum, has no effect on \cdCommand{save continuum} output.
 
 \subsection{Units of the save output in intensity and luminosity cases}
 The units of the predicted continuum depend on whether the intensity
-or luminosity case is used.
+or luminosity case is used. See Section~\ref{sec:IntensityLuminosityCases} for a definition of these cases.
 In the intensity
 case continua are given as the intensity per octave
 $ 4\pi \,\nu J_\nu [\ergpscmps ]$.
@@ -1287,7 +1287,7 @@ in the luminosity case was per unit
 cloud area at the inner radius rather than the true luminosity,
 and so had units $\ergpscmps$.
 This was to avoid processor limits on older computers.
-Beginning in C16 output is in true luminosity units, $\nu L_\nu$, in the luminosity case.
+Beginning in C17 output is in true luminosity units, $\nu L_\nu$, in the luminosity case.
 The old behavior will the used if the
 \cdCommand{set save luminosity old} option, described in
 Section~\ref{sec:SetSaveLuminosity}, is used.

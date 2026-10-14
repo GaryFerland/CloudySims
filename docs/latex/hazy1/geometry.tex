@@ -229,11 +229,13 @@ as described there.
 \section{Covering factor 0.3}
 \label{cov_factor}
 
-This sets a covering factor $\Omega/4\pi$ for the emission-line region
+In the default geometry this sets a covering factor $\Omega/4\pi$ for the emission-line region
 (see AGN3 section 5.9).
 The argument is the log of the covering factor
 if less than or equal to zero and the linear covering factor if positive.
-It is impossible to specify a covering factor of zero.
+It is impossible to specify a covering factor of zero. The interaction of
+this command with the \cdCommand{cylinder} command described below is
+discussed in Section~\ref{cov_cylinder}.
 
 The covering factor affects both the luminosity of the emitted spectrum
 and the radiative transfer of lines and continua.
@@ -263,6 +265,7 @@ continuum source) but a radiative covering factor of zero (i.e., an open
 geometry).
 
 \section{Cylinder log semi height =9.12}
+\label{cmd:cylinder}
 
 \noindent The model will be spherical,
 but truncated so as to simulate a cylinder

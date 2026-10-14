@@ -2,9 +2,18 @@
 
 # on modern Mac Xcode and FreeBSD releases, g++ is disappearing in favor of clang++
 # so make sure we have a fallback in case g++ is missing...
-DEFCXX := ${shell which g++ 2> /dev/null}
-ifeq ($(DEFCXX),)
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+#   prefer clang++ on Macs, but g++ on Linux and other platforms
   DEFCXX := ${shell which clang++ 2> /dev/null}
+  ifeq ($(DEFCXX),)
+    DEFCXX := ${shell which g++ 2> /dev/null}
+  endif
+else
+  DEFCXX := ${shell which g++ 2> /dev/null}
+  ifeq ($(DEFCXX),)
+    DEFCXX := ${shell which clang++ 2> /dev/null}
+  endif
 endif
 
 override CXX = $(DEFCXX)
