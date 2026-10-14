@@ -13,6 +13,8 @@
 /** set true when allocated, init to false */
 extern bool lgOpacAllocated;
 
+static const double TAUMIN = 0.;
+
 /**OpacityCreateAll compute initial set of opacities for all species */
 void OpacityCreateAll(void);
 
@@ -149,9 +151,6 @@ struct t_opac : public module {
 	/**< this is the stack used to hold opacities - entered one time when code
 	 * is initialized, in routine OpacityCreateAll */
 	vector<double> OpacStack;
-
-	/** taumin is the smallest optical depths allowed, */
-	realnum taumin;
 
 	/** tlamin is smallest Lya optical depth, 
 	 * modified to large value if case b used */
@@ -302,10 +301,8 @@ struct t_opac : public module {
 
 	/** max correction for stim emission in continuum opacities at Lyman and Balmer edges */
 	realnum stimax[2];
+};
 
-	};
 extern t_opac opac;
-
-
 
 #endif /* OPACITY_H_ */

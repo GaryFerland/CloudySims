@@ -1667,7 +1667,7 @@ STATIC void read_UTA_lines()
 	}
 
 	/* option to dump UTA lines, either save file, or in main output */
-	if( trace.lgTrace || save.lgSDSOn || atmdat.lgUTAprint )
+	if( ( trace.lgTrace && prt.lgPrintTime ) || save.lgSDSOn || atmdat.lgUTAprint )
 	{
 		FILE *ioUTA = ioQQQ;
 		if( save.lgSDSOn )

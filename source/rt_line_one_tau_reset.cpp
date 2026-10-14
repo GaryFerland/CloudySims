@@ -63,9 +63,9 @@ void RT_line_one_tau_reset(const TransitionProxy& t)
 	if( geometry.lgSphere && geometry.lgStatic )
 		t.Emis().TauIn() = TauNext/2.f;
 	else
-		t.Emis().TauIn() = opac.taumin;
+		t.Emis().TauIn() = TAUMIN;
 
-	t.Emis().TauInSpecific() = opac.taumin;
+	t.Emis().TauInSpecific() = TAUMIN;
 
 	t.Emis().TauTot() = TauNext;
 
@@ -80,7 +80,7 @@ void RT_line_one_tau_reset(const TransitionProxy& t)
 	t.Emis().Pelec_esc() = 0.;
 
 	/* optical depth to the continuum source */
-	t.Emis().TauCon() = opac.taumin;
+	t.Emis().TauCon() = TAUMIN;
 
 	/* >>chng 01 sep 01, zero out some pops and energies */
 	(*t.Lo()).Pop() = 0.;

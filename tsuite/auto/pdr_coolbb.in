@@ -43,7 +43,8 @@ save monitors "pdr_coolbb.asr" last
 save heating "pdr_coolbb.het"
 save cooling "pdr_coolbb.col"
 save dr "pdr_coolbb.dr"
-save grain temperature "pdr_coolbb.grntem"
+save grain temperature "pdr_coolbb.grntemres"
+save grain temperature average "pdr_coolbb.grntem"
 save convergence reason "pdr_coolbb.cvr"
 save lines emissivity "pdr_coolbb.ems"
 H2O  212.468m

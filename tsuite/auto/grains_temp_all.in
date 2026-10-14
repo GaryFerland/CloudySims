@@ -24,7 +24,8 @@ save performance "grains_temp_all.per"
 save monitors "grains_temp_all.asr" last 
 save dr "grains_temp_all.dr" last 
 save grain charge "grains_temp_all.grnchr" last 
-save grain temperature "grains_temp_all.grntem" last 
+save grain temperature "grains_temp_all.grntemres" last 
+save grain temperature average "grains_temp_all.grntem" last 
 save grain drift velocity "grains_temp_all.grndft" last 
 #
 # commands giving the monitors    =========

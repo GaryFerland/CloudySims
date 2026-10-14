@@ -169,9 +169,9 @@ double RT_recom_effic(long int ip)
 			tau = (realnum)(OpacityEffective * EffectiveThickness);
 		}
 		else
-			tau = opac.taumin;
+			tau = TAUMIN;
 
-		tau = MAX2((double)opac.taumin,tau);
+		tau = MAX2(TAUMIN,tau);
 
 		ASSERT( tau >= 0. );
 

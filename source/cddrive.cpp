@@ -71,6 +71,7 @@
 #include "parser.h"
 #include "generic_state.h"
 #include "prt.h"
+#include "grainvar.h"
 
 /*************************************************************************
  *
@@ -126,6 +127,10 @@ int cdDrive()
 	 * will address [nflux] for unit continuum test */
 	rfield.nflux = rfield.nflux_with_check-1;
 	rfield.nPositive = rfield.nflux;
+	gv.InitMesh();
+	/* the grain frequency mesh does not have a unit cell */
+	gv.nflux = gv.ncells();
+	gv.nPositive = gv.nflux;
 
 	/* one time initialization of core load - returns if already called 
 	 * called here rather than in cdInit since at this point we know if

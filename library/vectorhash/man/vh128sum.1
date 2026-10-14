@@ -1,0 +1,145 @@
+.TH vh128sum "1" "April 2026" "Peter van Hoof" "User Commands"
+.SH NAME
+vh128sum, vh256sum, vh512sum \- compute or check VectorHash checksums
+.SH SYNOPSIS
+.B vh128sum
+[\fI\,OPTION\/\fR]... [\fI\,FILE\/\fR]...
+.br
+.B vh256sum
+[\fI\,OPTION\/\fR]... [\fI\,FILE\/\fR]...
+.br
+.B vh512sum
+[\fI\,OPTION\/\fR]... [\fI\,FILE\/\fR]...
+.SH DESCRIPTION
+Compute or check 128-, 256-, or 512-bit VectorHash checksums.
+In this document hash is used as a synonym for checksum.
+.PP
+VectorHash is a very fast, non-cryptographic checksum algorithm. It has in part
+been inspired by the PRNG algorithm xoroshiro128++ written by David Blackman and
+Sebastiano Vigna (for the core of the hashing function) and MurmurHash3 written
+by Austin Appleby (for the finalization mix and some support routines). This
+program has been written such that it can be vectorized using SIMD instructions
+from the SSE2, AVX2, or AVX512f instruction sets, which makes it very fast. It
+also has a scalar version for non-Intel platforms. The resulting checksum is
+identical for each of these instruction sets. The supported instruction sets
+will be detected automatically during runtime.
+
+In standard mode, the program will produce one line of output for each file that
+was checksummed. This line may start with '\\' if escaping needed to be done on
+the file name (currently this is only done if the FILE name contains a newline
+or a backslash in the name) followed by the checksum, a space, a character
+indicating the input mode ('*' for binary, \&' ' for text mode), and the name of
+the FILE.
+
+In BSD mode the line will start with the name of the algorithm, followed by the
+FILE name between parentheses, an equals sign, and the checksum.
+
+When verifying files (with the \-c option), the input FILE should be a former
+output of this program (either in standard or BSD format). These output files
+should not be modified in any way.
+.SH OPTIONS
+When no FILE is supplied, or when the FILE name is given as \-, the buffer is
+read from standard input. Multiple FILE names can be given on the command line.
+.TP
+The following OPTIONs are supported:
+.TP
+\fB\-\-\fR
+this OPTION marks the end if the list of OPTIONs. This is useful if you want
+to supply FILE names starting with \- after this option. Such FILE names would
+otherwise be interpreted as another command line option. This option is not
+needed when using \- as FILE name for standard input.
+.TP
+\fB\-\-avx2\fR
+force using the AVX2 version of the algorithm, even if the hardware does not
+support it. This OPTION is mainly useful for testing.
+.TP
+\fB\-\-avx512\fR
+force using the AVX512f version of the algorithm, even if the hardware does not
+support it. This OPTION is mainly useful for testing.
+.TP
+\fB\-b\fR, \fB\-\-binary\fR
+read the FILEs in binary mode.
+.TP
+\fB\-c\fR, \fB\-\-check\fR
+read previously computed VectorHash checksums from the FILEs and check them.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+display a short description of supported command line options and exit.
+.TP
+\fB\-i\fR, \fB\-\-ignore\-missing\fR
+don't fail or report status for missing files.
+.TP
+\fB\-l\fR, \fB\-\-length\fR
+set the width of the checksum (in bits). Normally the width of the checksum
+is determined from the name of the executable by looking for a number embedded
+in the name. If that fails, the width will default to 128 bits. With this
+OPTION it is possible to explicitly set the width of the checksum. Allowed
+values are any multiple of 32 between 32 and 1024.
+.TP
+\fB\-q\fR, \fB\-\-quiet\fR
+don't print OK for each successfully verified file.
+.TP
+\fB\-\-scalar\fR
+force using the scalar version of the algorithm. This OPTION is mainly useful
+for testing.
+.TP
+\fB\-\-sse2\fR
+force using the SSE2 version of the algorithm, even if the hardware does not
+support it. This OPTION is mainly useful for testing.
+.TP
+\fB\-Q\fR, \fB\-\-status\fR
+don't output anything, status code shows success.
+.TP
+\fB\-s\fR, \fB\-\-strict\fR
+exit non\-zero for improperly formatted checksum lines.
+.TP
+\fB\-\-tag\fR
+use BSD\-style output formatting.
+.TP
+\fB\-t\fR, \fB\-\-text\fR
+read the FILEs in text mode (default).
+.TP
+\fB\-\-verbose\fR
+include additional information in the output (mainly useful for debugging).
+.TP
+\fB\-v\fR, \fB\-\-version\fR
+display version information and exit.
+.TP
+\fB\-w\fR, \fB\-\-warn\fR
+warn about improperly formatted checksum lines.
+.TP
+\fB\-z\fR, \fB\-\-zero\fR
+use a different output format: end each line with the NUL character instead
+of newline, and disable file name escaping.
+.TP
+Long versions of the OPTIONs can be abbreviated, provided the abbreviated form is unambiguous.
+.SH "EXIT STATUS"
+The executable returns 0 when no errors occurred, and 1 otherwise. The following
+problems will be considered errors: files that are missing or cannot be read,
+conflicting command line parameters, or an internal error. When checking files,
+a checksum mismatch is also an error. Improperly formatted checksum lines are
+not considered an error unless the \fB\-\-strict\fR flag is used, or if the
+input file contains no properly formatted checksum lines at all.
+.SH NOTES
+There is no difference between binary mode and text mode on GNU systems.
+.SH CAVEATS
+Do not use the VectorHash algorithm for security related purposes.
+.SH AUTHOR
+Written by Peter van Hoof.
+.SH "REPORTING BUGS"
+Bugs can be reported in the gitlab repository at
+<https://gitlab-as.oma.be/pvh/vectorhash/>.
+.SH COPYRIGHT
+Copyright \(co 2018-2026 Peter van Hoof,
+.br
+License: zlib.
+
+The distribution includes support libraries written by steinwurf (cpuid),
+Noel Llopis, and Charles Nicholson (unittest-cpp).
+.br
+Licences: BSD and MIT/X, respectively.
+
+This is open source software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+VectorHash(3)

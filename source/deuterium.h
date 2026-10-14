@@ -40,8 +40,6 @@ public:
 	}
 };
 
-extern t_deuterium deut;
-
 void ScaleDensitiesDeuterium( const realnum &factor );
 void SetDeuteriumFractionation( const realnum &frac );
 void SetGasPhaseDeuterium( const realnum &Hdensity );

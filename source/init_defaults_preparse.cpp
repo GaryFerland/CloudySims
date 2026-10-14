@@ -616,9 +616,6 @@ void InitDefaultsPreparse( void )
 	* Case B command */
 	opac.tlamin = 0.f;
 
-	/* taumin command minimum optical depths for lines default 1e-20 */
-	opac.taumin = 0.f;
-
 	opac.eeFreeFreeTemp = -1.;
 
 	/* set false with no induced processes */

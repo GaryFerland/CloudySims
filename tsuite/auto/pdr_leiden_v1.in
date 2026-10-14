@@ -29,7 +29,8 @@ save overview "pdr_leiden_v1.ovr"
 save leiden lines "pdr_leiden_v1.lin"
 save leiden "pdr_leiden_v1.lei"
 save dr "pdr_leiden_v1.dr" 
-save grain temperature "pdr_leiden_v1.grn"
+save grain temperature "pdr_leiden_v1.grnr"
+save grain temperature average "pdr_leiden_v1.grn"
 save monitors "pdr_leiden_v1.asr"
 #
 # commands giving the monitors    =========

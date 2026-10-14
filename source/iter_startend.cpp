@@ -383,8 +383,8 @@ void IterStart()
 		opac.opacity_sct_savzon1[i] = opac.opacity_sct[i];
 
 		/* will accumulate optical depths through cloud */
-		opac.TauAbsFace[i] = opac.taumin;
-		opac.TauScatFace[i] = opac.taumin;
+		opac.TauAbsFace[i] = TAUMIN;
+		opac.TauScatFace[i] = TAUMIN;
 		/* >>chng 99 dec 04, having exactly 1 zone thickness for first zone caused discontinuity
 		 * for heating in very high T models in func_map.in.  zone 1 and 2 were 20% different,
 		 * since tau in is 1e-20, e2 is 0.9999, and so some H ots

@@ -1,0 +1,26 @@
+10 08 08 # the magic number for this format file
+#
+# this file defines the frequency mesh used internally by the grains code
+# its format is the same as the file continuum_mesh.dat.
+#
+0.0012	 15
+0.005    100 # dust features
+0.0316   200 # PAH features
+4.       75  # strong OTS lines
+20.5     15
+23       300 # C K-band edge
+39       15
+42       300 # O K-band edge
+51       15
+54       300 # Fe L-band edge
+95       15
+100      300 # Mg K-band edge
+114      15
+119      300 # Al K-band edge
+135      15
+140      300 # Si K-band edge
+180      15
+185      300 # S K-band edge
+522      15
+530      300 # Fe K-band edge
+0.       15

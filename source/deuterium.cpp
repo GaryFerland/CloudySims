@@ -2,9 +2,8 @@
  * others.  For conditions of distribution and use see copyright notice in license.txt */
 #include "cddefines.h"
 #include "deuterium.h"
+#include "global.h"
 #include "mole.h"
-
-t_deuterium deut;
 
 void t_deuterium::zero()
 {

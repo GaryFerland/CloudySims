@@ -43,7 +43,8 @@ extern "C" void fpsetmask(unsigned long);
 #include "cddefines.h"
 #include "trace.h"
 #include "service.h"
-#include "vectorhash.h"
+#include "vectorize.h"
+#include "vhfile.h"
 #include "version.h"
 #include "prt.h"
 #include "ran.h"
@@ -955,7 +956,7 @@ void check_data(const string& fpath, const string& fname)
 	map<string,string>::const_iterator ptr = cpu.i().checksum_expct.find(fname);
 	if( ptr != cpu.i().checksum_expct.end() )
 	{
-		string checksum = VHstream(fpath);
+		string checksum = VHfile(fpath);
 		if( checksum != ptr->second )
 		{
 			fprintf( ioQQQ, "NOTE: using modified data in %s. Full path:\n", fname.c_str() );

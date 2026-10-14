@@ -400,6 +400,8 @@ namespace {
 
 	TEST(TestReadLineID)
 	{
+		LineSave.sig_figs = 6;
+
 		// LineID always stores wavelength in vacuum internally, but what it reads from the line
 		// can be either air or vacuum wavelength, depending on the value of prt.lgPrintLineAirWavelengths
 		// explicit keywords AIR or VACUUM can also be used to force the interpretation of the wavelength

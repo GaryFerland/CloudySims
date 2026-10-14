@@ -426,6 +426,10 @@ struct t_save {
 	/** option to remove isotropic continua from the output of 'save continuum' */
 	bool lgPrtIsotropicCont[LIMPUN];
 
+	/** option to save average grain temperature for each grain size bin
+	 * rather than the temperature for each separate charge state (default) */
+	bool lgTgrAverage[LIMPUN];
+
 	/** number of save commands entered */
 	long int nsave;
 

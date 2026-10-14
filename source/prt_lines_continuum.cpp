@@ -572,7 +572,7 @@ void lines_continuum(void)
 						 * the result, chLable, is only used when ipass == 0, can be undefined otherwise */
 						double wn = RYD_INF * iso_sp[ipISO][nelem].fb[n].xIsoLevNIonRyd;
 						t_wavl wl = t_vac(wn2angVac(wn));
-						linadd( 0. , wl ,chIonLbl(iso_sp[ipISO][nelem].trans(1,0)).c_str(),'i',
+						linadd( 0. , wl ,chIonLbl(iso_sp[ipISO][nelem].trans(2,0)).c_str(),'i',
 							"radiative recombination continuum");
 					}
 					else

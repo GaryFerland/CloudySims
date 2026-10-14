@@ -349,9 +349,9 @@ void rfield_opac_zero(
 
 		for( i=lo; i <= ihi; i++ )
 		{
-			opac.TauTotalGeo[0][i] = opac.taumin;
-			opac.TauAbsGeo[0][i] = opac.taumin;
-			opac.TauScatGeo[0][i] = opac.taumin;
+			opac.TauTotalGeo[0][i] = TAUMIN;
+			opac.TauAbsGeo[0][i] = TAUMIN;
+			opac.TauScatGeo[0][i] = TAUMIN;
 			opac.tmn[i] = 1.;
 			opac.ExpZone[i] = 1.;
 			opac.E2TauAbsFace[i] = 1.;

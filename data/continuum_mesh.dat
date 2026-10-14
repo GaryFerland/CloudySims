@@ -1,4 +1,4 @@
-10 08 08 //the magic number for this format file
+10 08 08 # the magic number for this format file
 #
 # change history, 2010 Aug 10, use 0.005 resolution to low energy limit;
 # had been 0.1 between low energy limit and 2e-5 Ryd, but many molecular

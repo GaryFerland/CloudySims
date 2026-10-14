@@ -95,8 +95,9 @@ save pressure "orion_hii_pdr_pp.pre1"
 save grain extinction last  "orion_hii_pdr_pp.grnext"
 save grain charge last "orion_hii_pdr_pp.grnchr" 
 save grain potential last "orion_hii_pdr_pp.grnpot" 
-save grain temperature last "orion_hii_pdr_pp.grntem" 
-save grain temperature "orion_hii_pdr_pp.grntem1" 
+save grain temperature last "orion_hii_pdr_pp.grntemres" 
+save grain temperature average last "orion_hii_pdr_pp.grntem" 
+save grain temperature "orion_hii_pdr_pp.grntem1res" 
 #
 # the monitors    =========
 #

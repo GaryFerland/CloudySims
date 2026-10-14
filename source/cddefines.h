@@ -124,8 +124,12 @@ using namespace std;
 
 #ifdef FLT_IS_DBL
 typedef double realnum;
+#define RNM_MIN DBL_MIN
+#define RNM_MAX DBL_MAX
 #else
 typedef float realnum;
+#define RNM_MIN FLT_MIN
+#define RNM_MAX FLT_MAX
 #endif
 
 typedef float sys_float;

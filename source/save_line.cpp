@@ -69,7 +69,8 @@ void save_line(FILE * ioPUN, /* the file we will write to */
 	vector<double> a(nLinesNow);
 
 	bool lgBadLine = false;
-	if( nzone <= 1 && linelist[ipPun]->lgMustGetLines )
+	/* do one-time initialization of lines */
+	if( linelist[ipPun]->lgMustGetLines )
 	{
 		for( i=0; i < nLinesNow; i++ )
 		{

@@ -37,7 +37,8 @@ save heating "pdr_co_fully_noneq.het"
 save cooling "pdr_co_fully_noneq.col"
 save grain charge "pdr_co_fully_noneq.grnchr"
 save grain drift "pdr_co_fully_noneq.grndft"
-save grain temperature "pdr_co_fully_noneq.grntem"
+save grain temperature "pdr_co_fully_noneq.grntemres"
+save grain temperature average "pdr_co_fully_noneq.grntem"
 save monitors "pdr_co_fully_noneq.asr"
 #
 # commands giving the monitors    =========
