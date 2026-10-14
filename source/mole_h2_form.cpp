@@ -52,7 +52,7 @@ void diatomics::mole_H2_form( void )
 					/* H2_X_grain_formation_distribution is normalized to a summed total of unity */
 					H2_X_grain_formation_distribution[ipH2][iVib][iRot] * 
 					/* units of following are s-1 */
-					gv.bin[nd].rate_h2_form_grains_used;
+					gv.bin[nd].rate_h2_form_grains_bin;
 
 				sum_check += one;
 
@@ -78,7 +78,7 @@ void diatomics::mole_H2_form( void )
 		}
 	}
 
-	ASSERT( fp_equal_tol( sum_check, gv.rate_h2_form_grains_used_total, 1e-5*sum_check + DBL_MIN ) );
+	ASSERT( fp_equal_tol( sum_check, gv.rate_h2_form_grains, 1e-5*sum_check + DBL_MIN ) );
 
 	/* convert to dimensionless factors that add to unity */
 	/* >>chng 02 oct 17, use proper distribution function */
