@@ -307,7 +307,7 @@ void GrainMakeDiffuse()
 
 			double fac = factor*gv.bin[nd].cnv_H_pCM3;
 			for( long i=0; i < loopmax; i++ )
-				flux[i] *= realnum(fac*gv.bin[nd].dstab1[i]*gv.anu2(i));
+				flux[i] *= realnum(fac*gptr.opc->dstab1[i]*gv.anu2(i));
 
 			loopmax = 1;
 			while( loopmax < gv.nflux && flux[loopmax] > RNM_MIN )
@@ -601,7 +601,7 @@ void qheat(/*@out@*/ vector<double>& qtemp, /* qtemp[NQGRID] */
 	Umax = ufunct(Tmax,nd,&lgBoundErr);
 	ASSERT( !lgBoundErr ); /* this should never happen */
 	/* y is dln(Lambda)/dlnT at Tmax */
-	spldrv_safe(gv.dsttmp,gv.bin[nd].dstems,gv.bin[nd].dstslp2,NDEMS,log(Tmax),&y,&lgBoundErr);
+	spldrv_safe(gv.dsttmp,gptr.opc->dstems,gptr.opc->dstslp2,NDEMS,log(Tmax),&y,&lgBoundErr);
 	ASSERT( !lgBoundErr ); /* this should never happen */
 	/* deriv is dLambda/dU at Umax, in 1/grain/s */
 	deriv = y*c0/(uderiv(Tmax,nd)*Tmax);
@@ -930,8 +930,8 @@ STATIC void qheat_init(size_t nd,
 	/* integrate over incident continuum for non-ionizing energies */
 	for( i=0; i < min(gptr.ipThresInf,limit); i++ )
 	{
-		check1 += gv.SummedCon[i]*gv.bin[nd].dstab1[i]*gv.anu(i);
-		phiTilde[i] += gv.SummedCon[i]*gv.bin[nd].dstab1[i];
+		check1 += gv.SummedCon[i]*gptr.opc->dstab1[i]*gv.anu(i);
+		phiTilde[i] += gv.SummedCon[i]*gptr.opc->dstab1[i];
 	}
 
 	/* >>chng 01 mar 02, use new expressions for grain cooling and absorption
@@ -939,11 +939,11 @@ STATIC void qheat_init(size_t nd,
 	for( i=gptr.ipThresInf; i < limit; i++ )
 	{
 		long ipLo2 = gptr.ipThresInfVal;
-		double cs1 = ( i >= ipLo2 ) ? gv.bin[nd].dstab1[i]*gptr.yhat_primary[i] : 0.;
+		double cs1 = ( i >= ipLo2 ) ? gptr.opc->dstab1[i]*gptr.yhat_primary[i] : 0.;
 
 		check1 += gv.SummedCon[i]*gptr.fac1[i];
 		/* this accounts for the photons that are fully absorbed by grain */
-		phiTilde[i] += gv.SummedCon[i]*max(gv.bin[nd].dstab1[i]-cs1,0.);
+		phiTilde[i] += gv.SummedCon[i]*max(gptr.opc->dstab1[i]-cs1,0.);
 
 		/* >>chng 01 oct 10, use bisection search to find ip. On C scale now */
 
@@ -1286,7 +1286,7 @@ STATIC void GetProbDistr_LowLimit(size_t nd,
 	ASSERT( !lgBoundErr ); /* this should never happen */
 	/* >>chng 00 mar 22, taken out factor 4, factored in hden and dstAbund
 	 * interpolate in dstems array instead of integrating explicitly, by PvH */
-	splint_safe(gv.dsttmp,gv.bin[nd].dstems,gv.bin[nd].dstslp2,NDEMS,log(qtemp[0]),&y,&lgBoundErr);
+	splint_safe(gv.dsttmp,gptr.opc->dstems,gptr.opc->dstslp2,NDEMS,log(qtemp[0]),&y,&lgBoundErr);
 	ASSERT( !lgBoundErr ); /* this should never happen */
 	/* Lambda holds the radiated energy for grains in this bin, in Ryd/s/grain */
 	Lambda[0] = exp(y)*gv.bin[nd].cnv_H_pGR/EN1RYD;
@@ -1318,7 +1318,7 @@ STATIC void GetProbDistr_LowLimit(size_t nd,
 	/* this test neglects a negative contribution which is impossible to calculate, so it may
 	 * fail to detect cases where the probability distribution starts dropping immediately,
 	 * we will use a second test using the variable lgAllNegSlope below to catch those cases, PvH */
-	spldrv_safe(gv.dsttmp,gv.bin[nd].dstems,gv.bin[nd].dstslp2,NDEMS,log(qtemp[0]),&dlnLdlnT,&lgBoundErr);
+	spldrv_safe(gv.dsttmp,gptr.opc->dstems,gptr.opc->dstslp2,NDEMS,log(qtemp[0]),&dlnLdlnT,&lgBoundErr);
 	ASSERT( !lgBoundErr ); /* this should never happen */
 	dlnpdlnU = u1[0]*Phi[0]/Lambda[0] - dlnLdlnT*u1[0]/(qtemp[0]*uderiv(qtemp[0],nd));
 	if( dlnpdlnU < 0. )
@@ -1677,7 +1677,7 @@ STATIC double TryDoubleStep(vector<double>& u1,
 		delu[k] = step/2.;
 		u1[k] = u1[k-1] + delu[k];
 		qtemp[k] = inv_ufunct(u1[k],nd,lgBoundFail);
-		splint_safe(gv.dsttmp,gv.bin[nd].dstems,gv.bin[nd].dstslp2,NDEMS,log(qtemp[k]),&y,&lgErr);
+		splint_safe(gv.dsttmp,gptr.opc->dstems,gptr.opc->dstslp2,NDEMS,log(qtemp[k]),&y,&lgErr);
 		*lgBoundFail = *lgBoundFail || lgErr;
 		Lambda[k] = exp(y)*gv.bin[nd].cnv_H_pGR/EN1RYD;
 
@@ -2093,7 +2093,7 @@ STATIC long RebinQHeatResults(size_t nd,
 		new_qprob[newnbin] = s0;
 		new_Lambda[newnbin] = s1/s0;
 		xx = log(new_Lambda[newnbin]*EN1RYD*gv.bin[nd].cnv_GR_pH);
-		splint_safe(gv.bin[nd].dstems,gv.dsttmp,gv.bin[nd].dstslp,NDEMS,xx,&y,&lgBoundErr);
+		splint_safe(gv.bin[nd].chrg(nz).opc->dstems,gv.dsttmp,gv.bin[nd].chrg(nz).opc->dstslp,NDEMS,xx,&y,&lgBoundErr);
 		ASSERT( !lgBoundErr ); /* this should never be triggered */
 		new_qtemp[newnbin] = exp(y);
 		new_u1[newnbin] = ufunct(new_qtemp[newnbin],nd,&lgBoundErr);
@@ -2206,6 +2206,8 @@ STATIC void GetProbDistr_HighLimit(size_t nd,
 				 gv.bin[nd].chDstLab, nz, gv.bin[nd].chrg(nz).DustZ );
 	}
 
+	const ChargeBin& gptr = gv.bin[nd].chrg(nz);
+
 	c1 = sqrt(4.*LN_TWO/PI)/fwhm*exp(-pow2(fwhm/Umax)/(16.*LN_TWO));
 	c2 = 4.*LN_TWO*pow2(Umax/fwhm);
 
@@ -2234,7 +2236,7 @@ STATIC void GetProbDistr_HighLimit(size_t nd,
 	lgBoundErr = lgBoundErr || lgErr;
 	help1 = log(uu1/Umax);
 	p1 = c1*exp(-c2*pow2(help1));
-	splint_safe(gv.dsttmp,gv.bin[nd].dstems,gv.bin[nd].dstslp2,NDEMS,log(T1),&y,&lgErr);
+	splint_safe(gv.dsttmp,gptr.opc->dstems,gptr.opc->dstslp2,NDEMS,log(T1),&y,&lgErr);
 	lgBoundErr = lgBoundErr || lgErr;
 	L1 = exp(y)*gv.bin[nd].cnv_H_pGR/EN1RYD;
 
@@ -2263,7 +2265,7 @@ STATIC void GetProbDistr_HighLimit(size_t nd,
 		lgBoundErr = lgBoundErr || lgErr;
 		help1 = log(uu2/Umax);
 		p2 = c1*exp(-c2*pow2(help1));
-		splint_safe(gv.dsttmp,gv.bin[nd].dstems,gv.bin[nd].dstslp2,NDEMS,log(T2),&y,&lgErr);
+		splint_safe(gv.dsttmp,gptr.opc->dstems,gptr.opc->dstslp2,NDEMS,log(T2),&y,&lgErr);
 		lgBoundErr = lgBoundErr || lgErr;
 		L2 = exp(y)*gv.bin[nd].cnv_H_pGR/EN1RYD;
 
@@ -2275,7 +2277,7 @@ STATIC void GetProbDistr_HighLimit(size_t nd,
 		qprob[nbin] = s0;
 		Lambda[nbin] = s1/s0;
 		xx = log(Lambda[nbin]*EN1RYD*gv.bin[nd].cnv_GR_pH);
-		splint_safe(gv.bin[nd].dstems,gv.dsttmp,gv.bin[nd].dstslp,NDEMS,xx,&y,&lgErr);
+		splint_safe(gptr.opc->dstems,gv.dsttmp,gptr.opc->dstslp,NDEMS,xx,&y,&lgErr);
 		lgBoundErr = lgBoundErr || lgErr;
 		qtemp[nbin] = exp(y);
 		delu[nbin] = wid;

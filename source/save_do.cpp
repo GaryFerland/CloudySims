@@ -1572,7 +1572,11 @@ void SaveDo(
 						/* sum over all grain species */
 						for( size_t nd=0; nd < gv.bin.size(); nd++ )
 						{
-							scat += gv.bin[nd].pure_sc1[j]*gv.bin[nd].dstAbund;
+							for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
+							{
+								const ChargeBin& gptr = gv.bin[nd].chrg(nz);
+								scat += gptr.FracPop*gptr.opc->pure_sc1[j]*gv.bin[nd].dstAbund;
+							}
 						}
 						/* finally, scattering including effects of forward scattering */
 						fprintf( save.params[ipPun].ipPnunit, 
@@ -1809,9 +1813,30 @@ void SaveDo(
 					{
 						/* first print string giving grain id */
 						fprintf( save.params[ipPun].ipPnunit, "#grain nu/Ryd" );
-						for( size_t nd=0; nd < gv.bin.size(); ++nd ) 
-							fprintf( save.params[ipPun].ipPnunit, "\tQ_abs%s\tQ_scat*(1-g)%s",
-								 gv.bin[nd].chDstLab, gv.bin[nd].chDstLab );
+						for( size_t nd=0; nd < gv.bin.size(); ++nd )
+						{
+							for( size_t c=0; c < gv.bin[nd].opc.size(); ++c )
+							{
+								ostringstream Zrange;
+								if( gv.bin[nd].opc.size() > 1 )
+								{
+									Zrange << "[Z=";
+									if( gv.bin[nd].opc[c].Z[0] == LONG_MIN )
+										Zrange << "-inf";
+									else
+										Zrange << gv.bin[nd].opc[c].Z[0];
+									Zrange << "..";
+									if( gv.bin[nd].opc[c].Z[1] == LONG_MAX )
+										Zrange << "+inf";
+									else
+										Zrange << gv.bin[nd].opc[c].Z[1];
+									Zrange << "]";
+								}
+								const char* Zr = Zrange.str().c_str();
+								fprintf( save.params[ipPun].ipPnunit, "\tQ_abs%s%s\tQ_scat*(1-g)%s%s",
+										 gv.bin[nd].chDstLab, Zr, gv.bin[nd].chDstLab, Zr );
+							}
+						}
 						fprintf( save.params[ipPun].ipPnunit, "\n" );
 						save.SaveHeaderDone(ipPun);
 					}
@@ -1821,9 +1846,13 @@ void SaveDo(
 								 gv.anu(j) );
 						for( size_t nd=0; nd < gv.bin.size(); nd++ )
 						{
-							fprintf( save.params[ipPun].ipPnunit, "\t%.3e\t%.3e", 
-									 gv.bin[nd].dstab1[j]*4./gv.bin[nd].IntArea,
-									 gv.bin[nd].pure_sc1[j]*gv.bin[nd].asym[j]*4./gv.bin[nd].IntArea );
+							for( size_t c=0; c < gv.bin[nd].opc.size(); c++ )
+							{
+								const OpcData* opc = gv.bin[nd].opc[c].p;
+								fprintf( save.params[ipPun].ipPnunit, "\t%.3e\t%.3e", 
+										 opc->dstab1[j]*4./gv.bin[nd].IntArea,
+										 opc->pure_sc1[j]*opc->asym[j]*4./gv.bin[nd].IntArea );
+							}
 						}
 						fprintf( save.params[ipPun].ipPnunit, "\n" );
 					}

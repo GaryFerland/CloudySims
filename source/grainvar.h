@@ -450,19 +450,8 @@ public:
 	  cnv_GR_pH,            /**< grain unit conversion, \<unit\>/grain -> \<unit\>/H (default depl) */
 	  cnv_GR_pCM3;          /**< grain unit conversion, \<unit\>/grain -> \<unit\>/cm^3 (actual depl) */
 
-	/** grain opacities */
-	/** >>chng 02 dec 30, separated scattering cross section and asymmetry factor (1-g),
-	 * NB NB NB -- note that pure_sc1 DOES NOT contain the asymmetry factor, while gv.dstsc DOES !!! */
-	vector<double> dstab1;  /**< absorption cross section per grain species, for default depl */
-	vector<double> pure_sc1;/**< scattering cross section per grain species, for default depl */
-	vector<double> asym;    /**< asymmetry factor (1-g) */
-	vector<double> dstab1_x_anu; /**< helper array, dstab1[i]*anu[i] for default depl */
+	/** grain opacities & equilibrium temperature */
 	vector<OpcBracket> opc; /**< charge-dependent opacity data */
-
-	/** equilibrium temperature */
-	double dstems[NDEMS],   /**< grain emissivity at dsttmp[], default depl, normalized per H */
-	  dstslp[NDEMS],        /**< auxiliary array for spline interpolation */
-	  dstslp2[NDEMS];       /**< auxiliary array for inverse spline interpolation */
 
 	double AvTemp;          /**< average temperature of all charge states for this zone */
 	double TeGrainMax;      /**< highest equilibrium temperature as a function of radius, OUTPUT ONLY */

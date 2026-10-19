@@ -64,10 +64,7 @@ void ChargeBin::p_clear1()
 void GrainBin::p_clear0()
 {
 	pool.clear();
-	dstab1.clear();
-	pure_sc1.clear();
-	asym.clear();
-	dstab1_x_anu.clear();
+	opc.clear();
 	sd.clear();
 	y0b06.clear();
 	inv_att_len.clear();
@@ -88,9 +85,6 @@ void GrainBin::p_clear1()
 	cnv_CM3_pH = -DBL_MAX;
 	cnv_GR_pH = -DBL_MAX;
 	cnv_GR_pCM3 = -DBL_MAX;
-	memset( dstems, 0, NDEMS*sizeof(dstems[0]) );
-	memset( dstslp, 0, NDEMS*sizeof(dstslp[0]) );
-	memset( dstslp2, 0, NDEMS*sizeof(dstslp2[0]) );
 	AvTemp = 1.;
 	TeGrainMax = FLT_MAX;
 	avdust = 0.;

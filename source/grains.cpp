@@ -116,7 +116,7 @@ STATIC void InitBinAugerData(size_t,long,long);
 /* initialize grain emissivities */
 STATIC void InitEmissivities();
 /* PlanckIntegral compute total radiative cooling due to large grains */
-STATIC double PlanckIntegral(double,size_t,long);
+STATIC double PlanckIntegral(double,size_t,size_t,long);
 /* invalidate charge dependent data from previous iteration */
 STATIC void NewChargeData(long);
 /* GrnStdDpth returns the grain abundance as a function of depth into cloud */
@@ -624,16 +624,18 @@ void GrainsInit()
 		fprintf( ioQQQ, "    Ryd   " );
 		for( size_t nd=0; nd < gv.bin.size(); nd++ )
 		{
-			fprintf( ioQQQ, " %-12.12s", gv.bin[nd].chDstLab );
+			for( size_t c=0; c < gv.bin[nd].opc.size(); c++ )
+				fprintf( ioQQQ, " %12.12s[%ld]", gv.bin[nd].chDstLab, c );
 		}
 		fprintf( ioQQQ, "\n" );
 
 		for( i=0; i < gv.nflux; i += 10 )
 		{
-			fprintf( ioQQQ, "%10.2e", gv.anu(i) );
+			fprintf( ioQQQ, "%10.4e", gv.anu(i) );
 			for( size_t nd=0; nd < gv.bin.size(); nd++ )
 			{
-				fprintf( ioQQQ, " %10.2e  ", gv.bin[nd].dstab1[i] );
+				for( size_t c=0; c < gv.bin[nd].opc.size(); c++ )
+					fprintf( ioQQQ, " %13.4e  ", gv.bin[nd].opc[c].p->dstab1[i] );
 			}
 			fprintf( ioQQQ, "\n" );
 		}
@@ -643,16 +645,18 @@ void GrainsInit()
 		fprintf( ioQQQ, "    Ryd   " );
 		for( size_t nd=0; nd < gv.bin.size(); nd++ )
 		{
-			fprintf( ioQQQ, " %-12.12s", gv.bin[nd].chDstLab );
+			for( size_t c=0; c < gv.bin[nd].opc.size(); c++ )
+				fprintf( ioQQQ, " %12.12s[%ld]", gv.bin[nd].chDstLab, c );
 		}
 		fprintf( ioQQQ, "\n" );
 
 		for( i=0; i < gv.nflux; i += 10 )
 		{
-			fprintf( ioQQQ, "%10.2e", gv.anu(i) );
+			fprintf( ioQQQ, "%10.4e", gv.anu(i) );
 			for( size_t nd=0; nd < gv.bin.size(); nd++ )
 			{
-				fprintf( ioQQQ, " %10.2e  ", gv.bin[nd].pure_sc1[i] );
+				for( size_t c=0; c < gv.bin[nd].opc.size(); c++ )
+					fprintf( ioQQQ, " %13.4e  ", gv.bin[nd].opc[c].p->pure_sc1[i] );
 			}
 			fprintf( ioQQQ, "\n" );
 		}
@@ -662,16 +666,18 @@ void GrainsInit()
 		fprintf( ioQQQ, "    Ryd   " );
 		for( size_t nd=0; nd < gv.bin.size(); nd++ )
 		{
-			fprintf( ioQQQ, " %-12.12s", gv.bin[nd].chDstLab );
+			for( size_t c=0; c < gv.bin[nd].opc.size(); c++ )
+				fprintf( ioQQQ, " %12.12s[%ld]", gv.bin[nd].chDstLab, c );
 		}
 		fprintf( ioQQQ, "\n" );
 
 		for( i=0; i < gv.nflux; i += 10 )
 		{
-			fprintf( ioQQQ, "%10.2e", gv.anu(i) );
+			fprintf( ioQQQ, "%10.4e", gv.anu(i) );
 			for( size_t nd=0; nd < gv.bin.size(); nd++ )
 			{
-				fprintf( ioQQQ, " %10.2e  ", gv.bin[nd].dstab1[i]*4./gv.bin[nd].IntArea );
+				for( size_t c=0; c < gv.bin[nd].opc.size(); c++ )
+					fprintf( ioQQQ, " %13.4e  ", gv.bin[nd].opc[c].p->dstab1[i]*4./gv.bin[nd].IntArea );
 			}
 			fprintf( ioQQQ, "\n" );
 		}
@@ -681,16 +687,18 @@ void GrainsInit()
 		fprintf( ioQQQ, "    Ryd   " );
 		for( size_t nd=0; nd < gv.bin.size(); nd++ )
 		{
-			fprintf( ioQQQ, " %-12.12s", gv.bin[nd].chDstLab );
+			for( size_t c=0; c < gv.bin[nd].opc.size(); c++ )
+				fprintf( ioQQQ, " %12.12s[%ld]", gv.bin[nd].chDstLab, c );
 		}
 		fprintf( ioQQQ, "\n" );
 
 		for( i=0; i < gv.nflux; i += 10 )
 		{
-			fprintf( ioQQQ, "%10.2e", gv.anu(i) );
+			fprintf( ioQQQ, "%10.4e", gv.anu(i) );
 			for( size_t nd=0; nd < gv.bin.size(); nd++ )
 			{
-				fprintf( ioQQQ, " %10.2e  ", gv.bin[nd].pure_sc1[i]*4./gv.bin[nd].IntArea );
+				for( size_t c=0; c < gv.bin[nd].opc.size(); c++ )
+					fprintf( ioQQQ, " %13.4e  ", gv.bin[nd].opc[c].p->pure_sc1[i]*4./gv.bin[nd].IntArea );
 			}
 			fprintf( ioQQQ, "\n" );
 		}
@@ -700,16 +708,18 @@ void GrainsInit()
 		fprintf( ioQQQ, "    Ryd   " );
 		for( size_t nd=0; nd < gv.bin.size(); nd++ )
 		{
-			fprintf( ioQQQ, " %-12.12s", gv.bin[nd].chDstLab );
+			for( size_t c=0; c < gv.bin[nd].opc.size(); c++ )
+				fprintf( ioQQQ, " %12.12s[%ld]", gv.bin[nd].chDstLab, c );
 		}
 		fprintf( ioQQQ, "\n" );
 
 		for( i=0; i < gv.nflux; i += 10 )
 		{
-			fprintf( ioQQQ, "%10.2e", gv.anu(i) );
+			fprintf( ioQQQ, "%10.4e", gv.anu(i) );
 			for( size_t nd=0; nd < gv.bin.size(); nd++ )
 			{
-				fprintf( ioQQQ, " %10.2e  ", gv.bin[nd].asym[i] );
+				for( size_t c=0; c < gv.bin[nd].opc.size(); c++ )
+					fprintf( ioQQQ, " %13.4e  ", gv.bin[nd].opc[c].p->asym[i] );
 			}
 			fprintf( ioQQQ, "\n" );
 		}
@@ -939,7 +949,7 @@ STATIC void InitEmissivities()
 	if( trace.lgTrace && trace.lgDustBug )
 	{
 		fprintf( ioQQQ, "  InitEmissivities starts\n" );
-		fprintf( ioQQQ, "    ND    Tdust       Emis       BB Check   4pi*a^2*<Q>\n" );
+		fprintf( ioQQQ, "    ND    C    Tdust       Emis       BB Check   4pi*a^2*<Q>\n" );
 	}
 
 	ASSERT( NTOP >= 2 && NDEMS > 2*NTOP );
@@ -950,7 +960,10 @@ STATIC void InitEmissivities()
 		gv.dsttmp[i] = log(tdust);
 		for( size_t nd=0; nd < gv.bin.size(); nd++ )
 		{
-			gv.bin[nd].dstems[i] = log(PlanckIntegral(tdust,nd,i));
+			for( size_t c=0; c < gv.bin[nd].opc.size(); c++ )
+			{
+				gv.bin[nd].opc[c].p->dstems[i] = log(PlanckIntegral(tdust,nd,c,i));
+			}
 		}
 		tdust *= fac;
 	}
@@ -962,7 +975,10 @@ STATIC void InitEmissivities()
 		gv.dsttmp[i] = log(tdust);
 		for( size_t nd=0; nd < gv.bin.size(); nd++ )
 		{
-			gv.bin[nd].dstems[i] = log(PlanckIntegral(tdust,nd,i));
+			for( size_t c=0; c < gv.bin[nd].opc.size(); c++ )
+			{
+				gv.bin[nd].opc[c].p->dstems[i] = log(PlanckIntegral(tdust,nd,c,i));
+			}
 		}
 		fac *= fac2;
 		tdust *= fac;
@@ -981,35 +997,21 @@ STATIC void InitEmissivities()
 	/* now find slopes form spline fit */
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
-		/* set up coefficients for spline */
-		spline(gv.bin[nd].dstems,gv.dsttmp,NDEMS,2e31,2e31,gv.bin[nd].dstslp);
-		spline(gv.dsttmp,gv.bin[nd].dstems,NDEMS,2e31,2e31,gv.bin[nd].dstslp2);
-	}
-
-#	if 0
-	/* test the dstems interpolation */
-	nd = nint(fudge(0));
-	ASSERT( nd >= 0 && nd < gv.bin.size() );
-	for( i=0; i < 2000; i++ )
-	{
-		double x,y,z;
-		z = exp10(-40. + (double)i/50.);
-		splint(gv.bin[nd].dstems,gv.dsttmp,gv.bin[nd].dstslp,NDEMS,log(z),&y);
-		if( exp(y) > GRAIN_TMIN && exp(y) < GRAIN_TMAX )
+		for( size_t c=0; c < gv.bin[nd].opc.size(); c++ )
 		{
-			x = PlanckIntegral(exp(y),nd,3);
-			printf(" input %.6e temp %.6e output %.6e rel. diff. %.6e\n",z,exp(y),x,(x-z)/z);
+			/* set up coefficients for spline */
+			spline(gv.bin[nd].opc[c].p->dstems,gv.dsttmp,NDEMS,2e31,2e31,gv.bin[nd].opc[c].p->dstslp);
+			spline(gv.dsttmp,gv.bin[nd].opc[c].p->dstems,NDEMS,2e31,2e31,gv.bin[nd].opc[c].p->dstslp2);
 		}
 	}
-	cdEXIT(EXIT_SUCCESS);
-#	endif
 }
 
 
 /* PlanckIntegral compute total radiative cooling due to grains */
 STATIC double PlanckIntegral(double tdust, 
-			     size_t nd, 
-			     long int ip)
+							 size_t nd,
+							 size_t c,
+							 long int ip)
 {
 	DEBUG_ENTRY( "PlanckIntegral()" );
 
@@ -1061,7 +1063,7 @@ STATIC double PlanckIntegral(double tdust,
 
 		double Planck1 = PI4*2.*HPLANCK/POW2(SPEEDLIGHT)*POW2(FR1RYD)*POW2(FR1RYD)*
 			gv.anu3(i)/ExpM1*gv.widflx(i);
-		double Planck2 = Planck1*gv.bin[nd].dstab1[i];
+		double Planck2 = Planck1*gv.bin[nd].opc[c].p->dstab1[i];
 
 		/* add integral over RJ tail, maybe useful for extreme low temps */
 		if( i == 0 ) 
@@ -1080,7 +1082,7 @@ STATIC double PlanckIntegral(double tdust,
 	/* this is an option to print out every few steps, when 'trace grains' is set */
 	if( trace.lgDustBug && trace.lgTrace && ip%10 == 0 )
 	{
-		fprintf( ioQQQ, "  %4ld %11.4e %11.4e %11.4e %11.4e\n", (unsigned long)nd, tdust, 
+		fprintf( ioQQQ, "  %4ld %4ld %11.4e %11.4e %11.4e %11.4e\n", (unsigned long)nd, (unsigned long)c, tdust, 
 		  integral2, integral1/4./5.67051e-5/powi(tdust,4), integral2*4./integral1 );
 	}
 
@@ -1583,7 +1585,7 @@ STATIC void GrainChargeTemp()
 							bool lgBoundErr;
 							double y, x = log(gptr.tedust);
 							/* make sure GrainHeatCS is consistent with value of tedust */
-							splint_safe(gv.dsttmp,gv.bin[nd].dstems,gv.bin[nd].dstslp2,NDEMS,x,&y,&lgBoundErr);
+							splint_safe(gv.dsttmp,gptr.opc->dstems,gptr.opc->dstslp2,NDEMS,x,&y,&lgBoundErr);
 							gptr.GrainHeatCS = exp(y)*gv.bin[nd].cnv_H_pCM3;
 						}
 
@@ -1652,10 +1654,11 @@ STATIC void GrainChargeTemp()
 				{
 					/* make sure GrainHeatCS is consistent with tedust in case this is the last iteration */
 					bool lgBoundErr;
-					double y, x = log(gv.bin[nd].chrg(nz).tedust);
+					ChargeBin& gptr = gv.bin[nd].chrg(nz);
+					double y, x = log(gptr.tedust);
 					/* make sure GrainHeatCS is consistent with value of tedust */
-					splint_safe(gv.dsttmp,gv.bin[nd].dstems,gv.bin[nd].dstslp2,NDEMS,x,&y,&lgBoundErr);
-					gv.bin[nd].chrg(nz).GrainHeatCS = exp(y)*gv.bin[nd].cnv_H_pCM3;
+					splint_safe(gv.dsttmp,gptr.opc->dstems,gptr.opc->dstslp2,NDEMS,x,&y,&lgBoundErr);
+					gptr.GrainHeatCS = exp(y)*gv.bin[nd].cnv_H_pCM3;
 				}
 			}
 
@@ -2387,9 +2390,9 @@ STATIC double GrainElecEmis1(size_t nd,
 	long ipLo = gptr.ipThresInfVal;
 	long ipHi = gv.nPositive;
 #	ifdef WD_TEST2
-	*sum1a = reduce_abc( get_ptr(gv.bin[nd].dstab1), gv.flux.data(), gptr.yhat.ptr0(), ipLo, ipHi );
+	*sum1a = reduce_abc( get_ptr(gptr.opc->dstab1), gv.flux.data(), gptr.yhat.ptr0(), ipLo, ipHi );
 #	else
-	*sum1a = reduce_abc( get_ptr(gv.bin[nd].dstab1), gv.SummedCon.data(), gptr.yhat.ptr0(), ipLo, ipHi );
+	*sum1a = reduce_abc( get_ptr(gptr.opc->dstab1), gv.SummedCon.data(), gptr.yhat.ptr0(), ipLo, ipHi );
 #	endif
 	/* normalize to rates per cm^2 of projected grain area */
 	*sum1a /= gv.bin[nd].IntArea/4.;
@@ -3939,33 +3942,30 @@ STATIC void GrainUpdateRadius2()
 	/* >>chng 11 dec 12 reorder loops so they can be vectorized, PvH */
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
-		double dstAbund = gv.bin[nd].dstAbund;
-
-		/* >>chng 01 mar 26, from nupper to nflux */
-		for( long i=0; i < gv.nflux; i++ )
-		{
-			/* these are total absorption and scattering cross sections,
-			 * the latter should contain the asymmetry factor (1-g) */
-			/* this is effective area per proton, scaled by depletion
-			 * dareff(nd) = darea(nd) * dstAbund(nd) */
-			/* grain abundance may be a function of depth */
-			/* >>chng 02 dec 30, separated scattering cross section and asymmetry factor, PvH */
-			gv.dstab0[i] += gv.bin[nd].dstab1[i]*dstAbund;
-		}
-		for( long i=0; i < gv.nflux; i++ )
-		{
-			gv.dstsc0[i] += gv.bin[nd].pure_sc1[i]*gv.bin[nd].asym[i]*dstAbund;
-		}
-
 		for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
 		{
 			const ChargeBin& gptr = gv.bin[nd].chrg(nz);
+			double FracAbund = gptr.FracPop*gv.bin[nd].dstAbund;
+				
+			/* >>chng 01 mar 26, from nupper to nflux */
+			for( long i=0; i < gv.nflux; i++ )
+			{
+				/* these are total absorption and scattering cross sections,
+				 * the latter should contain the asymmetry factor (1-g) */
+				/* this is effective area per proton, scaled by depletion
+				 * dareff(nd) = darea(nd) * dstAbund(nd) */
+				/* grain abundance may be a function of depth */
+				/* >>chng 02 dec 30, separated scattering cross section and asymmetry factor, PvH */
+				gv.dstab0[i] += gptr.opc->dstab1[i]*FracAbund;
+			}
+			for( long i=0; i < gv.nflux; i++ )
+			{
+				gv.dstsc0[i] += gptr.opc->pure_sc1[i]*gptr.opc->asym[i]*FracAbund;
+			}
 			if( gptr.DustZ <= -1 )
 			{
-				double FracAbund = gptr.FracPop*dstAbund;
-
 				for( long i=gptr.ipThresInf; i < gv.nflux; i++ )
-					gv.dstab0[i] += FracAbund*gptr.cs_pdt[i];
+					gv.dstab0[i] += gptr.cs_pdt[i]*FracAbund;
 			}
 		}
 	}
@@ -4008,12 +4008,12 @@ STATIC void GrainTemperature(size_t nd,
 	long ip2 = gv.nPositive;
 	if( lgReEvaluate1 )
 	{
-		gptr.hcon1 = reduce_ab( get_ptr(gv.bin[nd].dstab1_x_anu), gv.flux.data(), ip0, ip1 ) +
+		gptr.hcon1 = reduce_ab( get_ptr(gptr.opc->dstab1_x_anu), gv.flux.data(), ip0, ip1 ) +
 			reduce_ab( gptr.fac1.ptr0(), gv.flux.data(), ip1, ip2 );
 	}
 	if( lgReEvaluate2 )
 	{
-		gptr.hots1 = reduce_ab( get_ptr(gv.bin[nd].dstab1_x_anu), gv.SummedDif.data(), ip0, ip1 ) +
+		gptr.hots1 = reduce_ab( get_ptr(gptr.opc->dstab1_x_anu), gv.SummedDif.data(), ip0, ip1 ) +
 			reduce_ab( gptr.fac1.ptr0(), gv.SummedDif.data(), ip1, ip2 );
 #		ifdef WD_TEST2
 		gptr.pe1 = reduce_ab( gptr.fac2.ptr0(), gv.flux.data(), ip1, ip2 );
@@ -4021,7 +4021,7 @@ STATIC void GrainTemperature(size_t nd,
 		gptr.pe1 = reduce_ab( gptr.fac2.ptr0(), gv.SummedCon.data(), ip1, ip2 );
 #		endif
 #		ifndef NDEBUG
-		gptr.bolflux1 = reduce_ab( get_ptr(gv.bin[nd].dstab1_x_anu), gv.SummedCon.data(), ip0, ip2 );
+		gptr.bolflux1 = reduce_ab( get_ptr(gptr.opc->dstab1_x_anu), gv.SummedCon.data(), ip0, ip2 );
 		if( gptr.DustZ <= -1 )
 			gptr.bolflux1 +=
 				reduce_abc( gptr.cs_pdt.ptr0(), gv.anuptr(), gv.SummedCon.data(), ip1, ip2 );
@@ -4060,7 +4060,7 @@ STATIC void GrainTemperature(size_t nd,
 	/* >>chng 04 feb 01, moved calculation of GrainHeatLyaCS outside loop for optimization, PvH */
 	if( ipLya < rfield.nPositive && ipgvLya < gptr.ipThresInf )
 	{
-		gptr.GrainHeatLyaCS = rfield.otslin[ipLya]*gv.bin[nd].dstab1_x_anu[ipgvLya];
+		gptr.GrainHeatLyaCS = rfield.otslin[ipLya]*gptr.opc->dstab1_x_anu[ipgvLya];
 	}
 	else if( ipLya < rfield.nPositive )
 	{
@@ -4123,7 +4123,7 @@ STATIC void GrainTemperature(size_t nd,
 			 *  >>chng 97 jul 17, divide by abundance here */
 			double y, x = log(MAX2(DBL_MIN,gptr.GrainHeatCS*gv.bin[nd].cnv_CM3_pH));
 			/* >>chng 96 apr 27, as per Peter van Hoof comment */
-			splint_safe(gv.bin[nd].dstems,gv.dsttmp,gv.bin[nd].dstslp,NDEMS,x,&y,&lgOutOfBounds);
+			splint_safe(gptr.opc->dstems,gv.dsttmp,gptr.opc->dstslp,NDEMS,x,&y,&lgOutOfBounds);
 			NextTg = exp(y);
 		}
 		else
@@ -4149,7 +4149,7 @@ STATIC void GrainTemperature(size_t nd,
 			gptr.tedust = thermal.ConstGrainTemp;
 		/* >>chng 04 jun 01, make sure GrainHeatCS is consistent with value of tedust, PvH */
 		double y, x = log(gptr.tedust);
-		splint_safe(gv.dsttmp,gv.bin[nd].dstems,gv.bin[nd].dstslp2,NDEMS,x,&y,&lgOutOfBounds);
+		splint_safe(gv.dsttmp,gptr.opc->dstems,gptr.opc->dstslp2,NDEMS,x,&y,&lgOutOfBounds);
 		gptr.GrainHeatCS = exp(y)*gv.bin[nd].cnv_H_pCM3;
 	}
 
@@ -4227,7 +4227,7 @@ STATIC void PE_init(size_t nd,
 	if( i >= ipLo1 )
 	{
 		/* effective cross section for photo-ejection */
-		*cs1 = gv.bin[nd].dstab1[i]*gptr.yhat[i];
+		*cs1 = gptr.opc->dstab1[i]*gptr.yhat[i];
 		/* >>chng 00 jul 17, use description of Weingartner & Draine, 2001 */
 		/* ehat1 is the average energy of the escaping electron at infinity */
 		*ehat1 = gptr.ehat[i];
@@ -4284,7 +4284,7 @@ STATIC void PE_init(size_t nd,
 		*cool2 = 0.;
 	}
 
-	*cs_tot = gv.bin[nd].dstab1[i] + *cs2;		
+	*cs_tot = gptr.opc->dstab1[i] + *cs2;		
 }
 
 
@@ -4623,10 +4623,15 @@ void GrainDrift()
 	{
 		/* find momentum absorbed by grain */
 		double dmomen = 0.;
-		for( long i=0; i < gv.nPositive; i++ )
+		for( long nz=0; nz < gv.bin[nd].nChrg; nz++ )
 		{
-			/* >>chng 02 dec 30, separated scattering cross section and asymmetry factor, PvH */
-			dmomen += help[i]*(gv.bin[nd].dstab1[i] + gv.bin[nd].pure_sc1[i]*gv.bin[nd].asym[i]);
+			const ChargeBin& gptr = gv.bin[nd].chrg(nz);
+
+			for( long i=0; i < gv.nPositive; i++ )
+			{
+				/* >>chng 02 dec 30, separated scattering cross section and asymmetry factor, PvH */
+				dmomen += gptr.FracPop*help[i]*(gptr.opc->dstab1[i] + gptr.opc->pure_sc1[i]*gptr.opc->asym[i]);
+			}
 		}
 		ASSERT( dmomen >= 0. );
 		dmomen *= EN1RYD*4./gv.bin[nd].IntArea;

@@ -1346,10 +1346,6 @@ void mie_read_opc(/*@in@*/const char *chFile,
 	for( i=0; i < nbin; i++ )
 	{
 		nd2 = nd + i;
-		gv.bin[nd2].dstab1.resize(nup);
-		gv.bin[nd2].pure_sc1.resize(nup);
-		gv.bin[nd2].asym.resize(nup);
-		gv.bin[nd2].dstab1_x_anu.resize(nup);
 		gv.bin[nd2].inv_att_len.resize(nup);
 		gv.bin[nd2].opc.reserve(4);
 	}
@@ -1538,16 +1534,6 @@ void mie_read_opc(/*@in@*/const char *chFile,
 	}
 
 	CheckBrackets(gv.bin[nd].opc, chFile);
-
-	// TEMPORARY CODE!!!!
-	for( j=0; j < nbin; j++ )
-	{
-		nd2 = nd + j;
-		gv.bin[nd2].dstab1 = gv.bin[nd2].opc[0].p->dstab1;
-		gv.bin[nd2].pure_sc1 = gv.bin[nd2].opc[0].p->pure_sc1;
-		gv.bin[nd2].asym = gv.bin[nd2].opc[0].p->asym;
-		gv.bin[nd2].dstab1_x_anu = gv.bin[nd2].opc[0].p->dstab1_x_anu;
-	}
 
 	/* skip to end-of-line and then skip next 4 lines */
 	for( i=0; i < 5; i++ )
