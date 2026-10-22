@@ -972,8 +972,9 @@ void PrtFinal(void)
 	if( atmdat.lgdBaseSourceExists[ipOXYGEN][2] )
 	{
 		double o4363, o4959, o5007;
+		t_wavl wl4363 = 4363.21_air, wl4959 = 4958.91_air, wl5007 = 5006.84_air;
 
-		if( cdLine("O  3",4958.91_air,&o4959,&absint)<=0 )
+		if( cdLine("O  3",wl4959,&o4959,&absint)<=0 )
 		{
 			if( dense.lgElmtOn[ipOXYGEN] )
 			{
@@ -983,7 +984,7 @@ void PrtFinal(void)
 			}
 		}
 
-		if( cdLine("O  3",5006.84_air,&o5007,&absint)<=0 )
+		if( cdLine("O  3",wl5007,&o5007,&absint)<=0 )
 		{
 			if( dense.lgElmtOn[ipOXYGEN] )
 			{
@@ -992,7 +993,7 @@ void PrtFinal(void)
 			}
 		}
 
-		if( cdLine("O  3",4363.21_air,&o4363,&absint)<=0 )
+		if( cdLine("O  3",wl4363,&o4363,&absint)<=0 )
 		{
 			if( dense.lgElmtOn[ipOXYGEN] )
 			{
@@ -1001,14 +1002,32 @@ void PrtFinal(void)
 			}
 		}
 
-		// Energy ratio of O3 lines -- better to get this from transition structures
-		realnum o3enro = (realnum)(4.56e-12/3.98e-12);
 		/* first find low density limit OIII zone temp */
 		if( o4363 != 0. && o4959 != 0. && o5007 != 0. )
 		{
+			// lvl 1 = 2p2 3P, lvl 2 = 2p2 1D, lvl 3 = 2p2 1S
+			// CS come from
+			// >>refer	O3	CS	Del zanna et al. 2025 #ADF04 2025-06-18 o_3.dat
+			realnum o3cs12 = 2.2618_r;
+			realnum o3cs13 = 0.2969_r;
+			// A's come from
+			// >>refer	O3	As	NIST (04/31/2025)
+			double a31 = 0.215;
+			double a32 = 1.71;
+			realnum o3ex23 = realnum(1.e8/wl4363.wavlVac()*T1CM);
+			realnum o3br32 = (realnum)(a32/(a31 + a32));
+
+			// convert energy rates to photon rates
+			o4363 *= wl4363.wavlVac();
+			o4959 *= wl4959.wavlVac();
+			o5007 *= wl5007.wavlVac();
+
+			// upper limit for the ratio 4363/(4959+5007) for T -> inf
+			realnum ratul = o3br32*o3cs13/o3cs12;
+
 			/* following will assume coll excitation only, so correct
-			 * for 4363's that cascade as 5007 */
-			bot = o4959+o5007 - o4363/o3enro;
+			 * for 4363's that cascade as 4959 or 5007 */
+			bot = o4959+o5007 - o4363;
 
 			if( bot > 0. )
 			{
@@ -1016,35 +1035,21 @@ void PrtFinal(void)
 			}
 			else
 			{
-				ratio = 0.178;
+				ratio = ratul;
 			}
 
-			if( ratio > 0.177 )
+			if( ratio > 0.9999_r*ratul )
 			{
 				/* ratio was above infinite temperature limit */
 				peimbt.toiiir = 1e10;
 			}
 			else
 			{
-				/* o iii 5007+4959, As 96 NIST */
-				/*The cs of the transitions 3P0,1,2 to 1D2 are added together to give oiii_cs3P1D2 */
-				/*the cs of the transition 1D2-1S0 is mentioned as oiii_cs1D21S0*/
-				/*The cs of the transitions 3P0,1,2 to 1S0 are added together to give oiii_cs3P1S0*/
-				realnum o3cs12 = 2.2347f;
-				realnum o3cs13 = 0.29811f;
-				double a31 = 0.2262;
-				double a32 = 1.685;
-				realnum o3ex23 = 32947.;
-				realnum o3br32 = (realnum)(a32/(a31 + a32));
-
-				/* data for following set in OIII cooling routine
-				 * ratio of collision strengths, factor of 4/3 makes 5007+4959
+				/* data for following were taken from stout
 				 * >>chng 96 sep 07, reset cs to values at 10^4K,
 				 * had been last temp in model */
-				/*>>chng 06 jul 25, update to recent data */
-				ratio = ratio/1.3333/(o3cs13/o3cs12);
-				/* ratio of energies and branching ratio for 4363 */
-				ratio = ratio/o3enro/o3br32;
+				/* >>chng 06 jul 25, update to recent data */
+				ratio /= ratul;
 				peimbt.toiiir = (realnum)(-o3ex23/log(ratio));
 			}
 		}
