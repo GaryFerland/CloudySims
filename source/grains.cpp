@@ -285,6 +285,7 @@ void GrainsInit()
 	for( nelem=0; nelem < LIMELM; nelem++ )
 	{
 		gv.elmSumAbund[nelem] = 0.f;
+		gv.elmInferredMass[nelem] = 0.f;
 	}
 
 	for( i=0; i < rfield.nflux_with_check; i++ )
@@ -531,6 +532,17 @@ void GrainsInit()
 		gv.bin[nd].StickElecNeg = gv.bin[nd].StickElecPos*p_rad;
 	}
 
+	/* >>chng 02 dec 19, these quantities depend on radius and are normally set
+	 * in GrainUpdateRadius1(), however, it is necessary to initialize them here
+	 * as well so that they are valid for the initial printout in Cloudy, PvH */
+	/* calculate the summed grain abundances, these are valid at the inner radius;
+	 * these numbers depend on radius and are updated in GrainUpdateRadius1() */
+	for( nelem=0; nelem < LIMELM; nelem++ )
+	{
+		gv.elmSumAbund[nelem] = 0.f;
+		gv.elmInferredMass[nelem] = 0.f;
+	}
+
 	vector<double> mult_frac(MAT_TOP);
 	GetFracDep(mult_frac);
 
@@ -548,20 +560,7 @@ void GrainsInit()
 		/* grain unit conversion, <unit>/cm^3 (actual depl) -> <unit>/grain */
 		gv.bin[nd].cnv_CM3_pGR = gv.bin[nd].cnv_H_pGR/gv.bin[nd].cnv_H_pCM3;
 		gv.bin[nd].cnv_GR_pCM3 = 1./gv.bin[nd].cnv_CM3_pGR;
-	}
 
-	/* >>chng 02 dec 19, these quantities depend on radius and are normally set
-	 * in GrainUpdateRadius1(), however, it is necessary to initialize them here
-	 * as well so that they are valid for the initial printout in Cloudy, PvH */
-	/* calculate the summed grain abundances, these are valid at the inner radius;
-	 * these numbers depend on radius and are updated in GrainUpdateRadius1() */
-	for( nelem=0; nelem < LIMELM; nelem++ )
-	{
-		gv.elmSumAbund[nelem] = 0.f;
-	}
-
-	for( size_t nd=0; nd < gv.bin.size(); nd++ )
-	{
 		for( nelem=0; nelem < LIMELM; nelem++ )
 		{
 			gv.elmSumAbund[nelem] += gv.bin[nd].elmAbund[nelem]*(realnum)gv.bin[nd].cnv_H_pCM3;
@@ -1151,7 +1150,9 @@ STATIC void GetFracDep(vector<double>& mult_frac) // pass the material type as a
 	 * fraction of silicon and carbon in the default grains, then use that fraction to
 	 * compute the mass of depleted carbon and silicon going into the non-SiC vs SiC grains */
 
-	/* break out of the routine, if there is no depletion */
+	/* break out of the routine, if there is no depletion
+	* TODO: is this still valid for elmInferredMass ?
+	*/
 	if( abund.DepletionScaleFactor[ipCARBON] == 1.0 && abund.DepletionScaleFactor[ipSILICON] == 1.0 )
 	{
 		fill(mult_frac.begin(), mult_frac.end(), 1.0);
@@ -1173,6 +1174,9 @@ STATIC void GetFracDep(vector<double>& mult_frac) // pass the material type as a
 	/* Sum up the total mass of the given elements in each size bin of the default grains */
 	for( size_t nd=0; nd < gv.bin.size(); nd++ )
 	{
+		for (long el = 1; el < LIMELM; ++el)
+			gv.elmInferredMass[el] += gv.bin[nd].elmAbund[el]*dense.AtomicWeight[el];
+
 		if( gv.bin[nd].matType == MAT_SIC )
 		{
 			/* Sum the abundance of C, Si in SiC grains */
@@ -1181,7 +1185,7 @@ STATIC void GetFracDep(vector<double>& mult_frac) // pass the material type as a
 		}
 		else
 		{
-			/* Sum the abundance of C in all grains besides Si, C */
+			/* Sum the abundance of C in all grains besides SiC */
 			default_notsic_c_abund += gv.bin[nd].elmAbund[ipCARBON];
 			for (int el : car_elements)
 			{
@@ -1224,6 +1228,21 @@ STATIC void GetFracDep(vector<double>& mult_frac) // pass the material type as a
 		depleted_abund = max(0., 1.-abund.DepletionScaleFactor[el]) * abund.ReferenceAbun[el];
 		depleted_sil_mass += depleted_abund*dense.AtomicWeight[el];
 	}
+
+	realnum total_depleted_mass = depleted_car_mass + depleted_sil_mass + depleted_sic_mass;
+	double total_default_grain_mass = default_grain_car_mass + default_grain_sil_mass + default_grain_sic_mass;
+	double grain_to_depleted_mass = (total_depleted_mass == 0.0) ? 0.0 : (total_default_grain_mass/total_depleted_mass);
+
+	for (long el = 1; el < LIMELM; ++el)
+    {
+        if (gv.elmInferredMass[el] == 0.0)
+        {
+			realnum depleted_mass = max(0.0, 1.0 - abund.DepletionScaleFactor[el]) * abund.ReferenceAbun[el] * dense.AtomicWeight[el];
+            gv.elmInferredMass[el] = depleted_mass * grain_to_depleted_mass;
+        }
+		else
+			gv.elmInferredMass[el] = 0.0;
+    }
 
 	for( size_t mT=0; mT < mult_frac.size(); mT++ )
 		if( mT == MAT_CAR || mT == MAT_CAR2 ||
@@ -3905,6 +3924,7 @@ STATIC void GrainUpdateRadius1()
 	for( long nelem=0; nelem < LIMELM; nelem++ )
 	{
 		gv.elmSumAbund[nelem] = 0.f;
+		gv.elmInferredMass[nelem] = 0.f;
 	}
 
 	vector<double> mult_frac(MAT_TOP);
