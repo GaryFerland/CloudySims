@@ -488,6 +488,7 @@ public:
 	string chPAH_abundance;        /**< which functions describes the PAH abundances, changed with SET PAH */
 
 	/** grain depletion */
+	double elmInferredMass[LIMELM]; /**< inferred elemental grain mass for depleted elements not in grain composition */
 
 	/** chemical abundances of grains are normalized such that in any given zone
 	 * the total number density of an element nelem locked up in grains is given by
