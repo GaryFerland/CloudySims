@@ -33,7 +33,7 @@ save continuum last "limit_lowdm6.con"
 #
 # commands giving the monitors    =========
 # all asserts are in this file
-init file="lowd.dat"
+init file="lowd.mon"
 #
 # limit_lowdm6.in
 # class limit 
