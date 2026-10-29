@@ -26,7 +26,7 @@ save cooling "grid_coronal_primal.col" last no hash
 ## >>chng 16 nov 16, val 18 from -22.6429 to -22.6837, merging RydDep branch after fixing some bugs   
 ## >>chng 16 nov 16, val 19 from -22.9777 to -23.0153, merging RydDep branch after fixing some bugs   
 ## >>chng 16 nov 16, val 20 from -23.1739 to -23.2026, merging RydDep branch after fixing some bugs   
-monitor CTOT grid "grid_coronal_primal.dat" 0.05
+monitor CTOT grid "grid_coronal_primal.mon" 0.05
 # 
 # grid_coronal_primal.in
 # class coronal 

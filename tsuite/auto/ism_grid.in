@@ -51,7 +51,7 @@ save temperature "ism_grid.tem"  last no hash
 # this is a special version of the monitors that does a series of models 
 ## >>chng 08 feb 11, from 776 to 811 for sim 5, cr&secondary heat efficiency
 # sert tempe hydro 1 9942 .05 grid 8575 6468 3606 776 304 169 103 66.2 44.1 31.3
-monitor temperature grid "ism_grid.dat" "H+" .05
+monitor temperature grid "ism_grid.mon" "H+" .05
 #
 # ism_grid.in
 # class ism 

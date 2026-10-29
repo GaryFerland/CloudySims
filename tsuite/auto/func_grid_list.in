@@ -4,7 +4,7 @@ grid list "func_grid_list.dat" linear sequential
 hden 5
 stop zone 1
 iterate 2
-monitor temperature face grid "func_grid_list.dat"
+monitor temperature face grid "func_grid_list.mon"
 ****************
 
 This is a simple grid with parameter values stored in an external file.

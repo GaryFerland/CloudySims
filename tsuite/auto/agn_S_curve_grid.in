@@ -56,7 +56,7 @@ save neon element "agn_S_curve_grid.ne" last separate
 ## >>chng 11 jul 13, several changes due to collisional suppression of DR
 ## >>chng 12 feb 27, from 5.152 to 5.127; upgrade to Chianti 7
 ## >>chng 14 apr 07, from 5.3970 to 5.3769, update of Gaunt free-free factors
-monitor temperature grid "agn_S_curve_grid.dat" "H+" err 0.05
+monitor temperature grid "agn_S_curve_grid.mon" "H+" err 0.05
 #
 # agn_S_grid.in
 # class BLR
