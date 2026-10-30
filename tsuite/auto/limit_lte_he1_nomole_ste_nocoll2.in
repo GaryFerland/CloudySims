@@ -42,7 +42,7 @@ save monitors "limit_lte_he1_nomole_ste_nocoll2.asr"
 # >>chng 14 dec 14, Badnell S DR, increase error
 monitor he-like helium excited departures 1 ZeroOK 0.15
 monitor h-like helium excited departures 1 ZeroOK 0.15
-monitor temperature face grid "ste_temps.dat"
+monitor temperature face grid "ste_temps.mon"
 # limit_lte_he1_nomole_ste_nocoll2.in 
 # class limit 
 # ========================================
