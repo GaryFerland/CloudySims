@@ -28,7 +28,7 @@ save cooling "grid_coronal.col" last no hash
 ## >>chng 17 sep 01, val 25 from -22.4745 to -22.4972, fix bug in high n collisional excitation rates for He-like iso-sequences
 ## >>chng 17 sep 01, val 27 from -22.6344 to -22.6578, fix bug in high n collisional excitation rates for He-like iso-sequences
 ## >>chng 17 sep 01, val 28 from -22.5590 to -22.5809, fix bug in high n collisional excitation rates for He-like iso-sequences
-monitor CTOT grid "grid_coronal.dat" 0.05
+monitor CTOT grid "grid_coronal.mon" 0.05
 # 
 # grid_coronal.in
 # class coronal 

@@ -15,7 +15,7 @@ save continuum last ".con"
 #
 # commands giving the monitors    =========
 # this contains a large number of asserts that both tests use
-init file "trans_lumi.dat"
+init file "trans_lumi.mon"
 # 
 # func_trans_lumi.in 
 # class function 
