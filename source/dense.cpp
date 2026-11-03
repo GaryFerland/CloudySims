@@ -20,6 +20,7 @@
 #include "h2.h"
 #include "mole.h"
 #include "save.h"
+#include "grainvar.h"
 
 void t_dense::updateXMolecules()
 {
@@ -335,6 +336,69 @@ bool AbundChange( )
 				for( long ion=0; ion < (nelem + 2); ion++ )
 				{
 					dense.xIonDense[nelem][ion] *= (realnum)hold;
+				}
+			}
+		}
+	}
+
+	/* If grain abundances vary with depth, this computes the fraction to adjust
+	 * the gas abundance per element, so that the sublimated grain abundances
+	 * are consistent with the gas abundances. */
+	double sublimated_mass, fx;
+	double tot_sublimated_mass = 0.0;
+	double tot_grain_mass = 0.0;
+	realnum depleted_mass;
+	if( gv.lgAnyDustVary )
+	{
+		for( long nelem=1; nelem < LIMELM; nelem++ )
+		{
+			if ( gv.elmInferredMass[nelem] != 0.0 )
+				continue;
+
+			/* mass remaining in gas-phase */
+			depleted_mass = max(0.0, abund.DepletionScaleFactor[nelem]) * abund.ReferenceAbun[nelem] * dense.AtomicWeight[nelem];
+
+			/* mass returning to gas-phase from sublimation */
+			sublimated_mass = 0.0;
+			for( size_t nd=0; nd < gv.bin.size(); nd++ )
+			{
+				/* go to the next grain bin, if there is no sublimation */
+				if (gv.bin[nd].nDustFunc == DF_USER_FUNCTION)
+					continue;
+				sublimated_mass += (1.-(realnum)gv.bin[nd].GrnDpth)*gv.bin[nd].elmAbund[nelem]*dense.AtomicWeight[nelem];
+				tot_sublimated_mass += ((realnum)gv.bin[nd].GrnDpth)*gv.bin[nd].elmAbund[nelem]*dense.AtomicWeight[nelem];
+				tot_grain_mass += gv.bin[nd].elmAbund[nelem]*dense.AtomicWeight[nelem];
+				lgChange = true;
+			}
+
+			fx = (depleted_mass == 0.0) ? 1. : 1. + (sublimated_mass/depleted_mass);
+			dense.SetGasPhaseDensity( nelem, (realnum)dense.gas_phase[nelem] * fx );
+
+			for( long ion=0; ion < (nelem + 2); ion++ )
+			{
+				dense.xIonDense[nelem][ion] *= (realnum)fx;
+			}
+		}
+
+		/* fraction of grain mass that remains in the grains summed over all grain size bins,
+		* for all elements in the grain composition	*/
+		double tot_gr_survival_frac = (tot_grain_mass == 0.0) ? 1. : tot_sublimated_mass/tot_grain_mass;
+
+		/* Reconcile for depleted elements like Ti that are not in the grains composition. */
+		for( long nelem=1; nelem < LIMELM; nelem++ )
+		{
+			sublimated_mass = 0.0;
+			if ( gv.elmInferredMass[nelem] != 0.0 )
+			{
+				depleted_mass = max(0.0, abund.DepletionScaleFactor[nelem]) * abund.ReferenceAbun[nelem] * dense.AtomicWeight[nelem];
+				sublimated_mass += (1.-tot_gr_survival_frac)*gv.elmInferredMass[nelem];
+
+				fx = (depleted_mass == 0.0) ? 1. : 1. + (sublimated_mass/depleted_mass);
+				dense.SetGasPhaseDensity( nelem, (realnum)dense.gas_phase[nelem] * fx );
+
+				for( long ion=0; ion < (nelem + 2); ion++ )
+				{
+					dense.xIonDense[nelem][ion] *= (realnum)fx;
 				}
 			}
 		}
