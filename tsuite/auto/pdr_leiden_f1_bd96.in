@@ -1,0 +1,205 @@
+title Leiden meeting model 1
+# This is one of the tests in Rollig et al. 2007, A&A, 467, 187 
+#
+# commands controlling continuum =========
+# Use the Draine 1978 field, for a semi-infinite slab we have to use half
+# the requested value, so the actual value
+# they want for the model is actually twice the value below
+table draine 5
+extinguish 24
+#
+# commands for density & abundances =========
+#  hydrogen density 
+hden 3.
+grains ism 1.16 no qheat
+#
+# commands controlling geometry  =========
+#
+# other commands for details     =========
+failures 3
+# use leiden initialization file
+init file="pdr_leiden.ini"
+# This command defines the grain temperature to be a constant 20 Kelvin
+constant grain temperature 20 
+# This sets the temperature to a constant 50 Kelvin
+constant temperature 50 linear
+set H2 small model BD96
+#
+# commands controlling output    =========
+print line optical depths 
+save performance "pdr_leiden_f1_bd96.per"
+save overview "pdr_leiden_f1_bd96.ovr"
+save continuum "pdr_leiden_f1_bd96.con"
+save leiden lines "pdr_leiden_f1_bd96.lin"
+save leiden "pdr_leiden_f1_bd96.lei"
+save dr "pdr_leiden_f1_bd96.dr" 
+save molecules "pdr_leiden_f1_bd96.mol"
+save grain physical conditions "pdr_leiden_f1_bd96.grn"
+save monitors "pdr_leiden_f1_bd96.asr"
+save chemistry rates "pdr_leiden_f1_bd96.COr" "CO"
+save chemistry rates "pdr_leiden_f1_bd96.H2r" "H2"
+save chemistry rates "pdr_leiden_f1_bd96.H2a" "H2" all
+save chemistry rates "pdr_leiden_f1_bd96.H2ds" "H2" destruction
+save chemistry rates "pdr_leiden_f1_bd96.H2cr" "H2" creation
+save chemistry rates "pdr_leiden_f1_bd96.H2ca" "H2" catalytic 
+save secondaries "pdr_leiden_f1_bd96.sec"
+save species column densities "pdr_leiden_f1_bd96.col" all
+#
+# commands giving the monitors    =========
+## >> chng 20 sep 06 change default error to acknowledge stability of ISM chemistry
+monitor set error 0.1
+##
+monitor line luminosity "Si 2" 34.8046m  -7.101
+## >>chng 26 nov 04, from 14 to 14.1, initial update of the monitors
+monitor "H2O " 538.142m line intensity -8.676
+monitor "HNC " 1652.90m  line intensity -7.889 
+monitor "HCS+" 1755.88m  -8.233 line intensity
+monitor "CS  " 3058.86m  -7.348 line intensity
+monitor "CO  " 2600.05m  -7.281 line intensity
+monitor "CO  " 1300.05m  -6.455 line intensity
+monitor "CO  " 866.727m  -6.139 line intensity
+monitor "CO  " 650.074m  -6.213 line intensity
+monitor "CO  " 520.089m  -6.529 line intensity
+monitor "CO  " 433.438m  -7 line intensity
+monitor "CO  " 371.549m  -7.524 line intensity
+monitor "CO  " 325.137m  -8.094 line intensity
+monitor "^13CO" 906.599m  -7.557 line intensity
+monitor "CN  " 880.858m  -7.915  line intensity
+# 
+monitor H2 column density 21.904 error 0.1
+## 
+monitor CO column density 16.97 error 0.1
+## 
+monitor O2 column density 13.77 error 0.1
+## 
+monitor OH column density 13.93 error 0.1
+## 
+monitor SiO column density 14.88 error 0.1
+## 
+monitor column density H2+  11.72 error 0.1
+## 
+monitor column density H3+  14.69 error 0.1
+## 
+monitor column density H2g  21.90 error 0.1
+## 
+## >>chng 26 nov 04, from 14.00 to 14.10, initial update of the monitors
+monitor column density H2*  14.10 error 0.1
+## 
+## >>chng 26 nov 04, from 7.918 to 8.186, initial update of the monitors
+monitor column density HeH+ 8.186  error 0.1
+## 
+monitor column density "C2+"       10.03  
+monitor column density "C2"        16.38  
+monitor column density "C2H+"      10.26  
+monitor column density "C2H"       15.84
+monitor column density "C2H2"      12.7  
+monitor column density "C2H2+"     12.77  
+monitor column density "C2H3+"     10.41  
+monitor column density "C3"        15.27  
+monitor column density "C3H+"      12.06
+monitor column density "C3H"       13.72  
+monitor column density "CCl+"      10.47  
+monitor column density "CCl"       11.22  
+monitor column density "CH+"       10.87  
+monitor column density "CH"        15.8  
+monitor column density "CH2+"      10.95  
+monitor column density "CH2"       15.04  
+monitor column density "CH3+"      13.23
+monitor column density "CH3"       14.94  
+monitor column density "CH4+"      9.846  
+monitor column density "CH4"       14.86  
+monitor column density "CH5+"      11.51  
+monitor column density "CN"        15.67  
+monitor column density "COgrn"     17.5  
+monitor column density "CS+"       10.69  
+monitor column density "CS"        17.06  
+monitor column density "H2Cl+"     12.0392  
+## >>chng 26 nov 04, from 10.42 to 10.49, initial update of the monitors
+monitor column density "H2O+"      10.49  
+monitor column density "H2O"       14.048  
+monitor column density "H3O+"      11.412  
+## >>chng 26 nov 04, from 11.29 to 11.4, initial update of the monitors
+monitor column density "HCl+"      11.4  
+monitor column density "HCl"       13.41  
+monitor column density "HCN"       15.2  
+monitor column density "HCNH+"     12.59  
+monitor column density "HCO+"      12.87  
+monitor column density "HCS+"      14.06 
+monitor column density "HNC"       15.12
+monitor column density "HNO"       11.91  
+monitor column density "HS+"       12.68  
+monitor column density "HS"        13.67  
+monitor column density "N2+"       12.49  
+monitor column density "N2"        17.44  
+monitor column density "N2H+"      13.92
+monitor column density "N2O"       10.62
+monitor column density "NH"        15.42  
+monitor column density "NH2+"      10.31  
+monitor column density "NH2"       14.67  
+monitor column density "NH3+"      12.38
+monitor column density "NH3"       14.8  
+monitor column density "NH4+"      10.94  
+monitor column density "NO"        13.57
+monitor column density "NS+"       11.19  
+monitor column density "NS"        14.14
+monitor column density "OCN"       9.509  
+monitor column density "OCS"       11.07  
+## >>chng 26 nov 04, from 10.33 to 10.43, initial update of the monitors
+monitor column density "OH+"       10.43  
+monitor column density "OHgrn"     14.87  
+monitor column density "SiH"       12.23  
+monitor column density "SiH2+"     10.187  
+monitor column density "SiN+"      12.61  
+monitor column density "SiN"       13.66  
+monitor column density "SiOH+"     11.16
+monitor column density "SO+"       9.981  
+monitor column density "SO"        12.67  
+## 
+monitor line luminosity "C  2" 157.636m -4.682
+## 
+monitor line luminosity "c  1" 370.269m -5.105
+## 
+monitor line luminosity "c  1" 609.590m -5.477
+## 
+monitor line luminosity "O  1" 63.1679m -5.721
+## 
+monitor line luminosity "O  1" 145.495m -7.243
+##
+monitor temperature "H" 50 error 0.05
+##
+monitor temperature "H+" 50 error 0.05
+##
+monitor temperature "H2" 50 error 0.05
+##
+monitor temperature "H2O" 50 error 0.05
+##
+monitor temperature "CO+" 50 error 0.05
+##
+monitor temperature "TeNe" 50 error 0.050
+## 
+## This computes an unweighted average of the electron temperature across the model
+monitor temperature "" 50 error 0.050
+##
+monitor 21cm temperature mean 50 error 0.1
+##
+monitor 21cm temperature optical 50 error 0.1
+##
+monitor 21cm temperature spin 50 error 0.1
+##
+monitor itrzn 1.939
+## 
+monitor nzone 754 
+#
+monitor "SiS " 4127.23m -8.829 line intensity
+monitor "SiS " 3301.81m -8.799 line intensity
+# pdr_leiden_f1_bd96.in
+# class pdr  
+# ========================================
+# 
+
+
+This sim has some interesting properties.  The grain temp is so low that
+O freezes onto grains as H2O.  This is so efficient that CO does not become
+well formed - the CO/C ratio only reaches 0.3.
+This is one of the tests in Rollig et al. 2007, A&A, 467, 187 
+This sim uses the  Bertoldi & Draine 1996 small model for H2
