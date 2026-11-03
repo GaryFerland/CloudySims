@@ -36,25 +36,25 @@ void lines_molecules(void)
 		"HD rotation cooling");
 
 	/* molecular hydrogen heating */
-	hmi.h2dtot += (realnum)(hmi.HeatH2Dish_used*radius.dVeffAper);
-	hmi.h2dfrc = (realnum)(MAX2(safe_div(hmi.HeatH2Dish_used,thermal.htot,0.0),hmi.h2dfrc));
+	hmi.h2dtot += (realnum)(hmi.HeatH2Dish*radius.dVeffAper);
+	hmi.h2dfrc = (realnum)(MAX2(safe_div(hmi.HeatH2Dish,thermal.htot,0.0),hmi.h2dfrc));
 
 	/* largest fraction of heating due to photo dissoc of H2+ */
 	hmi.h2pmax = MAX2(hmi.h2pmax,(realnum)(safe_div(thermal.heating(0,16),thermal.htot,0.0)));
 
-	linadd(hmi.HeatH2Dish_used,0_vac,"H2dH",'h',
+	linadd(hmi.HeatH2Dish,0_vac,"H2dH",'h',
 		"heating by H2 dissociation by photons and cosmic rays");
 
 	/*remember largest fraction of heating due to H2 vib deexcitation */	
-	hmi.HeatH2DexcMax = MAX2(safe_div((realnum)hmi.HeatH2Dexc_used,(realnum)thermal.htot,(realnum)0.0f),hmi.HeatH2DexcMax);
+	hmi.HeatH2DexcMax = MAX2(safe_div((realnum)hmi.HeatH2Dexc,(realnum)thermal.htot,(realnum)0.0f),hmi.HeatH2DexcMax);
 
 	/*remember largest fraction of cooling due to H2 cooling */
-	hmi.CoolH2DexcMax = MAX2(safe_div(-(realnum)hmi.HeatH2Dexc_used,(realnum)thermal.htot,(realnum)0.0f),hmi.CoolH2DexcMax);
+	hmi.CoolH2DexcMax = MAX2(safe_div(-(realnum)hmi.HeatH2Dexc,(realnum)thermal.htot,(realnum)0.0f),hmi.CoolH2DexcMax);
 
-	linadd( MAX2(0.,hmi.HeatH2Dexc_used),0_vac,"H2vH",'h',
+	linadd( MAX2(0.,hmi.HeatH2Dexc),0_vac,"H2vH",'h',
 		"heating by coll deexcit of vib-excited H2");
 
-	linadd( MAX2(0.,-hmi.HeatH2Dexc_used) ,0_vac,"H2vC",'c',
+	linadd( MAX2(0.,-hmi.HeatH2Dexc) ,0_vac,"H2vC",'c',
 		" cooling by coll deexcit of vib-excited H2");
 
 	/* line emission by vib-excited H2 */

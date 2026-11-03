@@ -2846,9 +2846,9 @@ void SaveDo(
 					/* COds - CO dissociation heating */
 					thermal.heating(0,9),
 					/* H2dH-Heating due to H2 dissociation */
-					hmi.HeatH2Dish_used,
+					hmi.HeatH2Dish,
 					/* H2vH-Heating due to collisions with H2 */
-					hmi.HeatH2Dexc_used ,
+					hmi.HeatH2Dexc,
 					/* ChaT - charge transfer heating */
 					thermal.heating(0,24) ,
 					/* cosmic ray heating */

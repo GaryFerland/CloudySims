@@ -151,34 +151,13 @@ STATIC void mole_effects()
 	
 	/* TH85 deexcitation heating */
 	hmi.HeatH2Dexc_TH85 = ((mole.findrate("H2*,H2=>H2,H2") + mole.findrate("H2*,H=>H2,H"))
-												 - (mole.findrate("H2,H2=>H2*,H2") + mole.findrate("H2,H=>H2*,H"))) * 4.17e-12;
-	/* this is derivative wrt temperature, only if counted as a cooling source */
-	hmi.deriv_HeatH2Dexc_TH85 = (realnum)(MAX2(0.,-hmi.HeatH2Dexc_TH85)* ( 30172. * thermal.tsq1 - thermal.halfte ) );
-	
-	if( hmi.chH2_small_model_type == 'H' )
+							- (mole.findrate("H2,H2=>H2*,H2") + mole.findrate("H2,H=>H2*,H"))) * 4.17e-12;
+
+	if( hmi.chH2_small_model_type == 'T' || hmi.chH2_small_model_type == 'H' || hmi.chH2_small_model_type == 'B' )
 	{
-		/* Burton et al. 1990 */
-		hmi.HeatH2Dish_BHT90 = 0.25 * EN1EV *
-			(hmi.H2_Solomon_dissoc_rate_used_H2g * findspecieslocal("H2")->den +
-			 hmi.H2_Solomon_dissoc_rate_used_H2s * findspecieslocal("H2*")->den);
-		
-		/* Burton et al. 1990 heating */
-		hmi.HeatH2Dexc_BHT90 = ((mole.findrate("H2*,H2=>H2,H2") + mole.findrate("H2*,H=>H2,H")) 
-														- (mole.findrate("H2,H2=>H2*,H2") + mole.findrate("H2,H=>H2*,H"))) * 4.17e-12;
-		/* this is derivative wrt temperature, only if counted as a cooling source */
-		hmi.deriv_HeatH2Dexc_BHT90 = (realnum)(MAX2(0.,-hmi.HeatH2Dexc_BHT90)* ( 30172. * thermal.tsq1 - thermal.halfte ) );
-	}
-	else if( hmi.chH2_small_model_type == 'B')
-	{
-		/* Bertoldi & Draine */
-		hmi.HeatH2Dish_BD96 = 0.25 * EN1EV *
-			(hmi.H2_Solomon_dissoc_rate_used_H2g * findspecieslocal("H2")->den +
-			 hmi.H2_Solomon_dissoc_rate_used_H2s * findspecieslocal("H2*")->den);
-		/* Bertoldi & Draine heating, same as TH85 */
-		hmi.HeatH2Dexc_BD96 = ((mole.findrate("H2*,H2=>H2,H2") + mole.findrate("H2*,H=>H2,H"))
-													 - (mole.findrate("H2,H2=>H2*,H2") + mole.findrate("H2,H=>H2*,H"))) * 4.17e-12;
-		/* this is derivative wrt temperature, only if counted as a cooling source */
-		hmi.deriv_HeatH2Dexc_BD96 = (realnum)(MAX2(0.,-hmi.HeatH2Dexc_BD96)* ( 30172. * thermal.tsq1 - thermal.halfte ) );
+		/* Tielens & Hollenbach 1985 or Burton et al. 1990 or Bertoldi & Draine */
+		hmi.HeatH2Dish = hmi.HeatH2Dish_TH85;
+		hmi.HeatH2Dexc = hmi.HeatH2Dexc_TH85;
 	}
 	else if(hmi.chH2_small_model_type == 'E')
 	{
@@ -230,13 +209,10 @@ STATIC void mole_effects()
 		f1 = 0.15 * log_density + 0.75;
 		f2 = -0.5 * log_density + 10.;
 		
-		hmi.HeatH2Dish_ELWERT = 0.25 * EN1EV *  f1 * 
+		hmi.HeatH2Dish = 0.25 * EN1EV *  f1 * 
 			(hmi.H2_Solomon_dissoc_rate_used_H2g * findspecieslocal("H2")->den +
 			 hmi.H2_Solomon_dissoc_rate_used_H2s * findspecieslocal("H2*")->den ) + 
 			f2 * secondaries.x12tot * EN1EV * hmi.H2_total;
-		
-		/*fprintf( ioQQQ, "f1: %.2e, f2: %.2e,heat Solomon: %.2e",f1,f2,hmi.HeatH2Dish_TH85);*/
-		
 		
 		/* heating due to collisional deexcitation within X of H2
 		 * >>chng 05 oct 19, TE, define new approximation for the heating due to the destruction of H2
@@ -282,24 +258,18 @@ STATIC void mole_effects()
 		f3 = MAX2(0.1, -4.75 * log_density + 24.25);
 		f5 = MAX2(1.,0.95 * log_density - 1.45) * 0.2 * log_G0_face;
 		
-		hmi.HeatH2Dexc_ELWERT = ((mole.findrate("H2*,H2=>H2,H2") + mole.findrate("H2*,H=>H2,H"))
+		hmi.HeatH2Dexc = ((mole.findrate("H2*,H2=>H2,H2") + mole.findrate("H2*,H=>H2,H"))
 			- (mole.findrate("H2,H2=>H2*,H2") + mole.findrate("H2,H=>H2*,H"))) * 4.17e-12 * f3 + 
 			f4 * (mole.species[findnuclide("H")->ipMl[0]].den/dense.gas_phase[ipHYDROGEN]) +
 			f5 * secondaries.x12tot * EN1EV * hmi.H2_total;
 		
 		if(log_G0_face == 0.&& dense.gas_phase[ipHYDROGEN] > 1.) 
-			hmi.HeatH2Dexc_ELWERT *= 0.001 / dense.gas_phase[ipHYDROGEN];
+			hmi.HeatH2Dexc *= 0.001 / dense.gas_phase[ipHYDROGEN];
 		
 		/* >>chng 06 oct 24, TE introduce effects of spherical geometry */
 		/*if(radius.depth/radius.rinner >= 1.0) */
-		hmi.HeatH2Dexc_ELWERT /= POW2(radius.r1r0sq);
-		
-		/* this is derivative wrt temperature, only if counted as a cooling source */
-		hmi.deriv_HeatH2Dexc_ELWERT = (realnum)(MAX2(0.,-hmi.HeatH2Dexc_ELWERT)* ( 30172. * thermal.tsq1 - thermal.halfte ) );
-		
-		/*fprintf( ioQQQ, "\tf3: %.2e, f4: %.2e, f5: %.2e, heat coll dissoc: %.2e\n",f3,f4,f5,hmi.HeatH2Dexc_TH85);*/
-	}
-	/* end Elwert branch for photo rates */
+		hmi.HeatH2Dexc /= POW2(radius.r1r0sq);
+	} /* end Elwert branch for photo rates */
 	else
 		TotalInsanity();
 

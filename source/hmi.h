@@ -134,30 +134,13 @@ struct t_hmi : public module {
 	 * set with "set h2 Tad " command */
 	realnum Tad;
 
-	double 
+	/** HeatH2Dish is heating due to H2 dissociation */
+	double HeatH2Dish;
+	double HeatH2Dish_TH85;
 
-	  /** HeatH2Dish_used is heating due to H2 dissociation actually used*/
-	  HeatH2Dish_used, 
-	  HeatH2Dish_TH85, 
-	  HeatH2Dish_BD96 ,
-	  HeatH2Dish_BHT90, 
-	  HeatH2Dish_ELWERT ,
-
-	  /** HeatH2Dexc_used is heating due to collisional deexcitation of vib-excited 
-	   * H2 actually used */
-	  HeatH2Dexc_used,
-	  HeatH2Dexc_TH85,
-	  HeatH2Dexc_BD96,
-	  HeatH2Dexc_BHT90,
-	  HeatH2Dexc_ELWERT;
-
-	/** these are derivative wrt temp for collisional processes within X */
-	realnum 
-		deriv_HeatH2Dexc_used,
-		deriv_HeatH2Dexc_TH85 ,
-		deriv_HeatH2Dexc_BD96 ,
-		deriv_HeatH2Dexc_BHT90 ,
-		deriv_HeatH2Dexc_ELWERT;
+	/** HeatH2Dexc is heating due to collisional deexcitation of vib-excited H2 */
+	double HeatH2Dexc;
+	double HeatH2Dexc_TH85;
 
 	/** these are the H- and grain formation rates, added above and below a
 	 * certain energy (2.6 eV) for production of H2 or H2* in small network */

@@ -145,8 +145,8 @@ void CoolSave(FILE * io, const char chJob[])
 		debug_ctot += MAX2(0.,gv.GasCoolColl);
 
 		/* H2cX - H2 molecule cooling*/
-		fprintf( io, "\t%.4e", MAX2(0.,-hmi.HeatH2Dexc_used) );
-		debug_ctot += MAX2(0.,-hmi.HeatH2Dexc_used);
+		fprintf( io, "\t%.4e", MAX2(0.,-hmi.HeatH2Dexc) );
+		debug_ctot += MAX2(0.,-hmi.HeatH2Dexc);
 
 		/* CT C - charge transfering cooling*/ 
 		fprintf( io, "\t%.4e", thermal.char_tran_cool );
