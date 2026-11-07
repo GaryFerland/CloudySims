@@ -135,9 +135,8 @@ void CoolEvaluate(double *tot)
 		thermal.setHeating(0,15,0.);
 		/* thermal.heating(0,16) is H2+ heating */
 		thermal.setHeating(0,16,0.);
-		hmi.HeatH2Dish_used = 0.;
-		hmi.HeatH2Dexc_used = 0.;
-		hmi.deriv_HeatH2Dexc_used = 0.;
+		hmi.HeatH2Dish = 0.;
+		hmi.HeatH2Dexc = 0.;
 	}
 
 	else
@@ -146,7 +145,7 @@ void CoolEvaluate(double *tot)
 		thermal.setHeating(0,15, hmi.hmihet);
 		thermal.setHeating(0,16, hmi.h2plus_heat);
 		/* now get heating from H2 molecule, either simple or from big one */
-		if( h2.lgEnabled  && hmi.lgH2_Thermal_BigH2 )
+		if( h2.lgEnabled && hmi.lgH2_Thermal_BigH2 )
 		{
 			if( h2.lgEvaluated )
 			{
@@ -154,58 +153,26 @@ void CoolEvaluate(double *tot)
 				 * first is heating due to radiative pump of excited states, followed by
 				 * radiative decay into continuum of X, followed by dissociation of molecule
 				 * with kinetic energy, typically 0.25 - 0.5 eV per event */
-				hmi.HeatH2Dish_used = h2.HeatDiss;
-				hmi.HeatH2Dexc_used = h2.HeatDexc;
-				if (0)
-					fprintf(ioQQQ,"DEBUG big %.2f\t%.5e\t%.2e\t%.2e\t%.2e\n", 
-							  fnzone , phycon.te, hmi.HeatH2Dexc_used,
-							  hmi.H2_total, dense.gas_phase[ipHYDROGEN] );
-				/* negative sign because right term is really deriv of heating,
-				 * but will be used below as deriv of cooling */
-				hmi.deriv_HeatH2Dexc_used = -h2.HeatDexc_deriv;
+				hmi.HeatH2Dish = h2.HeatDiss;
+				hmi.HeatH2Dexc = h2.HeatDexc;
 			}
 			else
 			{
-				hmi.HeatH2Dish_used = 0;
-				hmi.HeatH2Dexc_used = 0;
-				hmi.deriv_HeatH2Dexc_used = 0;
+				hmi.HeatH2Dish = 0;
+				hmi.HeatH2Dexc = 0;
 			}
 		}
-
-		else if( hmi.chH2_small_model_type == 'T' )
+		else if( hmi.chH2_small_model_type == 'T' || hmi.chH2_small_model_type == 'H' ||
+				 hmi.chH2_small_model_type == 'B' || hmi.chH2_small_model_type == 'E' )
 		{
-			/* TH85 dissociation heating */
-			/* these come from approximations in TH85, see comments above */
-			hmi.HeatH2Dish_used = hmi.HeatH2Dish_TH85;
-			hmi.HeatH2Dexc_used = hmi.HeatH2Dexc_TH85;
-			hmi.deriv_HeatH2Dexc_used = hmi.deriv_HeatH2Dexc_TH85;
-		}
-		else if( hmi.chH2_small_model_type == 'H' )
-		{
-			/* Burton et al. 1990 */
-			hmi.HeatH2Dish_used = hmi.HeatH2Dish_BHT90;
-			hmi.HeatH2Dexc_used = hmi.HeatH2Dexc_BHT90;
-			hmi.deriv_HeatH2Dexc_used = hmi.deriv_HeatH2Dexc_BHT90;
-		}
-		else if( hmi.chH2_small_model_type == 'B' )
-		{
-			/* Bertoldi & Draine */
-			hmi.HeatH2Dish_used = hmi.HeatH2Dish_BD96;
-			hmi.HeatH2Dexc_used = hmi.HeatH2Dexc_BD96;
-			hmi.deriv_HeatH2Dexc_used = hmi.deriv_HeatH2Dexc_BD96;
-		}
-		else if( hmi.chH2_small_model_type == 'E' )
-		{
-			/* this is the default when small H2 used */
-			hmi.HeatH2Dish_used = hmi.HeatH2Dish_ELWERT;
-			hmi.HeatH2Dexc_used = hmi.HeatH2Dexc_ELWERT;
-			hmi.deriv_HeatH2Dexc_used = hmi.deriv_HeatH2Dexc_ELWERT;
+			// nothing to do here, variables were already initialized in mole_drive.cpp
+			(void)0;
 		}
 		else
 			TotalInsanity();
 
 		/* heating due to photodissociation heating */
-		thermal.setHeating(0,17,hmi.HeatH2Dish_used);
+		thermal.setHeating(0,17,hmi.HeatH2Dish);
 
 		/* heating due to continuum photodissociation */
 		thermal.setHeating(0,28,0.);
@@ -224,21 +191,12 @@ void CoolEvaluate(double *tot)
 
 		/* heating (usually cooling in big H2) due to collisions within X */
 		/* add to heating is net heating is positive */
-		thermal.setHeating(0,8, MAX2(0.,hmi.HeatH2Dexc_used) +
+		thermal.setHeating(0,8, MAX2(0.,hmi.HeatH2Dexc) +
 				// HD heating, cooling is CoolHeavy.HD
 				MAX2(0.,hd.HeatDexc) + MAX2(0.,hd.HeatDiss));
 
 		/* add to cooling if net heating is negative */
-		CoolAdd("H2cX",0,MAX2(0.,-hmi.HeatH2Dexc_used));
-		/*fprintf(ioQQQ,"DEBUG coolh2\t%.2f\t%.4e\t%.4e\t%.4e\t%.4e\t%.4e\n",
-			fnzone, phycon.te, dense.eden, hmi.H2_total, thermal.ctot, -hmi.HeatH2Dexc_used );*/
-		/* add to net derivative */
-		/*thermal.dCooldT += MAX2(0.,-hmi.HeatH2Dexc_used)* ( 30172. * thermal.tsq1 - thermal.halfte );*/
-		/* >>chng 04 jan 25, check sign to prevent cooling from entering here,
-		 * also enter neg sign since going into cooling stack (bug), in heatsum
-		 * same term adds to deriv of heating */
-		if( hmi.HeatH2Dexc_used < 0. )
-			thermal.dCooldT -= hmi.deriv_HeatH2Dexc_used;
+		CoolAdd("H2cX",0,MAX2(0.,-hmi.HeatH2Dexc));
 
 		/*  H + H+ => H2+ cooling */
 		CoolHeavy.H2PlsCool = (realnum)(MAX2((2.325*phycon.te-1875.)*1e-20,0.)*

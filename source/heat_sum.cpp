@@ -920,12 +920,6 @@ void HeatSum( void )
 	if( PRT_DERIV )
 		fprintf(ioQQQ,"DEBUG dhdt  2 %.3e \n", thermal.dHeatdT);
 
-	/* hydrogen molecule collisional deexcitation heating */
-	/* >>chng 04 jan 25, add max to prevent cooling from entering here */
-	/*thermal.dHeatdT += MAX2(0.,thermal.heating(0,8))*oldfac;*/
-	if( hmi.HeatH2Dexc_used > 0. )
-		thermal.dHeatdT += hmi.deriv_HeatH2Dexc_used;
-
 	/* >>chng 96 nov 15, had been oldfac below, wrong sign
 	 * H- H minus heating, goes up with temp since rad assoc does */
 	thermal.dHeatdT += thermal.heating(0,15)*0.7/phycon.te;
