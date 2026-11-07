@@ -151,7 +151,7 @@ void SaveHeat(FILE* io)
 		else if( i == 0 && j == 8 )
 		{
 			/* thermal.heating(0,8) is heating due to collisions within 
-			 * X of H2, code var hmi.HeatH2Dexc_used */
+			 * X of H2, code var hmi.HeatH2Dexc */
 			chLabel[k] = "H2vH";
 		}
 		else if( i == 0 && j == 17 )

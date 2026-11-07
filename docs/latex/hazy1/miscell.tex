@@ -2216,14 +2216,20 @@ rate $R = k\,n\left( {{\mathrm{H}}_{tot} } \right)n\left( {\hO } \right)$
  [cm$^{-3}$~s$^{-1}$].  If no number appears on the line then the \citet{Jura1975} rate
 of $3 \times 10^{-17}$ will be assumed.
 
-\item[set H2 Solomon [BD96; TH85; ELWERT]]  This changes how the Solomon process
-is treated when the small \htwo\ molecule is used.  The fits to the dissociation
-rate derived by \citet{Elwert2006} are the default and will be used if
-the keyword \cdCommand{ELWERT} appears.  The keyword \cdCommand{BD96} will use \citet{Bertoldi1996} and the keyword \cdCommand{TH85} will use the \citet{Tielens1985a} rate.
-These rates differ by $\ge1$ dex for some \htwo\ column densities.  When the large
+\item[set H2 Solomon]  This command has been deprecated and will be removed in a future
+  release. It has the same functionality as the \cdCommand{set H2 small model} command
+  described below.
+
+\item[set H2 small model [TH85; BHT; BD96; ELWERT]]  This changes how the physics
+is treated when the small \htwo\ molecule is used.  The model
+derived by \citet{Elwert2006} is the default and will be used if
+the keyword \cdCommand{ELWERT} appears.  The keyword \cdCommand{TH85} will use the \citet{Tielens1985a} model,
+the keyword \cdCommand{BHT} will use the \citet{Burton1990} model, and the keyword \cdCommand{BD96} will use the
+\citet{Bertoldi1996} model.
+These models can produce large differences for some \htwo\ column densities.  When the large
 \htwo\ molecule is used, as set with the \cdCommand{database H2} command,
-the Solomon
-process is treated in a self-consistent manner.
+the 
+physics is treated in a self-consistent manner.
 \citet{Abel2004} show
 that \htwo\ column densities are quite sensitive to the correct
 treatment of this physics for translucent clouds.
