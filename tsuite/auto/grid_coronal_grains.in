@@ -22,7 +22,7 @@ no blends
 save grid "grid_coronal_grains.grd" last no hash
 save monitors "grid_coronal_grains.asr" last
 save cooling "grid_coronal_grains.col" last no hash
-monitor CTOT grid "grid_coronal_grains.dat" 0.05
+monitor CTOT grid "grid_coronal_grains.mon" 0.05
 # 
 # grid_coronal_grains.in
 # class coronal 

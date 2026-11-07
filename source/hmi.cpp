@@ -14,10 +14,6 @@ void t_hmi::zero()
 	h2plus_exc_frac = 0.;
 	h2plus_heatcoef = 0.;
 	h2plus_heat = 0.;
-	HeatH2Dish_used = 0.;
-	HeatH2Dexc_used = 0.;
-	HeatH2Dish_TH85 = 0.;
-	HeatH2Dexc_TH85 = 0.;
 	UV_Cont_rel2_Draine_DB96_face = 0.;
 	UV_Cont_rel2_Draine_DB96_depth = 0.;
 	UV_Cont_rel2_Habing_TH85_face = 0.;
@@ -54,26 +50,10 @@ void t_hmi::zero()
 	chH2_small_model_type = 'E';
 
 	/* set NaN */
-	set_NaN( HeatH2Dish_used ); 
+	set_NaN( HeatH2Dish );
 	set_NaN( HeatH2Dish_TH85 );
-	set_NaN( HeatH2Dish_BD96 );
-	set_NaN( HeatH2Dish_BHT90 );
-	set_NaN( HeatH2Dish_ELWERT );
-
-	/** HeatH2Dexc_used is heating due to collisional deexcitation of vib-excited 
-	* H2 actually used */
-	set_NaN( HeatH2Dexc_used );
+	set_NaN( HeatH2Dexc );
 	set_NaN( HeatH2Dexc_TH85 );
-	set_NaN( HeatH2Dexc_BD96 );
-	set_NaN( HeatH2Dexc_BHT90 );
-	set_NaN( HeatH2Dexc_ELWERT );
-
-	/** these are derivative wrt temp for collisional processes within X */
-	set_NaN( deriv_HeatH2Dexc_used );
-	set_NaN( deriv_HeatH2Dexc_TH85 );
-	set_NaN( deriv_HeatH2Dexc_BD96 );
-	set_NaN( deriv_HeatH2Dexc_BHT90 );
-	set_NaN( deriv_HeatH2Dexc_ELWERT );
 
 	set_NaN( H2_Solomon_dissoc_rate_used_H2g );
 	set_NaN( H2_Solomon_dissoc_rate_TH85_H2g );

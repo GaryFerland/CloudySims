@@ -19,7 +19,7 @@ iterate
 #
 # commands controlling output    =========
 # this contains a large number of asserts used by both commands
-init file "trans.dat"
+init file "trans.mon"
 save overview "func_trans_read.ovr"
 save performance "func_trans_read.per"
 save ionization last "func_trans_read.ion"

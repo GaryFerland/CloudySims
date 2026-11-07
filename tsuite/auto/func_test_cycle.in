@@ -38,7 +38,7 @@ save average "func_test_cycle.avr" last
 temperature hydrogen 2
 end of average
 # 
-monitor temperature grid "func_test_cycle.dat" "H+"
+monitor temperature grid "func_test_cycle.mon" "H+"
 #
 # func_test_cycle.in limits
  

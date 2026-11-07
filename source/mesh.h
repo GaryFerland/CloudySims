@@ -145,6 +145,10 @@ public:
 	{
 		return p_anu_edge[i+1];
 	}
+	const double* widflxptr() const
+	{
+		return get_ptr(p_widflx);
+	}
 	double widflx(size_t i) const
 	{
 		return p_widflx[i];

@@ -33,7 +33,7 @@ save continuum last "limit_lowd0.con"
 #
 # commands giving the monitors    =========
 # all asserts for both sims are in this file
-init file="lowd.dat"
+init file="lowd.mon"
 #
 # limit_lowd0.in
 # class limit 

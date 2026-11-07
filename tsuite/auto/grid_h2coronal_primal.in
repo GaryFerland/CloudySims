@@ -30,7 +30,7 @@ save cooling ".col" last no hash
 ## >>chng 16 nov 16, val 18 from -22.6558 to -22.6837, merging RydDep branch after fixing some bugs
 ## >>chng 16 nov 16, val 19 from -22.9889 to -23.0153, merging RydDep branch after fixing some bugs
 ## >>chng 16 dec 15, val 17 from -22.1707 to -22.1909, bug fix on h-like collisions with Percival and Richard
-monitor CTOT grid "grid_h2coronal_primal.dat" 0.05
+monitor CTOT grid "grid_h2coronal_primal.mon" 0.05
 # 
 # grid_h2coronal_primal.in
 # class coronal 

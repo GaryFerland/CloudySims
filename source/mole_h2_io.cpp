@@ -1551,7 +1551,7 @@ void diatomics::H2_PunchDo( FILE* io ,  char chJOB[] , const char chTime[] , lon
 			/* chemistry renorm factor */
 			H2_renorm_chemistry,
 			/* rate H2 forms on grains */
-			gv.rate_h2_form_grains_used_total , 
+			gv.rate_h2_form_grains, 
 			/* rate H2 forms by H minus route */
 			findspecieslocal("H-")->den*1.35e-9,
 			/* H2 destruction by Solomon process, TH85 rate */

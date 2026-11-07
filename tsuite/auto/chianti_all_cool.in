@@ -28,5 +28,5 @@ save monitors "chianti_all_cool.asr" last
 # commands giving the monitors    =========
 ## >>chng 11 apr 26, 2nd -18.86 to .83, 3rd -18.42 to .47, Ar seq recom rates
 ## >>chng 11 apr 29, 2nd -18.83 to .86, 3rd -18.42 to .47, Ar seq recom rates
-monitor ctot grid "chianti_all_cool.dat"
+monitor ctot grid "chianti_all_cool.mon"
 

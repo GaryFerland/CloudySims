@@ -51,8 +51,8 @@
 
 /* these are the static saved variables, set in IterStart and reset in IterRestart */
 
-static double h2plus_heat_save, HeatH2Dish_used_save, HeatH2Dexc_used_save,
-	hmihet_save, hmitot_save, H2_Solomon_dissoc_rate_used_H2g_save,deriv_HeatH2Dexc_used_save,
+static double h2plus_heat_save, HeatH2Dish_save, HeatH2Dexc_save,
+	hmihet_save, hmitot_save, H2_Solomon_dissoc_rate_used_H2g_save,
 	H2_Solomon_dissoc_rate_used_H2s_save, H2_H2g_to_H2s_rate_used_save, H2_photodissoc_used_H2s_save,
 	H2_photodissoc_used_H2g_save, 
 	UV_Cont_rel2_Draine_DB96_face,
@@ -321,10 +321,9 @@ void IterStart()
 
 	h2plus_heat_save = hmi.h2plus_heat;
 
-	HeatH2Dish_used_save = hmi.HeatH2Dish_used;
-	HeatH2Dexc_used_save = hmi.HeatH2Dexc_used;
+	HeatH2Dish_save = hmi.HeatH2Dish;
+	HeatH2Dexc_save = hmi.HeatH2Dexc;
 
-	deriv_HeatH2Dexc_used_save = hmi.deriv_HeatH2Dexc_used;
 	H2_Solomon_dissoc_rate_used_H2g_save = hmi.H2_Solomon_dissoc_rate_used_H2g;
 	H2_Solomon_dissoc_rate_used_H2s_save = hmi.H2_Solomon_dissoc_rate_used_H2s;
 
@@ -803,10 +802,9 @@ void IterRestart(void)
 	hmi.hmitot = hmitot_save;
 
 	hmi.h2plus_heat = h2plus_heat_save;
-	hmi.HeatH2Dish_used = HeatH2Dish_used_save;
-	hmi.HeatH2Dexc_used = HeatH2Dexc_used_save;
+	hmi.HeatH2Dish = HeatH2Dish_save;
+	hmi.HeatH2Dexc = HeatH2Dexc_save;
 
-	hmi.deriv_HeatH2Dexc_used = (realnum)deriv_HeatH2Dexc_used_save;
 	hmi.H2_Solomon_dissoc_rate_used_H2g = H2_Solomon_dissoc_rate_used_H2g_save;
 	hmi.H2_Solomon_dissoc_rate_used_H2s = H2_Solomon_dissoc_rate_used_H2s_save;
 	hmi.H2_H2g_to_H2s_rate_used = H2_H2g_to_H2s_rate_used_save;

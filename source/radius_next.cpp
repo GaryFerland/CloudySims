@@ -601,7 +601,7 @@ void radius_next()
 	{
 		/* this is case where temperature has not been set */
 		/* compare total heating - cooling due to h2 with total due to everything */
-		double H2_heat_cool = safe_div((fabs(hmi.HeatH2Dexc_used)+fabs(hmi.HeatH2Dish_used)), thermal.htot,0.0);
+		double H2_heat_cool = safe_div((fabs(hmi.HeatH2Dexc)+fabs(hmi.HeatH2Dish)), thermal.htot,0.0);
 		// Leiden hack PDR sims can have H2 heating set by sims equation, does not change
 		double dH2_heat_cool = fabs( H2_heat_cool - Old_H2_heat_cool );
 		if( H2_heat_cool > 0.1 && Old_H2_heat_cool>0. && dH2_heat_cool>SMALLFLOAT )
@@ -615,7 +615,7 @@ void radius_next()
 			drChoice.insert( drH2_heat_cool, oss.str() );
 		}
 	}
-	Old_H2_heat_cool = safe_div((fabs(hmi.HeatH2Dexc_used)+fabs(hmi.HeatH2Dish_used)) , thermal.htot, 0.0);
+	Old_H2_heat_cool = safe_div((fabs(hmi.HeatH2Dexc)+fabs(hmi.HeatH2Dish)) , thermal.htot, 0.0);
 
 	/* >>chng 03 mar 04, add this logic */
 	/* do not let change in H2 and heavy element molecular abundances become too large 

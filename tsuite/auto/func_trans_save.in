@@ -24,7 +24,7 @@ save last transmitted continuum "func_trans_save.trn"
 #
 # commands giving the monitors    =========
 # this contains a large number of asserts that both tests use
-init file "trans.dat"
+init file "trans.mon"
 # 
 # func_trans_save.in 
 # class function 
