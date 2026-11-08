@@ -44,10 +44,11 @@ void t_hmi::zero()
 	>>refcon	1990, ApJ, 365, 620 */
 	chH2_small_model_type = 'H';
 	/* the Bertoldi & Draine 1996 treatment */
-	/* >>chng 03 nov 15, change default to BD96 */
-	chH2_small_model_type = 'B';
 	/* >>chng 05 dec 08, use the Elwert et al. approximations as the default */
 	chH2_small_model_type = 'E';
+	/* >>chng 03 nov 15, change default to BD96 */
+	/* >>chng 26 nov 07 reestablish BD96 */
+	chH2_small_model_type = 'B';
 
 	/* set NaN */
 	set_NaN( HeatH2Dish );
