@@ -106,7 +106,8 @@ monitor line "Q(H)" 4861.32A 0.4636 error 0.1
 ## >>chng 16 aug 07, from -4.009 to -4.058, Marios bug fixes
 ## >>chng 17 may 26, wl from 1215.68A to 1215.67A, update Rydberg constant
 ## >>chng 25 jan 15, from -4.058 to -4.02, GS removes destabilizing reactions, updates others to current UMIST
-monitor line luminosity "h  1" 1215.67A -4.02 error 0.1
+## >>chng 26 nov 08, from -4.02 to -4.075, revert to BD96 as small H2 default model
+monitor line luminosity "h  1" 1215.67A -4.075 error 0.1
 ##
 ## >>chng 02 apr 03, from 3.46 to 3.22 bound compton
 ## >>chng 03 may 22, fron intensity to luminosity
@@ -133,7 +134,8 @@ monitor line luminosity "h  1" 1215.67A -4.02 error 0.1
 ## >>chng 21 mar 16, wl from 6562.80A to 6562.82A, update NIST energies
 ## >>chng 21 apr 08, wl from 6562.82A to 6562.83A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 6562.83A to 6562.80A, revert to PvH energies for H
-monitor line luminosity "h  1" 6562.80A -4.98 error 0.1
+## >>chng 26 nov 08, from -4.98 to -5.052, revert to BD96 as small H2 default model
+monitor line luminosity "h  1" 6562.80A -5.052 error 0.1
 ##
 ## >>chng 03 may 22, fron intensity to luminosity
 ## >>chng 03 aug 03, from -0.204 to -0.230, chng 2s-2p coll
@@ -158,7 +160,8 @@ monitor line luminosity "h  1" 6562.80A -4.98 error 0.1
 ## >>chng 21 mar 16, wl from 4340.46A to 4340.47A, update NIST energies
 ## >>chng 21 aug 18, wl from 4340.47A to 4340.46A, revert to PvH energies for H
 ## >>chng 25 jan 15, from -5.927 to -5.869, GS removes destabilizing reactions, updates others to current UMIST
-monitor line luminosity "H  1" 4340.46A -5.869 error 0.1
+## >>chng 26 nov 08, from -5.869 to -5.919, revert to BD96 as small H2 default model
+monitor line luminosity "H  1" 4340.46A -5.919 error 0.1
 ##
 ## H 2 pht very sensitive to J-bar in Lya
 ## >>chng 01 jun 15, from 20.8 to 15.7, H ct rates
@@ -175,7 +178,8 @@ monitor line luminosity "H  1" 4340.46A -5.869 error 0.1
 ## >>chng 18 feb 13, wl from 0 to 2431.34A, update two-photon wl 
 ## >>chng 24 feb 04, wl from 2431.34A to 2431.35A, resolve 1 electron Lya doublets
 ## >>chng 24 oct 01, wl from 2431.35A to 2430.61A, treat H I two-photon cont. wl as vacuum
-monitor line luminosity "H  1" 2430.61A -4.362 error 0.2
+## >>chng 26 nov 08, from -4.362 to -4.468, revert to BD96 as small H2 default model
+monitor line luminosity "H  1" 2430.61A -4.468 error 0.2
 ##
 ## very sensitive to J-bar in Lya
 ## >>chng 02 apr 03, from 60.8 to 48.1 bound compton
@@ -206,7 +210,8 @@ monitor line luminosity "H  1" 2430.61A -4.362 error 0.2
 ## >>chng 13 sep 17, from -4.75 to -4.463, D chem off by default
 ## >>chng 15 jun 03, from -4.463 to -4.394, exact LTE H2 cooling (not big model)
 ## >>chng 17 may 26, wl from 1215.68A to 1215.67A, update Rydberg constant
-monitor line luminosity "La x" 1215.67A -4.394 error 0.1
+## >>chng 26 nov 08, from -4.394 to -4.468, revert to BD96 as small H2 default model
+monitor line luminosity "La x" 1215.67A -4.468 error 0.1
 ##
 ## >>chng 01 apr 02, from 80.3 to 75.8, better convergence criteria
 ## >>chng 01 jun 15, from 75.8 to 69.8 H ct rates
@@ -226,7 +231,8 @@ monitor line luminosity "La x" 1215.67A -4.394 error 0.1
 ## >>chng 13 sep 17, from -4.178 to -4.114, D chem off by default
 ## >>chng 15 jun 03, from -4.114 to -3.038, exact LTE H2 cooling (not big model)
 ## >>chng 16 nov 14, from -3.038 to -2.998, Reintegration of RydDep after several bug fixes
-monitor line luminosity "toth" 0 -2.998 error 0.1   ## total heating
+## >>chng 26 nov 08, from -2.998 to -4.135, revert to BD96 as small H2 default model
+monitor line luminosity "toth" 0 -4.135 error 0.1   ## total heating
 ##
 ## >>chng 01 feb 26, from 37.555 to 39.784, H 2s 2p optical depths together
 ## >>chng 01 apr 02, from 39.784 to 34.484 better convergence criteria
@@ -255,7 +261,8 @@ monitor line luminosity "toth" 0 -2.998 error 0.1   ## total heating
 ## >>chng 12 nov 08, from -8.59 to -9.245, fix e-,H2 dissociation rate
 ## >>chng 13 feb 10, from -9.245 to -9.095, H2,e-=>H-,H update
 ## >>chng 15 jun 03, from -9.095 to -8.064, exact LTE H2 cooling (not big model)
-monitor line luminosity "H- H" 0 -8.064 error 0.20 ## h- heating
+## >>chng 26 nov 08, from -8.064 to -8.803, revert to BD96 as small H2 default model
+monitor line luminosity "H- H" 0 -8.803 error 0.20 ## h- heating
 ##
 ## >>chng 01 mar 17, from 2.066 to 0.541 updated H cs
 ## >>chng 02 dec 15, from 1.951 to 1.87, slow drift
@@ -327,7 +334,8 @@ monitor line luminosity "H-ct" 6562.80A -6.973 errror 0.2
 ## >>chng 11 nov 16, from -5.25 to -5.06, adjust newmole monitors
 ## >>chng 13 nov 19, from -5.06 to -5.211, fix CT bug in mole_eval_balance
 ## >>chng 15 jun 03, from -5.211 to -6.766, exact LTE H2 cooling (not big model)
-monitor line luminosity "H-fb" 0 -6.766 errror 0.2
+## >>chng 26 nov 08, from -6.766 to -6.997, revert to BD96 as small H2 default model
+monitor line luminosity "H-fb" 0 -6.997 errror 0.2
 ##
 ##very sensitive to J-bar in Lya
 ## >>chng 02 apr 03, from 4.07 to 3.352 bound compton
@@ -345,7 +353,8 @@ monitor line luminosity "H-fb" 0 -6.766 errror 0.2
 ## >>chng 11 nov 16, from -5.57 to -5.354, adjust newmole monitors
 ## >>chng 13 nov 19, from -5.354 to -5.519, fix CT bug in mole_eval_balance
 ## >>chng 15 jun 03, from -5.519 to -9.321, exact LTE H2 cooling (not big model)
-monitor line luminosity "H2+ " 0 -9.321 errror 0.2
+## >>chng 26 nov 08, from -9.321 to -9.586, revert to BD96 as small H2 default model
+monitor line luminosity "H2+ " 0 -9.586 errror 0.2
 ##
 ## >>chng 03 sep 10, add this column density
 ## >>chng 03 sep 11, from 25.14 to 25.20 better H2* 
@@ -359,7 +368,8 @@ monitor line luminosity "H2+ " 0 -9.321 errror 0.2
 ## >>chng 13 sep 10, from 21.51 to 20.11, updated HD cooling
 ## >>chng 13 sep 17, from 20.11 to 22.71, D chem off by default
 ## >>chng 15 jun 03, from 22.71 to 26.58, exact LTE H2 cooling (not big model)
-monitor H2 column density 26.58 error 0.15 
+## >>chng 26 nov 08, from 26.58 to 24.04, revert to BD96 as small H2 default model
+monitor H2 column density 24.04 error 0.15 
 ##
 ## >>chng 02 nov 20, add this line
 ## >>chng 03 may 22, from intensity to luminosity
@@ -384,7 +394,8 @@ monitor H2 column density 26.58 error 0.15
 ## >>chng 18 feb 20, updated spectral label from "He 1" 5875.64A to "Blnd" 5877.29A, update He-like triplet labels and wl
 ## >>chng 18 mar 06, wl from 5877.29A to 5875.66A, adjust multiplet Blend WL for refraction index
 ## >>chng 25 jan 26, from -6.83 to -6.796, merge master updated cham"
-monitor line luminosity "Blnd" 5875.66A -6.796
+## >>chng 26 nov 08, from -6.796 to -6.832, revert to BD96 as small H2 default model
+monitor line luminosity "Blnd" 5875.66A -6.832
 ##
 ## >>chng 01 may 07, from 1.111 to 1.046, chng in he+ H ct rate
 ## >>chng 02 apr 03, from 1.046 to 1.135 bound compton
@@ -429,7 +440,8 @@ monitor line luminosity "Blnd" 1.08302m -6.711 error 0.1
 ## >>chng 13 sep 17, from 3.242 to 2.366, D chem off by default
 ## >>chng 13 nov 19, from 2.366 to 2.268, fix CT bug in mole_eval_balance
 ## >>chng 15 jun 03, from 2.268 to 1.657, exact LTE H2 cooling (not big model)
-monitor temperature "H+" 1.657 error 0.1
+## >>chng 26 nov 08, from 1.657 to 1.736, revert to BD96 as small H2 default model
+monitor temperature "H+" 1.736 error 0.1
 ##
 ## >>chng 01 may 06. from 3.786 to 3.856, chng in He+ H ct rates
 ## >>chng 02 may 27, from 3.856 to 3.811 brems gaunt factors
@@ -448,7 +460,8 @@ monitor temperature "H+" 1.657 error 0.1
 ## >>chng 13 nov 19, from 3.326 to 3.372, fix CT bug in mole_eval_balance
 ## >>chng 15 jun 03, from 3.372 to 2.441, exact LTE H2 cooling (not big model)
 ## >>chng 25 jan 26, from 2.441 to 2.476, merge master updated cham"
-monitor temperature "He+" 2.476
+## >>chng 26 nov 08, from 2.476 to 2.51, revert to BD96 as small H2 default model
+monitor temperature "He+" 2.51
 ##
 ## >>chng 05 sep 15, add this assert, eden for last zone
 ## >>chng 05 dec 08, from -0.661 to -0.748, update to Elwert Solomon rate
@@ -458,7 +471,8 @@ monitor temperature "He+" 2.476
 ## >>chng 15 jun 03, from -1.571 to -6.21, exact LTE H2 cooling (not big model)
 ## >>chng 16 oct 21, from -6.21 to -6.484, new l-changing rates from Hlike_HS87 reintegration
 ## >>chng 20 jan 30, from -6.484 to -6.446, Interpolate Anderson+2000 collisionstrengths to 0
-monitor eden -6.446
+## >>chng 26 nov 08, from -6.446 to -3.258, revert to BD96 as small H2 default model
+monitor eden -3.258
 ##
 ## >>chng 01 apr 02, from 450 to 550 better convergence criteria
 ## >>chng 02 jun 14, from 550 to 650 finer ifront zoning
@@ -479,7 +493,8 @@ monitor eden -6.446
 ## >>chng 13 sep 15, from 268 to 253, improve Thomson c.s.
 ## >>chng 13 sep 17, from 253 to 344, D chem off by default
 ## >>chng 15 jun 03, from 344 to 764, exact LTE H2 cooling (not big model)
-monitor nzone 764 
+## >>chng 26 nov 08, from 764 to 428, revert to BD96 as small H2 default model
+monitor nzone 428 
 ##
 ## >>chng 02 nov 20, increase from 13 to 17
 ## >>chng 02 dec 13, from 17 to 16, better conv

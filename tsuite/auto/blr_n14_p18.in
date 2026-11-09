@@ -74,7 +74,8 @@ monitor line luminosity "H  1"  4861.32A 6.374 ##total of sum of both Si IV comp
 ## >>chng 21 mar 16, wl from 4861.32A to 4861.33A, update NIST energies
 ## >>chng 21 apr 08, wl from 4861.33A to 4861.34A, up 1-e energies to np
 ## >>chng 21 aug 18, wl from 4861.34A to 4861.32A, revert to PvH energies for H
-monitor line luminosity "H  1 Inwd" 4861.32A 6.355,
+## >>chng 26 nov 08, from 6.355 to 6.387, revert to BD96 as small H2 default model
+monitor line luminosity "H  1 Inwd" 4861.32A 6.387,
 ##
 ##total HeII Balmer-a 1640
 ## >>chng 16 aug 07, from 3.87 to 3.936, Fran bug fix
@@ -93,7 +94,8 @@ monitor line luminosity "he 2"  1640.41A 3.721 err 0.1
 ## >>chng 16 mar 24, from 0.7008 to 0.624, FeII cooling using Stout 80 levels
 ## >>chng 16 aug 07, from 0.624 to 0.6729, Fran bug fix
 ## >>chng 20 jan 13, from 0.6729 to 0.6955, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor line luminosity "Blnd" 1888 0.6955  ##total of sum of Si III] 1892+
+## >>chng 26 nov 08, from 0.6955 to 0.7199, revert to BD96 as small H2 default model
+monitor line luminosity "Blnd" 1888 0.7199  ##total of sum of Si III] 1892+
 ##
 ## >>chng 12 jul 02, from 2.608 to 2.64, change H,H=>H2,hv rate
 ## >>chng 12 jul 09, from 2.64 to 2.692, get rid of major discontinuities in 3body rates
@@ -101,24 +103,28 @@ monitor line luminosity "Blnd" 1888 0.6955  ##total of sum of Si III] 1892+
 ## >>chng 13 apr 23, from 2.665 to 2.684, move Cr, Sc, Na to Stout, rm cool_xxx, enable all other Chianti ions of these elements
 ## >>chng 13 nov 19, from 2.684 to 2.739, fix CT bug in mole_eval_balance
 ## >>chng 16 aug 07, from 2.739 to 2.768, Fran bug fix
-monitor line luminosity "Blnd"  1860 2.768  ##total sum of both Al III comp
+## >>chng 26 nov 08, from 2.768 to 2.828, revert to BD96 as small H2 default model
+monitor line luminosity "Blnd"  1860 2.828  ##total sum of both Al III comp
 ##
 ##total C II] 2324.69 + 2328.12
 ## >>chng 13 may 07, from 2.981 to 3.023, bnl_effective change
 ## >>chng 14 apr 19, from 3.023 to 3.071, Use Stout Ca 2
 ## >>chng 16 mar 24, from 3.071 to 3.012, FeII cooling using Stout 80 levels
 ## >>chng 16 aug 07, from 3.012 to 3.068, Fran bug fix
-monitor line luminosity "blnd" 2326 3.068 err 0.1 
+## >>chng 26 nov 08, from 3.068 to 3.701, revert to BD96 as small H2 default model
+monitor line luminosity "blnd" 2326 3.701 err 0.1 
 ##
 ## >>chng 19 aug 06, from 6.766 to 6.786, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 23 jul 15, from 6.786 to 6.805, GS update UMIST to 2012 and set upper limit on T
-monitor line luminosity "blnd" 2798 6.805  ##total of sum of both Mg II comp
+## >>chng 26 nov 08, from 6.805 to 6.825, revert to BD96 as small H2 default model
+monitor line luminosity "blnd" 2798 6.825  ##total of sum of both Mg II comp
 ##
 ## >>chng 12 jul 01, from 6.816 to 6.79, update Badnell DR to 13-electron iso sequence
 ## >>chng 14 apr 19, from 6.79 to 6.712, Use Stout Ca 2
 ## >>chng 16 mar 24, from 6.712 to 6.671, FeII cooling using Stout 80 levels
 ## >>chng 19 jul 30, from 6.671 to 6.692, split He I 2 ^3P_J
-monitor line luminosity "blnd"  3933 6.692
+## >>chng 26 nov 08, from 6.692 to 6.79, revert to BD96 as small H2 default model
+monitor line luminosity "blnd"  3933 6.79
 ##
 ## >>chng 13 jul 25, wl from 1.083m to 1.08299m, increased wl precision to 6 sig. fig.
 ## >>chng 13 jul 30, wl from 1.08299m to 1.08303m, increased wl precision to 6 sig. fig.
@@ -139,7 +145,8 @@ monitor line luminosity "Blnd"  1.08302m 6.122
 ## >>chng 18 mar 06, wl from 5877.29A to 5875.66A, adjust multiplet Blend WL for refraction index
 ## >>chng 19 jun 28, from 5.699 to 5.639, reintegrate iso_collisions branch
 ## >>chng 19 jul 30, from 5.639 to 5.542, split He I 2 ^3P_J
-monitor line luminosity "Blnd"  5875.66A 5.542
+## >>chng 26 nov 08, from 5.542 to 5.565, revert to BD96 as small H2 default model
+monitor line luminosity "Blnd"  5875.66A 5.565
 ##
 ## >>chng 12 apr 02, from 18.37 to 22.36, Chianti 7 change, gcc 4.4.6 wolkje
 ## >>chng 12 may 22, from 22.36 to 15.72, bugfix r6155
@@ -154,14 +161,16 @@ monitor line luminosity "Blnd"  5875.66A 5.542
 monitor itrzn 6.663 error 0.10
 ## 
 monitor niter <6
-monitor niter >3
+## >>chng 26 nov 08, from 3 to 2.8, revert to BD96 as small H2 default model
+monitor niter >2.8
 ##
 ## >>chng 12 apr 02, from 260 to 247, Chianti 7 change, gcc 4.4.6 wolkje
 ## >>chng 12 jul 02, from 247 to 304, change H,H=>H2,hv rate
 ## >>chng 12 aug 16, from 304 to 260, fix radasc bug from r6346
 ## >>chng 12 aug 16, from 260 to 243, further fix of Rawlings H2 rates
 ## >>chng 13 mar 12, from 243 to 254, due to r7393
-monitor nzone 254 
+## >>chng 26 nov 08, from 254 to 343, revert to BD96 as small H2 default model
+monitor nzone 343 
 ##
 ## >>chng 14 jul 10, from 1.01 to 2.201, Add monitors for WillsNetzerWills FeII Lines
 ## >>chng 16 mar 23, drop WillsNetzerWills FeII Lines

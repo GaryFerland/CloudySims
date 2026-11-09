@@ -112,6 +112,9 @@ void ParseTest(Parser &p)
 		{
 			/*>>chng 13 apr 13, -1.528 to -1.542 we are not monitoring this in test suite */
 			StuffCommand( "MONITOR MOLECULAR FRACTION H2 -1.542 error 0.1", p, lgPrintTest );
+			/* >>>chng 26 nov 08 -1.5420 to -1.3638 small model Elwest -> BD96 */
+			StuffCommand( "MONITOR MOLECULAR FRACTION H2 -1.3638 error 0.1", p, lgPrintTest );
+
 		}
 		ParseMonitorResults(p);
 

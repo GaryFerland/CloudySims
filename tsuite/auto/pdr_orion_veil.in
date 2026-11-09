@@ -82,7 +82,8 @@ monitor temperature "H+" 8330
 ## >>chng 04 may 07, update density radius to published paper, 17.81
 ## >>chng 05 dec 08, from 17.94 to 15.30, update to Elwert Solomon rate
 ## >>chng 15 mar 07, from 15.3 to 15.37, merging newmesh branch
-monitor H2 column density 15.37 error 0.2 
+## >>chng 26 nov 08, from 15.37 to 17.74, revert to BD96 as small H2 default model
+monitor H2 column density 17.74 error 0.2 
 ##
 ## >>chng 03 jul 20, from 7.097 to 6.86, cap diffuse field pump, incr error
 ## >>chng 03 aug 01, from 6.86 to 7.05, ans very unstable, incr error
@@ -111,15 +112,18 @@ monitor column density H2+  10.55
 ## >>chng 14 mar 26, from 6.161 to 6.094, Move oxygen data to stout and chianti files
 ## >>chng 20 sep 06, from 6.094 to 6.238, further update to McCall CR-related rate
 ## >>chng 25 jan 26, from 6.238 to 6.15, merge master updated cham"
-monitor column density H3+  6.15
+## >>chng 26 nov 08, from 6.15 to 8.607, revert to BD96 as small H2 default model
+monitor column density H3+  8.607
 ## 
 ## >>chng 05 dec 08, from 17.69 to 15.20, update to Elwert Solomon rate
 ## >>chng 14 mar 26, from 15.2 to 15.26, Move oxygen data to stout and chianti files
 ## >>chng 15 mar 07, from 15.26 to 15.3, merging newmesh branch
-monitor column density H2g  15.3
+## >>chng 26 nov 08, from 15.3 to 17.74, revert to BD96 as small H2 default model
+monitor column density H2g  17.74
 ## 
 ## >>chng 05 dec 08, from 15.15 to 14.60, update to Elwert Solomon rate
-monitor column density H2*  14.60
+## >>chng 26 nov 08, from 14.6 to 15.12, revert to BD96 as small H2 default model
+monitor column density H2*  15.12
 ## 
 ## >>chng 08 mar 22, from 10.79 to 10.68 bugfix r1879
 ## >>chng 11 nov 16, from 10.68 to 10.62, adjust newmole monitors
@@ -129,7 +133,8 @@ monitor column density HeH+ 10.94
 ## >>chng 21 jun 17, from 1 to 9.52, first run
 ## >>chng 21 sep 11, from 9.52 to 8.416, LAMDA update
 ## >>chng 21 nov 04, from 8.416 to 8.183, update mole co data
-monitor column density "ArH+" 8.183
+## >>chng 26 nov 08, from 8.183 to 9.068, revert to BD96 as small H2 default model
+monitor column density "ArH+" 9.068
 ## 
 ##
 ## >>chng 03 nov 10, from 400 to 440, chng zoning, use He0
@@ -158,7 +163,8 @@ monitor itrzn 6.752
 ## >>chng 14 mar 26, from 23.93 to 24.19, Move oxygen data to stout and chianti files
 ## >>chng 15 aug 03, from 24.19 to 24.46, update LAMDA to 2015
 ## >>chng 24 jan 09, from 24.46 to 24.41, resolve 1 electron Ly doublets
-monitor "H2O " 538.142m line intensity 24.41
+## >>chng 26 nov 08, from 24.41 to 24.58, revert to BD96 as small H2 default model
+monitor "H2O " 538.142m line intensity 24.58
 ## >>chng 13 jun 27, from -7.288 to 25.93, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from 25.93 to 26.03, C to external databases
@@ -236,7 +242,8 @@ monitor "^13CO" 906.599m  25.84 line intensity
 ## >>chng 21 sep 11, from 23.59 to 22.98, LAMDA update
 ## >>chng 21 sep 15, from 22.98 to 23.74, go back to unresolved model
 ## >>chng 24 feb 27, from 23.74 to 23.69, Fix escape probability for Ly beta and higher
-monitor "CN  " 880.858m  23.69  line intensity
+## >>chng 26 nov 08, from 23.69 to 24.03, revert to BD96 as small H2 default model
+monitor "CN  " 880.858m  24.03  line intensity
 ##
 ## >>chng 13 dec 18, from 29.05 to 29.19, fixes to Federman shielding
 ## >>chng 17 nov 20, from 29.19 to 29.17, Bug-fix in DR suppression (r11900)

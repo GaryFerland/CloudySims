@@ -304,7 +304,8 @@ monitor column density H3+  13.89 error 0.1
 monitor column density H2g  21.74 error 0.1
 ##
 ## >>chng 05 dec 08, from 15.17 to 14.73, update to Elwert Solomon rate
-monitor column density H2*  14.73 error 0.1
+## >>chng 26 nov 08, from 14.73 to 15.16, revert to BD96 as small H2 default model
+monitor column density H2*  15.16 error 0.1
 ##
 ## >>chng 05 dec 08, from 10.54 to 10.49, update to Elwert Solomon rate
 ## >>chng 09 oct 05, from 10.49 to 10.39, [NI] pumping changes
@@ -312,7 +313,8 @@ monitor column density H2*  14.73 error 0.1
 ## >>chng 14 jan 05, from 10.28 to 10.38, N to external databases
 ## >>chng 14 jun 11, from 10.38 to 10.3, BUGFIX 14 jan 05, N to external databases, did not include N I, Mg II excited state photo
 ## >>chng 17 feb 10, from 10.3 to 10.26, default size of N 1 model atom set to 50
-monitor column density HeH+ 10.26 error 0.1
+## >>chng 26 nov 08, from 10.26 to 10.3, revert to BD96 as small H2 default model
+monitor column density HeH+ 10.3 error 0.1
 ## 
 ## >>chng 06 nov 28, add these lines
 ## >>chng 13 dec 23, from -4.166 to -4.085, C to external databases

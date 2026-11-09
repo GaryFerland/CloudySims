@@ -58,7 +58,8 @@ monitor temperature "H+" 4.021
 ## >>chng 09 jan 16, from 288 to 289, average of 10 runs
 ## >>chng 09 may 21, from 289 to 291, average of 32/64 bit runs
 ## >>chng 23 jun 27, from 291 to 274, update Fe+ model to Smyth+19
-monitor nzone 274
+## >>chng 26 nov 08, from 274 to 297, revert to BD96 as small H2 default model
+monitor nzone 297
 ##
 ## >>chng 03 oct 30, from 12 to 16, zoning changed, many fewer zones,
 ## but more iterations per zone, net was faster

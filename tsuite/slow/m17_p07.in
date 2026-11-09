@@ -136,7 +136,8 @@ monitor line luminosity "Blnd" 6720 36.75
 ## >>chng 20 sep 06, from 33.62 to 33.66, further update to McCall CR-related rates from r14260
 ## >>chng 23 may 15, from 33.66 to 33.69, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 26, from 33.69 to 33.72, master merg
-monitor line luminosity "CO  " 1300.05m 33.72
+## >>chng 26 nov 08, from 33.72 to 33.4, revert to BD96 as default small H2 model
+monitor line luminosity "CO  " 1300.05m 33.4
 ## 
 ## >>chng 10 mar 03, from 32.98 to 33.13, fix botches after CO changes
 ## >>chng 10 jun 22, from 33.13 to 33.1, fix botches after dBaseLines cooling/heating changes
@@ -153,7 +154,8 @@ monitor line luminosity "CO  " 1300.05m 33.72
 ## >>chng 20 sep 06, from 32.79 to 32.81, further update to McCall CR-related rates from r14260
 ## >>chng 23 may 15, from 32.81 to 32.84, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 26, from 32.84 to 32.87, master merg
-monitor line luminosity "CO  " 2600.05m 32.87
+## >>chng 26 nov 08, from 32.87 to 32.58, revert to BD96 as default small H2 model
+monitor line luminosity "CO  " 2600.05m 32.58
 ## 
 ## >>chng 10 mar 03, from 33.83 to 34.19, fix botches after CO changes
 ## >>chng 10 jun 22, from 34.19 to 34.15, fix botches after dBaseLines cooling/heating changes
@@ -170,7 +172,8 @@ monitor line luminosity "CO  " 2600.05m 32.87
 ## >>chng 20 sep 06, from 33.78 to 33.81, further update to McCall CR-related rates from r14260
 ## >>chng 23 may 15, from 33.81 to 33.84, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 26, from 33.84 to 33.87, master merg
-monitor line luminosity "CO  " 866.727m 33.87
+## >>chng 26 nov 08, from 33.87 to 33.52, revert to BD96 as default small H2 model
+monitor line luminosity "CO  " 866.727m 33.52
 ## 
 ## >>chng 10 mar 03, from 32.2 to 33.08, fix botches after CO changes
 ## >>chng 10 jun 22, from 33.08 to 33.01, fix botches after dBaseLines cooling/heating changes
@@ -188,14 +191,16 @@ monitor line luminosity "CO  " 866.727m 33.87
 ## >>chng 20 sep 06, from 32.7 to 32.73, further update to McCall CR-related rates from r14260
 ## >>chng 23 may 15, from 32.73 to 32.77, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 26, from 32.77 to 32.8, master merg
-monitor line luminosity "CO  " 371.549m 32.8
+## >>chng 26 nov 08, from 32.8 to 32.27, revert to BD96 as default small H2 model
+monitor line luminosity "CO  " 371.549m 32.27
 ## 
 ## >>chng 11 dec 12, from 36.74 to 36.56, bug-fix for updating grain opacity (r5759)
 ## >>chng 13 nov 03, from 36.56 to 36.526, update H2 - C II 158m collision
 ## >>chng 13 nov 04, wl from 157.6m to 157.636m, update C II
 ## >>chng 13 dec 23, from 36.53 to 36.57, C to external databases
 ## >>chng 14 mar 26, from 36.57 to 36.53, move O to external databases
-monitor line luminosity "C  2" 157.636m 36.53
+## >>chng 26 nov 08, from 36.53 to 36.49, revert to BD96 as default small H2 model
+monitor line luminosity "C  2" 157.636m 36.49
 ## 
 ## >>chng 10 aug 23, from 35.15 to 35.05, first run since change continuum grid
 ## >>chng 11 apr 27, from 35.05 to 35.073, r4955: higher precision A_V integration
@@ -204,7 +209,8 @@ monitor line luminosity "C  2" 157.636m 36.53
 ## >>chng 13 dec 23, from 35.48 to 35.53, C to external databases
 ## >>chng 14 mar 26, from 35.53 to 35.49, move O to external databases
 ## >>chng 15 oct 14, from 35.49 to 35.42, update Ne 3 cs to McLaughlin+11
-monitor line luminosity "c  1" 370.269m 35.42
+## >>chng 26 nov 08, from 35.42 to 35.38, revert to BD96 as default small H2 model
+monitor line luminosity "c  1" 370.269m 35.38
 ## 
 ## >>chng 10 aug 23, from 34.67 to 34.59, first run since change continuum grid
 ## >>chng 11 jun 23, from 34.59 to 34.61, tune Te solver (average of 3 runs)
@@ -217,14 +223,16 @@ monitor line luminosity "c  1" 609.590m 35.01
 ## >>chng 11 dec 12, from 37.02 to 36.76, bug-fix for updating grain opacity (r5759)
 ## >>chng 14 mar 26, from 36.76 to 36.88, move O to external databases
 ## >>chng 14 aug 28, from 36.88 to 36.85, EleyRideal H2 formation
-monitor line luminosity "o  1"  63.1679m 36.85
+## >>chng 26 nov 08, from 36.85 to 36.82, revert to BD96 as default small H2 model
+monitor line luminosity "o  1"  63.1679m 36.82
 ## >>chng 10 aug 23, from 35.88 to 35.91, first run since change continuum grid
 ## >>chng 11 nov 16, from 35.91 to 35.89, adjust newmole monitors
 ## >>chng 11 dec 12, from 35.89 to 35.62, bug-fix for updating grain opacity (r5759)
 ## >>chng 13 jul 31, wl from 145.5m to 145.530m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from 35.62 to 35.7388, move O to external databases
 ## >>chng 14 aug 28, from 35.74 to 35.71, EleyRideal H2 formation
-monitor line luminosity "O  1" 145.495m 35.71
+## >>chng 26 nov 08, from 35.71 to 35.69, revert to BD96 as default small H2 model
+monitor line luminosity "O  1" 145.495m 35.69
 ## 
 ## >>chng 10 aug 23, from 36.37 to 36.39, first run since change continuum grid
 ## >>chng 11 nov 16, from 36.39 to 36.36, adjust newmole monitors
@@ -237,7 +245,8 @@ monitor line luminosity "Si 2"  34.8046m 36.05
 ## >>chng 10 aug 23, from 15.83 to 15.77, first run since change continuum grid
 ## >>chng 11 dec 12, from 15.77 to 16.15, bug-fix for updating grain opacity (r5759)
 ## >>chng 14 mar 26, from 16.15 to 16, move O to external databases
-monitor column density  OH 16 error 0.1
+## >>chng 26 nov 08, from 16 to 15.81, revert to BD96 as default small H2 model
+monitor column density  OH 15.81 error 0.1
 ## 
 ## >>chng 11 dec 12, from 21.42 to 21.5, bug-fix for updating grain opacity (r5759)
 monitor column density  H2 21.5 error 0.1
@@ -252,7 +261,8 @@ monitor column density  H2 21.5 error 0.1
 ## >>chng 20 sep 06, from 15.83 to 15.87, further update to McCall CR-related rates from r14260
 ## >>chng 23 may 15, from 15.87 to 15.9, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jan 26, from 15.9 to 15.93, master merg
-monitor column density  CO 15.93
+## >>chng 26 nov 08, from 15.93 to 15.62, revert to BD96 as default small H2 model
+monitor column density  CO 15.62
 ## 
 monitor temperature "H+" radius 3.992
 ## >>chng 10 aug 23, from 2.902 to 2.929, first run since change continuum grid
@@ -260,7 +270,8 @@ monitor temperature "H+" radius 3.992
 ## >>chng 14 mar 26, from 2.794 to 2.548, move O to external databases
 monitor temperature "H" radius 2.548
 ## >>chng 14 mar 26, from 2.028 to 1.968, move O to external databases
-monitor temperature "H2" radius 1.968
+## >>chng 26 nov 08, from 1.968 to 1.936, revert to BD96 as default small H2 model
+monitor temperature "H2" radius 1.936
 #
 # m17_P07.in 
 # class hii pdr 

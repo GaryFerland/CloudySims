@@ -87,7 +87,8 @@ monitor "TiO" column density 14.73 error 0.1
 ## >>chng 25 aug 11, from 10 to 1.644, Sim without dust incr column density
 monitor column density "HNTi+" 1.644
 ## >>chng 25 aug 11, from 10 to 3.612, Sim without dust incr column density
-monitor column density "TiNC+" 3.612
+## >>chng 26 nov 08, from 3.612 to 3.541, revert to BD96 as small H2 default model
+monitor column density "TiNC+" 3.541
 ## >>chng 25 aug 11, from 10 to 14.73, Sim without dust incr column density
 monitor column density "TiO" 14.73
 ## >>chng 25 aug 11, from 10 to 9.06, Sim without dust incr column density
@@ -106,17 +107,20 @@ monitor column density "TiS+" 3.236
 monitor column density "HTiS+" 2.072
 # P-bearing column densities
 ## >>chng 25 aug 11, from 10 to 7.174, Sim without dust incr column density
-monitor column densitty "PH" 7.174
+## >>chng 26 nov 08, from 7.174 to 7.078, revert to BD96 as small H2 default model
+monitor column densitty "PH" 7.078
 ## >>chng 25 aug 11, from 10 to 5.229, Sim without dust incr column density
 monitor column densitty "PH+" 5.229
 ## >>chng 25 aug 11, from 10 to 1.028, Sim without dust incr column density
 monitor column densitty "PH2" 1.028
 ## >>chng 25 aug 11, from 10 to 5.003, Sim without dust incr column density
-monitor column densitty "PH2+" 5.003
+## >>chng 26 nov 08, from 5.003 to 4.937, revert to BD96 as small H2 default model
+monitor column densitty "PH2+" 4.937
 ## >>chng 25 aug 11, from 10 to 4.108, Sim without dust incr column density
 monitor column densitty "PH3" 4.108
 ## >>chng 25 aug 11, from 10 to 3.808, Sim without dust incr column density
-monitor column densitty "CP" 3.808
+## >>chng 26 nov 08, from 3.808 to 3.705, revert to BD96 as small H2 default model
+monitor column densitty "CP" 3.705
 ## >>chng 25 aug 11, from 10 to 15.15, Sim without dust incr column density
 monitor column densitty "PN" 15.15
 ## >>chng 25 aug 11, from 10 to 7.993, Sim without dust incr column density
@@ -142,7 +146,8 @@ monitor column density H3+  9.363 error 0.1
 ## >>chng 25 aug 11, from 21.9 to 20.92, Sim without dust incr column density
 monitor column density H2g  20.92 error 0.1
 ## >>chng 25 aug 11, from 14 to 13.28, Sim without dust incr column density
-monitor column density H2*  13.28 error 0.1
+## >>chng 26 nov 08, from 13.28 to 13.33, revert to BD96 as small H2 default model
+monitor column density H2*  13.33 error 0.1
 ## >>chng 25 aug 11, from 7.918 to 5.272, Sim without dust incr column density
 monitor column density HeH+ 5.272  error 0.1
 ## >>chng 25 aug 11, from 10.03 to 6.379, Sim without dust incr column density
@@ -154,17 +159,22 @@ monitor column density "C2H+"      3.172
 ## >>chng 25 aug 11, from 15.84 to 7.746, Sim without dust incr column density
 monitor column density "C2H"       7.746
 ## >>chng 25 aug 11, from 12.7 to 1.457, Sim without dust incr column density
-monitor column density "C2H2"      1.457  
+## >>chng 26 nov 08, from 1.457 to 1.41, revert to BD96 as small H2 default model
+monitor column density "C2H2"      1.41  
 ## >>chng 25 aug 11, from 12.77 to 2.145, Sim without dust incr column density
-monitor column density "C2H2+"     2.145  
+## >>chng 26 nov 08, from 2.145 to 2.083, revert to BD96 as small H2 default model
+monitor column density "C2H2+"     2.083  
 ## >>chng 25 aug 11, from 15.27 to 3.339, Sim without dust incr column density
-monitor column density "C3"        3.339  
+## >>chng 26 nov 08, from 3.339 to 3.513, revert to BD96 as small H2 default model
+monitor column density "C3"        3.513  
 ## >>chng 25 aug 11, from 13.72 to 1.508, Sim without dust incr column density
 monitor column density "C3H"       1.508  
 ## >>chng 25 aug 11, from 10.47 to 5.179, Sim without dust incr column density
-monitor column density "CCl+"      5.179  
+## >>chng 26 nov 08, from 5.179 to 5.067, revert to BD96 as small H2 default model
+monitor column density "CCl+"      5.067  
 ## >>chng 25 aug 11, from 11.22 to 0.7182, Sim without dust incr column density
-monitor column density "CCl"       0.7182  
+## >>chng 26 nov 08, from 0.7182 to 0.5434, revert to BD96 as small H2 default model
+monitor column density "CCl"       0.5434  
 ## >>chng 25 aug 11, from 10.87 to 6.025, Sim without dust incr column density
 monitor column density "CH+"       6.025  
 ## >>chng 25 aug 11, from 15.8 to 12.13, Sim without dust incr column density
@@ -172,7 +182,8 @@ monitor column density "CH"        12.13
 ## >>chng 25 aug 11, from 10.95 to 4.874, Sim without dust incr column density
 monitor column density "CH2+"      4.874  
 ## >>chng 25 aug 11, from 15.04 to 9.683, Sim without dust incr column density
-monitor column density "CH2"       9.683  
+## >>chng 26 nov 08, from 9.683 to 9.629, revert to BD96 as small H2 default model
+monitor column density "CH2"       9.629  
 ## >>chng 25 aug 11, from 13.23 to 5.515, Sim without dust incr column density
 monitor column density "CH3+"      5.515
 ## >>chng 25 aug 11, from 14.94 to 8.742, Sim without dust incr column density
@@ -190,7 +201,8 @@ monitor column density "CS+"       7.468
 ## >>chng 25 aug 11, from 17.06 to 12.77, Sim without dust incr column density
 monitor column density "CS"        12.77  
 ## >>chng 25 aug 11, from 12.04 to 8.004, Sim without dust incr column density
-monitor column density "H2Cl+"     8.004  
+## >>chng 26 nov 08, from 8.004 to 7.948, revert to BD96 as small H2 default model
+monitor column density "H2Cl+"     7.948  
 ## >>chng 25 aug 11, from 10.42 to 9.016, Sim without dust incr column density
 monitor column density "H2O+"      9.016  
 ## >>chng 25 aug 11, from 14.05 to 15.96, Sim without dust incr column density
@@ -198,9 +210,11 @@ monitor column density "H2O"       15.96
 ## >>chng 25 aug 11, from 11.41 to 9.752, Sim without dust incr column density
 monitor column density "H3O+"      9.752  
 ## >>chng 25 aug 11, from 11.29 to 7.998, Sim without dust incr column density
-monitor column density "HCl+"      7.998  
+## >>chng 26 nov 08, from 7.998 to 8.054, revert to BD96 as small H2 default model
+monitor column density "HCl+"      8.054  
 ## >>chng 25 aug 11, from 13.41 to 12.68, Sim without dust incr column density
-monitor column density "HCl"       12.68  
+## >>chng 26 nov 08, from 12.68 to 12.62, revert to BD96 as small H2 default model
+monitor column density "HCl"       12.62  
 ## >>chng 25 aug 11, from 15.2 to 10.68, Sim without dust incr column density
 monitor column density "HCN"       10.68  
 ## >>chng 25 aug 11, from 12.59 to 3.652, Sim without dust incr column density
@@ -250,13 +264,16 @@ monitor column density "OCS"       13.09
 ## >>chng 25 aug 11, from 10.33 to 7.256, Sim without dust incr column density
 monitor column density "OH+"       7.256  
 ## >>chng 25 aug 11, from 12.23 to 9.648, Sim without dust incr column density
-monitor column density "SiH"       9.648  
+## >>chng 26 nov 08, from 9.648 to 9.558, revert to BD96 as small H2 default model
+monitor column density "SiH"       9.558  
 ## >>chng 25 aug 11, from 10.19 to 7.239, Sim without dust incr column density
-monitor column density "SiH2+"     7.239  
+## >>chng 26 nov 08, from 7.239 to 7.172, revert to BD96 as small H2 default model
+monitor column density "SiH2+"     7.172  
 ## >>chng 25 aug 11, from 12.61 to 5.773, Sim without dust incr column density
 monitor column density "SiN+"      5.773  
 ## >>chng 25 aug 11, from 13.66 to 9.765, Sim without dust incr column density
-monitor column density "SiN"       9.765  
+## >>chng 26 nov 08, from 9.765 to 9.674, revert to BD96 as small H2 default model
+monitor column density "SiN"       9.674  
 ## >>chng 25 aug 11, from 11.16 to 9.951, Sim without dust incr column density
 monitor column density "SiOH+"     9.951
 ## >>chng 25 aug 11, from 9.981 to 10.19, Sim without dust incr column density

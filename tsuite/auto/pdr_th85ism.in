@@ -182,7 +182,8 @@ monitor line luminosity "CO  " 371.549m  -3.2 error 0.15
 ## >>chng 14 mar 26, from -2.48 to -2.927, Move oxygen data to stout and chianti files
 ## >>chng 14 aug 28, from -2.927 to -2.777, EleyRideal H2 formation
 ## >>chng 15 may 30, from -2.777 to -2.9, updates after merge from mainline, r10248
-monitor line luminosity "H2 l" 2.000m -2.9 error 0.2
+## >>chng 26 nov 08, from -2.9 to -3.093, revert to BD96 as small H2 default model
+monitor line luminosity "H2 l" 2.000m -3.093 error 0.2
 ##
 ## >>chng 03 may 17, from -2.882 to -2.749, update pump more often
 ## >>chng 03 may 23, from -2.749 to -1.861, bug in solomon process H2*
@@ -199,7 +200,8 @@ monitor line luminosity "H2 l" 2.000m -2.9 error 0.2
 ## >>chng 05 dec 08, from -1.94 to -3.39, update to Elwert Solomon rate
 ## >>chng 14 mar 26, from -3.39 to -3.663, Move oxygen data to stout and chianti files
 ## >>chng 14 aug 28, from -3.663 to -3.541, EleyRideal H2 formation
-monitor line luminosity "H2vH" 0 -3.541  error 0.2
+## >>chng 26 nov 08, from -3.541 to -1.952, revert to BD96 as small H2 default model
+monitor line luminosity "H2vH" 0 -1.952  error 0.2
 ##
 ## >>chng 03 jun 10, from -0.622 to -0.554 chng solomon rate
 ## >>chng 03 aug 28, from -0.554 to -0.617 Nick Abel fix CO, greater depth
@@ -459,7 +461,8 @@ monitor column density H2g  22.44 error 0.1
 ## >>chng 11 nov 16, from 16.17 to 16.1, adjust newmole monitors
 ## >>chng 14 mar 26, from 16.1 to 16.16, Move oxygen data to stout and chianti files
 ## >>chng 14 aug 28, from 16.16 to 16.24, EleyRideal H2 formation
-monitor column density H2*  16.24 error 0.1
+## >>chng 26 nov 08, from 16.24 to 16.78, revert to BD96 as small H2 default model
+monitor column density H2*  16.78 error 0.1
 ## 
 ## >>chng 05 dec 08, from 7.96 to 7.99, update to Elwert Solomon rate
 ## >>chng 11 nov 16, from 7.99 to 7.847, adjust newmole monitors
@@ -473,7 +476,8 @@ monitor column density HeH+ 8.377 error 0.1
 ## >>chng 21 sep 11, from 10.13 to 11.26, LAMDA update
 ## >>chng 21 nov 04, from 11.26 to 10.12, update mole co data
 ## >>chng 23 may 15, from 10.12 to 9.914, GS updates 21 reactions to UMIST 2012
-monitor column density "C2+"       9.914  
+## >>chng 26 nov 08, from 9.914 to 10.05, revert to BD96 as small H2 default model
+monitor column density "C2+"       10.05  
 ## >>chng 21 apr 16, from 17.01 to 14.27, add molecular column densities
 ## >>chng 21 sep 11, from 14.27 to 14.43, LAMDA update
 ## >>chng 21 nov 04, from 14.43 to 14.27, update mole co data
@@ -483,7 +487,8 @@ monitor column density "C2"        13.3
 ## >>chng 21 sep 11, from 9.671 to 10.57, LAMDA update
 ## >>chng 21 nov 04, from 10.57 to 9.619, update mole co data
 ## >>chng 23 may 15, from 9.619 to 9.459, GS updates 21 reactions to UMIST 2012
-monitor column density "C2H+"      9.459  
+## >>chng 26 nov 08, from 9.459 to 9.537, revert to BD96 as small H2 default model
+monitor column density "C2H+"      9.537  
 ## >>chng 21 apr 16, from 16.17 to 13.57, add molecular column densities
 ## >>chng 21 sep 11, from 13.57 to 13.49, LAMDA update
 ## >>chng 21 nov 04, from 13.49 to 13.38, update mole co data
@@ -527,7 +532,8 @@ monitor column density "CCl+"      10.9
 ## >>chng 23 may 15, from 8.341 to 8.299, GS updates 21 reactions to UMIST 2012
 monitor column density "CCl"       8.299  
 ## >>chng 21 apr 16, from 10.89 to 11.89, add molecular column densities
-monitor column density "CH+"       11.89  
+## >>chng 26 nov 08, from 11.89 to 12.39, revert to BD96 as small H2 default model
+monitor column density "CH+"       12.39  
 ## >>chng 21 apr 16, from 16.11 to 14.11, add molecular column densities
 ## >>chng 21 sep 11, from 14.11 to 14.62, LAMDA update
 ## >>chng 21 nov 04, from 14.62 to 14.14, update mole co data
@@ -535,7 +541,8 @@ monitor column density "CH"        14.14
 ## >>chng 21 apr 16, from 10.96 to 11.46, add molecular column densities
 ## >>chng 21 sep 11, from 11.46 to 11.5, LAMDA update
 ## >>chng 21 nov 04, from 11.5 to 11.45, update mole co data
-monitor column density "CH2+"      11.45  
+## >>chng 26 nov 08, from 11.45 to 11.71, revert to BD96 as small H2 default model
+monitor column density "CH2+"      11.71  
 ## >>chng 21 apr 16, from 15.55 to 13.71, add molecular column densities
 ## >>chng 21 nov 04, from 13.71 to 13.65, update mole co data
 monitor column density "CH2"       13.65  
@@ -576,15 +583,18 @@ monitor column density "CS+"       9.485
 monitor column density "CS"        16.4  
 ## >>chng 21 apr 16, from 12.001to 12.0392, new monitor added
 ## >>chng 21 apr 16, from 12.04 to 12.33, add molecular column densities
-monitor column density "H2Cl+"     12.33  
+## >>chng 26 nov 08, from 12.33 to 12.37, revert to BD96 as small H2 default model
+monitor column density "H2Cl+"     12.37  
 ## >>chng 21 apr 16, from 10.42 to 10.71, add molecular column densities
-monitor column density "H2O+"      10.71  
+## >>chng 26 nov 08, from 10.71 to 10.79, revert to BD96 as small H2 default model
+monitor column density "H2O+"      10.79  
 ## >>chng 21 apr 16, from 14.05 to 16.82, add molecular column densities
 monitor column density "H2O"       16.82  
 ## >>chng 21 apr 16, from 11.41 to 14.35, add molecular column densities
 monitor column density "H3O+"      14.35  
 ## >>chng 21 apr 16, from 11.29 to 12.09, add molecular column densities
-monitor column density "HCl+"      12.09  
+## >>chng 26 nov 08, from 12.09 to 12.6, revert to BD96 as small H2 default model
+monitor column density "HCl+"      12.6  
 ## >>chng 21 apr 16, from 13.8 to 13.42, new monitor added
 ## >>chng 21 apr 16, from 13.42 to 14.32, add molecular column densities
 monitor column density "HCl"       14.32  
@@ -630,13 +640,16 @@ monitor column density "N2"        13.1
 monitor column density "N2H+"      9.138
 ## >>chng 21 apr 16, from 11.03 to 2.264, add molecular column densities
 ## >>chng 25 jul 11, from 2.264 to 2.498, GS Si chemistry, UMIST 2022
-monitor column density "N2O"       2.498
+## >>chng 26 nov 08, from 2.498 to 2.429, revert to BD96 as small H2 default model
+monitor column density "N2O"       2.429
 ## >>chng 21 apr 16, from 15.58 to 8.953, add molecular column densities
 ## >>chng 21 sep 11, from 8.953 to 8.907, LAMDA update
 ## >>chng 25 jul 11, from 8.907 to 9.032, GS Si chemistry, UMIST 2022
-monitor column density "NH"        9.032  
+## >>chng 26 nov 08, from 9.032 to 9.075, revert to BD96 as small H2 default model
+monitor column density "NH"        9.075  
 ## >>chng 21 apr 16, from 10.34 to 7.311, add molecular column densities
-monitor column density "NH2+"      7.311  
+## >>chng 26 nov 08, from 7.311 to 8.091, revert to BD96 as small H2 default model
+monitor column density "NH2+"      8.091  
 ## >>chng 21 apr 16, from 14.96 to 9.805, add molecular column densities
 ## >>chng 25 jul 11, from 9.805 to 9.922, GS Si chemistry, UMIST 2022
 monitor column density "NH2"       9.922  
@@ -668,7 +681,8 @@ monitor column density "OCN"       8.53
 ## >>chng 24 apr 21, from 15.52 to 15.04, GS updates chemistry
 monitor column density "OCS"       15.04  
 ## >>chng 21 apr 16, from 10.33 to 10.65, add molecular column densities
-monitor column density "OH+"       10.65  
+## >>chng 26 nov 08, from 10.65 to 11.07, revert to BD96 as small H2 default model
+monitor column density "OH+"       11.07  
 ## >>chng 21 apr 16, from 14.95 to 2.606, add molecular column densities
 monitor column density "OHgrn"     2.606  
 ## >>chng 21 apr 16, from 12.92 to 10.71, add molecular column densities

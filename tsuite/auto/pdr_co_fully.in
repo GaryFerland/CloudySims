@@ -98,7 +98,8 @@ monitor column density H2g  15.70 error 0.1
 ## >>chng 06 jun 02, from 11.41 to 11.48, add turbulence of 3 km/s
 ## >>chng 07 jan 07, from 11.48 to 11.44, enable McCall et al. H3+ rate
 ## >>chng 11 nov 16, from 11.44 to 9.112, adjust newmole monitors
-monitor column density H2*  9.112 error 0.1
+## >>chng 26 nov 08, from 9.112 to 9.06, revert to BD96 as small H2 default model
+monitor column density H2*  9.06 error 0.1
 ##
 ##>>chng 06 jun 02, add next three
 ## >>chng 11 nov 16, from 8.55 to 8.502, adjust newmole monitors
@@ -116,7 +117,8 @@ monitor column density CH 9.046 error 0.1
 monitor column density CH+ 3.841 error 0.1
 ##
 ## >>chng 20 aug 03, from 3.456 to 3.402, update H3+ rates Indriola+ 2012
-monitor column density "H-" 3.402 error 0.1
+## >>chng 26 nov 08, from 3.402 to 3.352, revert to BD96 as small H2 default model
+monitor column density "H-" 3.352 error 0.1
 ## 
 ## >>chng 21 apr 11 add all remaining molecules with N(x) > 1e10 cm-2
 ## >>chng 21 apr 16, from 10.51 to 2.715, add molecular column densities
@@ -192,10 +194,12 @@ monitor column density "CH5+"      3.694
 ## >>chng 21 sep 11, from 8.548 to 8.682, LAMDA update
 monitor column density "CN"        8.682  
 ## >>chng 21 apr 16, from 17.28 to -0.4506, add molecular column densities
-monitor column density "COgrn"     -0.4506  
+## >>chng 26 nov 08, from -0.4506 to -0.4002, revert to BD96 as small H2 default model
+monitor column density "COgrn"     -0.4002  
 ## >>chng 21 apr 16, from 10.56 to 4.048, add molecular column densities
 ## >>chng 21 sep 11, from 4.048 to 4.3, LAMDA update
-monitor column density "CS+"       4.3  
+## >>chng 26 nov 08, from 4.3 to 4.258, revert to BD96 as small H2 default model
+monitor column density "CS+"       4.258  
 ## >>chng 21 apr 16, from 16.89 to 10.15, add molecular column densities
 ## >>chng 21 sep 11, from 10.15 to 10.58, LAMDA update
 ## >>chng 23 may 15, from 10.58 to 10.5, GS updates 21 reactions to UMIST 2012
@@ -208,7 +212,8 @@ monitor column density "H2Cl+"     4.423
 ## >>chng 21 apr 16, from 10.42 to 4.854, add molecular column densities
 monitor column density "H2O+"      4.854  
 ## >>chng 21 apr 16, from 14.05 to 9.7, add molecular column densities
-monitor column density "H2O"       9.7  
+## >>chng 26 nov 08, from 9.7 to 9.748, revert to BD96 as small H2 default model
+monitor column density "H2O"       9.748  
 ## >>chng 21 apr 16, from 11.41 to 6.984, add molecular column densities
 monitor column density "H3O+"      6.984  
 ## >>chng 21 apr 16, from 11.29 to 1.885, add molecular column densities
@@ -243,7 +248,8 @@ monitor column density "HS+"       6.699
 ## >>chng 23 may 15, from 8.328 to 8.232, GS updates 21 reactions to UMIST 2012
 monitor column density "HS"        8.232  
 ## >>chng 21 apr 16, from 12.49 to 5.613, add molecular column densities
-monitor column density "N2+"       5.613  
+## >>chng 26 nov 08, from 5.613 to 5.659, revert to BD96 as small H2 default model
+monitor column density "N2+"       5.659  
 ## >>chng 21 apr 16, from 17.44 to 11.41, add molecular column densities
 monitor column density "N2"        11.41  
 ## >>chng 21 apr 16, from 13.95 to 7.216, add molecular column densities
@@ -282,7 +288,8 @@ monitor column density "NS"        8.646
 ## >>chng 21 apr 16, from 11.9 to 6.09, add molecular column densities
 ## >>chng 21 sep 11, from 6.09 to 4.151, LAMDA update
 ## >>chng 23 may 15, from 4.151 to 4.079, GS updates 21 reactions to UMIST 2012
-monitor column density "OCN"       4.079  
+## >>chng 26 nov 08, from 4.079 to 4.138, revert to BD96 as small H2 default model
+monitor column density "OCN"       4.138  
 ## >>chng 21 apr 16, from 10.98 to 7.292, add molecular column densities
 ## >>chng 21 sep 11, from 7.292 to 8.688, LAMDA update
 ## >>chng 23 may 15, from 8.688 to 9.637, GS updates 21 reactions to UMIST 2012
@@ -292,7 +299,8 @@ monitor column density "OCS"       8.386
 ## >>chng 21 apr 16, from 10.33 to 4.638, add molecular column densities
 monitor column density "OH+"       4.638  
 ## >>chng 21 apr 16, from 14.95 to -3.37, add molecular column densities
-monitor column density "OHgrn"     -3.37  
+## >>chng 26 nov 08, from -3.37 to -3.303, revert to BD96 as small H2 default model
+monitor column density "OHgrn"     -3.303  
 ## >>chng 21 apr 16, from 12.92 to 5.615, add molecular column densities
 ## >>chng 23 mar 17, from 5.615 to 5.295, add SiS and Lamda model"
 ## >>chng 23 may 15, from 5.295 to 4.87, GS updates 21 reactions to UMIST 2012
@@ -375,7 +383,8 @@ monitor itrzn 3.532 error 0.15
 ## >>chng 13 aug 20, from 48 to 49, enable D chem by default
 ## >>chng 13 sep 17, from 49 to 48, D chem off by default
 ## >>chng 20 aug 03, from 48 to 47, update H3+ rates Indriola+ 2012
-monitor nzone 47 error 0.01
+## >>chng 26 nov 08, from 47 to 45, revert to BD96 as small H2 default model
+monitor nzone 45 error 0.01
 ##
 # pdr_co_fully.in
 # class pdr 

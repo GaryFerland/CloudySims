@@ -44,7 +44,8 @@ monitor set error 0.1
 ## >>chng 14 jun 11, from -2.069 to -2.041, BUGFIX 14 jan 05, N to external databases, did not include N I, Mg II excited state photo
 ## >>chng 17 feb 10, from -2.041 to -1.998, default size of N 1 model atom set to 50
 monitor line luminosity "Si 2" 34.8046m  -1.998
-monitor H2 column density 21.87 error 0.1
+## >>chng 26 nov 08, from 21.87 to 21.83, revert to BD96 as small H2 default model
+monitor H2 column density 21.83 error 0.1
 monitor CO column density 17.81 error 0.1
 ## >>chng 08 feb 20, from 15.16 to 15.20, grain charge transfer changes in ion_solver and iso*
 ## >>chng 10 mar 02, from 15.2 to 15.25, fix botches after CO model switch
@@ -76,7 +77,8 @@ monitor SiO column density 15.73 error 0.1
 ## >>chng 14 mar 26, from 252.2 to 219, Move oxygen data to stout and chianti files
 ## >>chng 14 jun 11, from 219 to 259.7, BUGFIX 14 jan 05, N to external databases, did not include N I, Mg II excited state photo
 ## >>chng 17 feb 10, from 259.7 to 791.2, default size of N 1 model atom set to 50
-monitor "H+" temperature 791.2 error 0.1
+## >>chng 26 nov 08, from 791.2 to 944.4, revert to BD96 as small H2 default model
+monitor "H+" temperature 944.4 error 0.1
 ##
 ## >>chng 05 aug 03, from 45.45 to 42.15, NA update CO, H chem net
 ## >>chng 05 oct 01, from 42.15 to 43.98, RP update He leve
@@ -85,7 +87,8 @@ monitor "H+" temperature 791.2 error 0.1
 ## >>chng 10 jun 17, from 50.07 to 45.09, fix botches due to recent dBase cooling changes
 ## >>chng 12 mar 02, from 45.09 to 41.49, adjust newmole monitors
 ## >>chng 14 mar 26, from 41.49 to 37.97, Move oxygen data to stout and chianti files
-monitor "H2" temperature 37.97
+## >>chng 26 nov 08, from 37.97 to 32.93, revert to BD96 as small H2 default model
+monitor "H2" temperature 32.93
 ## 
 ## >>chng 05 sep 30, add these 5
 ## >>chng 09 oct 05, from 9.18 to 9.337, [NI] pumping changes
@@ -94,7 +97,8 @@ monitor "H2" temperature 37.97
 ## >>chng 13 jul 15, from 9.415 to 9.456, move to Stout/Chianti for Si, botches are due to improved atomic data
 ## >>chng 14 jan 05, from 9.456 to 9.177, N to external databases
 ## >>chng 17 feb 10, from 9.177 to 9.388, default size of N 1 model atom set to 50
-monitor column density H2+  9.388 error 0.1
+## >>chng 26 nov 08, from 9.388 to 9.449, revert to BD96 as small H2 default model
+monitor column density H2+  9.449 error 0.1
 ## 
 ## >>chng 07 jan 07, from 11.95 to 12.00, enable McCall et al. H3+ rate
 ## >>chng 13 feb 01, from 12 to 12.04, BUGFIX, largely undo r6703
@@ -105,7 +109,8 @@ monitor column density H2g  21.85 error 0.1
 ## 
 ## >>chng 05 dec 08, from 17.01 to 16.44, update to Elwert Solomon rate
 ## >>chng 11 nov 16, from 16.44 to 16.32, adjust newmole monitors
-monitor column density H2*  16.32 error 0.1
+## >>chng 26 nov 08, from 16.32 to 16.89, revert to BD96 as small H2 default model
+monitor column density H2*  16.89 error 0.1
 ## 
 ## >>chng 12 mar 02, from 7.63 to 9.651, adjust newmole monitors
 ## >>chng 12 nov 08, from 9.651 to 7.736, fix e-,H2 dissociation rate
@@ -115,7 +120,8 @@ monitor column density H2*  16.32 error 0.1
 ## >>chng 14 jan 05, from 7.751 to 7.506, N to external databases
 ## >>chng 17 feb 10, from 7.506 to 7.697, default size of N 1 model atom set to 50
 ## >>chng 25 jan 26, from 7.697 to 7.772, merge master updated cham"
-monitor column density HeH+ 7.772 error 0.1
+## >>chng 26 nov 08, from 7.772 to 7.913, revert to BD96 as small H2 default model
+monitor column density HeH+ 7.913 error 0.1
 ## 
 ## >>chng 06 nov 28, add these lines
 ## >>chng 13 dec 23, from -3.412 to -3.362, C to external databases
@@ -248,7 +254,8 @@ monitor "CO  " 371.549m  -7.292 line intensity
 monitor "CO  " 325.137m  -7.952 line intensity
 ## >>chng 13 jun 27, from -7.522 to -6.506, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
-monitor "^13CO" 906.599m  -6.506 line intensity
+## >>chng 26 nov 08, from -6.506 to -6.549, revert to BD96 as small H2 default model
+monitor "^13CO" 906.599m  -6.549 line intensity
 ## >>chng 13 jun 27, from -8.247 to -8.867, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -8.867 to -8.93, Move oxygen data to stout and chianti files

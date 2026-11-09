@@ -136,14 +136,16 @@ monitor line luminosity "CO  " 371.549m  -3.452 error 0.15
 ## >>chng 14 mar 26, from -2.13 to -2.528, Move oxygen data to stout and chianti files
 ## >>chng 14 aug 28, from -2.528 to -2.362, EleyRideal H2 formation
 ## >>chng 15 may 30, from -2.362 to -2.48, updates after merge from mainline, r10248
-monitor line luminosity "H2 l" 2.000m -2.48 error 0.2
+## >>chng 26 nov 08, from -2.48 to -2.31, revert to BD96 as small H2 default model
+monitor line luminosity "H2 l" 2.000m -2.31 error 0.2
 ##
 ## >>chng 05 jul 05, from -1.61 to -1.70, cdsqte err
 ## >>chng 05 aug 03, from -1.70 to -1.64, NA update CO, H chem net
 ## >>chng 05 dec 08, from -1.64 to -3.16, update to Elwert Solomon rate
 ## >>chng 14 mar 26, from -3.16 to -3.312, Move oxygen data to stout and chianti files
 ## >>chng 14 aug 28, from -3.312 to -3.188, EleyRideal H2 formation
-monitor line luminosity "H2vH" 0 -3.188  error 0.15
+## >>chng 26 nov 08, from -3.188 to -1.542, revert to BD96 as small H2 default model
+monitor line luminosity "H2vH" 0 -1.542  error 0.15
 ##
 ## >>chng 05 jul 05, from -0.635 to -0.610, turn on Cl 
 ## >>chng 14 mar 26, from -0.61 to -0.5709, Move oxygen data to stout and chianti files
@@ -181,7 +183,8 @@ monitor grain 2 temperature 54.4
 ## >>chng 08 dec 13, from 619 to 488.7, merging newsolvers branch
 ## >>chng 12 apr 02, from 488.7 to 466.5, Chianti 7 change, gcc 4.4.6 wolkje
 ## >>chng 14 mar 26, from 466.5 to 371.5, Move oxygen data to stout and chianti files
-monitor temperature "C+" 371.5
+## >>chng 26 nov 08, from 371.5 to 407.5, revert to BD96 as small H2 default model
+monitor temperature "C+" 407.5
 ## 
 monitor H2 column density 22.46 error 0.1 
 ##
@@ -228,7 +231,8 @@ monitor SiO column density 12.82 error 0.20
 ## >>chng 21 sep 11, from 13.8 to 13.54, LAMDA update
 ## >>chng 21 nov 04, from 13.54 to 13.71, update mole co data
 ## >>chng 23 may 15, from 13.71 to 13.2, GS updates 21 reactions to UMIST 2012
-monitor OH column density 13.2 error 0.25
+## >>chng 26 nov 08, from 13.2 to 13.35, revert to BD96 as small H2 default model
+monitor OH column density 13.35 error 0.25
 ## 
 ## >>chng 05 sep 30, add these 5
 ## >>chng 05 dec 08, from 10.16 to 10.01 update to Elwert Solomon rate
@@ -249,7 +253,8 @@ monitor column density H2g  22.44 error 0.1
 ## >>chng 11 nov 16, from 16.07 to 15.99, adjust newmole monitors
 ## >>chng 14 mar 26, from 15.99 to 16.08, Move oxygen data to stout and chianti files
 ## >>chng 14 aug 28, from 16.08 to 16.15, EleyRideal H2 formation
-monitor column density H2*  16.15 error 0.1
+## >>chng 26 nov 08, from 16.15 to 16.62, revert to BD96 as small H2 default model
+monitor column density H2*  16.62 error 0.1
 ## 
 ## >>chng 11 nov 16, from 8.05 to 7.859, adjust newmole monitors
 ## >>chng 12 apr 09, from 7.859 to 8.756, update CR backbround to Indriolo+07, ~8x larger
@@ -334,7 +339,8 @@ monitor "CO  " 371.549m  -3.452 line intensity
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 15 aug 03, from -3.504 to -3.647, update LAMDA to 2015
 ## >>chng 21 apr 10, from -3.647 to -3.589, update chemistry and lamba
-monitor "CO  " 325.137m  -3.589 line intensity
+## >>chng 26 nov 08, from -3.589 to -3.64, revert to BD96 as small H2 default model
+monitor "CO  " 325.137m  -3.64 line intensity
 ## >>chng 13 jun 27, from -7.522 to -4.413, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 15 aug 03, from -4.413 to -4.444, update LAMDA to 2015

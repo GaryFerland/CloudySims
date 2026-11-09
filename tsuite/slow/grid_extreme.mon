@@ -18,10 +18,13 @@
 ## >>chng 23 jun 27, from 3.4910 to 3.3963, update Fe+ model to Smyth+19
 3.3963
 ## >>chng 23 jun 27, from 3.4145 to 3.3132, update Fe+ model to Smyth+19
-3.3132
+## >>chng 25 jul 23, from 3.3132 to 3.3345, GS add PN and PO
+3.3345
 ## >>chng 25 jul 23, from 3.0189 to 2.9989, GS add PN and PO
-2.9989
-2.5769
+## >>chng 26 nov 08, from 2.9989 to 3.0224, BD96 for small H2
+3.0224
+## >>chng 26 nov 08, from 2.5769 to 2.5710, BD96 for small H2
+2.5710
 2.4771
 2.2891
 1.4584
@@ -59,11 +62,16 @@
 3.8188
 3.7627
 3.6863
-3.5765
-3.4482
-3.2990
-3.2802
-3.2548
+## >>chng 26 nov 08, from 3.5765 to 3.6376, BD96 for small H2
+3.6376
+## >>chng 26 nov 08, from 3.4482 to 3.4984, BD96 for small H2
+3.4984
+## >>chng 26 nov 08, from 3.2990 to 3.2562, BD96 for small H2
+3.2562
+## >>chng 26 nov 08, from 3.2802 to 3.2366, BD96 for small H2
+3.2366
+## >>chng 26 nov 08, from 3.2548 to 3.2050, BD96 for small H2
+3.2050
 5.9811
 5.9811
 5.9811
@@ -94,7 +102,8 @@
 ## >>chng 24 oct 24, from 3.6126 to 3.4216, update Si-rates from UDfA2006 to UDfA2012
 ## >>chng 25 jan 26, from 3.4216 to 3.6114, update Si-rates from UDfA2006 to UDfA2012
 ## >>chng 25 mar 02, from 3.6114 to 3.4216, merge changes from InitialTemp branch
-3.4216
+## >>chng 26 nov 08, from 3.4216 to 3.3725, BD96 for small H2
+3.3725
 5.9811
 5.9811
 5.9811

@@ -180,7 +180,8 @@ monitor line luminosity "blnd"  6300 -1.564
 ## for dealing with thermal fronts, inc errer
 ## >>chng 11 dec 12, from -0.26 to -0.3577, bug-fix for updating grain opacity (r5759)
 ## >>chng 14 mar 26, from -0.3577 to -0.2978, move O to external databases
-monitor line luminosity "o  1"  63.1679m -0.2978 erro 0.1 
+## >>chng 26 nov 08, from -0.2978 to -0.2526, revert to BD96 as default small H2 model
+monitor line luminosity "o  1"  63.1679m -0.2526 erro 0.1 
 ##
 ## >>chng 06 jul 06, add this line 
 ## >>chng 13 jul 26, wl from 12.81m to 12.8101m, increased wl precision to 6 sig. fig.
@@ -194,7 +195,8 @@ monitor line luminosity "Ne 2" 12.8101m 0.0241
 ## >>chng 11 dec 12, from -1.643 to -1.759, bug-fix for updating grain opacity (r5759)
 ## >>chng 13 dec 23, from -1.759 to -1.679, C to external databases
 ## >>chng 14 mar 26, from -1.679 to -1.721, move O to external databases
-monitor line luminosity "C  2" 157.636m -1.721 
+## >>chng 26 nov 08, from -1.721 to -1.694, revert to BD96 as default small H2 model
+monitor line luminosity "C  2" 157.636m -1.694 
 ##
 ## >>chng 05 aug 06, from -0.95 to -0.92, chng H2 col dis rates, logic
 ## for dealing with thermal fronts, inc errer
@@ -287,7 +289,8 @@ monitor "SiO" column density 17.85 error 0.25
 ## >>chng 20 aug 03, from 14.83 to 15, update H3+ rates Indriola+ 2012
 ## >>chng 23 may 15, from 15 to 14.95, GS updates 21 reactions to UMIST 2012
 ## >>chng 24 apr 21, from 14.95 to 15.01, GS updates chemistry
-monitor "OH" column density 15.01 error 0.1 
+## >>chng 26 nov 08, from 15.01 to 15.2, revert to BD96 as default small H2 model
+monitor "OH" column density 15.2 error 0.1 
 ##
 ## >>chng 05 mar 22, from -4.10 to -4.06, NA update CO chem net
 ## >>chng 05 dec 08, from -4.10 to -4.31 update to Elwert Solomon rate
@@ -301,7 +304,8 @@ monitor "OH" column density 15.01 error 0.1
 ## >>chng 11 nov 16, from -3.655 to -3.797, adjust newmole monitors
 ## >>chng 11 dec 12, from -3.797 to -3.843, bug-fix for updating grain opacity (r5759)
 ## >>chng 13 jul 25, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
-monitor line luminosity "CO  " 650.074m  -3.843 error 0.1
+## >>chng 26 nov 08, from -3.843 to -3.784, revert to BD96 as default small H2 model
+monitor line luminosity "CO  " 650.074m  -3.784 error 0.1
 ##
 ## >>chng 05 mar 22, from -3.74 to -3.70, NA update CO chem net
 ## >>chng 05 dec 08, from -3.74 to -4.00 update to Elwert Solomon rate
@@ -315,7 +319,8 @@ monitor line luminosity "CO  " 650.074m  -3.843 error 0.1
 ## >>chng 11 nov 16, from -3.381 to -3.543, adjust newmole monitors
 ## >>chng 11 dec 12, from -3.543 to -3.597, bug-fix for updating grain opacity (r5759)
 ## >>chng 13 jul 25, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
-monitor line luminosity "CO  " 520.089m  -3.597 error 0.1
+## >>chng 26 nov 08, from -3.597 to -3.528, revert to BD96 as default small H2 model
+monitor line luminosity "CO  " 520.089m  -3.528 error 0.1
 ##
 ## >>chng 05 mar 22, from -3.45 to -3.42, NA update CO chem net
 ## >>chng 05 dec 08, from -3.45 to -3.76 update to Elwert Solomon rate
@@ -330,7 +335,8 @@ monitor line luminosity "CO  " 520.089m  -3.597 error 0.1
 ## >>chng 11 nov 16, from -3.173 to -3.356, adjust newmole monitors
 ## >>chng 11 dec 12, from -3.356 to -3.418, bug-fix for updating grain opacity (r5759)
 ## >>chng 13 jul 25, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
-monitor line luminosity "CO  " 433.438m  -3.418 error 0.1
+## >>chng 26 nov 08, from -3.418 to -3.341, revert to BD96 as default small H2 model
+monitor line luminosity "CO  " 433.438m  -3.341 error 0.1
 ##
 ## >>chng 05 dec 08, from -3.24 to -3.59 update to Elwert Solomon rate
 ## >>chng 05 dec 17, from -3.59 to -3.52, NA increase C chemistry
@@ -344,7 +350,8 @@ monitor line luminosity "CO  " 433.438m  -3.418 error 0.1
 ## >>chng 11 nov 16, from -3.014 to -3.221, adjust newmole monitors
 ## >>chng 11 dec 12, from -3.221 to -3.291, bug-fix for updating grain opacity (r5759)
 ## >>chng 13 jul 25, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
-monitor line luminosity "CO  " 371.549m  -3.291 error 0.1
+## >>chng 26 nov 08, from -3.291 to -3.205, revert to BD96 as default small H2 model
+monitor line luminosity "CO  " 371.549m  -3.205 error 0.1
 ##
 ## >>chng 05 dec 08, from -3.08 to -3.45 update to Elwert Solomon rate
 ## >>chng 05 dec 17, from -3.45 to -3.37, NA increase C chemistry
@@ -359,7 +366,8 @@ monitor line luminosity "CO  " 371.549m  -3.291 error 0.1
 ## >>chng 11 dec 12, from -3.13 to -3.208, bug-fix for updating grain opacity (r5759)
 ## >>chng 13 jul 25, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -3.208 to -3.169, LAMDA update
-monitor line luminosity "CO  " 325.137m  -3.169 error 0.1
+## >>chng 26 nov 08, from -3.169 to -3.113, revert to BD96 as default small H2 model
+monitor line luminosity "CO  " 325.137m  -3.113 error 0.1
 ##
 ## >>chng 05 dec 08, from -2.95 to -3.36 update to Elwert Solomon rate
 ## >>chng 05 dec 17, from -3.36 to -3.27, NA increase C chemistry
@@ -372,7 +380,8 @@ monitor line luminosity "CO  " 325.137m  -3.169 error 0.1
 ## >>chng 11 nov 16, from -2.808 to -3.08, adjust newmole monitors
 ## >>chng 11 dec 12, from -3.08 to -3.164, bug-fix for updating grain opacity (r5759)
 ## >>chng 13 jul 25, wl from 289.0m to 289.041m, increased wl precision to 6 sig. fig.
-monitor line luminosity "CO  " 289.041m  -3.164 error 0.15
+## >>chng 26 nov 08, from -3.164 to -3.063, revert to BD96 as default small H2 model
+monitor line luminosity "CO  " 289.041m  -3.063 error 0.15
 ##
 ## >>chng 05 dec 08, from -2.86 to -3.30 update to Elwert Solomon rate
 ## >>chng 05 dec 17, from -3.30 to -3.20, NA increase C chemistry
@@ -386,7 +395,8 @@ monitor line luminosity "CO  " 289.041m  -3.164 error 0.15
 ## >>chng 11 nov 16, from -2.752 to -3.071, adjust newmole monitors
 ## >>chng 11 dec 12, from -3.071 to -3.161, bug-fix for updating grain opacity (r5759)
 ## >>chng 13 jul 25, wl from 260.2m to 260.169m, increased wl precision to 6 sig. fig.
-monitor line luminosity "CO  " 260.169m  -3.161 error 0.15
+## >>chng 26 nov 08, from -3.161 to -3.056, revert to BD96 as default small H2 model
+monitor line luminosity "CO  " 260.169m  -3.056 error 0.15
 ##
 ## >>chng 05 aug 06, from -2.80 to -2.86, chng H2 col dis rates, logic
 ## for dealing with thermal fronts, inc errer
@@ -402,7 +412,8 @@ monitor line luminosity "CO  " 260.169m  -3.161 error 0.15
 ## >>chng 11 nov 16, from -2.726 to -3.106, adjust newmole monitors
 ## >>chng 11 dec 12, from -3.106 to -3.201, bug-fix for updating grain opacity (r5759)
 ## >>chng 13 jul 25, wl from 236.5m to 236.549m, increased wl precision to 6 sig. fig.
-monitor line luminosity "CO  " 236.549m  -3.201 error 0.15
+## >>chng 26 nov 08, from -3.201 to -3.096, revert to BD96 as default small H2 model
+monitor line luminosity "CO  " 236.549m  -3.096 error 0.15
 ##
 ## >>chng 05 jun 26, from -2.77 to -2.84, make Federman chem the default
 ## >>chng 05 dec 08, from -2.83 to -3.31 update to Elwert Solomon rate
@@ -417,7 +428,8 @@ monitor line luminosity "CO  " 236.549m  -3.201 error 0.15
 ## >>chng 11 nov 16, from -2.721 to -3.192, adjust newmole monitors
 ## >>chng 11 dec 12, from -3.192 to -3.298, bug-fix for updating grain opacity (r5759)
 ## >>chng 13 jul 25, wl from 216.9m to 216.868m, increased wl precision to 6 sig. fig.
-monitor line luminosity "CO  " 216.868m  -3.298 error 0.15
+## >>chng 26 nov 08, from -3.298 to -3.187, revert to BD96 as default small H2 model
+monitor line luminosity "CO  " 216.868m  -3.187 error 0.15
 ## 
 ## >>chng 05 dec 08, add this temperature
 monitor temperature "H+" 9226
@@ -508,40 +520,48 @@ monitor "HCS+" 1755.88m  -5.489 line intensity
 monitor "CS  " 3058.86m  -5.818 line intensity
 ## >>chng 13 jun 27, from -7.288 to -5.64, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
-monitor "CO  " 2600.05m  -5.64 line intensity
+## >>chng 26 nov 08, from -5.64 to -5.614, revert to BD96 as default small H2 model
+monitor "CO  " 2600.05m  -5.614 line intensity
 ## >>chng 13 jun 27, from -6.463 to -4.708, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 1300m to 1300.05m, increased wl precision to 6 sig. fig.
-monitor "CO  " 1300.05m  -4.708 line intensity
+## >>chng 26 nov 08, from -4.708 to -4.668, revert to BD96 as default small H2 model
+monitor "CO  " 1300.05m  -4.668 line intensity
 ## >>chng 13 jun 27, from -6.149 to -4.189, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -4.189 to -4.168, LAMDA update
 ## >>chng 21 nov 04, from -4.168 to -4.194, update co mole data
-monitor "CO  " 866.727m  -4.194 line intensity
+## >>chng 26 nov 08, from -4.194 to -4.139, revert to BD96 as default small H2 model
+monitor "CO  " 866.727m  -4.139 line intensity
 ## >>chng 13 jun 27, from -6.177 to -3.843, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -3.843 to -3.819, LAMDA update
 ## >>chng 21 nov 04, from -3.819 to -3.848, update co mole data
-monitor "CO  " 650.074m  -3.848 line intensity
+## >>chng 26 nov 08, from -3.848 to -3.784, revert to BD96 as default small H2 model
+monitor "CO  " 650.074m  -3.784 line intensity
 ## >>chng 13 jun 27, from -6.485 to -3.595, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -3.595 to -3.569, LAMDA update
 ## >>chng 21 nov 04, from -3.569 to -3.601, update co mole data
-monitor "CO  " 520.089m  -3.601 line intensity
+## >>chng 26 nov 08, from -3.601 to -3.528, revert to BD96 as default small H2 model
+monitor "CO  " 520.089m  -3.528 line intensity
 ## >>chng 13 jun 27, from -6.954 to -3.416, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -3.416 to -3.386, LAMDA update
 ## >>chng 21 nov 04, from -3.386 to -3.421, update co mole data
-monitor "CO  " 433.438m  -3.421 line intensity
+## >>chng 26 nov 08, from -3.421 to -3.341, revert to BD96 as default small H2 model
+monitor "CO  " 433.438m  -3.341 line intensity
 ## >>chng 13 jun 27, from -7.48 to -3.287, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -3.287 to -3.256, LAMDA update
 ## >>chng 21 nov 04, from -3.256 to -3.293, update co mole data
-monitor "CO  " 371.549m  -3.293 line intensity
+## >>chng 26 nov 08, from -3.293 to -3.205, revert to BD96 as default small H2 model
+monitor "CO  " 371.549m  -3.205 line intensity
 ## >>chng 13 jun 27, from -8.049 to -3.203, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 21 sep 11, from -3.203 to -3.169, LAMDA update
 ## >>chng 21 nov 04, from -3.169 to -3.209, update co mole data
-monitor "CO  " 325.137m  -3.209 line intensity
+## >>chng 26 nov 08, from -3.209 to -3.113, revert to BD96 as default small H2 model
+monitor "CO  " 325.137m  -3.113 line intensity
 ## >>chng 13 jun 27, from -7.522 to -4.446, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 25, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 monitor "^13CO" 906.599m  -4.446 line intensity

@@ -112,14 +112,16 @@ monitor line luminosity "Blnd"  1860 3.097 ##total sum of both Al III comp
 ## >>chng 14 apr 19, from 3.734 to 3.773, move Ca 2 to Stout
 ## >>chng 14 jul 02, from 3.773 to 3.861, Add monitors for Fe II Bands
 ## >>chng 16 aug 17, from 3.861 to 3.948, bugfix at r11237
-monitor line luminosity "blnd" 2326 3.948 error 0.1
+## >>chng 26 nov 08, from 3.948 to 4.185, revert to BD96 as default small H2 model
+monitor line luminosity "blnd" 2326 4.185 error 0.1
 ## 
 ## >>chng 06 aub 06, update O+2 & N+2 CT, from 6.734 to 6.757
 ## >>chng 07 dec 09, from 6.757 to 6.721 cumulative RP changes in iso seq
 ## >>chng 08 mar 17, from 6.721 to 6.690, RP update line overlap
 ## >>chng 14 jul 02, from 6.69 to 6.715, Add monitors for Fe II Bands
 ## >>chng 16 aug 17, from 6.715 to 6.77, bugfix at r11237
-monitor line luminosity "blnd" 2798 6.77  ##total of sum of both Mg II comp
+## >>chng 26 nov 08, from 6.77 to 6.8, revert to BD96 as default small H2 model
+monitor line luminosity "blnd" 2798 6.8  ##total of sum of both Mg II comp
 ## 
 ## >>chng 11 nov 16, from 6.654 to 6.673, adjust newmole monitors
 ## >>chng 12 jul 01, from 6.673 to 6.641, update Badnell DR to 13-electron iso sequence
@@ -162,7 +164,8 @@ monitor line luminosity "Ca 2"  3933.66 6.311
 ## >>chng 14 jul 02, from 6.612 to 6.639, Add monitors for Fe II Bands
 ## >>chng 16 aug 17, from 6.639 to 6.677, bugfix at r11237
 ## >>chng 23 jun 27, from 6.677 to 6.578, update Fe+ model to Smyth+19
-monitor line luminosity "Fe 2c" 0 6.578
+## >>chng 26 nov 08, from 6.578 to 6.599, revert to BD96 as default small H2 model
+monitor line luminosity "Fe 2c" 0 6.599
 ##
 ## >>chng 09 jun 15, add this monitor
 ## >>chng 09 jun 16, from 1 to 6.517, add FeII bands
@@ -184,7 +187,8 @@ monitor line luminosity "Fe 2b" 2445 6.491
 ## >>chng 14 jul 02, from 4.09 to 4.157, Add monitors for Fe II Bands
 ## >>chng 16 aug 17, from 4.157 to 4.201, bugfix at r11237
 ## >>chng 23 jun 27, from 4.201 to 4.282, update Fe+ model to Smyth+19
-monitor line luminosity "Fe 2b" 4558 4.282
+## >>chng 26 nov 08, from 4.282 to 4.402, revert to BD96 as default small H2 model
+monitor line luminosity "Fe 2b" 4558 4.402
 ##
 ## >>chng 08 jan 29 from10 to 12 (10.02) drift up
 ## >>chng 08 dec 08, from 12 to 8.306, upper limit -> equals (r2515)
@@ -231,7 +235,8 @@ monitor line intensity "Fe 2b" 1212 4.571 error 0.1
 ## >>chng 14 jul 08, from 1.01 to 3.095, Move FeII to Stout
 ## >>chng 16 aug 17, from 3.095 to 3.139, bugfix at r11237
 ## >>chng 23 jun 27, from 3.139 to 3.961, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 1295 3.961 error 0.1
+## >>chng 26 nov 08, from 3.961 to 4.013, revert to BD96 as default small H2 model
+monitor line intensity "Fe 2b" 1295 4.013 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.133, Move FeII to Stout
 ## >>chng 23 jun 27, from 3.133 to 4.068, update Fe+ model to Smyth+19
@@ -280,7 +285,8 @@ monitor line intensity "Fe 2b" 2758 5.649 error 0.1
 ## >>chng 14 jul 08, from 1.01 to 3.928, Move FeII to Stout
 ## >>chng 16 aug 17, from 3.928 to 3.99, bugfix at r11237
 ## >>chng 23 jun 27, from 3.99 to 3.776, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 2797 3.776 error 0.1
+## >>chng 26 nov 08, from 3.776 to 3.815, revert to BD96 as default small H2 model
+monitor line intensity "Fe 2b" 2797 3.815 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 5.215, Move FeII to Stout
 ## >>chng 19 jun 14, from 5.215 to 5.253, update to CODATA 2018
@@ -290,78 +296,93 @@ monitor line intensity "Fe 2b" 2935 5.044 error 0.1
 ## >>chng 14 jul 08, from 1.01 to 4.042, Move FeII to Stout
 ## >>chng 16 aug 17, from 4.042 to 4.084, bugfix at r11237
 ## >>chng 23 jun 27, from 4.084 to 4.357, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 4255 4.357 error 0.1
+## >>chng 26 nov 08, from 4.357 to 4.481, revert to BD96 as default small H2 model
+monitor line intensity "Fe 2b" 4255 4.481 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.157, Move FeII to Stout
 ## >>chng 16 aug 17, from 4.157 to 4.201, bugfix at r11237
 ## >>chng 23 jun 27, from 4.201 to 4.282, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 4558 4.282 error 0.1
+## >>chng 26 nov 08, from 4.282 to 4.402, revert to BD96 as default small H2 model
+monitor line intensity "Fe 2b" 4558 4.402 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 2.653, Move FeII to Stout
 ## >>chng 16 aug 17, from 2.653 to 2.696, bugfix at r11237
 ## >>chng 23 jun 27, from 2.696 to 2.56, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 4743 2.56 error 0.1
+## >>chng 26 nov 08, from 2.56 to 2.739, revert to BD96 as default small H2 model
+monitor line intensity "Fe 2b" 4743 2.739 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.02, Move FeII to Stout
 ## >>chng 20 jul 21, from 3.02 to 3.058, update DR H2 diss as per  2020RNAAS...4...78S
 ## >>chng 23 jun 27, from 3.058 to 3.159, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 4855 3.159 error 0.1
+## >>chng 26 nov 08, from 3.159 to 3.376, revert to BD96 as default small H2 model
+monitor line intensity "Fe 2b" 4855 3.376 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 2.506, Move FeII to Stout
 ## >>chng 16 aug 17, from 2.506 to 2.544, bugfix at r11237
 ## >>chng 23 jun 27, from 2.544 to 2.845, update Fe+ model to Smyth+19
 ## >>chng 24 oct 03, from 2.845 to 3.737, reinterpret species band edges as vacuum wl
-monitor line intensity "Fe 2b" 4971 3.737 error 0.1
+## >>chng 26 nov 08, from 3.737 to 3.819, revert to BD96 as default small H2 model
+monitor line intensity "Fe 2b" 4971 3.819 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.591, Move FeII to Stout
 ## >>chng 19 jul 30, from 4.591 to 4.629, split He I 2 ^3P_J
 ## >>chng 23 jun 27, from 4.629 to 4.136, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 4975 4.136 error 0.1
+## >>chng 26 nov 08, from 4.136 to 4.2, revert to BD96 as default small H2 model
+monitor line intensity "Fe 2b" 4975 4.2 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 4.059, Move FeII to Stout
 ## >>chng 19 jul 01, from 4.059 to 4.097, reintegrate iso_collisions branch
 ## >>chng 23 jun 27, from 4.097 to 4.197, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 5143 4.197 error 0.1
+## >>chng 26 nov 08, from 4.197 to 4.279, revert to BD96 as default small H2 model
+monitor line intensity "Fe 2b" 5143 4.279 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.971, Move FeII to Stout
 ## >>chng 16 aug 17, from 3.971 to 4.012, bugfix at r11237
 ## >>chng 23 jun 27, from 4.012 to 4.376, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 5318 4.376 error 0.1
+## >>chng 26 nov 08, from 4.376 to 4.487, revert to BD96 as default small H2 model
+monitor line intensity "Fe 2b" 5318 4.487 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 2.857, Move FeII to Stout
 ## >>chng 19 aug 06, from 2.857 to 2.895, Adopted Lebedev & Beigman 1998 as default for n-changing collisions in iso-sequences
 ## >>chng 23 jun 27, from 2.895 to 3.089, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 5865 3.089 error 0.1
+## >>chng 26 nov 08, from 3.089 to 3.231, revert to BD96 as default small H2 model
+monitor line intensity "Fe 2b" 5865 3.231 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.108, Move FeII to Stout
 ## >>chng 23 jun 27, from 3.108 to 3.566, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 6265 3.566 error 0.1
+## >>chng 26 nov 08, from 3.566 to 3.66, revert to BD96 as default small H2 model
+monitor line intensity "Fe 2b" 6265 3.66 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.452, Move FeII to Stout
 ## >>chng 16 mar 20, from 3.452 to 3.407, change from Werner model to Stout model for Fe+
 ## >>chng 16 aug 17, from 3.407 to 3.455, bugfix at r11237
 ## >>chng 23 jun 27, from 3.455 to 3.579, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 6565 3.579 error 0.1
+## >>chng 26 nov 08, from 3.579 to 3.716, revert to BD96 as default small H2 model
+monitor line intensity "Fe 2b" 6565 3.716 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 3.212, Move FeII to Stout
 ## >>chng 16 aug 17, from 3.212 to 3.251, bugfix at r11237
 ## >>chng 23 jun 27, from 3.251 to 3.453, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 7445 3.453 error 0.1
+## >>chng 26 nov 08, from 3.453 to 3.582, revert to BD96 as default small H2 model
+monitor line intensity "Fe 2b" 7445 3.582 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 1.796, Move FeII to Stout
 ## >>chng 23 jun 27, from 1.796 to 1.04, update Fe+ model to Smyth+19
 ## >>chng 24 oct 23, from 1.04 to 0.9989, Merge changes from npSplit
-monitor line intensity "Fe 2b" 7785 0.9989 error 0.1
+## >>chng 26 nov 08, from 0.9989 to 1.185, revert to BD96 as default small H2 model
+monitor line intensity "Fe 2b" 7785 1.185 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 2.748, Move FeII to Stout
 ## >>chng 20 jan 30, from 2.748 to 2.796, Interpolate Anderson+2000 collisionstrengths to 0
 ## >>chng 23 jun 27, from 2.796 to 3.105, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 1.88900m 3.105 error 0.1
+## >>chng 26 nov 08, from 3.105 to 3.194, revert to BD96 as default small H2 model
+monitor line intensity "Fe 2b" 1.88900m 3.194 error 0.1
 ##
 ## >>chng 14 jul 08, from 1.01 to 1.424, Move FeII to Stout
 ## >>chng 20 jan 30, from 1.424 to 1.474, Interpolate Anderson+2000 collisionstrengths to 0
 ## >>chng 23 jun 27, from 1.474 to 1.271, update Fe+ model to Smyth+19
-monitor line intensity "Fe 2b" 2.20000m 1.271 error 0.1
+## >>chng 26 nov 08, from 1.271 to 1.398, revert to BD96 as default small H2 model
+monitor line intensity "Fe 2b" 2.20000m 1.398 error 0.1
 ##
 
 This is one of the 5 models that sample the LOC plane.

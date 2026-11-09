@@ -39,7 +39,8 @@ monitor set error 0.1
 ##
 ## >>chng 11 jul 22, from 31.7 to 584.1, first run
 ## >>chng 14 mar 26, from 584.1 to 273.4, move O to external databases
-monitor temperature "H+" 273.4 error 0.1
+## >>chng 26 nov 08, from 273.4 to 241.3, revert to BD96 as default small H2 model
+monitor temperature "H+" 241.3 error 0.1
 ##
 ## >>chng 11 jul 22, from -5.062 to -2.196, first run
 ## >>chng 13 dec 23, from -2.196 to -2.133, C to external databases
@@ -51,12 +52,14 @@ monitor line intensity "C  2" 157.636m -2.2 error 0.1
 ## >>chng 13 oct 5, from -3.907 to -3.997, convergence branch changes
 ## >>chng 13 dec 23, from -3.997 to -3.811 C to external databases
 ## >>chng 14 mar 26, from -3.811 to -3.853 move O to external databases
-monitor line intensity "C  1" 609.59m -3.853 error 0.1
+## >>chng 26 nov 08, from -3.853 to -3.906, revert to BD96 as default small H2 model
+monitor line intensity "C  1" 609.59m -3.906 error 0.1
 ##
 ## >>chng 11 jul 22, from -6.746 to -1.845, first run
 ## >>chng 13 dec 23, from -1.845 to -1.888, C to external databases
 ## >>chng 14 mar 26, from -1.888 to -1.744, move O to external databases
-monitor line intensity "o  1"  63.1679m -1.744 error 0.1
+## >>chng 26 nov 08, from -1.744 to -1.789, revert to BD96 as default small H2 model
+monitor line intensity "o  1"  63.1679m -1.789 error 0.1
 ## 
 ## >>chng 11 jul 22, from 10 to 22, first run
 monitor column density H2   22 error 0.1
@@ -68,13 +71,16 @@ monitor column density H2   22 error 0.1
 ## >>chng 21 nov 04, from 17.68 to 17.73, update co mole data
 ## >>chng 23 may 15, from 17.73 to 17.82, GS updates 21 reactions to UMIST 2012
 ## >>chng 26 apr 02, from 17.82 to 17.88, use charge-dependent grain temperatures
-monitor column density CO   17.88 error 0.1
+## >>chng 26 nov 08, from 17.88 to 17.75, revert to BD96 as default small H2 model
+monitor column density CO   17.75 error 0.1
 ## >>chng 26 apr 02, from 10.42 to 9.78, use charge-dependent grain temperatures
-monitor column density "COgrn"  9.78 error 0.1
+## >>chng 26 nov 08, from 9.78 to 9.413, revert to BD96 as default small H2 model
+monitor column density "COgrn"  9.413 error 0.1
 ## >>chng 11 jul 22, from 10 to 15.62, first run
 ## >>chng 14 mar 26, from 15.62 to 15.56, move O to external databases
 ## >>chng 20 sep 06, from 15.56 to 15.67, further update to McCall CR-related rates from r14260
-monitor column density H3+  15.67 error 0.1
+## >>chng 26 nov 08, from 15.67 to 15.61, revert to BD96 as default small H2 model
+monitor column density H3+  15.61 error 0.1
 ## >>chng 11 jul 22, from 10 to 14.06, first run
 ## >>chng 13 jun 27, from 14.06 to 14.01, monitors had drifted off in past week, these are wolkje/gcc 4.4.7"
 monitor column density H2+  14.01 error 0.1
@@ -85,7 +91,8 @@ monitor column density H-   10.97 error 0.1
 ## >>chng 11 jul 22, from 10 to 22, first run
 monitor column density H2g  22 error 0.1
 ## >>chng 11 jul 22, from 10 to 15.89, first run
-monitor column density H2*  15.89 error 0.1
+## >>chng 26 nov 08, from 15.89 to 16.13, revert to BD96 as default small H2 model
+monitor column density H2*  16.13 error 0.1
 ## >>chng 11 jul 22, from 10 to 12.28, first run
 ## >>chng 11 nov 16, from 12.28 to 12.17, adjust newmole monitors
 ## >>chng 14 mar 26, from 12.17 to 12.08, move O to external databases
@@ -97,13 +104,16 @@ monitor column density HeH+ 11.67 error 0.1
 ## >>chng 14 mar 26, from 16 to 15.96, move O to external databases
 ## >>chng 23 may 15, from 15.96 to 15.89, GS updates 21 reactions to UMIST 2012
 ## >>chng 26 apr 02, from 15.89 to 15.93, use charge-dependent grain temperatures
-monitor column density O2   15.93 error 0.1
+## >>chng 26 nov 08, from 15.93 to 15.87, revert to BD96 as default small H2 model
+monitor column density O2   15.87 error 0.1
 ## >>chng 11 jul 22, from 10 to 16.26, first run
 ## >>chng 12 aug 21, from 16.26 to 16.22, fix CRPHOT botches and HD crash
 ## >>chng 14 mar 26, from 16.22 to 16.14, move O to external databases
-monitor column density H2O  16.14 error 0.1
+## >>chng 26 nov 08, from 16.14 to 16.08, revert to BD96 as default small H2 model
+monitor column density H2O  16.08 error 0.1
 ## >>chng 26 apr 02, from 17.55 to 16.15, use charge-dependent grain temperatures
-monitor column density "H2Ogrn" 16.15  error 0.1
+## >>chng 26 nov 08, from 16.15 to 15.69, revert to BD96 as default small H2 model
+monitor column density "H2Ogrn" 15.69  error 0.1
 ## >>chng 11 jul 22, from 10 to 15.33, first run
 ## >>chng 11 nov 16, from 15.33 to 15.38, adjust newmole monitors
 ## >>chng 12 aug 21, from 15.38 to 15.42, fix CRPHOT botches and HD crash
@@ -114,7 +124,8 @@ monitor column density "H2Ogrn" 16.15  error 0.1
 ## >>chng 21 nov 04, from 14.74 to 15.28, update co mole data
 ## >>chng 23 may 15, from 15.28 to 15.03, GS updates 21 reactions to UMIST 2012
 ## >>chng 26 apr 02, from 15.03 to 14.99, use charge-dependent grain temperatures
-monitor column density C2   14.99 error 0.1
+## >>chng 26 nov 08, from 14.99 to 14.91, revert to BD96 as default small H2 model
+monitor column density C2   14.91 error 0.1
 ## >>chng 11 jul 22, from 10 to 13.17, first run
 ## >>chng 11 nov 16, from 13.17 to 13.24, adjust newmole monitors
 ## >>chng 12 aug 21, from 13.24 to 13.3, fix CRPHOT botches and HD crash
@@ -125,13 +136,15 @@ monitor column density C2   14.99 error 0.1
 ## >>chng 21 nov 04, from 12.65 to 13.2, update co mole data
 ## >>chng 23 may 15, from 13.2 to 13.07, GS updates 21 reactions to UMIST 2012
 ## >>chng 26 apr 02, from 13.07 to 13.01, use charge-dependent grain temperatures
-monitor column density C3   13.01 error 0.1
+## >>chng 26 nov 08, from 13.01 to 12.9, revert to BD96 as default small H2 model
+monitor column density C3   12.9 error 0.1
 ## >>chng 11 jul 22, from 10 to 14.94, first run
 ## >>chng 14 mar 26, from 14.94 to 14.81, move O to external databases
 ## >>chng 23 may 15, from 14.81 to 14.74, GS updates 21 reactions to UMIST 2012
 ## >>chng 24 apr 21, from 14.74 to 14.52, GS updates chemistry
 ## >>chng 24 jun 08, from 14.52 to 14.74, GS rm 3 TiO reactions
-monitor column density SiO  14.74 error 0.1
+## >>chng 26 nov 08, from 14.74 to 14.65, revert to BD96 as default small H2 model
+monitor column density SiO  14.65 error 0.1
 ## >>chng 11 jul 22, from 10 to 16.96, first run
 ## >>chng 12 jun 08, from 16.96 to 16.91, Updates to grain chemistry
 ## >>chng 14 mar 26, from 16.91 to 16.84, move O to external databases
@@ -139,7 +152,8 @@ monitor column density SiO  14.74 error 0.1
 ## >>chng 23 may 15, from 16.88 to 16.8, GS updates 21 reactions to UMIST 2012
 monitor column density OH   16.8 error 0.1
 ## >>chng 26 apr 02, from 10.07 to 9.32, use charge-dependent grain temperatures
-monitor column density "OHgrn" 9.32 error 0.1
+## >>chng 26 nov 08, from 9.32 to 9.025, revert to BD96 as default small H2 model
+monitor column density "OHgrn" 9.025 error 0.1
 ## >>chng 11 jul 22, from 10 to 14.41, first run
 ## >>chng 12 aug 21, from 14.41 to 14.45, fix CRPHOT botches and HD crash
 ## >>chng 13 nov 05, from 14.45 to 14.5, convergence branch changes
@@ -147,7 +161,8 @@ monitor column density "OHgrn" 9.32 error 0.1
 ## >>chng 21 nov 04, from 14.42 to 14.51, update co mole data
 ## >>chng 23 may 15, from 14.51 to 14.44, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jul 11, from 14.44 to 14.63, GS Si moles, UMIST2022
-monitor column density CN   14.63 error 0.1
+## >>chng 26 nov 08, from 14.63 to 14.58, revert to BD96 as default small H2 model
+monitor column density CN   14.58 error 0.1
 ## >>chng 11 jul 22, from 10 to 16.13, first run
 ## >>chng 13 feb 16, from 16.13 to 16.17, update iso recom files
 ## >>chng 13 nov 05, from 16.17 to 16.21, convergence branch changes
@@ -156,7 +171,8 @@ monitor column density CN   14.63 error 0.1
 ## >>chng 21 sep 11, from 16.2 to 15.53, LAMDA update
 ## >>chng 21 nov 04, from 15.53 to 16.07, update co mole data
 ## >>chng 23 may 15, from 16.07 to 16.02, GS updates 21 reactions to UMIST 2012
-monitor column density CH   16.02 error 0.1
+## >>chng 26 nov 08, from 16.02 to 15.94, revert to BD96 as default small H2 model
+monitor column density CH   15.94 error 0.1
 ## 
 ## >>chng 12 mar 07, from 14.9 to 8.032, renorm to r5961 results
 ## >>chng 13 nov 05, from 8.032 to 4.819, convergence branch changes
@@ -185,13 +201,15 @@ monitor itrzn 3.63
 ## >>chng 21 sep 11, from 913 to 851, LAMDA update
 ## >>chng 21 nov 04, from 851 to 899, LAMDA update
 ## >>chng 26 apr 02, from 899 to 828, use charge-dependent grain temperatures
-monitor nzone 828 error 0.03
+## >>chng 26 nov 08, from 828 to 766 revert to BD96 as default small H2 model
+monitor nzone 766 error 0.03
 ##
 ## >>chng 13 jun 27, from -8.869 to -5.357, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 538.1m to 538.142m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -5.357 to -5.451, move O to external databases
 ## >>chng 15 aug 03, from -5.451 to -4.983, update LAMDA to 2015
-monitor "H2O " 538.142m line intensity -4.983
+## >>chng 26 nov 08, from -4.983 to -5.06, revert to BD96 as default small H2 model
+monitor "H2O " 538.142m line intensity -5.06
 ## >>chng 13 jun 27, from -7.357 to -7.101, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 1653m to 1652.90m, increased wl precision to 6 sig. fig.
 ## >>chng 13 aug 16, from -7.101 to -7.248, subtraction of isotropic continua
@@ -208,7 +226,8 @@ monitor "HNC " 1652.90m  line intensity -7.414
 ## >>chng 21 sep 11, from -6.673 to -7.069, LAMDA update
 ## >>chng 21 nov 04, from -7.069 to -6.623, update co mole data
 ## >>chng 23 may 15, from -6.623 to -6.665, GS updates 21 reactions to UMIST 2012
-monitor "HCS+" 1755.88m  -6.665 line intensity
+## >>chng 26 nov 08, from -6.665 to -6.785, revert to BD96 as default small H2 model
+monitor "HCS+" 1755.88m  -6.785 line intensity
 ## >>chng 13 jun 27, from -7.453 to -6.575, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 3059m to 3058.86m, increased wl precision to 6 sig. fig.
 ## >>chng 13 aug 11, from -6.575 to -6.509, r7961/r7952
@@ -228,12 +247,14 @@ monitor "HCS+" 1755.88m  -6.665 line intensity
 ## >>chng 20 sep 06, from -6.814 to -6.771, further update to McCall CR-related rates from r14260
 ## >>chng 21 sep 11, from -6.771 to -7.038, LAMDA update
 ## >>chng 21 nov 04, from -7.038 to -6.739, update co mole data
-monitor "CS  " 3058.86m  -6.739 line intensity
+## >>chng 26 nov 08, from -6.739 to -6.848, revert to BD96 as default small H2 model
+monitor "CS  " 3058.86m  -6.848 line intensity
 ## >>chng 13 jun 27, from -7.288 to -5.951, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 2600m to 2600.05m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -5.951 to -6.06, move O to external databases
 ## >>chng 23 may 15, from -6.06 to -6.006, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 2600.05m  -6.006 line intensity
+## >>chng 26 nov 08, from -6.006 to -6.095, revert to BD96 as default small H2 model
+monitor "CO  " 2600.05m  -6.095 line intensity
 ## >>chng 13 jun 27, from -6.463 to -4.833, add line intensities of some molecules with strong emissions
 ## >>chng 13 jun 29, from -4.833 to -4.814, update added monitors
 ## >>chng 13 jun 30, from -4.814 to -4.832, average gcc icc wolkje
@@ -241,20 +262,23 @@ monitor "CO  " 2600.05m  -6.006 line intensity
 ## >>chng 13 nov 05, from -4.832 to -4.905, convergence branch changes
 ## >>chng 14 mar 26, from -4.905 to -5.023, move O to external databases
 ## >>chng 23 may 15, from -5.023 to -4.973, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 1300.05m  -4.973 line intensity
+## >>chng 26 nov 08, from -4.973 to -5.134, revert to BD96 as default small H2 model
+monitor "CO  " 1300.05m  -5.134 line intensity
 ## >>chng 13 jun 27, from -6.149 to -4.348, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 866.7m to 866.727m, increased wl precision to 6 sig. fig.
 ## >>chng 13 dec 23, from -4.348 to -4.399, C to external databases
 ## >>chng 14 mar 26, from -4.399 to -4.506, move O to external databases
 ## >>chng 23 may 15, from -4.506 to -4.454, GS updates 21 reactions to UMIST 2012
 ## >>chng 26 apr 02, from -4.454 to -4.499, use charge-dependent grain temperatures
-monitor "CO  " 866.727m  -4.499 line intensity
+## >>chng 26 nov 08, from -4.499 to -4.629, revert to BD96 as default small H2 model
+monitor "CO  " 866.727m  -4.629 line intensity
 ## >>chng 13 jun 27, from -6.177 to -4.082, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 650.1m to 650.074m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -4.082 to -4.198, move O to external databases
 ## >>chng 23 may 15, from -4.198 to -4.139, GS updates 21 reactions to UMIST 2012
 ## >>chng 26 apr 02, from -4.139 to -4.183, use charge-dependent grain temperatures
-monitor "CO  " 650.074m  -4.183 line intensity
+## >>chng 26 nov 08, from -4.183 to -4.302, revert to BD96 as default small H2 model
+monitor "CO  " 650.074m  -4.302 line intensity
 ## >>chng 13 jun 27, from -6.485 to -3.918, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 520.1m to 520.089m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 05, from -3.918 to -3.85, convergence branch changes
@@ -262,7 +286,8 @@ monitor "CO  " 650.074m  -4.183 line intensity
 ## >>chng 20 sep 06, from -4.026 to -3.983, further update to McCall CR-related rates from r14260
 ## >>chng 21 sep 11, from -3.983 to -4.032, LAMDA update
 ## >>chng 23 may 15, from -4.032 to -3.954, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 520.089m  -3.954 line intensity
+## >>chng 26 nov 08, from -3.954 to -4.087, revert to BD96 as default small H2 model
+monitor "CO  " 520.089m  -4.087 line intensity
 ## >>chng 13 jun 27, from -6.954 to -3.796, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 433.4m to 433.438m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 05, from -3.796 to -3.746, convergence branch changes
@@ -270,7 +295,8 @@ monitor "CO  " 520.089m  -3.954 line intensity
 ## >>chng 20 sep 06, from -3.94 to -3.892, further update to McCall CR-related rates from r14260
 ## >>chng 21 sep 11, from -3.892 to -3.934, LAMDA update
 ## >>chng 23 may 15, from -3.934 to -3.852, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 433.438m  -3.852 line intensity
+## >>chng 26 nov 08, from -3.852 to -3.963, revert to BD96 as default small H2 model
+monitor "CO  " 433.438m  -3.963 line intensity
 ## >>chng 13 jun 27, from -7.48 to -3.749, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 371.5m to 371.549m, increased wl precision to 6 sig. fig.
 ## >>chng 13 nov 05, from -3.749 to -3.711, convergence branch changes
@@ -278,7 +304,8 @@ monitor "CO  " 433.438m  -3.852 line intensity
 ## >>chng 20 sep 06, from -3.936 to -3.876, further update to McCall CR-related rates from r14260
 ## >>chng 21 sep 11, from -3.876 to -3.922, LAMDA update
 ## >>chng 23 may 15, from -3.922 to -3.823, GS updates 21 reactions to UMIST 2012
-monitor "CO  " 371.549m  -3.823 line intensity
+## >>chng 26 nov 08, from -3.823 to -3.934, revert to BD96 as default small H2 model
+monitor "CO  " 371.549m  -3.934 line intensity
 ## >>chng 13 jun 27, from -8.049 to -3.787, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 325.1m to 325.137m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -3.787 to -4.033, move O to external databases
@@ -288,7 +315,8 @@ monitor "CO  " 371.549m  -3.823 line intensity
 ## >>chng 21 nov 04, from -4.012 to -3.966, update co mole data
 ## >>chng 23 may 15, from -3.966 to -3.885, GS updates 21 reactions to UMIST 2012
 ## >>chng 26 apr 02, from -3.885 to -3.832, use charge-dependent grain temperatures
-monitor "CO  " 325.137m  -3.832 line intensity
+## >>chng 26 nov 08, from -3.832 to -4.016, revert to BD96 as default small H2 model
+monitor "CO  " 325.137m  -4.016 line intensity
 ## >>chng 13 jun 27, from -7.522 to -5.147, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 906.6m to 906.599m, increased wl precision to 6 sig. fig.
 ## >>chng 14 mar 26, from -5.147 to -5.292, move O to external databases
@@ -296,7 +324,8 @@ monitor "CO  " 325.137m  -3.832 line intensity
 ## >>chng 21 sep 11, from -5.238 to -5.283, LAMDA update
 ## >>chng 21 nov 04, from -5.283 to -5.245, update co mole data
 ## >>chng 23 may 15, from -5.245 to -5.185, GS updates 21 reactions to UMIST 2012
-monitor "^13CO" 906.599m  -5.185 line intensity
+## >>chng 26 nov 08, from -5.185 to -5.276, revert to BD96 as default small H2 model
+monitor "^13CO" 906.599m  -5.276 line intensity
 ## >>chng 13 jun 27, from -8.247 to -6.917, add line intensities of some molecules with strong emissions
 ## >>chng 13 jul 24, wl from 880.9m to 880.858m, increased wl precision to 6 sig. fig.
 ## >>chng 13 sep 12, from -6.917 to -6.96, Mg converted to database
@@ -307,7 +336,8 @@ monitor "^13CO" 906.599m  -5.185 line intensity
 ## >>chng 21 nov 04, from -6.985 to -6.927, update co mole data
 ## >>chng 23 may 15, from -6.927 to -7.003, GS updates 21 reactions to UMIST 2012
 ## >>chng 25 jul 11, from -7.003 to -6.785, GS Si moles, UMIST2022
-monitor "CN  " 880.858m  -6.785  line intensity
+## >>chng 26 nov 08, from -6.785 to -6.872, revert to BD96 as default small H2 model
+monitor "CN  " 880.858m  -6.872  line intensity
 #
 # pdr_xdr.in
 # class pdr 

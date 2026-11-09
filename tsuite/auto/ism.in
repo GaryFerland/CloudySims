@@ -158,7 +158,8 @@ monitor grain temperature 1 19.74 graphite
 ## >>chng 12 apr 09, from -11.34 to -11.51, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 13 dec 23, from -11.51 to -11.47, C to external databases
 ## >>chng 14 mar 26, from -11.47 to -11.4, Move oxygen data to stout and chianti files
-monitor line luminosity "H2dH" 0 -11.4
+## >>chng 26 nov 08, from -11.4 to -11.28, revert to BD96 as small H2 default model
+monitor line luminosity "H2dH" 0 -11.28
 ##
 ## >>chng 01 mar 07, from 0.212 to 0.361, grain physics, h2 form
 ## >>chng 02 jun 27, from 0.361 to 0.542 chng H2 grain form rates
@@ -170,7 +171,8 @@ monitor line luminosity "H2dH" 0 -11.4
 ## >>chng 05 dec 08, from -9.404 to -9.11, update to Elwert Solomon rate
 ## >>chng 12 apr 09, from -9.11 to -9.279, update CR backbround to Indriolo+07, ~8x larger
 ## >>chng 14 mar 26, from -9.279 to -9.174, Move oxygen data to stout and chianti files
-monitor line luminosity "H2 v" 0  -9.174 error 0.1
+## >>chng 26 nov 08, from -9.174 to -9.439, revert to BD96 as small H2 default model
+monitor line luminosity "H2 v" 0  -9.439 error 0.1
 ##
 ## >>chng 08 dec 08, from 15 to 10, upper limit -> equals (r2515)
 ## >>chng 09 jun 15, from 10 to 32, gradual approach to outer edge

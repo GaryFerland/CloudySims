@@ -156,7 +156,8 @@ monitor line luminosity "blnd"  3933 6.734
 ## >>chng 14 may 24, from 6.856 to 6.828, allow all NIST levels to be used
 ## >>chng 16 mar 24, from 6.828 to 6.772, FeII cooling using Stout 80 levels
 ## >>chng 20 jan 13, from 6.772 to 6.792, PS-M is now default for He-like collisions l<3. S62 is maintained only for electron impact as default.
-monitor line luminosity "blnd"  8579 6.792
+## >>chng 26 nov 08, from 6.792 to 6.838, revert to BD96 as small H2 default model
+monitor line luminosity "blnd"  8579 6.838
 ## >>chng 08 sep 22, from 6.174 to 6.195, remove Ali et al. DR guess
 ## >>chng 10 jul 30, from 6.195 to 6.222, lower te floor so column density stopping criterion is reached
 ## >>chng 11 jul 12, from 6.222 to 6.196, update to head of branch, without new coll DR suppression
@@ -178,7 +179,8 @@ monitor line luminosity "Ca 1"  4226.73A 6.127
 ## >>chng 12 jul 09, from 6.362 to 6.397, get rid of major discontinuities in 3body rates
 ## >>chng 13 apr 23, from 6.397 to 6.451, move Cr, Sc, Na to Stout, rm cool_xxx, enable all other Chianti ions of these elements
 ## >>chng 14 may 24, from 6.451 to 6.415, allow all NIST levels to be used
-monitor line luminosity "Blnd"  5892 6.415
+## >>chng 26 nov 08, from 6.415 to 6.452, revert to BD96 as small H2 default model
+monitor line luminosity "Blnd"  5892 6.452
 ## 
 ## >>chng 04 may 19, from 6.440 to 6.474, incr err RP update helike sequence
 ## >>chng 05 jun 05, from 6.474 to 6.500, update HeI
@@ -207,7 +209,8 @@ monitor line luminosity "Blnd"  1.08302m 6.131
 monitor line luminosity "Mg 1"      2852.13A 5.942 
 ##
 ## >>chng 15 nov 17, add this monitor
-monitor line luminosity "Na 1"      5889.95A    6.116 
+## >>chng 26 nov 08, from 6.116 to 6.149, revert to BD96 as small H2 default model
+monitor line luminosity "Na 1"      5889.95A    6.149 
 ##
 ## >>chng 04 mar 05, from < 7 to < 9, chng conv criteria
 ## >>chng 04 sep 30, from 9 to 12, conv_base conv heat cool
