@@ -54,7 +54,6 @@ void radius_first(void)
 	  drcol, 
 	  dr_time_dep,
 	  drthrm, 
-	  factor, 
 	  winddr;
 	static double drad_last_iteration=-1.;
 
@@ -244,23 +243,32 @@ void radius_first(void)
 	 *
 	 ***********************************************************************/
 
+	/* >>chng 26 nov 22 fix bug where a linear value was compared to a log meaning the proposed thickness of
+	 * zone 1 was always tiny for tables; refactored loop by decomposing the large conditional
+	 * statement to prevent this sort of bug and improve readability */
 	if( strcmp(dense.chDenseLaw,"DLW2") == 0 )
 	{
-		drTabDen = 1.;
-		i = 1;
-		factor = 0.;
-		while( i++ < 100 && factor < 0.05 && drTabDen*2. < iterations.StopThickness[0] )
+		drTabDen = 1.0;
+		for( int nprobe = 0; nprobe < 100; ++nprobe )
 		{
-			if( ( dense.DLW.lgDepth && drTabDen >= dense.DLW.dist.back() ) ||
-				( !dense.DLW.lgDepth && radius.Radius+drTabDen >= dense.DLW.dist.back() ) )
+			// if thickness is sufficient, stop probing
+			if( drTabDen*2.0 >= iterations.StopThickness[0]  )
 				break;
+			
+			// stop at the end of the table, serves both depth/radius cases
+			double logprobe = log10(dense.DLW.lgDepth ? drTabDen : radius.Radius + drTabDen);
+			if( logprobe >= dense.DLW.dist.back() )
+				break;
+
 			/* check densities at ever larger dr's, until factor becomes more than 5% */
-			factor = dense.gas_phase[ipHYDROGEN]/
-				dense.DLW.tabval(radius.Radius+drTabDen, drTabDen);
-			/* density change can be positive or negative sign */
-			factor = fabs(factor-1.);
-			drTabDen *= 2.;
+			double factor = fabs((dense.gas_phase[ipHYDROGEN]/dense.DLW.tabval(radius.Radius+drTabDen, drTabDen)) - 1.0);
+			drTabDen *= 2.0;  // double this before checking factor against threshold
+
+			if( !(factor < 0.05) )  // invert < bool so a NaN comparison returns true too
+				break;
 		}
+		/* the loop incrementally doubles drTabDen before each run
+		 * thus, if the loop last evaluated probe n, drTabDen is the value of probe n+1; correct for this */
 		drTabDen /= 2.;
 	}
 	else

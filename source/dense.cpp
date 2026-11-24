@@ -300,46 +300,111 @@ void SumDensities( void )
 	return;
 }
 
+namespace {
+	/** >>chng 26 nov 21, added helper function for fixing an element table bug
+	 * 1. Scales all molecules by the factor of their most restrictive constituent
+	 * 2. Refreshes cached molecular totals via dense.updateXMolecules()
+	 * 3. Ionic species take the remainder, being scaled for conservation purposes
+	 *
+	 * Anything calling RebalanceAbundances mustn't first modify xIonDense 
+	 **/
+	void RebalanceAbundances( const double abund_ratio[] ) 
+	{
+		DEBUG_ENTRY( "RebalanceAbundances()" );
+
+		ASSERT( !deut.lgElmtOn );  // molecules containing deuterium not handled here
+
+		bool lgModified[LIMELM];
+
+		for( long nelem=ipHYDROGEN; nelem < LIMELM; ++nelem )
+			lgModified[nelem] = ( abund_ratio[nelem] != 1.0 );
+
+		for( long i=0; i < mole_global.num_total; ++i )
+		{
+			if( mole.species[i].location != NULL )
+				continue;
+
+			molecule::nNucsMap& nuclides = mole_global.list[i]->nNuclide;
+
+			double factor = 1.0;  // running minimum
+
+			for( const auto& entry : nuclides )
+				factor = MIN2(factor, abund_ratio[entry.first->el()->Z-1]);
+
+			if( factor != 1.0 )  // abund_ratio should be precisely == 1.0 for an unchanged element 
+			{
+				mole.species[i].den *= factor;
+				for( const auto& atom : nuclides )
+					lgModified[atom.first->el()->Z-1] = true;
+			}
+		}
+		
+		mole.set_isotope_abundances();
+		dense.updateXMolecules();
+		deut.updateXMolecules();
+
+		for( long nelem=ipHYDROGEN; nelem < LIMELM; ++nelem)
+		{
+			if( !lgModified[nelem] || !dense.lgElmtOn[nelem] )
+				continue;
+			
+			double ion_new = dense.gas_phase[nelem] - dense.xMolecules(nelem);
+			double ion_old = 0.0;
+
+			for( long ion=0; ion < (nelem + 2); ++ion )
+			{
+				ion_old += dense.xIonDense[nelem][ion];  // callers mustn't modify xIonDense
+			}
+
+			ASSERT( ion_new >= 0.0 );
+			ASSERT( ion_old > 0.0 );  // avoid divide-by-zero; ion_new being 0 is physically possible
+
+			ScaleIonDensities(nelem, (realnum)(ion_new / ion_old));  // minor dtype loss of precision here
+		}
+	}
+}
+
 bool AbundChange( )
 {
 	DEBUG_ENTRY( "AbundChange()" );
 
-	fixit("AbundChange breaks conservation if molecular abundance is finite");
-
-	// Suggested improved procedure:
-	// 1. Scale all molecules by the scaling for their most restrictive constituent
-	// 2. dense.updateXMolecules();
-	// 3. Scale ionic species so as to maintain conservation
-	// This will probably lead to material being dumped into the ionic species,
-	// but this should slosh back at the next molecular network solve.  This
-	// procedure is at least a) conservative; b) consistent with the pure-ion case.
+	/* The routine here will probably lead to material being dumped into the ionic species,
+	 * but this should slosh back at the next molecular network solve. The current procedure is 
+	 * at least a) conservative; b) consistent with the pure-ion case. */	
 
 	/* this will be set true if density or abundances change in this zone */
 	bool lgChange = false;
 
 	/* >>chng 97 jun 03, added variable abundances for element table command
 	 * option to get abundances off a table with element read command */
+	/* >>chng 26 nov 22, updated scaling according to the proposed improved procedure
+	 * to avoid lgElemsConserved issues with the element table command & improve accuracy */
 	if( abund.lgAbTaON )
 	{
 		lgChange = true;
-		for( long nelem=1; nelem < LIMELM; nelem++ )
+
+		double abund_ratio[LIMELM];
+		// initialise ratios to 1.0 then skip hydrogen in the loop so it stays 1
+		std::fill_n(abund_ratio, LIMELM, 1.0);
+
+		for( long nelem=ipHELIUM; nelem < LIMELM; ++nelem)
 		{
-			if( abund.AbunTab[nelem].nvals() > 0 )
+			// skip turned-off elements to avoid NaN/inf denominator
+			if( abund.AbunTab[nelem].nvals() > 0 && dense.lgElmtOn[nelem])
 			{
 				double abun = abund.AbunTab[nelem].tabval(radius.Radius,radius.depth)*
 				  dense.gas_phase[ipHYDROGEN];
 
-				double hold = abun/dense.gas_phase[nelem];
-				dense.SetGasPhaseDensity( nelem, (realnum)abun );
+				// store abundance ratio before setting gas phase density
+				abund_ratio[nelem] = abun / dense.gas_phase[nelem];
 
-				for( long ion=0; ion < (nelem + 2); ion++ )
-				{
-					dense.xIonDense[nelem][ion] *= (realnum)hold;
-				}
+				// rounding ends up in the ions (see above)
+				dense.SetGasPhaseDensity( nelem, (realnum)abun );
 			}
 		}
-	}
 
+		RebalanceAbundances( abund_ratio );
+	}
 	/* this is set false if fluctuations abundances command entered,
 	 * when density variations are in place this is true,
 	 * and dense.chDenseLaw is "SINE" */
@@ -375,24 +440,23 @@ bool AbundChange( )
 		}
 	}
 
-	if( FacAbun != 1. )
+	if( FacAbun != 1. )  // >>chng 26 nov 22, update this code path to use the new helper
 	{
 		ASSERT(!dynamics.lgAdvection); // Local abundance change doesn't make sense with advective transport
+
+		double abund_ratio[LIMELM];  
+		std::fill_n(abund_ratio, LIMELM, 1.0);  // initialise ratios to 1.0, hydrogen + helium stay 1.0
 
 		/* Li on up is affect by abundance variations */
 		for( long nelem=ipLITHIUM; nelem < LIMELM; nelem++ )
 		{
 			if (dense.lgElmtOn[nelem])
 			{
+				abund_ratio[nelem] = FacAbun;
 				dense.SetGasPhaseDensity(nelem, dense.gas_phase[nelem] * (realnum) FacAbun);
-				ScaleIonDensities( nelem, (realnum)(FacAbun) );
 			}
 		}
-
-		for( long mol=0; mol < mole_global.num_total; mol++ )
-		{
-			mole.species[mol].den *= (realnum)(FacAbun);
-		}
+		RebalanceAbundances( abund_ratio );
 	}
 
 	if (lgChange)
